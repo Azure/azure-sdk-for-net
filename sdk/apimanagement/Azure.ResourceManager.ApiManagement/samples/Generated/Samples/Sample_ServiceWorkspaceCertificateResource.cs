@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementCertificateData resourceData = result.Data;
+            ApiManagementCertificateCreateOrUpdateContentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementCertificateData resourceData = result.Data;
+            ApiManagementCertificateCreateOrUpdateContentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -134,17 +134,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceCertificateResource serviceWorkspaceCertificate = client.GetServiceWorkspaceCertificateResource(serviceWorkspaceCertificateResourceId);
 
             // invoke the operation
-            CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters = new CertificateCreateOrUpdateParameters()
+            CertificateCreateOrUpdateContent content = new CertificateCreateOrUpdateContent()
             {
                 Data = "****************Base 64 Encoded Certificate *******************************",
                 Password = "****Certificate Password******",
             };
-            ArmOperation<ServiceWorkspaceCertificateResource> lro = await serviceWorkspaceCertificate.UpdateAsync(WaitUntil.Completed, certificateCreateOrUpdateParameters);
+            ArmOperation<ServiceWorkspaceCertificateResource> lro = await serviceWorkspaceCertificate.UpdateAsync(WaitUntil.Completed, content);
             ServiceWorkspaceCertificateResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementCertificateData resourceData = result.Data;
+            ApiManagementCertificateCreateOrUpdateContentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceCertificateResource serviceWorkspaceCertificate = client.GetServiceWorkspaceCertificateResource(serviceWorkspaceCertificateResourceId);
 
             // invoke the operation
-            CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters = new CertificateCreateOrUpdateParameters()
+            CertificateCreateOrUpdateContent content = new CertificateCreateOrUpdateContent()
             {
                 KeyVaultDetails = new KeyVaultContractCreateProperties()
                 {
@@ -181,12 +181,12 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                     IdentityClientId = "ceaa6b06-c00f-43ef-99ac-f53d1fe876a0",
                 },
             };
-            ArmOperation<ServiceWorkspaceCertificateResource> lro = await serviceWorkspaceCertificate.UpdateAsync(WaitUntil.Completed, certificateCreateOrUpdateParameters);
+            ArmOperation<ServiceWorkspaceCertificateResource> lro = await serviceWorkspaceCertificate.UpdateAsync(WaitUntil.Completed, content);
             ServiceWorkspaceCertificateResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementCertificateData resourceData = result.Data;
+            ApiManagementCertificateCreateOrUpdateContentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementCertificateData resourceData = result.Data;
+            ApiManagementCertificateCreateOrUpdateContentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

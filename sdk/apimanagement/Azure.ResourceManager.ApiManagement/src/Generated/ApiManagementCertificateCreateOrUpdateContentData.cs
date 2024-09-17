@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing the ApiManagementCertificate data model.
+    /// A class representing the ApiManagementCertificateCreateOrUpdateContent data model.
     /// Certificate details.
     /// </summary>
-    public partial class ApiManagementCertificateData : ResourceData
+    public partial class ApiManagementCertificateCreateOrUpdateContentData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementCertificateData"/>. </summary>
-        public ApiManagementCertificateData()
+        /// <summary> Initializes a new instance of <see cref="ApiManagementCertificateCreateOrUpdateContentData"/>. </summary>
+        public ApiManagementCertificateCreateOrUpdateContentData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementCertificateData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementCertificateCreateOrUpdateContentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </param>
         /// <param name="keyVaultDetails"> KeyVault location details of the certificate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string subject, string thumbprint, DateTimeOffset? expireOn, KeyVaultContractProperties keyVaultDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementCertificateCreateOrUpdateContentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string subject, string thumbprint, DateTimeOffset? expireOn, KeyVaultContractProperties keyVaultDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Subject = subject;
             Thumbprint = thumbprint;

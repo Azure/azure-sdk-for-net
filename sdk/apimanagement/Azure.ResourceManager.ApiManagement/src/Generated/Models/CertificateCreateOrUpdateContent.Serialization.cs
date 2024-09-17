@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class CertificateCreateOrUpdateParameters : IUtf8JsonSerializable, IJsonModel<CertificateCreateOrUpdateParameters>
+    public partial class CertificateCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<CertificateCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertificateCreateOrUpdateParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertificateCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CertificateCreateOrUpdateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CertificateCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementCertificateCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateCreateOrUpdateParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CertificateCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("properties"u8);
@@ -69,19 +69,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        CertificateCreateOrUpdateParameters IJsonModel<CertificateCreateOrUpdateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CertificateCreateOrUpdateContent IJsonModel<CertificateCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateCreateOrUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CertificateCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateCreateOrUpdateParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CertificateCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCertificateCreateOrUpdateParameters(document.RootElement, options);
+            return DeserializeCertificateCreateOrUpdateContent(document.RootElement, options);
         }
 
-        internal static CertificateCreateOrUpdateParameters DeserializeCertificateCreateOrUpdateParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CertificateCreateOrUpdateContent DeserializeCertificateCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -133,38 +133,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CertificateCreateOrUpdateParameters(data, password, keyVault, serializedAdditionalRawData);
+            return new CertificateCreateOrUpdateContent(data, password, keyVault, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CertificateCreateOrUpdateParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CertificateCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateCreateOrUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CertificateCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CertificateCreateOrUpdateParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertificateCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CertificateCreateOrUpdateParameters IPersistableModel<CertificateCreateOrUpdateParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CertificateCreateOrUpdateContent IPersistableModel<CertificateCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateCreateOrUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CertificateCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCertificateCreateOrUpdateParameters(document.RootElement, options);
+                        return DeserializeCertificateCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CertificateCreateOrUpdateParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertificateCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CertificateCreateOrUpdateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CertificateCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

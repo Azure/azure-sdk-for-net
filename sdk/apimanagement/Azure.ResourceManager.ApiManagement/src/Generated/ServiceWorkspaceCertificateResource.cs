@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         private readonly ClientDiagnostics _serviceWorkspaceCertificateWorkspaceCertificateClientDiagnostics;
         private readonly WorkspaceCertificateRestOperations _serviceWorkspaceCertificateWorkspaceCertificateRestClient;
-        private readonly ApiManagementCertificateData _data;
+        private readonly ApiManagementCertificateCreateOrUpdateContentData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/workspaces/certificates";
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of the <see cref="ServiceWorkspaceCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServiceWorkspaceCertificateResource(ArmClient client, ApiManagementCertificateData data) : this(client, data.Id)
+        internal ServiceWorkspaceCertificateResource(ArmClient client, ApiManagementCertificateCreateOrUpdateContentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ApiManagementCertificateData Data
+        public virtual ApiManagementCertificateCreateOrUpdateContentData Data
         {
             get
             {
@@ -282,20 +282,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="certificateCreateOrUpdateParameters"> Create or Update parameters. </param>
+        /// <param name="content"> Create or Update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateCreateOrUpdateParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceWorkspaceCertificateResource>> UpdateAsync(WaitUntil waitUntil, CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ServiceWorkspaceCertificateResource>> UpdateAsync(WaitUntil waitUntil, CertificateCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(certificateCreateOrUpdateParameters, nameof(certificateCreateOrUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _serviceWorkspaceCertificateWorkspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateResource.Update");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, certificateCreateOrUpdateParameters, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, certificateCreateOrUpdateParameters, ifMatch);
+                var response = await _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, ifMatch, cancellationToken).ConfigureAwait(false);
+                var uri = _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, ifMatch);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new ApiManagementArmOperation<ServiceWorkspaceCertificateResource>(Response.FromValue(new ServiceWorkspaceCertificateResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -331,20 +331,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="certificateCreateOrUpdateParameters"> Create or Update parameters. </param>
+        /// <param name="content"> Create or Update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateCreateOrUpdateParameters"/> is null. </exception>
-        public virtual ArmOperation<ServiceWorkspaceCertificateResource> Update(WaitUntil waitUntil, CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ServiceWorkspaceCertificateResource> Update(WaitUntil waitUntil, CertificateCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(certificateCreateOrUpdateParameters, nameof(certificateCreateOrUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _serviceWorkspaceCertificateWorkspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateResource.Update");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, certificateCreateOrUpdateParameters, ifMatch, cancellationToken);
-                var uri = _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, certificateCreateOrUpdateParameters, ifMatch);
+                var response = _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, ifMatch, cancellationToken);
+                var uri = _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, ifMatch);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new ApiManagementArmOperation<ServiceWorkspaceCertificateResource>(Response.FromValue(new ServiceWorkspaceCertificateResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)

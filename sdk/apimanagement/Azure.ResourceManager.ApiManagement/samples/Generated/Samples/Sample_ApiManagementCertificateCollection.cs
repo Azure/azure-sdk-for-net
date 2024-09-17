@@ -13,7 +13,7 @@ using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
-    public partial class Sample_ServiceCertificateCollection
+    public partial class Sample_ApiManagementCertificateCollection
     {
         // ApiManagementListCertificates
         [NUnit.Framework.Test]
@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServiceCertificateResource
-            ServiceCertificateCollection collection = apiManagementService.GetServiceCertificates();
+            // get the collection of this ApiManagementCertificateResource
+            ApiManagementCertificateCollection collection = apiManagementService.GetApiManagementCertificates();
 
             // invoke the operation and iterate over the result
-            await foreach (ServiceCertificateResource item in collection.GetAllAsync())
+            await foreach (ApiManagementCertificateResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApiManagementCertificateData resourceData = item.Data;
+                ApiManagementCertificateCreateOrUpdateContentData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServiceCertificateResource
-            ServiceCertificateCollection collection = apiManagementService.GetServiceCertificates();
+            // get the collection of this ApiManagementCertificateResource
+            ApiManagementCertificateCollection collection = apiManagementService.GetApiManagementCertificates();
 
             // invoke the operation
             string certificateId = "templateCert1";
-            ServiceCertificateResource result = await collection.GetAsync(certificateId);
+            ApiManagementCertificateResource result = await collection.GetAsync(certificateId);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementCertificateData resourceData = result.Data;
+            ApiManagementCertificateCreateOrUpdateContentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServiceCertificateResource
-            ServiceCertificateCollection collection = apiManagementService.GetServiceCertificates();
+            // get the collection of this ApiManagementCertificateResource
+            ApiManagementCertificateCollection collection = apiManagementService.GetApiManagementCertificates();
 
             // invoke the operation
             string certificateId = "templateCert1";
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServiceCertificateResource
-            ServiceCertificateCollection collection = apiManagementService.GetServiceCertificates();
+            // get the collection of this ApiManagementCertificateResource
+            ApiManagementCertificateCollection collection = apiManagementService.GetApiManagementCertificates();
 
             // invoke the operation
             string certificateId = "templateCert1";
-            NullableResponse<ServiceCertificateResource> response = await collection.GetIfExistsAsync(certificateId);
-            ServiceCertificateResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ApiManagementCertificateResource> response = await collection.GetIfExistsAsync(certificateId);
+            ApiManagementCertificateResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApiManagementCertificateData resourceData = result.Data;
+                ApiManagementCertificateCreateOrUpdateContentData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -182,16 +182,16 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServiceCertificateResource
-            ServiceCertificateCollection collection = apiManagementService.GetServiceCertificates();
+            // get the collection of this ApiManagementCertificateResource
+            ApiManagementCertificateCollection collection = apiManagementService.GetApiManagementCertificates();
 
             // invoke the operation
             string certificateId = "templateCertkv";
-            ServiceCertificateResource result = await collection.GetAsync(certificateId);
+            ApiManagementCertificateResource result = await collection.GetAsync(certificateId);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementCertificateData resourceData = result.Data;
+            ApiManagementCertificateCreateOrUpdateContentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServiceCertificateResource
-            ServiceCertificateCollection collection = apiManagementService.GetServiceCertificates();
+            // get the collection of this ApiManagementCertificateResource
+            ApiManagementCertificateCollection collection = apiManagementService.GetApiManagementCertificates();
 
             // invoke the operation
             string certificateId = "templateCertkv";
@@ -248,13 +248,13 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServiceCertificateResource
-            ServiceCertificateCollection collection = apiManagementService.GetServiceCertificates();
+            // get the collection of this ApiManagementCertificateResource
+            ApiManagementCertificateCollection collection = apiManagementService.GetApiManagementCertificates();
 
             // invoke the operation
             string certificateId = "templateCertkv";
-            NullableResponse<ServiceCertificateResource> response = await collection.GetIfExistsAsync(certificateId);
-            ServiceCertificateResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ApiManagementCertificateResource> response = await collection.GetIfExistsAsync(certificateId);
+            ApiManagementCertificateResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApiManagementCertificateData resourceData = result.Data;
+                ApiManagementCertificateCreateOrUpdateContentData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -291,22 +291,22 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServiceCertificateResource
-            ServiceCertificateCollection collection = apiManagementService.GetServiceCertificates();
+            // get the collection of this ApiManagementCertificateResource
+            ApiManagementCertificateCollection collection = apiManagementService.GetApiManagementCertificates();
 
             // invoke the operation
             string certificateId = "tempcert";
-            CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters = new CertificateCreateOrUpdateParameters()
+            CertificateCreateOrUpdateContent content = new CertificateCreateOrUpdateContent()
             {
                 Data = "****************Base 64 Encoded Certificate *******************************",
                 Password = "****Certificate Password******",
             };
-            ArmOperation<ServiceCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateId, certificateCreateOrUpdateParameters);
-            ServiceCertificateResource result = lro.Value;
+            ArmOperation<ApiManagementCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateId, content);
+            ApiManagementCertificateResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementCertificateData resourceData = result.Data;
+            ApiManagementCertificateCreateOrUpdateContentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -332,12 +332,12 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServiceCertificateResource
-            ServiceCertificateCollection collection = apiManagementService.GetServiceCertificates();
+            // get the collection of this ApiManagementCertificateResource
+            ApiManagementCertificateCollection collection = apiManagementService.GetApiManagementCertificates();
 
             // invoke the operation
             string certificateId = "templateCertkv";
-            CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters = new CertificateCreateOrUpdateParameters()
+            CertificateCreateOrUpdateContent content = new CertificateCreateOrUpdateContent()
             {
                 KeyVaultDetails = new KeyVaultContractCreateProperties()
                 {
@@ -345,12 +345,12 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                     IdentityClientId = "ceaa6b06-c00f-43ef-99ac-f53d1fe876a0",
                 },
             };
-            ArmOperation<ServiceCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateId, certificateCreateOrUpdateParameters);
-            ServiceCertificateResource result = lro.Value;
+            ArmOperation<ApiManagementCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateId, content);
+            ApiManagementCertificateResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementCertificateData resourceData = result.Data;
+            ApiManagementCertificateCreateOrUpdateContentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

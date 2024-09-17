@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             {
                 cert = new X509Certificate2("./Resources/sdktest.cer");
             }
-            var content = new ApiManagementCertificateCreateOrUpdateContent()
+            var content = new ApiManagementCertificateCreateOrUpdateContentData()
             {
                 Data = "sanitized"
             };

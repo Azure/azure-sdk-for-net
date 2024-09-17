@@ -75,22 +75,22 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
-        /// <param name="certificateCreateOrUpdateParameters"> Create or Update parameters. </param>
+        /// <param name="content"> Create or Update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> or <paramref name="certificateCreateOrUpdateParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceWorkspaceCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateId, CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ServiceWorkspaceCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateId, CertificateCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
-            Argument.AssertNotNull(certificateCreateOrUpdateParameters, nameof(certificateCreateOrUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _serviceWorkspaceCertificateWorkspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateId, certificateCreateOrUpdateParameters, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateId, certificateCreateOrUpdateParameters, ifMatch);
+                var response = await _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateId, content, ifMatch, cancellationToken).ConfigureAwait(false);
+                var uri = _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateId, content, ifMatch);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new ApiManagementArmOperation<ServiceWorkspaceCertificateResource>(Response.FromValue(new ServiceWorkspaceCertificateResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -127,22 +127,22 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
-        /// <param name="certificateCreateOrUpdateParameters"> Create or Update parameters. </param>
+        /// <param name="content"> Create or Update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> or <paramref name="certificateCreateOrUpdateParameters"/> is null. </exception>
-        public virtual ArmOperation<ServiceWorkspaceCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateId, CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ServiceWorkspaceCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateId, CertificateCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateId, nameof(certificateId));
-            Argument.AssertNotNull(certificateCreateOrUpdateParameters, nameof(certificateCreateOrUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _serviceWorkspaceCertificateWorkspaceCertificateClientDiagnostics.CreateScope("ServiceWorkspaceCertificateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateId, certificateCreateOrUpdateParameters, ifMatch, cancellationToken);
-                var uri = _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateId, certificateCreateOrUpdateParameters, ifMatch);
+                var response = _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateId, content, ifMatch, cancellationToken);
+                var uri = _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateId, content, ifMatch);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new ApiManagementArmOperation<ServiceWorkspaceCertificateResource>(Response.FromValue(new ServiceWorkspaceCertificateResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, isKeyVaultRefreshFailed);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, isKeyVaultRefreshFailed);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceWorkspaceCertificateResource(Client, ApiManagementCertificateData.DeserializeApiManagementCertificateData(e)), _serviceWorkspaceCertificateWorkspaceCertificateClientDiagnostics, Pipeline, "ServiceWorkspaceCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceWorkspaceCertificateResource(Client, ApiManagementCertificateCreateOrUpdateContentData.DeserializeApiManagementCertificateCreateOrUpdateContentData(e)), _serviceWorkspaceCertificateWorkspaceCertificateClientDiagnostics, Pipeline, "ServiceWorkspaceCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, isKeyVaultRefreshFailed);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceWorkspaceCertificateWorkspaceCertificateRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, isKeyVaultRefreshFailed);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceWorkspaceCertificateResource(Client, ApiManagementCertificateData.DeserializeApiManagementCertificateData(e)), _serviceWorkspaceCertificateWorkspaceCertificateClientDiagnostics, Pipeline, "ServiceWorkspaceCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceWorkspaceCertificateResource(Client, ApiManagementCertificateCreateOrUpdateContentData.DeserializeApiManagementCertificateCreateOrUpdateContentData(e)), _serviceWorkspaceCertificateWorkspaceCertificateClientDiagnostics, Pipeline, "ServiceWorkspaceCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

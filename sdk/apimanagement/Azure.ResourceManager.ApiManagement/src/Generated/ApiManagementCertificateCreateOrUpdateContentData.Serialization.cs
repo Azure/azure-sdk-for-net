@@ -16,11 +16,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementCertificateData : IUtf8JsonSerializable, IJsonModel<ApiManagementCertificateData>
+    public partial class ApiManagementCertificateCreateOrUpdateContentData : IUtf8JsonSerializable, IJsonModel<ApiManagementCertificateCreateOrUpdateContentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementCertificateData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementCertificateCreateOrUpdateContentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ApiManagementCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiManagementCertificateCreateOrUpdateContentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementCertificateData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementCertificateData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementCertificateCreateOrUpdateContentData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.ApiManagement
             writer.WriteEndObject();
         }
 
-        ApiManagementCertificateData IJsonModel<ApiManagementCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiManagementCertificateCreateOrUpdateContentData IJsonModel<ApiManagementCertificateCreateOrUpdateContentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementCertificateData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementCertificateCreateOrUpdateContentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementCertificateData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementCertificateCreateOrUpdateContentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiManagementCertificateData(document.RootElement, options);
+            return DeserializeApiManagementCertificateCreateOrUpdateContentData(document.RootElement, options);
         }
 
-        internal static ApiManagementCertificateData DeserializeApiManagementCertificateData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApiManagementCertificateCreateOrUpdateContentData DeserializeApiManagementCertificateCreateOrUpdateContentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ApiManagementCertificateData(
+            return new ApiManagementCertificateCreateOrUpdateContentData(
                 id,
                 name,
                 type,
@@ -325,9 +325,9 @@ namespace Azure.ResourceManager.ApiManagement
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ApiManagementCertificateData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApiManagementCertificateCreateOrUpdateContentData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementCertificateData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementCertificateCreateOrUpdateContentData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -336,26 +336,26 @@ namespace Azure.ResourceManager.ApiManagement
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementCertificateData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementCertificateCreateOrUpdateContentData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ApiManagementCertificateData IPersistableModel<ApiManagementCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApiManagementCertificateCreateOrUpdateContentData IPersistableModel<ApiManagementCertificateCreateOrUpdateContentData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementCertificateData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementCertificateCreateOrUpdateContentData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeApiManagementCertificateData(document.RootElement, options);
+                        return DeserializeApiManagementCertificateCreateOrUpdateContentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementCertificateData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementCertificateCreateOrUpdateContentData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ApiManagementCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiManagementCertificateCreateOrUpdateContentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

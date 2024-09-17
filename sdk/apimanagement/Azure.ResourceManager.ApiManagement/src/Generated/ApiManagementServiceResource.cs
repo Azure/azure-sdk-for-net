@@ -716,11 +716,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementAuthorizationServers().Get(authsid, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceBackendResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ServiceBackendResources and their operations over a ServiceBackendResource. </returns>
-        public virtual ServiceBackendCollection GetServiceBackends()
+        /// <summary> Gets a collection of ApiManagementBackendResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementBackendResources and their operations over a ApiManagementBackendResource. </returns>
+        public virtual ApiManagementBackendCollection GetApiManagementBackends()
         {
-            return GetCachedClient(client => new ServiceBackendCollection(client, Id));
+            return GetCachedClient(client => new ApiManagementBackendCollection(client, Id));
         }
 
         /// <summary>
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceBackendResource"/></description>
+        /// <description><see cref="ApiManagementBackendResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -749,9 +749,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backendId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceBackendResource>> GetServiceBackendAsync(string backendId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementBackendResource>> GetApiManagementBackendAsync(string backendId, CancellationToken cancellationToken = default)
         {
-            return await GetServiceBackends().GetAsync(backendId, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementBackends().GetAsync(backendId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceBackendResource"/></description>
+        /// <description><see cref="ApiManagementBackendResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -780,9 +780,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backendId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceBackendResource> GetServiceBackend(string backendId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementBackendResource> GetApiManagementBackend(string backendId, CancellationToken cancellationToken = default)
         {
-            return GetServiceBackends().Get(backendId, cancellationToken);
+            return GetApiManagementBackends().Get(backendId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementCacheResources in the ApiManagementService. </summary>
@@ -854,11 +854,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementCaches().Get(cacheId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceCertificateResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ServiceCertificateResources and their operations over a ServiceCertificateResource. </returns>
-        public virtual ServiceCertificateCollection GetServiceCertificates()
+        /// <summary> Gets a collection of ApiManagementCertificateResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementCertificateResources and their operations over a ApiManagementCertificateResource. </returns>
+        public virtual ApiManagementCertificateCollection GetApiManagementCertificates()
         {
-            return GetCachedClient(client => new ServiceCertificateCollection(client, Id));
+            return GetCachedClient(client => new ApiManagementCertificateCollection(client, Id));
         }
 
         /// <summary>
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceCertificateResource"/></description>
+        /// <description><see cref="ApiManagementCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -887,9 +887,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceCertificateResource>> GetServiceCertificateAsync(string certificateId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementCertificateResource>> GetApiManagementCertificateAsync(string certificateId, CancellationToken cancellationToken = default)
         {
-            return await GetServiceCertificates().GetAsync(certificateId, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementCertificates().GetAsync(certificateId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -909,7 +909,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceCertificateResource"/></description>
+        /// <description><see cref="ApiManagementCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -918,9 +918,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceCertificateResource> GetServiceCertificate(string certificateId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementCertificateResource> GetApiManagementCertificate(string certificateId, CancellationToken cancellationToken = default)
         {
-            return GetServiceCertificates().Get(certificateId, cancellationToken);
+            return GetApiManagementCertificates().Get(certificateId, cancellationToken);
         }
 
         /// <summary> Gets a collection of DocumentationContractResources in the ApiManagementService. </summary>
@@ -1260,11 +1260,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementIdentityProviders().Get(identityProviderName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceLoggerResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ServiceLoggerResources and their operations over a ServiceLoggerResource. </returns>
-        public virtual ServiceLoggerCollection GetServiceLoggers()
+        /// <summary> Gets a collection of ApiManagementLoggerResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementLoggerResources and their operations over a ApiManagementLoggerResource. </returns>
+        public virtual ApiManagementLoggerCollection GetApiManagementLoggers()
         {
-            return GetCachedClient(client => new ServiceLoggerCollection(client, Id));
+            return GetCachedClient(client => new ApiManagementLoggerCollection(client, Id));
         }
 
         /// <summary>
@@ -1284,7 +1284,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceLoggerResource"/></description>
+        /// <description><see cref="ApiManagementLoggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1293,9 +1293,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceLoggerResource>> GetServiceLoggerAsync(string loggerId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementLoggerResource>> GetApiManagementLoggerAsync(string loggerId, CancellationToken cancellationToken = default)
         {
-            return await GetServiceLoggers().GetAsync(loggerId, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementLoggers().GetAsync(loggerId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1315,7 +1315,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceLoggerResource"/></description>
+        /// <description><see cref="ApiManagementLoggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1324,9 +1324,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceLoggerResource> GetServiceLogger(string loggerId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementLoggerResource> GetApiManagementLogger(string loggerId, CancellationToken cancellationToken = default)
         {
-            return GetServiceLoggers().Get(loggerId, cancellationToken);
+            return GetApiManagementLoggers().Get(loggerId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementNamedValueResources in the ApiManagementService. </summary>

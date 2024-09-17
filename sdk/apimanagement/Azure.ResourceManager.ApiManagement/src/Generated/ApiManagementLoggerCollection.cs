@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceLoggerResource"/> and their operations.
-    /// Each <see cref="ServiceLoggerResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
-    /// To get a <see cref="ServiceLoggerCollection"/> instance call the GetServiceLoggers method from an instance of <see cref="ApiManagementServiceResource"/>.
+    /// A class representing a collection of <see cref="ApiManagementLoggerResource"/> and their operations.
+    /// Each <see cref="ApiManagementLoggerResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
+    /// To get an <see cref="ApiManagementLoggerCollection"/> instance call the GetApiManagementLoggers method from an instance of <see cref="ApiManagementServiceResource"/>.
     /// </summary>
-    public partial class ServiceLoggerCollection : ArmCollection, IEnumerable<ServiceLoggerResource>, IAsyncEnumerable<ServiceLoggerResource>
+    public partial class ApiManagementLoggerCollection : ArmCollection, IEnumerable<ApiManagementLoggerResource>, IAsyncEnumerable<ApiManagementLoggerResource>
     {
-        private readonly ClientDiagnostics _serviceLoggerLoggerClientDiagnostics;
-        private readonly LoggerRestOperations _serviceLoggerLoggerRestClient;
+        private readonly ClientDiagnostics _apiManagementLoggerLoggerClientDiagnostics;
+        private readonly LoggerRestOperations _apiManagementLoggerLoggerRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceLoggerCollection"/> class for mocking. </summary>
-        protected ServiceLoggerCollection()
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementLoggerCollection"/> class for mocking. </summary>
+        protected ApiManagementLoggerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceLoggerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementLoggerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ServiceLoggerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ApiManagementLoggerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceLoggerLoggerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceLoggerResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServiceLoggerResource.ResourceType, out string serviceLoggerLoggerApiVersion);
-            _serviceLoggerLoggerRestClient = new LoggerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceLoggerLoggerApiVersion);
+            _apiManagementLoggerLoggerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementLoggerResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ApiManagementLoggerResource.ResourceType, out string apiManagementLoggerLoggerApiVersion);
+            _apiManagementLoggerLoggerRestClient = new LoggerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementLoggerLoggerApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceLoggerResource"/></description>
+        /// <description><see cref="ApiManagementLoggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,19 +79,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceLoggerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string loggerId, ApiManagementLoggerData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementLoggerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string loggerId, ApiManagementLoggerData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceLoggerLoggerClientDiagnostics.CreateScope("ServiceLoggerCollection.CreateOrUpdate");
+            using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serviceLoggerLoggerRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _serviceLoggerLoggerRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, data, ifMatch);
+                var response = await _apiManagementLoggerLoggerRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var uri = _apiManagementLoggerLoggerRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, data, ifMatch);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ServiceLoggerResource>(Response.FromValue(new ServiceLoggerResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new ApiManagementArmOperation<ApiManagementLoggerResource>(Response.FromValue(new ApiManagementLoggerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceLoggerResource"/></description>
+        /// <description><see cref="ApiManagementLoggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,19 +131,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServiceLoggerResource> CreateOrUpdate(WaitUntil waitUntil, string loggerId, ApiManagementLoggerData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementLoggerResource> CreateOrUpdate(WaitUntil waitUntil, string loggerId, ApiManagementLoggerData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceLoggerLoggerClientDiagnostics.CreateScope("ServiceLoggerCollection.CreateOrUpdate");
+            using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serviceLoggerLoggerRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, data, ifMatch, cancellationToken);
-                var uri = _serviceLoggerLoggerRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, data, ifMatch);
+                var response = _apiManagementLoggerLoggerRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, data, ifMatch, cancellationToken);
+                var uri = _apiManagementLoggerLoggerRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, data, ifMatch);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ServiceLoggerResource>(Response.FromValue(new ServiceLoggerResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new ApiManagementArmOperation<ApiManagementLoggerResource>(Response.FromValue(new ApiManagementLoggerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceLoggerResource"/></description>
+        /// <description><see cref="ApiManagementLoggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -180,18 +180,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
-        public virtual async Task<Response<ServiceLoggerResource>> GetAsync(string loggerId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementLoggerResource>> GetAsync(string loggerId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
-            using var scope = _serviceLoggerLoggerClientDiagnostics.CreateScope("ServiceLoggerCollection.Get");
+            using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serviceLoggerLoggerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementLoggerLoggerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceLoggerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementLoggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceLoggerResource"/></description>
+        /// <description><see cref="ApiManagementLoggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,18 +225,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
-        public virtual Response<ServiceLoggerResource> Get(string loggerId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementLoggerResource> Get(string loggerId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
-            using var scope = _serviceLoggerLoggerClientDiagnostics.CreateScope("ServiceLoggerCollection.Get");
+            using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.Get");
             scope.Start();
             try
             {
-                var response = _serviceLoggerLoggerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, cancellationToken);
+                var response = _apiManagementLoggerLoggerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceLoggerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementLoggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceLoggerResource"/></description>
+        /// <description><see cref="ApiManagementLoggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceLoggerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceLoggerResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApiManagementLoggerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementLoggerResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceLoggerLoggerRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceLoggerLoggerRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceLoggerResource(Client, ApiManagementLoggerData.DeserializeApiManagementLoggerData(e)), _serviceLoggerLoggerClientDiagnostics, Pipeline, "ServiceLoggerCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementLoggerLoggerRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementLoggerLoggerRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementLoggerResource(Client, ApiManagementLoggerData.DeserializeApiManagementLoggerData(e)), _apiManagementLoggerLoggerClientDiagnostics, Pipeline, "ApiManagementLoggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceLoggerResource"/></description>
+        /// <description><see cref="ApiManagementLoggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,12 +303,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceLoggerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceLoggerResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiManagementLoggerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementLoggerResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceLoggerLoggerRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceLoggerLoggerRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceLoggerResource(Client, ApiManagementLoggerData.DeserializeApiManagementLoggerData(e)), _serviceLoggerLoggerClientDiagnostics, Pipeline, "ServiceLoggerCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementLoggerLoggerRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementLoggerLoggerRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementLoggerResource(Client, ApiManagementLoggerData.DeserializeApiManagementLoggerData(e)), _apiManagementLoggerLoggerClientDiagnostics, Pipeline, "ApiManagementLoggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceLoggerResource"/></description>
+        /// <description><see cref="ApiManagementLoggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,11 +340,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
-            using var scope = _serviceLoggerLoggerClientDiagnostics.CreateScope("ServiceLoggerCollection.Exists");
+            using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _serviceLoggerLoggerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementLoggerLoggerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceLoggerResource"/></description>
+        /// <description><see cref="ApiManagementLoggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -383,11 +383,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
-            using var scope = _serviceLoggerLoggerClientDiagnostics.CreateScope("ServiceLoggerCollection.Exists");
+            using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.Exists");
             scope.Start();
             try
             {
-                var response = _serviceLoggerLoggerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, cancellationToken: cancellationToken);
+                var response = _apiManagementLoggerLoggerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceLoggerResource"/></description>
+        /// <description><see cref="ApiManagementLoggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -422,18 +422,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
-        public virtual async Task<NullableResponse<ServiceLoggerResource>> GetIfExistsAsync(string loggerId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ApiManagementLoggerResource>> GetIfExistsAsync(string loggerId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
-            using var scope = _serviceLoggerLoggerClientDiagnostics.CreateScope("ServiceLoggerCollection.GetIfExists");
+            using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serviceLoggerLoggerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementLoggerLoggerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<ServiceLoggerResource>(response.GetRawResponse());
-                return Response.FromValue(new ServiceLoggerResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ApiManagementLoggerResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementLoggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceLoggerResource"/></description>
+        /// <description><see cref="ApiManagementLoggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -467,18 +467,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
-        public virtual NullableResponse<ServiceLoggerResource> GetIfExists(string loggerId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ApiManagementLoggerResource> GetIfExists(string loggerId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
 
-            using var scope = _serviceLoggerLoggerClientDiagnostics.CreateScope("ServiceLoggerCollection.GetIfExists");
+            using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serviceLoggerLoggerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, cancellationToken: cancellationToken);
+                var response = _apiManagementLoggerLoggerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<ServiceLoggerResource>(response.GetRawResponse());
-                return Response.FromValue(new ServiceLoggerResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ApiManagementLoggerResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementLoggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        IEnumerator<ServiceLoggerResource> IEnumerable<ServiceLoggerResource>.GetEnumerator()
+        IEnumerator<ApiManagementLoggerResource> IEnumerable<ApiManagementLoggerResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ServiceLoggerResource> IAsyncEnumerable<ServiceLoggerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ApiManagementLoggerResource> IAsyncEnumerable<ApiManagementLoggerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

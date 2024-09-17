@@ -45,8 +45,11 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tags/{tagId}: ApiTag
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}: ApiOperationPolicy
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/tags/{tagId}: ApiOperationTag
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}: ApiManagementBackend
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/certificates/{certificateId}: ApiManagementCertificate
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/diagnostics/{diagnosticId}: ApiManagementDiagnostic
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/issues/{issueId}: ApiManagementIssue
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/loggers/{loggerId}: ApiManagementLogger
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}: ApiManagementPolicy
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}: ApiManagementSubscription
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}: ApiManagementTag
@@ -190,7 +193,7 @@ rename-mapping:
   AuthorizationServerContract:  ApiManagementAuthorizationServer
   BackendContract: ApiManagementBackend
   CacheContract: ApiManagementCache
-  CertificateContract: ApiManagementCertificate
+  CertificateContract: ApiManagementCertificateCreateOrUpdateContent
   CertificateContract.properties.expirationDate: ExpireOn
   CertificateContract.properties.keyVault: KeyVaultDetails
   CertificateCreateOrUpdateParameters.properties.keyVault: KeyVaultDetails
@@ -230,6 +233,8 @@ rename-mapping:
   ProductState: ApiManagementProductState
   UserState: ApiManagementUserState
   TagCreateUpdateParameters: ApiManagementTagCreateOrUpdateContent
+  BackendUpdateParameters: ApiManagementBackendPatch
+  CertificateCreateOrUpdateParameters: CertificateCreateOrUpdateContent
   SubscriptionContract.properties.expirationDate: ExpireOn
   SubscriptionContract.properties.notificationDate: NotifiesOn
   UserContract.properties.registrationDate: RegistriesOn

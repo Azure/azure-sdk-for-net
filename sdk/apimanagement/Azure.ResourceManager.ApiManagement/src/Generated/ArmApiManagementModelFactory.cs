@@ -1167,7 +1167,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementCertificateData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementCertificateCreateOrUpdateContentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1179,10 +1179,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         ///
         /// </param>
         /// <param name="keyVaultDetails"> KeyVault location details of the certificate. </param>
-        /// <returns> A new <see cref="ApiManagement.ApiManagementCertificateData"/> instance for mocking. </returns>
-        public static ApiManagementCertificateData ApiManagementCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string subject = null, string thumbprint = null, DateTimeOffset? expireOn = null, KeyVaultContractProperties keyVaultDetails = null)
+        /// <returns> A new <see cref="ApiManagement.ApiManagementCertificateCreateOrUpdateContentData"/> instance for mocking. </returns>
+        public static ApiManagementCertificateCreateOrUpdateContentData ApiManagementCertificateCreateOrUpdateContentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string subject = null, string thumbprint = null, DateTimeOffset? expireOn = null, KeyVaultContractProperties keyVaultDetails = null)
         {
-            return new ApiManagementCertificateData(
+            return new ApiManagementCertificateCreateOrUpdateContentData(
                 id,
                 name,
                 resourceType,

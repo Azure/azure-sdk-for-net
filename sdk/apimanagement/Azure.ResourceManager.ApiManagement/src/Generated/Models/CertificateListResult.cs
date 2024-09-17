@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="CertificateListResult"/>. </summary>
         internal CertificateListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementCertificateData>();
+            Value = new ChangeTrackingList<ApiManagementCertificateCreateOrUpdateContentData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CertificateListResult"/>. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateListResult(IReadOnlyList<ApiManagementCertificateData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CertificateListResult(IReadOnlyList<ApiManagementCertificateCreateOrUpdateContentData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Count = count;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Page values. </summary>
-        public IReadOnlyList<ApiManagementCertificateData> Value { get; }
+        public IReadOnlyList<ApiManagementCertificateCreateOrUpdateContentData> Value { get; }
         /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
         /// <summary> Next page link if any. </summary>

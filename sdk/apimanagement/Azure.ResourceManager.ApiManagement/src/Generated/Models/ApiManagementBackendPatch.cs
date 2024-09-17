@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Backend update parameters. </summary>
-    public partial class BackendUpdateParameters
+    public partial class ApiManagementBackendPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BackendUpdateParameters"/>. </summary>
-        public BackendUpdateParameters()
+        /// <summary> Initializes a new instance of <see cref="ApiManagementBackendPatch"/>. </summary>
+        public ApiManagementBackendPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackendUpdateParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementBackendPatch"/>. </summary>
         /// <param name="title"> Backend Title. </param>
         /// <param name="description"> Backend Description. </param>
         /// <param name="resourceUri"> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="uri"> Runtime Url of the Backend. </param>
         /// <param name="protocol"> Backend communication protocol. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackendUpdateParameters(string title, string description, Uri resourceUri, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, BackendBaseParametersPool pool, BackendType? backendType, Uri uri, BackendProtocol? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementBackendPatch(string title, string description, Uri resourceUri, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, BackendBaseParametersPool pool, BackendType? backendType, Uri uri, BackendProtocol? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Title = title;
             Description = description;

@@ -527,15 +527,15 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceBackendResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceBackendResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBackendResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="ApiManagementBackendResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementBackendResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementBackendResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBackendResource"/> object. </returns>
-        public virtual ServiceBackendResource GetServiceBackendResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementBackendResource"/> object. </returns>
+        public virtual ApiManagementBackendResource GetApiManagementBackendResource(ResourceIdentifier id)
         {
-            ServiceBackendResource.ValidateResourceId(id);
-            return new ServiceBackendResource(Client, id);
+            ApiManagementBackendResource.ValidateResourceId(id);
+            return new ApiManagementBackendResource(Client, id);
         }
 
         /// <summary>
@@ -563,15 +563,15 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceCertificateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ServiceCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="ApiManagementCertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementCertificateResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceCertificateResource"/> object. </returns>
-        public virtual ServiceCertificateResource GetServiceCertificateResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementCertificateResource"/> object. </returns>
+        public virtual ApiManagementCertificateResource GetApiManagementCertificateResource(ResourceIdentifier id)
         {
-            ServiceCertificateResource.ValidateResourceId(id);
-            return new ServiceCertificateResource(Client, id);
+            ApiManagementCertificateResource.ValidateResourceId(id);
+            return new ApiManagementCertificateResource(Client, id);
         }
 
         /// <summary>
@@ -719,15 +719,15 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceLoggerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceLoggerResource.CreateResourceIdentifier" /> to create a <see cref="ServiceLoggerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="ApiManagementLoggerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementLoggerResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementLoggerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceLoggerResource"/> object. </returns>
-        public virtual ServiceLoggerResource GetServiceLoggerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementLoggerResource"/> object. </returns>
+        public virtual ApiManagementLoggerResource GetApiManagementLoggerResource(ResourceIdentifier id)
         {
-            ServiceLoggerResource.ValidateResourceId(id);
-            return new ServiceLoggerResource(Client, id);
+            ApiManagementLoggerResource.ValidateResourceId(id);
+            return new ApiManagementLoggerResource(Client, id);
         }
 
         /// <summary>

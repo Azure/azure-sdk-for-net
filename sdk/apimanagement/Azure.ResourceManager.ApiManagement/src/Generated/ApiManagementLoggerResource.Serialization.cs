@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ServiceLoggerResource : IJsonModel<ApiManagementLoggerData>
+    public partial class ApiManagementLoggerResource : IJsonModel<ApiManagementLoggerData>
     {
         void IJsonModel<ApiManagementLoggerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementLoggerData>)Data).Write(writer, options);
 

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IReadOnlyList<ApiManagementCertificateData> value = default;
+            IReadOnlyList<ApiManagementCertificateCreateOrUpdateContentData> value = default;
             long? count = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    List<ApiManagementCertificateData> array = new List<ApiManagementCertificateData>();
+                    List<ApiManagementCertificateCreateOrUpdateContentData> array = new List<ApiManagementCertificateCreateOrUpdateContentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementCertificateData.DeserializeApiManagementCertificateData(item, options));
+                        array.Add(ApiManagementCertificateCreateOrUpdateContentData.DeserializeApiManagementCertificateCreateOrUpdateContentData(item, options));
                     }
                     value = array;
                     continue;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CertificateListResult(value ?? new ChangeTrackingList<ApiManagementCertificateData>(), count, nextLink, serializedAdditionalRawData);
+            return new CertificateListResult(value ?? new ChangeTrackingList<ApiManagementCertificateCreateOrUpdateContentData>(), count, nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
