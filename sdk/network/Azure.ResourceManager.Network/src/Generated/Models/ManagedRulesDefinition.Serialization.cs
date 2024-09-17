@@ -26,6 +26,16 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Exceptions))
+            {
+                writer.WritePropertyName("exceptions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Exceptions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions"u8);
@@ -81,12 +91,27 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
+            IList<ExceptionEntry> exceptions = default;
             IList<OwaspCrsExclusionEntry> exclusions = default;
             IList<ManagedRuleSet> managedRuleSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("exceptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ExceptionEntry> array = new List<ExceptionEntry>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ExceptionEntry.DeserializeExceptionEntry(item, options));
+                    }
+                    exceptions = array;
+                    continue;
+                }
                 if (property.NameEquals("exclusions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -117,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedRulesDefinition(exclusions ?? new ChangeTrackingList<OwaspCrsExclusionEntry>(), managedRuleSets, serializedAdditionalRawData);
+            return new ManagedRulesDefinition(exceptions ?? new ChangeTrackingList<ExceptionEntry>(), exclusions ?? new ChangeTrackingList<OwaspCrsExclusionEntry>(), managedRuleSets, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRulesDefinition>.Write(ModelReaderWriterOptions options)

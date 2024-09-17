@@ -20,12 +20,6 @@ public class BasicServiceBusTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "The SB location."
-                    };
                 BicepParameter queueName =
                     new(nameof(queueName), typeof(string))
                     {
@@ -36,7 +30,6 @@ public class BasicServiceBusTests(bool async)
                 ServiceBusNamespace sb =
                     new(nameof(sb), ServiceBusNamespace.ResourceVersions.V2021_11_01)
                     {
-                        Location = location,
                         Sku = new ServiceBusSku { Name = ServiceBusSkuName.Standard },
                     };
 
@@ -63,12 +56,12 @@ public class BasicServiceBusTests(bool async)
             })
         .Compare(
             """
-            @description('The SB location.')
-            param location string = resourceGroup().location
-
             @description('The name of the SB queue.')
             param queueName string = 'orders'
 
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+            
             resource sb 'Microsoft.ServiceBus/namespaces@2021-11-01' = {
                 name: take('sb-${uniqueString(resourceGroup().id)}', 50)
                 location: location

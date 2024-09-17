@@ -1,9 +1,12 @@
 # Release History
 
-## 12.9.1 (Unreleased)
+## 12.9.1 (2024-09-17)
 
 ### Bugs Fixed
 - Fixed an issue that prevented use of stored access policy based SaS Uris by adding a parameterless constructor to `TableSasBuilder`. The resulting builder can then be modified to include the stored access policy identifier or any other details.
+
+### Other Changes
+- Cosmos Table endpoints now support Entra ID authentication.
 
 ## 12.9.0 (2024-07-22)
 

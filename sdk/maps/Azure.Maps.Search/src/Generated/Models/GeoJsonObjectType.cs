@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </summary>
-    public readonly partial struct GeoJsonObjectType : IEquatable<GeoJsonObjectType>
+    internal readonly partial struct GeoJsonObjectType : IEquatable<GeoJsonObjectType>
     {
         private readonly string _value;
 

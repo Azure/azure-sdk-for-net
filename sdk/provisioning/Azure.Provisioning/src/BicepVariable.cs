@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 
@@ -27,7 +28,8 @@ public class BicepVariable : NamedProvisioningConstruct
     /// <summary>
     /// Gets the Bicep type of the value.
     /// </summary>
-    protected Expression BicepType { get; }
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public Expression BicepType { get; }
 
     /// <summary>
     /// Creates a new BicepVariable.

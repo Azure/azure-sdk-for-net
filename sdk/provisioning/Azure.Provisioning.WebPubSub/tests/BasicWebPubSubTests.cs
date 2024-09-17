@@ -21,17 +21,9 @@ public class BasicWebPubSubTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "WebPubSub location."
-                    };
-
-                WebPubSubService webpubsub =
+               WebPubSubService webpubsub =
                     new(nameof(webpubsub), "2021-10-01")
                     {
-                        Location = location,
                         Sku =
                             new BillingInfoSku
                             {
@@ -79,7 +71,7 @@ public class BasicWebPubSubTests(bool async)
             })
         .Compare(
             """
-            @description('WebPubSub location.')
+            @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
             resource webpubsub 'Microsoft.SignalRService/webPubSub@2021-10-01' = {

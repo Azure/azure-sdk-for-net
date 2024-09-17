@@ -1924,6 +1924,29 @@ namespace Azure.Storage.Queues.Test
         }
         #endregion
 
+        [Test]
+        [TestCase(null, false)]
+        [TestCase("QueueNotFound", true)]
+        [TestCase("QueueDisabled", false)]
+        [TestCase("", false)]
+        public void QueueErrorCode_EqualityOperatorOverloadTest(string errorCode, bool expected)
+        {
+            var ex = new RequestFailedException(status: 404, message: "Some error.", errorCode: errorCode, innerException: null);
+
+            bool result1 = QueueErrorCode.QueueNotFound == ex.ErrorCode;
+            bool result2 = ex.ErrorCode == QueueErrorCode.QueueNotFound;
+            Assert.AreEqual(expected, result1);
+            Assert.AreEqual(expected, result2);
+
+            bool result3 = QueueErrorCode.QueueNotFound != ex.ErrorCode;
+            bool result4 = ex.ErrorCode != QueueErrorCode.QueueNotFound;
+            Assert.AreEqual(!expected, result3);
+            Assert.AreEqual(!expected, result4);
+
+            bool result5 = QueueErrorCode.QueueNotFound.Equals(ex.ErrorCode);
+            Assert.AreEqual(expected, result5);
+        }
+
         [RecordedTest]
         public void CanMockQueueServiceClientRetrieval()
         {

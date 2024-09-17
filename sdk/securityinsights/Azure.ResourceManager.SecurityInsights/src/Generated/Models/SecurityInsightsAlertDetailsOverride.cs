@@ -48,6 +48,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertDetailsOverride"/>. </summary>
         public SecurityInsightsAlertDetailsOverride()
         {
+            AlertDynamicProperties = new ChangeTrackingList<SecurityInsightsAlertPropertyMapping>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertDetailsOverride"/>. </summary>
@@ -55,23 +56,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="alertDescriptionFormat"> the format containing columns name(s) to override the alert description. </param>
         /// <param name="alertTacticsColumnName"> the column name to take the alert tactics from. </param>
         /// <param name="alertSeverityColumnName"> the column name to take the alert severity from. </param>
+        /// <param name="alertDynamicProperties"> List of additional dynamic properties to override. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsAlertDetailsOverride(string alertDisplayNameFormat, string alertDescriptionFormat, string alertTacticsColumnName, string alertSeverityColumnName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecurityInsightsAlertDetailsOverride(string alertDisplayNameFormat, string alertDescriptionFormat, string alertTacticsColumnName, string alertSeverityColumnName, IList<SecurityInsightsAlertPropertyMapping> alertDynamicProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlertDisplayNameFormat = alertDisplayNameFormat;
             AlertDescriptionFormat = alertDescriptionFormat;
             AlertTacticsColumnName = alertTacticsColumnName;
             AlertSeverityColumnName = alertSeverityColumnName;
+            AlertDynamicProperties = alertDynamicProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> the format containing columns name(s) to override the alert name. </summary>
+        [WirePath("alertDisplayNameFormat")]
         public string AlertDisplayNameFormat { get; set; }
         /// <summary> the format containing columns name(s) to override the alert description. </summary>
+        [WirePath("alertDescriptionFormat")]
         public string AlertDescriptionFormat { get; set; }
         /// <summary> the column name to take the alert tactics from. </summary>
+        [WirePath("alertTacticsColumnName")]
         public string AlertTacticsColumnName { get; set; }
         /// <summary> the column name to take the alert severity from. </summary>
+        [WirePath("alertSeverityColumnName")]
         public string AlertSeverityColumnName { get; set; }
+        /// <summary> List of additional dynamic properties to override. </summary>
+        [WirePath("alertDynamicProperties")]
+        public IList<SecurityInsightsAlertPropertyMapping> AlertDynamicProperties { get; }
     }
 }

@@ -20,13 +20,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         void IJsonModel<AssociatedProductProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AssociatedProductProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AssociatedProductProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -34,52 +43,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(Terms))
-            {
-                writer.WritePropertyName("terms"u8);
-                writer.WriteStringValue(Terms);
-            }
-            if (Optional.IsDefined(IsSubscriptionRequired))
-            {
-                writer.WritePropertyName("subscriptionRequired"u8);
-                writer.WriteBooleanValue(IsSubscriptionRequired.Value);
-            }
-            if (Optional.IsDefined(IsApprovalRequired))
-            {
-                writer.WritePropertyName("approvalRequired"u8);
-                writer.WriteBooleanValue(IsApprovalRequired.Value);
-            }
-            if (Optional.IsDefined(SubscriptionsLimit))
-            {
-                writer.WritePropertyName("subscriptionsLimit"u8);
-                writer.WriteNumberValue(SubscriptionsLimit.Value);
-            }
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToSerialString());
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         AssociatedProductProperties IJsonModel<AssociatedProductProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
