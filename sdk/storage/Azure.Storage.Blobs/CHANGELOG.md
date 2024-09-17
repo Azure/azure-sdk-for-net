@@ -1,6 +1,6 @@
 # Release History
 
-## 12.22.0 (2024-07-17)
+## 12.22.0 (2024-09-17)
 
 ### Features Added
 - Includes all features from 12.22.0-beta.1
