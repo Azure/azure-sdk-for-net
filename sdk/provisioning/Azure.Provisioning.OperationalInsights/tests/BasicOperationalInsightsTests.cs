@@ -36,16 +36,16 @@ public class BasicOperationalInsightsTests(bool async)
             param location string = resourceGroup().location
 
             resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
-                name: take('workspace-${uniqueString(resourceGroup().id)}', 63)
-                location: location
-                identity: {
-                    type: 'SystemAssigned'
+              name: take('workspace-${uniqueString(resourceGroup().id)}', 63)
+              location: location
+              identity: {
+                type: 'SystemAssigned'
+              }
+              properties: {
+                sku: {
+                  name: 'PerGB2018'
                 }
-                properties: {
-                    sku: {
-                        name: 'PerGB2018'
-                    }
-                }
+              }
             }
             """)
         .Lint()

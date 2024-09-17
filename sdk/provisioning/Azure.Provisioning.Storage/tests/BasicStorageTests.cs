@@ -26,16 +26,16 @@ public class BasicStorageTests(bool async)
             param location string = resourceGroup().location
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: location
-                sku: {
-                    name: 'Standard_LRS'
-                }
-                properties: {
-                    allowBlobPublicAccess: false
-                    isHnsEnabled: true
-                }
+              name: take('storage${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: 'Standard_LRS'
+              }
+              properties: {
+                allowBlobPublicAccess: false
+                isHnsEnabled: true
+              }
             }
             """)
         .Lint()
@@ -58,24 +58,24 @@ public class BasicStorageTests(bool async)
             param location string = resourceGroup().location
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: location
-                sku: {
-                    name: 'Standard_LRS'
-                }
-                properties: {
-                    allowBlobPublicAccess: false
-                    isHnsEnabled: true
-                }
+              name: take('storage${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: 'Standard_LRS'
+              }
+              properties: {
+                allowBlobPublicAccess: false
+                isHnsEnabled: true
+              }
             }
 
             resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
-                name: 'default'
-                parent: storage
-                dependsOn: [
-                    storage
-                ]
+              name: 'default'
+              parent: storage
+              dependsOn: [
+                storage
+              ]
             }
             """)
         .Lint(ignore: ["no-unnecessary-dependson"])
@@ -99,31 +99,31 @@ public class BasicStorageTests(bool async)
             param location string = resourceGroup().location
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: location
-                sku: {
-                    name: 'Standard_LRS'
-                }
-                properties: {
-                    allowBlobPublicAccess: false
-                    isHnsEnabled: true
-                }
+              name: take('storage${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: 'Standard_LRS'
+              }
+              properties: {
+                allowBlobPublicAccess: false
+                isHnsEnabled: true
+              }
             }
 
             resource id 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-                name: take('id-${uniqueString(resourceGroup().id)}', 128)
-                location: location
+              name: take('id-${uniqueString(resourceGroup().id)}', 128)
+              location: location
             }
 
             resource storage_id_StorageBlobDataReader 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-                name: guid(storage.id, id.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1'))
-                properties: {
-                    principalId: id.properties.principalId
-                    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')
-                    principalType: 'ServicePrincipal'
-                }
-                scope: storage
+              name: guid(storage.id, id.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1'))
+              properties: {
+                principalId: id.properties.principalId
+                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')
+                principalType: 'ServicePrincipal'
+              }
+              scope: storage
             }
             """)
         .Lint()
@@ -147,31 +147,31 @@ public class BasicStorageTests(bool async)
             param location string = resourceGroup().location
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: location
-                sku: {
-                    name: 'Standard_LRS'
-                }
-                properties: {
-                    allowBlobPublicAccess: false
-                    isHnsEnabled: true
-                }
+              name: take('storage${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: 'Standard_LRS'
+              }
+              properties: {
+                allowBlobPublicAccess: false
+                isHnsEnabled: true
+              }
             }
 
             resource id 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-                name: take('id-${uniqueString(resourceGroup().id)}', 128)
-                location: location
+              name: take('id-${uniqueString(resourceGroup().id)}', 128)
+              location: location
             }
 
             resource storage_StorageBlobDataReader 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-                name: guid(storage.id, id.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1'))
-                properties: {
-                    principalId: id.properties.principalId
-                    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')
-                    principalType: 'ServicePrincipal'
-                }
-                scope: storage
+              name: guid(storage.id, id.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1'))
+              properties: {
+                principalId: id.properties.principalId
+                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')
+                principalType: 'ServicePrincipal'
+              }
+              scope: storage
             }
             """)
         .Lint()
@@ -195,21 +195,21 @@ public class BasicStorageTests(bool async)
             param location string = resourceGroup().location
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: location
-                sku: {
-                    name: 'Standard_LRS'
-                }
-                properties: {
-                    allowBlobPublicAccess: false
-                    isHnsEnabled: true
-                }
+              name: take('storage${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: 'Standard_LRS'
+              }
+              properties: {
+                allowBlobPublicAccess: false
+                isHnsEnabled: true
+              }
             }
 
             resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
-                name: 'default'
-                parent: storage
+              name: 'default'
+              parent: storage
             }
 
             output blobs_endpoint string = storage.properties.primaryEndpoints.blob
@@ -252,12 +252,12 @@ public class BasicStorageTests(bool async)
             param location string = resourceGroup().location
 
             resource sa 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('sa${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: location
-                sku: {
-                    name: storageAccountType
-                }
+              name: take('sa${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: storageAccountType
+              }
             }
 
             output storageAccountName string = sa.name
@@ -307,25 +307,25 @@ public class BasicStorageTests(bool async)
             param location string = resourceGroup().location
 
             resource sa 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('sa${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: location
-                sku: {
-                    name: 'Standard_LRS'
-                }
-                properties: {
-                    accessTier: 'Hot'
-                }
+              name: take('sa${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: 'Standard_LRS'
+              }
+              properties: {
+                accessTier: 'Hot'
+              }
             }
 
             resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
-                name: 'default'
-                parent: sa
+              name: 'default'
+              parent: sa
             }
 
             resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = {
-                name: containerName
-                parent: blobs
+              name: containerName
+              parent: blobs
             }
             """)
         .Lint()
@@ -376,22 +376,22 @@ public class BasicStorageTests(bool async)
             param location string = resourceGroup().location
 
             resource sa 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('sa${uniqueString(resourceGroup().id)}', 24)
-                kind: 'Storage'
-                location: location
-                sku: {
-                    name: storageAccountType
-                }
-                properties: {
-                    encryption: {
-                        services: {
-                            blob: {
-                                enabled: true
-                            }
-                        }
-                        keySource: 'Microsoft.Storage'
+              name: take('sa${uniqueString(resourceGroup().id)}', 24)
+              kind: 'Storage'
+              location: location
+              sku: {
+                name: storageAccountType
+              }
+              properties: {
+                encryption: {
+                  services: {
+                    blob: {
+                      enabled: true
                     }
+                  }
+                  keySource: 'Microsoft.Storage'
                 }
+              }
             }
 
             output storageAccountName string = sa.name
@@ -428,22 +428,22 @@ public class BasicStorageTests(bool async)
         .Compare(
             """
             resource sa 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('sa${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: 'westus2'
-                sku: {
-                    name: 'Standard_LRS'
-                }
+              name: take('sa${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: 'westus2'
+              sku: {
+                name: 'Standard_LRS'
+              }
             }
 
             resource files 'Microsoft.Storage/storageAccounts/fileServices@2023-01-01' = {
-                name: 'default'
-                parent: sa
+              name: 'default'
+              parent: sa
             }
 
             resource share 'Microsoft.Storage/storageAccounts/fileServices/shares@2023-01-01' = {
-                name: 'photos'
-                parent: files
+              name: 'photos'
+              parent: files
             }
             """)
         .Lint()

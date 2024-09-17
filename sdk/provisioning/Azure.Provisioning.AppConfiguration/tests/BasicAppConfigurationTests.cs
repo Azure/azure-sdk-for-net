@@ -63,26 +63,26 @@ public class BasicAppConfigurationTests(bool async)
             param location string = resourceGroup().location
 
             resource configStore 'Microsoft.AppConfiguration/configurationStores@2022-05-01' = {
-                name: take('configStore-${uniqueString(resourceGroup().id)}', 50)
-                location: location
-                sku: {
-                    name: 'Standard'
-                }
+              name: take('configStore-${uniqueString(resourceGroup().id)}', 50)
+              location: location
+              sku: {
+                name: 'Standard'
+              }
             }
 
             var flag = {
-                id: featureFlagKey
-                description: 'A simple feature flag.'
-                enabled: true
+              id: featureFlagKey
+              description: 'A simple feature flag.'
+              enabled: true
             }
 
             resource featureFlag 'Microsoft.AppConfiguration/configurationStores/keyValues@2022-05-01' = {
-                name: '.appconfig.featureflag~2F${featureFlagKey}'
-                properties: {
-                    contentType: 'application/vnd.microsoft.appconfig.ff+json;charset=utf-8'
-                    value: string(flag)
-                }
-                parent: configStore
+              name: '.appconfig.featureflag~2F${featureFlagKey}'
+              properties: {
+                contentType: 'application/vnd.microsoft.appconfig.ff+json;charset=utf-8'
+                value: string(flag)
+              }
+              parent: configStore
             }
             """)
         .Lint()

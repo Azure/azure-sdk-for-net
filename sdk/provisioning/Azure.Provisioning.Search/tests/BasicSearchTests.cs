@@ -35,16 +35,16 @@ public class BasicSearchTests(bool async)
             param location string = resourceGroup().location
 
             resource search 'Microsoft.Search/searchServices@2023-11-01' = {
-                name: take('search-${uniqueString(resourceGroup().id)}', 60)
-                location: location
-                properties: {
-                    hostingMode: 'default'
-                    partitionCount: 1
-                    replicaCount: 1
-                }
-                sku: {
-                    name: 'standard'
-                }
+              name: take('search-${uniqueString(resourceGroup().id)}', 60)
+              location: location
+              properties: {
+                hostingMode: 'default'
+                partitionCount: 1
+                replicaCount: 1
+              }
+              sku: {
+                name: 'standard'
+              }
             }
             """)
         .Lint()
