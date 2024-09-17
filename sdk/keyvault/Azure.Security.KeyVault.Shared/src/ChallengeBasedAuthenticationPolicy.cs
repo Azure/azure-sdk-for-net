@@ -51,7 +51,7 @@ namespace Azure.Security.KeyVault
             if (_challenge != null)
             {
                 // We fetched the challenge from the cache, but we have not initialized the Scopes in the base yet.
-                var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, claims: _challenge.Claims, isCaeEnabled: true);
+                var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true);
                 if (async)
                 {
                     await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -123,11 +123,6 @@ namespace Azure.Security.KeyVault
                 {
                     return false;
                 }
-                else if (claims is not null)
-                {
-                    _challenge.Claims = claims;
-                    s_challengeCache[authority] = _challenge;
-                }
             }
             else
             {
@@ -156,11 +151,11 @@ namespace Azure.Security.KeyVault
                     throw new UriFormatException($"The challenge authorization URI '{authorization}' is invalid.");
                 }
 
-                _challenge = new ChallengeParameters(authorizationUri, new string[] { scope }, claims);
+                _challenge = new ChallengeParameters(authorizationUri, new string[] { scope });
                 s_challengeCache[authority] = _challenge;
             }
 
-            var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true, claims: _challenge.Claims);
+            var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true, claims: claims);
             if (async)
             {
                 await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -175,12 +170,11 @@ namespace Azure.Security.KeyVault
 
         internal class ChallengeParameters
         {
-            internal ChallengeParameters(Uri authorizationUri, string[] scopes, string claims = null)
+            internal ChallengeParameters(Uri authorizationUri, string[] scopes)
             {
                 AuthorizationUri = authorizationUri;
                 TenantId = authorizationUri.Segments[1].Trim('/');
                 Scopes = scopes;
-                Claims = claims;
             }
 
             /// <summary>
@@ -197,11 +191,6 @@ namespace Azure.Security.KeyVault
             /// Gets the tenant ID from <see cref="AuthorizationUri"/>.
             /// </summary>
             public string TenantId { get; }
-
-            /// <summary>
-            /// Gets the "claims" parameter from the challenge response if Continuous Access Evaluation is enabled.
-            /// </summary>
-            public string Claims { get; set; }
         }
 
         internal static void ClearCache()
