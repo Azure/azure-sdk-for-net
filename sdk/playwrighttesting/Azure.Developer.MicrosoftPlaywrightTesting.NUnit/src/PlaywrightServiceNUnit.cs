@@ -5,6 +5,7 @@ using Azure.Core;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
 
@@ -39,11 +40,12 @@ public class PlaywrightServiceNUnit : PlaywrightService
     /// <summary>
     /// Setup the resources utilized by Playwright service.
     /// </summary>
+    /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns></returns>
     [OneTimeSetUp]
-    public async Task SetupAsync()
+    public async Task SetupAsync(CancellationToken? cancellationToken = null)
     {
-        await InitializeAsync().ConfigureAwait(false);
+        await InitializeAsync(cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>

@@ -90,8 +90,9 @@ public class PlaywrightService
     /// <param name="os">The operating system.</param>
     /// <param name="runId">The run ID.</param>
     /// <param name="exposeNetwork">The network exposure.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The connect options.</returns>
-    public async Task<ConnectOptions<T>> GetConnectOptionsAsync<T>(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null) where T : class, new()
+    public async Task<ConnectOptions<T>> GetConnectOptionsAsync<T>(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, CancellationToken? cancellationToken = null) where T : class, new()
     {
         if (Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable) == "true")
             throw new Exception(Constants.s_service_endpoint_removed_since_scalable_execution_disabled_error_message);
@@ -108,7 +109,7 @@ public class PlaywrightService
         // 2. Not close to expiry
         if (!string.IsNullOrEmpty(_entraLifecycle!._entraIdAccessToken) && _entraLifecycle!.DoesEntraIdAccessTokenRequireRotation())
         {
-            _ = await _entraLifecycle.FetchEntraIdAccessTokenAsync().ConfigureAwait(false);
+            _ = await _entraLifecycle.FetchEntraIdAccessTokenAsync(cancellationToken).ConfigureAwait(false);
         }
         if (string.IsNullOrEmpty(GetAuthToken()))
         {
@@ -134,7 +135,7 @@ public class PlaywrightService
     /// <summary>
     /// Initialises the resources used to setup entra id authentication.
     /// </summary>
-    public async Task InitializeAsync()
+    public async Task InitializeAsync(CancellationToken? cancellationToken = null)
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
             return;
@@ -150,7 +151,7 @@ public class PlaywrightService
             ValidateMptPAT();
             return;
         }
-        var operationStatus = await _entraLifecycle!.FetchEntraIdAccessTokenAsync().ConfigureAwait(false);
+        var operationStatus = await _entraLifecycle!.FetchEntraIdAccessTokenAsync(cancellationToken).ConfigureAwait(false);
         if (!operationStatus)
         {
             if (!string.IsNullOrEmpty(GetAuthToken()))

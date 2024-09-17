@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -23,12 +24,12 @@ internal class EntraLifecycle
         SetEntraIdAccessTokenFromEnvironment();
     }
 
-    internal async Task<bool> FetchEntraIdAccessTokenAsync()
+    internal async Task<bool> FetchEntraIdAccessTokenAsync(CancellationToken? cancellationToken = null)
     {
         try
         {
             var tokenRequestContext = new TokenRequestContext(Constants.s_entra_access_token_scopes);
-            AccessToken accessToken = await _tokenCredential.GetTokenAsync(tokenRequestContext, default).ConfigureAwait(false);
+            AccessToken accessToken = await _tokenCredential.GetTokenAsync(tokenRequestContext, cancellationToken ?? default).ConfigureAwait(false);
             _entraIdAccessToken = accessToken.Token;
             _entraIdAccessTokenExpiry = accessToken.ExpiresOn.ToUnixTimeSeconds();
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, _entraIdAccessToken);
