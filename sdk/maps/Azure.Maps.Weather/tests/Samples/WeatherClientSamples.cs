@@ -152,7 +152,7 @@ namespace Azure.Maps.Weather.Tests.Samples
         }
 
         [Test]
-        public void GetDailyForecast()
+        public void GetDailyWeatherForecast()
         {
             MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
@@ -160,13 +160,13 @@ namespace Azure.Maps.Weather.Tests.Samples
             };
             string clientId = TestEnvironment.MapAccountClientId;
             MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
-            #region Snippet:GetDailyForecast
-            GetDailyForecastOptions options = new GetDailyForecastOptions()
+            #region Snippet:GetDailyWeatherForecast
+            GetDailyWeatherForecastOptions options = new GetDailyWeatherForecastOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            Response<DailyForecastResult> response = client.GetDailyForecast(options);
+            Response<DailyForecastResult> response = client.GetDailyWeatherForecast(options);
             Console.WriteLine("Minimum temperatrue: " + response.Value.Forecasts[0].Temperature.Minimum.Value);
             Console.WriteLine("Maximum temperatrue: " + response.Value.Forecasts[0].Temperature.Maximum.Value);
             #endregion
@@ -279,7 +279,7 @@ namespace Azure.Maps.Weather.Tests.Samples
         }
 
         [Test]
-        public void GetMinuteForecast()
+        public void GetMinuteWeatherForecast()
         {
             MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
@@ -287,7 +287,7 @@ namespace Azure.Maps.Weather.Tests.Samples
             };
             string clientId = TestEnvironment.MapAccountClientId;
             MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
-            #region Snippet:GetMinuteForecast
+            #region Snippet:GetMinuteWeatherForecast
             GetMinuteWeatherForecastOptions options = new GetMinuteWeatherForecastOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
@@ -299,7 +299,7 @@ namespace Azure.Maps.Weather.Tests.Samples
         }
 
         [Test]
-        public void GetQuarterDayForecast()
+        public void GetQuarterDayWeatherForecast()
         {
             MapsWeatherClientOptions clientOptions = new MapsWeatherClientOptions()
             {
@@ -307,7 +307,7 @@ namespace Azure.Maps.Weather.Tests.Samples
             };
             string clientId = TestEnvironment.MapAccountClientId;
             MapsWeatherClient client = new MapsWeatherClient(TestEnvironment.Credential, clientId, clientOptions);
-            #region Snippet:GetQuarterDayForecast
+            #region Snippet:GetQuarterDayWeatherForecast
             GetQuarterDayWeatherForecastOptions options = new GetQuarterDayWeatherForecastOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),

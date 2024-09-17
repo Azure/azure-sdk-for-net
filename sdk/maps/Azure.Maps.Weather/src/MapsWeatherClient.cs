@@ -363,11 +363,11 @@ namespace Azure.Maps.Weather
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<DailyForecastResult>> GetDailyForecastAsync(GetDailyForecastOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DailyForecastResult>> GetDailyWeatherForecastAsync(GetDailyWeatherForecastOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsWeatherClient.GetDailyForecast");
+            using var scope = _clientDiagnostics.CreateScope("MapsWeatherClient.GetDailyWeatherForecast");
             scope.Start();
             try
             {
@@ -392,11 +392,11 @@ namespace Azure.Maps.Weather
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<DailyForecastResult> GetDailyForecast(GetDailyForecastOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<DailyForecastResult> GetDailyWeatherForecast(GetDailyWeatherForecastOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
 
-            using var scope = _clientDiagnostics.CreateScope("MapsWeatherClient.GetDailyForecast");
+            using var scope = _clientDiagnostics.CreateScope("MapsWeatherClient.GetDailyWeatherForecast");
             scope.Start();
             try
             {

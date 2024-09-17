@@ -17,8 +17,6 @@ namespace Azure.Maps.Weather
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.AirQualityResult>> GetCurrentAirQualityAsync(Azure.Maps.Weather.Models.Options.GetCurrentAirQualityOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Weather.Models.CurrentConditionsResult> GetCurrentWeatherConditions(Azure.Maps.Weather.Models.Options.GetCurrentWeatherConditionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.CurrentConditionsResult>> GetCurrentWeatherConditionsAsync(Azure.Maps.Weather.Models.Options.GetCurrentWeatherConditionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Maps.Weather.Models.DailyForecastResult> GetDailyForecast(Azure.Maps.Weather.Models.Options.GetDailyForecastOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyForecastResult>> GetDailyForecastAsync(Azure.Maps.Weather.Models.Options.GetDailyForecastOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Weather.Models.DailyHistoricalActualsResult> GetDailyHistoricalActuals(Azure.Maps.Weather.Models.Options.GetDailyHistoricalActualsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyHistoricalActualsResult>> GetDailyHistoricalActualsAsync(Azure.Maps.Weather.Models.Options.GetDailyHistoricalActualsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Weather.Models.DailyHistoricalNormalsResult> GetDailyHistoricalNormals(Azure.Maps.Weather.Models.Options.GetDailyHistoricalNormalsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -27,6 +25,8 @@ namespace Azure.Maps.Weather
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyHistoricalRecordsResult>> GetDailyHistoricalRecordsAsync(Azure.Maps.Weather.Models.Options.GetDailyHistoricalRecordsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Weather.Models.DailyIndicesResult> GetDailyIndices(Azure.Maps.Weather.Models.Options.GetDailyIndicesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyIndicesResult>> GetDailyIndicesAsync(Azure.Maps.Weather.Models.Options.GetDailyIndicesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.Weather.Models.DailyForecastResult> GetDailyWeatherForecast(Azure.Maps.Weather.Models.Options.GetDailyWeatherForecastOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.DailyForecastResult>> GetDailyWeatherForecastAsync(Azure.Maps.Weather.Models.Options.GetDailyWeatherForecastOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Weather.Models.HourlyForecastResult> GetHourlyWeatherForecast(Azure.Maps.Weather.Models.Options.GetHourlyWeatherForecastOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.Weather.Models.HourlyForecastResult>> GetHourlyWeatherForecastAsync(Azure.Maps.Weather.Models.Options.GetHourlyWeatherForecastOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.Weather.Models.MinuteForecastResult> GetMinuteWeatherForecast(Azure.Maps.Weather.Models.Options.GetMinuteWeatherForecastOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1236,7 +1236,7 @@ namespace Azure.Maps.Weather.Models.Options
     public partial class GetAirQualityHourlyForecastsOptions : Azure.Maps.Weather.Models.Options.WeatherBaseOptions
     {
         public GetAirQualityHourlyForecastsOptions() { }
-        public int? Duration { get { throw null; } set { } }
+        public int? DurationInHours { get { throw null; } set { } }
         public bool? IncludePollutantDetails { get { throw null; } set { } }
     }
     public partial class GetCurrentAirQualityOptions : Azure.Maps.Weather.Models.Options.WeatherBaseOptions
@@ -1247,14 +1247,8 @@ namespace Azure.Maps.Weather.Models.Options
     public partial class GetCurrentWeatherConditionsOptions : Azure.Maps.Weather.Models.Options.WeatherBaseOptions
     {
         public GetCurrentWeatherConditionsOptions() { }
-        public int? Duration { get { throw null; } set { } }
+        public int? DurationInHours { get { throw null; } set { } }
         public bool IncludeDetails { get { throw null; } set { } }
-        public Azure.Maps.Weather.Models.WeatherDataUnit? Unit { get { throw null; } set { } }
-    }
-    public partial class GetDailyForecastOptions : Azure.Maps.Weather.Models.Options.WeatherBaseOptions
-    {
-        public GetDailyForecastOptions() { }
-        public int? Duration { get { throw null; } set { } }
         public Azure.Maps.Weather.Models.WeatherDataUnit? Unit { get { throw null; } set { } }
     }
     public partial class GetDailyHistoricalActualsOptions
@@ -1284,25 +1278,31 @@ namespace Azure.Maps.Weather.Models.Options
     public partial class GetDailyIndicesOptions : Azure.Maps.Weather.Models.Options.WeatherBaseOptions
     {
         public GetDailyIndicesOptions() { }
-        public int? Duration { get { throw null; } set { } }
+        public int? DurationInDays { get { throw null; } set { } }
         public int? IndexGroupId { get { throw null; } set { } }
         public int? IndexId { get { throw null; } set { } }
+    }
+    public partial class GetDailyWeatherForecastOptions : Azure.Maps.Weather.Models.Options.WeatherBaseOptions
+    {
+        public GetDailyWeatherForecastOptions() { }
+        public int? DurationInDays { get { throw null; } set { } }
+        public Azure.Maps.Weather.Models.WeatherDataUnit? Unit { get { throw null; } set { } }
     }
     public partial class GetHourlyWeatherForecastOptions : Azure.Maps.Weather.Models.Options.WeatherBaseOptions
     {
         public GetHourlyWeatherForecastOptions() { }
-        public int? Duration { get { throw null; } set { } }
+        public int? DurationInHours { get { throw null; } set { } }
         public Azure.Maps.Weather.Models.WeatherDataUnit? Unit { get { throw null; } set { } }
     }
     public partial class GetMinuteWeatherForecastOptions : Azure.Maps.Weather.Models.Options.WeatherBaseOptions
     {
         public GetMinuteWeatherForecastOptions() { }
-        public int? Interval { get { throw null; } set { } }
+        public int? IntervalInMinutes { get { throw null; } set { } }
     }
     public partial class GetQuarterDayWeatherForecastOptions : Azure.Maps.Weather.Models.Options.WeatherBaseOptions
     {
         public GetQuarterDayWeatherForecastOptions() { }
-        public int? Duration { get { throw null; } set { } }
+        public int? DurationInDays { get { throw null; } set { } }
         public Azure.Maps.Weather.Models.WeatherDataUnit? Unit { get { throw null; } set { } }
     }
     public partial class GetSevereWeatherAlertsOptions : Azure.Maps.Weather.Models.Options.WeatherBaseOptions
@@ -1313,7 +1313,7 @@ namespace Azure.Maps.Weather.Models.Options
     public partial class GetTropicalStormForecastOptions
     {
         public GetTropicalStormForecastOptions() { }
-        public string BasinId { get { throw null; } set { } }
+        public Azure.Maps.Weather.Models.BasinId BasinId { get { throw null; } set { } }
         public int GovernmentStormId { get { throw null; } set { } }
         public bool? IncludeDetails { get { throw null; } set { } }
         public bool? IncludeGeometricDetails { get { throw null; } set { } }
@@ -1324,7 +1324,7 @@ namespace Azure.Maps.Weather.Models.Options
     public partial class GetTropicalStormLocationsOptions
     {
         public GetTropicalStormLocationsOptions() { }
-        public string BasinId { get { throw null; } set { } }
+        public Azure.Maps.Weather.Models.BasinId BasinId { get { throw null; } set { } }
         public int GovernmentStormId { get { throw null; } set { } }
         public bool? IncludeCurrentStorm { get { throw null; } set { } }
         public bool? IncludeDetails { get { throw null; } set { } }
@@ -1335,7 +1335,7 @@ namespace Azure.Maps.Weather.Models.Options
     public partial class GetTropicalStormSearchOptions
     {
         public GetTropicalStormSearchOptions() { }
-        public string BasinId { get { throw null; } set { } }
+        public Azure.Maps.Weather.Models.BasinId BasinId { get { throw null; } set { } }
         public int GovernmentStormId { get { throw null; } set { } }
         public int Year { get { throw null; } set { } }
     }

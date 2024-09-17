@@ -8,7 +8,7 @@ using Azure.Maps.Weather;
 namespace Azure.Maps.Weather.Models.Options
 {
     /// <summary> Options. </summary>
-    public class GetDailyForecastOptions : WeatherBaseOptions
+    public class GetDailyWeatherForecastOptions : WeatherBaseOptions
     {
         /// <summary> Specifies to return the data in either metric units or imperial units. </summary>
         public WeatherDataUnit? Unit { get; set; }

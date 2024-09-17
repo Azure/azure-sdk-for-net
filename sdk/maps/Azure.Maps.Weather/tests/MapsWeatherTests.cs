@@ -76,15 +76,15 @@ namespace Azure.Maps.Weather.Tests
         }
 
         [RecordedTest]
-        public async Task GetDailyForecastTest()
+        public async Task GetDailyWeatherForecastTest()
         {
             MapsWeatherClient client = CreateClient();
-            GetDailyForecastOptions options = new GetDailyForecastOptions()
+            GetDailyWeatherForecastOptions options = new GetDailyWeatherForecastOptions()
             {
                 Coordinates = new GeoPosition(121.5640089, 25.0338053),
                 Language = WeatherLanguage.EnglishUsa
             };
-            Response<DailyForecastResult> response = await client.GetDailyForecastAsync(options);
+            Response<DailyForecastResult> response = await client.GetDailyWeatherForecastAsync(options);
             Console.WriteLine("Minimum temperatrue: " + response.Value.Forecasts[0].Temperature.Minimum.Value);
             Console.WriteLine("Maximum temperatrue: " + response.Value.Forecasts[0].Temperature.Maximum.Value);
             Assert.NotNull(response);
@@ -167,7 +167,7 @@ namespace Azure.Maps.Weather.Tests
         }
 
         [RecordedTest]
-        public async Task GetMinuteForecastTest()
+        public async Task GetMinuteWeatherForecastTest()
         {
             MapsWeatherClient client = CreateClient();
             GetMinuteWeatherForecastOptions options = new GetMinuteWeatherForecastOptions()
@@ -181,7 +181,7 @@ namespace Azure.Maps.Weather.Tests
         }
 
         [RecordedTest]
-        public async Task GetQuarterDayForecastTest()
+        public async Task GetQuarterDayWeatherForecastTest()
         {
             MapsWeatherClient client = CreateClient();
             GetQuarterDayWeatherForecastOptions options = new GetQuarterDayWeatherForecastOptions()
