@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault
         private const string KeyVaultStashedContentKey = "KeyVaultContent";
         private readonly bool _verifyChallengeResource;
 
-        private readonly bool _enableCAE;
+        private readonly bool _enableCAE = false;
 
         /// <summary>
         /// Challenges are cached using the Key Vault or Managed HSM endpoint URI authority as the key.
@@ -96,6 +96,21 @@ namespace Azure.Security.KeyVault
 
             string authority = GetRequestAuthority(message.Request);
             string scope = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "resource");
+
+            string error = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "error");
+            string claims = null;
+
+            if (error != null)
+            {
+                // The challenge response contained an error.
+                string base64Claims = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "claims");
+
+                if (error == "insufficient_claims" && base64Claims != null)
+                {
+                    claims = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(base64Claims));
+                }
+            }
+
             if (scope != null)
             {
                 scope += "/.default";
@@ -110,6 +125,11 @@ namespace Azure.Security.KeyVault
                 if (s_challengeCache.TryGetValue(authority, out _challenge))
                 {
                     return false;
+                }
+                else if (claims is not null)
+                {
+                    _challenge.Claims = claims;
+                    s_challengeCache[authority] = _challenge;
                 }
             }
             else
@@ -139,11 +159,11 @@ namespace Azure.Security.KeyVault
                     throw new UriFormatException($"The challenge authorization URI '{authorization}' is invalid.");
                 }
 
-                _challenge = new ChallengeParameters(authorizationUri, new string[] { scope });
+                _challenge = new ChallengeParameters(authorizationUri, new string[] { scope }, claims);
                 s_challengeCache[authority] = _challenge;
             }
 
-            var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId);
+            var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: _enableCAE, claims: _challenge.Claims);
             if (async)
             {
                 await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
