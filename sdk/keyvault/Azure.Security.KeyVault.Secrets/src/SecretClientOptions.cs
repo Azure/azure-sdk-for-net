@@ -87,6 +87,11 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         public bool DisableChallengeResourceVerification { get; set; }
 
+        /// <summary>
+        /// Enable Continuous Access Evaluation (CAE) for the client.
+        /// </summary>
+        public bool enableCAE { get; set; } = false;
+
         internal string GetVersionString()
         {
             return Version switch
