@@ -33,8 +33,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         /// <remarks>
         /// If using a schema format that is unsupported by this client, upgrade to a
-        /// version that supports the schema format. Otherwise, the content MIME type
-        /// string will be returned as the `format` value in the `properties` of the returned Schema.
+        /// version that supports the schema format.
         /// </remarks>
         public SchemaFormat(string value)
         {
