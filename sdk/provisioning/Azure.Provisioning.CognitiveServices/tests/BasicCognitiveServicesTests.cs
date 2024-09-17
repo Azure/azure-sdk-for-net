@@ -44,22 +44,22 @@ public class BasicCognitiveServicesTests(bool async)
             param location string = resourceGroup().location
 
             resource account 'Microsoft.CognitiveServices/accounts@2022-12-01' = {
-                name: take('account-${uniqueString(resourceGroup().id)}', 64)
-                location: location
-                identity: {
-                    type: 'SystemAssigned'
+              name: take('account-${uniqueString(resourceGroup().id)}', 64)
+              location: location
+              identity: {
+                type: 'SystemAssigned'
+              }
+              kind: 'TextTranslation'
+              properties: {
+                networkAcls: {
+                  defaultAction: 'Deny'
                 }
-                kind: 'TextTranslation'
-                properties: {
-                    networkAcls: {
-                        defaultAction: 'Deny'
-                    }
-                    publicNetworkAccess: 'Disabled'
-                    disableLocalAuth: true
-                }
-                sku: {
-                    name: 'S1'
-                }
+                publicNetworkAccess: 'Disabled'
+                disableLocalAuth: true
+              }
+              sku: {
+                name: 'S1'
+              }
             }
             """)
         .Lint()
