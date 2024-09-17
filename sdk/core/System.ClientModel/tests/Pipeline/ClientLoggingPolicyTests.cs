@@ -15,21 +15,6 @@ namespace System.ClientModel.Tests.Pipeline;
 
 public class ClientLoggingPolicyTests : SyncAsyncTestBase
 {
-    private const int RequestEvent = 1;
-    private const int RequestContentEvent = 2;
-    private const int RequestContentTextEvent = 17;
-    private const int ResponseEvent = 5;
-    private const int ResponseContentEvent = 6;
-    private const int ResponseContentBlockEvent = 11;
-    private const int ErrorResponseEvent = 8;
-    private const int ErrorResponseContentEvent = 9;
-    private const int ErrorResponseContentBlockEvent = 12;
-    private const int ResponseContentTextEvent = 13;
-    private const int ResponseContentTextBlockEvent = 15;
-    private const int ErrorResponseContentTextEvent = 14;
-    private const int ErrorResponseContentTextBlockEvent = 16;
-    private const int ExceptionResponseEvent = 18;
-
     private ILoggerFactory _loggerFactory;
 
     public ClientLoggingPolicyTests(bool isAsync) : base(isAsync)

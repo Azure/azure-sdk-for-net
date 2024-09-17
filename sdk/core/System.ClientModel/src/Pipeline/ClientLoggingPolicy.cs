@@ -61,7 +61,7 @@ public class ClientLoggingPolicy : PipelinePolicy
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
-        if (_handler.IsEnabled(LogLevel.Warning, EventLevel.Warning)) // Warning is the highest level logged
+        if (!_handler.IsEnabled(LogLevel.Warning, EventLevel.Warning)) // Warning is the highest level logged
         {
             if (async)
             {

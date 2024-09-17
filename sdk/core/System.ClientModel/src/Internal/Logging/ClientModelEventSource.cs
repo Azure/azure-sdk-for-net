@@ -24,7 +24,7 @@ internal sealed class ClientModelEventSource : EventSource
     {
         if (IsEnabled(EventLevel.Informational, EventKeywords.None))
         {
-            Request(requestId, request.Method, sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), );
+            Request(requestId, request.Method, sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), FormatHeaders(request.Headers, sanitizer), clientAssembly);
         }
     }
 

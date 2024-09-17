@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.TestFramework;
 using System.Collections.Generic;
@@ -20,29 +21,13 @@ namespace System.ClientModel.Tests.Internal;
 [NonParallelizable]
 public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 {
-    private const int RequestEvent = 1;
-    private const int RequestContentEvent = 2;
-    private const int RequestContentTextEvent = 17;
-    private const int ResponseEvent = 5;
-    private const int ResponseContentEvent = 6;
-    private const int ResponseContentBlockEvent = 11;
-    private const int ErrorResponseEvent = 8;
-    private const int ErrorResponseContentEvent = 9;
-    private const int ErrorResponseContentBlockEvent = 12;
-    private const int ResponseContentTextEvent = 13;
-    private const int ResponseContentTextBlockEvent = 15;
-    private const int ErrorResponseContentTextEvent = 14;
-    private const int ErrorResponseContentTextBlockEvent = 16;
-    private const int ExceptionResponseEvent = 18;
-    private const int RequestRetryingEvent = 10;
-
     // TODO
     private const int ResponseDelayEvent = 7;
 
     private TestLoggingFactory _factory;
     private TestLogger _logger;
 
-    private const string LoggingPolicyCategoryName = "System-ClientModel";
+    private const string LoggingPolicyCategoryName = "System.ClientModel";
 
     private readonly MockResponseHeaders _defaultHeaders = new(new Dictionary<string, string>()
     {
@@ -92,20 +77,20 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         await CreatePipelineAndSendRequest(response, requestContentBytes: requestContent, loggingOptions: loggingOptions);
 
-        LoggerEvent log = GetSingleEvent(RequestEvent, "Request", LogLevel.Information);
+        LoggerEvent log = GetSingleEvent(LoggingEventIds.RequestEvent, "Request", LogLevel.Information);
         Assert.AreEqual("http://example.com/", log.GetValueFromArguments<string>("uri"));
         Assert.AreEqual("GET", log.GetValueFromArguments<string>("method"));
         StringAssert.Contains($"Date:08/16/2024{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
         StringAssert.Contains($"Custom-Header:custom-header-value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
 
-        log = GetSingleEvent(RequestContentEvent, "RequestContent", LogLevel.Debug);
+        log = GetSingleEvent(LoggingEventIds.RequestContentEvent, "RequestContent", LogLevel.Debug);
         CollectionAssert.AreEqual(requestContent, log.GetValueFromArguments<byte[]>("content"));
 
-        log = GetSingleEvent(ResponseEvent, "Response", LogLevel.Information);
+        log = GetSingleEvent(LoggingEventIds.ResponseEvent, "Response", LogLevel.Information);
         Assert.AreEqual(log.GetValueFromArguments<int>("status"), 200);
         StringAssert.Contains($"Custom-Response-Header:custom-response-header-value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
 
-        log = GetSingleEvent(ResponseContentEvent, "ResponseContent", LogLevel.Debug);
+        log = GetSingleEvent(LoggingEventIds.ResponseContentEvent, "ResponseContent", LogLevel.Debug);
         CollectionAssert.AreEqual(responseContent, log.GetValueFromArguments<byte[]>("content"));
     }
 
@@ -126,11 +111,11 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         await CreatePipelineAndSendRequest(response, requestContentBytes: new byte[] { 1, 2, 3, 4, 5 }, loggingOptions: loggingOptions);
 
-        LoggerEvent log = GetSingleEvent(ErrorResponseEvent, "ErrorResponse", LogLevel.Warning);
+        LoggerEvent log = GetSingleEvent(LoggingEventIds.ErrorResponseEvent, "ErrorResponse", LogLevel.Warning);
         Assert.AreEqual(log.GetValueFromArguments<int>("status"), 500);
         StringAssert.Contains($"Custom-Response-Header:custom-response-header-value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
 
-        log = GetSingleEvent(ErrorResponseContentEvent, "ErrorResponseContent", LogLevel.Information);
+        log = GetSingleEvent(LoggingEventIds.ErrorResponseContentEvent, "ErrorResponseContent", LogLevel.Information);
         CollectionAssert.AreEqual(responseContent, log.GetValueFromArguments<byte[]>("content"));
 
         // TODO - add retry checks
@@ -154,13 +139,13 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         await CreatePipelineAndSendRequest(response, requestContentString: requestContent, loggingOptions: loggingOptions);
 
-        LoggerEvent log = GetSingleEvent(RequestContentTextEvent, "RequestContentText", LogLevel.Debug);
+        LoggerEvent log = GetSingleEvent(LoggingEventIds.RequestContentTextEvent, "RequestContentText", LogLevel.Debug);
         Assert.AreEqual(requestContent, log.GetValueFromArguments<string>("content"));
 
-        log = GetSingleEvent(ResponseContentTextEvent, "ResponseContentText", LogLevel.Debug);
+        log = GetSingleEvent(LoggingEventIds.ResponseContentTextEvent, "ResponseContentText", LogLevel.Debug);
         Assert.AreEqual(responseContent, log.GetValueFromArguments<string>("content"));
 
-        CollectionAssert.IsEmpty(_logger.EventsById(ResponseContentEvent));
+        CollectionAssert.IsEmpty(_logger.EventsById(LoggingEventIds.ResponseContentEvent));
     }
 
     [Test]
@@ -204,7 +189,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     {
         await CreatePipelineAndSendRequestWithStreamingResponse(200, false, _defaultHeaders);
 
-        LoggerEvent[] contentEvents = _logger.EventsById(ResponseContentBlockEvent).ToArray();
+        LoggerEvent[] contentEvents = _logger.EventsById(LoggingEventIds.ResponseContentBlockEvent).ToArray();
 
         Assert.AreEqual(2, contentEvents.Length);
 
@@ -218,7 +203,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(1, contentEvents[1].GetValueFromArguments<int>("blockNumber"));
         CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, contentEvents[1].GetValueFromArguments<byte[]>("content"));
 
-        CollectionAssert.IsEmpty(_logger.EventsById(ResponseContentEvent));
+        CollectionAssert.IsEmpty(_logger.EventsById(LoggingEventIds.ResponseContentEvent));
     }
 
     [Test]
@@ -226,7 +211,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     {
         await CreatePipelineAndSendRequestWithStreamingResponse(500, false, _defaultHeaders);
 
-        LoggerEvent[] errorContentEvents = _logger.EventsById(ErrorResponseContentBlockEvent).ToArray();
+        LoggerEvent[] errorContentEvents = _logger.EventsById(LoggingEventIds.ErrorResponseContentBlockEvent).ToArray();
 
         Assert.AreEqual(2, errorContentEvents.Length);
 
@@ -240,7 +225,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(1, errorContentEvents[1].GetValueFromArguments<int>("blockNumber"));
         CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, errorContentEvents[1].GetValueFromArguments<byte[]>("content"));
 
-        CollectionAssert.IsEmpty(_logger.EventsById(ErrorResponseContentEvent));
+        CollectionAssert.IsEmpty(_logger.EventsById(LoggingEventIds.ErrorResponseContentEvent));
     }
 
     [Test]
@@ -248,7 +233,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     {
         await CreatePipelineAndSendRequestWithStreamingResponse(200, false, _defaultTextHeaders);
 
-        LoggerEvent[] contentEvents = _logger.EventsById(ResponseContentTextBlockEvent).ToArray();
+        LoggerEvent[] contentEvents = _logger.EventsById(LoggingEventIds.ResponseContentTextBlockEvent).ToArray();
 
         Assert.AreEqual(2, contentEvents.Length);
 
@@ -263,7 +248,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(1, contentEvents[1].GetValueFromArguments<int>("blockNumber"));
         Assert.AreEqual("world", contentEvents[1].GetValueFromArguments<string>("content"));
 
-        CollectionAssert.IsEmpty(_logger.EventsById(ResponseContentEvent));
+        CollectionAssert.IsEmpty(_logger.EventsById(LoggingEventIds.ResponseContentEvent));
     }
 
     [Test]
@@ -271,7 +256,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     {
         await CreatePipelineAndSendRequestWithStreamingResponse(500, false, _defaultTextHeaders);
 
-        LoggerEvent[] errorContentEvents = _logger.EventsById(ErrorResponseContentTextBlockEvent).ToArray();
+        LoggerEvent[] errorContentEvents = _logger.EventsById(LoggingEventIds.ErrorResponseContentTextBlockEvent).ToArray();
 
         Assert.AreEqual(2, errorContentEvents.Length);
 
@@ -285,7 +270,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(1, errorContentEvents[1].GetValueFromArguments<int>("blockNumber"));
         Assert.AreEqual("world", errorContentEvents[1].GetValueFromArguments<string>("content"));
 
-        CollectionAssert.IsEmpty(_logger.EventsById(ErrorResponseContentEvent));
+        CollectionAssert.IsEmpty(_logger.EventsById(LoggingEventIds.ErrorResponseContentEvent));
     }
 
     [Test]
@@ -293,7 +278,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     {
         await CreatePipelineAndSendRequestWithStreamingResponse(200, true, _defaultTextHeaders);
 
-        LoggerEvent logEvent = GetSingleEvent(ResponseContentTextEvent, "ResponseContentText", LogLevel.Debug);
+        LoggerEvent logEvent = GetSingleEvent(LoggingEventIds.ResponseContentTextEvent, "ResponseContentText", LogLevel.Debug);
         Assert.AreEqual("Hello world", logEvent.GetValueFromArguments<string>("content"));
     }
 
@@ -302,7 +287,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     {
         await CreatePipelineAndSendRequestWithStreamingResponse(500, true, _defaultTextHeaders, 5);
 
-        LoggerEvent logEvent = GetSingleEvent(ErrorResponseContentTextEvent, "ErrorResponseContentText", LogLevel.Information);
+        LoggerEvent logEvent = GetSingleEvent(LoggingEventIds.ErrorResponseContentTextEvent, "ErrorResponseContentText", LogLevel.Information);
         Assert.AreEqual("Hello", logEvent.GetValueFromArguments<string>("content"));
     }
 
@@ -311,7 +296,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     {
         await CreatePipelineAndSendRequestWithStreamingResponse(200, true, _defaultTextHeaders, 5);
 
-        LoggerEvent logEvent = GetSingleEvent(ResponseContentTextEvent, "ResponseContentText", LogLevel.Debug);
+        LoggerEvent logEvent = GetSingleEvent(LoggingEventIds.ResponseContentTextEvent, "ResponseContentText", LogLevel.Debug);
         Assert.AreEqual("Hello", logEvent.GetValueFromArguments<string>("content"));
     }
 
@@ -334,10 +319,10 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         await CreatePipelineAndSendRequest(response, requestContentBytes: Encoding.UTF8.GetBytes("Hello world"), requestHeaders: requestHeaders, loggingOptions: loggingOptions);
 
-        LoggerEvent logEvent = GetSingleEvent(RequestContentTextEvent, "RequestContentText", LogLevel.Debug);
+        LoggerEvent logEvent = GetSingleEvent(LoggingEventIds.RequestContentTextEvent, "RequestContentText", LogLevel.Debug);
         Assert.AreEqual("Hello", logEvent.GetValueFromArguments<string>("content"));
 
-        CollectionAssert.IsEmpty(_logger.EventsById(ResponseContentEvent));
+        CollectionAssert.IsEmpty(_logger.EventsById(LoggingEventIds.ResponseContentEvent));
     }
 
     [Test]
@@ -345,10 +330,10 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     {
         await CreatePipelineAndSendRequestWithStreamingResponse(200, false, _defaultTextHeaders, 5);
 
-        LoggerEvent logEvent = GetSingleEvent(ResponseContentTextBlockEvent, "ResponseContentTextBlock", LogLevel.Debug);
+        LoggerEvent logEvent = GetSingleEvent(LoggingEventIds.ResponseContentTextBlockEvent, "ResponseContentTextBlock", LogLevel.Debug);
         Assert.AreEqual("Hello", logEvent.GetValueFromArguments<string>("content"));
 
-        CollectionAssert.IsEmpty(_logger.EventsById(ResponseContentEvent));
+        CollectionAssert.IsEmpty(_logger.EventsById(LoggingEventIds.ResponseContentEvent));
     }
 
     [Test]
@@ -368,14 +353,14 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         await CreatePipelineAndSendRequest(response, requestContentBytes: new byte[] { 1, 2, 3, 4, 5 }, requestHeaders: requestHeaders, requestUri: requestUri);
 
-        LoggerEvent log = GetSingleEvent(RequestEvent, "Request", LogLevel.Information);
+        LoggerEvent log = GetSingleEvent(LoggingEventIds.RequestEvent, "Request", LogLevel.Information);
         Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=REDACTED", log.GetValueFromArguments<string>("uri"));
         Assert.AreEqual("GET", log.GetValueFromArguments<string>("method"));
         StringAssert.Contains($"Date:08/16/2024{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
         StringAssert.Contains($"Custom-Header:custom-header-value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
         StringAssert.Contains($"Secret-Custom-Header:REDACTED{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
 
-        log = GetSingleEvent(ResponseEvent, "Response", LogLevel.Information);
+        log = GetSingleEvent(LoggingEventIds.ResponseEvent, "Response", LogLevel.Information);
         Assert.AreEqual(log.GetValueFromArguments<int>("status"), 200);
         StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
         StringAssert.Contains($"Secret-Response-Header:REDACTED{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
@@ -405,14 +390,14 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         await CreatePipelineAndSendRequest(response, requestContentBytes: new byte[] { 1, 2, 3, 4, 5 }, requestHeaders: requestHeaders, requestUri: requestUri, loggingOptions: loggingOptions);
 
-        LoggerEvent log = GetSingleEvent(RequestEvent, "Request", LogLevel.Information);
+        LoggerEvent log = GetSingleEvent(LoggingEventIds.RequestEvent, "Request", LogLevel.Information);
         Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=123", log.GetValueFromArguments<string>("uri"));
         Assert.AreEqual("GET", log.GetValueFromArguments<string>("method"));
         StringAssert.Contains($"Date:08/16/2024{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
         StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
         StringAssert.Contains($"Secret-Custom-Header:Value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
 
-        log = GetSingleEvent(ResponseEvent, "Response", LogLevel.Information);
+        log = GetSingleEvent(LoggingEventIds.ResponseEvent, "Response", LogLevel.Information);
         Assert.AreEqual(log.GetValueFromArguments<int>("status"), 200);
         StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
         StringAssert.Contains($"Secret-Response-Header:Very secret{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
@@ -442,7 +427,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         Assert.ThrowsAsync<InvalidOperationException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
 
-        LoggerEvent log = GetSingleEvent(ExceptionResponseEvent, "ExceptionResponse", LogLevel.Information);
+        LoggerEvent log = GetSingleEvent(LoggingEventIds.ExceptionResponseEvent, "ExceptionResponse", LogLevel.Information);
         Assert.AreEqual(exception, log.Exception);
     }
 
@@ -460,16 +445,16 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
     private void AssertNoContentLogged()
     {
-        CollectionAssert.IsEmpty(_logger.EventsById(RequestContentEvent));
-        CollectionAssert.IsEmpty(_logger.EventsById(RequestContentTextEvent));
+        CollectionAssert.IsEmpty(_logger.EventsById(LoggingEventIds.RequestContentEvent));
+        CollectionAssert.IsEmpty(_logger.EventsById(LoggingEventIds.RequestContentTextEvent));
 
-        CollectionAssert.IsEmpty(_logger.EventsById(ResponseContentEvent));
-        CollectionAssert.IsEmpty(_logger.EventsById(ResponseContentBlockEvent));
-        CollectionAssert.IsEmpty(_logger.EventsById(ResponseContentTextBlockEvent));
+        CollectionAssert.IsEmpty(_logger.EventsById(LoggingEventIds.ResponseContentEvent));
+        CollectionAssert.IsEmpty(_logger.EventsById(LoggingEventIds.ResponseContentBlockEvent));
+        CollectionAssert.IsEmpty(_logger.EventsById(LoggingEventIds.ResponseContentTextBlockEvent));
 
-        CollectionAssert.IsEmpty(_logger.EventsById(ErrorResponseContentEvent));
-        CollectionAssert.IsEmpty(_logger.EventsById(ErrorResponseContentTextEvent));
-        CollectionAssert.IsEmpty(_logger.EventsById(ErrorResponseContentTextBlockEvent));
+        CollectionAssert.IsEmpty(_logger.EventsById(LoggingEventIds.ErrorResponseContentEvent));
+        CollectionAssert.IsEmpty(_logger.EventsById(LoggingEventIds.ErrorResponseContentTextEvent));
+        CollectionAssert.IsEmpty(_logger.EventsById(LoggingEventIds.ErrorResponseContentTextBlockEvent));
     }
 
     private async Task CreatePipelineAndSendRequestWithStreamingResponse(int statusCode,
