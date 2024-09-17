@@ -66,7 +66,6 @@ namespace Azure.Monitor.Query
             return value.ToString("O", CultureInfo.InvariantCulture);
         }
 
-        internal static string ToIsoString(this DateTimeOffset? value)
-            => value != null ? value.Value.ToIsoString() : null;
+        internal static string ToIsoString(this DateTimeOffset? value) => value?.ToIsoString();
     }
 }
