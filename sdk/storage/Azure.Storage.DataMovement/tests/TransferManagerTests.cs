@@ -12,10 +12,8 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.DataMovement.Tests.Models;
-using Castle.Core.Resource;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 
 namespace Azure.Storage.DataMovement.Tests;
 
