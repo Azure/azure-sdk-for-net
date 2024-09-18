@@ -74,7 +74,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a access token from Azure PowerShell, using the access token to authenticate. This method id called by Azure SDK clients.
+        /// Obtains an access token from Azure PowerShell, using the access token to authenticate. This method is called by Azure SDK clients.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -86,7 +86,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a access token from Azure PowerShell, using the access token to authenticate. This method id called by Azure SDK clients.
+        /// Obtains an access token from Azure PowerShell, using the access token to authenticate. This method is called by Azure SDK clients.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -252,10 +252,28 @@ if (! $m) {{
     Write-Output '{AzurePowerShellNoAzAccountModule}'
     exit
 }}
+$tenantId = '{tenantIdArg}'
+$params = @{{
+    ResourceUrl = '{resource}'
+    WarningAction = 'Ignore' }}
 
-$token = Get-AzAccessToken -ResourceUrl '{resource}'{tenantIdArg}
+if ($tenantId.Length -gt 0) {{
+    $params['TenantId'] = '{tenantId}'
+}}
+
+$useSecureString = $m.Version -ge [version]'2.17.0'
+if ($useSecureString) {{
+    $params['AsSecureString'] = $true
+}}
+
+$token = Get-AzAccessToken @params
+
 $customToken = New-Object -TypeName psobject
-$customToken | Add-Member -MemberType NoteProperty -Name Token -Value $token.Token
+if ($useSecureString) {{
+    $customToken | Add-Member -MemberType NoteProperty -Name Token -Value (ConvertFrom-SecureString -AsPlainText $token.Token)
+}} else {{
+    $customToken | Add-Member -MemberType NoteProperty -Name Token -Value $token.Token
+}}
 $customToken | Add-Member -MemberType NoteProperty -Name ExpiresOn -Value $token.ExpiresOn.ToUnixTimeSeconds()
 
 $x = $customToken | ConvertTo-Xml

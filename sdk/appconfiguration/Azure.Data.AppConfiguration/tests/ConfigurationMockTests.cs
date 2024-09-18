@@ -809,6 +809,51 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
+        public async Task GetLabels()
+        {
+            var response1 = new MockResponse(200);
+            var response1Labels = new[]
+            {
+                CreateLabel(0),
+                CreateLabel(1)
+            };
+            response1.SetContent(SerializationHelpers.Serialize((Items: response1Labels, NextLink: $"/labels?after=5&api-version={s_version}"), SerializeLabels));
+
+            var response2 = new MockResponse(200);
+            var response2Labels = new[]
+            {
+                CreateLabel(2),
+                CreateLabel(3),
+                CreateLabel(4),
+            };
+            response2.SetContent(SerializationHelpers.Serialize((Settings: response2Labels, NextLink: (string)null), SerializeLabels));
+
+            var mockTransport = new MockTransport(response1, response2);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            var query = new SettingLabelSelector();
+            int keyIndex = 0;
+
+            await foreach (SettingLabel label in service.GetLabelsAsync(query, CancellationToken.None))
+            {
+                Assert.AreEqual("label" + keyIndex, label.Name);
+                keyIndex++;
+            }
+
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+
+            MockRequest request1 = mockTransport.Requests[0];
+            Assert.AreEqual(RequestMethod.Get, request1.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/labels?api-version={s_version}", request1.Uri.ToString());
+            AssertRequestCommon(request1);
+
+            MockRequest request2 = mockTransport.Requests[1];
+            Assert.AreEqual(RequestMethod.Get, request2.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/labels?after=5&api-version={s_version}", request2.Uri.ToString());
+            AssertRequestCommon(request1);
+        }
+
+        [Test]
         public async Task CustomHeadersAreAdded()
         {
             var response = new MockResponse(200);
@@ -1011,6 +1056,11 @@ namespace Azure.Data.AppConfiguration.Tests
             return new ConfigurationSetting($"key{i}", "val") { Label = "label", ETag = new ETag("c3c231fd-39a0-4cb6-3237-4614474b92c1"), ContentType = "text" };
         }
 
+        private static SettingLabel CreateLabel(int i)
+        {
+            return new SettingLabel($"label{i}");
+        }
+
         private void SerializeRequestSetting(ref Utf8JsonWriter json, ConfigurationSetting setting)
         {
             json.WriteStartObject();
@@ -1070,6 +1120,30 @@ namespace Azure.Data.AppConfiguration.Tests
             foreach (ConfigurationSetting item in content.Settings)
             {
                 SerializeSetting(ref json, item);
+            }
+            json.WriteEndArray();
+            json.WriteEndObject();
+        }
+
+        private static void SerializeLabel(ref Utf8JsonWriter json, SettingLabel label)
+        {
+            json.WriteStartObject();
+            json.WritePropertyName("name"u8);
+            json.WriteStringValue(label.Name);
+            json.WriteEndObject();
+        }
+
+        private void SerializeLabels(ref Utf8JsonWriter json, (SettingLabel[] Labels, string NextLink) content)
+        {
+            json.WriteStartObject();
+            if (content.NextLink != null)
+            {
+                json.WriteString("@nextLink", content.NextLink);
+            }
+            json.WriteStartArray("items");
+            foreach (SettingLabel label in content.Labels)
+            {
+                ConfigurationMockTests.SerializeLabel(ref json, label);
             }
             json.WriteEndArray();
             json.WriteEndObject();

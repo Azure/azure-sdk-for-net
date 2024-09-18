@@ -20,6 +20,7 @@ omitted_paths:
   - sdk/resourcemanager/*
   - src/*
   - tools/*
+  - sdk/**/tools/*
 
 language: net
 root_check_enabled: True

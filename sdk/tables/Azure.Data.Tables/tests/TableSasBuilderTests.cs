@@ -17,6 +17,7 @@ namespace Azure.Data.Tables.Tests
             Assert.Throws<ArgumentException>(() => new TableSasBuilder(string.Empty, TableSasPermissions.Add, DateTimeOffset.Now));
             Assert.Throws<ArgumentNullException>(() => new TableSasBuilder("table", null, DateTimeOffset.Now));
             Assert.Throws<ArgumentException>(() => new TableSasBuilder("table", string.Empty, DateTimeOffset.Now));
+            Assert.Throws<ArgumentNullException>(() => new TableSasBuilder("table", null));
             Assert.Throws<ArgumentNullException>(() => new TableSasBuilder(null));
         }
 

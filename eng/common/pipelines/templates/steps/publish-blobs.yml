@@ -1,20 +1,14 @@
 parameters:
   FolderForUpload: ''
   TargetLanguage: ''
-  BlobName: ''
-  ScriptPath: ''
+  BlobName: '' # To be removed once all usages are removed in the languages
+  BlobAccountName: 'https://azuresdkdocs.blob.core.windows.net'
+  ScriptPath: 'eng/common/scripts/copy-docs-to-blobstorage.ps1'
   ArtifactLocation: ''
   RepoId: $(Build.Repository.Name)
 
 steps:
 - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
-- pwsh: |
-    if (!(Test-Path '$(Build.BinariesDirectory)/azcopy/azcopy_windows_amd64_*/azcopy.exe')) {
-      Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://aka.ms/downloadazcopy-v10-windows" -OutFile "azcopy.zip" | Wait-Process;
-      Expand-Archive -Path "azcopy.zip" -DestinationPath "$(Build.BinariesDirectory)/azcopy/" -Force
-    }
-  workingDirectory: $(Build.BinariesDirectory)
-  displayName: Download and Extract azcopy Zip
 
 - task: AzurePowerShell@5
   displayName: 'Copy Docs to Blob Storage'
@@ -24,9 +18,8 @@ steps:
     ScriptType: 'FilePath'
     ScriptPath: ${{ parameters.ScriptPath }}
     ScriptArguments: >
-      -AzCopy $(Resolve-Path "$(Build.BinariesDirectory)/azcopy/azcopy_windows_amd64_*/azcopy.exe")[0]
       -DocLocation "${{ parameters.FolderForUpload }}"
-      -BlobName "${{ parameters.BlobName }}"
+      -BlobAccountName "${{ parameters.BlobAccountName }}"
       -PublicArtifactLocation "${{ parameters.ArtifactLocation }}"
       -RepoReplaceRegex "(https://github.com/${{ parameters.RepoId }}/(?:blob|tree)/)$(DefaultBranch)"
     azurePowerShellVersion: latestVersion

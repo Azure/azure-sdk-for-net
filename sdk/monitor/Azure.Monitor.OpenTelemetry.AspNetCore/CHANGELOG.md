@@ -8,6 +8,16 @@
 
 ### Bugs Fixed
 
+* Fixed an issue where `APPLICATIONINSIGHTS_CONNECTION_STRING` was not read from
+  `IConfiguration` when using the `UseAzureMonitor` overload with the
+  `Action<AzureMonitorOptions>` parameter. If the connection string is not set
+  using the `Action<AzureMonitorOptions>` delegate, the distro will now check if
+  `APPLICATIONINSIGHTS_CONNECTION_STRING` is present in `IConfiguration`.
+  ([#45292](https://github.com/Azure/azure-sdk-for-net/pull/45292))
+
+* Fixed a bug where LiveMetrics displays "UNKNOWN_INSTANCE" and "UNKNOWN_NAME" for "server name" and "role name" respectively.
+  ([#45433](https://github.com/Azure/azure-sdk-for-net/pull/45433))
+
 ### Other Changes
 
 ## 1.3.0-beta.1 (2024-07-12)

@@ -364,29 +364,6 @@ namespace Azure.Communication.JobRouter
             return new UnassignJobResult(jobId, unassignmentCount, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.AcceptJobOfferResult"/>. </summary>
-        /// <param name="assignmentId"> Id of job assignment that assigns a worker that has accepted an offer to a job. </param>
-        /// <param name="jobId"> Id of the job assigned. </param>
-        /// <param name="workerId"> Id of the worker that has been assigned this job. </param>
-        /// <returns> A new <see cref="JobRouter.AcceptJobOfferResult"/> instance for mocking. </returns>
-        public static AcceptJobOfferResult AcceptJobOfferResult(string assignmentId = null, string jobId = null, string workerId = null)
-        {
-            return new AcceptJobOfferResult(assignmentId, jobId, workerId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterQueueStatistics"/>. </summary>
-        /// <param name="queueId"> Id of the queue these details are about. </param>
-        /// <param name="length"> Length of the queue: total number of enqueued jobs. </param>
-        /// <param name="estimatedWaitTimes"> The estimated wait time of this queue rounded up to the nearest minute, grouped by job priority. </param>
-        /// <param name="longestJobWaitTimeMinutes"> The wait time of the job that has been enqueued in this queue for the longest. </param>
-        /// <returns> A new <see cref="JobRouter.RouterQueueStatistics"/> instance for mocking. </returns>
-        public static RouterQueueStatistics RouterQueueStatistics(string queueId = null, int length = default, IDictionary<int, TimeSpan> estimatedWaitTimes = null, double? longestJobWaitTimeMinutes = null)
-        {
-            estimatedWaitTimes ??= new Dictionary<int, TimeSpan>();
-
-            return new RouterQueueStatistics(queueId, length, estimatedWaitTimes, longestJobWaitTimeMinutes, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="JobRouter.RouterChannel"/>. </summary>
         /// <param name="channelId"> Id of a channel. </param>
         /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
@@ -424,6 +401,29 @@ namespace Azure.Communication.JobRouter
         public static RouterWorkerAssignment RouterWorkerAssignment(string assignmentId = null, string jobId = null, int capacityCost = default, DateTimeOffset assignedAt = default)
         {
             return new RouterWorkerAssignment(assignmentId, jobId, capacityCost, assignedAt, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.AcceptJobOfferResult"/>. </summary>
+        /// <param name="assignmentId"> Id of job assignment that assigns a worker that has accepted an offer to a job. </param>
+        /// <param name="jobId"> Id of the job assigned. </param>
+        /// <param name="workerId"> Id of the worker that has been assigned this job. </param>
+        /// <returns> A new <see cref="JobRouter.AcceptJobOfferResult"/> instance for mocking. </returns>
+        public static AcceptJobOfferResult AcceptJobOfferResult(string assignmentId = null, string jobId = null, string workerId = null)
+        {
+            return new AcceptJobOfferResult(assignmentId, jobId, workerId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterQueueStatistics"/>. </summary>
+        /// <param name="queueId"> Id of the queue these details are about. </param>
+        /// <param name="length"> Length of the queue: total number of enqueued jobs. </param>
+        /// <param name="estimatedWaitTimes"> The estimated wait time of this queue rounded up to the nearest minute, grouped by job priority. </param>
+        /// <param name="longestJobWaitTimeMinutes"> The wait time of the job that has been enqueued in this queue for the longest. </param>
+        /// <returns> A new <see cref="JobRouter.RouterQueueStatistics"/> instance for mocking. </returns>
+        public static RouterQueueStatistics RouterQueueStatistics(string queueId = null, int length = default, IDictionary<int, TimeSpan> estimatedWaitTimes = null, double? longestJobWaitTimeMinutes = null)
+        {
+            estimatedWaitTimes ??= new Dictionary<int, TimeSpan>();
+
+            return new RouterQueueStatistics(queueId, length, estimatedWaitTimes, longestJobWaitTimeMinutes, serializedAdditionalRawData: null);
         }
     }
 }

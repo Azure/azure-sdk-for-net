@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Azure.Storage.Files.Shares.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
@@ -23,12 +22,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     : options?.ContentType?.Value,
                 ContentEncoding = (options?.ContentEncoding?.Preserve ?? true)
                     ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentEncoding, out object contentEncoding) == true
-                        ? (string[])contentEncoding
+                        ? ConvertContentPropertyObjectToStringArray(DataMovementConstants.ResourceProperties.ContentEncoding, contentEncoding)
                         : default
                     : options?.ContentEncoding?.Value,
                 ContentLanguage = (options?.ContentLanguage?.Preserve ?? true)
                     ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentLanguage, out object contentLanguage) == true
-                        ? (string[])contentLanguage
+                        ? ConvertContentPropertyObjectToStringArray(DataMovementConstants.ResourceProperties.ContentLanguage, contentLanguage)
                         : default
                     : options?.ContentLanguage?.Value,
                 ContentDisposition = (options?.ContentDisposition?.Preserve ?? true)
@@ -232,6 +231,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.ChangedOnTime, fileProperties.SmbProperties.FileChangedOn);
             }
+            if (fileProperties.SmbProperties.FileLastWrittenOn != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.LastWrittenOn, fileProperties.SmbProperties.FileLastWrittenOn);
+            }
             if (fileProperties.SmbProperties.FileAttributes != default)
             {
                 existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.FileAttributes, fileProperties.SmbProperties.FileAttributes);
@@ -263,6 +266,18 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (fileProperties.CacheControl != default)
             {
                 existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.CacheControl, fileProperties.CacheControl);
+            }
+            if (existingProperties.LastModifiedTime == default)
+            {
+                existingProperties.LastModifiedTime = fileProperties.LastModified;
+            }
+            if (existingProperties.ETag == default)
+            {
+                existingProperties.ETag = fileProperties.ETag;
+            }
+            if (existingProperties.ResourceLength == default)
+            {
+                existingProperties.ResourceLength = fileProperties.ContentLength;
             }
         }
 
@@ -351,6 +366,22 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 eTag: shareItem?.Properties?.ETag,
                 lastModifiedTime: shareItem?.Properties?.LastModified,
                 properties: properties);
+        }
+
+        private static string[] ConvertContentPropertyObjectToStringArray(string contentPropertyName, object contentPropertyValue)
+        {
+            if (contentPropertyValue is string)
+            {
+                return new string[] { contentPropertyValue as string, };
+            }
+            else if (contentPropertyValue is string[])
+            {
+                return contentPropertyValue as string[];
+            }
+            else
+            {
+                throw Storage.Errors.UnexpectedPropertyType(contentPropertyName, DataMovementConstants.StringTypeStr, DataMovementConstants.StringArrayTypeStr);
+            }
         }
     }
 

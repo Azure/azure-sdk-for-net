@@ -88,7 +88,7 @@
     <PackageReference Update="System.Buffers" Version="4.5.1" />
     <PackageReference Update="System.ClientModel" Version="1.0.0" />
     <PackageReference Update="System.IO.Hashing" Version="6.0.0" />
-    <PackageReference Update="System.Memory" Version="4.5.4" />
+    <PackageReference Update="System.Memory" Version="4.5.5" />
     <PackageReference Update="System.Memory.Data" Version="1.0.2" />
     <PackageReference Update="System.Numerics.Vectors" Version="4.5.0" />
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
@@ -96,39 +96,38 @@
     <PackageReference Update="System.Reflection.TypeExtensions" Version="4.7.0" />
     <PackageReference Update="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Cose" Version="7.0.0" />
-    <PackageReference Update="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
-    <PackageReference Update="System.Threading.Channels" Version="4.7.1" />
+    <PackageReference Update="System.Threading.Channels" Version="6.0.0" />
     <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.5.4" />
     <PackageReference Update="System.Text.Json" Version="4.7.2" />
-    <PackageReference Update="System.Text.Encodings.Web" Version="4.7.2" />
+    <PackageReference Update="System.Text.Encodings.Web" Version="6.0.0" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
-    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
+    <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
 
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.Communication.Identity" Version="1.3.1" />
     <PackageReference Update="Azure.Communication.Common" Version="1.3.0" />
-    <PackageReference Update="Azure.Core" Version="1.41.0" />
-    <PackageReference Update="Azure.Core.Amqp" Version="1.3.0" />
+    <PackageReference Update="Azure.Core" Version="1.42.0" />
+    <PackageReference Update="Azure.Core.Amqp" Version="1.3.1" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.34" />
     <PackageReference Update="Azure.Core.Expressions.DataFactory" Version="1.0.0" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.2.0" />
     <PackageReference Update="Azure.Data.Tables" Version="12.8.0" />
-    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.11.4" />
+    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.11.5" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.21.0" />
-    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.17.5" />
-    <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.3.0" />
+    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.18.1" />
+    <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.4.0" />
     <PackageReference Update="Azure.MixedReality.Authentication" version= "1.2.0" />
     <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.4.0-beta.1" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
     <PackageReference Update="Azure.Identity" Version="1.12.0" />
-    <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
-    <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.2.0" />
-    <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
-    <PackageReference Update="Azure.Storage.Common" Version="12.20.0" />
-    <PackageReference Update="Azure.Storage.Blobs" Version="12.21.0" />
-    <PackageReference Update="Azure.Storage.Queues" Version="12.19.0" />
-    <PackageReference Update="Azure.Storage.Files.Shares" Version="12.19.0" />
+    <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.6.0" />
+    <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.6.0" />
+    <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.6.0" />
+    <PackageReference Update="Azure.Storage.Common" Version="12.20.1" />
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.21.1" />
+    <PackageReference Update="Azure.Storage.Queues" Version="12.19.1" />
+    <PackageReference Update="Azure.Storage.Files.Shares" Version="12.19.1" />
     <PackageReference Update="Azure.AI.OpenAI" Version="2.0.0-beta.1" />
     <PackageReference Update="Azure.ResourceManager" Version="1.12.0" />
     <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.3.2" />
@@ -154,13 +153,13 @@
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.7" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.2.0" />
-    <PackageReference Update="Microsoft.Identity.Client" Version="4.61.3" />
-    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.61.3" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.62.0" />
+    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.62.0" />
     <!--
       TODO: This package needs to be released as GA and arch-board approved before taking a dependency in any stable SDK library.
       Currently, it is referencd by Azure.Identity.Broker which is still in beta
     -->
-    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.61.3" />
+    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.62.0" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.35.0" />
@@ -188,7 +187,7 @@
     These are dependencies for Track 2 integration packages
   -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.'))">
-    <PackageReference Update="Apache.Avro" Version="1.11.0" />
+    <PackageReference Update="Apache.Avro" Version="1.12.0" />
     <PackageReference Update="CloudNative.CloudEvents" Version="2.0.0" />
     <PackageReference Update="CloudNative.CloudEvents.SystemTextJson" Version="2.0.0" />
     <PackageReference Update="Google.Protobuf" Version="3.24.3" />
@@ -228,8 +227,8 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240722.4" PrivateAssets="All" />
-    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20240429.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240818.1" PrivateAssets="All" />
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20240813.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.2" PrivateAssets="All" />
@@ -251,7 +250,7 @@
     <PackageReference Update="Azure.Identity" Version="1.12.0" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
     <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.11.3" />
-    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.17.5" />
+    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.18.1" />
     <PackageReference Update="Azure.ResourceManager.Compute" Version="1.2.0" />
     <PackageReference Update="Azure.ResourceManager.CognitiveServices" Version="1.3.0" />
     <PackageReference Update="Azure.ResourceManager.KeyVault" Version="1.1.0" />
@@ -268,8 +267,8 @@
     <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.0.0" />
     <PackageReference Update="Azure.ResourceManager.ContainerRegistry" Version="1.1.0" />
     <PackageReference Update="Azure.Search.Documents" Version="11.2.0" />
-    <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.4.0" />
-    <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0-beta.4" />
+    <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.6.0" />
+    <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.6.0" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.20.0" />
     <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.8.0" />
     <PackageReference Update="BenchmarkDotNet" Version="0.13.4" />
@@ -357,6 +356,7 @@
     <PackageReference Update="System.Security.Cryptography.Algorithms" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Cng" Version="4.5.2" />
     <PackageReference Update="System.Security.Cryptography.Primitives" Version="4.3.0" />
+    <PackageReference Update="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
     <PackageReference Update="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
     <PackageDownload Include="Azure.Sdk.Tools.Testproxy" Version="[$(TestProxyVersion)]" />
@@ -388,7 +388,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TestProxyVersion>1.0.0-dev.20240619.2</TestProxyVersion>
+    <TestProxyVersion>1.0.0-dev.20240806.1</TestProxyVersion>
   </PropertyGroup>
 
 </Project>

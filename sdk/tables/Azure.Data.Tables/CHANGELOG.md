@@ -1,14 +1,9 @@
 # Release History
 
-## 12.10.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 12.9.1 (Unreleased)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fixed an issue that prevented use of stored access policy based SaS Uris by adding a constructor to `TableSasBuilder` that accepts a stored access policy identifier without needing to specify the policy's permissions.
 
 ## 12.9.0 (2024-07-22)
 

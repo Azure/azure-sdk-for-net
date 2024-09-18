@@ -1,18 +1,22 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Added method overloads `serviceClient.GetClientAccessUri`, `serviceClient.GetClientAccessUri` for MQTT clients.
-- Added method `serviceClient.AddConnectionsToGroups` to add filtered connections to specified multiple groups.
-- Added method `serviceClient.RemoveConnectionsFromGroups` to remove filtered connections from specified multiple groups.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2024-07-31)
+
+### Features Added
+
+- Added method overloads `serviceClient.GetClientAccessUri`, `serviceClient.GetClientAccessUri` for MQTT clients.
+- Added method `serviceClient.AddConnectionsToGroups` to add filtered connections to specified multiple groups.
+- Added method `serviceClient.RemoveConnectionsFromGroups` to remove filtered connections from specified multiple groups.
 
 ## 1.3.0 (2022-11-20)
 
@@ -37,7 +41,7 @@
 ## 1.1.0-beta.1 (2022-08-06)
 
 ### Bugs Fixed
-- Fix the issue that when `expiresAfter` is less than 1 minute it requests a token with 0 ttl 
+- Fix the issue that when `expiresAfter` is less than 1 minute it requests a token with 0 ttl
 
 ## 1.0.0 (2021-11-09)
 

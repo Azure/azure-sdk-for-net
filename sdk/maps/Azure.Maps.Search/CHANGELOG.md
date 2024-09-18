@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 2.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.0.0-beta.2 (2024-08-13)
+
+### Bugs Fixed
+
+- Fix NPE issue during client creation
+
+## 2.0.0-beta.1 (2024-08-06)
+
+### Features Added
+
+- Support Search API `2023-06-01`
 
 ## 1.0.0-beta.5 (2024-05-07)
 

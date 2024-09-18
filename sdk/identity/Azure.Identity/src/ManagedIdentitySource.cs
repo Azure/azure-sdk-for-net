@@ -82,11 +82,21 @@ namespace Azure.Identity
 
             //This is a special case for Docker Desktop which responds with a 403 with a message that contains "A socket operation was attempted to an unreachable network/host"
             // rather than just timing out, as expected.
-            if (response.Status == 403)
+            // This case can also be hit when some service other than IMDS responds with a non-JSON response.
+            // In all such cases, we should treat the response as CredentialUnavailable.
+            if (response.IsError)
             {
-                string content = response.Content.ToString();
-                if (content.Contains("unreachable"))
+                string content = string.Empty;
+                try
                 {
+                    content = response.Content.ToString();
+                    using JsonDocument json = async
+                    ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
+                    : JsonDocument.Parse(response.ContentStream);
+                }
+                catch (JsonException)
+                {
+                    // If the response is not json, it is not the IMDS and it should be treated as CredentialUnavailable
                     throw new CredentialUnavailableException(UnexpectedResponse, new Exception(content));
                 }
             }
@@ -182,7 +192,7 @@ namespace Azure.Identity
         }
 
         // Compute refresh_in as 1/2 expiresOn, but only if expiresOn > 2h.
-        private static DateTimeOffset? InferManagedIdentityRefreshInValue(DateTimeOffset expiresOn)
+        internal static DateTimeOffset? InferManagedIdentityRefreshInValue(DateTimeOffset expiresOn)
         {
             if (expiresOn > DateTimeOffset.UtcNow.AddHours(2) && expiresOn < DateTimeOffset.MaxValue)
             {
@@ -190,20 +200,6 @@ namespace Azure.Identity
                 return expiresOn.AddTicks(-(expiresOn.Ticks - DateTimeOffset.UtcNow.Ticks) / 2);
             }
             return null;
-        }
-
-        private class ManagedIdentityResponseClassifier : ResponseClassifier
-        {
-            public override bool IsRetriableResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    404 => true,
-                    410 => true,
-                    502 => false,
-                    _ => base.IsRetriableResponse(message)
-                };
-            }
         }
     }
 }

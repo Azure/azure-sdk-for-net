@@ -22,7 +22,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationLanguages()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationLanguages
             try
@@ -43,7 +43,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationLanguagesMetadata()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationLanguagesMetadata
             try
@@ -84,7 +84,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationLanguagesByScope()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationLanguagesByScope
             try
@@ -126,7 +126,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationLanguagesByCulture()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationLanguagesByCulture
             try

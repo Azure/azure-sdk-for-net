@@ -7,7 +7,8 @@ azure-arm: true
 csharp: true
 library-name: MobileNetwork
 namespace: Azure.ResourceManager.MobileNetwork
-require: https://github.com/Azure/azure-rest-api-specs/blob/812012235b51ef1edf0e99f6ce9741c2c4c9df9a/specification/mobilenetwork/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/45ed7d13be79760a39301ff85cc0937f017329de/specification/mobilenetwork/resource-manager/readme.md
+#tag: package-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -18,9 +19,10 @@ sample-gen:
   clear-output-folder: true
 use-model-reader-writer: true
 client-side-validation: false
+enable-bicep-serialization: true
 
-#mgmt-debug:
-#  show-serialized-names: true
+mgmt-debug:
+  show-serialized-names: true
 
 request-path-to-resource-name:
   /providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}: TenantPacketCoreControlPlaneVersion
@@ -119,6 +121,15 @@ rename-mapping:
   EventHubConfiguration.id: -|arm-id
   RrcEstablishmentCause.SMS: Sms
   UeQOSFlow: UEQosFlow
+  RoutingInfoModel: MobileNetworkRoutingInfo
+  SimMove: SimMoveContent
+  SimClone: SimCloneContent
+  SignalingConfiguration: PacketCoreSignalingConfiguration
+
+prepend-rp-prefix:
+  - Ipv4Route
+  - Ipv4RouteNextHop
+  - NasEncryptionType
 
 directive:
   # CodeGen don't support some definitions in v4 & v5 common types, here is an issue https://github.com/Azure/autorest.csharp/issues/3537 opened to fix this problem

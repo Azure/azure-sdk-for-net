@@ -1,11 +1,26 @@
 # Release History
 
-## 1.2.0 (2024-07-19)
+## 1.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0 (2024-07-29)
 
 ### Features Added
 
 - Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
-- Upgraded api-version tag from 'package-2021-02' to 'package-2023-12'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/928047803788f7377fa003a26ba2bdc2e0fcccc0/specification/web/resource-manager/readme.md
+- Upgraded api-version tag from 'package-2021-02' to 'package-2023-12'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/928047803788f7377fa003a26ba2bdc2e0fcccc0/specification/web/resource-manager/readme.md.
+
+### Bugs Fixed
+
+- Fixed https://github.com/Azure/azure-sdk-for-net/issues/39126.
+- Fixed 'GetAppServiceCertificateOrdersAsync's InvalidResourceType problem for AppServiceCertificateOrderData, Issue at https://github.com/Azure/azure-sdk-for-net/issues/45177
 
 ### Other Changes
 
