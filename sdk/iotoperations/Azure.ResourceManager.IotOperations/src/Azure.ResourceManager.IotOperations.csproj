@@ -8,6 +8,5 @@
     <NoWarn>$(NoWarn);AZC0033</NoWarn>
     <NoWarn>$(NoWarn);AZC0030</NoWarn>
     <NoWarn>$(NoWarn);AZC0033</NoWarn>
-    <NoWarn>$(NoWarn);CS1503</NoWarn>
   </PropertyGroup>
 </Project>
