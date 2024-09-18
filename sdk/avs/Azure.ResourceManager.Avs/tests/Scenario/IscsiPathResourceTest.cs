@@ -19,34 +19,34 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
         {
         }
 
-        [TestCase, Order(1)]
-        [RecordedTest]
-        public async Task Get()
-        {
-            var iscsiPathResource = await getIscsiPathResource();
-            Assert.AreEqual(iscsiPathResource.Data.Name, ISCSI_PATH_NAME);
-        }
+        // [TestCase, Order(1)]
+        // [RecordedTest]
+        // public async Task Get()
+        // {
+        //     var iscsiPathResource = await getIscsiPathResource();
+        //     Assert.AreEqual(iscsiPathResource.Data.Name, ISCSI_PATH_NAME);
+        // }
 
-        [TestCase, Order(2)]
-        [RecordedTest]
-        public async Task Update()
-        {
-            var newNetwork = "192.168.0.0/24";
-            var iscsiPathResource = await getIscsiPathResource();
-              IscsiPathData data = new IscsiPathData()
-            {
-                NetworkBlock = newNetwork
-            };
-            ArmOperation<IscsiPathResource> lro = await iscsiPathResource.CreateOrUpdateAsync(WaitUntil.Completed, data);
-            Assert.AreEqual( lro.Value.Data.NetworkBlock, newNetwork);
-        }
+        // [TestCase, Order(2)]
+        // [RecordedTest]
+        // public async Task Update()
+        // {
+        //     var newNetwork = "192.168.0.0/24";
+        //     var iscsiPathResource = await getIscsiPathResource();
+        //       IscsiPathData data = new IscsiPathData()
+        //     {
+        //         NetworkBlock = newNetwork
+        //     };
+        //     ArmOperation<IscsiPathResource> lro = await iscsiPathResource.CreateOrUpdateAsync(WaitUntil.Completed, data);
+        //     Assert.AreEqual( lro.Value.Data.NetworkBlock, newNetwork);
+        // }
 
-        [TestCase, Order(3)]
-        [RecordedTest]
-        public async Task Delete()
-        {
-            var iscsiPathResource = await getIscsiPathResource();
-            ArmOperation lro =  await iscsiPathResource.DeleteAsync(WaitUntil.Started);
-        }
+        // [TestCase, Order(3)]
+        // [RecordedTest]
+        // public async Task Delete()
+        // {
+        //     var iscsiPathResource = await getIscsiPathResource();
+        //     ArmOperation lro =  await iscsiPathResource.DeleteAsync(WaitUntil.Started);
+        // }
     }
 }

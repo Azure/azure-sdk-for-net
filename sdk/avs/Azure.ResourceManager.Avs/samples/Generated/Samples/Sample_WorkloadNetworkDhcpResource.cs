@@ -70,16 +70,16 @@ namespace Azure.ResourceManager.Avs.Samples
             WorkloadNetworkDhcpResource workloadNetworkDhcp = client.GetWorkloadNetworkDhcpResource(workloadNetworkDhcpResourceId);
 
             // invoke the operation
-            WorkloadNetworkDhcpPatch patch = new WorkloadNetworkDhcpPatch()
+            WorkloadNetworkDhcpData data = new WorkloadNetworkDhcpData()
             {
-                Properties = new WorkloadNetworkDhcpServerUpdate()
+                Properties = new WorkloadNetworkDhcpServer()
                 {
                     ServerAddress = "40.1.5.1/24",
                     LeaseTime = 86400,
                     Revision = 1,
                 },
             };
-            ArmOperation<WorkloadNetworkDhcpResource> lro = await workloadNetworkDhcp.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<WorkloadNetworkDhcpResource> lro = await workloadNetworkDhcp.UpdateAsync(WaitUntil.Completed, data);
             WorkloadNetworkDhcpResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

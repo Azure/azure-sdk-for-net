@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Avs.Samples
             WorkloadNetworkDnsServiceResource workloadNetworkDnsService = client.GetWorkloadNetworkDnsServiceResource(workloadNetworkDnsServiceResourceId);
 
             // invoke the operation
-            WorkloadNetworkDnsServicePatch patch = new WorkloadNetworkDnsServicePatch()
+            WorkloadNetworkDnsServiceData data = new WorkloadNetworkDnsServiceData()
             {
                 DisplayName = "dnsService1",
                 DnsServiceIP = IPAddress.Parse("5.5.5.5"),
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Avs.Samples
                 LogLevel = DnsServiceLogLevel.Info,
                 Revision = 1,
             };
-            ArmOperation<WorkloadNetworkDnsServiceResource> lro = await workloadNetworkDnsService.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<WorkloadNetworkDnsServiceResource> lro = await workloadNetworkDnsService.UpdateAsync(WaitUntil.Completed, data);
             WorkloadNetworkDnsServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

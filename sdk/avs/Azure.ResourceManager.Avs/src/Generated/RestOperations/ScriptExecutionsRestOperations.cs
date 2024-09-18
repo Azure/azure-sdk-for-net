@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScriptExecutionListResult>> ListAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<ScriptExecutionsList>> ListAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        ScriptExecutionListResult value = default;
+                        ScriptExecutionsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScriptExecutionListResult.DeserializeScriptExecutionListResult(document.RootElement);
+                        value = ScriptExecutionsList.DeserializeScriptExecutionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScriptExecutionListResult> List(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<ScriptExecutionsList> List(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        ScriptExecutionListResult value = default;
+                        ScriptExecutionsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScriptExecutionListResult.DeserializeScriptExecutionListResult(document.RootElement);
+                        value = ScriptExecutionsList.DeserializeScriptExecutionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScriptExecutionListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<ScriptExecutionsList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -588,9 +588,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        ScriptExecutionListResult value = default;
+                        ScriptExecutionsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScriptExecutionListResult.DeserializeScriptExecutionListResult(document.RootElement);
+                        value = ScriptExecutionsList.DeserializeScriptExecutionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScriptExecutionListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<ScriptExecutionsList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -619,9 +619,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        ScriptExecutionListResult value = default;
+                        ScriptExecutionsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScriptExecutionListResult.DeserializeScriptExecutionListResult(document.RootElement);
+                        value = ScriptExecutionsList.DeserializeScriptExecutionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

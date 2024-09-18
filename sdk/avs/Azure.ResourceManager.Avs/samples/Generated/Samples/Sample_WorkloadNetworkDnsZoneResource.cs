@@ -10,7 +10,6 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Avs.Models;
 
 namespace Azure.ResourceManager.Avs.Samples
 {
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Avs.Samples
             WorkloadNetworkDnsZoneResource workloadNetworkDnsZone = client.GetWorkloadNetworkDnsZoneResource(workloadNetworkDnsZoneResourceId);
 
             // invoke the operation
-            WorkloadNetworkDnsZonePatch patch = new WorkloadNetworkDnsZonePatch()
+            WorkloadNetworkDnsZoneData data = new WorkloadNetworkDnsZoneData()
             {
                 DisplayName = "dnsZone1",
                 Domain =
@@ -84,7 +83,7 @@ IPAddress.Parse("1.1.1.1")
                 SourceIP = IPAddress.Parse("8.8.8.8"),
                 Revision = 1,
             };
-            ArmOperation<WorkloadNetworkDnsZoneResource> lro = await workloadNetworkDnsZone.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<WorkloadNetworkDnsZoneResource> lro = await workloadNetworkDnsZone.UpdateAsync(WaitUntil.Completed, data);
             WorkloadNetworkDnsZoneResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

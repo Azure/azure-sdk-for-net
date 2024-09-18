@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkListResult>> ListAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkList>> ListAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkListResult value = default;
+                        WorkloadNetworkList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkListResult.DeserializeWorkloadNetworkListResult(document.RootElement);
+                        value = WorkloadNetworkList.DeserializeWorkloadNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkListResult> List(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkList> List(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkListResult value = default;
+                        WorkloadNetworkList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkListResult.DeserializeWorkloadNetworkListResult(document.RootElement);
+                        value = WorkloadNetworkList.DeserializeWorkloadNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkDhcpListResult>> ListDhcpAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkDhcpList>> ListDhcpAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -283,9 +283,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkDhcpListResult value = default;
+                        WorkloadNetworkDhcpList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkDhcpListResult.DeserializeWorkloadNetworkDhcpListResult(document.RootElement);
+                        value = WorkloadNetworkDhcpList.DeserializeWorkloadNetworkDhcpList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkDhcpListResult> ListDhcp(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkDhcpList> ListDhcp(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -312,9 +312,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkDhcpListResult value = default;
+                        WorkloadNetworkDhcpList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkDhcpListResult.DeserializeWorkloadNetworkDhcpListResult(document.RootElement);
+                        value = WorkloadNetworkDhcpList.DeserializeWorkloadNetworkDhcpList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal RequestUriBuilder CreateUpdateDhcpRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, WorkloadNetworkDhcpPatch patch)
+        internal RequestUriBuilder CreateUpdateDhcpRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, WorkloadNetworkDhcpData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Avs
             return uri;
         }
 
-        internal HttpMessage CreateUpdateDhcpRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, WorkloadNetworkDhcpPatch patch)
+        internal HttpMessage CreateUpdateDhcpRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, WorkloadNetworkDhcpData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Avs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -573,19 +573,19 @@ namespace Azure.ResourceManager.Avs
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="dhcpId"> The ID of the DHCP configuration. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="dhcpId"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="dhcpId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateDhcpAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, WorkloadNetworkDhcpPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateDhcpAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, WorkloadNetworkDhcpData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateDhcpRequest(subscriptionId, resourceGroupName, privateCloudName, dhcpId, patch);
+            using var message = CreateUpdateDhcpRequest(subscriptionId, resourceGroupName, privateCloudName, dhcpId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -602,19 +602,19 @@ namespace Azure.ResourceManager.Avs
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="dhcpId"> The ID of the DHCP configuration. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="dhcpId"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="dhcpId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateDhcp(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, WorkloadNetworkDhcpPatch patch, CancellationToken cancellationToken = default)
+        public Response UpdateDhcp(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, WorkloadNetworkDhcpData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateDhcpRequest(subscriptionId, resourceGroupName, privateCloudName, dhcpId, patch);
+            using var message = CreateUpdateDhcpRequest(subscriptionId, resourceGroupName, privateCloudName, dhcpId, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkDnsServiceListResult>> ListDnsServicesAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkDnsServicesList>> ListDnsServicesAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -775,9 +775,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkDnsServiceListResult value = default;
+                        WorkloadNetworkDnsServicesList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkDnsServiceListResult.DeserializeWorkloadNetworkDnsServiceListResult(document.RootElement);
+                        value = WorkloadNetworkDnsServicesList.DeserializeWorkloadNetworkDnsServicesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkDnsServiceListResult> ListDnsServices(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkDnsServicesList> ListDnsServices(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -804,9 +804,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkDnsServiceListResult value = default;
+                        WorkloadNetworkDnsServicesList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkDnsServiceListResult.DeserializeWorkloadNetworkDnsServiceListResult(document.RootElement);
+                        value = WorkloadNetworkDnsServicesList.DeserializeWorkloadNetworkDnsServicesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1018,7 +1018,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal RequestUriBuilder CreateUpdateDnsServiceRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, WorkloadNetworkDnsServicePatch patch)
+        internal RequestUriBuilder CreateUpdateDnsServiceRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, WorkloadNetworkDnsServiceData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1034,7 +1034,7 @@ namespace Azure.ResourceManager.Avs
             return uri;
         }
 
-        internal HttpMessage CreateUpdateDnsServiceRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, WorkloadNetworkDnsServicePatch patch)
+        internal HttpMessage CreateUpdateDnsServiceRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, WorkloadNetworkDnsServiceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1054,7 +1054,7 @@ namespace Azure.ResourceManager.Avs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1065,19 +1065,19 @@ namespace Azure.ResourceManager.Avs
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="dnsServiceId"> ID of the DNS service. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="dnsServiceId"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="dnsServiceId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateDnsServiceAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, WorkloadNetworkDnsServicePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateDnsServiceAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, WorkloadNetworkDnsServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateDnsServiceRequest(subscriptionId, resourceGroupName, privateCloudName, dnsServiceId, patch);
+            using var message = CreateUpdateDnsServiceRequest(subscriptionId, resourceGroupName, privateCloudName, dnsServiceId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1094,19 +1094,19 @@ namespace Azure.ResourceManager.Avs
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="dnsServiceId"> ID of the DNS service. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="dnsServiceId"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="dnsServiceId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateDnsService(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, WorkloadNetworkDnsServicePatch patch, CancellationToken cancellationToken = default)
+        public Response UpdateDnsService(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, WorkloadNetworkDnsServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateDnsServiceRequest(subscriptionId, resourceGroupName, privateCloudName, dnsServiceId, patch);
+            using var message = CreateUpdateDnsServiceRequest(subscriptionId, resourceGroupName, privateCloudName, dnsServiceId, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1255,7 +1255,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkDnsZoneListResult>> ListDnsZonesAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkDnsZonesList>> ListDnsZonesAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1267,9 +1267,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkDnsZoneListResult value = default;
+                        WorkloadNetworkDnsZonesList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkDnsZoneListResult.DeserializeWorkloadNetworkDnsZoneListResult(document.RootElement);
+                        value = WorkloadNetworkDnsZonesList.DeserializeWorkloadNetworkDnsZonesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1284,7 +1284,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkDnsZoneListResult> ListDnsZones(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkDnsZonesList> ListDnsZones(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1296,9 +1296,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkDnsZoneListResult value = default;
+                        WorkloadNetworkDnsZonesList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkDnsZoneListResult.DeserializeWorkloadNetworkDnsZoneListResult(document.RootElement);
+                        value = WorkloadNetworkDnsZonesList.DeserializeWorkloadNetworkDnsZonesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1510,7 +1510,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal RequestUriBuilder CreateUpdateDnsZoneRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, WorkloadNetworkDnsZonePatch patch)
+        internal RequestUriBuilder CreateUpdateDnsZoneRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, WorkloadNetworkDnsZoneData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1526,7 +1526,7 @@ namespace Azure.ResourceManager.Avs
             return uri;
         }
 
-        internal HttpMessage CreateUpdateDnsZoneRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, WorkloadNetworkDnsZonePatch patch)
+        internal HttpMessage CreateUpdateDnsZoneRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, WorkloadNetworkDnsZoneData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1546,7 +1546,7 @@ namespace Azure.ResourceManager.Avs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1557,19 +1557,19 @@ namespace Azure.ResourceManager.Avs
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="dnsZoneId"> ID of the DNS zone. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="dnsZoneId"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="dnsZoneId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsZoneId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateDnsZoneAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, WorkloadNetworkDnsZonePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateDnsZoneAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, WorkloadNetworkDnsZoneData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateDnsZoneRequest(subscriptionId, resourceGroupName, privateCloudName, dnsZoneId, patch);
+            using var message = CreateUpdateDnsZoneRequest(subscriptionId, resourceGroupName, privateCloudName, dnsZoneId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1586,19 +1586,19 @@ namespace Azure.ResourceManager.Avs
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="dnsZoneId"> ID of the DNS zone. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="dnsZoneId"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="dnsZoneId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsZoneId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateDnsZone(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, WorkloadNetworkDnsZonePatch patch, CancellationToken cancellationToken = default)
+        public Response UpdateDnsZone(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, WorkloadNetworkDnsZoneData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateDnsZoneRequest(subscriptionId, resourceGroupName, privateCloudName, dnsZoneId, patch);
+            using var message = CreateUpdateDnsZoneRequest(subscriptionId, resourceGroupName, privateCloudName, dnsZoneId, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1747,7 +1747,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkGatewayListResult>> ListGatewaysAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkGatewayList>> ListGatewaysAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1759,9 +1759,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkGatewayListResult value = default;
+                        WorkloadNetworkGatewayList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkGatewayListResult.DeserializeWorkloadNetworkGatewayListResult(document.RootElement);
+                        value = WorkloadNetworkGatewayList.DeserializeWorkloadNetworkGatewayList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1776,7 +1776,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkGatewayListResult> ListGateways(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkGatewayList> ListGateways(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1788,9 +1788,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkGatewayListResult value = default;
+                        WorkloadNetworkGatewayList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkGatewayListResult.DeserializeWorkloadNetworkGatewayListResult(document.RootElement);
+                        value = WorkloadNetworkGatewayList.DeserializeWorkloadNetworkGatewayList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1945,7 +1945,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkPortMirroringListResult>> ListPortMirroringAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkPortMirroringList>> ListPortMirroringAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1957,9 +1957,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkPortMirroringListResult value = default;
+                        WorkloadNetworkPortMirroringList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkPortMirroringListResult.DeserializeWorkloadNetworkPortMirroringListResult(document.RootElement);
+                        value = WorkloadNetworkPortMirroringList.DeserializeWorkloadNetworkPortMirroringList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1974,7 +1974,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkPortMirroringListResult> ListPortMirroring(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkPortMirroringList> ListPortMirroring(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1986,9 +1986,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkPortMirroringListResult value = default;
+                        WorkloadNetworkPortMirroringList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkPortMirroringListResult.DeserializeWorkloadNetworkPortMirroringListResult(document.RootElement);
+                        value = WorkloadNetworkPortMirroringList.DeserializeWorkloadNetworkPortMirroringList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2200,7 +2200,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal RequestUriBuilder CreateUpdatePortMirroringRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, WorkloadNetworkPortMirroringProfilePatch patch)
+        internal RequestUriBuilder CreateUpdatePortMirroringRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, WorkloadNetworkPortMirroringProfileData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2216,7 +2216,7 @@ namespace Azure.ResourceManager.Avs
             return uri;
         }
 
-        internal HttpMessage CreateUpdatePortMirroringRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, WorkloadNetworkPortMirroringProfilePatch patch)
+        internal HttpMessage CreateUpdatePortMirroringRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, WorkloadNetworkPortMirroringProfileData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2236,7 +2236,7 @@ namespace Azure.ResourceManager.Avs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -2247,19 +2247,19 @@ namespace Azure.ResourceManager.Avs
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="portMirroringId"> ID of the NSX port mirroring profile. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="portMirroringId"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="portMirroringId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdatePortMirroringAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, WorkloadNetworkPortMirroringProfilePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdatePortMirroringAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, WorkloadNetworkPortMirroringProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdatePortMirroringRequest(subscriptionId, resourceGroupName, privateCloudName, portMirroringId, patch);
+            using var message = CreateUpdatePortMirroringRequest(subscriptionId, resourceGroupName, privateCloudName, portMirroringId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2276,19 +2276,19 @@ namespace Azure.ResourceManager.Avs
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="portMirroringId"> ID of the NSX port mirroring profile. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="portMirroringId"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="portMirroringId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdatePortMirroring(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, WorkloadNetworkPortMirroringProfilePatch patch, CancellationToken cancellationToken = default)
+        public Response UpdatePortMirroring(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, WorkloadNetworkPortMirroringProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdatePortMirroringRequest(subscriptionId, resourceGroupName, privateCloudName, portMirroringId, patch);
+            using var message = CreateUpdatePortMirroringRequest(subscriptionId, resourceGroupName, privateCloudName, portMirroringId, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2437,7 +2437,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkPublicIPListResult>> ListPublicIPsAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkPublicIPsList>> ListPublicIPsAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2449,9 +2449,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkPublicIPListResult value = default;
+                        WorkloadNetworkPublicIPsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkPublicIPListResult.DeserializeWorkloadNetworkPublicIPListResult(document.RootElement);
+                        value = WorkloadNetworkPublicIPsList.DeserializeWorkloadNetworkPublicIPsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2466,7 +2466,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkPublicIPListResult> ListPublicIPs(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkPublicIPsList> ListPublicIPs(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2478,9 +2478,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkPublicIPListResult value = default;
+                        WorkloadNetworkPublicIPsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkPublicIPListResult.DeserializeWorkloadNetworkPublicIPListResult(document.RootElement);
+                        value = WorkloadNetworkPublicIPsList.DeserializeWorkloadNetworkPublicIPsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2829,7 +2829,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkSegmentListResult>> ListSegmentsAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkSegmentsList>> ListSegmentsAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2841,9 +2841,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkSegmentListResult value = default;
+                        WorkloadNetworkSegmentsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkSegmentListResult.DeserializeWorkloadNetworkSegmentListResult(document.RootElement);
+                        value = WorkloadNetworkSegmentsList.DeserializeWorkloadNetworkSegmentsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2858,7 +2858,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkSegmentListResult> ListSegments(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkSegmentsList> ListSegments(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2870,9 +2870,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkSegmentListResult value = default;
+                        WorkloadNetworkSegmentsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkSegmentListResult.DeserializeWorkloadNetworkSegmentListResult(document.RootElement);
+                        value = WorkloadNetworkSegmentsList.DeserializeWorkloadNetworkSegmentsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3084,7 +3084,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal RequestUriBuilder CreateUpdateSegmentsRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentPatch patch)
+        internal RequestUriBuilder CreateUpdateSegmentsRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -3100,7 +3100,7 @@ namespace Azure.ResourceManager.Avs
             return uri;
         }
 
-        internal HttpMessage CreateUpdateSegmentsRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentPatch patch)
+        internal HttpMessage CreateUpdateSegmentsRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3120,7 +3120,7 @@ namespace Azure.ResourceManager.Avs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -3131,19 +3131,19 @@ namespace Azure.ResourceManager.Avs
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="segmentId"> The ID of the NSX Segment. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="segmentId"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="segmentId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateSegmentsAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateSegmentsAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateSegmentsRequest(subscriptionId, resourceGroupName, privateCloudName, segmentId, patch);
+            using var message = CreateUpdateSegmentsRequest(subscriptionId, resourceGroupName, privateCloudName, segmentId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3160,19 +3160,19 @@ namespace Azure.ResourceManager.Avs
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="segmentId"> The ID of the NSX Segment. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="segmentId"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="segmentId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateSegments(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentPatch patch, CancellationToken cancellationToken = default)
+        public Response UpdateSegments(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateSegmentsRequest(subscriptionId, resourceGroupName, privateCloudName, segmentId, patch);
+            using var message = CreateUpdateSegmentsRequest(subscriptionId, resourceGroupName, privateCloudName, segmentId, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3321,7 +3321,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkVirtualMachineListResult>> ListVirtualMachinesAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkVirtualMachinesList>> ListVirtualMachinesAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3333,9 +3333,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkVirtualMachineListResult value = default;
+                        WorkloadNetworkVirtualMachinesList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkVirtualMachineListResult.DeserializeWorkloadNetworkVirtualMachineListResult(document.RootElement);
+                        value = WorkloadNetworkVirtualMachinesList.DeserializeWorkloadNetworkVirtualMachinesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3350,7 +3350,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkVirtualMachineListResult> ListVirtualMachines(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkVirtualMachinesList> ListVirtualMachines(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3362,9 +3362,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkVirtualMachineListResult value = default;
+                        WorkloadNetworkVirtualMachinesList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkVirtualMachineListResult.DeserializeWorkloadNetworkVirtualMachineListResult(document.RootElement);
+                        value = WorkloadNetworkVirtualMachinesList.DeserializeWorkloadNetworkVirtualMachinesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3519,7 +3519,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkVmGroupListResult>> ListVmGroupsAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkVmGroupsList>> ListVmGroupsAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3531,9 +3531,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkVmGroupListResult value = default;
+                        WorkloadNetworkVmGroupsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkVmGroupListResult.DeserializeWorkloadNetworkVmGroupListResult(document.RootElement);
+                        value = WorkloadNetworkVmGroupsList.DeserializeWorkloadNetworkVmGroupsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3548,7 +3548,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkVmGroupListResult> ListVmGroups(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkVmGroupsList> ListVmGroups(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3560,9 +3560,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkVmGroupListResult value = default;
+                        WorkloadNetworkVmGroupsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkVmGroupListResult.DeserializeWorkloadNetworkVmGroupListResult(document.RootElement);
+                        value = WorkloadNetworkVmGroupsList.DeserializeWorkloadNetworkVmGroupsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3774,7 +3774,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal RequestUriBuilder CreateUpdateVmGroupRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, WorkloadNetworkVmGroupPatch patch)
+        internal RequestUriBuilder CreateUpdateVmGroupRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, WorkloadNetworkVmGroupData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -3790,7 +3790,7 @@ namespace Azure.ResourceManager.Avs
             return uri;
         }
 
-        internal HttpMessage CreateUpdateVmGroupRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, WorkloadNetworkVmGroupPatch patch)
+        internal HttpMessage CreateUpdateVmGroupRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, WorkloadNetworkVmGroupData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3810,7 +3810,7 @@ namespace Azure.ResourceManager.Avs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -3821,19 +3821,19 @@ namespace Azure.ResourceManager.Avs
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="vmGroupId"> ID of the VM group. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="vmGroupId"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="vmGroupId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateVmGroupAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, WorkloadNetworkVmGroupPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateVmGroupAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, WorkloadNetworkVmGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateVmGroupRequest(subscriptionId, resourceGroupName, privateCloudName, vmGroupId, patch);
+            using var message = CreateUpdateVmGroupRequest(subscriptionId, resourceGroupName, privateCloudName, vmGroupId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3850,19 +3850,19 @@ namespace Azure.ResourceManager.Avs
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="vmGroupId"> ID of the VM group. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="vmGroupId"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="vmGroupId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateVmGroup(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, WorkloadNetworkVmGroupPatch patch, CancellationToken cancellationToken = default)
+        public Response UpdateVmGroup(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, WorkloadNetworkVmGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateVmGroupRequest(subscriptionId, resourceGroupName, privateCloudName, vmGroupId, patch);
+            using var message = CreateUpdateVmGroupRequest(subscriptionId, resourceGroupName, privateCloudName, vmGroupId, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3998,7 +3998,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4011,9 +4011,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkListResult value = default;
+                        WorkloadNetworkList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkListResult.DeserializeWorkloadNetworkListResult(document.RootElement);
+                        value = WorkloadNetworkList.DeserializeWorkloadNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4029,7 +4029,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4042,9 +4042,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkListResult value = default;
+                        WorkloadNetworkList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkListResult.DeserializeWorkloadNetworkListResult(document.RootElement);
+                        value = WorkloadNetworkList.DeserializeWorkloadNetworkList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4082,7 +4082,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkDhcpListResult>> ListDhcpNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkDhcpList>> ListDhcpNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4095,9 +4095,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkDhcpListResult value = default;
+                        WorkloadNetworkDhcpList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkDhcpListResult.DeserializeWorkloadNetworkDhcpListResult(document.RootElement);
+                        value = WorkloadNetworkDhcpList.DeserializeWorkloadNetworkDhcpList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4113,7 +4113,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkDhcpListResult> ListDhcpNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkDhcpList> ListDhcpNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4126,9 +4126,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkDhcpListResult value = default;
+                        WorkloadNetworkDhcpList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkDhcpListResult.DeserializeWorkloadNetworkDhcpListResult(document.RootElement);
+                        value = WorkloadNetworkDhcpList.DeserializeWorkloadNetworkDhcpList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4166,7 +4166,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkDnsServiceListResult>> ListDnsServicesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkDnsServicesList>> ListDnsServicesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4179,9 +4179,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkDnsServiceListResult value = default;
+                        WorkloadNetworkDnsServicesList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkDnsServiceListResult.DeserializeWorkloadNetworkDnsServiceListResult(document.RootElement);
+                        value = WorkloadNetworkDnsServicesList.DeserializeWorkloadNetworkDnsServicesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4197,7 +4197,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkDnsServiceListResult> ListDnsServicesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkDnsServicesList> ListDnsServicesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4210,9 +4210,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkDnsServiceListResult value = default;
+                        WorkloadNetworkDnsServicesList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkDnsServiceListResult.DeserializeWorkloadNetworkDnsServiceListResult(document.RootElement);
+                        value = WorkloadNetworkDnsServicesList.DeserializeWorkloadNetworkDnsServicesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4250,7 +4250,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkDnsZoneListResult>> ListDnsZonesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkDnsZonesList>> ListDnsZonesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4263,9 +4263,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkDnsZoneListResult value = default;
+                        WorkloadNetworkDnsZonesList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkDnsZoneListResult.DeserializeWorkloadNetworkDnsZoneListResult(document.RootElement);
+                        value = WorkloadNetworkDnsZonesList.DeserializeWorkloadNetworkDnsZonesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4281,7 +4281,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkDnsZoneListResult> ListDnsZonesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkDnsZonesList> ListDnsZonesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4294,9 +4294,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkDnsZoneListResult value = default;
+                        WorkloadNetworkDnsZonesList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkDnsZoneListResult.DeserializeWorkloadNetworkDnsZoneListResult(document.RootElement);
+                        value = WorkloadNetworkDnsZonesList.DeserializeWorkloadNetworkDnsZonesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4334,7 +4334,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkGatewayListResult>> ListGatewaysNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkGatewayList>> ListGatewaysNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4347,9 +4347,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkGatewayListResult value = default;
+                        WorkloadNetworkGatewayList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkGatewayListResult.DeserializeWorkloadNetworkGatewayListResult(document.RootElement);
+                        value = WorkloadNetworkGatewayList.DeserializeWorkloadNetworkGatewayList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4365,7 +4365,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkGatewayListResult> ListGatewaysNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkGatewayList> ListGatewaysNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4378,9 +4378,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkGatewayListResult value = default;
+                        WorkloadNetworkGatewayList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkGatewayListResult.DeserializeWorkloadNetworkGatewayListResult(document.RootElement);
+                        value = WorkloadNetworkGatewayList.DeserializeWorkloadNetworkGatewayList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4418,7 +4418,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkPortMirroringListResult>> ListPortMirroringNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkPortMirroringList>> ListPortMirroringNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4431,9 +4431,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkPortMirroringListResult value = default;
+                        WorkloadNetworkPortMirroringList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkPortMirroringListResult.DeserializeWorkloadNetworkPortMirroringListResult(document.RootElement);
+                        value = WorkloadNetworkPortMirroringList.DeserializeWorkloadNetworkPortMirroringList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4449,7 +4449,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkPortMirroringListResult> ListPortMirroringNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkPortMirroringList> ListPortMirroringNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4462,9 +4462,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkPortMirroringListResult value = default;
+                        WorkloadNetworkPortMirroringList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkPortMirroringListResult.DeserializeWorkloadNetworkPortMirroringListResult(document.RootElement);
+                        value = WorkloadNetworkPortMirroringList.DeserializeWorkloadNetworkPortMirroringList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4502,7 +4502,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkPublicIPListResult>> ListPublicIPsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkPublicIPsList>> ListPublicIPsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4515,9 +4515,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkPublicIPListResult value = default;
+                        WorkloadNetworkPublicIPsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkPublicIPListResult.DeserializeWorkloadNetworkPublicIPListResult(document.RootElement);
+                        value = WorkloadNetworkPublicIPsList.DeserializeWorkloadNetworkPublicIPsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4533,7 +4533,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkPublicIPListResult> ListPublicIPsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkPublicIPsList> ListPublicIPsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4546,9 +4546,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkPublicIPListResult value = default;
+                        WorkloadNetworkPublicIPsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkPublicIPListResult.DeserializeWorkloadNetworkPublicIPListResult(document.RootElement);
+                        value = WorkloadNetworkPublicIPsList.DeserializeWorkloadNetworkPublicIPsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4586,7 +4586,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkSegmentListResult>> ListSegmentsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkSegmentsList>> ListSegmentsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4599,9 +4599,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkSegmentListResult value = default;
+                        WorkloadNetworkSegmentsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkSegmentListResult.DeserializeWorkloadNetworkSegmentListResult(document.RootElement);
+                        value = WorkloadNetworkSegmentsList.DeserializeWorkloadNetworkSegmentsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4617,7 +4617,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkSegmentListResult> ListSegmentsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkSegmentsList> ListSegmentsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4630,9 +4630,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkSegmentListResult value = default;
+                        WorkloadNetworkSegmentsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkSegmentListResult.DeserializeWorkloadNetworkSegmentListResult(document.RootElement);
+                        value = WorkloadNetworkSegmentsList.DeserializeWorkloadNetworkSegmentsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4670,7 +4670,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkVirtualMachineListResult>> ListVirtualMachinesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkVirtualMachinesList>> ListVirtualMachinesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4683,9 +4683,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkVirtualMachineListResult value = default;
+                        WorkloadNetworkVirtualMachinesList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkVirtualMachineListResult.DeserializeWorkloadNetworkVirtualMachineListResult(document.RootElement);
+                        value = WorkloadNetworkVirtualMachinesList.DeserializeWorkloadNetworkVirtualMachinesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4701,7 +4701,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkVirtualMachineListResult> ListVirtualMachinesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkVirtualMachinesList> ListVirtualMachinesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4714,9 +4714,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkVirtualMachineListResult value = default;
+                        WorkloadNetworkVirtualMachinesList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkVirtualMachineListResult.DeserializeWorkloadNetworkVirtualMachineListResult(document.RootElement);
+                        value = WorkloadNetworkVirtualMachinesList.DeserializeWorkloadNetworkVirtualMachinesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4754,7 +4754,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadNetworkVmGroupListResult>> ListVmGroupsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkloadNetworkVmGroupsList>> ListVmGroupsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4767,9 +4767,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkVmGroupListResult value = default;
+                        WorkloadNetworkVmGroupsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadNetworkVmGroupListResult.DeserializeWorkloadNetworkVmGroupListResult(document.RootElement);
+                        value = WorkloadNetworkVmGroupsList.DeserializeWorkloadNetworkVmGroupsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4785,7 +4785,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadNetworkVmGroupListResult> ListVmGroupsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
+        public Response<WorkloadNetworkVmGroupsList> ListVmGroupsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -4798,9 +4798,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        WorkloadNetworkVmGroupListResult value = default;
+                        WorkloadNetworkVmGroupsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadNetworkVmGroupListResult.DeserializeWorkloadNetworkVmGroupListResult(document.RootElement);
+                        value = WorkloadNetworkVmGroupsList.DeserializeWorkloadNetworkVmGroupsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

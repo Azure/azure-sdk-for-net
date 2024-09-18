@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Avs.Samples
             WorkloadNetworkSegmentResource workloadNetworkSegment = client.GetWorkloadNetworkSegmentResource(workloadNetworkSegmentResourceId);
 
             // invoke the operation
-            WorkloadNetworkSegmentPatch patch = new WorkloadNetworkSegmentPatch()
+            WorkloadNetworkSegmentData data = new WorkloadNetworkSegmentData()
             {
                 ConnectedGateway = "/infra/tier-1s/gateway",
                 Subnet = new WorkloadNetworkSegmentSubnet()
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Avs.Samples
                 },
                 Revision = 1,
             };
-            ArmOperation<WorkloadNetworkSegmentResource> lro = await workloadNetworkSegment.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<WorkloadNetworkSegmentResource> lro = await workloadNetworkSegment.UpdateAsync(WaitUntil.Completed, data);
             WorkloadNetworkSegmentResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

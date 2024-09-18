@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverAddress"> DHCP Server Address. </param>
         /// <param name="leaseTime"> DHCP Server Lease Time. </param>
-        internal WorkloadNetworkDhcpServer(DhcpTypeEnum dhcpType, string displayName, IReadOnlyList<string> segments, WorkloadNetworkDhcpProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData, string serverAddress, int? leaseTime) : base(dhcpType, displayName, segments, provisioningState, revision, serializedAdditionalRawData)
+        internal WorkloadNetworkDhcpServer(DhcpTypeEnum dhcpType, string displayName, IReadOnlyList<string> segments, WorkloadNetworkDhcpProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData, string serverAddress, long? leaseTime) : base(dhcpType, displayName, segments, provisioningState, revision, serializedAdditionalRawData)
         {
             ServerAddress = serverAddress;
             LeaseTime = leaseTime;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> DHCP Server Address. </summary>
         public string ServerAddress { get; set; }
         /// <summary> DHCP Server Lease Time. </summary>
-        public int? LeaseTime { get; set; }
+        public long? LeaseTime { get; set; }
     }
 }

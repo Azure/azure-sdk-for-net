@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Avs.Models;
 
 namespace Azure.ResourceManager.Avs.Samples
 {
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Avs.Samples
             WorkloadNetworkVmGroupResource workloadNetworkVmGroup = client.GetWorkloadNetworkVmGroupResource(workloadNetworkVmGroupResourceId);
 
             // invoke the operation
-            WorkloadNetworkVmGroupPatch patch = new WorkloadNetworkVmGroupPatch()
+            WorkloadNetworkVmGroupData data = new WorkloadNetworkVmGroupData()
             {
                 Members =
 {
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.Avs.Samples
 },
                 Revision = 1,
             };
-            ArmOperation<WorkloadNetworkVmGroupResource> lro = await workloadNetworkVmGroup.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<WorkloadNetworkVmGroupResource> lro = await workloadNetworkVmGroup.UpdateAsync(WaitUntil.Completed, data);
             WorkloadNetworkVmGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

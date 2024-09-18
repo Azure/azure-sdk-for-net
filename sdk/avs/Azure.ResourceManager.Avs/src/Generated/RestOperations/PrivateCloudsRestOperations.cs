@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateCloudListResult>> ListInSubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateCloudList>> ListInSubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        PrivateCloudListResult value = default;
+                        PrivateCloudList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateCloudListResult.DeserializePrivateCloudListResult(document.RootElement);
+                        value = PrivateCloudList.DeserializePrivateCloudList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateCloudListResult> ListInSubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<PrivateCloudList> ListInSubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        PrivateCloudListResult value = default;
+                        PrivateCloudList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateCloudListResult.DeserializePrivateCloudListResult(document.RootElement);
+                        value = PrivateCloudList.DeserializePrivateCloudList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateCloudListResult>> ListAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateCloudList>> ListAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -163,9 +163,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        PrivateCloudListResult value = default;
+                        PrivateCloudList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateCloudListResult.DeserializePrivateCloudListResult(document.RootElement);
+                        value = PrivateCloudList.DeserializePrivateCloudList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateCloudListResult> List(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<PrivateCloudList> List(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        PrivateCloudListResult value = default;
+                        PrivateCloudList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateCloudListResult.DeserializePrivateCloudListResult(document.RootElement);
+                        value = PrivateCloudList.DeserializePrivateCloudList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateCloudListResult>> ListInSubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateCloudList>> ListInSubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -871,9 +871,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        PrivateCloudListResult value = default;
+                        PrivateCloudList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateCloudListResult.DeserializePrivateCloudListResult(document.RootElement);
+                        value = PrivateCloudList.DeserializePrivateCloudList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateCloudListResult> ListInSubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<PrivateCloudList> ListInSubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -898,9 +898,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        PrivateCloudListResult value = default;
+                        PrivateCloudList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateCloudListResult.DeserializePrivateCloudListResult(document.RootElement);
+                        value = PrivateCloudList.DeserializePrivateCloudList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -937,7 +937,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateCloudListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateCloudList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -949,9 +949,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        PrivateCloudListResult value = default;
+                        PrivateCloudList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateCloudListResult.DeserializePrivateCloudListResult(document.RootElement);
+                        value = PrivateCloudList.DeserializePrivateCloudList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -966,7 +966,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateCloudListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<PrivateCloudList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -978,9 +978,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        PrivateCloudListResult value = default;
+                        PrivateCloudList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateCloudListResult.DeserializePrivateCloudListResult(document.RootElement);
+                        value = PrivateCloudList.DeserializePrivateCloudList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

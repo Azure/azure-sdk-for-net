@@ -744,32 +744,6 @@ namespace Azure.ResourceManager.Avs.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkDnsServicePatch"/>. </summary>
-        /// <param name="displayName"> Display name of the DNS Service. </param>
-        /// <param name="dnsServiceIP"> DNS service IP of the DNS Service. </param>
-        /// <param name="defaultDnsZone"> Default DNS zone of the DNS Service. </param>
-        /// <param name="fqdnZones"> FQDN zones of the DNS Service. </param>
-        /// <param name="logLevel"> DNS Service log level. </param>
-        /// <param name="status"> DNS Service status. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="revision"> NSX revision number. </param>
-        /// <returns> A new <see cref="Models.WorkloadNetworkDnsServicePatch"/> instance for mocking. </returns>
-        public static WorkloadNetworkDnsServicePatch WorkloadNetworkDnsServicePatch(string displayName = null, IPAddress dnsServiceIP = null, string defaultDnsZone = null, IEnumerable<string> fqdnZones = null, DnsServiceLogLevel? logLevel = null, DnsServiceStatus? status = null, WorkloadNetworkDnsServiceProvisioningState? provisioningState = null, long? revision = null)
-        {
-            fqdnZones ??= new List<string>();
-
-            return new WorkloadNetworkDnsServicePatch(
-                displayName,
-                dnsServiceIP,
-                defaultDnsZone,
-                fqdnZones?.ToList(),
-                logLevel,
-                status,
-                provisioningState,
-                revision,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkDnsZoneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -783,7 +757,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
         /// <returns> A new <see cref="Avs.WorkloadNetworkDnsZoneData"/> instance for mocking. </returns>
-        public static WorkloadNetworkDnsZoneData WorkloadNetworkDnsZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<string> domain = null, IEnumerable<IPAddress> dnsServerIPs = null, IPAddress sourceIP = null, int? dnsServices = null, WorkloadNetworkDnsZoneProvisioningState? provisioningState = null, long? revision = null)
+        public static WorkloadNetworkDnsZoneData WorkloadNetworkDnsZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<string> domain = null, IEnumerable<IPAddress> dnsServerIPs = null, IPAddress sourceIP = null, long? dnsServices = null, WorkloadNetworkDnsZoneProvisioningState? provisioningState = null, long? revision = null)
         {
             domain ??= new List<string>();
             dnsServerIPs ??= new List<IPAddress>();
@@ -793,31 +767,6 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                displayName,
-                domain?.ToList(),
-                dnsServerIPs?.ToList(),
-                sourceIP,
-                dnsServices,
-                provisioningState,
-                revision,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkDnsZonePatch"/>. </summary>
-        /// <param name="displayName"> Display name of the DNS Zone. </param>
-        /// <param name="domain"> Domain names of the DNS Zone. </param>
-        /// <param name="dnsServerIPs"> DNS Server IP array of the DNS Zone. </param>
-        /// <param name="sourceIP"> Source IP of the DNS Zone. </param>
-        /// <param name="dnsServices"> Number of DNS Services using the DNS zone. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="revision"> NSX revision number. </param>
-        /// <returns> A new <see cref="Models.WorkloadNetworkDnsZonePatch"/> instance for mocking. </returns>
-        public static WorkloadNetworkDnsZonePatch WorkloadNetworkDnsZonePatch(string displayName = null, IEnumerable<string> domain = null, IEnumerable<IPAddress> dnsServerIPs = null, IPAddress sourceIP = null, int? dnsServices = null, WorkloadNetworkDnsZoneProvisioningState? provisioningState = null, long? revision = null)
-        {
-            domain ??= new List<string>();
-            dnsServerIPs ??= new List<IPAddress>();
-
-            return new WorkloadNetworkDnsZonePatch(
                 displayName,
                 domain?.ToList(),
                 dnsServerIPs?.ToList(),
@@ -870,28 +819,6 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                displayName,
-                direction,
-                source,
-                destination,
-                status,
-                provisioningState,
-                revision,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkPortMirroringProfilePatch"/>. </summary>
-        /// <param name="displayName"> Display name of the port mirroring profile. </param>
-        /// <param name="direction"> Direction of port mirroring profile. </param>
-        /// <param name="source"> Source VM Group. </param>
-        /// <param name="destination"> Destination VM Group. </param>
-        /// <param name="status"> Port Mirroring Status. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="revision"> NSX revision number. </param>
-        /// <returns> A new <see cref="Models.WorkloadNetworkPortMirroringProfilePatch"/> instance for mocking. </returns>
-        public static WorkloadNetworkPortMirroringProfilePatch WorkloadNetworkPortMirroringProfilePatch(string displayName = null, PortMirroringProfileDirection? direction = null, string source = null, string destination = null, PortMirroringProfileStatus? status = null, WorkloadNetworkPortMirroringProfileProvisioningState? provisioningState = null, long? revision = null)
-        {
-            return new WorkloadNetworkPortMirroringProfilePatch(
                 displayName,
                 direction,
                 source,
@@ -966,30 +893,6 @@ namespace Azure.ResourceManager.Avs.Models
             return new WorkloadNetworkSegmentPortVif(portName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkSegmentPatch"/>. </summary>
-        /// <param name="displayName"> Display name of the segment. </param>
-        /// <param name="connectedGateway"> Gateway which to connect segment to. </param>
-        /// <param name="subnet"> Subnet which to connect segment to. </param>
-        /// <param name="portVif"> Port Vif which segment is associated with. </param>
-        /// <param name="status"> Segment status. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="revision"> NSX revision number. </param>
-        /// <returns> A new <see cref="Models.WorkloadNetworkSegmentPatch"/> instance for mocking. </returns>
-        public static WorkloadNetworkSegmentPatch WorkloadNetworkSegmentPatch(string displayName = null, string connectedGateway = null, WorkloadNetworkSegmentSubnet subnet = null, IEnumerable<WorkloadNetworkSegmentPortVif> portVif = null, WorkloadNetworkSegmentStatus? status = null, WorkloadNetworkSegmentProvisioningState? provisioningState = null, long? revision = null)
-        {
-            portVif ??= new List<WorkloadNetworkSegmentPortVif>();
-
-            return new WorkloadNetworkSegmentPatch(
-                displayName,
-                connectedGateway,
-                subnet,
-                portVif?.ToList(),
-                status,
-                provisioningState,
-                revision,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkVirtualMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1032,26 +935,6 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                displayName,
-                members?.ToList(),
-                status,
-                provisioningState,
-                revision,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkVmGroupPatch"/>. </summary>
-        /// <param name="displayName"> Display name of the VM group. </param>
-        /// <param name="members"> Virtual machine members of this group. </param>
-        /// <param name="status"> VM Group status. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="revision"> NSX revision number. </param>
-        /// <returns> A new <see cref="Models.WorkloadNetworkVmGroupPatch"/> instance for mocking. </returns>
-        public static WorkloadNetworkVmGroupPatch WorkloadNetworkVmGroupPatch(string displayName = null, IEnumerable<string> members = null, WorkloadNetworkVmGroupStatus? status = null, WorkloadNetworkVmGroupProvisioningState? provisioningState = null, long? revision = null)
-        {
-            members ??= new List<string>();
-
-            return new WorkloadNetworkVmGroupPatch(
                 displayName,
                 members?.ToList(),
                 status,
@@ -1175,7 +1058,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="serverAddress"> DHCP Server Address. </param>
         /// <param name="leaseTime"> DHCP Server Lease Time. </param>
         /// <returns> A new <see cref="Models.WorkloadNetworkDhcpServer"/> instance for mocking. </returns>
-        public static WorkloadNetworkDhcpServer WorkloadNetworkDhcpServer(string displayName = null, IEnumerable<string> segments = null, WorkloadNetworkDhcpProvisioningState? provisioningState = null, long? revision = null, string serverAddress = null, int? leaseTime = null)
+        public static WorkloadNetworkDhcpServer WorkloadNetworkDhcpServer(string displayName = null, IEnumerable<string> segments = null, WorkloadNetworkDhcpProvisioningState? provisioningState = null, long? revision = null, string serverAddress = null, long? leaseTime = null)
         {
             segments ??= new List<string>();
 
