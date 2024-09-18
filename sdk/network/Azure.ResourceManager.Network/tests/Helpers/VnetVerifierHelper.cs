@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             if (await vnetVerifier.GetReachabilityAnalysisIntents().ExistsAsync(analysisIntent.Data.Name))
             {
-                ReachabilityAnalysisRunResource analysisIntentResponse = await vnetVerifier.GetReachabilityAnalysisRuns().GetAsync(analysisIntent.Data.Name);
+                ReachabilityAnalysisIntentResource analysisIntentResponse = await vnetVerifier.GetReachabilityAnalysisIntents().GetAsync(analysisIntent.Data.Name);
                 await analysisIntentResponse.DeleteAsync(WaitUntil.Completed);
             }
         }
@@ -61,10 +61,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             string vnetVerifierName,
             AzureLocation location)
         {
-            VerifierWorkspaceData vnetVerifierData = new VerifierWorkspaceData(location);
+            var vnetVerifierData = new VerifierWorkspaceData(location);
 
-            var vnv = await (await networkManager.GetVerifierWorkspaces().CreateOrUpdateAsync(WaitUntil.Completed, vnetVerifierName, vnetVerifierData)).WaitForCompletionAsync();
-            return vnv.Value;
+            var vnv = await networkManager.GetVerifierWorkspaces().CreateOrUpdateAsync(WaitUntil.Completed, vnetVerifierName, vnetVerifierData);
+            await Task.Delay(10000);
+            return await vnv.WaitForCompletionAsync();
         }
 
         public static async Task<ReachabilityAnalysisRunResource> CreateAnalysisRunAsync(this VerifierWorkspaceResource vnetVerifier, string analysisRunName, string intentId)
