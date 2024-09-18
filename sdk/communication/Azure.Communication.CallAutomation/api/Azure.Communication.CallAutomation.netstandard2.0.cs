@@ -90,6 +90,8 @@ namespace Azure.Communication.CallAutomation
         public CallAutomationClient(string connectionString) { }
         public CallAutomationClient(string connectionString, Azure.Communication.CallAutomation.CallAutomationClientOptions options) { }
         public CallAutomationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.CallAutomation.CallAutomationClientOptions options = null) { }
+        public CallAutomationClient(System.Uri pmaEndpoint, string connectionString, Azure.Communication.CallAutomation.CallAutomationClientOptions options = null) { }
+        public CallAutomationClient(System.Uri pmaEndpoint, System.Uri acsEndpoint, Azure.Core.TokenCredential credential, Azure.Communication.CallAutomation.CallAutomationClientOptions options = null) { }
         public Azure.Communication.CommunicationUserIdentifier Source { get { throw null; } }
         public virtual Azure.Response<Azure.Communication.CallAutomation.AnswerCallResult> AnswerCall(Azure.Communication.CallAutomation.AnswerCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.AnswerCallResult> AnswerCall(string incomingCallContext, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1641,5 +1643,36 @@ namespace Azure.Communication.CallAutomation
         public System.TimeSpan Offset { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("text")]
         public string Text { get { throw null; } set { } }
+    }
+}
+namespace Azure.Communication.CallAutomation.FHL
+{
+    public partial class Mark
+    {
+        public Mark(string sequence) { }
+        public string Sequence { get { throw null; } }
+    }
+    public partial class ServerAudioData
+    {
+        public ServerAudioData(byte[] data) { }
+        public byte[] Data { get { throw null; } }
+    }
+    public enum ServerMessageType
+    {
+        AudioData = 0,
+        Mark = 1,
+        StopAudio = 2,
+    }
+    public partial class ServerStreamingData
+    {
+        public ServerStreamingData(Azure.Communication.CallAutomation.FHL.ServerMessageType kind, Azure.Communication.CallAutomation.FHL.ServerAudioData audioData) { }
+        public Azure.Communication.CallAutomation.FHL.ServerMessageType Kind { get { throw null; } }
+        public Azure.Communication.CallAutomation.FHL.Mark Mark { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.FHL.ServerAudioData ServerAudioData { get { throw null; } }
+        public Azure.Communication.CallAutomation.FHL.StopAudio StopAudio { get { throw null; } set { } }
+    }
+    public partial class StopAudio
+    {
+        public StopAudio() { }
     }
 }
