@@ -1,6 +1,6 @@
 # Release History
 
-## 12.21.0 (2024-09-17)
+## 12.21.0 (2024-09-18)
 
 ### Features Added
 - This release contains bug fixes to improve quality.
