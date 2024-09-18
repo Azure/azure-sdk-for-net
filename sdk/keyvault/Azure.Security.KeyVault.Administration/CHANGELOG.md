@@ -6,7 +6,7 @@
 
 - Added support for service API version `7.6-preview.1`.
 - Added new methods `StartPreRestoreAsync`, `StartPreRestore`, `StartPreBackupAsync`, and `StartPreBackupAsync` to the `KeyVaultBackupClient`.
-- Added support for Continuous Access Evaluation (CAE).
+- Support for Continuous Access Evaluation (CAE).
 
 ### Breaking Changes
 
