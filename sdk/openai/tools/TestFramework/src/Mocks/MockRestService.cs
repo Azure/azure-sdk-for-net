@@ -395,7 +395,7 @@ public class MockRestService<TData> : IDisposable
             return default;
         }
 
-        return JsonHelpers.Deserialize<TData>(request.InputStream, s_options);
+        return JsonSerializer.Deserialize<TData>(request.InputStream, s_options);
     }
 
     private static void WriteJsonResponse<T>(HttpListenerResponse response, int status, T data)
@@ -403,7 +403,7 @@ public class MockRestService<TData> : IDisposable
         response.StatusCode = status;
 
         using MemoryStream buffer = new();
-        JsonHelpers.Serialize(buffer, data, s_options);
+        JsonSerializer.Serialize(buffer, data, s_options);
         buffer.Seek(0, SeekOrigin.Begin);
 
         response.ContentType = "application/json";

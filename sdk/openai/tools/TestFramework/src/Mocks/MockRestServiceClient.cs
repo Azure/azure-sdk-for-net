@@ -6,7 +6,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Globalization;
 using System.Net.Http;
-using OpenAI.TestFramework.Utils;
+using System.Text.Json;
 
 namespace OpenAI.TestFramework.Mocks;
 
@@ -241,7 +241,7 @@ public class MockRestServiceClient<TData> : IDisposable
         else
         {
             using MemoryStream stream = new();
-            JsonHelpers.Serialize(stream, data);
+            JsonSerializer.Serialize(stream, data);
             var binaryData = BinaryData.FromBytes(new ReadOnlyMemory<byte>(stream.GetBuffer(), 0, (int)stream.Length));
 
             message.Request.Headers.Set("Content-Length", stream.Length.ToString(CultureInfo.InvariantCulture));

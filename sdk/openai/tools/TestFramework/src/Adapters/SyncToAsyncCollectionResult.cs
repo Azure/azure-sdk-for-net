@@ -2,19 +2,18 @@
 // Licensed under the MIT License.
 
 using System.ClientModel;
-using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
+using OpenAI.TestFramework.Utils;
 
 namespace OpenAI.TestFramework.Adapters;
 
 /// <summary>
-/// An adapter to make a <see cref="ResultCollection{T}"/> look and work like a <see cref="AsyncResultCollection{T}"/>. This
+/// An adapter to make a <see cref="CollectionResult{T}{T}"/> look and work like a <see cref="AsyncCollectionResult{T}"/>. This
 /// simplifies writing test cases
 /// </summary>
 /// <typeparam name="T">The type of the items the enumerator returns</typeparam>
 public class SyncToAsyncCollectionResult<T> : AsyncCollectionResult<T>
 {
-    private bool _responseSet;
     private CollectionResult<T>? _syncCollection;
     private Exception? _ex;
 
@@ -26,7 +25,6 @@ public class SyncToAsyncCollectionResult<T> : AsyncCollectionResult<T>
     public SyncToAsyncCollectionResult(CollectionResult<T> syncCollection)
     {
         _syncCollection = syncCollection ?? throw new ArgumentNullException(nameof(syncCollection));
-        TrySetRawResponse();
     }
 
     /// <summary>
@@ -37,47 +35,39 @@ public class SyncToAsyncCollectionResult<T> : AsyncCollectionResult<T>
     public SyncToAsyncCollectionResult(Exception ex)
     {
         _ex = ex ?? throw new ArgumentNullException(nameof(ex));
-        _syncCollection = null;
     }
 
     /// <inheritdoc />
-    public override IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
-    {
-        return InnerEnumerable(cancellationToken).GetAsyncEnumerator();
-    }
-
-    private async IAsyncEnumerable<T> InnerEnumerable([EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public override ContinuationToken? GetContinuationToken(ClientResult page)
     {
         if (_ex != null)
         {
             ExceptionDispatchInfo.Capture(_ex).Throw();
         }
 
-        var asyncWrapper = new SyncToAsyncEnumerator<T>(_syncCollection?.GetEnumerator()!, cancellationToken);
-        while (await asyncWrapper.MoveNextAsync().ConfigureAwait(false))
-        {
-            TrySetRawResponse();
-            yield return asyncWrapper.Current;
-        }
+        return _syncCollection!.GetContinuationToken(page);
     }
 
-    private void TrySetRawResponse()
+    /// <inheritdoc />
+    public override IAsyncEnumerable<ClientResult> GetRawPagesAsync()
     {
-        if (_responseSet)
+        if (_ex != null)
         {
-            return;
+            ExceptionDispatchInfo.Capture(_ex).Throw();
         }
 
-        // Client result doesn't provide virtual methods so we have to manually set it ourselves here
-        try
+        return new SyncToAsyncEnumerable<ClientResult>(_syncCollection!.GetRawPages());
+    }
+
+    /// <inheritdoc />
+    protected override IAsyncEnumerable<T> GetValuesFromPageAsync(ClientResult page)
+    {
+        if (_ex != null)
         {
-            var raw = _syncCollection?.GetRawResponse();
-            if (raw != null)
-            {
-                SetRawResponse(raw);
-                _responseSet = true;
-            }
+            ExceptionDispatchInfo.Capture(_ex).Throw();
         }
-        catch (Exception) { /* dont' care */ }
+
+        var items = NonPublic.FromMethod<CollectionResult<T>, ClientResult, IEnumerable<T>>("GetValuesFromPage")(_syncCollection!, page);
+        return new SyncToAsyncEnumerable<T>(items);
     }
 }
