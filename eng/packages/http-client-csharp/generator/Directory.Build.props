@@ -1,6 +1,7 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <IsClientLibrary>false</IsClientLibrary>
+		<Nullable>enable</Nullable>
   </PropertyGroup>
   <!--
     Add any shared properties you want for the projects under this package directory that need to be set before the auto imported Directory.Build.props

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ExpressRouteCircuitConnectionGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/ExpressRouteCircuitConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteCircuitConnectionGet.json
             // this example is just showing the usage of "ExpressRouteCircuitConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ExpressRouteCircuitConnectionGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/ExpressRouteCircuitConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteCircuitConnectionGet.json
             // this example is just showing the usage of "ExpressRouteCircuitConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_ExpressRouteCircuitConnectionGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/ExpressRouteCircuitConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteCircuitConnectionGet.json
             // this example is just showing the usage of "ExpressRouteCircuitConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ExpressRouteCircuitConnectionCreate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/ExpressRouteCircuitConnectionCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteCircuitConnectionCreate.json
             // this example is just showing the usage of "ExpressRouteCircuitConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListExpressRouteCircuitConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/ExpressRouteCircuitConnectionList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ExpressRouteCircuitConnectionList.json
             // this example is just showing the usage of "ExpressRouteCircuitConnections_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

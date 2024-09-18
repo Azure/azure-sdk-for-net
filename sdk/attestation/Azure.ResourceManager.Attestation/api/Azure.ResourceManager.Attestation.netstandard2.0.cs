@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.Attestation
         public Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public string PrivateEndpointStringId { get { throw null; } }
         public Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -87,6 +88,7 @@ namespace Azure.ResourceManager.Attestation
         public Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Attestation.Models.AttestationServiceStatus? Status { get { throw null; } set { } }
         public string TrustModel { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.AttestationProviderData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.AttestationProviderData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.AttestationProviderData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.AttestationProviderData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.AttestationProviderData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -205,6 +207,7 @@ namespace Azure.ResourceManager.Attestation.Models
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -217,6 +220,7 @@ namespace Azure.ResourceManager.Attestation.Models
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -229,6 +233,7 @@ namespace Azure.ResourceManager.Attestation.Models
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams Properties { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.Models.AttestationProviderCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationProviderCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationProviderCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.Models.AttestationProviderCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationProviderCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -240,6 +245,7 @@ namespace Azure.ResourceManager.Attestation.Models
         public AttestationProviderPatch() { }
         public Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType? AttestationServicePatchSpecificParamsPublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.Models.AttestationProviderPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationProviderPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationProviderPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.Models.AttestationProviderPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationProviderPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -251,6 +257,7 @@ namespace Azure.ResourceManager.Attestation.Models
         public AttestationServiceCreationSpecificParams() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Attestation.Models.JsonWebKey> PolicySigningCertificatesKeys { get { throw null; } }
         public Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -296,6 +303,7 @@ namespace Azure.ResourceManager.Attestation.Models
         public string X { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> X5C { get { throw null; } }
         public string Y { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.Models.JsonWebKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.JsonWebKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.JsonWebKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.Models.JsonWebKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.JsonWebKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

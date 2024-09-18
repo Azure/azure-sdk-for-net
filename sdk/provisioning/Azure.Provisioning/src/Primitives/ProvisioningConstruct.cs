@@ -16,7 +16,7 @@ public abstract class NamedProvisioningConstruct : ProvisioningConstruct
 {
     /// <summary>
     /// Gets the the Bicep name of the resource.  This can be used to refer to
-    /// the resource in expressions, but isn't the Azuree name of the resource.
+    /// the resource in expressions, but isn't the Azure name of the resource.
     /// </summary>
     public string ResourceName { get; private set; }
 
@@ -44,6 +44,10 @@ public abstract class ProvisioningConstruct(ProvisioningContext? context = defau
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public Infrastructure? ParentInfrastructure { get; internal set; }
+
+    /// <inheritdoc />
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override IEnumerable<Provisionable> GetResources() => base.GetResources();
 
     /// <summary>
     /// Gets the properties of the construct.

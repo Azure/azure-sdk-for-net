@@ -16,6 +16,8 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
+
+    <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
   </ItemGroup>
 
 </Project>

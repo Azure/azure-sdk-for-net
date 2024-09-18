@@ -31,15 +31,8 @@ internal class SampleTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location
-                    };
-
                 // Create a storage account and blob resources
                 StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
-                storage.Location = location;
                 blobs = new(nameof(blobs)) { Parent = storage };
 
                 // Grab the endpoint
@@ -47,24 +40,25 @@ internal class SampleTests(bool async)
             })
         .Compare(
             """
+            @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: location
-                sku: {
-                    name: 'Standard_LRS'
-                }
-                properties: {
-                    allowBlobPublicAccess: false
-                    isHnsEnabled: true
-                }
+              name: take('storage${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: 'Standard_LRS'
+              }
+              properties: {
+                allowBlobPublicAccess: false
+                isHnsEnabled: true
+              }
             }
 
             resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
-                name: 'default'
-                parent: storage
+              name: 'default'
+              parent: storage
             }
 
             output blobs_endpoint string = storage.properties.primaryEndpoints.blob
@@ -96,24 +90,17 @@ internal class SampleTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location
-                    };
                 BicepParameter principalId = new(nameof(principalId), typeof(string)) { Value = "" };
                 BicepParameter tags = new(nameof(tags), typeof(object)) { Value = new BicepDictionary<string>() };
 
                 UserAssignedIdentity mi =
                     new(nameof(mi))
                     {
-                        Location = location,
                         Tags = tags,
                     };
                 ContainerRegistryService acr =
                     new(nameof(acr))
                     {
-                        Location = location,
                         Sku = new ContainerRegistrySku() { Name = ContainerRegistrySkuName.Basic },
                         Tags = tags,
                         Identity =
@@ -131,14 +118,12 @@ internal class SampleTests(bool async)
                 OperationalInsightsWorkspace law =
                     new(nameof(law))
                     {
-                        Location = location,
                         Sku = new OperationalInsightsWorkspaceSku() { Name = OperationalInsightsWorkspaceSkuName.PerGB2018 },
                         Tags = tags,
                     };
                 ContainerAppManagedEnvironment cae =
                     new(nameof(cae))
                     {
-                        Location = location,
                         WorkloadProfiles =
                         {
                             new ContainerAppWorkloadProfile()
@@ -188,91 +173,92 @@ internal class SampleTests(bool async)
             })
         .Compare(
             """
-            param location string = resourceGroup().location
-
             param principalId string = ''
 
             param tags object = { }
 
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
             resource mi 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-                name: take('mi-${uniqueString(resourceGroup().id)}', 128)
-                location: location
-                tags: tags
+              name: take('mi-${uniqueString(resourceGroup().id)}', 128)
+              location: location
+              tags: tags
             }
 
             resource acr 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
-                name: take('acr${uniqueString(resourceGroup().id)}', 50)
-                location: location
-                sku: {
-                    name: 'Basic'
+              name: take('acr${uniqueString(resourceGroup().id)}', 50)
+              location: location
+              sku: {
+                name: 'Basic'
+              }
+              identity: {
+                type: 'SystemAssigned, UserAssigned'
+                userAssignedIdentities: {
+                  '${mi.id}': { }
                 }
-                identity: {
-                    type: 'SystemAssigned, UserAssigned'
-                    userAssignedIdentities: {
-                        '${mi.id}': { }
-                    }
-                }
-                tags: tags
+              }
+              tags: tags
             }
 
-            resource mi_AcrPull_acr 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-                name: guid(resourceGroup().id, 'mi_AcrPull_acr')
-                properties: {
-                    principalId: mi.properties.principalId
-                    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d')
-                    principalType: 'ServicePrincipal'
-                }
-                scope: acr
+            resource acr_mi_AcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+              name: guid(acr.id, mi.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d'))
+              properties: {
+                principalId: mi.properties.principalId
+                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d')
+                principalType: 'ServicePrincipal'
+              }
+              scope: acr
             }
 
             resource law 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
-                name: take('law-${uniqueString(resourceGroup().id)}', 63)
-                location: location
-                properties: {
-                    sku: {
-                        name: 'PerGB2018'
-                    }
+              name: take('law-${uniqueString(resourceGroup().id)}', 63)
+              location: location
+              properties: {
+                sku: {
+                  name: 'PerGB2018'
                 }
-                tags: tags
+              }
+              tags: tags
             }
 
             resource cae 'Microsoft.App/managedEnvironments@2023-05-01' = {
-                name: take('cae${uniqueString(resourceGroup().id)}', 24)
-                location: location
-                properties: {
-                    appLogsConfiguration: {
-                        destination: 'log-analytics'
-                        logAnalyticsConfiguration: {
-                            customerId: law.properties.customerId
-                            sharedKey: law.listKeys().primarySharedKey
-                        }
-                    }
-                    workloadProfiles: [
-                        {
-                            name: 'consumption'
-                            workloadProfileType: 'Consumption'
-                        }
-                    ]
+              name: take('cae${uniqueString(resourceGroup().id)}', 24)
+              location: location
+              properties: {
+                appLogsConfiguration: {
+                  destination: 'log-analytics'
+                  logAnalyticsConfiguration: {
+                    customerId: law.properties.customerId
+                    sharedKey: law.listKeys().primarySharedKey
+                  }
                 }
-                tags: tags
+                workloadProfiles: [
+                  {
+                    name: 'consumption'
+                    workloadProfileType: 'Consumption'
+                  }
+                ]
+              }
+              tags: tags
             }
 
-            resource mi_Contributor_cae 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-                name: guid(resourceGroup().id, 'mi_Contributor_cae')
-                properties: {
-                    principalId: mi.properties.principalId
-                    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')
-                    principalType: 'ServicePrincipal'
-                }
-                scope: cae
+            resource cae_mi_Contributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+              name: guid(cae.id, mi.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c'))
+              properties: {
+                principalId: mi.properties.principalId
+                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')
+                principalType: 'ServicePrincipal'
+              }
+              scope: cae
             }
 
             resource aspireDashboard 'Microsoft.App/managedEnvironments/dotNetComponents@2024-02-02-preview' = {
-                name: 'aspire-dashboard'
-                parent: cae
-                properties: {
-                    componentType: 'AspireDashboard'
-                }
+              name: 'aspire-dashboard'
+              parent: cae
+              properties: {
+                componentType: 'AspireDashboard'
+              }
             }
 
             output MANAGED_IDENTITY_CLIENT_ID string = mi.properties.clientId
@@ -307,12 +293,7 @@ internal class SampleTests(bool async)
             ctx =>
             {
                 // Create a new resource group
-                ResourceGroup rg =
-                    new("rg-test", "2024-03-01")
-                    {
-                        Name = BicepFunction.Interpolate($"rg-test-{BicepFunction.GetUniqueString(BicepFunction.GetSubscription().Id)}"),
-                        Location = AzureLocation.WestUS2
-                    };
+                ResourceGroup rg = new("rg-test", "2024-03-01");
 
                 // Create a new infra group scoped to our subscription and add
                 // the resource group
@@ -325,9 +306,12 @@ internal class SampleTests(bool async)
             """
             targetScope = 'subscription'
 
+            @description('The location for the resource(s) to be deployed.')
+            param location string = deployment().location
+
             resource rg-test 'Microsoft.Resources/resourceGroups@2024-03-01' = {
-                name: 'rg-test-${uniqueString(subscription().id)}'
-                location: 'westus2'
+              name: take('rg-test-${uniqueString(deployment().id)}', 90)
+              location: location
             }
             """)
         .Lint()
