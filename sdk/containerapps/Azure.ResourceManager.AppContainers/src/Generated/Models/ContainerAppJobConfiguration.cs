@@ -85,20 +85,28 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Collection of secrets used by a Container Apps Job. </summary>
+        [WirePath("secrets")]
         public IList<ContainerAppWritableSecret> Secrets { get; }
         /// <summary> Trigger type of the job. </summary>
+        [WirePath("triggerType")]
         public ContainerAppJobTriggerType TriggerType { get; set; }
         /// <summary> Maximum number of seconds a replica is allowed to run. </summary>
+        [WirePath("replicaTimeout")]
         public int ReplicaTimeout { get; set; }
         /// <summary> Maximum number of retries before failing the job. </summary>
+        [WirePath("replicaRetryLimit")]
         public int? ReplicaRetryLimit { get; set; }
         /// <summary> Manual trigger configuration for a single execution job. Properties replicaCompletionCount and parallelism would be set to 1 by default. </summary>
+        [WirePath("manualTriggerConfig")]
         public JobConfigurationManualTriggerConfig ManualTriggerConfig { get; set; }
         /// <summary> Cron formatted repeating trigger schedule ("* * * * *") for cronjobs. Properties completions and parallelism would be set to 1 by default. </summary>
+        [WirePath("scheduleTriggerConfig")]
         public JobConfigurationScheduleTriggerConfig ScheduleTriggerConfig { get; set; }
         /// <summary> Trigger configuration of an event driven job. </summary>
+        [WirePath("eventTriggerConfig")]
         public EventTriggerConfiguration EventTriggerConfig { get; set; }
         /// <summary> Collection of private container registry credentials used by a Container apps job. </summary>
+        [WirePath("registries")]
         public IList<ContainerAppRegistryCredentials> Registries { get; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -107,6 +108,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningScriptsToExecute(startupScript, creationScript, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartupScript), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startupScript: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartupScript))
+                {
+                    builder.Append("  startupScript: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, StartupScript, options, 2, false, "  startupScript: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreationScript), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  creationScript: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreationScript))
+                {
+                    builder.Append("  creationScript: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CreationScript, options, 2, false, "  creationScript: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MachineLearningScriptsToExecute>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningScriptsToExecute>)this).GetFormatFromOptions(options) : options.Format;
@@ -115,6 +161,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningScriptsToExecute)} does not support writing '{options.Format}' format.");
             }

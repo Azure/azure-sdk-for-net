@@ -80,24 +80,34 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The identity of the container registry. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The tags for the container registry. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The SKU of the container registry. </summary>
+        [WirePath("sku")]
         public ContainerRegistrySku Sku { get; set; }
         /// <summary> The value that indicates whether the admin user is enabled. </summary>
+        [WirePath("properties.adminUserEnabled")]
         public bool? IsAdminUserEnabled { get; set; }
         /// <summary> The network rule set for a container registry. </summary>
+        [WirePath("properties.networkRuleSet")]
         public ContainerRegistryNetworkRuleSet NetworkRuleSet { get; set; }
         /// <summary> The policies for a container registry. </summary>
+        [WirePath("properties.policies")]
         public ContainerRegistryPolicies Policies { get; set; }
         /// <summary> The encryption settings of container registry. </summary>
+        [WirePath("properties.encryption")]
         public ContainerRegistryEncryption Encryption { get; set; }
         /// <summary> Enable a single data endpoint per region for serving data. </summary>
+        [WirePath("properties.dataEndpointEnabled")]
         public bool? IsDataEndpointEnabled { get; set; }
         /// <summary> Whether or not public network access is allowed for the container registry. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public ContainerRegistryPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Whether to allow trusted Azure services to access a network restricted registry. </summary>
+        [WirePath("properties.networkRuleBypassOptions")]
         public ContainerRegistryNetworkRuleBypassOption? NetworkRuleBypassOptions { get; set; }
     }
 }

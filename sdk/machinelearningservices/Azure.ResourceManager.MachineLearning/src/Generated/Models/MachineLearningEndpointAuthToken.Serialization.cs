@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -38,16 +39,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("accessToken");
                 }
             }
-            if (Optional.IsDefined(ExpireOn))
-            {
-                writer.WritePropertyName("expiryTimeUtc"u8);
-                writer.WriteNumberValue(ExpireOn.Value, "U");
-            }
-            if (Optional.IsDefined(RefreshOn))
-            {
-                writer.WritePropertyName("refreshAfterTimeUtc"u8);
-                writer.WriteNumberValue(RefreshOn.Value, "U");
-            }
             if (Optional.IsDefined(TokenType))
             {
                 if (TokenType != null)
@@ -59,6 +50,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("tokenType");
                 }
+            }
+            if (Optional.IsDefined(ExpireOn))
+            {
+                writer.WritePropertyName("expiryTimeUtc"u8);
+                writer.WriteNumberValue(ExpireOn.Value, "U");
+            }
+            if (Optional.IsDefined(RefreshOn))
+            {
+                writer.WritePropertyName("refreshAfterTimeUtc"u8);
+                writer.WriteNumberValue(RefreshOn.Value, "U");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,9 +100,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string accessToken = default;
+            string tokenType = default;
             DateTimeOffset? expiryTimeUtc = default;
             DateTimeOffset? refreshAfterTimeUtc = default;
-            string tokenType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,6 +115,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     accessToken = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tokenType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        tokenType = null;
+                        continue;
+                    }
+                    tokenType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("expiryTimeUtc"u8))
@@ -134,23 +145,106 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     refreshAfterTimeUtc = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
-                if (property.NameEquals("tokenType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        tokenType = null;
-                        continue;
-                    }
-                    tokenType = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningEndpointAuthToken(accessToken, expiryTimeUtc, refreshAfterTimeUtc, tokenType, serializedAdditionalRawData);
+            return new MachineLearningEndpointAuthToken(accessToken, tokenType, expiryTimeUtc, refreshAfterTimeUtc, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessToken), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  accessToken: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccessToken))
+                {
+                    builder.Append("  accessToken: ");
+                    if (AccessToken.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AccessToken}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AccessToken}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tokenType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TokenType))
+                {
+                    builder.Append("  tokenType: ");
+                    if (TokenType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TokenType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TokenType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpireOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  expiryTimeUtc: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExpireOn))
+                {
+                    builder.Append("  expiryTimeUtc: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RefreshOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  refreshAfterTimeUtc: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RefreshOn))
+                {
+                    builder.Append("  refreshAfterTimeUtc: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(RefreshOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningEndpointAuthToken>.Write(ModelReaderWriterOptions options)
@@ -161,6 +255,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningEndpointAuthToken)} does not support writing '{options.Format}' format.");
             }

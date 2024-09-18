@@ -85,6 +85,7 @@ known_presence_issues:
   - ['sdk/search/Microsoft.Azure.Search.Service/CHANGELOG.md','Track 1']
 
   - ['sdk/eventgrid/Azure.Messaging.EventGrid/EventGridSourceGenerator','https://github.com/Azure/azure-sdk-tools/issues/2444']
+  - ['sdk/provisioning/Generator','Not a package']
 
 known_content_issues:
   - ['sdk/batch/Microsoft.Azure.Batch.Conventions.Files/README.md','Track 1']
@@ -138,6 +139,31 @@ known_content_issues:
 
   - ['sdk/extension-wcf/Microsoft.CoreWCF.Azure.StorageQueues/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/extension-wcf/Microsoft.WCF.Azure.StorageQueues/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+ 
+  - ['sdk/provisioning/Azure.Provisioning.AppService/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.Sql/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.ServiceBus/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.Redis/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.EventGrid/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.SignalR/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.OperationalInsights/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.Storage/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.KubernetesConfiguration/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.CosmosDB/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.EventHubs/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.CognitiveServices/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.WebPubSub/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.PostgreSql/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.AppContainers/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.KeyVault/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.ContainerRegistry/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.AppConfiguration/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.Search/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.Kubernetes/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.Communication/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.ApplicationInsights/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.ContainerService/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:

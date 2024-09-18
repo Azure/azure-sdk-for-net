@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the delay in minutes. </summary>
+        [WirePath("delayInMinutes")]
         public int? DelayInMinutes { get; set; }
         /// <summary> Gets or sets the is enabled. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
     }
 }

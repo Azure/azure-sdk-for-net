@@ -65,6 +65,8 @@
                 Assert.Null(patchParameters.Constraints);
                 Assert.Null(patchParameters.Metadata);
                 Assert.Null(patchParameters.OnAllTasksComplete);
+                Assert.Null(patchParameters.NetworkConfiguration);
+
 
                 Assert.NotNull(patchParameters.PoolInfo);
                 Assert.Equal(newPoolId, patchParameters.PoolInfo.PoolId);
@@ -94,6 +96,7 @@
                 Assert.Null(patchParameters.Constraints);
                 Assert.Null(patchParameters.Metadata);
                 Assert.Null(patchParameters.PoolInfo);
+                Assert.Null(patchParameters.NetworkConfiguration);
 
                 Assert.NotNull(patchParameters.Priority);
                 Assert.Equal(newPriority, patchParameters.Priority);
@@ -129,6 +132,7 @@
                 Assert.Null(patchParameters.Constraints);
                 Assert.Null(patchParameters.PoolInfo);
                 Assert.Null(patchParameters.OnAllTasksComplete);
+                Assert.Null(patchParameters.NetworkConfiguration);
 
                 Assert.NotNull(patchParameters.Metadata);
                 Assert.Equal(2, patchParameters.Metadata.Count);
@@ -159,6 +163,7 @@
                 Assert.Null(patchParameters.Metadata);
                 Assert.Null(patchParameters.PoolInfo);
                 Assert.Null(patchParameters.OnAllTasksComplete);
+                Assert.Null(patchParameters.NetworkConfiguration);
 
                 Assert.NotNull(patchParameters.Constraints);
                 Assert.Equal(newMaxWallClock, patchParameters.Constraints.MaxWallClockTime);
@@ -192,6 +197,7 @@
                 Assert.Null(patchParameters.PoolInfo);
                 Assert.Null(patchParameters.OnAllTasksComplete);
                 Assert.Null(patchParameters.Constraints);
+                Assert.Null(patchParameters.NetworkConfiguration);
             }
 
             CommonPatchJobTest(protoJob, modificationFunction, assertAction);
@@ -228,6 +234,7 @@
                 Assert.Null(patchParameters.PoolInfo);
                 Assert.Null(patchParameters.OnAllTasksComplete);
                 Assert.Null(patchParameters.Constraints);
+                Assert.Null(patchParameters.NetworkConfiguration);
             }
 
             CommonPatchJobTest(protoJob, modificationFunction, assertAction);
@@ -278,6 +285,7 @@
                 Assert.Null(patchParameters.Metadata);
                 Assert.Null(patchParameters.ApplicationPackageReferences);
                 Assert.Null(patchParameters.CertificateReferences);
+                Assert.Null(patchParameters.NetworkConfiguration);
 
                 Assert.NotNull(patchParameters.StartTask);
                 Assert.Equal(newCommandLine, patchParameters.StartTask.CommandLine);
@@ -305,6 +313,7 @@
                 Assert.Null(patchParameters.StartTask);
                 Assert.Null(patchParameters.ApplicationPackageReferences);
                 Assert.Null(patchParameters.CertificateReferences);
+                Assert.Null(patchParameters.NetworkConfiguration);
 
                 Assert.NotNull(patchParameters.Metadata);
                 Assert.Equal(2, patchParameters.Metadata.Count);
@@ -328,6 +337,7 @@
                 Assert.Null(patchParameters.Metadata);
                 Assert.Null(patchParameters.ApplicationPackageReferences);
                 Assert.Null(patchParameters.CertificateReferences);
+                Assert.Null(patchParameters.NetworkConfiguration);
 
                 Assert.NotNull(patchParameters.StartTask);
                 Assert.Equal(newCommandLine, patchParameters.StartTask.CommandLine);
@@ -358,6 +368,7 @@
                 Assert.Null(patchParameters.ApplicationPackageReferences);
                 Assert.Null(patchParameters.CertificateReferences);
                 Assert.Null(patchParameters.StartTask);
+                Assert.Null(patchParameters.NetworkConfiguration);
             }
 
             CommonPatchPoolTest(protoPool, modificationFunction, assertAction);
@@ -389,6 +400,7 @@
                 Assert.Null(patchParameters.ApplicationPackageReferences);
                 Assert.Null(patchParameters.CertificateReferences);
                 Assert.Null(patchParameters.StartTask);
+                Assert.Null(patchParameters.NetworkConfiguration);
             }
 
             CommonPatchPoolTest(protoPool, modificationFunction, assertAction);

@@ -72,12 +72,16 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Display name of the event type. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Description of the event type. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Url of the schema for this event type. </summary>
+        [WirePath("properties.schemaUrl")]
         public Uri SchemaUri { get; set; }
         /// <summary> IsInDefaultSet flag of the event type. </summary>
+        [WirePath("properties.isInDefaultSet")]
         public bool? IsInDefaultSet { get; set; }
     }
 }

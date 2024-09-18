@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Common field for data type in data connectors. </summary>
-    internal partial class DataConnectorDataTypeCommon
+    public partial class DataConnectorDataTypeCommon
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,20 +46,28 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DataConnectorDataTypeCommon"/>. </summary>
-        public DataConnectorDataTypeCommon()
+        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
+        public DataConnectorDataTypeCommon(SecurityInsightsDataTypeConnectionState state)
         {
+            State = state;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataConnectorDataTypeCommon"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataConnectorDataTypeCommon(SecurityInsightsDataTypeConnectionState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataConnectorDataTypeCommon(SecurityInsightsDataTypeConnectionState state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataConnectorDataTypeCommon"/> for deserialization. </summary>
+        internal DataConnectorDataTypeCommon()
+        {
+        }
+
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        public SecurityInsightsDataTypeConnectionState? State { get; set; }
+        [WirePath("state")]
+        public SecurityInsightsDataTypeConnectionState State { get; set; }
     }
 }

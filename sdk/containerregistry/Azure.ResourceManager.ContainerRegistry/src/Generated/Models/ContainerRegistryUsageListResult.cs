@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The list of container registry quota usages. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ContainerRegistryUsage> Value { get; }
     }
 }

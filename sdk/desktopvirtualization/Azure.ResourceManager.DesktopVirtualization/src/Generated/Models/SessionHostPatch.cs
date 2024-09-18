@@ -70,10 +70,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Allow a new session. </summary>
+        [WirePath("properties.allowNewSession")]
         public bool? AllowNewSession { get; set; }
         /// <summary> User assigned to SessionHost. </summary>
+        [WirePath("properties.assignedUser")]
         public string AssignedUser { get; set; }
         /// <summary> Friendly name of SessionHost. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; set; }
     }
 }
