@@ -52,6 +52,6 @@ acronym-mapping:
 
 rename-mapping:
   MonitoredResource: MonitoredResourceContent
-  ElasticTrafficfilter.type: ElasticTrafficFilterType
+  ElasticTrafficFilter.type: ElasticTrafficFilterType
 
 ```
