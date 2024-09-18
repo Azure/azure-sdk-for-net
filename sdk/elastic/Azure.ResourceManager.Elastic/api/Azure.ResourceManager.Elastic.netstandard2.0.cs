@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.Elastic.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.OpenAIIntegrationStatusResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Operation : System.IEquatable<Azure.ResourceManager.Elastic.Models.Operation>
+    public readonly partial struct ElasticResourceOperation : System.IEquatable<Azure.ResourceManager.Elastic.Models.Operation>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
@@ -856,7 +856,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Status : System.IEquatable<Azure.ResourceManager.Elastic.Models.Status>
+    public readonly partial struct ElasticResourceStatus : System.IEquatable<Azure.ResourceManager.Elastic.Models.Status>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
@@ -875,7 +875,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static bool operator !=(Azure.ResourceManager.Elastic.Models.Status left, Azure.ResourceManager.Elastic.Models.Status right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SubscriptionList : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.SubscriptionList>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.SubscriptionList>
+    public partial class ElasticResourceSubscriptionList : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.SubscriptionList>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.SubscriptionList>
     {
         public SubscriptionList() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Elastic.Models.MonitoredSubscription> MonitoredSubscriptionList { get { throw null; } }
@@ -906,7 +906,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Type : System.IEquatable<Azure.ResourceManager.Elastic.Models.Type>
+    public readonly partial struct ElasticResourceType : System.IEquatable<Azure.ResourceManager.Elastic.Models.Type>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.Elastic.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.UserApiKeyResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.UserApiKeyResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class UserEmailId : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.UserEmailId>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.UserEmailId>
+    public partial class ElasticAssociatedEmailId : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Elastic.Models.UserEmailId>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Elastic.Models.UserEmailId>
     {
         public UserEmailId() { }
         public string EmailId { get { throw null; } set { } }
