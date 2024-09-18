@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Details of system created storage account to be used for the registry. </summary>
+        [WirePath("systemCreatedStorageAccount")]
         public SystemCreatedStorageAccount SystemCreatedStorageAccount { get; set; }
         /// <summary> Details of user created storage account to be used for the registry. </summary>
         internal UserCreatedStorageAccount UserCreatedStorageAccount { get; set; }
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Arm ResourceId is in the format "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}"
         /// or "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{AcrName}"
         /// </summary>
+        [WirePath("userCreatedStorageAccount.armResourceId.resourceId")]
         public ResourceIdentifier ArmResourceId
         {
             get => UserCreatedStorageAccount is null ? default : UserCreatedStorageAccount.ArmResourceId;

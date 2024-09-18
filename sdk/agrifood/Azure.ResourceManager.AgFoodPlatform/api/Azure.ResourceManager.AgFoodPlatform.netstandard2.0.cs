@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         public Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -102,6 +103,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -134,6 +136,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         public string ExtensionCategory { get { throw null; } }
         public string ExtensionId { get { throw null; } }
         public string InstalledExtensionVersion { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.ExtensionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.ExtensionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.ExtensionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.ExtensionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgFoodPlatform.ExtensionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -185,6 +188,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         public Azure.ResourceManager.AgFoodPlatform.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AgFoodPlatform.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.AgFoodPlatform.Models.SensorIntegration SensorIntegration { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.FarmBeatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.FarmBeatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.FarmBeatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.FarmBeatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgFoodPlatform.FarmBeatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -255,6 +259,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         public string FarmBeatsExtensionVersion { get { throw null; } }
         public string PublisherId { get { throw null; } }
         public string TargetResourceType { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -358,6 +363,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -381,6 +387,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     {
         internal ArmAsyncOperation() { }
         public string Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.Models.ArmAsyncOperation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.Models.ArmAsyncOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.Models.ArmAsyncOperation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.Models.ArmAsyncOperation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgFoodPlatform.Models.ArmAsyncOperation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -392,6 +399,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         public CheckNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
         public string ResourceType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -422,6 +430,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
         public Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityReason? Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -436,6 +445,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         public System.Collections.Generic.IReadOnlyList<string> CustomParameters { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> PlatformParameters { get { throw null; } }
         public Azure.ResourceManager.AgFoodPlatform.Models.UnitSystemsInfo UnitsSupported { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.Models.DetailedInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.Models.DetailedInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.Models.DetailedInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.Models.DetailedInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgFoodPlatform.Models.DetailedInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -449,6 +459,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.AgFoodPlatform.Models.FarmBeatsUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.Models.FarmBeatPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.Models.FarmBeatPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.Models.FarmBeatPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.Models.FarmBeatPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgFoodPlatform.Models.FarmBeatPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -460,6 +471,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         public FarmBeatsUpdateProperties() { }
         public Azure.ResourceManager.AgFoodPlatform.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.AgFoodPlatform.Models.SensorIntegration SensorIntegration { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.Models.FarmBeatsUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.Models.FarmBeatsUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.Models.FarmBeatsUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.Models.FarmBeatsUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgFoodPlatform.Models.FarmBeatsUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -511,6 +523,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         public string Enabled { get { throw null; } set { } }
         public Azure.ResponseError ProvisioningInfoError { get { throw null; } set { } }
         public Azure.ResourceManager.AgFoodPlatform.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.Models.SensorIntegration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.Models.SensorIntegration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.Models.SensorIntegration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.Models.SensorIntegration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgFoodPlatform.Models.SensorIntegration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -522,6 +535,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         internal UnitSystemsInfo() { }
         public string Key { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.Models.UnitSystemsInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.Models.UnitSystemsInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AgFoodPlatform.Models.UnitSystemsInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AgFoodPlatform.Models.UnitSystemsInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgFoodPlatform.Models.UnitSystemsInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

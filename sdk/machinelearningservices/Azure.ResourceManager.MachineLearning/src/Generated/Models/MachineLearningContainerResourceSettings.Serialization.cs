@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -38,18 +39,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cpu");
                 }
             }
-            if (Optional.IsDefined(Gpu))
-            {
-                if (Gpu != null)
-                {
-                    writer.WritePropertyName("gpu"u8);
-                    writer.WriteStringValue(Gpu);
-                }
-                else
-                {
-                    writer.WriteNull("gpu");
-                }
-            }
             if (Optional.IsDefined(Memory))
             {
                 if (Memory != null)
@@ -60,6 +49,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("memory");
+                }
+            }
+            if (Optional.IsDefined(Gpu))
+            {
+                if (Gpu != null)
+                {
+                    writer.WritePropertyName("gpu"u8);
+                    writer.WriteStringValue(Gpu);
+                }
+                else
+                {
+                    writer.WriteNull("gpu");
                 }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -101,8 +102,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string cpu = default;
-            string gpu = default;
             string memory = default;
+            string gpu = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,16 +118,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     cpu = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("gpu"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        gpu = null;
-                        continue;
-                    }
-                    gpu = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("memory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -137,13 +128,107 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     memory = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("gpu"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        gpu = null;
+                        continue;
+                    }
+                    gpu = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningContainerResourceSettings(cpu, gpu, memory, serializedAdditionalRawData);
+            return new MachineLearningContainerResourceSettings(cpu, memory, gpu, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cpu), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cpu: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Cpu))
+                {
+                    builder.Append("  cpu: ");
+                    if (Cpu.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Cpu}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Cpu}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Memory), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  memory: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Memory))
+                {
+                    builder.Append("  memory: ");
+                    if (Memory.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Memory}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Memory}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Gpu), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  gpu: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Gpu))
+                {
+                    builder.Append("  gpu: ");
+                    if (Gpu.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Gpu}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Gpu}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningContainerResourceSettings>.Write(ModelReaderWriterOptions options)
@@ -154,6 +239,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support writing '{options.Format}' format.");
             }

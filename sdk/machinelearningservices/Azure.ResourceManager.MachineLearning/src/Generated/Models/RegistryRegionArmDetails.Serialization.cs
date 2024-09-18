@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -166,6 +168,82 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new RegistryRegionArmDetails(acrDetails ?? new ChangeTrackingList<RegistryAcrDetails>(), location, storageAccountDetails ?? new ChangeTrackingList<StorageAccountDetails>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AcrDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  acrDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AcrDetails))
+                {
+                    if (AcrDetails.Any())
+                    {
+                        builder.Append("  acrDetails: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AcrDetails)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  acrDetails: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    builder.Append("  location: ");
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storageAccountDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(StorageAccountDetails))
+                {
+                    if (StorageAccountDetails.Any())
+                    {
+                        builder.Append("  storageAccountDetails: ");
+                        builder.AppendLine("[");
+                        foreach (var item in StorageAccountDetails)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  storageAccountDetails: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RegistryRegionArmDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RegistryRegionArmDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -174,6 +252,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RegistryRegionArmDetails)} does not support writing '{options.Format}' format.");
             }

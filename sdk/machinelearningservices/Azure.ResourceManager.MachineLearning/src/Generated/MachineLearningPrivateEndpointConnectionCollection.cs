@@ -52,8 +52,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Called by end-users to approve or reject a PE connection.
-        /// This method must validate and forward the call to NRP.
+        /// Update the state of specified private endpoint connection associated with the workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -74,8 +73,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="privateEndpointConnectionName"> NRP Private Endpoint Connection Name. </param>
-        /// <param name="data"> PrivateEndpointConnection object. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
+        /// <param name="data"> The private endpoint connection properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
@@ -104,8 +103,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Called by end-users to approve or reject a PE connection.
-        /// This method must validate and forward the call to NRP.
+        /// Update the state of specified private endpoint connection associated with the workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -117,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -126,8 +124,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="privateEndpointConnectionName"> NRP Private Endpoint Connection Name. </param>
-        /// <param name="data"> PrivateEndpointConnection object. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
+        /// <param name="data"> The private endpoint connection properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
@@ -156,7 +154,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Called by end-users to get a PE connection.
+        /// Gets the specified private endpoint connection associated with the workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -168,7 +166,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -176,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> NRP Private Endpoint Connection Name. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
@@ -201,7 +199,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Called by end-users to get a PE connection.
+        /// Gets the specified private endpoint connection associated with the workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -213,7 +211,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -221,7 +219,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> NRP Private Endpoint Connection Name. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
@@ -246,7 +244,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Called by end-users to get all PE connections.
+        /// List all the private endpoint connections associated with the workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -258,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -275,7 +273,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Called by end-users to get all PE connections.
+        /// List all the private endpoint connections associated with the workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -287,7 +285,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -316,7 +314,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -324,7 +322,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> NRP Private Endpoint Connection Name. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
@@ -359,7 +357,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -367,7 +365,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> NRP Private Endpoint Connection Name. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
@@ -402,7 +400,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -410,7 +408,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> NRP Private Endpoint Connection Name. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
@@ -447,7 +445,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -455,7 +453,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> NRP Private Endpoint Connection Name. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>

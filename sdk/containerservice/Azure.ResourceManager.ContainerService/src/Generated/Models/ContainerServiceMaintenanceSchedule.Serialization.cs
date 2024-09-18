@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -137,6 +138,84 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ContainerServiceMaintenanceSchedule(daily, weekly, absoluteMonthly, relativeMonthly, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("DailyIntervalDays", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  daily: ");
+                builder.AppendLine("{");
+                builder.Append("    intervalDays: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Daily))
+                {
+                    builder.Append("  daily: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Daily, options, 2, false, "  daily: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Weekly), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  weekly: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Weekly))
+                {
+                    builder.Append("  weekly: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Weekly, options, 2, false, "  weekly: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AbsoluteMonthly), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  absoluteMonthly: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AbsoluteMonthly))
+                {
+                    builder.Append("  absoluteMonthly: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AbsoluteMonthly, options, 2, false, "  absoluteMonthly: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RelativeMonthly), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  relativeMonthly: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RelativeMonthly))
+                {
+                    builder.Append("  relativeMonthly: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RelativeMonthly, options, 2, false, "  relativeMonthly: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerServiceMaintenanceSchedule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceMaintenanceSchedule>)this).GetFormatFromOptions(options) : options.Format;
@@ -145,6 +224,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerServiceMaintenanceSchedule)} does not support writing '{options.Format}' format.");
             }

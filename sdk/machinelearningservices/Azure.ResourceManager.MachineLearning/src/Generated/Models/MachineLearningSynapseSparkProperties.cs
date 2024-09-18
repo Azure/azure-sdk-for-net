@@ -78,24 +78,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Auto scale properties. </summary>
+        [WirePath("autoScaleProperties")]
         public MachineLearningAutoScaleProperties AutoScaleProperties { get; set; }
         /// <summary> Auto pause properties. </summary>
+        [WirePath("autoPauseProperties")]
         public MachineLearningAutoPauseProperties AutoPauseProperties { get; set; }
         /// <summary> Spark version. </summary>
+        [WirePath("sparkVersion")]
         public string SparkVersion { get; set; }
         /// <summary> The number of compute nodes currently assigned to the compute. </summary>
+        [WirePath("nodeCount")]
         public int? NodeCount { get; set; }
         /// <summary> Node size. </summary>
+        [WirePath("nodeSize")]
         public string NodeSize { get; set; }
         /// <summary> Node size family. </summary>
+        [WirePath("nodeSizeFamily")]
         public string NodeSizeFamily { get; set; }
         /// <summary> Azure subscription identifier. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; set; }
         /// <summary> Name of the resource group in which workspace is located. </summary>
+        [WirePath("resourceGroup")]
         public string ResourceGroup { get; set; }
         /// <summary> Name of Azure Machine Learning workspace. </summary>
+        [WirePath("workspaceName")]
         public string WorkspaceName { get; set; }
         /// <summary> Pool name. </summary>
+        [WirePath("poolName")]
         public string PoolName { get; set; }
     }
 }

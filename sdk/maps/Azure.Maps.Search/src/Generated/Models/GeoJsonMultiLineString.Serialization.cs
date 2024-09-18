@@ -11,7 +11,7 @@ using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonMultiLineString
+    internal partial class GeoJsonMultiLineString
     {
         internal static GeoJsonMultiLineString DeserializeGeoJsonMultiLineString(JsonElement element)
         {

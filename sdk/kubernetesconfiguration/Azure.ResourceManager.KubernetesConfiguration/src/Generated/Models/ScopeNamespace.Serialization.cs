@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -88,6 +89,44 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             return new ScopeNamespace(targetNamespace, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetNamespace), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetNamespace: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetNamespace))
+                {
+                    builder.Append("  targetNamespace: ");
+                    if (TargetNamespace.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TargetNamespace}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TargetNamespace}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ScopeNamespace>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScopeNamespace>)this).GetFormatFromOptions(options) : options.Format;
@@ -96,6 +135,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ScopeNamespace)} does not support writing '{options.Format}' format.");
             }

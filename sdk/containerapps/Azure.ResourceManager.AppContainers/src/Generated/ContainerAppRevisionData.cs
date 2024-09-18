@@ -100,30 +100,41 @@ namespace Azure.ResourceManager.AppContainers
         /// Timestamp describing when the revision was created
         /// by controller
         /// </summary>
+        [WirePath("properties.createdTime")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Timestamp describing when the revision was last active. Only meaningful when revision is inactive. </summary>
+        [WirePath("properties.lastActiveTime")]
         public DateTimeOffset? LastActiveOn { get; }
         /// <summary> Fully qualified domain name of the revision. </summary>
+        [WirePath("properties.fqdn")]
         public string Fqdn { get; }
         /// <summary>
         /// Container App Revision Template with all possible settings and the
         /// defaults if user did not provide them. The defaults are populated
         /// as they were at the creation time
         /// </summary>
+        [WirePath("properties.template")]
         public ContainerAppTemplate Template { get; }
         /// <summary> Boolean describing if the Revision is Active. </summary>
+        [WirePath("properties.active")]
         public bool? IsActive { get; }
         /// <summary> Number of pods currently running for this revision. </summary>
+        [WirePath("properties.replicas")]
         public int? Replicas { get; }
         /// <summary> Traffic weight assigned to this revision. </summary>
+        [WirePath("properties.trafficWeight")]
         public int? TrafficWeight { get; }
         /// <summary> Optional Field - Platform Error Message. </summary>
+        [WirePath("properties.provisioningError")]
         public string ProvisioningError { get; }
         /// <summary> Current health State of the revision. </summary>
+        [WirePath("properties.healthState")]
         public ContainerAppRevisionHealthState? HealthState { get; }
         /// <summary> Current provisioning State of the revision. </summary>
+        [WirePath("properties.provisioningState")]
         public ContainerAppRevisionProvisioningState? ProvisioningState { get; }
         /// <summary> Current running state of the revision. </summary>
+        [WirePath("properties.runningState")]
         public RevisionRunningState? RunningState { get; }
     }
 }

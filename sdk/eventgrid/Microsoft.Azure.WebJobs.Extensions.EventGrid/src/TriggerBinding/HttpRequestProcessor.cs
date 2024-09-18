@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -10,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventGrid.SystemEvents;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using STJ = System.Text.Json;
 
@@ -104,7 +106,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             if (string.Equals(eventTypeHeader, NotificationEvent, StringComparison.OrdinalIgnoreCase))
             {
                 string requestContent = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
-                JToken token = JToken.Parse(requestContent);
+                JToken token;
+                using (JsonReader reader = new JsonTextReader(new StringReader(requestContent)) { DateParseHandling = DateParseHandling.None })
+                {
+                    token = JToken.Load(reader);
+                }
                 JArray events = token.Type switch
                 {
                     JTokenType.Array => (JArray) token,

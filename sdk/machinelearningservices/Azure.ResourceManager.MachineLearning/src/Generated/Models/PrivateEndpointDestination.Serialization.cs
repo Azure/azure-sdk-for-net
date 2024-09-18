@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -133,6 +134,90 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new PrivateEndpointDestination(serviceResourceId, sparkEnabled, sparkStatus, subresourceTarget, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceResourceId))
+                {
+                    builder.Append("  serviceResourceId: ");
+                    builder.AppendLine($"'{ServiceResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SparkEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sparkEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SparkEnabled))
+                {
+                    builder.Append("  sparkEnabled: ");
+                    var boolValue = SparkEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SparkStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sparkStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SparkStatus))
+                {
+                    builder.Append("  sparkStatus: ");
+                    builder.AppendLine($"'{SparkStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubresourceTarget), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  subresourceTarget: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SubresourceTarget))
+                {
+                    builder.Append("  subresourceTarget: ");
+                    if (SubresourceTarget.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SubresourceTarget}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SubresourceTarget}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PrivateEndpointDestination>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointDestination>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,6 +226,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support writing '{options.Format}' format.");
             }

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         void IJsonModel<ScVmmGuestCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ScVmmGuestCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScVmmGuestCredential)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("username"u8);
             writer.WriteStringValue(Username);
             writer.WritePropertyName("password"u8);
@@ -45,7 +53,6 @@ namespace Azure.ResourceManager.ScVmm.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ScVmmGuestCredential IJsonModel<ScVmmGuestCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

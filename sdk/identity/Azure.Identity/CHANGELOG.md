@@ -1,11 +1,9 @@
 # Release History
 
-## 1.13.0-beta.2 (Unreleased)
+## 1.13.0-beta.2 (2024-09-17)
 
 ### Features Added
 - `ManagedIdentityCredential` now supports specifying a user-assigned managed identity by object ID.
-
-### Breaking Changes
 
 ### Bugs Fixed
 - If `DefaultAzureCredential` attempts to authenticate with the `MangagedIdentityCredential` and it receives either a failed response that is not json, it will now fall through to the next credential in the chain. [#45184](https://github.com/Azure/azure-sdk-for-net/issues/45184)
