@@ -358,14 +358,14 @@ namespace Azure.ResourceManager.Elastic
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableElasticSubscriptionResource.GetApiKeyOrganization(UserEmailId,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableElasticSubscriptionResource.GetApiKeyOrganization(ElasticModelUserEmailId,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="body"> Email Id parameter of the User Organization, of which the API Key must be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<UserApiKeyResponse>> GetApiKeyOrganizationAsync(this SubscriptionResource subscriptionResource, UserEmailId body = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<UserApiKeyResponse>> GetApiKeyOrganizationAsync(this SubscriptionResource subscriptionResource, ElasticModelUserEmailId body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -390,14 +390,14 @@ namespace Azure.ResourceManager.Elastic
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableElasticSubscriptionResource.GetApiKeyOrganization(UserEmailId,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableElasticSubscriptionResource.GetApiKeyOrganization(ElasticModelUserEmailId,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="body"> Email Id parameter of the User Organization, of which the API Key must be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<UserApiKeyResponse> GetApiKeyOrganization(this SubscriptionResource subscriptionResource, UserEmailId body = null, CancellationToken cancellationToken = default)
+        public static Response<UserApiKeyResponse> GetApiKeyOrganization(this SubscriptionResource subscriptionResource, ElasticModelUserEmailId body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

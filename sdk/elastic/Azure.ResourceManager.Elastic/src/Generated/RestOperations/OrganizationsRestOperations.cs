@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Elastic
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGetApiKeyRequestUri(string subscriptionId, UserEmailId body)
+        internal RequestUriBuilder CreateGetApiKeyRequestUri(string subscriptionId, ElasticModelUserEmailId body)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Elastic
             return uri;
         }
 
-        internal HttpMessage CreateGetApiKeyRequest(string subscriptionId, UserEmailId body)
+        internal HttpMessage CreateGetApiKeyRequest(string subscriptionId, ElasticModelUserEmailId body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UserApiKeyResponse>> GetApiKeyAsync(string subscriptionId, UserEmailId body = null, CancellationToken cancellationToken = default)
+        public async Task<Response<UserApiKeyResponse>> GetApiKeyAsync(string subscriptionId, ElasticModelUserEmailId body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UserApiKeyResponse> GetApiKey(string subscriptionId, UserEmailId body = null, CancellationToken cancellationToken = default)
+        public Response<UserApiKeyResponse> GetApiKey(string subscriptionId, ElasticModelUserEmailId body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Elastic.Models
 {
     /// <summary> Email Id of the User Organization, of which the API Key must be returned. </summary>
-    public partial class UserEmailId
+    public partial class ElasticModelUserEmailId
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.Elastic.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UserEmailId"/>. </summary>
-        public UserEmailId()
+        /// <summary> Initializes a new instance of <see cref="ElasticModelUserEmailId"/>. </summary>
+        public ElasticModelUserEmailId()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserEmailId"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticModelUserEmailId"/>. </summary>
         /// <param name="emailId"> The User email Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserEmailId(string emailId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticModelUserEmailId(string emailId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EmailId = emailId;
             _serializedAdditionalRawData = serializedAdditionalRawData;

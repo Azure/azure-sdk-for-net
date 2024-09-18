@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The request to update subscriptions needed to be monitored by the Elastic monitor resource. </param>
         /// <returns> A new <see cref="Elastic.MonitoredSubscriptionPropertyData"/> instance for mocking. </returns>
-        public static MonitoredSubscriptionPropertyData MonitoredSubscriptionPropertyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SubscriptionList properties = null)
+        public static MonitoredSubscriptionPropertyData MonitoredSubscriptionPropertyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ElasticModelSubscriptionList properties = null)
         {
             return new MonitoredSubscriptionPropertyData(
                 id,
@@ -136,16 +136,16 @@ namespace Azure.ResourceManager.Elastic.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SubscriptionList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticModelSubscriptionList"/>. </summary>
         /// <param name="operation"> The operation for the patch on the resource. </param>
         /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
-        /// <returns> A new <see cref="Models.SubscriptionList"/> instance for mocking. </returns>
-        public static SubscriptionList SubscriptionList(Operation? operation = null, IEnumerable<MonitoredSubscription> monitoredSubscriptionList = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.ElasticModelSubscriptionList"/> instance for mocking. </returns>
+        public static ElasticModelSubscriptionList ElasticModelSubscriptionList(ElasticModelOperation? operation = null, IEnumerable<MonitoredSubscription> monitoredSubscriptionList = null, ProvisioningState? provisioningState = null)
         {
             monitoredSubscriptionList ??= new List<MonitoredSubscription>();
 
-            return new SubscriptionList(operation, monitoredSubscriptionList?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new ElasticModelSubscriptionList(operation, monitoredSubscriptionList?.ToList(), provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitoringTagRulesProperties"/>. </summary>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="includeByDefault"> IncludeByDefault for the elastic filter. </param>
         /// <param name="rules"> Rules in the elastic filter. </param>
         /// <returns> A new <see cref="Models.ElasticTrafficFilter"/> instance for mocking. </returns>
-        public static ElasticTrafficFilter ElasticTrafficFilter(string id = null, string name = null, string description = null, string region = null, Type? elasticTrafficFilterType = null, bool? includeByDefault = null, IEnumerable<ElasticTrafficFilterRule> rules = null)
+        public static ElasticTrafficFilter ElasticTrafficFilter(string id = null, string name = null, string description = null, string region = null, ElasticModelType? elasticTrafficFilterType = null, bool? includeByDefault = null, IEnumerable<ElasticTrafficFilterRule> rules = null)
         {
             rules ??= new List<ElasticTrafficFilterRule>();
 

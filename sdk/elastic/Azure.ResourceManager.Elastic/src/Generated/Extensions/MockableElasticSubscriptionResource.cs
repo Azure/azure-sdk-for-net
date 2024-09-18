@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </summary>
         /// <param name="body"> Email Id parameter of the User Organization, of which the API Key must be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<UserApiKeyResponse>> GetApiKeyOrganizationAsync(UserEmailId body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UserApiKeyResponse>> GetApiKeyOrganizationAsync(ElasticModelUserEmailId body = null, CancellationToken cancellationToken = default)
         {
             using var scope = OrganizationsClientDiagnostics.CreateScope("MockableElasticSubscriptionResource.GetApiKeyOrganization");
             scope.Start();
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </summary>
         /// <param name="body"> Email Id parameter of the User Organization, of which the API Key must be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<UserApiKeyResponse> GetApiKeyOrganization(UserEmailId body = null, CancellationToken cancellationToken = default)
+        public virtual Response<UserApiKeyResponse> GetApiKeyOrganization(ElasticModelUserEmailId body = null, CancellationToken cancellationToken = default)
         {
             using var scope = OrganizationsClientDiagnostics.CreateScope("MockableElasticSubscriptionResource.GetApiKeyOrganization");
             scope.Start();

@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Elastic.Models
             string name = default;
             string description = default;
             string region = default;
-            Type? type = default;
+            ElasticModelType? type = default;
             bool? includeByDefault = default;
             IReadOnlyList<ElasticTrafficFilterRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    type = new Type(property.Value.GetString());
+                    type = new ElasticModelType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("includeByDefault"u8))

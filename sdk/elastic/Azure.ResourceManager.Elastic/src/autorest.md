@@ -53,5 +53,10 @@ acronym-mapping:
 rename-mapping:
   MonitoredResource: MonitoredResourceContent
   ElasticTrafficFilter.type: ElasticTrafficFilterType
-
+  Type: ElasticModelType
+  Operation: ElasticModelOperation
+  Status: ElasticModelStatus
+  SubscriptionList: ElasticModelSubscriptionList
+  UserEmailId: ElasticModelUserEmailId
+ 
 ```

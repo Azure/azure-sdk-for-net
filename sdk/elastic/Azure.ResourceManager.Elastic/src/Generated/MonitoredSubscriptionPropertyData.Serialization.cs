@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 return null;
             }
-            SubscriptionList properties = default;
+            ElasticModelSubscriptionList properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Elastic
                     {
                         continue;
                     }
-                    properties = SubscriptionList.DeserializeSubscriptionList(property.Value, options);
+                    properties = ElasticModelSubscriptionList.DeserializeElasticModelSubscriptionList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

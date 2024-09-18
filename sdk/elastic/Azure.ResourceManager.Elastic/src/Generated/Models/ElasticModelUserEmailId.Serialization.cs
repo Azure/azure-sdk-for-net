@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class UserEmailId : IUtf8JsonSerializable, IJsonModel<UserEmailId>
+    public partial class ElasticModelUserEmailId : IUtf8JsonSerializable, IJsonModel<ElasticModelUserEmailId>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserEmailId>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticModelUserEmailId>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<UserEmailId>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ElasticModelUserEmailId>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserEmailId>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticModelUserEmailId>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserEmailId)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticModelUserEmailId)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.Elastic.Models
             writer.WriteEndObject();
         }
 
-        UserEmailId IJsonModel<UserEmailId>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ElasticModelUserEmailId IJsonModel<ElasticModelUserEmailId>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserEmailId>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticModelUserEmailId>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserEmailId)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticModelUserEmailId)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUserEmailId(document.RootElement, options);
+            return DeserializeElasticModelUserEmailId(document.RootElement, options);
         }
 
-        internal static UserEmailId DeserializeUserEmailId(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ElasticModelUserEmailId DeserializeElasticModelUserEmailId(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -85,38 +85,38 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UserEmailId(emailId, serializedAdditionalRawData);
+            return new ElasticModelUserEmailId(emailId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<UserEmailId>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ElasticModelUserEmailId>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserEmailId>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticModelUserEmailId>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UserEmailId)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticModelUserEmailId)} does not support writing '{options.Format}' format.");
             }
         }
 
-        UserEmailId IPersistableModel<UserEmailId>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ElasticModelUserEmailId IPersistableModel<ElasticModelUserEmailId>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserEmailId>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticModelUserEmailId>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUserEmailId(document.RootElement, options);
+                        return DeserializeElasticModelUserEmailId(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserEmailId)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticModelUserEmailId)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<UserEmailId>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ElasticModelUserEmailId>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="includeByDefault"> IncludeByDefault for the elastic filter. </param>
         /// <param name="rules"> Rules in the elastic filter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticTrafficFilter(string id, string name, string description, string region, Type? elasticTrafficFilterType, bool? includeByDefault, IReadOnlyList<ElasticTrafficFilterRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticTrafficFilter(string id, string name, string description, string region, ElasticModelType? elasticTrafficFilterType, bool? includeByDefault, IReadOnlyList<ElasticTrafficFilterRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <summary> Region of the elastic filter. </summary>
         public string Region { get; }
         /// <summary> Type of the elastic filter. </summary>
-        public Type? ElasticTrafficFilterType { get; }
+        public ElasticModelType? ElasticTrafficFilterType { get; }
         /// <summary> IncludeByDefault for the elastic filter. </summary>
         public bool? IncludeByDefault { get; }
         /// <summary> Rules in the elastic filter. </summary>

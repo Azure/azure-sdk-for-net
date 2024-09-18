@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 return null;
             }
             string subscriptionId = default;
-            Status? status = default;
+            ElasticModelStatus? status = default;
             string error = default;
             MonitoringTagRulesProperties tagRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new ElasticModelStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"u8))
