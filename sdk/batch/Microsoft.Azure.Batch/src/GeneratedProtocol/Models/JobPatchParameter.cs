@@ -43,9 +43,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Job.</param>
         /// <param name="poolInfo">The Pool on which the Batch service runs the
         /// Job's Tasks.</param>
+        /// <param name="networkConfiguration">The network configuration for
+        /// the Job.</param>
         /// <param name="metadata">A list of name-value pairs associated with
         /// the Job as metadata.</param>
-        public JobPatchParameter(int? priority = default(int?), int? maxParallelTasks = default(int?), bool? allowTaskPreemption = default(bool?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), JobConstraints constraints = default(JobConstraints), PoolInformation poolInfo = default(PoolInformation), IList<MetadataItem> metadata = default(IList<MetadataItem>))
+        public JobPatchParameter(int? priority = default(int?), int? maxParallelTasks = default(int?), bool? allowTaskPreemption = default(bool?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), JobConstraints constraints = default(JobConstraints), PoolInformation poolInfo = default(PoolInformation), JobNetworkConfiguration networkConfiguration = default(JobNetworkConfiguration), IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
             Priority = priority;
             MaxParallelTasks = maxParallelTasks;
@@ -53,6 +55,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             OnAllTasksComplete = onAllTasksComplete;
             Constraints = constraints;
             PoolInfo = poolInfo;
+            NetworkConfiguration = networkConfiguration;
             Metadata = metadata;
             CustomInit();
         }
@@ -141,6 +144,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "poolInfo")]
         public PoolInformation PoolInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the network configuration for the Job.
+        /// </summary>
+        [JsonProperty(PropertyName = "networkConfiguration")]
+        public JobNetworkConfiguration NetworkConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets a list of name-value pairs associated with the Job as

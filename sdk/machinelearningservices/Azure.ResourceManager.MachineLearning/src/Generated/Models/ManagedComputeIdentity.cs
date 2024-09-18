@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The identity which will be leveraged by the monitoring jobs. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

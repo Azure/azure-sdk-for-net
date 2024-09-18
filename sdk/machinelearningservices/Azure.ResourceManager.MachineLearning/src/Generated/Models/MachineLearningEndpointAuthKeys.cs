@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The primary key. </summary>
+        [WirePath("primaryKey")]
         public string PrimaryKey { get; set; }
         /// <summary> The secondary key. </summary>
+        [WirePath("secondaryKey")]
         public string SecondaryKey { get; set; }
     }
 }

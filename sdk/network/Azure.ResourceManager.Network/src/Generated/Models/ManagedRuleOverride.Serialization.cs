@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
+            if (Optional.IsDefined(Sensitivity))
+            {
+                writer.WritePropertyName("sensitivity"u8);
+                writer.WriteStringValue(Sensitivity.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -79,6 +84,7 @@ namespace Azure.ResourceManager.Network.Models
             string ruleId = default;
             ManagedRuleEnabledState? state = default;
             RuleMatchActionType? action = default;
+            ManagedRuleSensitivityType? sensitivity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,13 +112,22 @@ namespace Azure.ResourceManager.Network.Models
                     action = new RuleMatchActionType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("sensitivity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sensitivity = new ManagedRuleSensitivityType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedRuleOverride(ruleId, state, action, serializedAdditionalRawData);
+            return new ManagedRuleOverride(ruleId, state, action, sensitivity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleOverride>.Write(ModelReaderWriterOptions options)

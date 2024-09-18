@@ -27,17 +27,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
-            }
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -49,47 +38,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowRoleAssignmentOnRG))
-            {
-                writer.WritePropertyName("allowRoleAssignmentOnRG"u8);
-                writer.WriteBooleanValue(AllowRoleAssignmentOnRG.Value);
-            }
-            if (Optional.IsDefined(ApplicationInsights))
-            {
-                writer.WritePropertyName("applicationInsights"u8);
-                writer.WriteStringValue(ApplicationInsights);
-            }
-            if (Optional.IsDefined(ContainerRegistry))
-            {
-                writer.WritePropertyName("containerRegistry"u8);
-                writer.WriteStringValue(ContainerRegistry);
-            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(EnableDataIsolation))
-            {
-                writer.WritePropertyName("enableDataIsolation"u8);
-                writer.WriteBooleanValue(EnableDataIsolation.Value);
-            }
-            if (Optional.IsDefined(EnableSoftwareBillOfMaterials))
-            {
-                writer.WritePropertyName("enableSoftwareBillOfMaterials"u8);
-                writer.WriteBooleanValue(EnableSoftwareBillOfMaterials.Value);
-            }
-            if (Optional.IsDefined(Encryption))
-            {
-                writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
-            }
-            if (Optional.IsDefined(FeatureStoreSettings))
-            {
-                writer.WritePropertyName("featureStoreSettings"u8);
-                writer.WriteObjectValue(FeatureStoreSettings, options);
             }
             if (Optional.IsDefined(FriendlyName))
             {
@@ -101,50 +66,60 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("imageBuildCompute"u8);
                 writer.WriteStringValue(ImageBuildCompute);
             }
-            if (Optional.IsCollectionDefined(IPAllowlist))
+            if (Optional.IsDefined(ServiceManagedResourcesSettings))
             {
-                writer.WritePropertyName("ipAllowlist"u8);
-                writer.WriteStartArray();
-                foreach (var item in IPAllowlist)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ManagedNetwork))
-            {
-                writer.WritePropertyName("managedNetwork"u8);
-                writer.WriteObjectValue(ManagedNetwork, options);
+                writer.WritePropertyName("serviceManagedResourcesSettings"u8);
+                writer.WriteObjectValue(ServiceManagedResourcesSettings, options);
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentity))
             {
                 writer.WritePropertyName("primaryUserAssignedIdentity"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentity);
             }
-            if (Optional.IsDefined(PublicNetworkAccessType))
-            {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccessType.Value.ToString());
-            }
             if (Optional.IsDefined(ServerlessComputeSettings))
             {
                 writer.WritePropertyName("serverlessComputeSettings"u8);
                 writer.WriteObjectValue(ServerlessComputeSettings, options);
             }
-            if (Optional.IsDefined(ServiceManagedResourcesSettings))
+            if (Optional.IsDefined(PublicNetworkAccessType))
             {
-                writer.WritePropertyName("serviceManagedResourcesSettings"u8);
-                writer.WriteObjectValue(ServiceManagedResourcesSettings, options);
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccessType.Value.ToString());
             }
-            if (Optional.IsDefined(SoftDeleteRetentionInDays))
+            if (Optional.IsDefined(ApplicationInsights))
             {
-                writer.WritePropertyName("softDeleteRetentionInDays"u8);
-                writer.WriteNumberValue(SoftDeleteRetentionInDays.Value);
+                writer.WritePropertyName("applicationInsights"u8);
+                writer.WriteStringValue(ApplicationInsights);
+            }
+            if (Optional.IsDefined(ContainerRegistry))
+            {
+                writer.WritePropertyName("containerRegistry"u8);
+                writer.WriteStringValue(ContainerRegistry);
+            }
+            if (Optional.IsDefined(FeatureStoreSettings))
+            {
+                writer.WritePropertyName("featureStoreSettings"u8);
+                writer.WriteObjectValue(FeatureStoreSettings, options);
+            }
+            if (Optional.IsDefined(ManagedNetwork))
+            {
+                writer.WritePropertyName("managedNetwork"u8);
+                writer.WriteObjectValue(ManagedNetwork, options);
+            }
+            if (Optional.IsDefined(EnableDataIsolation))
+            {
+                writer.WritePropertyName("enableDataIsolation"u8);
+                writer.WriteBooleanValue(EnableDataIsolation.Value);
             }
             if (Optional.IsDefined(V1LegacyMode))
             {
                 writer.WritePropertyName("v1LegacyMode"u8);
                 writer.WriteBooleanValue(V1LegacyMode.Value);
+            }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -185,50 +160,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
-            MachineLearningSku sku = default;
             IDictionary<string, string> tags = default;
-            bool? allowRoleAssignmentOnRG = default;
-            string applicationInsights = default;
-            string containerRegistry = default;
+            MachineLearningSku sku = default;
+            ManagedServiceIdentity identity = default;
             string description = default;
-            bool? enableDataIsolation = default;
-            bool? enableSoftwareBillOfMaterials = default;
-            EncryptionUpdateProperties encryption = default;
-            FeatureStoreSettings featureStoreSettings = default;
             string friendlyName = default;
             string imageBuildCompute = default;
-            IList<string> ipAllowlist = default;
-            ManagedNetworkSettings managedNetwork = default;
-            string primaryUserAssignedIdentity = default;
-            MachineLearningPublicNetworkAccessType? publicNetworkAccess = default;
-            ServerlessComputeSettings serverlessComputeSettings = default;
             ServiceManagedResourcesSettings serviceManagedResourcesSettings = default;
-            int? softDeleteRetentionInDays = default;
+            string primaryUserAssignedIdentity = default;
+            ServerlessComputeSettings serverlessComputeSettings = default;
+            PublicNetworkAccess? publicNetworkAccess = default;
+            string applicationInsights = default;
+            string containerRegistry = default;
+            FeatureStoreSettings featureStoreSettings = default;
+            ManagedNetworkSettings managedNetwork = default;
+            bool? enableDataIsolation = default;
             bool? v1LegacyMode = default;
+            EncryptionUpdateProperties encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
-                    continue;
-                }
-                if (property.NameEquals("sku"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -243,6 +195,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    continue;
+                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -252,64 +223,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("allowRoleAssignmentOnRG"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            allowRoleAssignmentOnRG = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("applicationInsights"u8))
-                        {
-                            applicationInsights = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("containerRegistry"u8))
-                        {
-                            containerRegistry = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableDataIsolation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableDataIsolation = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableSoftwareBillOfMaterials"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableSoftwareBillOfMaterials = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("encryption"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryption = EncryptionUpdateProperties.DeserializeEncryptionUpdateProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("featureStoreSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            featureStoreSettings = FeatureStoreSettings.DeserializeFeatureStoreSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("friendlyName"u8))
@@ -322,41 +238,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             imageBuildCompute = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("ipAllowlist"u8))
+                        if (property0.NameEquals("serviceManagedResourcesSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            ipAllowlist = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("managedNetwork"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managedNetwork = ManagedNetworkSettings.DeserializeManagedNetworkSettings(property0.Value, options);
+                            serviceManagedResourcesSettings = ServiceManagedResourcesSettings.DeserializeServiceManagedResourcesSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("primaryUserAssignedIdentity"u8))
                         {
                             primaryUserAssignedIdentity = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("publicNetworkAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            publicNetworkAccess = new MachineLearningPublicNetworkAccessType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("serverlessComputeSettings"u8))
@@ -368,22 +261,50 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             serverlessComputeSettings = ServerlessComputeSettings.DeserializeServerlessComputeSettings(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("serviceManagedResourcesSettings"u8))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            serviceManagedResourcesSettings = ServiceManagedResourcesSettings.DeserializeServiceManagedResourcesSettings(property0.Value, options);
+                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("softDeleteRetentionInDays"u8))
+                        if (property0.NameEquals("applicationInsights"u8))
+                        {
+                            applicationInsights = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("containerRegistry"u8))
+                        {
+                            containerRegistry = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("featureStoreSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            softDeleteRetentionInDays = property0.Value.GetInt32();
+                            featureStoreSettings = FeatureStoreSettings.DeserializeFeatureStoreSettings(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("managedNetwork"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            managedNetwork = ManagedNetworkSettings.DeserializeManagedNetworkSettings(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("enableDataIsolation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableDataIsolation = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("v1LegacyMode"u8))
@@ -393,6 +314,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                                 continue;
                             }
                             v1LegacyMode = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("encryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryption = EncryptionUpdateProperties.DeserializeEncryptionUpdateProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -405,27 +335,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningWorkspacePatch(
-                identity,
-                sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                allowRoleAssignmentOnRG,
-                applicationInsights,
-                containerRegistry,
+                sku,
+                identity,
                 description,
-                enableDataIsolation,
-                enableSoftwareBillOfMaterials,
-                encryption,
-                featureStoreSettings,
                 friendlyName,
                 imageBuildCompute,
-                ipAllowlist ?? new ChangeTrackingList<string>(),
-                managedNetwork,
-                primaryUserAssignedIdentity,
-                publicNetworkAccess,
-                serverlessComputeSettings,
                 serviceManagedResourcesSettings,
-                softDeleteRetentionInDays,
+                primaryUserAssignedIdentity,
+                serverlessComputeSettings,
+                publicNetworkAccess,
+                applicationInsights,
+                containerRegistry,
+                featureStoreSettings,
+                managedNetwork,
+                enableDataIsolation,
                 v1LegacyMode,
+                encryption,
                 serializedAdditionalRawData);
         }
 

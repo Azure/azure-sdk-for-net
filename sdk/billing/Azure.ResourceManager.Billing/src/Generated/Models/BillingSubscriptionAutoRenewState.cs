@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    /// <summary> Indicates whether auto renewal is turned on or off for a subscription. </summary>
+    /// <summary> Indicates whether auto renewal is turned on or off for a product. </summary>
     public readonly partial struct BillingSubscriptionAutoRenewState : IEquatable<BillingSubscriptionAutoRenewState>
     {
         private readonly string _value;
