@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 namespace Azure.Storage.DataMovement.Tests;
 
@@ -253,6 +254,45 @@ public class TransferManagerTests
         {
             Assert.That(transfer.HasCompleted);
         }
+    }
+
+    // TODO: should be more granular testing job build failures
+    [TestCase(true, false)]
+    [TestCase(false, true)]
+    public async Task ItemTransferFailAtQueue(
+        bool failBuildJob,
+        bool failAddJobToCheckpointer)
+    {
+        Uri srcUri = new("file:///foo/bar");
+        Uri dstUri = new("https://example.com/fizz/buzz");
+
+        StepProcessor<TransferJobInternal> jobsProcessor = new();
+        StepProcessor<JobPartInternal> partsProcessor = new();
+        StepProcessor<Func<Task>> chunksProcessor = new();
+        JobBuilder jobBuilder = failBuildJob
+            ? new Mock<JobBuilder>(MockBehavior.Strict).Object
+            : new JobBuilder(ArrayPool<byte>.Shared, default, new(ClientOptions.Default));
+        Mock<TransferCheckpointer> checkpointer = new(failAddJobToCheckpointer ? MockBehavior.Strict : MockBehavior.Loose);
+        Mock<StorageResourceItem> srcResource = new(MockBehavior.Strict);
+        Mock<StorageResourceItem> dstResource = new(MockBehavior.Strict);
+
+        (srcResource, dstResource).BasicSetup(srcUri, dstUri);
+
+        await using TransferManager transferManager = new(
+            jobsProcessor,
+            partsProcessor,
+            chunksProcessor,
+            jobBuilder,
+            checkpointer.Object,
+            default);
+
+        DataTransfer transfer;
+
+        Assert.That(async () => transfer = await transferManager.StartTransferAsync(
+            srcResource.Object,
+            dstResource.Object), Throws.InstanceOf<MockException>());
+
+        // TODO determine if checkpointer still has the job tracked even though it failed to queue
     }
 }
 
