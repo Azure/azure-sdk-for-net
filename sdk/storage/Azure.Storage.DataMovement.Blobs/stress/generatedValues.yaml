@@ -1,0 +1,7 @@
+scenarios:
+- image: Dockerfile
+  Scenario: blobSingleUpload
+  testScenario: blobsingleupload
+  imageBuildDir: ../../..
+  imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/storage-datamovement-blobs-net-stress/dockerfile:amnguye
+

@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env 
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env 
 
 # Copy in engineering system needed to build
 COPY ./eng/ /app/eng/
@@ -8,7 +8,7 @@ COPY ./Directory.Build.props/ /app/
 COPY ./Directory.Build.targets/ /app/
 COPY ./NuGet.Config/ /app/
 
-# Copy in Service Bus Source Code
+# Copy in DataMovement Source Code
 COPY ./sdk/storage/Azure.Storage.DataMovement.Blobs/ /app/sdk/storage/Azure.Storage.DataMovement.Blobs/
 
 # Copy in Core Source Code
@@ -21,10 +21,10 @@ RUN dotnet build './sdk/storage/Azure.Storage.DataMovement.Blobs/stress/src/' --
 # Copy in the dll files to be ready to run
 FROM build-env as publish
 WORKDIR /app
-COPY --from=build-env /app/artifacts/bin/Azure.Storage.DataMovement.Blobs.Stress/Release/net7.0/ /app/artifacts/bin/Azure.Storage.DataMovement.Blobs.Stress/Release/net7.0/
+COPY --from=build-env /app/artifacts/bin/Azure.Storage.DataMovement.Blobs.Stress/Release/net8.0/ /app/artifacts/bin/Azure.Storage.DataMovement.Blobs.Stress/Release/net8.0/
 
-WORKDIR /app/artifacts/bin/Azure.Storage.DataMovement.Blobs.Stress/Release/net7.0
+WORKDIR /app/artifacts/bin/Azure.Storage.DataMovement.Blobs.Stress/Release/net8.0
 
-# The default is running just the "SendReceiveTest"
+# The default is running all the upload tests
 ENTRYPOINT ["dotnet Azure.Storage.DataMovement.Blobs.Stress.dll", "--test"]
 CMD ["SendRec"]

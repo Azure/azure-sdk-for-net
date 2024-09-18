@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
         {
         }
 
-        public override string Name => "";
+        public override string Name => "blobSingleUpload";
 
         public override async Task RunTestAsync(CancellationToken cancellationToken)
         {

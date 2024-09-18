@@ -9,7 +9,6 @@
       $(NoWarn);CA2213
     </NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
