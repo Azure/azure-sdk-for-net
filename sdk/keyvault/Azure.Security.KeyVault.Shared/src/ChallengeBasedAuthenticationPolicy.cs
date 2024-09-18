@@ -97,15 +97,13 @@ namespace Azure.Security.KeyVault
             string error = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "error");
             string claims = null;
 
-            if (error != null)
+            if (error == "insufficient_claims")
             {
-                // The challenge response contained an error.
-                string base64Claims = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "claims");
-
-                if (error == "insufficient_claims" && base64Claims != null)
+                claims = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "claims") switch
                 {
-                    claims = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(base64Claims));
-                }
+                    { Length: 0 } => null,
+                    string enc => System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(enc))
+                };
             }
 
             if (scope != null)
