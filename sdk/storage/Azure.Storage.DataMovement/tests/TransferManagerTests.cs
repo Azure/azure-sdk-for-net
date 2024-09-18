@@ -17,7 +17,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests;
 
-internal class TransferManagerTests
+public class TransferManagerTests
 {
     [Test]
     public async Task BasicProcessorLifetime()

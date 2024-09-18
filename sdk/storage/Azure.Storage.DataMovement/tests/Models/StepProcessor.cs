@@ -3,10 +3,9 @@
 
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Channels;
 using System.Threading.Tasks;
 
-namespace Azure.Storage.DataMovement.Tests.Models
+namespace Azure.Storage.DataMovement.Tests
 {
     /// <summary>
     /// Processor that only processes items one by one from
