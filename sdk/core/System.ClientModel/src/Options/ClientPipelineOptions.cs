@@ -47,25 +47,6 @@ public class ClientPipelineOptions
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="PipelinePolicy"/> to be used by the
-    /// <see cref="ClientPipeline"/> for logging.
-    /// </summary>
-    /// <remarks>
-    /// In most cases, this property will be set to an instance of
-    /// <see cref="ClientLoggingPolicy"/>.
-    /// </remarks>
-    public PipelinePolicy? LoggingPolicy
-    {
-        get => _loggingPolicy;
-        set
-        {
-            AssertNotFrozen();
-
-            _loggingPolicy = value;
-        }
-    }
-
-    /// <summary>
     /// Gets or sets the <see cref="PipelineTransport"/> to be used by the
     /// <see cref="ClientPipeline"/> for sending and receiving HTTP messages.
     /// </summary>
@@ -103,10 +84,7 @@ public class ClientPipelineOptions
     }
 
     /// <summary>
-    /// The options to be used to create a <see cref="ClientLoggingPolicy"/>
-    /// if a custom <see cref="LoggingPolicy"/> is not provided. If
-    /// <see cref="LoggingPolicy"/> is not <c>null</c>, this property will
-    /// not be used.
+    /// The options to be used to configure logging.
     /// </summary>
     public LoggingOptions LoggingOptions
     {

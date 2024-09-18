@@ -9,12 +9,12 @@ using Microsoft.Extensions.Logging;
 namespace System.ClientModel.Internal;
 
 // The methods in this class should only ever be called from LoggingHandler
-internal partial class ClientModelLogMessages
+internal partial class HttpMessageLogMessages
 {
     private ILogger _logger;
     private PipelineMessageSanitizer _sanitizer;
 
-    public ClientModelLogMessages(ILogger logger, PipelineMessageSanitizer sanitizer)
+    public HttpMessageLogMessages(ILogger logger, PipelineMessageSanitizer sanitizer)
     {
         _logger = logger;
         _sanitizer = sanitizer;

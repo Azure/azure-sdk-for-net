@@ -12,16 +12,18 @@ namespace System.ClientModel.Internal;
 
 internal class LoggingHandler
 {
+    private const string assemblyName = "System.ClientModel";
+
     private readonly ILogger _logger;
     private readonly PipelineMessageSanitizer _sanitizer;
-    private readonly ClientModelLogMessages _logMessages;
+    private readonly HttpMessageLogMessages _logMessages;
     private readonly bool _useILogger;
 
     public LoggingHandler(ILogger logger, PipelineMessageSanitizer sanitizer)
     {
         _logger = logger;
         _sanitizer = sanitizer;
-        _logMessages = new ClientModelLogMessages(logger, _sanitizer);
+        _logMessages = new HttpMessageLogMessages(logger, _sanitizer);
         _useILogger = logger is not NullLogger;
     }
 
@@ -37,7 +39,7 @@ internal class LoggingHandler
         return _useILogger ? _logger.IsEnabled(logLevel) : ClientModelEventSource.Log.IsEnabled(eventLevel, EventKeywords.None);
     }
 
-    public void LogRequest(PipelineRequest request, string requestId, string? assemblyName)
+    public void LogRequest(string requestId, PipelineRequest request)
     {
         if (_useILogger)
         {

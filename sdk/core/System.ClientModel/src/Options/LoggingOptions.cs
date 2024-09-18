@@ -70,10 +70,10 @@ public class LoggingOptions
     }
 
     /// <summary>
-    /// Gets or sets value indicating if request and response content should be logged.
+    /// Gets or sets value indicating if any logs should be written from this library.
     /// </summary>
     /// <value>Defaults to <c>false</c>.</value>
-    public bool IsLoggingContentEnabled
+    public bool IsClientLoggingEnabled
     {
         get => _isLoggingContentEnabled;
         set
@@ -85,10 +85,41 @@ public class LoggingOptions
     }
 
     /// <summary>
-    /// Gets or sets value indicating maximum size of content to log in bytes.
+    /// Gets or sets value indicating if HTTP requests and responses
+    /// should be logged.
+    /// </summary>
+    /// <value>Defaults to <c>false</c>.</value>
+    public bool IsHttpMessageLoggingEnabled
+    {
+        get => _isLoggingContentEnabled;
+        set
+        {
+            AssertNotFrozen();
+
+            _isLoggingContentEnabled = value;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets value indicating if request and response content should be logged.
+    /// </summary>
+    /// <value>Defaults to <c>false</c>.</value>
+    public bool IsHttpMessageBodyLoggingEnabled
+    {
+        get => _isLoggingContentEnabled;
+        set
+        {
+            AssertNotFrozen();
+
+            _isLoggingContentEnabled = value;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets value indicating maximum size of body size to log in bytes.
     /// </summary>
     /// <value>Defaults to <c>4096</c></value>
-    public int LoggedContentSizeLimit
+    public int HttpMessageBodyLogLimit
     {
         get => _loggedContentSizeLimit;
         set

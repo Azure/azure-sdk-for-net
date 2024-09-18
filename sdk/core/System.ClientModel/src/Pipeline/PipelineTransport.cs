@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.ClientModel.Internal.Logging;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -16,6 +17,8 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public abstract class PipelineTransport : PipelinePolicy
 {
+    internal HttpMessageLogging? HttpMessageLogging { get; set; }
+
     #region CreateMessage
 
     /// <summary>
@@ -84,6 +87,12 @@ public abstract class PipelineTransport : PipelinePolicy
         using CancellationTokenSource timeoutTokenSource = CancellationTokenSource.CreateLinkedTokenSource(messageToken);
         timeoutTokenSource.CancelAfter(networkTimeout);
 
+        HttpMessageLogging?.LogRequest(message);
+
+        HttpMessageLogging?.LogRequestContentSyncOrAsync(message, async);
+
+        var before = Stopwatch.GetTimestamp();
+
         try
         {
             message.CancellationToken = timeoutTokenSource.Token;
@@ -108,8 +117,13 @@ public abstract class PipelineTransport : PipelinePolicy
             timeoutTokenSource.CancelAfter(Timeout.Infinite);
         }
 
+        var after = Stopwatch.GetTimestamp();
+        double elapsed = (after - before) / (double)Stopwatch.Frequency;
+
         message.AssertResponse();
         message.Response!.IsErrorCore = ClassifyResponse(message);
+
+        HttpMessageLogging?.LogResponse(message, elapsed);
 
         // The remainder of the method handles response content according to
         // buffering logic specified by value of message.BufferResponse.
@@ -118,6 +132,8 @@ public abstract class PipelineTransport : PipelinePolicy
         if (contentStream is null)
         {
             // There is no response content.
+
+            HttpMessageLogging?.LogBufferedOrSeekableResponseContent(message);
             return;
         }
 
@@ -129,6 +145,8 @@ public abstract class PipelineTransport : PipelinePolicy
             {
                 message.Response.ContentStream = new ReadTimeoutStream(contentStream, networkTimeout);
             }
+
+            HttpMessageLogging?.LogNonBufferedResponseContent(message);
 
             return;
         }
@@ -152,6 +170,8 @@ public abstract class PipelineTransport : PipelinePolicy
             {
                 message.Response.BufferContent(timeoutTokenSource.Token);
             }
+
+            HttpMessageLogging?.LogBufferedOrSeekableResponseContent(message);
         }
         // We dispose stream on timeout or user cancellation so catch and check if
         // cancellation token was cancelled
@@ -162,6 +182,8 @@ public abstract class PipelineTransport : PipelinePolicy
         {
             CancellationHelper.ThrowIfCancellationRequestedOrTimeout(messageToken, timeoutTokenSource.Token, ex, networkTimeout);
             throw;
+
+            // TODO - log exception response?
         }
     }
 
