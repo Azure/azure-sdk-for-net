@@ -54,7 +54,7 @@ public class BasicAppServiceTests(bool async)
                 BicepVariable funcAppName =
                     new(nameof(funcAppName), typeof(string))
                     {
-                        Value = BicepFunction.Interpolate($"functionApp-{BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id)}")
+                        Value = BicepFunction.Concat("functionApp-", BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id))
                     };
 
                 WebSite functionApp =
@@ -117,84 +117,84 @@ public class BasicAppServiceTests(bool async)
             param location string = resourceGroup().location
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                kind: 'Storage'
-                location: location
-                sku: {
-                    name: 'Standard_LRS'
-                }
-                properties: {
-                    supportsHttpsTrafficOnly: true
-                    defaultToOAuthAuthentication: true
-                }
+              name: take('storage${uniqueString(resourceGroup().id)}', 24)
+              kind: 'Storage'
+              location: location
+              sku: {
+                name: 'Standard_LRS'
+              }
+              properties: {
+                supportsHttpsTrafficOnly: true
+                defaultToOAuthAuthentication: true
+              }
             }
 
             resource hostingPlan 'Microsoft.Web/serverfarms@2021-03-01' = {
-                name: take('hostingPlan-${uniqueString(resourceGroup().id)}', 60)
-                location: location
-                sku: {
-                    name: 'Y1'
-                    tier: 'Dynamic'
-                }
+              name: take('hostingPlan-${uniqueString(resourceGroup().id)}', 60)
+              location: location
+              sku: {
+                name: 'Y1'
+                tier: 'Dynamic'
+              }
             }
 
             resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
-                name: take('appInsights-${uniqueString(resourceGroup().id)}', 260)
-                kind: 'web'
-                location: location
-                properties: {
-                    Application_Type: 'web'
-                    Request_Source: 'rest'
-                }
+              name: take('appInsights-${uniqueString(resourceGroup().id)}', 260)
+              kind: 'web'
+              location: location
+              properties: {
+                Application_Type: 'web'
+                Request_Source: 'rest'
+              }
             }
 
-            var funcAppName = 'functionApp-${uniqueString(resourceGroup().id)}'
+            var funcAppName = concat('functionApp-', uniqueString(resourceGroup().id))
 
             resource functionApp 'Microsoft.Web/sites@2023-12-01' = {
-                name: funcAppName
-                location: location
-                properties: {
-                    serverFarmId: hostingPlan.id
-                    httpsOnly: true
-                    siteConfig: {
-                        appSettings: [
-                            {
-                                name: 'AzureWebJobsStorage'
-                                value: 'DefaultEndpointsProtocol=https;AccountName=${storage.name};EndpointSuffix=core.windows.net;AccountKey=${storage.listKeys().keys[0].value}'
-                            }
-                            {
-                                name: 'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING'
-                                value: 'DefaultEndpointsProtocol=https;AccountName=${storage.name};EndpointSuffix=core.windows.net;AccountKey=${storage.listKeys().keys[0].value}'
-                            }
-                            {
-                                name: 'WEBSITE_CONTENTSHARE'
-                                value: toLower(funcAppName)
-                            }
-                            {
-                                name: 'FUNCTIONS_EXTENSION_VERSION'
-                                value: '~4'
-                            }
-                            {
-                                name: 'WEBSITE_NODE_DEFAULT_VERSION'
-                                value: '~14'
-                            }
-                            {
-                                name: 'FUNCTIONS_WORKER_RUNTIME'
-                                value: 'dotnet'
-                            }
-                            {
-                                name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
-                                value: appInsights.properties.InstrumentationKey
-                            }
-                        ]
-                        minTlsVersion: '1.2'
-                        ftpsState: 'FtpsOnly'
+              name: funcAppName
+              location: location
+              properties: {
+                serverFarmId: hostingPlan.id
+                httpsOnly: true
+                siteConfig: {
+                  appSettings: [
+                    {
+                      name: 'AzureWebJobsStorage'
+                      value: 'DefaultEndpointsProtocol=https;AccountName=${storage.name};EndpointSuffix=core.windows.net;AccountKey=${storage.listKeys().keys[0].value}'
                     }
+                    {
+                      name: 'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING'
+                      value: 'DefaultEndpointsProtocol=https;AccountName=${storage.name};EndpointSuffix=core.windows.net;AccountKey=${storage.listKeys().keys[0].value}'
+                    }
+                    {
+                      name: 'WEBSITE_CONTENTSHARE'
+                      value: toLower(funcAppName)
+                    }
+                    {
+                      name: 'FUNCTIONS_EXTENSION_VERSION'
+                      value: '~4'
+                    }
+                    {
+                      name: 'WEBSITE_NODE_DEFAULT_VERSION'
+                      value: '~14'
+                    }
+                    {
+                      name: 'FUNCTIONS_WORKER_RUNTIME'
+                      value: 'dotnet'
+                    }
+                    {
+                      name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
+                      value: appInsights.properties.InstrumentationKey
+                    }
+                  ]
+                  minTlsVersion: '1.2'
+                  ftpsState: 'FtpsOnly'
                 }
-                identity: {
-                    type: 'SystemAssigned'
-                }
-                kind: 'functionapp'
+              }
+              identity: {
+                type: 'SystemAssigned'
+              }
+              kind: 'functionapp'
             }
             """)
         .Lint()

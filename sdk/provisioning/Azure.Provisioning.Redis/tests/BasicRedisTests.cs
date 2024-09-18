@@ -40,17 +40,17 @@ public class BasicRedisTests(bool async)
             param location string = resourceGroup().location
 
             resource cache 'Microsoft.Cache/redis@2020-06-01' = {
-                name: take('cache-${uniqueString(resourceGroup().id)}', 63)
-                location: location
-                properties: {
-                    sku: {
-                        name: 'Standard'
-                        family: 'C'
-                        capacity: 1
-                    }
-                    enableNonSslPort: false
-                    minimumTlsVersion: '1.2'
+              name: take('cache-${uniqueString(resourceGroup().id)}', 63)
+              location: location
+              properties: {
+                sku: {
+                  name: 'Standard'
+                  family: 'C'
+                  capacity: 1
                 }
+                enableNonSslPort: false
+                minimumTlsVersion: '1.2'
+              }
             }
             """)
         .Lint()

@@ -22,7 +22,6 @@ public class SqlSpecification() :
         RemoveProperty<FailoverGroupResource>("ReadOnlyEndpointFailoverPolicy");
         RemoveProperty<FailoverGroupResource>("Databases");
         RemoveProperty<GeoBackupPolicyResource>("GeoBackupPolicyName");
-        RemoveProperty<IPv6FirewallRuleResource>("Data");
         RemoveProperty<LedgerDigestUploadResource>("LedgerDigestUploads");
         RemoveProperty<LogicalDatabaseTransparentDataEncryptionResource>("TdeName");
         RemoveProperty<LongTermRetentionPolicyResource>("PolicyName");
@@ -55,7 +54,6 @@ public class SqlSpecification() :
         RemoveProperty<SqlDatabaseVulnerabilityAssessmentResource>("VulnerabilityAssessmentName");
         RemoveProperty<SqlDatabaseVulnerabilityAssessmentRuleBaselineResource>("BaselineName");
         RemoveProperty<SqlDatabaseVulnerabilityAssessmentRuleBaselineResource>("RuleId");
-        RemoveProperty<SqlFirewallRuleResource>("Data");
         RemoveProperty<SqlServerAzureADAdministratorResource>("AdministratorName");
         RemoveProperty<SqlServerAzureADOnlyAuthenticationResource>("AuthenticationName");
         RemoveProperty<SqlServerBlobAuditingPolicyResource>("BlobAuditingPolicyName");

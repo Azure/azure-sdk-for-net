@@ -14,17 +14,17 @@ namespace BasicTypeSpec.Models
     public partial class ProjectedModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         internal ProjectedModel(string name)
         {
             Name = name;
         }
 
-        internal ProjectedModel(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProjectedModel(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> name of the ModelWithProjectedName. </summary>
