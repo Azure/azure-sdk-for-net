@@ -152,8 +152,8 @@ public class CloudMachineInfrastructure : Infrastructure
                 IncludedEventTypes =
                 [
                     "Microsoft.Storage.BlobCreated",
-                        "Microsoft.Storage.BlobDeleted",
-                        "Microsoft.Storage.BlobRenamed"
+                    "Microsoft.Storage.BlobDeleted",
+                    "Microsoft.Storage.BlobRenamed"
                 ],
                 IsAdvancedFilteringOnArraysEnabled = true
             },
