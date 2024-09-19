@@ -17,9 +17,55 @@ namespace Azure.AI.Translation.Text.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TextTranslation_GetSupportedLanguages_ShortVersion()
+        public void Example_TextTranslation_GetSupportedLanguages_GetsTheSetOfLanguagesCurrentlySupportedByOtherOperationsOfTheTranslator()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            Response response = client.GetSupportedLanguages("kayfnugjec", "translation,transliteration,dictionary", "en", new ETag("fpnhruttllvc"), null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TextTranslation_GetSupportedLanguages_GetsTheSetOfLanguagesCurrentlySupportedByOtherOperationsOfTheTranslator_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            Response response = await client.GetSupportedLanguagesAsync("kayfnugjec", "translation,transliteration,dictionary", "en", new ETag("fpnhruttllvc"), null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TextTranslation_GetSupportedLanguages_GetsTheSetOfLanguagesCurrentlySupportedByOtherOperationsOfTheTranslator_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages();
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TextTranslation_GetSupportedLanguages_GetsTheSetOfLanguagesCurrentlySupportedByOtherOperationsOfTheTranslator_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TextTranslationClient client = new TextTranslationClient(endpoint);
+
+            Response<GetSupportedLanguagesResult> response = await client.GetSupportedLanguagesAsync();
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TextTranslation_GetSupportedLanguages_GetsTheSetOfLanguagesCurrentlySupportedByOtherOperationsOfTheTranslatorWithMinimumProperties()
+        {
+            Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
             Response response = client.GetSupportedLanguages(null, null, null, null, null);
@@ -30,9 +76,9 @@ namespace Azure.AI.Translation.Text.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextTranslation_GetSupportedLanguages_ShortVersion_Async()
+        public async Task Example_TextTranslation_GetSupportedLanguages_GetsTheSetOfLanguagesCurrentlySupportedByOtherOperationsOfTheTranslatorWithMinimumProperties_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
             Response response = await client.GetSupportedLanguagesAsync(null, null, null, null, null);
@@ -43,9 +89,9 @@ namespace Azure.AI.Translation.Text.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TextTranslation_GetSupportedLanguages_ShortVersion_Convenience()
+        public void Example_TextTranslation_GetSupportedLanguages_GetsTheSetOfLanguagesCurrentlySupportedByOtherOperationsOfTheTranslatorWithMinimumProperties_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
             Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages();
@@ -53,96 +99,12 @@ namespace Azure.AI.Translation.Text.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextTranslation_GetSupportedLanguages_ShortVersion_Convenience_Async()
+        public async Task Example_TextTranslation_GetSupportedLanguages_GetsTheSetOfLanguagesCurrentlySupportedByOtherOperationsOfTheTranslatorWithMinimumProperties_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
             Response<GetSupportedLanguagesResult> response = await client.GetSupportedLanguagesAsync();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextTranslation_GetSupportedLanguages_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TextTranslationClient client = new TextTranslationClient(endpoint);
-
-            Response response = client.GetSupportedLanguages("<clientTraceId>", "<scope>", "<acceptLanguage>", new ETag("<ifNoneMatch>"), null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("translation").GetProperty("<key>").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("translation").GetProperty("<key>").GetProperty("nativeName").ToString());
-            Console.WriteLine(result.GetProperty("translation").GetProperty("<key>").GetProperty("dir").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("nativeName").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("nativeName").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("dir").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("nativeName").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("dir").ToString());
-            Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("nativeName").ToString());
-            Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("dir").ToString());
-            Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("translations")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("translations")[0].GetProperty("nativeName").ToString());
-            Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("translations")[0].GetProperty("dir").ToString());
-            Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("translations")[0].GetProperty("code").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextTranslation_GetSupportedLanguages_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TextTranslationClient client = new TextTranslationClient(endpoint);
-
-            Response response = await client.GetSupportedLanguagesAsync("<clientTraceId>", "<scope>", "<acceptLanguage>", new ETag("<ifNoneMatch>"), null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("translation").GetProperty("<key>").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("translation").GetProperty("<key>").GetProperty("nativeName").ToString());
-            Console.WriteLine(result.GetProperty("translation").GetProperty("<key>").GetProperty("dir").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("nativeName").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("nativeName").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("dir").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("nativeName").ToString());
-            Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("dir").ToString());
-            Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("nativeName").ToString());
-            Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("dir").ToString());
-            Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("translations")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("translations")[0].GetProperty("nativeName").ToString());
-            Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("translations")[0].GetProperty("dir").ToString());
-            Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("translations")[0].GetProperty("code").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextTranslation_GetSupportedLanguages_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TextTranslationClient client = new TextTranslationClient(endpoint);
-
-            Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages(clientTraceId: "<clientTraceId>", scope: "<scope>", acceptLanguage: "<acceptLanguage>", ifNoneMatch: new ETag("<ifNoneMatch>"));
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextTranslation_GetSupportedLanguages_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TextTranslationClient client = new TextTranslationClient(endpoint);
-
-            Response<GetSupportedLanguagesResult> response = await client.GetSupportedLanguagesAsync(clientTraceId: "<clientTraceId>", scope: "<scope>", acceptLanguage: "<acceptLanguage>", ifNoneMatch: new ETag("<ifNoneMatch>"));
         }
     }
 }
