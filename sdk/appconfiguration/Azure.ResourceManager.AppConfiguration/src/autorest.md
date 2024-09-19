@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: AppConfiguration
 namespace: Azure.ResourceManager.AppConfiguration
-require: https://github.com/Azure/azure-rest-api-specs/blob/e8c4e082948a49ef5dc8acf6c5b9d581b603370e/specification/appconfiguration/resource-manager/readme.md
-tag: package-2023-03-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/b72e0199fa3242d64b0b49f38e71586066a8c048/specification/appconfiguration/resource-manager/readme.md
+# tag: package-2024-05-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -89,6 +89,14 @@ acronym-mapping:
 request-path-to-parent:
   /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/deletedConfigurationStores: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}
 directive:
+  - from: v2/types.json
+    where: $.definitions.ErrorResponse
+    transform: >
+      $["x-ms-client-name"] = "ErrorResponseV2";
+  - from: v5/types.json
+    where: $.definitions.ErrorResponse
+    transform: >
+      $["x-ms-client-name"] = "ErrorResponseV5";
   - from: swagger-document
     where: $.definitions.EncryptionProperties
     transform: >
@@ -100,7 +108,4 @@ directive:
   - rename-operation:
       from: Operations_CheckNameAvailability
       to: CheckAppConfigurationNameAvailability
-
-list-exception:
-- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}
-````
+```
