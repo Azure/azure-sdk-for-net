@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core.Cryptography;
 using Azure.Core.Pipeline;
 using Azure.Storage.Cryptography.Models;
+using static Azure.Storage.Cryptography.Models.ClientSideEncryptionVersionExtensions;
 
 namespace Azure.Storage.Cryptography
 {
@@ -416,6 +417,8 @@ namespace Azure.Storage.Cryptography
                         count: Constants.ClientSideEncryption.V2.WrappedDataVersionLength)
                         // remove empty padding from fixed-length space for version string
                         .Trim('\0');
+                    unwrappedProtocolString = unwrappedProtocolString == ClientSideEncryptionVersionString.V2_1
+                        ? ClientSideEncryptionVersionString.V2_0 : unwrappedProtocolString;
                     if (unwrappedProtocolString != encryptionData.EncryptionAgent.EncryptionVersion.Serialize())
                     {
                         throw new CryptographicException("Encryption metadata has been tampered.");

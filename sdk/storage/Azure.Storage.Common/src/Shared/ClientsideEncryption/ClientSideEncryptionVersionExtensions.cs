@@ -9,6 +9,7 @@ namespace Azure.Storage.Cryptography.Models
         {
             public const string V1_0 = "1.0";
             public const string V2_0 = "2.0";
+            public const string V2_1 = "2.1";
         }
 
         public static string Serialize(this ClientSideEncryptionVersion version)
@@ -36,6 +37,8 @@ namespace Azure.Storage.Cryptography.Models
                     return ClientSideEncryptionVersion.V1_0;
 #pragma warning restore CS0618 // obsolete
                 case ClientSideEncryptionVersionString.V2_0:
+                    return ClientSideEncryptionVersion.V2_0;
+                case ClientSideEncryptionVersionString.V2_1:
                     return ClientSideEncryptionVersion.V2_0;
                 default:
                     // This library doesn't support the stated encryption version
