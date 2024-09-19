@@ -16,7 +16,9 @@ public class LoggingOptions
     private bool _frozen;
 
     private const int DefaultLoggedContentSizeLimit = 4 * 1024;
-    private const bool DefaultIsLoggingContentEnabled = false;
+    private const bool DefaultDisableHttpLogging = false;
+    private const bool DefaultDisableLogging = false;
+    private const bool DefaultEnableHttpContentLogging = false;
     private const bool DefaultCombineLogs = true;
 
     private static readonly string[] s_defaultAllowedHeaderNames =
@@ -45,10 +47,12 @@ public class LoggingOptions
     private static readonly string[] s_defaultAllowedQueryParameters = new[] { "api-version" };
 
     private int _loggedContentSizeLimit = DefaultLoggedContentSizeLimit;
-    private bool _isLoggingContentEnabled = DefaultIsLoggingContentEnabled;
+    private bool _disableLogging = DefaultDisableLogging;
     private IList<string> _allowedHeaderNames = new List<string>(s_defaultAllowedHeaderNames);
     private IList<string> _allowedQueryParameters = new List<string>(s_defaultAllowedQueryParameters);
     private ILoggerFactory _loggerFactory = NullLoggerFactory.Instance;
+    private bool _disableHttpLogging = DefaultDisableHttpLogging;
+    private bool _enableHttpContentLogging = DefaultEnableHttpContentLogging;
 
     /// <summary>
     /// Gets or sets the implementation of <see cref="ILoggerFactory"/> to use to
@@ -73,14 +77,14 @@ public class LoggingOptions
     /// Gets or sets value indicating if any logs should be written from this library.
     /// </summary>
     /// <value>Defaults to <c>false</c>.</value>
-    public bool IsClientLoggingEnabled
+    public bool DisableLogging
     {
-        get => _isLoggingContentEnabled;
+        get => _disableLogging;
         set
         {
             AssertNotFrozen();
 
-            _isLoggingContentEnabled = value;
+            _disableLogging = value;
         }
     }
 
@@ -89,14 +93,14 @@ public class LoggingOptions
     /// should be logged.
     /// </summary>
     /// <value>Defaults to <c>false</c>.</value>
-    public bool IsHttpMessageLoggingEnabled
+    public bool DisableHttpLogging
     {
-        get => _isLoggingContentEnabled;
+        get => _disableHttpLogging;
         set
         {
             AssertNotFrozen();
 
-            _isLoggingContentEnabled = value;
+            _disableHttpLogging = value;
         }
     }
 
@@ -104,14 +108,14 @@ public class LoggingOptions
     /// Gets or sets value indicating if request and response content should be logged.
     /// </summary>
     /// <value>Defaults to <c>false</c>.</value>
-    public bool IsHttpMessageBodyLoggingEnabled
+    public bool EnableHttpContentLogging
     {
-        get => _isLoggingContentEnabled;
+        get => _enableHttpContentLogging;
         set
         {
             AssertNotFrozen();
 
-            _isLoggingContentEnabled = value;
+            _enableHttpContentLogging = value;
         }
     }
 
@@ -119,7 +123,7 @@ public class LoggingOptions
     /// Gets or sets value indicating maximum size of body size to log in bytes.
     /// </summary>
     /// <value>Defaults to <c>4096</c></value>
-    public int HttpMessageBodyLogLimit
+    public int HttpContentLogLimit
     {
         get => _loggedContentSizeLimit;
         set

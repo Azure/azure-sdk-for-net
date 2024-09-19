@@ -30,49 +30,43 @@ internal class HttpMessageLogging
 
     public void LogRequest(PipelineMessage message)
     {
-        if (_loggingOptions.IsHttpMessageLoggingEnabled)
-        {
-            _loggingHandler.LogRequest(message.LoggingCorrelationId, message.Request);
-        }
+        _loggingHandler.LogRequest(message.LoggingCorrelationId, message.Request);
     }
 
     public async ValueTask LogRequestContentSyncOrAsync(PipelineMessage message, bool async)
     {
-        if (_loggingOptions.IsHttpMessageBodyLoggingEnabled && _loggingHandler.IsEnabled(LogLevel.Debug, EventLevel.Verbose))
+        PipelineRequest request = message.Request;
+
+        if (request.Content == null)
         {
-            PipelineRequest request = message.Request;
-
-            if (request.Content == null)
-            {
-                _loggingHandler.LogRequestContent(message.LoggingCorrelationId, Array.Empty<byte>(), null);
-                return;
-            }
-
-            using var memoryStream = new MaxLengthStream(_loggingOptions.HttpMessageBodyLogLimit);
-            if (async)
-            {
-                await request.Content.WriteToAsync(memoryStream).ConfigureAwait(false);
-            }
-            else
-            {
-                request.Content.WriteTo(memoryStream, message.CancellationToken);
-            }
-            byte[] bytes = memoryStream.ToArray();
-
-            Encoding? requestTextEncoding = null;
-            if (request.Headers.TryGetValue("Content-Type", out var contentType) && contentType != null)
-            {
-                ContentTypeUtilities.TryGetTextEncoding(contentType, out requestTextEncoding);
-            }
-
-            _loggingHandler.LogRequestContent(message.LoggingCorrelationId, bytes, requestTextEncoding);
+            _loggingHandler.LogRequestContent(message.LoggingCorrelationId, Array.Empty<byte>(), null);
+            return;
         }
+
+        using var memoryStream = new MaxLengthStream(_loggingOptions.HttpContentLogLimit);
+        if (async)
+        {
+            await request.Content.WriteToAsync(memoryStream).ConfigureAwait(false);
+        }
+        else
+        {
+            request.Content.WriteTo(memoryStream, message.CancellationToken);
+        }
+        byte[] bytes = memoryStream.ToArray();
+
+        Encoding? requestTextEncoding = null;
+        if (request.Headers.TryGetValue("Content-Type", out var contentType) && contentType != null)
+        {
+            ContentTypeUtilities.TryGetTextEncoding(contentType, out requestTextEncoding);
+        }
+
+        _loggingHandler.LogRequestContent(message.LoggingCorrelationId, bytes, requestTextEncoding);
     }
 
     public void LogResponse(PipelineMessage message, double secondsElapsed)
     {
         PipelineResponse? response = message.Response;
-        if (_loggingOptions.IsHttpMessageLoggingEnabled && response != null)
+        if (response != null)
         {
             if (response.IsError)
             {
@@ -88,7 +82,7 @@ internal class HttpMessageLogging
     public void LogBufferedOrSeekableResponseContent(PipelineMessage message)
     {
         PipelineResponse? response = message.Response;
-        if (_loggingOptions.IsHttpMessageBodyLoggingEnabled && _loggingHandler.IsEnabled(LogLevel.Debug, EventLevel.Verbose) && response != null)
+        if ( _loggingHandler.IsEnabled(LogLevel.Debug, EventLevel.Verbose) && response != null)
         {
             if (response.ContentStream == null)
             {
@@ -109,13 +103,13 @@ internal class HttpMessageLogging
                 {
                     // Content is buffered, so log the first _loggingOptions.HttpMessageBodyLogLimit bytes
                     ReadOnlyMemory<byte> contentAsMemory = response.Content.ToMemory();
-                    var length = Math.Min(contentAsMemory.Length, _loggingOptions.HttpMessageBodyLogLimit);
+                    var length = Math.Min(contentAsMemory.Length, _loggingOptions.HttpContentLogLimit);
                     responseBytes = contentAsMemory.Span.Slice(0, length).ToArray();
                 }
                 else
                 {
-                    responseBytes = new byte[_loggingOptions.HttpMessageBodyLogLimit];
-                    response.ContentStream.Read(responseBytes, 0, _loggingOptions.HttpMessageBodyLogLimit);
+                    responseBytes = new byte[_loggingOptions.HttpContentLogLimit];
+                    response.ContentStream.Read(responseBytes, 0, _loggingOptions.HttpContentLogLimit);
                     response.ContentStream.Seek(0, SeekOrigin.Begin);
                 }
 
@@ -134,7 +128,7 @@ internal class HttpMessageLogging
     public void LogNonBufferedResponseContent(PipelineMessage message)
     {
         PipelineResponse? response = message.Response;
-        if (_loggingOptions.IsHttpMessageBodyLoggingEnabled && _loggingHandler.IsEnabled(LogLevel.Debug, EventLevel.Verbose) && response != null)
+        if (_loggingHandler.IsEnabled(LogLevel.Debug, EventLevel.Verbose) && response != null)
         {
             if (response.ContentStream == null)
             {
@@ -148,15 +142,12 @@ internal class HttpMessageLogging
                 ContentTypeUtilities.TryGetTextEncoding(contentType, out responseTextEncoding);
             }
 
-            response.ContentStream = new LoggingStream(_loggingHandler, message.LoggingCorrelationId, _loggingOptions.HttpMessageBodyLogLimit, response.ContentStream, response.IsError, responseTextEncoding);
+            response.ContentStream = new LoggingStream(_loggingHandler, message.LoggingCorrelationId, _loggingOptions.HttpContentLogLimit, response.ContentStream, response.IsError, responseTextEncoding);
         }
     }
 
     public void LogExceptionResponse(Exception exception, PipelineMessage message)
     {
-        if (_loggingOptions.IsHttpMessageLoggingEnabled)
-        {
-            _loggingHandler.LogExceptionResponse(message.LoggingCorrelationId, exception);
-        }
+        _loggingHandler.LogExceptionResponse(message.LoggingCorrelationId, exception);
     }
 }

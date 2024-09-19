@@ -23,9 +23,6 @@ internal class ClientLogging
 
     public void LogRetry(PipelineMessage message, double secondsElapsed)
     {
-        if (_loggingOptions.IsClientLoggingEnabled)
-        {
-            _loggingHandler.LogRequestRetrying(message.LoggingCorrelationId, message.RetryCount, secondsElapsed);
-        }
+        _loggingHandler.LogRequestRetrying(message.LoggingCorrelationId, message.RetryCount, secondsElapsed);
     }
 }

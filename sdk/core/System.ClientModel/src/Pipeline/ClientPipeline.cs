@@ -111,11 +111,11 @@ public sealed partial class ClientPipeline
         ClientLogging? clientLogging = null;
         HttpMessageLogging? messageLogging = null;
 
-        if (options.LoggingOptions.IsClientLoggingEnabled || options.LoggingOptions.IsHttpMessageLoggingEnabled)
+        if (!options.LoggingOptions.DisableLogging)
         {
             sanitizer = new(options.LoggingOptions.AllowedQueryParameters.ToArray(), options.LoggingOptions.AllowedHeaderNames.ToArray());
-            clientLogging = options.LoggingOptions.IsClientLoggingEnabled ? new(sanitizer, options.LoggingOptions) : null;
-            messageLogging = options.LoggingOptions.IsHttpMessageLoggingEnabled ? new(options.LoggingOptions) : null;
+            clientLogging = new(sanitizer, options.LoggingOptions);
+            messageLogging = !options.LoggingOptions.DisableHttpLogging ? new(options.LoggingOptions) : null;
         }
 
         // Add length of client-specific policies.

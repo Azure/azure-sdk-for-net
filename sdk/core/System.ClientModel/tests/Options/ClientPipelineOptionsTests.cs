@@ -162,7 +162,7 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
         Assert.Throws<InvalidOperationException>(()
             => options.LoggingOptions = new LoggingOptions());
         Assert.Throws<InvalidOperationException>(()
-            => options.LoggingOptions.IsClientLoggingEnabled = true);
+            => options.LoggingOptions.DisableHttpLogging = true);
     }
 
     [Test]
@@ -182,7 +182,7 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
         Assert.Throws<InvalidOperationException>(()
             => options.LoggingOptions = new LoggingOptions());
         Assert.Throws<InvalidOperationException>(()
-            => options.LoggingOptions.IsClientLoggingEnabled = true);
+            => options.LoggingOptions.DisableHttpLogging = true);
     }
 
     #region Helpers

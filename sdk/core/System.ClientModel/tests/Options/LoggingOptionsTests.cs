@@ -17,10 +17,10 @@ namespace System.ClientModel.Tests.Options
         public void DefaultOptionsAreSet()
         {
             LoggingOptions options = new();
-            Assert.AreEqual(4 * 1024, options.HttpMessageBodyLogLimit);
+            Assert.AreEqual(4 * 1024, options.HttpContentLogLimit);
             Assert.AreEqual(21, options.AllowedHeaderNames.Count);
             Assert.AreEqual(1, options.AllowedQueryParameters.Count);
-            Assert.AreEqual(false, options.IsHttpMessageBodyLoggingEnabled);
+            Assert.AreEqual(false, options.EnableHttpContentLogging);
             Assert.IsInstanceOf(typeof(NullLoggerFactory), options.LoggerFactory);
         }
 
@@ -35,8 +35,8 @@ namespace System.ClientModel.Tests.Options
 
             Assert.Throws<NotSupportedException>(() => options.AllowedHeaderNames.Add("ShouldNotAdd"));
             Assert.Throws<NotSupportedException>(() => options.AllowedQueryParameters.Add("ShouldNotAdd"));
-            Assert.Throws<InvalidOperationException>(() => options.HttpMessageBodyLogLimit = 5);
-            Assert.Throws<InvalidOperationException>(() => options.IsHttpMessageBodyLoggingEnabled = true);
+            Assert.Throws<InvalidOperationException>(() => options.HttpContentLogLimit = 5);
+            Assert.Throws<InvalidOperationException>(() => options.EnableHttpContentLogging = true);
             Assert.Throws<InvalidOperationException>(() => options.LoggerFactory = new NullLoggerFactory());
         }
     }
