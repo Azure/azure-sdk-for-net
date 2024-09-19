@@ -37,8 +37,8 @@ The following examples demonstrate how to add the `AzureMonitorExporter` to your
 
 - Traces
     ```csharp
-    Sdk.CreateTracerProviderBuilder()
-        .AddAzureMonitorTraceExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000")
+    var tracerProvider = Sdk.CreateTracerProviderBuilder()
+        .AddAzureMonitorTraceExporter(options => options.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000")
         .Build();
     ```
 
@@ -46,8 +46,8 @@ The following examples demonstrate how to add the `AzureMonitorExporter` to your
 
 - Metrics
     ```csharp
-    Sdk.CreateMeterProviderBuilder()
-        .AddAzureMonitorMetricExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000")
+    var meterProvider = Sdk.CreateMeterProviderBuilder()
+        .AddAzureMonitorMetricExporter(options => options.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000")
         .Build();
     ```
 
@@ -55,11 +55,11 @@ The following examples demonstrate how to add the `AzureMonitorExporter` to your
 
 - Logs
     ```csharp
-    LoggerFactory.Create(builder =>
+    var loggerFactory = LoggerFactory.Create(builder =>
     {
-        builder.AddOpenTelemetry(options =>
+        builder.AddOpenTelemetry(logging =>
         {
-            options.AddAzureMonitorLogExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
+            logging.AddAzureMonitorLogExporter(options => options.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
         });
     });
     ```
@@ -78,11 +78,11 @@ There are two options to enable AAD authentication. Note that if both have been 
     ```csharp
     var credential = new DefaultAzureCredential();
 
-    Sdk.CreateTracerProviderBuilder()
-        .AddAzureMonitorTraceExporter(o =>
+    var tracerProvider = Sdk.CreateTracerProviderBuilder()
+        .AddAzureMonitorTraceExporter(options =>
         {
-            o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
-            o.Credential = credential;
+            options.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
+            options.Credential = credential;
         })
         .Build();
     ```
@@ -92,8 +92,8 @@ There are two options to enable AAD authentication. Note that if both have been 
     ```csharp
     var credential = new DefaultAzureCredential();
 
-    Sdk.CreateTracerProviderBuilder()
-        .AddAzureMonitorTraceExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000", credential)
+    var tracerProvider = Sdk.CreateTracerProviderBuilder()
+        .AddAzureMonitorTraceExporter(options => options.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000", credential)
         .Build();
     ```
 
@@ -151,10 +151,10 @@ To include the scope with your logs, set `OpenTelemetryLoggerOptions.IncludeScop
 ```csharp
 var loggerFactory = LoggerFactory.Create(builder =>
 {
-    builder.AddOpenTelemetry(options =>
+    builder.AddOpenTelemetry(logging =>
     {
-        options.AddAzureMonitorLogExporter(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
-        options.IncludeScopes = true;
+        logging.AddAzureMonitorLogExporter(options => options.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
+        logging.IncludeScopes = true;
     });
 });
 ```
