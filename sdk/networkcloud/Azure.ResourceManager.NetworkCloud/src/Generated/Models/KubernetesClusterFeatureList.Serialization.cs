@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<KubernetesClusterFeatureData> value = default;
+            IReadOnlyList<NetworkCloudKubernetesClusterFeatureData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    List<KubernetesClusterFeatureData> array = new List<KubernetesClusterFeatureData>();
+                    List<NetworkCloudKubernetesClusterFeatureData> array = new List<NetworkCloudKubernetesClusterFeatureData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesClusterFeatureData.DeserializeKubernetesClusterFeatureData(item, options));
+                        array.Add(NetworkCloudKubernetesClusterFeatureData.DeserializeNetworkCloudKubernetesClusterFeatureData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new KubernetesClusterFeatureList(nextLink, value ?? new ChangeTrackingList<KubernetesClusterFeatureData>(), serializedAdditionalRawData);
+            return new KubernetesClusterFeatureList(nextLink, value ?? new ChangeTrackingList<NetworkCloudKubernetesClusterFeatureData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterFeatureList>.Write(ModelReaderWriterOptions options)

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class KubernetesClusterFeaturePatch : IUtf8JsonSerializable, IJsonModel<KubernetesClusterFeaturePatch>
+    public partial class NetworkCloudKubernetesClusterFeaturePatch : IUtf8JsonSerializable, IJsonModel<NetworkCloudKubernetesClusterFeaturePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterFeaturePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudKubernetesClusterFeaturePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<KubernetesClusterFeaturePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkCloudKubernetesClusterFeaturePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterFeaturePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudKubernetesClusterFeaturePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterFeaturePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudKubernetesClusterFeaturePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,19 +68,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteEndObject();
         }
 
-        KubernetesClusterFeaturePatch IJsonModel<KubernetesClusterFeaturePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkCloudKubernetesClusterFeaturePatch IJsonModel<NetworkCloudKubernetesClusterFeaturePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterFeaturePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudKubernetesClusterFeaturePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterFeaturePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudKubernetesClusterFeaturePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKubernetesClusterFeaturePatch(document.RootElement, options);
+            return DeserializeNetworkCloudKubernetesClusterFeaturePatch(document.RootElement, options);
         }
 
-        internal static KubernetesClusterFeaturePatch DeserializeKubernetesClusterFeaturePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetworkCloudKubernetesClusterFeaturePatch DeserializeNetworkCloudKubernetesClusterFeaturePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -140,38 +140,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new KubernetesClusterFeaturePatch(tags ?? new ChangeTrackingDictionary<string, string>(), options0 ?? new ChangeTrackingList<StringKeyValuePair>(), serializedAdditionalRawData);
+            return new NetworkCloudKubernetesClusterFeaturePatch(tags ?? new ChangeTrackingDictionary<string, string>(), options0 ?? new ChangeTrackingList<StringKeyValuePair>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<KubernetesClusterFeaturePatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetworkCloudKubernetesClusterFeaturePatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterFeaturePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudKubernetesClusterFeaturePatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterFeaturePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudKubernetesClusterFeaturePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        KubernetesClusterFeaturePatch IPersistableModel<KubernetesClusterFeaturePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetworkCloudKubernetesClusterFeaturePatch IPersistableModel<NetworkCloudKubernetesClusterFeaturePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterFeaturePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudKubernetesClusterFeaturePatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeKubernetesClusterFeaturePatch(document.RootElement, options);
+                        return DeserializeNetworkCloudKubernetesClusterFeaturePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterFeaturePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudKubernetesClusterFeaturePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<KubernetesClusterFeaturePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkCloudKubernetesClusterFeaturePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

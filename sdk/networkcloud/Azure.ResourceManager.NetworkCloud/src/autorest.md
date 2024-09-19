@@ -83,6 +83,8 @@ rename-mapping:
   KubernetesCluster.properties.attachedNetworkIds: -|arm-id
   KubernetesCluster.properties.clusterId: -|arm-id
   KubernetesCluster.properties.connectedClusterId: -|arm-id
+  KubernetesClusterNode.agentPoolId: AgentPoolArmId
+  KubernetesClusterNode.bareMetalMachineId: BareMetalMachineArmId
   L2Network.properties.associatedResourceIds: -|arm-id
   L2Network.properties.clusterId: -|arm-id
   L2Network.properties.hybridAksClustersAssociatedIds: -|arm-id
@@ -95,10 +97,12 @@ rename-mapping:
   L3Network.properties.l3IsolationDomainId: -|arm-id
   L3Network.properties.virtualMachinesAssociatedIds: -|arm-id
   L3NetworkAttachmentConfiguration.networkId: -|arm-id
+  NetworkAttachment.attachedNetworkId: AttachedNetworkArmId
   NetworkConfiguration: KubernetesClusterNetworkConfiguration
   NetworkConfiguration.cloudServicesNetworkId: -|arm-id
   NetworkConfiguration.cniNetworkId: -|arm-id
   NetworkConfiguration.dnsServiceIp: -|ip-address
+  OperationStatusResult.id: -|arm-id
   OsDisk.diskSizeGB: DiskSizeInGB
   Rack.properties.clusterId: -|arm-id
   Rack.properties.rackSkuId: -|arm-id
@@ -120,10 +124,6 @@ rename-mapping:
   VirtualMachine.properties.memorySizeGB: MemorySizeInGB
   VirtualMachinePlacementHint.resourceId: -|arm-id
   Volume.properties.sizeMiB: SizeInMiB
-  NetworkAttachment.attachedNetworkId: AttachedNetworkArmId
-  KubernetesClusterNode.bareMetalMachineId: BareMetalMachineArmId
-  KubernetesClusterNode.agentPoolId: AgentPoolArmId
-  OperationStatusResult.id: -|arm-id
 
 models-to-treat-empty-string-as-null:
   - NetworkCloudClusterManagerData
@@ -140,10 +140,12 @@ prepend-rp-prefix:
   - ClusterManager
   - ClusterMetricsConfiguration
   - KubernetesCluster
+  - KubernetesClusterFeature
   - L2Network
   - L3Network
   - NetworkInterface
   - Nic
+  - OperationStatusResult
   - OsDisk
   - Rack
   - RackDefinition
@@ -154,7 +156,6 @@ prepend-rp-prefix:
   - TrunkedNetwork
   - VirtualMachine
   - Volume
-  - OperationStatusResult
 
 acronym-mapping:
   CPU: Cpu

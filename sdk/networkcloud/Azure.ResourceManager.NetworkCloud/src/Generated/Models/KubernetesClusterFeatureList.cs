@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterFeatureList"/>. </summary>
         internal KubernetesClusterFeatureList()
         {
-            Value = new ChangeTrackingList<KubernetesClusterFeatureData>();
+            Value = new ChangeTrackingList<NetworkCloudKubernetesClusterFeatureData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterFeatureList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of Kubernetes cluster features. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesClusterFeatureList(string nextLink, IReadOnlyList<KubernetesClusterFeatureData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KubernetesClusterFeatureList(string nextLink, IReadOnlyList<NetworkCloudKubernetesClusterFeatureData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
         /// <summary> The list of Kubernetes cluster features. </summary>
-        public IReadOnlyList<KubernetesClusterFeatureData> Value { get; }
+        public IReadOnlyList<NetworkCloudKubernetesClusterFeatureData> Value { get; }
     }
 }

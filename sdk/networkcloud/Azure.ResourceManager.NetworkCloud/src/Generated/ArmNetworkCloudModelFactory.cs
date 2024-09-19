@@ -1408,7 +1408,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloud.KubernetesClusterFeatureData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudKubernetesClusterFeatureData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1422,13 +1422,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="provisioningState"> The provisioning state of the Kubernetes cluster feature. </param>
         /// <param name="required"> The indicator of if the feature is required or optional. Optional features may be deleted by the user, while required features are managed with the kubernetes cluster lifecycle. </param>
         /// <param name="version"> The version of the feature. </param>
-        /// <returns> A new <see cref="NetworkCloud.KubernetesClusterFeatureData"/> instance for mocking. </returns>
-        public static KubernetesClusterFeatureData KubernetesClusterFeatureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, KubernetesClusterFeatureAvailabilityLifecycle? availabilityLifecycle = null, KubernetesClusterFeatureDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, IEnumerable<StringKeyValuePair> options = null, KubernetesClusterFeatureProvisioningState? provisioningState = null, KubernetesClusterFeatureRequired? required = null, string version = null)
+        /// <returns> A new <see cref="NetworkCloud.NetworkCloudKubernetesClusterFeatureData"/> instance for mocking. </returns>
+        public static NetworkCloudKubernetesClusterFeatureData NetworkCloudKubernetesClusterFeatureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, KubernetesClusterFeatureAvailabilityLifecycle? availabilityLifecycle = null, KubernetesClusterFeatureDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, IEnumerable<StringKeyValuePair> options = null, KubernetesClusterFeatureProvisioningState? provisioningState = null, KubernetesClusterFeatureRequired? required = null, string version = null)
         {
             tags ??= new Dictionary<string, string>();
             options ??= new List<StringKeyValuePair>();
 
-            return new KubernetesClusterFeatureData(
+            return new NetworkCloudKubernetesClusterFeatureData(
                 id,
                 name,
                 resourceType,

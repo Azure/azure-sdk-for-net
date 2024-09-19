@@ -356,22 +356,22 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KubernetesClusterFeatureResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KubernetesClusterFeatureResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesClusterFeatureResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudKubernetesClusterFeatureResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudKubernetesClusterFeatureResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudKubernetesClusterFeatureResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetKubernetesClusterFeatureResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudKubernetesClusterFeatureResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="KubernetesClusterFeatureResource"/> object. </returns>
-        public static KubernetesClusterFeatureResource GetKubernetesClusterFeatureResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudKubernetesClusterFeatureResource"/> object. </returns>
+        public static NetworkCloudKubernetesClusterFeatureResource GetNetworkCloudKubernetesClusterFeatureResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetworkCloudArmClient(client).GetKubernetesClusterFeatureResource(id);
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudKubernetesClusterFeatureResource(id);
         }
 
         /// <summary>

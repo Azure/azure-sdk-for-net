@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.NetworkCloud
             return GetNetworkCloudAgentPools().Get(agentPoolName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of KubernetesClusterFeatureResources in the NetworkCloudKubernetesCluster. </summary>
-        /// <returns> An object representing collection of KubernetesClusterFeatureResources and their operations over a KubernetesClusterFeatureResource. </returns>
-        public virtual KubernetesClusterFeatureCollection GetKubernetesClusterFeatures()
+        /// <summary> Gets a collection of NetworkCloudKubernetesClusterFeatureResources in the NetworkCloudKubernetesCluster. </summary>
+        /// <returns> An object representing collection of NetworkCloudKubernetesClusterFeatureResources and their operations over a NetworkCloudKubernetesClusterFeatureResource. </returns>
+        public virtual NetworkCloudKubernetesClusterFeatureCollection GetNetworkCloudKubernetesClusterFeatures()
         {
-            return GetCachedClient(client => new KubernetesClusterFeatureCollection(client, Id));
+            return GetCachedClient(client => new NetworkCloudKubernetesClusterFeatureCollection(client, Id));
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="KubernetesClusterFeatureResource"/></description>
+        /// <description><see cref="NetworkCloudKubernetesClusterFeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<KubernetesClusterFeatureResource>> GetKubernetesClusterFeatureAsync(string featureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkCloudKubernetesClusterFeatureResource>> GetNetworkCloudKubernetesClusterFeatureAsync(string featureName, CancellationToken cancellationToken = default)
         {
-            return await GetKubernetesClusterFeatures().GetAsync(featureName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkCloudKubernetesClusterFeatures().GetAsync(featureName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="KubernetesClusterFeatureResource"/></description>
+        /// <description><see cref="NetworkCloudKubernetesClusterFeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<KubernetesClusterFeatureResource> GetKubernetesClusterFeature(string featureName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkCloudKubernetesClusterFeatureResource> GetNetworkCloudKubernetesClusterFeature(string featureName, CancellationToken cancellationToken = default)
         {
-            return GetKubernetesClusterFeatures().Get(featureName, cancellationToken);
+            return GetNetworkCloudKubernetesClusterFeatures().Get(featureName, cancellationToken);
         }
 
         /// <summary>

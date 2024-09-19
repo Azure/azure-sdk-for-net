@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KubernetesClusterFeatureResource"/> and their operations.
-    /// Each <see cref="KubernetesClusterFeatureResource"/> in the collection will belong to the same instance of <see cref="NetworkCloudKubernetesClusterResource"/>.
-    /// To get a <see cref="KubernetesClusterFeatureCollection"/> instance call the GetKubernetesClusterFeatures method from an instance of <see cref="NetworkCloudKubernetesClusterResource"/>.
+    /// A class representing a collection of <see cref="NetworkCloudKubernetesClusterFeatureResource"/> and their operations.
+    /// Each <see cref="NetworkCloudKubernetesClusterFeatureResource"/> in the collection will belong to the same instance of <see cref="NetworkCloudKubernetesClusterResource"/>.
+    /// To get a <see cref="NetworkCloudKubernetesClusterFeatureCollection"/> instance call the GetNetworkCloudKubernetesClusterFeatures method from an instance of <see cref="NetworkCloudKubernetesClusterResource"/>.
     /// </summary>
-    public partial class KubernetesClusterFeatureCollection : ArmCollection, IEnumerable<KubernetesClusterFeatureResource>, IAsyncEnumerable<KubernetesClusterFeatureResource>
+    public partial class NetworkCloudKubernetesClusterFeatureCollection : ArmCollection, IEnumerable<NetworkCloudKubernetesClusterFeatureResource>, IAsyncEnumerable<NetworkCloudKubernetesClusterFeatureResource>
     {
-        private readonly ClientDiagnostics _kubernetesClusterFeatureClientDiagnostics;
-        private readonly KubernetesClusterFeaturesRestOperations _kubernetesClusterFeatureRestClient;
+        private readonly ClientDiagnostics _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesClientDiagnostics;
+        private readonly KubernetesClusterFeaturesRestOperations _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="KubernetesClusterFeatureCollection"/> class for mocking. </summary>
-        protected KubernetesClusterFeatureCollection()
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudKubernetesClusterFeatureCollection"/> class for mocking. </summary>
+        protected NetworkCloudKubernetesClusterFeatureCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="KubernetesClusterFeatureCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudKubernetesClusterFeatureCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal KubernetesClusterFeatureCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetworkCloudKubernetesClusterFeatureCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _kubernetesClusterFeatureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", KubernetesClusterFeatureResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(KubernetesClusterFeatureResource.ResourceType, out string kubernetesClusterFeatureApiVersion);
-            _kubernetesClusterFeatureRestClient = new KubernetesClusterFeaturesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, kubernetesClusterFeatureApiVersion);
+            _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudKubernetesClusterFeatureResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NetworkCloudKubernetesClusterFeatureResource.ResourceType, out string networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesApiVersion);
+            _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesRestClient = new KubernetesClusterFeaturesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="KubernetesClusterFeatureResource"/></description>
+        /// <description><see cref="NetworkCloudKubernetesClusterFeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<KubernetesClusterFeatureResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string featureName, KubernetesClusterFeatureData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudKubernetesClusterFeatureResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string featureName, NetworkCloudKubernetesClusterFeatureData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _kubernetesClusterFeatureClientDiagnostics.CreateScope("KubernetesClusterFeatureCollection.CreateOrUpdate");
+            using var scope = _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterFeatureCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _kubernetesClusterFeatureRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<KubernetesClusterFeatureResource>(new KubernetesClusterFeatureOperationSource(Client), _kubernetesClusterFeatureClientDiagnostics, Pipeline, _kubernetesClusterFeatureRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkCloudArmOperation<NetworkCloudKubernetesClusterFeatureResource>(new NetworkCloudKubernetesClusterFeatureOperationSource(Client), _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesClientDiagnostics, Pipeline, _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="KubernetesClusterFeatureResource"/></description>
+        /// <description><see cref="NetworkCloudKubernetesClusterFeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<KubernetesClusterFeatureResource> CreateOrUpdate(WaitUntil waitUntil, string featureName, KubernetesClusterFeatureData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudKubernetesClusterFeatureResource> CreateOrUpdate(WaitUntil waitUntil, string featureName, NetworkCloudKubernetesClusterFeatureData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _kubernetesClusterFeatureClientDiagnostics.CreateScope("KubernetesClusterFeatureCollection.CreateOrUpdate");
+            using var scope = _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterFeatureCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _kubernetesClusterFeatureRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, data, cancellationToken);
-                var operation = new NetworkCloudArmOperation<KubernetesClusterFeatureResource>(new KubernetesClusterFeatureOperationSource(Client), _kubernetesClusterFeatureClientDiagnostics, Pipeline, _kubernetesClusterFeatureRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, data, cancellationToken);
+                var operation = new NetworkCloudArmOperation<NetworkCloudKubernetesClusterFeatureResource>(new NetworkCloudKubernetesClusterFeatureOperationSource(Client), _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesClientDiagnostics, Pipeline, _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="KubernetesClusterFeatureResource"/></description>
+        /// <description><see cref="NetworkCloudKubernetesClusterFeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,18 +174,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
-        public virtual async Task<Response<KubernetesClusterFeatureResource>> GetAsync(string featureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkCloudKubernetesClusterFeatureResource>> GetAsync(string featureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using var scope = _kubernetesClusterFeatureClientDiagnostics.CreateScope("KubernetesClusterFeatureCollection.Get");
+            using var scope = _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterFeatureCollection.Get");
             scope.Start();
             try
             {
-                var response = await _kubernetesClusterFeatureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, cancellationToken).ConfigureAwait(false);
+                var response = await _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KubernetesClusterFeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudKubernetesClusterFeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="KubernetesClusterFeatureResource"/></description>
+        /// <description><see cref="NetworkCloudKubernetesClusterFeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
-        public virtual Response<KubernetesClusterFeatureResource> Get(string featureName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkCloudKubernetesClusterFeatureResource> Get(string featureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using var scope = _kubernetesClusterFeatureClientDiagnostics.CreateScope("KubernetesClusterFeatureCollection.Get");
+            using var scope = _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterFeatureCollection.Get");
             scope.Start();
             try
             {
-                var response = _kubernetesClusterFeatureRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, cancellationToken);
+                var response = _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KubernetesClusterFeatureResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudKubernetesClusterFeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,17 +256,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="KubernetesClusterFeatureResource"/></description>
+        /// <description><see cref="NetworkCloudKubernetesClusterFeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KubernetesClusterFeatureResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<KubernetesClusterFeatureResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudKubernetesClusterFeatureResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudKubernetesClusterFeatureResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesClusterFeatureRestClient.CreateListByKubernetesClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kubernetesClusterFeatureRestClient.CreateListByKubernetesClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KubernetesClusterFeatureResource(Client, KubernetesClusterFeatureData.DeserializeKubernetesClusterFeatureData(e)), _kubernetesClusterFeatureClientDiagnostics, Pipeline, "KubernetesClusterFeatureCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesRestClient.CreateListByKubernetesClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesRestClient.CreateListByKubernetesClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudKubernetesClusterFeatureResource(Client, NetworkCloudKubernetesClusterFeatureData.DeserializeNetworkCloudKubernetesClusterFeatureData(e)), _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesClientDiagnostics, Pipeline, "NetworkCloudKubernetesClusterFeatureCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="KubernetesClusterFeatureResource"/></description>
+        /// <description><see cref="NetworkCloudKubernetesClusterFeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KubernetesClusterFeatureResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<KubernetesClusterFeatureResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudKubernetesClusterFeatureResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudKubernetesClusterFeatureResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesClusterFeatureRestClient.CreateListByKubernetesClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kubernetesClusterFeatureRestClient.CreateListByKubernetesClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KubernetesClusterFeatureResource(Client, KubernetesClusterFeatureData.DeserializeKubernetesClusterFeatureData(e)), _kubernetesClusterFeatureClientDiagnostics, Pipeline, "KubernetesClusterFeatureCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesRestClient.CreateListByKubernetesClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesRestClient.CreateListByKubernetesClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudKubernetesClusterFeatureResource(Client, NetworkCloudKubernetesClusterFeatureData.DeserializeNetworkCloudKubernetesClusterFeatureData(e)), _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesClientDiagnostics, Pipeline, "NetworkCloudKubernetesClusterFeatureCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="KubernetesClusterFeatureResource"/></description>
+        /// <description><see cref="NetworkCloudKubernetesClusterFeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using var scope = _kubernetesClusterFeatureClientDiagnostics.CreateScope("KubernetesClusterFeatureCollection.Exists");
+            using var scope = _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterFeatureCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _kubernetesClusterFeatureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="KubernetesClusterFeatureResource"/></description>
+        /// <description><see cref="NetworkCloudKubernetesClusterFeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using var scope = _kubernetesClusterFeatureClientDiagnostics.CreateScope("KubernetesClusterFeatureCollection.Exists");
+            using var scope = _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterFeatureCollection.Exists");
             scope.Start();
             try
             {
-                var response = _kubernetesClusterFeatureRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, cancellationToken: cancellationToken);
+                var response = _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="KubernetesClusterFeatureResource"/></description>
+        /// <description><see cref="NetworkCloudKubernetesClusterFeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,18 +410,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
-        public virtual async Task<NullableResponse<KubernetesClusterFeatureResource>> GetIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<NetworkCloudKubernetesClusterFeatureResource>> GetIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using var scope = _kubernetesClusterFeatureClientDiagnostics.CreateScope("KubernetesClusterFeatureCollection.GetIfExists");
+            using var scope = _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterFeatureCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _kubernetesClusterFeatureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<KubernetesClusterFeatureResource>(response.GetRawResponse());
-                return Response.FromValue(new KubernetesClusterFeatureResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<NetworkCloudKubernetesClusterFeatureResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudKubernetesClusterFeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="KubernetesClusterFeatureResource"/></description>
+        /// <description><see cref="NetworkCloudKubernetesClusterFeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -455,18 +455,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
-        public virtual NullableResponse<KubernetesClusterFeatureResource> GetIfExists(string featureName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<NetworkCloudKubernetesClusterFeatureResource> GetIfExists(string featureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            using var scope = _kubernetesClusterFeatureClientDiagnostics.CreateScope("KubernetesClusterFeatureCollection.GetIfExists");
+            using var scope = _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterFeatureCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _kubernetesClusterFeatureRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, cancellationToken: cancellationToken);
+                var response = _networkCloudKubernetesClusterFeatureKubernetesClusterFeaturesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<KubernetesClusterFeatureResource>(response.GetRawResponse());
-                return Response.FromValue(new KubernetesClusterFeatureResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<NetworkCloudKubernetesClusterFeatureResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudKubernetesClusterFeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        IEnumerator<KubernetesClusterFeatureResource> IEnumerable<KubernetesClusterFeatureResource>.GetEnumerator()
+        IEnumerator<NetworkCloudKubernetesClusterFeatureResource> IEnumerable<NetworkCloudKubernetesClusterFeatureResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<KubernetesClusterFeatureResource> IAsyncEnumerable<KubernetesClusterFeatureResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NetworkCloudKubernetesClusterFeatureResource> IAsyncEnumerable<NetworkCloudKubernetesClusterFeatureResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

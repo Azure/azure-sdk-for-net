@@ -14,10 +14,10 @@ using Azure.ResourceManager.NetworkCloud.Models;
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
-    /// A class representing the KubernetesClusterFeature data model.
+    /// A class representing the NetworkCloudKubernetesClusterFeature data model.
     /// KubernetesClusterFeature represents the feature of a Kubernetes cluster.
     /// </summary>
-    public partial class KubernetesClusterFeatureData : TrackedResourceData
+    public partial class NetworkCloudKubernetesClusterFeatureData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="KubernetesClusterFeatureData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterFeatureData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public KubernetesClusterFeatureData(AzureLocation location) : base(location)
+        public NetworkCloudKubernetesClusterFeatureData(AzureLocation location) : base(location)
         {
             Options = new ChangeTrackingList<StringKeyValuePair>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KubernetesClusterFeatureData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterFeatureData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="required"> The indicator of if the feature is required or optional. Optional features may be deleted by the user, while required features are managed with the kubernetes cluster lifecycle. </param>
         /// <param name="version"> The version of the feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesClusterFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KubernetesClusterFeatureAvailabilityLifecycle? availabilityLifecycle, KubernetesClusterFeatureDetailedStatus? detailedStatus, string detailedStatusMessage, IList<StringKeyValuePair> options, KubernetesClusterFeatureProvisioningState? provisioningState, KubernetesClusterFeatureRequired? required, string version, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudKubernetesClusterFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KubernetesClusterFeatureAvailabilityLifecycle? availabilityLifecycle, KubernetesClusterFeatureDetailedStatus? detailedStatus, string detailedStatusMessage, IList<StringKeyValuePair> options, KubernetesClusterFeatureProvisioningState? provisioningState, KubernetesClusterFeatureRequired? required, string version, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             AvailabilityLifecycle = availabilityLifecycle;
             DetailedStatus = detailedStatus;
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.NetworkCloud
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KubernetesClusterFeatureData"/> for deserialization. </summary>
-        internal KubernetesClusterFeatureData()
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterFeatureData"/> for deserialization. </summary>
+        internal NetworkCloudKubernetesClusterFeatureData()
         {
         }
 

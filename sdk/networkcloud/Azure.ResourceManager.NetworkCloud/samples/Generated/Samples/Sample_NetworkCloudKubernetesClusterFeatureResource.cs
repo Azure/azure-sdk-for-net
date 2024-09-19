@@ -13,7 +13,7 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
 {
-    public partial class Sample_KubernetesClusterFeatureResource
+    public partial class Sample_NetworkCloudKubernetesClusterFeatureResource
     {
         // Get Kubernetes cluster feature
         [NUnit.Framework.Test]
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this KubernetesClusterFeatureResource created on azure
-            // for more information of creating KubernetesClusterFeatureResource, please refer to the document of KubernetesClusterFeatureResource
+            // this example assumes you already have this NetworkCloudKubernetesClusterFeatureResource created on azure
+            // for more information of creating NetworkCloudKubernetesClusterFeatureResource, please refer to the document of NetworkCloudKubernetesClusterFeatureResource
             string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string kubernetesClusterName = "kubernetesClusterName";
             string featureName = "featureName";
-            ResourceIdentifier kubernetesClusterFeatureResourceId = KubernetesClusterFeatureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, kubernetesClusterName, featureName);
-            KubernetesClusterFeatureResource kubernetesClusterFeature = client.GetKubernetesClusterFeatureResource(kubernetesClusterFeatureResourceId);
+            ResourceIdentifier networkCloudKubernetesClusterFeatureResourceId = NetworkCloudKubernetesClusterFeatureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, kubernetesClusterName, featureName);
+            NetworkCloudKubernetesClusterFeatureResource networkCloudKubernetesClusterFeature = client.GetNetworkCloudKubernetesClusterFeatureResource(networkCloudKubernetesClusterFeatureResourceId);
 
             // invoke the operation
-            KubernetesClusterFeatureResource result = await kubernetesClusterFeature.GetAsync();
+            NetworkCloudKubernetesClusterFeatureResource result = await networkCloudKubernetesClusterFeature.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            KubernetesClusterFeatureData resourceData = result.Data;
+            NetworkCloudKubernetesClusterFeatureData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -60,17 +60,17 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this KubernetesClusterFeatureResource created on azure
-            // for more information of creating KubernetesClusterFeatureResource, please refer to the document of KubernetesClusterFeatureResource
+            // this example assumes you already have this NetworkCloudKubernetesClusterFeatureResource created on azure
+            // for more information of creating NetworkCloudKubernetesClusterFeatureResource, please refer to the document of NetworkCloudKubernetesClusterFeatureResource
             string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string kubernetesClusterName = "kubernetesClusterName";
             string featureName = "featureName";
-            ResourceIdentifier kubernetesClusterFeatureResourceId = KubernetesClusterFeatureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, kubernetesClusterName, featureName);
-            KubernetesClusterFeatureResource kubernetesClusterFeature = client.GetKubernetesClusterFeatureResource(kubernetesClusterFeatureResourceId);
+            ResourceIdentifier networkCloudKubernetesClusterFeatureResourceId = NetworkCloudKubernetesClusterFeatureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, kubernetesClusterName, featureName);
+            NetworkCloudKubernetesClusterFeatureResource networkCloudKubernetesClusterFeature = client.GetNetworkCloudKubernetesClusterFeatureResource(networkCloudKubernetesClusterFeatureResourceId);
 
             // invoke the operation
-            ArmOperation<NetworkCloudOperationStatusResult> lro = await kubernetesClusterFeature.DeleteAsync(WaitUntil.Completed);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudKubernetesClusterFeature.DeleteAsync(WaitUntil.Completed);
             NetworkCloudOperationStatusResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -89,17 +89,17 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this KubernetesClusterFeatureResource created on azure
-            // for more information of creating KubernetesClusterFeatureResource, please refer to the document of KubernetesClusterFeatureResource
+            // this example assumes you already have this NetworkCloudKubernetesClusterFeatureResource created on azure
+            // for more information of creating NetworkCloudKubernetesClusterFeatureResource, please refer to the document of NetworkCloudKubernetesClusterFeatureResource
             string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string kubernetesClusterName = "kubernetesClusterName";
             string featureName = "featureName";
-            ResourceIdentifier kubernetesClusterFeatureResourceId = KubernetesClusterFeatureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, kubernetesClusterName, featureName);
-            KubernetesClusterFeatureResource kubernetesClusterFeature = client.GetKubernetesClusterFeatureResource(kubernetesClusterFeatureResourceId);
+            ResourceIdentifier networkCloudKubernetesClusterFeatureResourceId = NetworkCloudKubernetesClusterFeatureResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, kubernetesClusterName, featureName);
+            NetworkCloudKubernetesClusterFeatureResource networkCloudKubernetesClusterFeature = client.GetNetworkCloudKubernetesClusterFeatureResource(networkCloudKubernetesClusterFeatureResourceId);
 
             // invoke the operation
-            KubernetesClusterFeaturePatch patch = new KubernetesClusterFeaturePatch()
+            NetworkCloudKubernetesClusterFeaturePatch patch = new NetworkCloudKubernetesClusterFeaturePatch()
             {
                 Tags =
 {
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 new StringKeyValuePair("featureOptionName","featureOptionValue")
 },
             };
-            ArmOperation<KubernetesClusterFeatureResource> lro = await kubernetesClusterFeature.UpdateAsync(WaitUntil.Completed, patch);
-            KubernetesClusterFeatureResource result = lro.Value;
+            ArmOperation<NetworkCloudKubernetesClusterFeatureResource> lro = await networkCloudKubernetesClusterFeature.UpdateAsync(WaitUntil.Completed, patch);
+            NetworkCloudKubernetesClusterFeatureResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            KubernetesClusterFeatureData resourceData = result.Data;
+            NetworkCloudKubernetesClusterFeatureData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
