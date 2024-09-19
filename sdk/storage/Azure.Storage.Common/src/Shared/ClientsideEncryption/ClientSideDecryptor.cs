@@ -76,7 +76,7 @@ namespace Azure.Storage.Cryptography
             switch (encryptionData.EncryptionAgent.EncryptionVersion)
             {
 #pragma warning disable CS0618 // obsolete
-                case ClientSideEncryptionVersion.V1_0:
+                case ClientSideEncryptionVersionInternal.V1_0:
                     return await DecryptReadInternalV1_0(
                         ciphertext,
                         encryptionData,
@@ -85,7 +85,8 @@ namespace Azure.Storage.Cryptography
                         async,
                         cancellationToken).ConfigureAwait(false);
 #pragma warning restore CS0618 // obsolete
-                case ClientSideEncryptionVersion.V2_0:
+                case ClientSideEncryptionVersionInternal.V2_0:
+                case ClientSideEncryptionVersionInternal.V2_1:
                     return await DecryptInternalV2_0(
                         ciphertext,
                         encryptionData,
@@ -126,14 +127,15 @@ namespace Azure.Storage.Cryptography
             switch (encryptionData.EncryptionAgent.EncryptionVersion)
             {
 #pragma warning disable CS0618 // obsolete
-                case ClientSideEncryptionVersion.V1_0:
+                case ClientSideEncryptionVersionInternal.V1_0:
                     return await DecryptWholeContentWriteInternalV1_0(
                         plaintextDestination,
                         encryptionData,
                         async,
                         cancellationToken).ConfigureAwait(false);
 #pragma warning restore CS0618 // obsolete
-                case ClientSideEncryptionVersion.V2_0:
+                case ClientSideEncryptionVersionInternal.V2_0:
+                case ClientSideEncryptionVersionInternal.V2_1:
                     return await DecryptInternalV2_0(
                         plaintextDestination,
                         encryptionData,
@@ -404,21 +406,20 @@ namespace Azure.Storage.Cryptography
             switch (encryptionData.EncryptionAgent.EncryptionVersion)
             {
 #pragma warning disable CS0618 // obsolete
-                case ClientSideEncryptionVersion.V1_0:
+                case ClientSideEncryptionVersionInternal.V1_0:
                     unwrappedKey = unwrappedContent;
                     break;
 #pragma warning restore CS0618 // obsolete
                 // v2.0 binds content encryption key with content encryption algorithm under a single keywrap.
                 // Separate key from algorithm ID and validate ID match
-                case ClientSideEncryptionVersion.V2_0:
+                case ClientSideEncryptionVersionInternal.V2_0:
+                case ClientSideEncryptionVersionInternal.V2_1:
                     string unwrappedProtocolString = Encoding.UTF8.GetString(
                         unwrappedContent,
                         index: 0,
                         count: Constants.ClientSideEncryption.V2.WrappedDataVersionLength)
                         // remove empty padding from fixed-length space for version string
                         .Trim('\0');
-                    unwrappedProtocolString = unwrappedProtocolString == ClientSideEncryptionVersionString.V2_1
-                        ? ClientSideEncryptionVersionString.V2_0 : unwrappedProtocolString;
                     if (unwrappedProtocolString != encryptionData.EncryptionAgent.EncryptionVersion.Serialize())
                     {
                         throw new CryptographicException("Encryption metadata has been tampered.");

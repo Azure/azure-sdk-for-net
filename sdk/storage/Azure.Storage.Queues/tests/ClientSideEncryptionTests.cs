@@ -241,11 +241,11 @@ namespace Azure.Storage.Queues.Test
                 switch (encryptionMetadata.EncryptionAgent.EncryptionVersion)
                 {
 #pragma warning disable CS0618 // obsolete
-                    case ClientSideEncryptionVersion.V1_0:
+                    case ClientSideEncryptionVersionInternal.V1_0:
                         explicitlyUnwrappedKey = explicitlyUnwrappedContent;
                         break;
 #pragma warning restore CS0618 // obsolete
-                    case ClientSideEncryptionVersion.V2_0:
+                    case ClientSideEncryptionVersionInternal.V2_0:
                         explicitlyUnwrappedKey = new Span<byte>(explicitlyUnwrappedContent).Slice(8).ToArray();
                         break;
                     default:

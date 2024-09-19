@@ -165,10 +165,10 @@ namespace Azure.Storage.Blobs.Test
             switch (encryptionMetadata.EncryptionAgent.EncryptionVersion)
             {
 #pragma warning disable CS0618 // obsolete
-                case ClientSideEncryptionVersion.V1_0:
+                case ClientSideEncryptionVersionInternal.V1_0:
                     return await ReplicateEncryptionV1_0(plaintext, encryptionMetadata, keyEncryptionKey);
 #pragma warning restore CS0618 // obsolete
-                case ClientSideEncryptionVersion.V2_0:
+                case ClientSideEncryptionVersionInternal.V2_0:
                     return await ReplicateEncryptionV2_0(plaintext, encryptionMetadata, keyEncryptionKey);
                 default:
                     throw new ArgumentException("Bad version in EncryptionData");
@@ -247,7 +247,7 @@ namespace Azure.Storage.Blobs.Test
                 EncryptionAgent = new EncryptionAgent()
                 {
                     EncryptionAlgorithm = "foo",
-                    EncryptionVersion = ClientSideEncryptionVersion.V2_0
+                    EncryptionVersion = ClientSideEncryptionVersionInternal.V2_0
                 },
                 EncryptionMode = "bar",
                 KeyWrappingMetadata = new Dictionary<string, string> { { "fizz", "buzz" } }
