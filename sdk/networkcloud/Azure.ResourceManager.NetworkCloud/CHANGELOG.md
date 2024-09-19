@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- This SDK version supports 2024-06-01-preview API version.
 - ClusterManager resource supports system-assigned and user-assigned identities.
 - Cluster resource supports system-assigned and user-assigned identities.
 - CommandOutputSettings is added to Cluster configuration for provisioning a storage account used during BareMetalMachine command execution result download.
@@ -21,17 +22,14 @@
 - ClusterDetailedStatus got a new value "UpdatePaused" to represent Cluster update status being paused.
 - RackSkuProvisioningState got new values "Cancelled" and "Failed" to better represent its state.
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- NetworkCloudOperationStatusResult now exposes additional properties to get access for BareMetalMachine command execution result, such as, exitCode, outputHead, resultRef, and resultUri.
 
 ### Breaking Changes
 
 ### Other Changes
 
-- This SDK version supports 2024-06-01-preview API version.
 - A clarification is added to the descriptions throughout that memory and disk sizes are measured in gibibytes.
 - ServiceLoadBalancerBgpPeer has the following optional fields marked as deprecated: "holdTime" and "keepAliveTime". Of defined, their values will be ignored.
-- NetworkCloudOperationStatusResult exposed additional properties to get access for BareMetalMachine command execution result, such as, exitCode, outputHead, resultRef, and resultUri.
-- SubscriptionId type is updated from string to GUI for all APIs.
-- Default values were removed for maxSurge and enableDefaultEgressEndpoints properties in PATCH APIs.
 
 ## 1.0.1 (2023-11-29)
 
