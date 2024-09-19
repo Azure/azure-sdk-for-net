@@ -11,8 +11,9 @@ extends:
     SupportedClouds: 'Public,UsGov,Canary'
     CloudConfig:
       Public:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-        ServiceConnection: azure-sdk-tests
+        ServiceConnection: azure-sdk-tests-tme
+        SubscriptionConfigurationFilePaths:
+          - eng/common/TestResources/sub-config/AzurePublicTME.json
         ${{ if not(contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
           MatrixFilters:
             - ArmTemplateParameters=^(?!.*enableHsm.*true)
