@@ -54,10 +54,9 @@ parameters:
     type: object
     default:
       Public:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-        ServiceConnection: azure-sdk-tests
+        ServiceConnection: azure-sdk-tests-tme
         SubscriptionConfigurationFilePaths:
-          - eng/common/TestResources/sub-config/AzurePublicMsft.json
+          - eng/common/TestResources/sub-config/AzurePublicTME.json
       Preview:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
         ServiceConnection: azure-sdk-tests-preview
