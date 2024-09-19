@@ -9,11 +9,9 @@ namespace Azure.Communication.CallAutomation.FHL
         /// The WebSocket data object which is then serialized to JSON format
         /// </summary>
         /// <param name="kind">Server message type kind</param>
-        /// <param name="audioData">Audio data</param>
-        public ServerStreamingData(ServerMessageType kind, ServerAudioData audioData)
+        public ServerStreamingData(ServerMessageType kind)
         {
             Kind = kind;
-            ServerAudioData = audioData;
         }
 
         /// <summary>
@@ -27,7 +25,7 @@ namespace Azure.Communication.CallAutomation.FHL
         /// Audio Data which contains the audio data stream information
         /// IsRequired = false
         /// </summary>
-        public ServerAudioData ServerAudioData { get; }
+        public ServerAudioData ServerAudioData { get; set; }
 
         /// <summary>
         /// Mark determines end of stream of data

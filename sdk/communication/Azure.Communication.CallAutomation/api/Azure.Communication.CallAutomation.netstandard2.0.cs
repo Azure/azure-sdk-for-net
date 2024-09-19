@@ -1665,10 +1665,10 @@ namespace Azure.Communication.CallAutomation.FHL
     }
     public partial class ServerStreamingData
     {
-        public ServerStreamingData(Azure.Communication.CallAutomation.FHL.ServerMessageType kind, Azure.Communication.CallAutomation.FHL.ServerAudioData audioData) { }
+        public ServerStreamingData(Azure.Communication.CallAutomation.FHL.ServerMessageType kind) { }
         public Azure.Communication.CallAutomation.FHL.ServerMessageType Kind { get { throw null; } }
         public Azure.Communication.CallAutomation.FHL.Mark Mark { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.FHL.ServerAudioData ServerAudioData { get { throw null; } }
+        public Azure.Communication.CallAutomation.FHL.ServerAudioData ServerAudioData { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.FHL.StopAudio StopAudio { get { throw null; } set { } }
     }
     public partial class StopAudio
