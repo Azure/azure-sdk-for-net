@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    internal partial class ControlPlaneNodePatchConfiguration : IUtf8JsonSerializable, IJsonModel<ControlPlaneNodePatchConfiguration>
+    public partial class ControlPlaneNodePatchConfiguration : IUtf8JsonSerializable, IJsonModel<ControlPlaneNodePatchConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ControlPlaneNodePatchConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(AdministratorConfiguration))
+            {
+                writer.WritePropertyName("administratorConfiguration"u8);
+                writer.WriteObjectValue(AdministratorConfiguration, options);
+            }
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
@@ -69,11 +74,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
+            AdministratorConfigurationPatch administratorConfiguration = default;
             long? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("administratorConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    administratorConfiguration = AdministratorConfigurationPatch.DeserializeAdministratorConfigurationPatch(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -89,7 +104,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ControlPlaneNodePatchConfiguration(count, serializedAdditionalRawData);
+            return new ControlPlaneNodePatchConfiguration(administratorConfiguration, count, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControlPlaneNodePatchConfiguration>.Write(ModelReaderWriterOptions options)
