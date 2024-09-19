@@ -26,12 +26,6 @@ public class BasicSqlTests(bool async)
                         Value = "SampleDB",
                         Description = "The name of the SQL Database."
                     };
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "The SQL Server location."
-                    };
                 BicepParameter adminLogin =
                     new(nameof(adminLogin), typeof(string))
                     {
@@ -47,7 +41,6 @@ public class BasicSqlTests(bool async)
                 SqlServer sql =
                     new(nameof(sql))
                     {
-                        Location = location,
                         AdministratorLogin = adminLogin,
                         AdministratorLoginPassword = adminPass
                     };
@@ -57,7 +50,6 @@ public class BasicSqlTests(bool async)
                     {
                         Parent = sql,
                         Name = dbName,
-                        Location = location,
                         Sku = new SqlSku { Name = "Standard", Tier = "Standard" }
                     };
             })
@@ -66,9 +58,6 @@ public class BasicSqlTests(bool async)
             @description('The name of the SQL Database.')
             param dbName string = 'SampleDB'
 
-            @description('The SQL Server location.')
-            param location string = resourceGroup().location
-
             @description('The administrator username of the SQL logical server.')
             param adminLogin string
 
@@ -76,23 +65,26 @@ public class BasicSqlTests(bool async)
             @description('The administrator password of the SQL logical server.')
             param adminPass string
 
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
             resource sql 'Microsoft.Sql/servers@2021-11-01' = {
-                name: take('sql-${uniqueString(resourceGroup().id)}', 63)
-                location: location
-                properties: {
-                    administratorLogin: adminLogin
-                    administratorLoginPassword: adminPass
-                }
+              name: take('sql-${uniqueString(resourceGroup().id)}', 63)
+              location: location
+              properties: {
+                administratorLogin: adminLogin
+                administratorLoginPassword: adminPass
+              }
             }
 
             resource db 'Microsoft.Sql/servers/databases@2021-11-01' = {
-                name: dbName
-                location: location
-                sku: {
-                    name: 'Standard'
-                    tier: 'Standard'
-                }
-                parent: sql
+              name: dbName
+              location: location
+              sku: {
+                name: 'Standard'
+                tier: 'Standard'
+              }
+              parent: sql
             }
             """)
         .Lint()

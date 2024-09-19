@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         void IJsonModel<ScVmmInfrastructureProfileUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ScVmmInfrastructureProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScVmmInfrastructureProfileUpdate)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(CheckpointType))
             {
                 writer.WritePropertyName("checkpointType"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.ScVmm.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ScVmmInfrastructureProfileUpdate IJsonModel<ScVmmInfrastructureProfileUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

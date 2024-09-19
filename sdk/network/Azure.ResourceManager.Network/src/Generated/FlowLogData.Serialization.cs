@@ -86,6 +86,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("storageId"u8);
                 writer.WriteStringValue(StorageId);
             }
+            if (Optional.IsDefined(EnabledFilteringCriteria))
+            {
+                writer.WritePropertyName("enabledFilteringCriteria"u8);
+                writer.WriteStringValue(EnabledFilteringCriteria);
+            }
             if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
@@ -160,6 +165,7 @@ namespace Azure.ResourceManager.Network
             ResourceIdentifier targetResourceId = default;
             Guid? targetResourceGuid = default;
             ResourceIdentifier storageId = default;
+            string enabledFilteringCriteria = default;
             bool? enabled = default;
             RetentionPolicyParameters retentionPolicy = default;
             FlowLogProperties format = default;
@@ -269,6 +275,11 @@ namespace Azure.ResourceManager.Network
                             storageId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("enabledFilteringCriteria"u8))
+                        {
+                            enabledFilteringCriteria = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("enabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -335,6 +346,7 @@ namespace Azure.ResourceManager.Network
                 targetResourceId,
                 targetResourceGuid,
                 storageId,
+                enabledFilteringCriteria,
                 enabled,
                 retentionPolicy,
                 format,

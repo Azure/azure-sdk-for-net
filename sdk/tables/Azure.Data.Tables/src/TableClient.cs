@@ -275,7 +275,7 @@ namespace Azure.Data.Tables
 
             var pipelineOptions = new HttpPipelineOptions(options)
             {
-                PerRetryPolicies = { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
+                PerRetryPolicies = { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, _isCosmosEndpoint ? TableConstants.CosmosScope : TableConstants.StorageScope, options.EnableTenantDiscovery) },
                 ResponseClassifier = new ResponseClassifier(),
                 RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
             };

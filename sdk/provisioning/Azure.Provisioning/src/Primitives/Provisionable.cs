@@ -21,7 +21,7 @@ public abstract class Provisionable
     /// be the object itself for everything but <see cref="Infrastructure"/>.
     /// </summary>
     /// <returns>Any resources represented by this object.</returns>
-    protected internal virtual IEnumerable<Provisionable> GetResources() { yield return this; }
+    public virtual IEnumerable<Provisionable> GetResources() { yield return this; }
 
     /// <summary>
     /// Resolve any resources or properties that were not explicitly specified.

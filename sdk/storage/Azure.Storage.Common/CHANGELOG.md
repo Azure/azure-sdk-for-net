@@ -1,14 +1,9 @@
 # Release History
 
-## 12.21.0-beta.2 (Unreleased)
+## 12.21.0 (2024-09-18)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- This release contains bug fixes to improve quality.
 
 ## 12.21.0-beta.1 (2024-08-06)
 

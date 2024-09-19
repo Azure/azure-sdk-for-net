@@ -21,19 +21,12 @@ public class BasicCosmosDBTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "DB location."
-                    };
                 BicepParameter dbName = new(nameof(dbName), typeof(string)) { Value = "orders" };
                 BicepParameter containerName = new(nameof(containerName), typeof(string)) { Value = "products" };
 
                 CosmosDBAccount cosmos =
                     new(nameof(cosmos))
                     {
-                        Location = location,
                         DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard,
                         ConsistencyPolicy = new ConsistencyPolicy
                         {
@@ -41,7 +34,7 @@ public class BasicCosmosDBTests(bool async)
                         },
                         Locations =
                         {
-                            new CosmosDBAccountLocation { LocationName = location }
+                            new CosmosDBAccountLocation { LocationName = BicepFunction.GetResourceGroup().Location }
                         }
                     };
 
@@ -80,57 +73,57 @@ public class BasicCosmosDBTests(bool async)
             })
         .Compare(
             """
-            @description('DB location.')
-            param location string = resourceGroup().location
-
             param dbName string = 'orders'
 
             param containerName string = 'products'
 
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
             resource cosmos 'Microsoft.DocumentDB/databaseAccounts@2024-05-15-preview' = {
-                name: take('cosmos-${uniqueString(resourceGroup().id)}', 44)
-                location: location
-                properties: {
-                    locations: [
-                        {
-                            locationName: location
-                        }
-                    ]
-                    consistencyPolicy: {
-                        defaultConsistencyLevel: 'Session'
-                    }
-                    databaseAccountOfferType: 'Standard'
+              name: take('cosmos-${uniqueString(resourceGroup().id)}', 44)
+              location: location
+              properties: {
+                locations: [
+                  {
+                    locationName: resourceGroup().location
+                  }
+                ]
+                consistencyPolicy: {
+                  defaultConsistencyLevel: 'Session'
                 }
+                databaseAccountOfferType: 'Standard'
+              }
             }
 
             resource db 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2023-11-15' = {
-                name: dbName
-                location: resourceGroup().location
-                properties: {
-                    resource: {
-                        id: dbName
-                    }
-                    options: {
-                        throughput: 400
-                    }
+              name: dbName
+              location: location
+              properties: {
+                resource: {
+                  id: dbName
                 }
-                parent: cosmos
+                options: {
+                  throughput: 400
+                }
+              }
+              parent: cosmos
             }
 
             resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2023-11-15' = {
-                name: containerName
-                location: resourceGroup().location
-                properties: {
-                    resource: {
-                        id: containerName
-                        partitionKey: {
-                            paths: [
-                                '/myPartitionKey'
-                            ]
-                        }
-                    }
+              name: containerName
+              location: location
+              properties: {
+                resource: {
+                  id: containerName
+                  partitionKey: {
+                    paths: [
+                      '/myPartitionKey'
+                    ]
+                  }
                 }
-                parent: db
+              }
+              parent: db
             }
 
             output containerName string = containerName
