@@ -2,13 +2,13 @@
 
 ## 2.0.0-beta.3 (Unreleased)
 
-### Features Added
-
 ### Breaking Changes
 
-### Bugs Fixed
+- Hide unnecessary GeoJson interfaces and replace with `Azure.Core.GeoJson` types
 
 ### Other Changes
+
+- Refine test samples
 
 ## 2.0.0-beta.2 (2024-08-13)
 
