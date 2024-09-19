@@ -1,0 +1,58 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.29.47.4906",
+      "templateHash": "3159610104032648889"
+    }
+  },
+  "parameters": {
+    "baseName": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    }
+  },
+  "variables": {
+    "primaryAccountName": "[format('{0}', parameters('baseName'))]",
+    "pageBlobStorageAccountName": "[format('{0}pageblob', parameters('baseName'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2024-08-04",
+      "name": "[variables('primaryAccountName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Premium_LRS"
+      },
+      "kind": "BlockBlobStorage",
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2024-08-04",
+      "name": "[variables('pageBlobStorageAccountName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Premium_LRS"
+      },
+      "kind": "StorageV2",
+      "properties": {}
+    }
+  ],
+  "outputs": {
+    "STORAGE_ENDPOINT_STRING": {
+      "type": "string",
+      "value": "[format('\"https://{0}.blob.core.windows.net\"', variables('primaryAccountName'))]"
+    },
+    "PAGE_BLOB_STORAGE_ENDPOINT_STRING": {
+      "type": "string",
+      "value": "[format('\"https://{0}.blob.core.windows.net\"', variables('pageBlobStorageAccountName'))]"
+    }
+  }
+}

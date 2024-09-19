@@ -2,21 +2,24 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 
 # Copy in engineering system needed to build
 COPY ./eng/ /app/eng/
-COPY ./tools/ /app/tools/
+#COPY ./tools/ /app/tools/
 COPY ./*.proj /app/
 COPY ./Directory.Build.props/ /app/
 COPY ./Directory.Build.targets/ /app/
 COPY ./NuGet.Config/ /app/
 
 # Copy in DataMovement Source Code
-COPY ./sdk/storage/Azure.Storage.DataMovement.Blobs/ /app/sdk/storage/Azure.Storage.DataMovement.Blobs/
+COPY ./sdk/storage/Azure.Storage.Common /app/sdk/storage/Azure.Storage.Common
+COPY ./sdk/storage/Azure.Storage.Blobs /app/sdk/storage/Azure.Storage.Blobs
+COPY ./sdk/storage/Azure.Storage.DataMovement /app/sdk/storage/Azure.Storage.DataMovement
+COPY ./sdk/storage/Azure.Storage.DataMovement.Blobs /app/sdk/storage/Azure.Storage.DataMovement.Blobs
 
 # Copy in Core Source Code
 COPY ./sdk/core/ /app/sdk/core/
 
 # Run restore and build, copy the .dll files over so they can used in the running container
 WORKDIR /app
-RUN dotnet build './sdk/storage/Azure.Storage.DataMovement.Blobs/stress/src/' --configuration Release
+RUN dotnet build './sdk/storage/Azure.Storage.DataMovement.Blobs/stress/src' --configuration Release
 
 # Copy in the dll files to be ready to run
 FROM build-env as publish
