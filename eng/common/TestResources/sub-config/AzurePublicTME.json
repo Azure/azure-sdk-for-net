@@ -3,10 +3,10 @@
     "TenantId": "70a036f6-8e4d-4615-bad6-149c02e7720d",
     "TestApplicationId": "1f0573a2-8c55-4d11-90b3-cb8d192b3338",
     "TestApplicationSecret": "",
-    "TestApplicationOid": "2732eca7-e801-43a3-abda-008f2b86323c",
+    "TestApplicationOid": "6ed493c8-7cc4-4d8b-9105-1024e9d869cd",
     "ProvisionerApplicationId": "1f0573a2-8c55-4d11-90b3-cb8d192b3338",
     "ProvisionerApplicationSecret": "",
-    "ProvisionerApplicationOid": "2732eca7-e801-43a3-abda-008f2b86323c",
+    "ProvisionerApplicationOid": "6ed493c8-7cc4-4d8b-9105-1024e9d869cd",
     "Environment": "AzureCloud",
     "AzureSubscription": "Azure SDK Test Resources - TME"
 }
