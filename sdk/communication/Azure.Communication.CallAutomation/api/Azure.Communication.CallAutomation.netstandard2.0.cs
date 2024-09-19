@@ -1657,6 +1657,7 @@ namespace Azure.Communication.CallAutomation.FHL
         public ServerAudioData(byte[] data) { }
         public byte[] Data { get { throw null; } }
     }
+    [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
     public enum ServerMessageType
     {
         AudioData = 0,
