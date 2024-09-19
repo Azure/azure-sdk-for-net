@@ -11,6 +11,7 @@ trigger:
     - sdk/provisioning/ci.data.yml
     - sdk/provisioning/Azure.Provisioning
     - sdk/provisioning/Azure.Provisioning.AppConfiguration
+    - sdk/provisioning/Azure.Provisioning.CloudMachine
     - sdk/provisioning/Azure.Provisioning.CognitiveServices
     - sdk/provisioning/Azure.Provisioning.CosmosDB
     - sdk/provisioning/Azure.Provisioning.EventHubs
@@ -38,6 +39,7 @@ pr:
     - sdk/provisioning/ci.data.yml
     - sdk/provisioning/Azure.Provisioning
     - sdk/provisioning/Azure.Provisioning.AppConfiguration
+    - sdk/provisioning/Azure.Provisioning.CloudMachine
     - sdk/provisioning/Azure.Provisioning.CognitiveServices
     - sdk/provisioning/Azure.Provisioning.CosmosDB
     - sdk/provisioning/Azure.Provisioning.EventHubs
@@ -64,6 +66,8 @@ extends:
       safeName: AzureProvisioning
     - name: Azure.Provisioning.AppConfiguration
       safeName: AzureProvisioningAppConfiguration
+    - name: Azure.Provisioning.CloudMachine
+      safeName: AzureProvisioningCloudMachine
     - name: Azure.Provisioning.CognitiveServices
       safeName: AzureProvisioningCognitiveServices
     - name: Azure.Provisioning.CosmosDB
