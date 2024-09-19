@@ -16,8 +16,6 @@ using Azure.ResourceManager.Maps.Models;
 
 using NUnit.Framework;
 using Azure.Core.GeoJson;
-using Azure.Maps.Search.Models.Queries;
-using Azure.Maps.Search.Models.Options;
 
 namespace Azure.Maps.Search.Tests
 {

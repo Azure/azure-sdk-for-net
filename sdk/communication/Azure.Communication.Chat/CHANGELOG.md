@@ -1,14 +1,9 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.3.1 (2024-09-19)
 
 ### Bugs Fixed
-
-### Other Changes
+Security patch, update to Azure.Core to 1.43.0.
 
 ## 1.3.0 (2024-04-15)
 

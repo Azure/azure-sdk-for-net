@@ -11,7 +11,7 @@ using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonMultiPoint
+    internal partial class GeoJsonMultiPoint
     {
         internal static GeoJsonMultiPoint DeserializeGeoJsonMultiPoint(JsonElement element)
         {

@@ -1,14 +1,10 @@
 # Release History
 
-## 4.26.0-beta.1 (Unreleased)
+## 4.26.0 (2024-09-18)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `TierToColdSummary` property to `StorageLifecyclePolicyCompletedEventData`.
 
 ## 4.25.0 (2024-08-21)
 

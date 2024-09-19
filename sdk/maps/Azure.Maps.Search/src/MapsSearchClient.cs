@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -14,8 +13,6 @@ using Azure.Core.GeoJson;
 using Azure.Core.Pipeline;
 using Azure.Maps.Common;
 using Azure.Maps.Search.Models;
-using Azure.Maps.Search.Models.Options;
-using Azure.Maps.Search.Models.Queries;
 
 namespace Azure.Maps.Search
 {
@@ -277,12 +274,12 @@ namespace Azure.Maps.Search
                 }
 
                 IEnumerable<double> coordinates = null;
-                if (options?.Coordinates != null)
+                if (options.Coordinates != null)
                 {
                     coordinates = coordinates = new[]
                     {
-                        Convert.ToDouble(options?.Coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat),
-                        Convert.ToDouble(options?.Coordinates?.Longitude, CultureInfo.InvariantCulture.NumberFormat)
+                        Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
+                        Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                     };
                 }
                 return await RestClient.GetPolygonAsync(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken).ConfigureAwait(false);
@@ -312,9 +309,9 @@ namespace Azure.Maps.Search
                 }
 
                 IEnumerable<double> coordinates = null;
-                if (options?.Coordinates != null)
+                if (options.Coordinates != null)
                 {
-                    coordinates = new[] { (double)options.Coordinates?.Longitude, (double)options.Coordinates?.Latitude };
+                    coordinates = new[] { (double)options.Coordinates.Longitude, (double)options.Coordinates.Latitude };
                 }
                 return RestClient.GetPolygon(coordinates, localizedMapView, options?.ResultType, options?.Resolution, cancellationToken);
             }
