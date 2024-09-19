@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Avs
         // /// <param name="privateCloudName"> The privateCloudName. </param>
         // /// <param name="workloadNetworkName"> The workloadNetworkName. </param>
         // [EditorBrowsable(EditorBrowsableState.Never)]
+        // [Obsolete("This overload is obsolete.", true)]
         // public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, WorkloadNetworkName workloadNetworkName)
         // {
-        //     var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default";
-        //     return new ResourceIdentifier(resourceId);
+        //    return CreateResourceIdentifier(subscriptionId, resourceGroupName,privateCloudName);
         // }
-    
+
     }
 }

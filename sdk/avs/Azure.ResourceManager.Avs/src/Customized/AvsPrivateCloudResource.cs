@@ -51,11 +51,9 @@ namespace Azure.ResourceManager.Avs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<WorkloadNetworkResource> GetWorkloadNetwork(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
         {
-            // workloadNetworkName.toString(), get all workload networks and search in there
             throw new NotSupportedException("This method is obsolete.");
         }
 
-        /*
         /// <summary>
         /// Get a private cloud workload network.
         /// <list type="bullet">
@@ -84,9 +82,8 @@ namespace Azure.ResourceManager.Avs
         public virtual async Task<Response<WorkloadNetworkResource>> GetWorkloadNetworkAsync(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
         {
             // workloadNetworkName.toString(), get async all workload networks and search if it exists
-            //return await GetWorkloadNetworks().GetAsync(workloadNetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadNetworks().GetAsync(workloadNetworkName, cancellationToken).ConfigureAwait(false);
         }
-        */
 
         /// <summary> Gets a collection of WorkloadNetworkResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of WorkloadNetworkResources and their operations over a WorkloadNetworkResource. </returns>
@@ -163,6 +160,7 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Gets a collection of WorkloadNetworkDhcpResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of WorkloadNetworkDhcpResources and their operations over a WorkloadNetworkDhcpResource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual WorkloadNetworkDhcpCollection GetWorkloadNetworkDhcps()
         {
             return GetWorkloadNetwork().GetWorkloadNetworkDhcps();
@@ -234,6 +232,7 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Gets a collection of WorkloadNetworkDnsServiceResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of WorkloadNetworkDnsServiceResources and their operations over a WorkloadNetworkDnsServiceResource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual WorkloadNetworkDnsServiceCollection GetWorkloadNetworkDnsServices()
         {
             return GetWorkloadNetwork().GetWorkloadNetworkDnsServices();
@@ -305,6 +304,7 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Gets a collection of WorkloadNetworkDnsZoneResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of WorkloadNetworkDnsZoneResources and their operations over a WorkloadNetworkDnsZoneResource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual WorkloadNetworkDnsZoneCollection GetWorkloadNetworkDnsZones()
         {
             return GetWorkloadNetwork().GetWorkloadNetworkDnsZones();
@@ -376,6 +376,7 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Gets a collection of WorkloadNetworkGatewayResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of WorkloadNetworkGatewayResources and their operations over a WorkloadNetworkGatewayResource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual WorkloadNetworkGatewayCollection GetWorkloadNetworkGateways()
         {
             return GetWorkloadNetwork().GetWorkloadNetworkGateways();
@@ -447,6 +448,7 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Gets a collection of WorkloadNetworkPortMirroringProfileResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of WorkloadNetworkPortMirroringProfileResources and their operations over a WorkloadNetworkPortMirroringProfileResource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual WorkloadNetworkPortMirroringProfileCollection GetWorkloadNetworkPortMirroringProfiles()
         {
             return GetWorkloadNetwork().GetWorkloadNetworkPortMirroringProfiles();
@@ -518,6 +520,7 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Gets a collection of WorkloadNetworkPublicIPResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of WorkloadNetworkPublicIPResources and their operations over a WorkloadNetworkPublicIPResource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual WorkloadNetworkPublicIPCollection GetWorkloadNetworkPublicIPs()
         {
             return GetWorkloadNetwork().GetWorkloadNetworkPublicIPs();
@@ -589,6 +592,7 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Gets a collection of WorkloadNetworkSegmentResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of WorkloadNetworkSegmentResources and their operations over a WorkloadNetworkSegmentResource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual WorkloadNetworkSegmentCollection GetWorkloadNetworkSegments()
         {
             return GetWorkloadNetwork().GetWorkloadNetworkSegments();
@@ -660,6 +664,7 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Gets a collection of WorkloadNetworkVirtualMachineResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of WorkloadNetworkVirtualMachineResources and their operations over a WorkloadNetworkVirtualMachineResource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual WorkloadNetworkVirtualMachineCollection GetWorkloadNetworkVirtualMachines()
         {
             return GetWorkloadNetwork().GetWorkloadNetworkVirtualMachines();
@@ -731,6 +736,7 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Gets a collection of WorkloadNetworkVmGroupResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of WorkloadNetworkVmGroupResources and their operations over a WorkloadNetworkVmGroupResource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual WorkloadNetworkVmGroupCollection GetWorkloadNetworkVmGroups()
         {
             return GetWorkloadNetwork().GetWorkloadNetworkVmGroups();

@@ -73,6 +73,7 @@ namespace Azure.ResourceManager.Avs
         /// Public IP count raised from 64 to 1024
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+         [EditorBrowsable(EditorBrowsableState.Never)]
          internal AvsPrivateCloudData(
             ResourceIdentifier id,
             string name,

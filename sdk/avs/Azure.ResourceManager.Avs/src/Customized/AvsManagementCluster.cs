@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -19,8 +20,10 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="clusterId"> The identity. </param>
         /// <param name="hosts"> The hosts. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         internal AvsManagementCluster(int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IList<string> hosts, IDictionary<string, BinaryData> serializedAdditionalRawData) : this(clusterSize, provisioningState, clusterId, hosts, null, serializedAdditionalRawData)
         {
         }
+        
     }
 }
