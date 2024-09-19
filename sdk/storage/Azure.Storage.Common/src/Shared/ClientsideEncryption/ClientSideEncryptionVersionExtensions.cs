@@ -56,7 +56,6 @@ namespace Azure.Storage.Cryptography.Models
         /// <summary>
         /// 1.0.
         /// </summary>
-        [Obsolete("This version is considered insecure. Applications are encouraged to migrate to version 2.0 or to one of Azure Storage's server-side encryption solutions. See http://aka.ms/azstorageclientencryptionblog for more details.")]
         V1_0 = 1,
 
         /// <summary>
