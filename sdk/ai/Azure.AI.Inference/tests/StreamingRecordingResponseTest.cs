@@ -13,10 +13,12 @@ namespace Azure.AI.Inference.Tests
     {
         [Test]
         public void TestSeveralChunks(
-            [Values(true, false)] bool withUsage
+            [Values(true, false)] bool withUsage,
+            [Values(true, false)] bool traceContent
             )
         {
-            StreamingRecordedResponse resp = new();
+            StreamingRecordedResponse resp = new(traceContent);
+            Assert.True(resp.IsEmpty);
             resp.Update(new(
                 id: "1",
                 model: "gpt-100o",
@@ -25,6 +27,7 @@ namespace Azure.AI.Inference.Tests
                 finishReason: CompletionsFinishReason.Stopped,
                 contentUpdate: "First"
             ));
+            Assert.False(resp.IsEmpty);
             resp.Update(new(
                 id: "2",
                 model: "gpt-100o",
@@ -66,11 +69,18 @@ namespace Azure.AI.Inference.Tests
             string[] strSerialized = resp.GetSerializedCompletions();
             Assert.AreEqual(strSerialized.Length, 1);
             Dictionary<string, object> dtData = JsonSerializer.Deserialize<Dictionary<string, object>>(strSerialized[0]);
-            Assert.That(dtData.ContainsKey("message"));
-            Dictionary<string, object> messageDict = JsonSerializer.Deserialize<Dictionary<string, object>>(dtData["message"].ToString());
-            Assert.That(messageDict.ContainsKey("content"));
-            Assert.AreEqual(messageDict["content"].ToString(), "First second third");
-            Assert.That(!messageDict.ContainsKey("tool_calls"));
+            if (traceContent)
+            {
+                Assert.That(dtData.ContainsKey("message"));
+                Dictionary<string, object> messageDict = JsonSerializer.Deserialize<Dictionary<string, object>>(dtData["message"].ToString());
+                Assert.That(messageDict.ContainsKey("content"));
+                Assert.AreEqual(messageDict["content"].ToString(), "First second third");
+                Assert.That(!messageDict.ContainsKey("tool_calls"));
+            }
+            else
+            {
+                Assert.False(dtData.ContainsKey("content"));
+            }
             Assert.That(dtData.ContainsKey("finish_reason"));
             Assert.AreEqual(dtData["finish_reason"].ToString(), CompletionsFinishReason.Stopped.ToString());
             Assert.That(dtData.ContainsKey("index"));
@@ -78,9 +88,9 @@ namespace Azure.AI.Inference.Tests
         }
 
         [Test]
-        public void TestWithTools()
+        public void TestWithTools([Values(true, false)] bool traceContent)
         {
-            StreamingRecordedResponse resp = new();
+            StreamingRecordedResponse resp = new(traceContent);
             resp.Update(getFuncPart("first", "func1", "{\"arg1\": 42}"));
             resp.Update(getFuncPart(" second", "func2", "{\"arg1\": 42,"));
             resp.Update(getFuncPart(" third", "func2", "\"arg2\": 43}"));
@@ -95,16 +105,26 @@ namespace Azure.AI.Inference.Tests
             // Message
             Assert.That(dtData.ContainsKey("message"));
             Dictionary<string, object> messageDict = JsonSerializer.Deserialize<Dictionary<string, object>>(dtData["message"].ToString());
-            Assert.That(messageDict.ContainsKey("content"));
-            Assert.AreEqual(messageDict["content"].ToString(), "first second third");
+            if (traceContent)
+            {
+                Assert.That(messageDict.ContainsKey("content"));
+                Assert.AreEqual(messageDict["content"].ToString(), "first second third");
+            }
             // Tools
             Assert.That(messageDict.ContainsKey("tool_calls"));
             List<Dictionary<string, object>> dtFnArgs = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(messageDict["tool_calls"].ToString());
-            Assert.AreEqual(dtFnArgs.Count, 2);
-            Dictionary<string, object> params1 = new() { {"arg1", "42" } };
-            Assert.That(dtFnArgs[0]["arg1"].ToString().Equals(params1["arg1"]));
-            params1 = new() { { "arg1", "42" }, { "arg2", "43" } };
-            Assert.That(dtFnArgs[1]["arg1"].ToString().Equals(params1["arg1"]) && dtFnArgs[1]["arg2"].ToString().Equals(params1["arg2"]));
+            if (traceContent)
+            {
+                Assert.AreEqual(dtFnArgs.Count, 2);
+                Dictionary<string, object> params1 = new() { { "arg1", "42" } };
+                Assert.That(dtFnArgs[0]["arg1"].ToString().Equals(params1["arg1"]));
+                params1 = new() { { "arg1", "42" }, { "arg2", "43" } };
+                Assert.That(dtFnArgs[1]["arg1"].ToString().Equals(params1["arg1"]) && dtFnArgs[1]["arg2"].ToString().Equals(params1["arg2"]));
+            }
+            else
+            {
+                Assert.AreEqual(dtFnArgs.Count, 0);
+            }
             // Other fields.
             Assert.That(dtData.ContainsKey("finish_reason"));
             Assert.AreEqual(dtData["finish_reason"].ToString(), CompletionsFinishReason.ToolCalls.ToString());

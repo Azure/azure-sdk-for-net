@@ -90,20 +90,23 @@ System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 ```
 
 ## Running the application
-**IMPORTANT!** To switch on the telemetry we need to set environment variable `AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED` to "1" or "true". It can be done in IDE or in the console as outlined below.
+**IMPORTANT!** To switch on the telemetry we need to set environment variable `OPENAI_EXPERIMENTAL_ENABLE_OPEN_TELEMETRY` to "1" or "true". To enable the collection of chat requests and responses please set `AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED` variable to "1". It can be done in IDE or in the console as outlined below.
 
 On Windows CMD
 ```
+set OPENAI_EXPERIMENTAL_ENABLE_OPEN_TELEMETRY=1
 set AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED=1
 ```
 
 On PowerShell
 ```
+$env:OPENAI_EXPERIMENTAL_ENABLE_OPEN_TELEMETRY="1"
 $env:AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED="1"
 ```
 
 On Bash
 ```bash
+export OPENAI_EXPERIMENTAL_ENABLE_OPEN_TELEMETRY=1
 export AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED=1
 ```
 

@@ -14,8 +14,10 @@ namespace Azure.AI.Inference.Telemetry
         /// <summary>
         /// Create the instance of Single recorded response.
         /// </summary>
+        /// <param name="traceContent">If true the messges and function names will be recorded.</param>
         /// <param name="response"></param>
-        public SingleRecordedResponse(ChatCompletions response) {
+        public SingleRecordedResponse(ChatCompletions response, bool traceContent) {
+            IsEmpty = false;
             Id = response.Id;
             Model = response.Model;
             PromptTokens = response.Usage.PromptTokens;
@@ -30,23 +32,28 @@ namespace Azure.AI.Inference.Telemetry
                 FinishReason = response.Choices[response.Choices.Count - 1].FinishReason.ToString();
             foreach (ChatChoice choice in response.Choices)
             {
-                var messageDict = new Dictionary<string, object>
-                {
-                    {"content", choice.Message.Content}
-                };
                 var evt = new Dictionary<string, object> {
-                    {"message", messageDict },
                     {"finish_reason", choice.FinishReason.ToString() ?? "" },
                     {"index", choice.Index},
                 };
+                var messageDict = new Dictionary<string, object>();
+                if (traceContent)
+                {
+                    messageDict["content"] = choice.Message.Content;
+                    evt["message"] = messageDict;
+                }
                 if (choice.Message.ToolCalls != null && choice.Message.ToolCalls.Count > 0)
                 {
                     var calls = new List<Dictionary<string, object>>();
-                    foreach (ChatCompletionsFunctionToolCall toolCall in choice.Message.ToolCalls)
+                    if (traceContent)
                     {
-                        calls.Add(JsonSerializer.Deserialize<Dictionary<string, object>>(toolCall.Arguments));
+                        foreach (ChatCompletionsFunctionToolCall toolCall in choice.Message.ToolCalls)
+                        {
+                            calls.Add(JsonSerializer.Deserialize<Dictionary<string, object>>(toolCall.Arguments));
+                        }
                     }
                     messageDict.Add("tool_calls", calls);
+                    evt["message"] = messageDict;
                 }
                 m_completions[i] = JsonSerializer.Serialize(evt);
                 i++;

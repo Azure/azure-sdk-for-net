@@ -79,7 +79,7 @@ namespace Azure.Core.Tests
                     var name = value.Key.Substring(0, value.Key.Length - stopSuffix.Length);
                     foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                     {
-                        if (producedDiagnosticScope.Activity.Id == Activity.Current.Id)
+                        if (producedDiagnosticScope.Activity?.Id == Activity.Current.Id)
                         {
                             producedDiagnosticScope.IsCompleted = true;
                             return;
@@ -92,7 +92,7 @@ namespace Azure.Core.Tests
                     var name = value.Key.Substring(0, value.Key.Length - exceptionSuffix.Length);
                     foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                     {
-                        if (producedDiagnosticScope.Activity.Id == Activity.Current.Id)
+                        if (producedDiagnosticScope.Activity?.Id == Activity.Current.Id || producedDiagnosticScope.Activity == null)
                         {
                             if (producedDiagnosticScope.IsCompleted)
                             {
@@ -142,7 +142,7 @@ namespace Azure.Core.Tests
             foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
             {
                 var activity = producedDiagnosticScope.Activity;
-                var operationName = activity.OperationName;
+                var operationName = activity?.OperationName;
                 // traverse the activities and check for duplicates among ancestors
                 while (activity != null)
                 {
@@ -158,7 +158,7 @@ namespace Azure.Core.Tests
                     activity = activity.Parent;
                 }
 
-                if (!producedDiagnosticScope.IsCompleted)
+                if (!producedDiagnosticScope.IsCompleted && producedDiagnosticScope.Activity != null)
                 {
                     throw new InvalidOperationException($"'{producedDiagnosticScope.Name}' scope is not completed");
                 }

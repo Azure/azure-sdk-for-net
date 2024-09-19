@@ -3,10 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.AI.Inference.Telemetry;
 
 namespace Azure.Core.Sse
@@ -24,7 +26,16 @@ namespace Azure.Core.Sse
                 using SseReader sseReader = new(stream);
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    SseLine? sseEvent = await sseReader.TryReadSingleFieldEventAsync().ConfigureAwait(false);
+                    SseLine? sseEvent = null;
+                    try
+                    {
+                        sseEvent = await sseReader.TryReadSingleFieldEventAsync().ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        scope?.RecordError(ex);
+                        throw;
+                    }
                     if (sseEvent is not null)
                     {
                         ReadOnlyMemory<char> name = sseEvent.Value.FieldName;
@@ -45,6 +56,10 @@ namespace Azure.Core.Sse
                             yield return item;
                         }
                     }
+                }
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    scope?.RecordError(new TaskCanceledException());
                 }
             }
             finally

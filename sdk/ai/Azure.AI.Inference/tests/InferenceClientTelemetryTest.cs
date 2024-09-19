@@ -51,10 +51,16 @@ namespace Azure.AI.Inference.Tests
         }
 
         [RecordedTest]
-        [TestCase(TestType.Basic)]
-        [TestCase(TestType.Streaming)]
-        public async Task TestGoodChatResponse(TestType testType)
+        [TestCase(TestType.Basic, true)]
+        [TestCase(TestType.Basic, false)]
+        [TestCase(TestType.Streaming, true)]
+        [TestCase(TestType.Streaming, false)]
+        public async Task TestGoodChatResponse(
+            TestType testType,
+            bool traceContent
+            )
         {
+            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableTraceContents, traceContent.ToString());
             var endpoint = new Uri(TestEnvironment.GithubEndpoint);
             var client = CreateClient(endpoint);
             using var actListener = new ValidatingActivityListener();
@@ -65,13 +71,13 @@ namespace Azure.AI.Inference.Tests
                 case TestType.Basic:
                     {
                         Response<ChatCompletions> response = await client.CompleteAsync(m_requestOptions);
-                        recordedResponse = new SingleRecordedResponse(response);
+                        recordedResponse = new SingleRecordedResponse(response, traceContent);
                     }
                     break;
                 case TestType.Streaming:
                     {
                         StreamingResponse<StreamingChatCompletionsUpdate> response = await client.CompleteStreamingAsync(m_requestStreamingOptions);
-                        recordedResponse = await GetStreamingResponse(response);
+                        recordedResponse = await GetStreamingResponse(response, traceContent);
                     }
                     break;
             }
@@ -135,9 +141,9 @@ namespace Azure.AI.Inference.Tests
         }
 
         #region Helpers
-        private static async Task<StreamingRecordedResponse> GetStreamingResponse(StreamingResponse<StreamingChatCompletionsUpdate> response)
+        private static async Task<StreamingRecordedResponse> GetStreamingResponse(StreamingResponse<StreamingChatCompletionsUpdate> response, bool traceContent)
         {
-            var recordedResponse = new StreamingRecordedResponse();
+            var recordedResponse = new StreamingRecordedResponse(traceContent);
             await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
             {
                 recordedResponse.Update(chatUpdate);

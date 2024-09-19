@@ -77,6 +77,15 @@ namespace Azure.AI.Inference.Tests.Utilities
         public void ValidateResponseEvents(AbstractRecordedResponse response)
         {
             Activity activity = m_listeners.Single();
+            if (response.IsEmpty)
+            {
+                // Check that we do not have the actual completion events.
+                foreach (ActivityEvent evt in activity.Events)
+                {
+                    Assert.That(evt.Name != GenAiChoice);
+                }
+                return;
+            }
             ValidateTag(activity, GenAiResponseIdKey, response.Id);
             ValidateTag(activity, GenAiResponseModelKey, response.Model);
             ValidateTag(activity, GenAiResponseFinishReasonKey, response.FinishReason);
@@ -87,7 +96,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             {
                 validChoices.Add(CleanString(v));
             }
-            foreach (var evt in activity.Events)
+            foreach (ActivityEvent evt in activity.Events)
             {
                 if (evt.Name != GenAiChoice)
                     continue;

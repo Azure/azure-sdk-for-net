@@ -3,10 +3,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.AI.Inference.Telemetry;
 using Azure.AI.Inference.Tests.Utilities;
+using Azure.Core.Sse;
+using Microsoft.Identity.Client;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.AI.Inference.Tests
 {
@@ -50,6 +58,16 @@ namespace Azure.AI.Inference.Tests
         }
 
         [Test, Sequential]
+        public void TestGetSwitch(
+            [Values(null, "1", "true", "false", "neep")] string env,
+            [Values(false, true, true, false, false)] bool expected
+            )
+        {
+            Environment.SetEnvironmentVariable("some_env_123", env);
+            Assert.AreEqual(expected, OpenTelemetryScope.GetSwithVariableVal("some_env_123"));
+        }
+
+        [Test, Sequential]
         public void TestActivityOnOff(
             [Values(null, "1", "true", "false", "neep")] string env,
             [Values(false, true, true, false, false)] bool hasActivity
@@ -79,12 +97,15 @@ namespace Azure.AI.Inference.Tests
 
         [Test, Sequential]
         public void TestChatResponse(
-            [Values(true, false)] bool modelChanged,
-            [Values("gpt-3000", "gpt-3000-2024-09-06")] string modelNameReturned
+            [Values(true, false, true, false)] bool modelChanged,
+            [Values("gpt-3000", "gpt-3000-2024-09-06", "gpt-3000", "gpt-3000-2024-09-06")] string modelNameReturned,
+            [Values(true, true, false, false)] bool traceContent
             )
         {
+            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableTraceContents,
+                traceContent.ToString());
             ChatCompletions completions = GetChatCompletions(modelNameReturned);
-            var response = new SingleRecordedResponse(completions);
+            var response = new SingleRecordedResponse(completions, traceContent);
             using (var actListener = new ValidatingActivityListener())
             {
                 using (var meterListener = new ValidatingMeterListener())
@@ -129,9 +150,13 @@ namespace Azure.AI.Inference.Tests
         }
 
         [Test]
-        public void TestStreamingResponse()
+        public void TestStreamingResponse(
+            [Values(true, false)] bool traceContent
+            )
         {
-            StreamingRecordedResponse resp = new();
+            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableTraceContents,
+                traceContent.ToString());
+            StreamingRecordedResponse resp = new(traceContent);
             StreamingChatCompletionsUpdate[] updates = new StreamingChatCompletionsUpdate[]{
                 GetFuncPart("first", "func1", "{\"arg1\": 42}"),
                 GetFuncPart(" second", "func2", "{\"arg1\": 42,"),
@@ -161,7 +186,38 @@ namespace Azure.AI.Inference.Tests
         }
 
         [Test]
-        public void testSwitchedOffTelemetry(
+        public async Task TestMockSSEStream()
+        {
+            Stream stream = new MemoryStream();
+            using var tokenSource = new CancellationTokenSource();
+            CancellationToken ct = tokenSource.Token;
+
+            using var actListener = new ValidatingActivityListener();
+            using var meterListener = new ValidatingMeterListener();
+            using var scope = new OpenTelemetryScope(requestOptions, endpoint);
+            StreamingRecordedResponse resp = new(true);
+
+            var task = Task.Run(async () => {
+                var enumerator = SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
+                        stream,
+                        StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
+                        ct,
+                        scope);
+                await foreach (var val in enumerator)
+                {
+                    resp.Update(val);
+                }
+                });
+            tokenSource.Cancel();
+            await task;
+            actListener.ValidateStartActivity(requestOptions, endpoint);
+            actListener.ValidateResponseEvents(resp);
+            actListener.ValidateErrorTag(typeof(TaskCanceledException).ToString(), "A task was canceled.");
+            meterListener.VaidateDuration(requestOptions.Model, endpoint);
+        }
+
+        [Test]
+        public void TestSwitchedOffTelemetry(
             [Values(RunType.Basic, RunType.Streaming, RunType.Error)] RunType rtype
             )
         {

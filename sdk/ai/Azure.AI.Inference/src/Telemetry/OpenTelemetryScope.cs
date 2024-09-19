@@ -29,10 +29,13 @@ namespace Azure.AI.Inference.Telemetry
         private static readonly Histogram<long> s_tokens = s_meter.CreateHistogram<long>(
             GenAiClientTokenUsageMetricName, "{token}", "Measures the number of input and output token used.");
 
-        private Activity m_activity;
-        private Stopwatch m_duration;
-        private TagList m_commonTags;
-        private StreamingRecordedResponse m_recordedStreamingResponse;
+        private readonly Activity m_activity;
+        private readonly Stopwatch m_duration;
+        private readonly TagList m_commonTags;
+        private readonly string m_caller;
+        private readonly bool m_traceContent;
+        private readonly DiagnosticListener m_source = null;
+        private readonly StreamingRecordedResponse m_recordedStreamingResponse;
 
         /// <summary>
         /// Return the content of the message.
@@ -54,6 +57,12 @@ namespace Azure.AI.Inference.Telemetry
             throw new NotSupportedException("The message type is not supported");
         }
 
+        public static bool GetSwithVariableVal(string name)
+        {
+            string enable = Environment.GetEnvironmentVariable(name);
+            return enable != null && (enable.Equals("true", StringComparison.OrdinalIgnoreCase) || enable.Equals("1"));
+        }
+
         /// <summary>
         /// Get the activity, if the telemetry is enabled. If there is no listeners for
         /// Activity source, null will be returned.
@@ -63,8 +72,7 @@ namespace Azure.AI.Inference.Telemetry
         private static Activity GetActivityMaybe(string name)
         {
             Activity act = null;
-            string enable = Environment.GetEnvironmentVariable(EnvironmentVariableSwitchName);
-            if (enable != null && (enable.Equals("true", StringComparison.OrdinalIgnoreCase) || enable.Equals("1")))
+            if (GetSwithVariableVal(EnvironmentVariableSwitchName))
                 act = s_chatSource.CreateActivity(name, ActivityKind.Client);
             return act;
         }
@@ -75,7 +83,7 @@ namespace Azure.AI.Inference.Telemetry
         /// <typeparam name="T"></typeparam>
         /// <param name="name">The name of tag to set.</param>
         /// <param name="value">Nullable value to be set.</param>
-        private void SetTagMaybe<T>(string name, Nullable<T> value) where T: struct
+        private void SetTagMaybe<T>(string name, T? value) where T: struct
         {
             if (value.HasValue && m_activity != null)
                 m_activity.SetTag(name, value.Value);
@@ -97,10 +105,20 @@ namespace Azure.AI.Inference.Telemetry
         /// </summary>
         /// <param name="requestOptions">The request options used in the call.</param>
         /// <param name="endpoint">The endpoint being called.</param>
-        public OpenTelemetryScope(ChatCompletionsOptions requestOptions, Uri endpoint)
+        /// <param name="caller">The calling method.</param>
+        public OpenTelemetryScope(ChatCompletionsOptions requestOptions, Uri endpoint, string caller=null)
         {
-            m_recordedStreamingResponse = new();
-            m_activity = GetActivityMaybe($"Complete_{requestOptions.Model}");
+            m_traceContent = GetSwithVariableVal(EnvironmentVariableTraceContents);
+            m_recordedStreamingResponse = new(m_traceContent);
+            var model = requestOptions.Model ?? "chat";
+            var activityName = $"Complete_{model}";
+            m_activity = GetActivityMaybe(activityName);
+            m_caller = caller;
+            if (!string.IsNullOrEmpty(caller))
+            {
+                m_source = new("Azure.AI.Inference");
+                m_source.Write($"{m_caller}.Start", activityName);
+            }
             if (m_activity == null)
                 return;
             m_activity.Start();
@@ -145,7 +163,7 @@ namespace Azure.AI.Inference.Telemetry
 
         public void RecordResponse(ChatCompletions response)
         {
-            RecordResponseInternal(new SingleRecordedResponse(response));
+            RecordResponseInternal(new SingleRecordedResponse(response, m_traceContent));
         }
 
         public void UpdateStreamResponse<T>(T item)
@@ -169,6 +187,8 @@ namespace Azure.AI.Inference.Telemetry
         {
             if (m_activity == null)
                 return;
+            if (!string.IsNullOrEmpty(m_caller))
+                m_source.Write(m_caller + ".Exception", e);
             s_duration.Record(m_duration.Elapsed.TotalSeconds, m_commonTags);
             var errorType = e?.GetType()?.FullName;
             if ( e is Azure.RequestFailedException requestFailed)
@@ -185,7 +205,7 @@ namespace Azure.AI.Inference.Telemetry
         /// <param name="recordedResponse"></param>
         private void RecordResponseInternal(AbstractRecordedResponse recordedResponse)
         {
-            if (m_activity == null)
+            if (m_activity == null || recordedResponse.IsEmpty)
                 return;
             TagList tags = m_commonTags;
             // Find index of model tag.
@@ -242,6 +262,7 @@ namespace Azure.AI.Inference.Telemetry
         public void Dispose()
         {
             m_activity?.Stop();
+            m_source?.Dispose();
         }
     }
 }

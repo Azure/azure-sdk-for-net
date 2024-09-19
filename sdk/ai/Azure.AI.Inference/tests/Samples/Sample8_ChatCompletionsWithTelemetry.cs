@@ -26,6 +26,7 @@ namespace Azure.AI.Inference.Tests.Samples
         public void Setup() {
             // Switch on open telemetry
             Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableSwitchName, "1");
+            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableTraceContents, "1");
         }
 
         [Test]

@@ -50,17 +50,19 @@ namespace Azure.AI.Inference
             RequestContext context = FromCancellationToken(cancellationToken);
             using OpenTelemetryScope otel = new OpenTelemetryScope(chatCompletionsOptions, _endpoint);
             Response response = null;
+            ChatCompletions chatCompletions = null;
             try
             {
                 response = await CompleteAsync(content, extraParams?.ToString(), context).ConfigureAwait(false);
-                otel.RecordResponse(ChatCompletions.FromResponse(response));
+                chatCompletions = ChatCompletions.FromResponse(response);
+                otel.RecordResponse(chatCompletions);
             }
             catch (Exception ex)
             {
                 otel.RecordError(ex);
                 throw;
             }
-            return Response.FromValue(ChatCompletions.FromResponse(response), response);
+            return Response.FromValue(chatCompletions, response);
         }
 
         /// <summary>
@@ -95,16 +97,18 @@ namespace Azure.AI.Inference
             RequestContext context = FromCancellationToken(cancellationToken);
             using OpenTelemetryScope otel = new OpenTelemetryScope(chatCompletionsOptions, _endpoint);
             Response response = null;
+            ChatCompletions chatCompletions = null;
             try
             {
                 response = Complete(content, extraParams?.ToString(), context);
-                otel.RecordResponse(ChatCompletions.FromResponse(response));
+                chatCompletions = ChatCompletions.FromResponse(response);
+                otel.RecordResponse(chatCompletions);
             }
             catch (Exception ex) {
                 otel.RecordError(ex);
                 throw;
             }
-            return Response.FromValue(ChatCompletions.FromResponse(response), response);
+            return Response.FromValue(chatCompletions, response);
         }
 
         /// <summary>
@@ -134,45 +138,40 @@ namespace Azure.AI.Inference
         {
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ChatCompletionsClient.CompleteStreaming");
-            scope.Start();
-
             chatCompletionsOptions.InternalShouldStreamResponse = true;
 
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
+            //using DiagnosticScope scope = ClientDiagnostics.CreateScope("ChatCompletionsClient.CompleteStreaming");
+            //scope.Start();
 
-            OpenTelemetryScope otel = new OpenTelemetryScope(chatCompletionsOptions, _endpoint);
+            OpenTelemetryScope otel = new(chatCompletionsOptions, _endpoint, "ChatCompletionsClient.CompleteStreaming");
+            Response baseResponse = null;
             try
             {
                 // Response value object takes IDisposable ownership of message and scope.
                 HttpMessage message = CreatePostRequestMessage(chatCompletionsOptions, content, context);
                 message.BufferResponse = false;
-                Response baseResponse = await _pipeline.ProcessMessageAsync(
+                baseResponse = await _pipeline.ProcessMessageAsync(
                     message,
                     context,
                     cancellationToken).ConfigureAwait(false);
-                return StreamingResponse<StreamingChatCompletionsUpdate>.CreateFromResponse(
-                    baseResponse,
-                    (responseForEnumeration)
-                        => SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
-                            responseForEnumeration.ContentStream,
-                            StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
-                            cancellationToken,
-                            otel
-                            ));
             }
             catch (Exception e)
             {
                 otel.RecordError(e);
                 otel.Dispose();
-                scope.Failed(e);
                 throw;
             }
-            finally
-            {
-                otel.Dispose();
-            }
+            return StreamingResponse<StreamingChatCompletionsUpdate>.CreateFromResponse(
+                baseResponse,
+                (responseForEnumeration)
+                    => SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
+                        responseForEnumeration.ContentStream,
+                        StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
+                        cancellationToken,
+                        otel
+                        ));
         }
 
         /// <summary>
@@ -199,41 +198,34 @@ namespace Azure.AI.Inference
         {
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ChatCompletionsClient.CompleteStreaming");
-            scope.Start();
-
             chatCompletionsOptions.InternalShouldStreamResponse = true;
 
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
 
-            OpenTelemetryScope otel = new OpenTelemetryScope(chatCompletionsOptions, _endpoint);
+            OpenTelemetryScope otel = new OpenTelemetryScope(chatCompletionsOptions, _endpoint, "ChatCompletionsClient.CompleteStreaming");
+            Response baseResponse;
             try
             {
                 // Response value object takes IDisposable ownership of message and scope.
                 HttpMessage message = CreatePostRequestMessage(chatCompletionsOptions, content, context);
                 message.BufferResponse = false;
-                Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
-                return StreamingResponse<StreamingChatCompletionsUpdate>.CreateFromResponse(
-                    baseResponse,
-                    (responseForEnumeration)
-                        => SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
-                            responseForEnumeration.ContentStream,
-                            StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
-                            cancellationToken,
-                            otel));
+                baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
             }
             catch (Exception e)
             {
                 otel.RecordError(e);
                 otel.Dispose();
-                scope.Failed(e);
                 throw;
             }
-            finally
-            {
-                otel.Dispose();
-            }
+            return StreamingResponse<StreamingChatCompletionsUpdate>.CreateFromResponse(
+                baseResponse,
+                (responseForEnumeration)
+                    => SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
+                        responseForEnumeration.ContentStream,
+                        StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
+                        cancellationToken,
+                        otel));
         }
 
         internal HttpMessage CreatePostRequestMessage(

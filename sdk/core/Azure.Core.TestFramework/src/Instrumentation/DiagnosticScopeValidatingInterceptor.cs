@@ -267,6 +267,8 @@ namespace Azure.Core.TestFramework
 
         private static void CheckAttributes(Activity activity, bool strict)
         {
+            if (activity == null)
+                return;
             foreach (var tag in activity.TagObjects)
             {
                 if (tag.Key == "kind" || tag.Key.StartsWith("otel.") || tag.Key == "requestId" || tag.Key == "serviceRequestId")
