@@ -133,7 +133,7 @@ namespace Azure.Identity
 
             if (context.IsProofOfPossessionEnabled)
             {
-                builder.WithProofOfPossession(context.ProofOfPossessionNonce, context.ResourceRequestMethod, context.ResourceRequestUri);
+                builder.WithProofOfPossession(context.ProofOfPossessionNonce, new(context.ResourceRequestMethod), context.ResourceRequestUri);
             }
 
             return await builder
@@ -196,7 +196,7 @@ namespace Azure.Identity
             }
             if (context.IsProofOfPossessionEnabled)
             {
-                builder.WithProofOfPossession(context.ProofOfPossessionNonce, context.ResourceRequestMethod, context.ResourceRequestUri);
+                builder.WithProofOfPossession(context.ProofOfPossessionNonce, new(context.ResourceRequestMethod), context.ResourceRequestUri);
             }
 
             return await builder.ExecuteAsync(async, cancellationToken)
@@ -307,7 +307,7 @@ namespace Azure.Identity
             }
             if (tokenRequestContext.IsProofOfPossessionEnabled)
             {
-                builder.WithProofOfPossession(tokenRequestContext.ProofOfPossessionNonce, tokenRequestContext.ResourceRequestMethod, tokenRequestContext.ResourceRequestUri);
+                builder.WithProofOfPossession(tokenRequestContext.ProofOfPossessionNonce, new(tokenRequestContext.ResourceRequestMethod), tokenRequestContext.ResourceRequestUri);
             }
             return await builder
                 .ExecuteAsync(async, cancellationToken)

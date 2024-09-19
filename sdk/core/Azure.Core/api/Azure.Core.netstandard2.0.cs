@@ -788,7 +788,7 @@ namespace Azure.Core
         public bool IsProofOfPossessionEnabled { get { throw null; } }
         public string? ParentRequestId { get { throw null; } }
         public string? ProofOfPossessionNonce { get { throw null; } }
-        public System.Net.Http.HttpMethod? ResourceRequestMethod { get { throw null; } }
+        public string? ResourceRequestMethod { get { throw null; } }
         public System.Uri? ResourceRequestUri { get { throw null; } }
         public string[] Scopes { get { throw null; } }
         public string? TenantId { get { throw null; } }

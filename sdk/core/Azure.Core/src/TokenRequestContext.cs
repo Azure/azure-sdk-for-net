@@ -12,9 +12,6 @@ namespace Azure.Core
     /// </summary>
     public readonly struct TokenRequestContext
     {
-        private readonly Uri? _uri;
-        private readonly HttpMethod? _method;
-
         /// <summary>
         /// Creates a new TokenRequest with the specified scopes.
         /// </summary>
@@ -98,8 +95,8 @@ namespace Azure.Core
             IsCaeEnabled = isCaeEnabled;
             ProofOfPossessionNonce = proofOfPossessionNonce;
             IsProofOfPossessionEnabled = isProofOfPossessionEnabled;
-            _uri = requestUri;
-            _method = requestMethod is null ? null : new(requestMethod);
+            ResourceRequestUri = requestUri;
+            ResourceRequestMethod = requestMethod;
         }
 
         /// <summary>
@@ -146,11 +143,11 @@ namespace Azure.Core
         /// <summary>
         /// The HTTP method of the request. This is used in combination with <see cref="ResourceRequestUri"/> and <see cref="ProofOfPossessionNonce"/> to generate the PoP token.
         /// </summary>
-        public HttpMethod? ResourceRequestMethod => _method;
+        public string? ResourceRequestMethod { get; }
 
         /// <summary>
         /// The URI of the request. This is used in combination with <see cref="ResourceRequestMethod"/> and <see cref="ProofOfPossessionNonce"/> to generate the PoP token.
         /// </summary>
-        public Uri? ResourceRequestUri => _uri;
+        public Uri? ResourceRequestUri { get; }
     }
 }
