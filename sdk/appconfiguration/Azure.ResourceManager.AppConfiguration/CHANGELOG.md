@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.1-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2024-10-08)
+
+### Features Added
+
+- Updated AppConfiguration RP API version to `2024-05-01` (SnapshotCollection, SnapshotResource, SnapshotData and DataPlaneProxy)
 
 ## 1.3.2 (2024-05-07)
 

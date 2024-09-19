@@ -129,6 +129,11 @@ namespace Azure.ResourceManager.AppConfiguration
                 writer.WritePropertyName("enablePurgeProtection"u8);
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
+            if (Optional.IsDefined(DataPlaneProxy))
+            {
+                writer.WritePropertyName("dataPlaneProxy"u8);
+                writer.WriteObjectValue(DataPlaneProxy, options);
+            }
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
@@ -190,6 +195,7 @@ namespace Azure.ResourceManager.AppConfiguration
             bool? disableLocalAuth = default;
             int? softDeleteRetentionInDays = default;
             bool? enablePurgeProtection = default;
+            DataPlaneProxyProperties dataPlaneProxy = default;
             AppConfigurationCreateMode? createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -344,6 +350,15 @@ namespace Azure.ResourceManager.AppConfiguration
                             enablePurgeProtection = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("dataPlaneProxy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dataPlaneProxy = DataPlaneProxyProperties.DeserializeDataPlaneProxyProperties(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("createMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -380,6 +395,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 disableLocalAuth,
                 softDeleteRetentionInDays,
                 enablePurgeProtection,
+                dataPlaneProxy,
                 createMode,
                 serializedAdditionalRawData);
         }
@@ -688,6 +704,21 @@ namespace Azure.ResourceManager.AppConfiguration
                     builder.Append("    enablePurgeProtection: ");
                     var boolValue = EnablePurgeProtection.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataPlaneProxy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    dataPlaneProxy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataPlaneProxy))
+                {
+                    builder.Append("    dataPlaneProxy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DataPlaneProxy, options, 4, false, "    dataPlaneProxy: ");
                 }
             }
 
