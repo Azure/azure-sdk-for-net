@@ -113,7 +113,7 @@ parameters:
     default: true
   - name: UseFederatedAuth
     type: boolean
-    default: false
+    default: true
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
