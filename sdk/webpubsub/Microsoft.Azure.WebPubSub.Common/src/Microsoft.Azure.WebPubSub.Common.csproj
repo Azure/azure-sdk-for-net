@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure SDK Common object library for the WebPubSub service</Description>
     <AssemblyTitle>Azure SDK Common for WebPubSub</AssemblyTitle>

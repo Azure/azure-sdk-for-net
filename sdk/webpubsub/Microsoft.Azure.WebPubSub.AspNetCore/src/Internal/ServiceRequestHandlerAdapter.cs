@@ -107,27 +107,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                         }
                     case ConnectEventRequest connectEventRequest:
                         {
-                            if (connectEventRequest is MqttConnectEventRequest mqttConnectEventRequest)
-                            {
-                                var mqttResponse = await hub.OnMqttConnectAsync(mqttConnectEventRequest, context.RequestAborted).ConfigureAwait(false);
-                                if (mqttResponse is MqttConnectEventResponse successfulyResponse)
-                                {
-                                    SetConnectionState(ref context, mqttConnectEventRequest.ConnectionContext, successfulyResponse.ConnectionStates);
-                                    await context.Response.WriteAsync(JsonSerializer.Serialize(successfulyResponse)).ConfigureAwait(false);
-                                    break;
-                                }
-                                if (mqttResponse is MqttConnectEventErrorResponse errorResponse)
-                                {
-                                    context.Response.StatusCode = (int)MqttConnectCodeToHttpStatusCodeConverter.ToHttpStatusCode(errorResponse.Mqtt.Code);
-                                    await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse)).ConfigureAwait(false);
-                                    break;
-                                }
-                                if (mqttResponse != null)
-                                {
-                                    throw new InvalidOperationException($"Invalid return type for {nameof(WebPubSubHub.OnMqttConnectAsync)} method. Only {nameof(MqttConnectEventResponse)} or {nameof(MqttConnectEventErrorResponse)} is accepted.");
-                                }
-                                // otherwise, fall back to general connect event handling.
-                            }
                             var response = await hub.OnConnectAsync(connectEventRequest, context.RequestAborted).ConfigureAwait(false);
                             // default as null is allowed.
                             if (response != null)
@@ -201,6 +180,20 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                     responseBodyString = ex.Message;
                 }
                 await context.Response.WriteAsync(responseBodyString).ConfigureAwait(false);
+            }
+            catch (MqttConnectionException mqttException)
+            {
+                Log.FailedToHandleRequest(_logger, mqttException.Message, mqttException);
+                if (serviceRequest is MqttConnectEventRequest mqttConnect)
+                {
+                    context.Response.StatusCode = (int)MqttConnectCodeToHttpStatusCodeConverter.ToHttpStatusCode(mqttException.MqttErrorResponse.Mqtt.Code);
+                    await context.Response.WriteAsync(JsonSerializer.Serialize(mqttException.MqttErrorResponse)).ConfigureAwait(false);
+                }
+                else
+                {
+                    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                    await context.Response.WriteAsync($"Exception of type '{nameof(MqttConnectionException)}' can only be thrown for MQTT clients.").ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {

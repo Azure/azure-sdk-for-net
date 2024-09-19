@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure SDK client library for the WebPubSub service</Description>
     <AssemblyTitle>Azure SDK for WebPubSub</AssemblyTitle>
@@ -21,9 +21,9 @@
 
   <ItemGroup>
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\ConnectionStatesConverter.cs" LinkBase="Shared" />
-    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\MqttDisconnectedEventRequestContent.cs" LinkBase="Bindings\Shared" />
-    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\MqttConnectEventRequestContent.cs" LinkBase="Bindings\Shared" />
-    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\WebPubSubErrorCodeExtensions.cs" LinkBase="Bindings\Shared" />
+    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\MqttDisconnectedEventRequestContent.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\MqttConnectEventRequestContent.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\WebPubSubErrorCodeExtensions.cs" LinkBase="Shared" />
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\MqttConnectCodeToHttpStatusCodeConverter.cs" />
   </ItemGroup>
 

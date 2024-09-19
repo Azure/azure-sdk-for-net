@@ -3,8 +3,9 @@
 
 using System;
 using System.Net;
+using Microsoft.Azure.WebPubSub.Common;
 
-namespace Microsoft.Azure.WebPubSub.Common;
+namespace Microsoft.Azure.WebPubSub.AspNetCore;
 
 internal static class MqttConnectCodeToHttpStatusCodeConverter
 {
@@ -43,8 +44,8 @@ internal static class MqttConnectCodeToHttpStatusCodeConverter
                 MqttV500ConnectReasonCode.QosNotSupported => HttpStatusCode.BadRequest,
 
                 // Too many requests
-                MqttV500ConnectReasonCode.QuotaExceeded => (HttpStatusCode)429,
-                MqttV500ConnectReasonCode.ConnectionRateExceeded => (HttpStatusCode)429,
+                MqttV500ConnectReasonCode.QuotaExceeded => HttpStatusCode.TooManyRequests,
+                MqttV500ConnectReasonCode.ConnectionRateExceeded => HttpStatusCode.TooManyRequests,
 
                 // Forbidden
                 MqttV500ConnectReasonCode.Banned => HttpStatusCode.Forbidden,
