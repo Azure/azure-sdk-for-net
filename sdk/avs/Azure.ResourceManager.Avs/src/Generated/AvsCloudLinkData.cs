@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="status"> The state of the cloud link. </param>
         /// <param name="linkedCloud"> Identifier of the other private cloud participating in the link. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsCloudLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CloudLinkProvisioningState? provisioningState, AvsCloudLinkStatus? status, ResourceIdentifier linkedCloud, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AvsCloudLinkData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, CloudLinkProvisioningState? provisioningState, AvsCloudLinkStatus? status, ResourceIdentifier linkedCloud, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Status = status;

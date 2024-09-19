@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="publicIPBlock"> CIDR Block of the Public IP Block. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkPublicIPData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, long? numberOfPublicIPs, string publicIPBlock, WorkloadNetworkPublicIPProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkPublicIPData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string displayName, long? numberOfPublicIPs, string publicIPBlock, WorkloadNetworkPublicIPProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             NumberOfPublicIPs = numberOfPublicIPs;

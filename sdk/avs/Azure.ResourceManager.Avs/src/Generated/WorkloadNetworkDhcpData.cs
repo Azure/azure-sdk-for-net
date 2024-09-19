@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Avs
         /// The available derived classes include <see cref="WorkloadNetworkDhcpRelay"/> and <see cref="WorkloadNetworkDhcpServer"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkDhcpData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkloadNetworkDhcpEntity properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkDhcpData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, WorkloadNetworkDhcpEntity properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;

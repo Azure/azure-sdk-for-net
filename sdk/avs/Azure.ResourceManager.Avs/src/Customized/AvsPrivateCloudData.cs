@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id,
             string name,
             ResourceType resourceType,
-            SystemData systemData,
+            ResourceManager.Models.SystemData systemData,
             IDictionary<string, string> tags,
             AzureLocation location,
             AvsSku sku,

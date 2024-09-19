@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="company"> Company that created and supports the package. </param>
         /// <param name="uri"> Link to support by the package vendor. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScriptPackageProvisioningState? provisioningState, string description, string version, string company, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ScriptPackageData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ScriptPackageProvisioningState? provisioningState, string description, string version, string company, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Description = description;

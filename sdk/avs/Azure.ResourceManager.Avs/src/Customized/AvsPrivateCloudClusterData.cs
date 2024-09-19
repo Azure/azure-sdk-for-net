@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = null,
             string name = null,
             ResourceType resourceType = default,
-            SystemData systemData = null,
+            ResourceManager.Models.SystemData systemData = null,
             AvsSku sku = null,
             int? clusterSize = null,
             AvsPrivateCloudClusterProvisioningState? provisioningState = null,

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="folderPath"> Path to virtual machine's folder starting from datacenter virtual machine folder. </param>
         /// <param name="restrictMovement"> Whether VM DRS-driven movement is restricted (enabled) or not (disabled). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsPrivateCloudClusterVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VirtualMachineProvisioningState? provisioningState, string displayName, string moRefId, string folderPath, VirtualMachineRestrictMovementState? restrictMovement, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AvsPrivateCloudClusterVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, VirtualMachineProvisioningState? provisioningState, string displayName, string moRefId, string folderPath, VirtualMachineRestrictMovementState? restrictMovement, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;

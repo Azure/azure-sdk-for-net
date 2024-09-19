@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="activationKey"> The activation key. </param>
         /// <param name="status"> The status of the HCX Enterprise Site. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HcxEnterpriseSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HcxEnterpriseSiteProvisioningState? provisioningState, string activationKey, HcxEnterpriseSiteStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HcxEnterpriseSiteData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, HcxEnterpriseSiteProvisioningState? provisioningState, string activationKey, HcxEnterpriseSiteStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ActivationKey = activationKey;

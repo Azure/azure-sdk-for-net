@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="displayName"> Display name of the DHCP entity. </param>
         /// <param name="path"> NSX Gateway Path. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkloadNetworkProvisioningState? provisioningState, string displayName, string path, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, WorkloadNetworkProvisioningState? provisioningState, string displayName, string path, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
