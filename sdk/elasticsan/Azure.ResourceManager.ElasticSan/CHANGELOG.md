@@ -1,14 +1,11 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2024-09-27)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded to API version 2024-05-01
+- Supported EnforceDataIntegrityCheckForIscsi for volume groups
 
 ## 1.0.0 (2024-01-26)
 
