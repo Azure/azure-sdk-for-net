@@ -19,7 +19,7 @@ sample-gen:
     - AgentPools_Delete
     - BareMetalMachineKeySets_Delete
     - BmcKeySets_Delete
-    - loudServicesNetworks_Delete
+    - CloudServicesNetworks_Delete
     - ClusterManagers_Delete
     - MetricsConfigurations_Delete
     - Clusters_Delete
@@ -30,7 +30,6 @@ sample-gen:
     - Consoles_Delete
     - VirtualMachines_Delete
     - Volumes_Delete
-    - CloudServicesNetworks_Delete
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
