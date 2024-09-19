@@ -47,7 +47,7 @@ namespace Azure.Identity.Tests
 
         [Test]
         [LiveOnly]
-        public async Task AzurePipelineCredentialLiveTest_GetToken_InvalidToken()
+        public void AzurePipelineCredentialLiveTest_GetToken_InvalidToken()
         {
             string systemAccessToken = "invalidSystemAccessToken";
             var tenantId = Environment.GetEnvironmentVariable("AZURE_SERVICE_CONNECTION_TENANT_ID");
