@@ -105,6 +105,19 @@ public sealed partial class ClientPipeline
 
         options.Freeze();
 
+        // Set up logging
+
+        PipelineMessageSanitizer? sanitizer = null;
+        ClientLogging? clientLogging = null;
+        HttpMessageLogging? messageLogging = null;
+
+        if (options.LoggingOptions.IsClientLoggingEnabled || options.LoggingOptions.IsHttpMessageLoggingEnabled)
+        {
+            sanitizer = new(options.LoggingOptions.AllowedQueryParameters.ToArray(), options.LoggingOptions.AllowedHeaderNames.ToArray());
+            clientLogging = options.LoggingOptions.IsClientLoggingEnabled ? new(sanitizer, options.LoggingOptions) : null;
+            messageLogging = options.LoggingOptions.IsHttpMessageLoggingEnabled ? new(options.LoggingOptions) : null;
+        }
+
         // Add length of client-specific policies.
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length + beforeTransportPolicies.Length;
 
@@ -114,7 +127,6 @@ public sealed partial class ClientPipeline
         pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
         pipelineLength++; // for retry policy
-        pipelineLength++; // for logging policy
         pipelineLength++; // for transport
 
         PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
@@ -138,8 +150,7 @@ public sealed partial class ClientPipeline
 
         if (policies[index] is ClientRetryPolicy retryPolicy)
         {
-            ILogger logger = options.LoggingOptions.LoggerFactory.CreateLogger<ClientRetryPolicy>();
-            retryPolicy.LogHandler = new LoggingHandler(logger, new PipelineMessageSanitizer(options.LoggingOptions.AllowedQueryParameters.ToArray(), options.LoggingOptions.AllowedHeaderNames.ToArray()));
+            retryPolicy.ClientLog = clientLogging;
         }
 
         // Per try policies come after the retry policy.
@@ -154,10 +165,6 @@ public sealed partial class ClientPipeline
 
         int perTryIndex = index;
 
-        // Add logging policy just before the transport.
-
-        policies[index++] = options.LoggingPolicy ?? new ClientLoggingPolicy(options.LoggingOptions);
-
         // Before transport policies come before the transport.
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));
         index += beforeTransportPolicies.Length;
@@ -170,8 +177,11 @@ public sealed partial class ClientPipeline
 
         int beforeTransportIndex = index;
 
+        PipelineTransport transport = options.Transport ?? HttpClientPipelineTransport.Shared;
+        transport.HttpMessageLogging = messageLogging;
+
         // Add the transport.
-        policies[index++] = options.Transport ?? HttpClientPipelineTransport.Shared;
+        policies[index++] = transport;
 
         return new ClientPipeline(policies,
             options.NetworkTimeout ?? DefaultNetworkTimeout,

@@ -20,7 +20,6 @@ public class ClientPipelineOptions
     private bool _frozen;
 
     private PipelinePolicy? _retryPolicy;
-    private PipelinePolicy? _loggingPolicy;
     private PipelineTransport? _transport;
     private TimeSpan? _timeout;
     private LoggingOptions _loggingOptions = new();

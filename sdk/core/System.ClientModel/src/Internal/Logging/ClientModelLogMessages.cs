@@ -9,196 +9,187 @@ using Microsoft.Extensions.Logging;
 namespace System.ClientModel.Internal;
 
 // The methods in this class should only ever be called from LoggingHandler
-internal partial class HttpMessageLogMessages
+internal static partial class ClientModelLogMessages
 {
-    private ILogger _logger;
-    private PipelineMessageSanitizer _sanitizer;
-
-    public HttpMessageLogMessages(ILogger logger, PipelineMessageSanitizer sanitizer)
-    {
-        _logger = logger;
-        _sanitizer = sanitizer;
-    }
-
     #region Request
 
-    public void Request(string requestId, PipelineRequest request, string? clientAssembly)
+    public static void Request(ILogger logger, string requestId, PipelineRequest request, string? clientAssembly, PipelineMessageSanitizer sanitizer)
     {
-        if (_logger.IsEnabled(LogLevel.Information))
+        if (logger.IsEnabled(LogLevel.Information))
         {
-            Request(requestId, request.Method, _sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), FormatHeaders(request.Headers), clientAssembly);
+            Request(logger, requestId, request.Method, sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), FormatHeaders(request.Headers, sanitizer), clientAssembly);
         }
     }
 
     [LoggerMessage(LoggingEventIds.RequestEvent, LogLevel.Information, "Request [{requestId}] {method} {uri}\r\n{headers}client assembly: {clientAssembly}", SkipEnabledCheck = true, EventName = "Request")]
-    private partial void Request(string requestId, string method, string uri, string headers, string? clientAssembly);
+    private static partial void Request(ILogger logger, string requestId, string method, string uri, string headers, string? clientAssembly);
 
-    public void RequestContent(string requestId, byte[] content, Encoding? textEncoding)
+    public static void RequestContent(ILogger logger, string requestId, byte[] content, Encoding? textEncoding)
     {
-        if (_logger.IsEnabled(LogLevel.Debug))
+        if (logger.IsEnabled(LogLevel.Debug))
         {
             if (textEncoding != null)
             {
-                RequestContentText(requestId, textEncoding.GetString(content));
+                RequestContentText(logger, requestId, textEncoding.GetString(content));
             }
             else
             {
-                RequestContent(requestId, content);
+                RequestContent(logger, requestId, content);
             }
         }
     }
 
     [LoggerMessage(LoggingEventIds.RequestContentEvent, LogLevel.Debug, "Request [{requestId}] content: {content}", SkipEnabledCheck = true, EventName = "RequestContent")]
-    private partial void RequestContent(string requestId, byte[] content);
+    private static partial void RequestContent(ILogger logger, string requestId, byte[] content);
 
     [LoggerMessage(LoggingEventIds.RequestContentTextEvent, LogLevel.Debug, "Request [{requestId}] content: {content}", SkipEnabledCheck = true, EventName = "RequestContentText")]
-    private partial void RequestContentText(string requestId, string content);
+    private static partial void RequestContentText(ILogger logger, string requestId, string content);
     #endregion
 
     #region Response
 
-    public void Response(string requestId, PipelineResponse response, double seconds)
+    public static void Response(ILogger logger, string requestId, PipelineResponse response, double seconds, PipelineMessageSanitizer sanitizer)
     {
-        if (_logger.IsEnabled(LogLevel.Information))
+        if (logger.IsEnabled(LogLevel.Information))
         {
-            Response(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), seconds);
+            Response(logger, requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers, sanitizer), seconds);
         }
     }
 
     [LoggerMessage(LoggingEventIds.ResponseEvent, LogLevel.Information, "Response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", SkipEnabledCheck = true, EventName = "Response")]
-    private partial void Response(string requestId, int status, string reasonPhrase, string headers, double seconds);
+    private static partial void Response(ILogger logger, string requestId, int status, string reasonPhrase, string headers, double seconds);
 
-    public void ResponseContent(string requestId, byte[] content, Encoding? textEncoding)
+    public static void ResponseContent(ILogger logger, string requestId, byte[] content, Encoding? textEncoding)
     {
-        if (_logger.IsEnabled(LogLevel.Debug))
+        if (logger.IsEnabled(LogLevel.Debug))
         {
             if (textEncoding != null)
             {
-                ResponseContentText(requestId, textEncoding.GetString(content));
+                ResponseContentText(logger, requestId, textEncoding.GetString(content));
             }
             else
             {
-                ResponseContent(requestId, content);
+                ResponseContent(logger, requestId, content);
             }
         }
     }
 
     [LoggerMessage(LoggingEventIds.ResponseContentEvent, LogLevel.Debug, "Response [{requestId}] content: {content}", SkipEnabledCheck = true, EventName = "ResponseContent")]
-    private partial void ResponseContent(string requestId, byte[] content);
+    private static partial void ResponseContent(ILogger logger, string requestId, byte[] content);
 
     [LoggerMessage(LoggingEventIds.ResponseContentTextEvent, LogLevel.Debug, "Response [{requestId}] content: {content}", SkipEnabledCheck = true, EventName = "ResponseContentText")]
-    private partial void ResponseContentText(string requestId, string content);
+    private static partial void ResponseContentText(ILogger logger, string requestId, string content);
 
-    public void ResponseContentBlock(string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
+    public static void ResponseContentBlock(ILogger logger, string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
     {
-        if (_logger.IsEnabled(LogLevel.Debug))
+        if (logger.IsEnabled(LogLevel.Debug))
         {
             if (textEncoding != null)
             {
-                ResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content));
+                ResponseContentTextBlock(logger, requestId, blockNumber, textEncoding.GetString(content));
             }
             else
             {
-                ResponseContentBlock(requestId, blockNumber, content);
+                ResponseContentBlock(logger, requestId, blockNumber, content);
             }
         }
     }
 
     [LoggerMessage(LoggingEventIds.ResponseContentBlockEvent, LogLevel.Debug, "Response [{requestId}] content block {blockNumber}: {content}", SkipEnabledCheck = true, EventName = "ResponseContentBlock")]
-    private partial void ResponseContentBlock(string requestId, int blockNumber, byte[] content);
+    private static partial void ResponseContentBlock(ILogger logger, string requestId, int blockNumber, byte[] content);
 
     [LoggerMessage(LoggingEventIds.ResponseContentTextBlockEvent, LogLevel.Debug, "Response [{requestId}] content block {blockNumber}: {content}", SkipEnabledCheck = true, EventName = "ResponseContentTextBlock")]
-    private partial void ResponseContentTextBlock(string requestId, int blockNumber, string content);
+    private static partial void ResponseContentTextBlock(ILogger logger, string requestId, int blockNumber, string content);
 
     #endregion
 
     #region Error Response
 
-    public void ErrorResponse(string requestId, PipelineResponse response, double seconds)
+    public static void ErrorResponse(ILogger logger, string requestId, PipelineResponse response, double seconds, PipelineMessageSanitizer sanitizer)
     {
-        if (_logger.IsEnabled(LogLevel.Warning))
+        if (logger.IsEnabled(LogLevel.Warning))
         {
-            ErrorResponse(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), seconds);
+            ErrorResponse(logger, requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers, sanitizer), seconds);
         }
     }
 
     [LoggerMessage(LoggingEventIds.ErrorResponseEvent, LogLevel.Warning, "Error response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", SkipEnabledCheck = true, EventName = "ErrorResponse")]
-    private partial void ErrorResponse(string requestId, int status, string reasonPhrase, string headers, double seconds);
+    private static partial void ErrorResponse(ILogger logger, string requestId, int status, string reasonPhrase, string headers, double seconds);
 
-    public void ErrorResponseContent(string requestId, byte[] content, Encoding? textEncoding)
+    public static void ErrorResponseContent(ILogger logger, string requestId, byte[] content, Encoding? textEncoding)
     {
-        if (_logger.IsEnabled(LogLevel.Information))
+        if (logger.IsEnabled(LogLevel.Information))
         {
             if (textEncoding != null)
             {
-                ErrorResponseContentText(requestId, textEncoding.GetString(content));
+                ErrorResponseContentText(logger, requestId, textEncoding.GetString(content));
             }
             else
             {
-                ErrorResponseContent(requestId, content);
+                ErrorResponseContent(logger, requestId, content);
             }
         }
     }
 
     [LoggerMessage(LoggingEventIds.ErrorResponseContentEvent, LogLevel.Information, "Error response [{requestId}] content: {content}", SkipEnabledCheck = true, EventName = "ErrorResponseContent")]
-    private partial void ErrorResponseContent(string requestId, byte[] content);
+    private static partial void ErrorResponseContent(ILogger logger, string requestId, byte[] content);
 
     [LoggerMessage(LoggingEventIds.ErrorResponseContentTextEvent, LogLevel.Information, "Error response [{requestId}] content: {content}", SkipEnabledCheck = true, EventName = "ErrorResponseContentText")]
-    private partial void ErrorResponseContentText(string requestId, string content);
+    private static partial void ErrorResponseContentText(ILogger logger, string requestId, string content);
 
-    public void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
+    public static void ErrorResponseContentBlock(ILogger logger, string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
     {
-        if (_logger.IsEnabled(LogLevel.Information))
+        if (logger.IsEnabled(LogLevel.Information))
         {
             if (textEncoding != null)
             {
-                ErrorResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content));
+                ErrorResponseContentTextBlock(logger, requestId, blockNumber, textEncoding.GetString(content));
             }
             else
             {
-                ErrorResponseContentBlock(requestId, blockNumber, content);
+                ErrorResponseContentBlock(logger, requestId, blockNumber, content);
             }
         }
     }
 
     [LoggerMessage(LoggingEventIds.ErrorResponseContentBlockEvent, LogLevel.Information, "Error response [{requestId}] content block {blockNumber}: {content}", SkipEnabledCheck = true, EventName = "ErrorResponseContentBlock")]
-    private partial void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content);
+    private static partial void ErrorResponseContentBlock(ILogger logger, string requestId, int blockNumber, byte[] content);
 
     [LoggerMessage(LoggingEventIds.ErrorResponseContentTextBlockEvent, LogLevel.Information, "Error response [{requestId}] content block {blockNumber}: {content}", SkipEnabledCheck = true, EventName = "ErrorResponseContentTextBlock")]
-    private partial void ErrorResponseContentTextBlock(string requestId, int blockNumber, string content);
+    private static partial void ErrorResponseContentTextBlock(ILogger logger, string requestId, int blockNumber, string content);
 
     #endregion
 
     #region Retry
     [LoggerMessage(LoggingEventIds.RequestRetryingEvent, LogLevel.Information, "Request [{requestId}] attempt number {retryCount} took {seconds:00.0}s", EventName = "RequestRetrying")]
-    public partial void RequestRetrying(string requestId, int retryCount, double seconds);
+    public static partial void RequestRetrying(ILogger logger, string requestId, int retryCount, double seconds);
 
     #endregion
 
     #region Delay Response
 
     [LoggerMessage(LoggingEventIds.ResponseDelayEvent, LogLevel.Warning, "Response [{requestId}] took {seconds:00.0}s", EventName = "ResponseDelay")]
-    public partial void ResponseDelay(string requestId, double seconds);
+    public static partial void ResponseDelay(ILogger logger, string requestId, double seconds);
 
     #endregion
 
     #region Exception Response
 
     [LoggerMessage(LoggingEventIds.ExceptionResponseEvent, LogLevel.Information, "Request [{requestId}] exception occurred.", EventName = "ExceptionResponse")]
-    public partial void ExceptionResponse(string requestId, Exception exception);
+    public static partial void ExceptionResponse(ILogger logger, string requestId, Exception exception);
 
     #endregion
 
     #region Helpers
 
-    private string FormatHeaders(IEnumerable<KeyValuePair<string, string>> headers)
+    private static string FormatHeaders(IEnumerable<KeyValuePair<string, string>> headers, PipelineMessageSanitizer sanitizer)
     {
         var stringBuilder = new StringBuilder();
         foreach (var header in headers)
         {
             stringBuilder.Append(header.Key);
             stringBuilder.Append(':');
-            stringBuilder.Append(_sanitizer.SanitizeHeader(header.Key, header.Value));
+            stringBuilder.Append(sanitizer.SanitizeHeader(header.Key, header.Value));
             stringBuilder.Append(Environment.NewLine);
         }
         return stringBuilder.ToString();

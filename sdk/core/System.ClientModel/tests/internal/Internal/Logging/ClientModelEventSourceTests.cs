@@ -138,7 +138,7 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
             Transport = new MockPipelineTransport("Transport", i => response),
             LoggingOptions = new LoggingOptions
             {
-                IsLoggingContentEnabled = true
+                IsHttpMessageBodyLoggingEnabled = true
             }
         };
         options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
@@ -193,7 +193,7 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
             Transport = new MockPipelineTransport("Transport", (PipelineMessage i) => throw exception),
             LoggingOptions = new LoggingOptions
             {
-                IsLoggingContentEnabled = true
+                IsHttpMessageBodyLoggingEnabled = true
             }
         };
 
@@ -229,8 +229,8 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
             RetryPolicy = new ObservablePolicy("RetryPolicy"),
             LoggingOptions = new LoggingOptions
             {
-                IsLoggingContentEnabled = true,
-                LoggedContentSizeLimit = int.MaxValue,
+                IsHttpMessageBodyLoggingEnabled = true,
+                HttpMessageBodyLogLimit = int.MaxValue,
             }
         };
         options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
@@ -275,8 +275,8 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
             RetryPolicy = new ObservablePolicy("RetryPolicy"),
             LoggingOptions = new LoggingOptions
             {
-                IsLoggingContentEnabled = true,
-                LoggedContentSizeLimit = int.MaxValue
+                IsHttpMessageBodyLoggingEnabled = true,
+                HttpMessageBodyLogLimit = int.MaxValue
             }
         };
 
@@ -313,8 +313,8 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
             Transport = new MockPipelineTransport("Transport", i => response),
             LoggingOptions = new LoggingOptions
             {
-                IsLoggingContentEnabled = false,
-                LoggedContentSizeLimit = int.MaxValue
+                IsHttpMessageBodyLoggingEnabled = false,
+                HttpMessageBodyLogLimit = int.MaxValue
             }
         };
         options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
@@ -562,8 +562,8 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
             RetryPolicy = new ObservablePolicy("RetryPolicy"),
             LoggingOptions = new LoggingOptions
             {
-                IsLoggingContentEnabled = true,
-                LoggedContentSizeLimit = 5
+                IsHttpMessageBodyLoggingEnabled = true,
+                HttpMessageBodyLogLimit = 5
             }
         };
 
@@ -719,8 +719,8 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
             RetryPolicy = new ObservablePolicy("RetryPolicy"),
             LoggingOptions = new LoggingOptions
             {
-                IsLoggingContentEnabled = true,
-                LoggedContentSizeLimit = maxLength
+                IsHttpMessageBodyLoggingEnabled = true,
+                HttpMessageBodyLogLimit = maxLength
             }
         };
 

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
-using System.ClientModel.Internal.Logging;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -108,6 +107,8 @@ public abstract class PipelineTransport : PipelinePolicy
         }
         catch (OperationCanceledException ex)
         {
+            HttpMessageLogging?.LogExceptionResponse(ex, message);
+
             CancellationHelper.ThrowIfCancellationRequestedOrTimeout(messageToken, timeoutTokenSource.Token, ex, networkTimeout);
             throw;
         }
@@ -180,10 +181,10 @@ public abstract class PipelineTransport : PipelinePolicy
                                       or OperationCanceledException
                                       or NotSupportedException)
         {
+            HttpMessageLogging?.LogExceptionResponse(ex, message);
+
             CancellationHelper.ThrowIfCancellationRequestedOrTimeout(messageToken, timeoutTokenSource.Token, ex, networkTimeout);
             throw;
-
-            // TODO - log exception response?
         }
     }
 

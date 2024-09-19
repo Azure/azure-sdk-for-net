@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
@@ -11,7 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace System.ClientModel.Internal.Logging;
+namespace System.ClientModel;
+
 internal class HttpMessageLogging
 {
     private const double RequestTooLongSeconds = 3.0;
@@ -149,6 +149,14 @@ internal class HttpMessageLogging
             }
 
             response.ContentStream = new LoggingStream(_loggingHandler, message.LoggingCorrelationId, _loggingOptions.HttpMessageBodyLogLimit, response.ContentStream, response.IsError, responseTextEncoding);
+        }
+    }
+
+    public void LogExceptionResponse(Exception exception, PipelineMessage message)
+    {
+        if (_loggingOptions.IsHttpMessageLoggingEnabled)
+        {
+            _loggingHandler.LogExceptionResponse(message.LoggingCorrelationId, exception);
         }
     }
 }

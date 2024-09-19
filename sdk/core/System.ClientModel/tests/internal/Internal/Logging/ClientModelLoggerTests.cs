@@ -67,8 +67,8 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         LoggingOptions loggingOptions = new()
         {
-            IsLoggingContentEnabled = true,
-            LoggedContentSizeLimit = int.MaxValue,
+            IsHttpMessageBodyLoggingEnabled = true,
+            HttpMessageBodyLogLimit = int.MaxValue,
             LoggerFactory = _factory
         };
 
@@ -101,8 +101,8 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         LoggingOptions loggingOptions = new()
         {
-            IsLoggingContentEnabled = true,
-            LoggedContentSizeLimit = int.MaxValue,
+            IsHttpMessageBodyLoggingEnabled = true,
+            HttpMessageBodyLogLimit = int.MaxValue,
             LoggerFactory = _factory
         };
 
@@ -129,8 +129,8 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         LoggingOptions loggingOptions = new()
         {
-            IsLoggingContentEnabled = true,
-            LoggedContentSizeLimit = int.MaxValue,
+            IsHttpMessageBodyLoggingEnabled = true,
+            HttpMessageBodyLogLimit = int.MaxValue,
             LoggerFactory = _factory
         };
 
@@ -153,8 +153,8 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     {
         LoggingOptions loggingOptions = new()
         {
-            IsLoggingContentEnabled = false,
-            LoggedContentSizeLimit = int.MaxValue,
+            IsHttpMessageBodyLoggingEnabled = false,
+            HttpMessageBodyLogLimit = int.MaxValue,
             LoggerFactory = _factory
         };
 
@@ -171,8 +171,8 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     {
         LoggingOptions loggingOptions = new()
         {
-            IsLoggingContentEnabled = false,
-            LoggedContentSizeLimit = int.MaxValue,
+            IsHttpMessageBodyLoggingEnabled = false,
+            HttpMessageBodyLogLimit = int.MaxValue,
             LoggerFactory = _factory
         };
 
@@ -307,8 +307,8 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         LoggingOptions loggingOptions = new LoggingOptions
         {
-            IsLoggingContentEnabled = true,
-            LoggedContentSizeLimit = 5,
+            IsHttpMessageBodyLoggingEnabled = true,
+            HttpMessageBodyLogLimit = 5,
             LoggerFactory = _factory
         };
 
@@ -412,7 +412,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
             Transport = new MockPipelineTransport("Transport", (PipelineMessage i) => throw exception),
             LoggingOptions = new LoggingOptions
             {
-                IsLoggingContentEnabled = true,
+                IsHttpMessageBodyLoggingEnabled = true,
                 LoggerFactory = _factory
             }
         };
@@ -476,8 +476,8 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         LoggingOptions loggingOptions = new()
         {
-            IsLoggingContentEnabled = true,
-            LoggedContentSizeLimit = maxLength,
+            IsHttpMessageBodyLoggingEnabled = true,
+            HttpMessageBodyLogLimit = maxLength,
             LoggerFactory = _factory
         };
 

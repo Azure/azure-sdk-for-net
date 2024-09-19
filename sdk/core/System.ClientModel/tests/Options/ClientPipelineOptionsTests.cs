@@ -154,8 +154,6 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
         Assert.Throws<InvalidOperationException>(()
             => options.RetryPolicy = new MockRetryPolicy());
         Assert.Throws<InvalidOperationException>(()
-            => options.LoggingPolicy = new MockPipelinePolicy());
-        Assert.Throws<InvalidOperationException>(()
             => options.Transport = new MockPipelineTransport("Transport"));
         Assert.Throws<InvalidOperationException>(()
             => options.NetworkTimeout = TimeSpan.MinValue);
@@ -164,7 +162,7 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
         Assert.Throws<InvalidOperationException>(()
             => options.LoggingOptions = new LoggingOptions());
         Assert.Throws<InvalidOperationException>(()
-            => options.LoggingOptions.IsLoggingContentEnabled = true);
+            => options.LoggingOptions.IsClientLoggingEnabled = true);
     }
 
     [Test]
@@ -176,8 +174,6 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
         Assert.Throws<InvalidOperationException>(()
             => options.RetryPolicy = new MockRetryPolicy());
         Assert.Throws<InvalidOperationException>(()
-            => options.LoggingPolicy = new MockPipelinePolicy());
-        Assert.Throws<InvalidOperationException>(()
             => options.Transport = new MockPipelineTransport("Transport"));
         Assert.Throws<InvalidOperationException>(()
             => options.NetworkTimeout = TimeSpan.MinValue);
@@ -186,7 +182,7 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
         Assert.Throws<InvalidOperationException>(()
             => options.LoggingOptions = new LoggingOptions());
         Assert.Throws<InvalidOperationException>(()
-            => options.LoggingOptions.IsLoggingContentEnabled = true);
+            => options.LoggingOptions.IsClientLoggingEnabled = true);
     }
 
     #region Helpers

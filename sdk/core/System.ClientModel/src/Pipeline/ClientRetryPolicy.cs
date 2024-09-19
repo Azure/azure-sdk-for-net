@@ -38,7 +38,7 @@ public class ClientRetryPolicy : PipelinePolicy
         _initialDelay = DefaultInitialDelay;
     }
 
-    internal LoggingHandler? LogHandler { get; set; } = null;
+    internal ClientLogging? ClientLog { get; set; } = null;
 
     /// <inheritdoc/>
     public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
@@ -122,7 +122,7 @@ public class ClientRetryPolicy : PipelinePolicy
                 message.RetryCount++;
                 OnTryComplete(message);
 
-                LogHandler?.LogRequestRetrying(message.LoggingCorrelationId ?? string.Empty, message.RetryCount, elapsed);
+                ClientLog?.LogRetry(message, elapsed);
 
                 continue;
             }

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Internal.Logging;
+namespace System.ClientModel.Internal;
 
 internal class LoggingStream : Stream
 {

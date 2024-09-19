@@ -12,18 +12,16 @@ namespace System.ClientModel.Internal;
 
 internal class LoggingHandler
 {
-    private const string assemblyName = "System.ClientModel";
+    private const string _assemblyName = "System.ClientModel";
 
     private readonly ILogger _logger;
     private readonly PipelineMessageSanitizer _sanitizer;
-    private readonly HttpMessageLogMessages _logMessages;
     private readonly bool _useILogger;
 
     public LoggingHandler(ILogger logger, PipelineMessageSanitizer sanitizer)
     {
         _logger = logger;
         _sanitizer = sanitizer;
-        _logMessages = new HttpMessageLogMessages(logger, _sanitizer);
         _useILogger = logger is not NullLogger;
     }
 
@@ -43,11 +41,11 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.Request(requestId, request, assemblyName);
+            ClientModelLogMessages.Request(_logger, requestId, request, _assemblyName, _sanitizer);
         }
         else
         {
-            ClientModelEventSource.Log.Request(requestId, request, assemblyName, _sanitizer);
+            ClientModelEventSource.Log.Request(requestId, request, _assemblyName, _sanitizer);
         }
     }
 
@@ -55,7 +53,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.RequestContent(requestId, content, textEncoding);
+            ClientModelLogMessages.RequestContent(_logger, requestId, content, textEncoding);
         }
         else
         {
@@ -67,7 +65,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.Response(requestId, response, seconds);
+            ClientModelLogMessages.Response(_logger, requestId, response, seconds, _sanitizer);
         }
         else
         {
@@ -79,7 +77,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.ResponseContent(requestId, content, textEncoding);
+            ClientModelLogMessages.ResponseContent(_logger, requestId, content, textEncoding);
         }
         else
         {
@@ -91,7 +89,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.ResponseContentBlock(requestId, blockNumber, content, textEncoding);
+            ClientModelLogMessages.ResponseContentBlock(_logger, requestId, blockNumber, content, textEncoding);
         }
         else
         {
@@ -103,7 +101,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.ErrorResponse(requestId, response, seconds);
+            ClientModelLogMessages.ErrorResponse(_logger, requestId, response, seconds, _sanitizer);
         }
         else
         {
@@ -115,7 +113,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.ErrorResponseContent(requestId, content, textEncoding);
+            ClientModelLogMessages.ErrorResponseContent(_logger, requestId, content, textEncoding);
         }
         else
         {
@@ -127,7 +125,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.ErrorResponseContentBlock(requestId, blockNumber, content, textEncoding);
+            ClientModelLogMessages.ErrorResponseContentBlock(_logger, requestId, blockNumber, content, textEncoding);
         }
         else
         {
@@ -139,7 +137,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.RequestRetrying(requestId, retryCount, seconds);
+            ClientModelLogMessages.RequestRetrying(_logger, requestId, retryCount, seconds);
         }
         else
         {
@@ -151,7 +149,7 @@ internal class LoggingHandler
     {
         if (_useILogger)
         {
-            _logMessages.ResponseDelay(requestId, seconds);
+            ClientModelLogMessages.ResponseDelay(_logger, requestId, seconds);
         }
         else
         {
@@ -166,24 +164,11 @@ internal class LoggingHandler
 
         if (_useILogger && isLoggerEnabled)
         {
-            _logMessages.ExceptionResponse(requestId, exception);
+            ClientModelLogMessages.ExceptionResponse(_logger, requestId, exception);
         }
         else if (isEventSourceEnabled)
         {
             ClientModelEventSource.Log.ExceptionResponse(requestId, exception.ToString());
         }
-    }
-
-    private string FormatHeaders(IEnumerable<KeyValuePair<string, string>> headers)
-    {
-        var stringBuilder = new StringBuilder();
-        foreach (var header in headers)
-        {
-            stringBuilder.Append(header.Key);
-            stringBuilder.Append(':');
-            stringBuilder.Append(_sanitizer.SanitizeHeader(header.Key, header.Value));
-            stringBuilder.Append(Environment.NewLine);
-        }
-        return stringBuilder.ToString();
     }
 }
