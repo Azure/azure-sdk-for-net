@@ -1000,6 +1000,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="extendedLocation"> The complex type of the extended location. </param>
         /// <param name="identity"> Managed identities needed by a container app job to interact with other Azure services to not maintain any secrets or credentials in code. </param>
         /// <param name="provisioningState"> Provisioning state of the Container Apps Job. </param>
+        /// <param name="runningState"> Current running state of the job. </param>
         /// <param name="environmentId"> Resource ID of environment. </param>
         /// <param name="workloadProfileName"> Workload profile name to pin for container apps job execution. </param>
         /// <param name="configuration"> Container Apps Job configuration properties. </param>
@@ -1007,7 +1008,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="outboundIPAddresses"> Outbound IP Addresses of a container apps job. </param>
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container apps job. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppJobData"/> instance for mocking. </returns>
-        public static ContainerAppJobData ContainerAppJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ContainerAppExtendedLocation extendedLocation = null, ManagedServiceIdentity identity = null, ContainerAppJobProvisioningState? provisioningState = null, string environmentId = null, string workloadProfileName = null, ContainerAppJobConfiguration configuration = null, ContainerAppJobTemplate template = null, IEnumerable<string> outboundIPAddresses = null, string eventStreamEndpoint = null)
+        public static ContainerAppJobData ContainerAppJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ContainerAppExtendedLocation extendedLocation = null, ManagedServiceIdentity identity = null, ContainerAppJobProvisioningState? provisioningState = null, JobRunningState? runningState = null, string environmentId = null, string workloadProfileName = null, ContainerAppJobConfiguration configuration = null, ContainerAppJobTemplate template = null, IEnumerable<string> outboundIPAddresses = null, string eventStreamEndpoint = null)
         {
             tags ??= new Dictionary<string, string>();
             outboundIPAddresses ??= new List<string>();
@@ -1022,6 +1023,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 extendedLocation,
                 identity,
                 provisioningState,
+                runningState,
                 environmentId,
                 workloadProfileName,
                 configuration,

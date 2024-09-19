@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(RunningState))
+            {
+                writer.WritePropertyName("runningState"u8);
+                writer.WriteStringValue(RunningState.Value.ToString());
+            }
             if (Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
@@ -162,6 +167,7 @@ namespace Azure.ResourceManager.AppContainers
             ResourceType type = default;
             SystemData systemData = default;
             ContainerAppJobProvisioningState? provisioningState = default;
+            JobRunningState? runningState = default;
             string environmentId = default;
             string workloadProfileName = default;
             ContainerAppJobConfiguration configuration = default;
@@ -252,6 +258,15 @@ namespace Azure.ResourceManager.AppContainers
                             provisioningState = new ContainerAppJobProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("runningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            runningState = new JobRunningState(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("environmentId"u8))
                         {
                             environmentId = property0.Value.GetString();
@@ -318,6 +333,7 @@ namespace Azure.ResourceManager.AppContainers
                 extendedLocation,
                 identity,
                 provisioningState,
+                runningState,
                 environmentId,
                 workloadProfileName,
                 configuration,
