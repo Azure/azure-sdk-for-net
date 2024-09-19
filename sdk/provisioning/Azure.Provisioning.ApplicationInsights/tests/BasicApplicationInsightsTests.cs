@@ -37,13 +37,13 @@ public class BasicApplicationInsightsTests(bool async)
             param location string = resourceGroup().location
 
             resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
-                name: take('appInsights-${uniqueString(resourceGroup().id)}', 260)
-                kind: 'web'
-                location: location
-                properties: {
-                    Application_Type: 'web'
-                    Request_Source: 'rest'
-                }
+              name: take('appInsights-${uniqueString(resourceGroup().id)}', 260)
+              kind: 'web'
+              location: location
+              properties: {
+                Application_Type: 'web'
+                Request_Source: 'rest'
+              }
             }
 
             output appInsightsName string = appInsights.name

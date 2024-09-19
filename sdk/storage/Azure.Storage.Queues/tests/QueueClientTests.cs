@@ -17,8 +17,6 @@ using Azure.Storage.Queues.Specialized;
 using Moq.Protected;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using NUnit.Framework.Internal;
-using BenchmarkDotNet.Disassemblers;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -2007,44 +2005,6 @@ namespace Azure.Storage.Queues.Test
             mock = new Mock<QueueClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new QueueClientOptions()).Object;
             mock = new Mock<QueueClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new QueueClientOptions()).Object;
             mock = new Mock<QueueClient>(new Uri("https://test/test"), mockTokenCredential, new QueueClientOptions()).Object;
-        }
-
-        [RecordedTest]
-        [TestCase("", null)]
-        [TestCase("u", QueueAccessPolicyPermissions.Update)]
-        [TestCase("au", QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Update)]
-        [TestCase("rap", QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Process)]
-        [TestCase("raup", QueueAccessPolicyPermissions.All)]
-        public async Task QueueClientPolicyPermissions_CheckIfSetCorrectly(string expectedPermissionsStr, QueueAccessPolicyPermissions? expectedPermissionsEnum)
-        {
-            await using DisposingQueue test = await GetTestQueueAsync();
-
-            QueueSignedIdentifier[] signedIdentifiers = new[]
-            {
-                new QueueSignedIdentifier
-                {
-                    Id = GetNewString(),
-                    AccessPolicy =
-                        new QueueAccessPolicy
-                        {
-                            StartsOn =  Recording.UtcNow.AddHours(-1),
-                            ExpiresOn =  Recording.UtcNow.AddHours(1),
-                            Permissions = expectedPermissionsStr
-                        }
-                }
-            };
-            await test.Queue.SetAccessPolicyAsync(signedIdentifiers);
-
-            Response<IEnumerable<Models.QueueSignedIdentifier>> getResult = await test.Queue.GetAccessPolicyAsync();
-            Models.QueueSignedIdentifier acl = getResult.Value.First();
-
-            string actualPermissionsStr = acl.AccessPolicy.Permissions;
-            QueueAccessPolicyPermissions? actualPermissionsEnum = acl.AccessPolicy.QueueAccessPolicyPermissions;
-
-            if (string.IsNullOrEmpty(expectedPermissionsStr)) expectedPermissionsStr = null;
-
-            Assert.AreEqual(expectedPermissionsStr, actualPermissionsStr);
-            Assert.AreEqual(expectedPermissionsEnum.ToPermissionsString(), actualPermissionsEnum.ToPermissionsString());
         }
     }
 }

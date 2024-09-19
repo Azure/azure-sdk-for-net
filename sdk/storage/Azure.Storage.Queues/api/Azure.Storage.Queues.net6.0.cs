@@ -186,20 +186,8 @@ namespace Azure.Storage.Queues.Models
     {
         public QueueAccessPolicy() { }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Permissions { get { throw null; } set { } }
-        public Azure.Storage.Queues.Models.QueueAccessPolicyPermissions? QueueAccessPolicyPermissions { get { throw null; } set { } }
         public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
-    }
-    [System.FlagsAttribute]
-    public enum QueueAccessPolicyPermissions
-    {
-        All = -1,
-        None = 0,
-        Read = 1,
-        Add = 2,
-        Update = 4,
-        Process = 8,
     }
     public partial class QueueAnalyticsLogging
     {
