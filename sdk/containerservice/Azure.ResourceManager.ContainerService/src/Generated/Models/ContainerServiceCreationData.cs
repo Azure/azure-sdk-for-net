@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> This is the ARM ID of the source object to be used to create the target object. </summary>
+        [WirePath("sourceResourceId")]
         public ResourceIdentifier SourceResourceId { get; set; }
     }
 }

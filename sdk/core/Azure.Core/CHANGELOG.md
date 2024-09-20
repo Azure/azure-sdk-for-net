@@ -1,6 +1,6 @@
 # Release History
 
-## 1.42.0-beta.1 (Unreleased)
+## 1.44.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,23 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.43.0 (2024-09-12)
+
+### Other Changes
+
+- Upgraded `System.Text.Json` package dependency to 6.0.9 ([#45416](https://github.com/Azure/azure-sdk-for-net/pull/45416)).
+- Added a new constructor on `AzureEventSourceListener` for callers that don't need the formatted message ([#45191](https://github.com/Azure/azure-sdk-for-net/pull/45191)).
+- Remove unused callback from `HttpRequestMessage` options in `HttpClientTransport` transport ([#45696](https://github.com/Azure/azure-sdk-for-net/pull/45696)).
+- Added `RequiresUnreferencedCode` and `RequiresDynamicCode` attributes to `ToDynamicFromJson` extension methods and `DynamicData` APIs to support AOT scenarios ([#45417](https://github.com/Azure/azure-sdk-for-net/pull/45417)).
+
+## 1.42.0 (2024-08-01)
+
+### Other Changes
+
+- Improved memory performance for Event Source formatting [#43947](https://github.com/Azure/azure-sdk-for-net/pull/43947)
+- Upgraded dependency on System.Text.Encodings.Web to 6.0.0
+- Upgraded dependency on Microsoft.Bcl.AsyncInterfaces to 6.0.0
 
 ## 1.41.0 (2024-07-11)
 

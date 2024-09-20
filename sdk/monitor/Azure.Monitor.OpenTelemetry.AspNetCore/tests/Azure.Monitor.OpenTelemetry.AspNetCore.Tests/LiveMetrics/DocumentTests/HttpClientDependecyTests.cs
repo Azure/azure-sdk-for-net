@@ -34,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             var activitySourceName = $"activitySourceName{uniqueTestId}";
             using var activitySource = new ActivitySource(activitySourceName);
             // TODO: Replace this ActivityListener with an OpenTelemetry provider.
-            var listener = new ActivityListener
+            using var listener = new ActivityListener
             {
                 ShouldListenTo = _ => true,
                 Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllData,
@@ -43,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             ActivitySource.AddActivityListener(listener);
 
             // ACT
-            using var dependencyActivity = activitySource.StartActivity(name: "HelloWorld", kind: ActivityKind.Client);
+            using var dependencyActivity = activitySource.StartActivity(name: "TestActivityName", kind: ActivityKind.Client);
             Assert.NotNull(dependencyActivity);
             dependencyActivity.SetTag("http.request.method", "GET");
             dependencyActivity.SetTag("url.full", "http://bing.com");
@@ -67,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             // ASSERT
             Assert.Equal("http://bing.com", dependencyDocument.CommandName);
             Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
-            Assert.Equal("HelloWorld", dependencyDocument.Name);
+            Assert.Equal("TestActivityName", dependencyDocument.Name);
             Assert.Equal("200", dependencyDocument.ResultCode);
 
             VerifyCustomProperties(dependencyDocument);
@@ -78,7 +78,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
         }
 
 #if !NET462
-        [Theory(Skip = "This test is leaky and needs to be rewritten using WebApplicationFactory (same as OTel repo).")]
+        [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public async Task VerifyHttpClientDependency(bool successfulRequest)
@@ -87,7 +87,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
 
             // SETUP WEBAPPLICATION
             var builder = WebApplication.CreateBuilder();
-            var app = builder.Build();
+            using var app = builder.Build();
             app.MapGet("/", () => "Response from Test Server");
             _ = app.RunAsync(TestServerUrl);
 
@@ -111,6 +111,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
                 // ignored. This can be thrown for a failed request.
             }
 
+            tracerProvider.ForceFlush();
             WaitForActivityExport(exportedActivities);
 
             // Assert

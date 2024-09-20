@@ -163,7 +163,7 @@ stages:
                             parameters:
                               BuildToolsRepositoryPath: $(Pipeline.Workspace)/azure-sdk-build-tools
                               PackagesPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
-                              StagingDirectory: $(Build.ArtifactStagingDirectory)/symbols    
+                              StagingDirectory: $(Build.ArtifactStagingDirectory)/symbols
                           - template: /eng/common/pipelines/templates/steps/create-apireview.yml
                             parameters:
                               ArtifactPath: $(Pipeline.Workspace)/packages
@@ -228,11 +228,8 @@ stages:
                           - template: /eng/common/pipelines/templates/steps/publish-blobs.yml
                             parameters:
                               FolderForUpload: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}'
-                              BlobName: '$(azure-sdk-docs-prod-blob-name)'
                               TargetLanguage: 'dotnet'
                               ArtifactLocation: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}'
-                              # we override the regular script path because we have cloned the build tools repo as a separate artifact.
-                              ScriptPath: 'eng/common/scripts/copy-docs-to-blobstorage.ps1'
 
               - ${{if ne(artifact.skipUpdatePackageVersion, 'true')}}:
                 - deployment: UpdatePackageVersion
@@ -315,7 +312,7 @@ stages:
 
       - job: PublishDocsToNightlyBranch
         dependsOn: PublishPackages
-        condition: or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal')))
+        condition: and(succeeded(), or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal'))))
         pool:
           name: $(LINUXPOOL)
           image: $(LINUXVMIMAGE)
@@ -334,7 +331,8 @@ stages:
             parameters:
               PackageInfoLocations:
                 - ${{ each artifact in parameters.Artifacts }}:
-                  - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
+                  - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
+                    - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
               WorkingDirectory: $(System.DefaultWorkingDirectory)
               TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
               TargetDocRepoName: ${{parameters.TargetDocRepoName}}

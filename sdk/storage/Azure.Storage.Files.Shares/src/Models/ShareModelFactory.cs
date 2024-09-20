@@ -22,6 +22,7 @@ namespace Azure.Storage.Files.Shares.Models
             => StorageClosedHandlesSegment(
                 marker: marker,
                 numberOfHandlesClosed: numberOfHandlesClosed);
+
         /// <summary>
         /// Creates a new ShareProperties instance for mocking.
         /// </summary>
@@ -44,7 +45,60 @@ namespace Azure.Storage.Files.Shares.Models
             IDictionary<string, string> metadata = default,
             ShareProtocols? protocols = default,
             ShareRootSquash? rootSquash = default,
-            bool? enableSnapshotVirtualDirectoryAccess = default)
+            bool? enableSnapshotVirtualDirectoryAccess = default,
+            bool? enablePaidBursting = default,
+            long? paidBurstingMaxIops = default,
+            long? paidBustingMaxBandwidthMibps = default)
+            => new ShareProperties()
+            {
+                AccessTier = accessTier,
+                LastModified = lastModified,
+                ProvisionedIops = provisionedIops,
+                ProvisionedIngressMBps = provisionedIngressMBps,
+                ProvisionedEgressMBps = provisionedEgressMBps,
+                NextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTime,
+                DeletedOn = deletedOn,
+                RemainingRetentionDays = remainingRetentionDays,
+                ETag = eTag,
+                AccessTierChangeTime = accessTierChangeTime,
+                AccessTierTransitionState = accessTierTransitionState,
+                LeaseStatus = leaseStatus,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                QuotaInGB = quotaInGB,
+                Metadata = metadata,
+                Protocols = protocols,
+                RootSquash = rootSquash,
+                EnableSnapshotVirtualDirectoryAccess = enableSnapshotVirtualDirectoryAccess,
+                EnablePaidBursting = enablePaidBursting,
+                PaidBurstingMaxIops = paidBurstingMaxIops,
+                PaidBurstingMaxBandwidthMibps = paidBustingMaxBandwidthMibps
+            };
+
+        /// <summary>
+        /// Creates a new ShareProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ShareProperties ShareProperties(
+            string accessTier,
+            DateTimeOffset? lastModified,
+            int? provisionedIops,
+            int? provisionedIngressMBps,
+            int? provisionedEgressMBps,
+            DateTimeOffset? nextAllowedQuotaDowngradeTime,
+            DateTimeOffset? deletedOn,
+            int? remainingRetentionDays,
+            ETag? eTag,
+            DateTimeOffset? accessTierChangeTime,
+            string accessTierTransitionState,
+            ShareLeaseStatus? leaseStatus,
+            ShareLeaseState? leaseState,
+            ShareLeaseDuration? leaseDuration,
+            int? quotaInGB,
+            IDictionary<string, string> metadata,
+            ShareProtocols? protocols,
+            ShareRootSquash? rootSquash,
+            bool? enableSnapshotVirtualDirectoryAccess)
             => new ShareProperties()
             {
                 AccessTier = accessTier,

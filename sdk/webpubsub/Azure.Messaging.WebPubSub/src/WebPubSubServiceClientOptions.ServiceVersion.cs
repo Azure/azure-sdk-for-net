@@ -26,18 +26,27 @@ namespace Azure.Messaging.WebPubSub
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary> The 2021_10_01_stable version of the Azure WebPubSub service. </summary>
             V2021_10_01 = 1,
+            /// <summary>
+            /// The 2024_01_01_stable version of the Azure WebPubSub service.
+            /// </summary>
+            V2024_01_01 = 2,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
         /// <summary>
         /// The Latest <see cref="ServiceVersion"/> supported by this client library.
         /// </summary>
-        private const ServiceVersion LatestVersion = ServiceVersion.V2021_10_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_01_01;
 
         /// <summary>
         /// Gets the version of the service API used when making requests.
         /// </summary>
         internal string Version { get; }
+
+        /// <summary>
+        /// Gets the version enum of the service API used when making requests.
+        /// </summary>
+        internal ServiceVersion VersionEnum { get; }
 
         /// <summary> Initializes a new instance of the <see cref="WebPubSubServiceClientOptions"/>. </summary>
         /// <param name="version">
@@ -51,6 +60,7 @@ namespace Azure.Messaging.WebPubSub
         /// </exception>
         public WebPubSubServiceClientOptions(ServiceVersion version = LatestVersion)
         {
+            VersionEnum = version;
             Version = version.ToVersionString();
         }
     }
@@ -74,6 +84,7 @@ namespace Azure.Messaging.WebPubSub
             version switch
             {
                 WebPubSubServiceClientOptions.ServiceVersion.V2021_10_01 => "2021-10-01",
+                WebPubSubServiceClientOptions.ServiceVersion.V2024_01_01 => "2024-01-01",
                 _ => throw CreateInvalidVersionException(version)
             };
 

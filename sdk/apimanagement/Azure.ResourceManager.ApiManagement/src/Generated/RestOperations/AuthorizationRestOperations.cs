@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01";
+            _apiVersion = apiVersion ?? "2023-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists a collection of authorization providers defined within a authorization provider. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Lists a collection of authorization providers defined within a authorization provider. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the details of the authorization specified by its identifier. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the details of the authorization specified by its identifier. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates or updates authorization. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates or updates authorization. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Deletes specific Authorization from the Authorization provider. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Deletes specific Authorization from the Authorization provider. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Confirm valid consent code to suppress Authorizations anti-phishing page. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Confirm valid consent code to suppress Authorizations anti-phishing page. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Lists a collection of authorization providers defined within a authorization provider. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Lists a collection of authorization providers defined within a authorization provider. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>

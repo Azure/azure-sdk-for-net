@@ -77,23 +77,30 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Collection of secrets used by a Container app. </summary>
+        [WirePath("secrets")]
         public IList<ContainerAppWritableSecret> Secrets { get; }
         /// <summary>
         /// ActiveRevisionsMode controls how active revisions are handled for the Container app:
         /// &lt;list&gt;&lt;item&gt;Multiple: multiple revisions can be active.&lt;/item&gt;&lt;item&gt;Single: Only one revision can be active at a time. Revision weights can not be used in this mode. If no value if provided, this is the default.&lt;/item&gt;&lt;/list&gt;
         /// </summary>
+        [WirePath("activeRevisionsMode")]
         public ContainerAppActiveRevisionsMode? ActiveRevisionsMode { get; set; }
         /// <summary> Ingress configurations. </summary>
+        [WirePath("ingress")]
         public ContainerAppIngressConfiguration Ingress { get; set; }
         /// <summary> Collection of private container registry credentials for containers used by the Container app. </summary>
+        [WirePath("registries")]
         public IList<ContainerAppRegistryCredentials> Registries { get; }
         /// <summary> Dapr configuration for the Container App. </summary>
+        [WirePath("dapr")]
         public ContainerAppDaprConfiguration Dapr { get; set; }
         /// <summary> Optional. Max inactive revisions a Container App can have. </summary>
+        [WirePath("maxInactiveRevisions")]
         public int? MaxInactiveRevisions { get; set; }
         /// <summary> Container App to be a dev Container App Service. </summary>
         internal Service Service { get; set; }
         /// <summary> Dev ContainerApp service type. </summary>
+        [WirePath("service.type")]
         public string ServiceType
         {
             get => Service is null ? default : Service.ServiceType;

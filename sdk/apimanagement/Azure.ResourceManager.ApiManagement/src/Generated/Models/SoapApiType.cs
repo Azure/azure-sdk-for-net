@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     ///  * `soap` creates a SOAP pass-through API
     ///  * `websocket` creates websocket API
     ///  * `graphql` creates GraphQL API.
+    ///  New types can be added in the future.
     /// </summary>
     public readonly partial struct SoapApiType : IEquatable<SoapApiType>
     {
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string SoapPassThroughValue = "soap";
         private const string WebSocketValue = "websocket";
         private const string GraphQLValue = "graphql";
+        private const string ODataValue = "odata";
 
         /// <summary> Imports a SOAP API having a RESTful front end. </summary>
         public static SoapApiType SoapToRest { get; } = new SoapApiType(SoapToRestValue);
@@ -41,6 +43,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static SoapApiType WebSocket { get; } = new SoapApiType(WebSocketValue);
         /// <summary> Imports the API having a GraphQL front end. </summary>
         public static SoapApiType GraphQL { get; } = new SoapApiType(GraphQLValue);
+        /// <summary> Imports the API having a OData front end. </summary>
+        public static SoapApiType OData { get; } = new SoapApiType(ODataValue);
         /// <summary> Determines if two <see cref="SoapApiType"/> values are the same. </summary>
         public static bool operator ==(SoapApiType left, SoapApiType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SoapApiType"/> values are not the same. </summary>

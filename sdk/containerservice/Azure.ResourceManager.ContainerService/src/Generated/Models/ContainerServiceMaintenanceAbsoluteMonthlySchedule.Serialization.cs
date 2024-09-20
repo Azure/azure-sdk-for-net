@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -93,6 +94,45 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ContainerServiceMaintenanceAbsoluteMonthlySchedule(intervalMonths, dayOfMonth, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntervalMonths), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  intervalMonths: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  intervalMonths: ");
+                builder.AppendLine($"{IntervalMonths}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DayOfMonth), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dayOfMonth: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  dayOfMonth: ");
+                builder.AppendLine($"{DayOfMonth}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerServiceMaintenanceAbsoluteMonthlySchedule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceMaintenanceAbsoluteMonthlySchedule>)this).GetFormatFromOptions(options) : options.Format;
@@ -101,6 +141,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerServiceMaintenanceAbsoluteMonthlySchedule)} does not support writing '{options.Format}' format.");
             }

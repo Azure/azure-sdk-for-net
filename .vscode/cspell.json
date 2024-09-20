@@ -47,7 +47,6 @@
     "sdk/machinelearningservices/*/api/*.cs",
     "sdk/modelsrepository/*/api/*.cs",
     "sdk/monitor/Azure.ResourceManager.Monitor/api/*.cs",
-    "sdk/monitor/Microsoft.Azure.Management.Monitor/**/*.cs",
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
@@ -58,38 +57,61 @@
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
   "words": [
+    "AADDS",
+    "AADKERB",
     "apos",
     "azsdk",
     "blazor",
+    "Byok",
     "centralus",
+    "Colls",
     "contoso",
     "cpus",
     "cref",
+    "Dapr",
     "deduplication",
+    "deletesas",
     "deserializable",
     "deserializes",
     "diagnoser",
     "dicom",
+    "Diffie",
     "distro",
+    "Dmarc",
     "dont",
     "dotnetcli",
     "dtmf",
     "eastus",
     "entra",
     "epsg",
+    "Exfiltration",
     "expando",
     "fhir",
     "finalizer",
     "finalizers",
+    "Fips",
     "flac",
+    "getsas",
+    "Gmsa",
+    "GZRS",
     "hnsw",
     "ienumerable",
     "illumos",
     "imds",
+    "Inotify",
     "interventional",
     "ints",
+    "Intvl",
+    "Istio",
+    "Itsm",
+    "Keda",
+    "Kubelet",
+    "Kubenet",
     "kubernetes",
     "kusto",
+    "Kustomization",
+    "Kustomizations",
+    "listsas",
     "lucene",
     "mgmt",
     "miscs",
@@ -107,17 +129,24 @@
     "personalizer",
     "petabit",
     "picometer",
+    "Pids",
     "pkcs",
     "pstn",
+    "Puid",
     "pwsh",
+    "RAGRS",
+    "RAGZRS",
     "referer",
     "renormalize",
     "retriable",
+    "setsas",
     "signalr",
     "signup",
     "skus",
+    "Somaxconn",
     "southcentralus",
     "structs",
+    "Sysctls",
     "Uefi",
     "uints",
     "unbilled",
@@ -125,6 +154,8 @@
     "unformattable",
     "unhold",
     "uninstrumented",
+    "Unparked",
+    "Unprovisioning",
     "vcpus",
     "Vectorizable",
     "Vectorize",
@@ -135,8 +166,11 @@
     "vmss",
     "vmuuid",
     "vnet",
+    "VSTSRM",
+    "Wasi",
     "westcentralus",
     "westus",
+    "Wmem",
     "xunit"
   ],
   "overrides": [
@@ -211,7 +245,11 @@
       "words": [
         "cref",
         "imds",
-        "IMDS"
+        "IMDS",
+        "Wdac",
+        "Adou",
+        "Drtm",
+        "Hvci"
       ]
     },
     {
@@ -223,6 +261,14 @@
         "Reimaging",
         "reimaging",
         "SSDLRS"
+      ]
+    },
+    {
+      "filename": "**/sdk/billing/**/*.cs",
+      "words": [
+        "puid",
+        "resellee",
+        "cnpj"
       ]
     },
     {
@@ -265,6 +311,14 @@
       ]
     },
     {
+      "filename": "**/sdk/computefleet/**/*.cs",
+      "words": [
+        "mbps",
+        "unattend",
+        "nvme"
+      ]
+    },
+    {
       "filename": "**/sdk/confidentialledger/**/*.cs",
       "words": [
         "cbor",
@@ -277,10 +331,35 @@
       "filename": "**/sdk/cognitivelanguage/**/*",
       "words": [
         "apim",
+        "armn",
+        "bangla",
+        "dbauth",
+        "ethi",
+        "gebr",
+        "geor",
+        "grek",
+        "gujr",
+        "gurmukhi",
+        "hebr",
+        "inclusivity",
+        "jpan",
+        "khmr",
+        "knda",
+        "laoo",
+        "mlym",
+        "mymr",
         "nigiri",
-        "qnas",
+        "odia",
+        "orya",
         "petabit",
-        "Picometer"
+        "picometer",
+        "qnas",
+        "regon",
+        "taml",
+        "telu",
+        "thaa",
+        "thaana",
+        "tibt"
       ]
     },
     {
@@ -380,6 +459,13 @@
       "filename": "**/sdk/datadog/**/*.cs",
       "words": [
         "liftr"
+      ]
+    },
+    {
+      "filename": "**/sdk/devopsinfrastructure/**/*.cs",
+      "words": [
+        "Reimage",
+        "Reimaging"
       ]
     },
     {
@@ -571,6 +657,17 @@
         "SSDZRS",
         "HDDLRS",
         "trino"
+      ]
+    },
+    {
+      "filename": "**/sdk/hdinsightcontainers/**/*.cs",
+      "words": [
+        "trino",
+        "flink",
+        "llap",
+        "SSDLRS",
+        "SSDZRS",
+        "HDDLRS"
       ]
     },
     {
@@ -799,6 +896,14 @@
         "mbps",
         "gshut",
         "dscp"
+      ]
+    },
+    {
+      "filename": "**/sdk/maps/Azure.Maps.TimeZone/**/*.cs",
+      "words": [
+        "Posix",
+        "posix",
+        "POSIX"
       ]
     },
     {
@@ -1145,7 +1250,8 @@
         "Puid",
         "Stix",
         "Whois",
-        "Nlstext"
+        "Nlstext",
+        "Criterias"
       ]
     },
     {
@@ -1219,7 +1325,9 @@
         "Rehydrated",
         "Undelete",
         "Aadkerb",
-        "Nfsv"
+        "Mibps",
+        "Nfsv",
+        "Sddl"
       ]
     },
     {
@@ -1327,7 +1435,11 @@
         "Guage",
         "Plex",
         "Vstsrm",
-        "Localizable"
+        "Localizable",
+        "Dapr",
+        "TLSAES",
+        "Unregistering",
+        "Diffie"
       ]
     },
     {
@@ -1430,6 +1542,16 @@
         "nfvi",
         "NFVIs",
         "nfvis"
+      ]
+    },
+    {
+      "filename": "**/sdk/healthdataaiservices/**/*",
+      "words": [
+        "Deidentification",
+        "Deidentify",
+        "Deidentified",
+        "Deid",
+        "HEALTHDATAAISERVICES"
       ]
     },
     {

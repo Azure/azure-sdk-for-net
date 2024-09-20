@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     case "AvroWriteSettings": return AvroWriteSettings.DeserializeAvroWriteSettings(element, options);
                     case "DelimitedTextWriteSettings": return DelimitedTextWriteSettings.DeserializeDelimitedTextWriteSettings(element, options);
+                    case "IcebergWriteSettings": return IcebergWriteSettings.DeserializeIcebergWriteSettings(element, options);
                     case "JsonWriteSettings": return JsonWriteSettings.DeserializeJsonWriteSettings(element, options);
                     case "OrcWriteSettings": return OrcWriteSettings.DeserializeOrcWriteSettings(element, options);
                     case "ParquetWriteSettings": return ParquetWriteSettings.DeserializeParquetWriteSettings(element, options);

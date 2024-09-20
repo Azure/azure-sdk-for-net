@@ -16,12 +16,197 @@ namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_WebSiteSlotResource
     {
+        // Get Web App Slot
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_GetWebAppSlot()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebAppSlot.json
+            // this example is just showing the usage of "WebApps_GetSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string name = "sitef6141";
+            string slot = "staging";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation
+            WebSiteSlotResource result = await webSiteSlot.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            WebSiteData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Delete Web App Slot
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Delete_DeleteWebAppSlot()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/DeleteWebAppSlot.json
+            // this example is just showing the usage of "WebApps_DeleteSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string name = "sitef6141";
+            string slot = "staging";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation
+            await webSiteSlot.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // Update Web App Slot
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Update_UpdateWebAppSlot()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/UpdateWebAppSlot.json
+            // this example is just showing the usage of "WebApps_UpdateSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string name = "sitef6141";
+            string slot = "staging";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation
+            SitePatchInfo info = new SitePatchInfo()
+            {
+                ServerFarmId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.Web/serverfarms/DefaultAsp"),
+            };
+            WebSiteSlotResource result = await webSiteSlot.UpdateAsync(info);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            WebSiteData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Analyze custom hostname for slot
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task AnalyzeCustomHostnameSlot_AnalyzeCustomHostnameForSlot()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AnalyzeCustomHostNameSlot.json
+            // this example is just showing the usage of "WebApps_AnalyzeCustomHostnameSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string name = "sitef6141";
+            string slot = "staging";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation
+            CustomHostnameAnalysisResult result = await webSiteSlot.AnalyzeCustomHostnameSlotAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // List Deployment Status Slot
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetSlotSiteDeploymentStatusesSlot_ListDeploymentStatusSlot()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListSiteDeploymentStatusSlot.json
+            // this example is just showing the usage of "WebApps_ListSlotSiteDeploymentStatusesSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string name = "testSite";
+            string slot = "stage";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (CsmDeploymentStatus item in webSiteSlot.GetSlotSiteDeploymentStatusesSlotAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // Get Deployment Status Slot
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetSlotSiteDeploymentStatusSlot_GetDeploymentStatusSlot()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetSiteDeploymentStatusSlot.json
+            // this example is just showing the usage of "WebApps_GetSlotSiteDeploymentStatusSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string name = "testSite";
+            string slot = "stage";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation
+            string deploymentStatusId = "eacfd68b-3bbd-4ad9-99c5-98614d89c8e5";
+            ArmOperation<CsmDeploymentStatus> lro = await webSiteSlot.GetSlotSiteDeploymentStatusSlotAsync(WaitUntil.Completed, deploymentStatusId);
+            CsmDeploymentStatus result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // List backups
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAllSiteBackupSlotData_ListBackups()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/ListSlotBackups.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListSlotBackups.json
             // this example is just showing the usage of "WebApps_ListSiteBackupsSlot" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +238,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNetworkTraceOperationSlot_GetTheCurrentStatusOfANetworkTraceOperationForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/GetWebSiteNetworkTraceOperation.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebSiteNetworkTraceOperation.json
             // this example is just showing the usage of "WebApps_GetNetworkTraceOperationSlot" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -85,7 +270,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task StartWebSiteNetworkTraceOperationSlot_StartANewNetworkTraceOperationForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/StartWebSiteNetworkTraceOperation.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/StartWebSiteNetworkTraceOperation.json
             // this example is just showing the usage of "WebApps_StartWebSiteNetworkTraceOperationSlot" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,7 +300,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task StopWebSiteNetworkTraceSlot_StopACurrentlyRunningNetworkTraceOperationForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/StopWebSiteNetworkTrace.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/StopWebSiteNetworkTrace.json
             // this example is just showing the usage of "WebApps_StopWebSiteNetworkTraceSlot" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -143,7 +328,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNetworkTracesSlot_GetNetworkTracesForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/GetWebSiteNetworkTraces.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebSiteNetworkTraces.json
             // this example is just showing the usage of "WebApps_GetNetworkTracesSlot" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -175,7 +360,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNetworkTraceOperationSlotV2_GetTheCurrentStatusOfANetworkTraceOperationForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/GetWebSiteNetworkTraceOperation.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebSiteNetworkTraceOperation.json
             // this example is just showing the usage of "WebApps_GetNetworkTraceOperationSlotV2" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -207,7 +392,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNetworkTracesSlotV2_GetNetworkTracesForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/GetWebSiteNetworkTraces.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebSiteNetworkTraces.json
             // this example is just showing the usage of "WebApps_GetNetworkTracesSlotV2" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -239,7 +424,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPrivateLinkResourcesSlot_GetPrivateLinkResourcesOfASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/GetSitePrivateLinkResourcesSlot.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetSitePrivateLinkResourcesSlot.json
             // this example is just showing the usage of "WebApps_GetPrivateLinkResourcesSlot" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -270,7 +455,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task StartNetworkTraceSlot_StartANewNetworkTraceOperationForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/StartWebSiteNetworkTraceOperation.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/StartWebSiteNetworkTraceOperation.json
             // this example is just showing the usage of "WebApps_StartNetworkTraceSlot" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -300,7 +485,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task StopNetworkTraceSlot_StopACurrentlyRunningNetworkTraceOperationForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2021-02-01/examples/StopWebSiteNetworkTrace.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/StopWebSiteNetworkTrace.json
             // this example is just showing the usage of "WebApps_StopNetworkTraceSlot" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -321,6 +506,118 @@ namespace Azure.ResourceManager.AppService.Samples
             await webSiteSlot.StopNetworkTraceSlotAsync();
 
             Console.WriteLine($"Succeeded");
+        }
+
+        // Deploys workflow artifacts slot
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task DeployWorkflowArtifactsSlot_DeploysWorkflowArtifactsSlot()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/PostDeployWorkflowArtifactsSlot.json
+            // this example is just showing the usage of "WebApps_DeployWorkflowArtifactsSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string name = "testsite2";
+            string slot = "testsSlot";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation
+            WorkflowArtifacts workflowArtifacts = new WorkflowArtifacts()
+            {
+                AppSettings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                {
+                    ["eventHub_connectionString"] = "Endpoint=sb://example.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=EXAMPLE1a2b3c4d5e6fEXAMPLE="
+                }),
+                Files =
+{
+["connections.json"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+{
+["managedApiConnections"] = new Dictionary<string, object>()
+{
+},
+["serviceProviderConnections"] = new Dictionary<string, object>()
+{
+["eventHub"] = new Dictionary<string, object>()
+{
+["displayName"] = "example1",
+["parameterValues"] = new Dictionary<string, object>()
+{
+["connectionString"] = "@appsetting('eventHub_connectionString')"},
+["serviceProvider"] = new Dictionary<string, object>()
+{
+["id"] = "/serviceProviders/eventHub"}}}}),
+["test1/workflow.json"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+{
+["definition"] = new Dictionary<string, object>()
+{
+["$schema"] = "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+["actions"] = new Dictionary<string, object>()
+{
+},
+["contentVersion"] = "1.0.0.0",
+["outputs"] = new Dictionary<string, object>()
+{
+},
+["triggers"] = new Dictionary<string, object>()
+{
+["When_events_are_available_in_Event_hub"] = new Dictionary<string, object>()
+{
+["type"] = "ServiceProvider",
+["inputs"] = new Dictionary<string, object>()
+{
+["parameters"] = new Dictionary<string, object>()
+{
+["eventHubName"] = "test123"},
+["serviceProviderConfiguration"] = new Dictionary<string, object>()
+{
+["operationId"] = "receiveEvents",
+["connectionName"] = "eventHub",
+["serviceProviderId"] = "/serviceProviders/eventHub"}},
+["splitOn"] = "@triggerOutputs()?['body']"}}},
+["kind"] = "Stateful"}),
+},
+            };
+            await webSiteSlot.DeployWorkflowArtifactsSlotAsync(workflowArtifacts: workflowArtifacts);
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // List the Instance Workflows Configuration Connections Slot
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetWorkflowsConnectionsSlot_ListTheInstanceWorkflowsConfigurationConnectionsSlot()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListWorkflowsConfigurationConnections.json
+            // this example is just showing the usage of "WebApps_ListWorkflowsConnectionsSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string name = "testsite2";
+            string slot = "staging";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation
+            WorkflowEnvelopeData result = await webSiteSlot.GetWorkflowsConnectionsSlotAsync();
+
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {result.Id}");
         }
     }
 }

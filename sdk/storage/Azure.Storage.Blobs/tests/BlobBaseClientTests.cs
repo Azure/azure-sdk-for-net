@@ -105,6 +105,38 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task Ctor_EscapeBlobName()
+        {
+            // Arrange
+            string blobName = "!*'();[]:@&%=+$,/#äÄöÖüÜß";
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var data = GetRandomBuffer(Constants.KB);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(blobName));
+            ETag originalEtag;
+            using (var stream = new MemoryStream(data))
+            {
+                BlobContentInfo info = await blob.UploadAsync(stream);
+                originalEtag = info.ETag;
+            }
+
+            // Act
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
+            {
+                BlobContainerName = blob.BlobContainerName,
+                BlobName = blobName
+            };
+            BlobBaseClient freshBlobClient = InstrumentClient(new BlobBaseClient(
+                uriBuilder.ToUri(),
+                TestEnvironment.Credential,
+                GetOptions()));
+
+            // Assert
+            Assert.AreEqual(blobName, freshBlobClient.Name);
+            BlobProperties propertiesResponse = await freshBlobClient.GetPropertiesAsync();
+            Assert.AreEqual(originalEtag, propertiesResponse.ETag);
+        }
+
+        [RecordedTest]
         public void Ctor_Uri()
         {
             var accountName = "accountName";
@@ -275,7 +307,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_CustomAudience()
         {
             // Arrange
@@ -308,7 +339,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/44967")]
         public async Task Ctor_StorageAccountAudience()
         {
             // Arrange
@@ -5081,6 +5111,83 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task SetMetadataAsync_Sort()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            IDictionary<string, string> metadata = new Dictionary<string, string>() {
+                { "a0", "a" },
+                { "a1", "a" },
+                { "a2", "a" },
+                { "a3", "a" },
+                { "a4", "a" },
+                { "a5", "a" },
+                { "a6", "a" },
+                { "a7", "a" },
+                { "a8", "a" },
+                { "a9", "a" },
+                { "_", "a" },
+                { "_a", "a" },
+                { "a_", "a" },
+                { "__", "a" },
+                { "_a_", "a" },
+                { "b", "a" },
+                { "c", "a" },
+                { "y", "a" },
+                { "z", "z_" },
+                { "_z", "a" },
+                { "_F", "a" },
+                { "F", "a" },
+                { "F_", "a" },
+                { "_F_", "a" },
+                { "__F", "a" },
+                { "__a", "a" },
+                { "a__", "a" }
+             };
+
+            // Act
+            Response<BlobInfo> response = await blob.SetMetadataAsync(metadata);
+
+            // Assert
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+
+            // Ensure the value has been correctly set by doing a GetProperties call
+            Response<BlobProperties> getPropertiesResponse = await blob.GetPropertiesAsync();
+            AssertDictionaryEquality(metadata, getPropertiesResponse.Value.Metadata);
+        }
+
+        [RecordedTest]
+        public async Task SetMetadataAsync_Sort_InvalidMetadata()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            IDictionary<string, string> metadata = new Dictionary<string, string>() {
+                { "test", "val" },
+                { "test-", "val" },
+                { "test--", "val" },
+                { "test-_", "val" },
+                { "test_-", "val" },
+                { "test__", "val" },
+                { "test-a", "val" },
+                { "test-_A", "val" },
+                { "test_a", "val" },
+                { "test_Z", "val" },
+                { "test_a_", "val" },
+                { "test_a-", "val" },
+                { "test_a-_", "val" },
+             };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.SetMetadataAsync(metadata),
+                e => Assert.AreEqual(BlobErrorCode.InvalidMetadata.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
         public async Task CreateSnapshotAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -7102,8 +7209,10 @@ namespace Azure.Storage.Blobs.Test
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = blobClient.GenerateSasUri(permissions, expiresOn);
+            Uri sasUri = blobClient.GenerateSasUri(permissions, expiresOn, out stringToSign);
 
             // Assert
             BlobSasBuilder sasBuilder = new BlobSasBuilder(permissions, expiresOn)
@@ -7118,6 +7227,7 @@ namespace Azure.Storage.Blobs.Test
                 Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -7147,8 +7257,10 @@ namespace Azure.Storage.Blobs.Test
                 StartsOn = startsOn
             };
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = blobClient.GenerateSasUri(sasBuilder);
+            Uri sasUri = blobClient.GenerateSasUri(sasBuilder, out stringToSign);
 
             // Assert
             BlobSasBuilder sasBuilder2 = new BlobSasBuilder(permissions, expiresOn)
@@ -7164,6 +7276,7 @@ namespace Azure.Storage.Blobs.Test
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -7554,6 +7667,29 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(await sasClient.ExistsAsync());
         }
         #endregion
+
+        [Test]
+        [TestCase(null, false)]
+        [TestCase("ContainerNotFound", true)]
+        [TestCase("ContainerDisabled", false)]
+        [TestCase("", false)]
+        public void BlobErrorCode_EqualityOperatorOverloadTest(string errorCode, bool expected)
+        {
+            var ex = new RequestFailedException(status: 404, message: "Some error.", errorCode: errorCode, innerException: null);
+
+            bool result1 = BlobErrorCode.ContainerNotFound == ex.ErrorCode;
+            bool result2 = ex.ErrorCode == BlobErrorCode.ContainerNotFound;
+            Assert.AreEqual(expected, result1);
+            Assert.AreEqual(expected, result2);
+
+            bool result3 = BlobErrorCode.ContainerNotFound != ex.ErrorCode;
+            bool result4 = ex.ErrorCode != BlobErrorCode.ContainerNotFound;
+            Assert.AreEqual(!expected, result3);
+            Assert.AreEqual(!expected, result4);
+
+            bool result5 = BlobErrorCode.ContainerNotFound.Equals(ex.ErrorCode);
+            Assert.AreEqual(expected, result5);
+        }
 
         //[Test]
         //public async Task SetTierAsync_Batch()

@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Event retention for the namespace topic expressed in days. The property default value is 1 day.
         /// Min event retention duration value is 1 day and max event retention duration value is 1 day.
         /// </summary>
+        [WirePath("properties.eventRetentionInDays")]
         public int? EventRetentionInDays { get; set; }
     }
 }

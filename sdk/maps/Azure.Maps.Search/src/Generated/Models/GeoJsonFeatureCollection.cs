@@ -16,9 +16,13 @@ namespace Azure.Maps.Search.Models
     internal partial class GeoJsonFeatureCollection : GeoJsonObject
     {
         /// <summary> Initializes a new instance of <see cref="GeoJsonFeatureCollection"/>. </summary>
-        /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>
+        /// <param name="features">
+        /// Contains a list of valid `GeoJSON Feature` objects.
+        /// Please note <see cref="GeoJsonFeature"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Boundary"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="features"/> is null. </exception>
-        public GeoJsonFeatureCollection(IEnumerable<GeoJsonFeature> features)
+        internal GeoJsonFeatureCollection(IEnumerable<GeoJsonFeature> features)
         {
             Argument.AssertNotNull(features, nameof(features));
 
@@ -28,14 +32,23 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Initializes a new instance of <see cref="GeoJsonFeatureCollection"/>. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
-        /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>
-        internal GeoJsonFeatureCollection(GeoJsonObjectType type, IList<GeoJsonFeature> features) : base(type)
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
+        /// <param name="features">
+        /// Contains a list of valid `GeoJSON Feature` objects.
+        /// Please note <see cref="GeoJsonFeature"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Boundary"/>.
+        /// </param>
+        internal GeoJsonFeatureCollection(GeoJsonObjectType type, IReadOnlyList<double> boundingBox, IReadOnlyList<GeoJsonFeature> features) : base(type, boundingBox)
         {
             Features = features;
             Type = type;
         }
 
-        /// <summary> Contains a list of valid `GeoJSON Feature` objects. </summary>
-        public IList<GeoJsonFeature> Features { get; }
+        /// <summary>
+        /// Contains a list of valid `GeoJSON Feature` objects.
+        /// Please note <see cref="GeoJsonFeature"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Boundary"/>.
+        /// </summary>
+        public IReadOnlyList<GeoJsonFeature> Features { get; }
     }
 }

@@ -1,11 +1,6 @@
 # Release History
 
-## 7.18.0-beta.2 (Unreleased)
-
-### Acknowledgments
-Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
-
-- Martin Costello _([GitHub](https://github.com/martincostello))_
+## 7.19.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -13,13 +8,33 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 7.18.1 (2024-07-31)
+
+### Other Changes
+
+- Bump `Azure.Core.Amqp` dependency to 1.3.1, which includes a fix to serialization of binary application properties.
+
+## 7.18.0 (2024-07-18)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Martin Costello _([GitHub](https://github.com/martincostello))_
+
+### Bugs Fixed
+
 - Fixed an issue that caused connection strings using host names without a scheme to fail parsing and be considered invalid.
 
 - Fixed an issue where the scheduled enqueue time was not cleared when creating a new message from a received message.
 
-- Fixed an issue that prevented relative URIs from being used with [application properties](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties) in the `ServiceBusMessage.ApplicationProperties` and `ServiceBusReceivedMessage.ApplicationProperties` collections. 
+- Fixed an issue that prevented relative URIs from being used with [application properties](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties) in the `ServiceBusMessage.ApplicationProperties` and `ServiceBusReceivedMessage.ApplicationProperties` collections.
 
 - Fixed an issue that caused `ServiceBusMessageBatch` to accept more than the allowed 1mb batch limit when sending to Service Bus entities with large message sizes enabled.
+
+- Fixed issue where the `SupportOrdering` property was not being respected when set on `CreateTopicOptions`.
 
 ### Other Changes
 
@@ -27,8 +42,9 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 - Updated the `Microsoft.Azure.Amqp` dependency to 2.6.7, which contains a fix for decoding messages with a null format code as the body.
 
-- Improved efficiency of subclient creation, reducing allocations when no explicit options are passed.  - Fixed deserialization of the lock token to take into account endianness. _(A community contribution, courtesy of [martincostello](https://github.com/martincostello))_
+- Improved efficiency of subclient creation, reducing allocations when no explicit options are passed.
 
+- Reduced the number of allocations of various option types. _(A community contribution, courtesy of [martincostello](https://github.com/martincostello))_
 
 ## 7.18.0-beta.1 (2024-05-08)
 

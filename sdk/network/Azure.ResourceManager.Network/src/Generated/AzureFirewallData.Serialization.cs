@@ -172,6 +172,11 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(AutoscaleConfiguration))
+            {
+                writer.WritePropertyName("autoscaleConfiguration"u8);
+                writer.WriteObjectValue(AutoscaleConfiguration, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -231,6 +236,7 @@ namespace Azure.ResourceManager.Network
             IReadOnlyList<AzureFirewallIPGroups> ipGroups = default;
             AzureFirewallSku sku = default;
             IDictionary<string, string> additionalProperties = default;
+            AzureFirewallAutoscaleConfiguration autoscaleConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -460,6 +466,15 @@ namespace Azure.ResourceManager.Network
                             additionalProperties = dictionary;
                             continue;
                         }
+                        if (property0.NameEquals("autoscaleConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            autoscaleConfiguration = AzureFirewallAutoscaleConfiguration.DeserializeAzureFirewallAutoscaleConfiguration(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -490,7 +505,8 @@ namespace Azure.ResourceManager.Network
                 hubIPAddresses,
                 ipGroups ?? new ChangeTrackingList<AzureFirewallIPGroups>(),
                 sku,
-                additionalProperties ?? new ChangeTrackingDictionary<string, string>());
+                additionalProperties ?? new ChangeTrackingDictionary<string, string>(),
+                autoscaleConfiguration);
         }
 
         BinaryData IPersistableModel<AzureFirewallData>.Write(ModelReaderWriterOptions options)

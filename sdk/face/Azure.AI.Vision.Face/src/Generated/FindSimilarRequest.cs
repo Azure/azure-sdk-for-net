@@ -50,7 +50,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="faceId"> faceId of the query face. User needs to call "Detect" first to get a valid faceId. Note that this faceId is not persisted and will expire 24 hours after the detection call. </param>
         /// <param name="faceIds"> An array of candidate faceIds. All of them are created by "Detect" and the faceIds will expire 24 hours after the detection call. The number of faceIds is limited to 1000. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="faceIds"/> is null. </exception>
-        public FindSimilarRequest(Guid faceId, IEnumerable<Guid> faceIds)
+        internal FindSimilarRequest(Guid faceId, IEnumerable<Guid> faceIds)
         {
             Argument.AssertNotNull(faceIds, nameof(faceIds));
 
@@ -64,7 +64,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="mode"> Similar face searching mode. It can be 'matchPerson' or 'matchFace'. Default value is 'matchPerson'. </param>
         /// <param name="faceIds"> An array of candidate faceIds. All of them are created by "Detect" and the faceIds will expire 24 hours after the detection call. The number of faceIds is limited to 1000. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FindSimilarRequest(Guid faceId, int? maxNumOfCandidatesReturned, FindSimilarMatchMode? mode, IList<Guid> faceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FindSimilarRequest(Guid faceId, int? maxNumOfCandidatesReturned, FindSimilarMatchMode? mode, IReadOnlyList<Guid> faceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FaceId = faceId;
             MaxNumOfCandidatesReturned = maxNumOfCandidatesReturned;
@@ -81,10 +81,10 @@ namespace Azure.AI.Vision.Face
         /// <summary> faceId of the query face. User needs to call "Detect" first to get a valid faceId. Note that this faceId is not persisted and will expire 24 hours after the detection call. </summary>
         public Guid FaceId { get; }
         /// <summary> The number of top similar faces returned. The valid range is [1, 1000]. Default value is 20. </summary>
-        public int? MaxNumOfCandidatesReturned { get; set; }
+        public int? MaxNumOfCandidatesReturned { get; }
         /// <summary> Similar face searching mode. It can be 'matchPerson' or 'matchFace'. Default value is 'matchPerson'. </summary>
-        public FindSimilarMatchMode? Mode { get; set; }
+        public FindSimilarMatchMode? Mode { get; }
         /// <summary> An array of candidate faceIds. All of them are created by "Detect" and the faceIds will expire 24 hours after the detection call. The number of faceIds is limited to 1000. </summary>
-        public IList<Guid> FaceIds { get; }
+        public IReadOnlyList<Guid> FaceIds { get; }
     }
 }

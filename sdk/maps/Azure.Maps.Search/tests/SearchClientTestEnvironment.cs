@@ -14,6 +14,6 @@ namespace Azure.Maps.Search.Tests
                 return endpoint != null ? new Uri(endpoint) : null;
             }
         }
-        public string MapAccountClientId => GetRecordedVariable("AZMAPS_CLIENT_ID");
+        public string MapAccountClientId => GetRecordedOptionalVariable("AZMAPS_CLIENT_ID");
     }
 }

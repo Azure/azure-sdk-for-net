@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary> Describes Machine Extension Properties. </summary>
+        [WirePath("properties")]
         public MachineExtensionProperties Properties { get; set; }
     }
 }

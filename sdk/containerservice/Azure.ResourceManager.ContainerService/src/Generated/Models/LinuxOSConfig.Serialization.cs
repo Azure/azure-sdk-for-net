@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -129,6 +130,97 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new LinuxOSConfig(sysctls, transparentHugePageEnabled, transparentHugePageDefrag, swapFileSizeMB, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sysctls), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sysctls: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Sysctls))
+                {
+                    builder.Append("  sysctls: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Sysctls, options, 2, false, "  sysctls: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TransparentHugePageEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  transparentHugePageEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TransparentHugePageEnabled))
+                {
+                    builder.Append("  transparentHugePageEnabled: ");
+                    if (TransparentHugePageEnabled.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TransparentHugePageEnabled}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TransparentHugePageEnabled}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TransparentHugePageDefrag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  transparentHugePageDefrag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TransparentHugePageDefrag))
+                {
+                    builder.Append("  transparentHugePageDefrag: ");
+                    if (TransparentHugePageDefrag.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TransparentHugePageDefrag}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TransparentHugePageDefrag}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SwapFileSizeInMB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  swapFileSizeMB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SwapFileSizeInMB))
+                {
+                    builder.Append("  swapFileSizeMB: ");
+                    builder.AppendLine($"{SwapFileSizeInMB.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<LinuxOSConfig>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LinuxOSConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -137,6 +229,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LinuxOSConfig)} does not support writing '{options.Format}' format.");
             }

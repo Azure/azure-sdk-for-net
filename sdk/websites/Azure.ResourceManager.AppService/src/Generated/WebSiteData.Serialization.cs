@@ -161,10 +161,55 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("lastModifiedTimeUtc"u8);
                 writer.WriteStringValue(LastModifiedTimeUtc.Value, "O");
             }
+            if (Optional.IsDefined(DnsConfiguration))
+            {
+                writer.WritePropertyName("dnsConfiguration"u8);
+                writer.WriteObjectValue(DnsConfiguration, options);
+            }
+            if (Optional.IsDefined(IsVnetRouteAllEnabled))
+            {
+                writer.WritePropertyName("vnetRouteAllEnabled"u8);
+                writer.WriteBooleanValue(IsVnetRouteAllEnabled.Value);
+            }
+            if (Optional.IsDefined(IsVnetImagePullEnabled))
+            {
+                writer.WritePropertyName("vnetImagePullEnabled"u8);
+                writer.WriteBooleanValue(IsVnetImagePullEnabled.Value);
+            }
+            if (Optional.IsDefined(IsVnetContentShareEnabled))
+            {
+                writer.WritePropertyName("vnetContentShareEnabled"u8);
+                writer.WriteBooleanValue(IsVnetContentShareEnabled.Value);
+            }
+            if (Optional.IsDefined(IsVnetBackupRestoreEnabled))
+            {
+                writer.WritePropertyName("vnetBackupRestoreEnabled"u8);
+                writer.WriteBooleanValue(IsVnetBackupRestoreEnabled.Value);
+            }
             if (Optional.IsDefined(SiteConfig))
             {
                 writer.WritePropertyName("siteConfig"u8);
                 writer.WriteObjectValue(SiteConfig, options);
+            }
+            if (Optional.IsDefined(FunctionAppConfig))
+            {
+                writer.WritePropertyName("functionAppConfig"u8);
+                writer.WriteObjectValue(FunctionAppConfig, options);
+            }
+            if (Optional.IsDefined(DaprConfig))
+            {
+                writer.WritePropertyName("daprConfig"u8);
+                writer.WriteObjectValue(DaprConfig, options);
+            }
+            if (Optional.IsDefined(WorkloadProfileName))
+            {
+                writer.WritePropertyName("workloadProfileName"u8);
+                writer.WriteStringValue(WorkloadProfileName);
+            }
+            if (Optional.IsDefined(ResourceConfig))
+            {
+                writer.WritePropertyName("resourceConfig"u8);
+                writer.WriteObjectValue(ResourceConfig, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(TrafficManagerHostNames))
             {
@@ -340,6 +385,11 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("inProgressOperationId");
                 }
             }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess);
+            }
             if (Optional.IsDefined(IsStorageAccountRequired))
             {
                 writer.WritePropertyName("storageAccountRequired"u8);
@@ -354,6 +404,11 @@ namespace Azure.ResourceManager.AppService
             {
                 writer.WritePropertyName("virtualNetworkSubnetId"u8);
                 writer.WriteStringValue(VirtualNetworkSubnetId);
+            }
+            if (Optional.IsDefined(ManagedEnvironmentId))
+            {
+                writer.WritePropertyName("managedEnvironmentId"u8);
+                writer.WriteStringValue(ManagedEnvironmentId);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -416,7 +471,16 @@ namespace Azure.ResourceManager.AppService
             bool? isXenon = default;
             bool? hyperV = default;
             DateTimeOffset? lastModifiedTimeUtc = default;
+            SiteDnsConfig dnsConfiguration = default;
+            bool? vnetRouteAllEnabled = default;
+            bool? vnetImagePullEnabled = default;
+            bool? vnetContentShareEnabled = default;
+            bool? vnetBackupRestoreEnabled = default;
             SiteConfigProperties siteConfig = default;
+            FunctionAppConfig functionAppConfig = default;
+            AppDaprConfig daprConfig = default;
+            string workloadProfileName = default;
+            FunctionAppResourceConfig resourceConfig = default;
             IReadOnlyList<string> trafficManagerHostNames = default;
             bool? scmSiteAlsoStopped = default;
             string targetSwapSlot = default;
@@ -441,9 +505,11 @@ namespace Azure.ResourceManager.AppService
             bool? httpsOnly = default;
             RedundancyMode? redundancyMode = default;
             Guid? inProgressOperationId = default;
+            string publicNetworkAccess = default;
             bool? storageAccountRequired = default;
             string keyVaultReferenceIdentity = default;
             ResourceIdentifier virtualNetworkSubnetId = default;
+            string managedEnvironmentId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -647,6 +713,51 @@ namespace Azure.ResourceManager.AppService
                             lastModifiedTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("dnsConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dnsConfiguration = SiteDnsConfig.DeserializeSiteDnsConfig(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("vnetRouteAllEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            vnetRouteAllEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("vnetImagePullEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            vnetImagePullEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("vnetContentShareEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            vnetContentShareEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("vnetBackupRestoreEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            vnetBackupRestoreEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("siteConfig"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -654,6 +765,38 @@ namespace Azure.ResourceManager.AppService
                                 continue;
                             }
                             siteConfig = SiteConfigProperties.DeserializeSiteConfigProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("functionAppConfig"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            functionAppConfig = FunctionAppConfig.DeserializeFunctionAppConfig(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("daprConfig"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            daprConfig = AppDaprConfig.DeserializeAppDaprConfig(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("workloadProfileName"u8))
+                        {
+                            workloadProfileName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("resourceConfig"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resourceConfig = FunctionAppResourceConfig.DeserializeFunctionAppResourceConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trafficManagerHostNames"u8))
@@ -856,6 +999,11 @@ namespace Azure.ResourceManager.AppService
                             inProgressOperationId = property0.Value.GetGuid();
                             continue;
                         }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            publicNetworkAccess = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("storageAccountRequired"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -877,6 +1025,11 @@ namespace Azure.ResourceManager.AppService
                                 continue;
                             }
                             virtualNetworkSubnetId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("managedEnvironmentId"u8))
+                        {
+                            managedEnvironmentId = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -910,7 +1063,16 @@ namespace Azure.ResourceManager.AppService
                 isXenon,
                 hyperV,
                 lastModifiedTimeUtc,
+                dnsConfiguration,
+                vnetRouteAllEnabled,
+                vnetImagePullEnabled,
+                vnetContentShareEnabled,
+                vnetBackupRestoreEnabled,
                 siteConfig,
+                functionAppConfig,
+                daprConfig,
+                workloadProfileName,
+                resourceConfig,
                 trafficManagerHostNames ?? new ChangeTrackingList<string>(),
                 scmSiteAlsoStopped,
                 targetSwapSlot,
@@ -935,9 +1097,11 @@ namespace Azure.ResourceManager.AppService
                 httpsOnly,
                 redundancyMode,
                 inProgressOperationId,
+                publicNetworkAccess,
                 storageAccountRequired,
                 keyVaultReferenceIdentity,
                 virtualNetworkSubnetId,
+                managedEnvironmentId,
                 kind,
                 serializedAdditionalRawData);
         }
@@ -1376,6 +1540,85 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    dnsConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DnsConfiguration))
+                {
+                    builder.Append("    dnsConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DnsConfiguration, options, 4, false, "    dnsConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsVnetRouteAllEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    vnetRouteAllEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsVnetRouteAllEnabled))
+                {
+                    builder.Append("    vnetRouteAllEnabled: ");
+                    var boolValue = IsVnetRouteAllEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsVnetImagePullEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    vnetImagePullEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsVnetImagePullEnabled))
+                {
+                    builder.Append("    vnetImagePullEnabled: ");
+                    var boolValue = IsVnetImagePullEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsVnetContentShareEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    vnetContentShareEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsVnetContentShareEnabled))
+                {
+                    builder.Append("    vnetContentShareEnabled: ");
+                    var boolValue = IsVnetContentShareEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsVnetBackupRestoreEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    vnetBackupRestoreEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsVnetBackupRestoreEnabled))
+                {
+                    builder.Append("    vnetBackupRestoreEnabled: ");
+                    var boolValue = IsVnetBackupRestoreEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SiteConfig), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -1388,6 +1631,74 @@ namespace Azure.ResourceManager.AppService
                 {
                     builder.Append("    siteConfig: ");
                     BicepSerializationHelpers.AppendChildObject(builder, SiteConfig, options, 4, false, "    siteConfig: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionAppConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    functionAppConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FunctionAppConfig))
+                {
+                    builder.Append("    functionAppConfig: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FunctionAppConfig, options, 4, false, "    functionAppConfig: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaprConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    daprConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DaprConfig))
+                {
+                    builder.Append("    daprConfig: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DaprConfig, options, 4, false, "    daprConfig: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkloadProfileName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    workloadProfileName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkloadProfileName))
+                {
+                    builder.Append("    workloadProfileName: ");
+                    if (WorkloadProfileName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{WorkloadProfileName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{WorkloadProfileName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    resourceConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceConfig))
+                {
+                    builder.Append("    resourceConfig: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ResourceConfig, options, 4, false, "    resourceConfig: ");
                 }
             }
 
@@ -1835,6 +2146,29 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    publicNetworkAccess: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetworkAccess))
+                {
+                    builder.Append("    publicNetworkAccess: ");
+                    if (PublicNetworkAccess.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PublicNetworkAccess}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PublicNetworkAccess}'");
+                    }
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStorageAccountRequired), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -1886,6 +2220,29 @@ namespace Azure.ResourceManager.AppService
                 {
                     builder.Append("    virtualNetworkSubnetId: ");
                     builder.AppendLine($"'{VirtualNetworkSubnetId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedEnvironmentId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    managedEnvironmentId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ManagedEnvironmentId))
+                {
+                    builder.Append("    managedEnvironmentId: ");
+                    if (ManagedEnvironmentId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ManagedEnvironmentId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ManagedEnvironmentId}'");
+                    }
                 }
             }
 

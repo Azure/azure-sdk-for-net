@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <PackageId>Azure.Generator</PackageId>
+    <Version>1.0.0-beta.1</Version>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	<NoWarn>CS8002</NoWarn>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Generator.CSharp.ClientModel" />
+		<PackageReference Include="Azure.Core" />
+	</ItemGroup>
+
+	<!-- Copy output to package dist path for local execution -->
+	<Target Name="CopyForNpmPackage" AfterTargets="Build">
+		<Message Text="Copying output to dist path" Importance="high" />
+		<ItemGroup>
+			<SourceDir Include="$(OutputPath)**\*.*" />
+		</ItemGroup>
+		<Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator\%(RecursiveDir)" />
+	</Target>
+	
+</Project>

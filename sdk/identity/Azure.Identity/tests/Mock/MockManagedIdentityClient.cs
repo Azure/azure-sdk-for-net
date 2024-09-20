@@ -21,7 +21,7 @@ namespace Azure.Identity.Tests.Mock
         }
 
         public MockManagedIdentityClient(CredentialPipeline pipeline, string clientId)
-            : base(pipeline, clientId)
+            : base(new ManagedIdentityClientOptions() { Pipeline = pipeline, ManagedIdentityId = clientId is null ? ManagedIdentityId.SystemAssigned : ManagedIdentityId.FromUserAssignedClientId(clientId), Options = new TokenCredentialOptions() { IsChainedCredential = true } })
         {
         }
 

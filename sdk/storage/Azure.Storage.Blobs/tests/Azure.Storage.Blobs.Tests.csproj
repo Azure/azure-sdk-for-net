@@ -11,6 +11,7 @@
     <!-- Microsoft and Newtonsoft dependencies for testing clientside encryption backwards compatibility -->
     <PackageReference Include="Microsoft.Azure.KeyVault.Core" />
     <PackageReference Include="Microsoft.Azure.Storage.Blob" />
+    <PackageReference Include="Microsoft.Azure.Management.Storage" />
     <PackageReference Include="Newtonsoft.Json" />
     <ProjectReference Include="..\..\..\..\sdk\compute\Azure.ResourceManager.Compute\src\Azure.ResourceManager.Compute.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Blobs.csproj" />

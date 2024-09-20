@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -224,6 +226,180 @@ namespace Azure.ResourceManager.EventGrid.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("  state: ");
+                    builder.AppendLine($"'{State.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RouteTopicResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  routeTopicResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RouteTopicResourceId))
+                {
+                    builder.Append("  routeTopicResourceId: ");
+                    if (RouteTopicResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RouteTopicResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RouteTopicResourceId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Hostname), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hostname: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Hostname))
+                {
+                    builder.Append("  hostname: ");
+                    if (Hostname.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Hostname}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Hostname}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingEnrichments), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  routingEnrichments: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoutingEnrichments))
+                {
+                    builder.Append("  routingEnrichments: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RoutingEnrichments, options, 2, false, "  routingEnrichments: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientAuthentication), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clientAuthentication: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientAuthentication))
+                {
+                    builder.Append("  clientAuthentication: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ClientAuthentication, options, 2, false, "  clientAuthentication: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumSessionExpiryInHours), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maximumSessionExpiryInHours: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaximumSessionExpiryInHours))
+                {
+                    builder.Append("  maximumSessionExpiryInHours: ");
+                    builder.AppendLine($"{MaximumSessionExpiryInHours.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumClientSessionsPerAuthenticationName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maximumClientSessionsPerAuthenticationName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaximumClientSessionsPerAuthenticationName))
+                {
+                    builder.Append("  maximumClientSessionsPerAuthenticationName: ");
+                    builder.AppendLine($"{MaximumClientSessionsPerAuthenticationName.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingIdentityInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  routingIdentityInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoutingIdentityInfo))
+                {
+                    builder.Append("  routingIdentityInfo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RoutingIdentityInfo, options, 2, false, "  routingIdentityInfo: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomDomains), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customDomains: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CustomDomains))
+                {
+                    if (CustomDomains.Any())
+                    {
+                        builder.Append("  customDomains: ");
+                        builder.AppendLine("[");
+                        foreach (var item in CustomDomains)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  customDomains: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<TopicSpacesConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TopicSpacesConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -232,6 +408,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TopicSpacesConfiguration)} does not support writing '{options.Format}' format.");
             }

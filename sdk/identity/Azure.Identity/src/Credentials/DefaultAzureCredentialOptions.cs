@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Azure.Core;
 
@@ -272,7 +273,9 @@ namespace Azure.Identity
         /// <inheriteddoc/>
         public bool DisableInstanceDiscovery { get; set; }
 
-        internal override T Clone<T>()
+        internal bool IsForceRefreshEnabled { get; set; }
+
+        internal override T Clone<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
         {
             var clone = base.Clone<T>();
 
@@ -299,6 +302,7 @@ namespace Azure.Identity
                 dacClone.ExcludeVisualStudioCredential = ExcludeVisualStudioCredential;
                 dacClone.ExcludeVisualStudioCodeCredential = ExcludeVisualStudioCodeCredential;
                 dacClone.ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential;
+                dacClone.IsForceRefreshEnabled = IsForceRefreshEnabled;
             }
 
             return clone;
