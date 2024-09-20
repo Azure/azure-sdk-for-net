@@ -190,7 +190,10 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.IsInstanceOf<MqttConnectEventRequest>(request);
             var mqttRequest = request as MqttConnectEventRequest;
             var mqttResponse = mqttRequest.CreateMqttResponse("userId", new string[] { "group1", "group2" }, new string[] { "role1", "role2" });
-            mqttResponse.Mqtt.UserProperties = new List<MqttUserProperty> { new("name1", "value1") };
+            mqttResponse.Mqtt = new()
+            {
+                UserProperties = new List<MqttUserProperty> { new("name1", "value1") }
+            };
 
             Assert.AreEqual("mqtt", mqttRequest.Subprotocols.Single());
             var clientCert = mqttRequest.ClientCertificates.Single();

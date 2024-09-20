@@ -112,7 +112,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                             if (response != null)
                             {
                                 SetConnectionState(ref context, connectEventRequest.ConnectionContext, response.ConnectionStates);
-                                await context.Response.WriteAsync(JsonSerializer.Serialize(response)).ConfigureAwait(false);
+                                await context.Response.WriteAsync(JsonSerializer.Serialize(response, response.GetType())).ConfigureAwait(false);
                             }
                             break;
                         }

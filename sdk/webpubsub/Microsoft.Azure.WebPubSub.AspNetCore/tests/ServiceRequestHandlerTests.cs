@@ -119,6 +119,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             context.Response.Body.Seek(0, SeekOrigin.Begin);
             var response = await new StreamReader(context.Response.Body).ReadToEndAsync();
             var expectedBody = "{\"mqtt\":{\"userProperties\":[{\"name\":\"a\",\"value\":\"b\"}]},\"userId\":\"userId\",\"groups\":[\"group1\",\"group2\"],\"subprotocol\":\"mqtt\",\"roles\":[\"webpubsub.joinLeaveGroup\"]}";
+            Console.WriteLine(response);
             Assert.AreEqual(expectedBody, response);
             hubMock.Verify(h => h.OnConnectAsync(It.IsAny<MqttConnectEventRequest>(), It.IsAny<CancellationToken>()), Times.Once);
         }
