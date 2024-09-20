@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageActions.Samples
 
             // this example assumes you already have this StorageTaskResource created on azure
             // for more information of creating StorageTaskResource, please refer to the document of StorageTaskResource
-            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4228";
             string storageTaskName = "mytask1";
             ResourceIdentifier storageTaskResourceId = StorageTaskResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, storageTaskName);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.StorageActions.Samples
 
             // this example assumes you already have this StorageTaskResource created on azure
             // for more information of creating StorageTaskResource, please refer to the document of StorageTaskResource
-            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4228";
             string storageTaskName = "mytask1";
             ResourceIdentifier storageTaskResourceId = StorageTaskResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, storageTaskName);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.StorageActions.Samples
 
             // this example assumes you already have this StorageTaskResource created on azure
             // for more information of creating StorageTaskResource, please refer to the document of StorageTaskResource
-            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4228";
             string storageTaskName = "mytask1";
             ResourceIdentifier storageTaskResourceId = StorageTaskResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, storageTaskName);
@@ -155,7 +155,7 @@ OnFailure = OnFailureAction.Break,
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -187,7 +187,7 @@ OnFailure = OnFailureAction.Break,
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -361,7 +361,7 @@ Value = "tValue2",
 
             // this example assumes you already have this StorageTaskResource created on azure
             // for more information of creating StorageTaskResource, please refer to the document of StorageTaskResource
-            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgroup1";
             string storageTaskName = "mytask1";
             ResourceIdentifier storageTaskResourceId = StorageTaskResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, storageTaskName);
@@ -391,7 +391,7 @@ Value = "tValue2",
 
             // this example assumes you already have this StorageTaskResource created on azure
             // for more information of creating StorageTaskResource, please refer to the document of StorageTaskResource
-            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgroup1";
             string storageTaskName = "mytask1";
             ResourceIdentifier storageTaskResourceId = StorageTaskResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, storageTaskName);

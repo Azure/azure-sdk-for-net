@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 
             // this example assumes you already have this SpringBootSiteErrorSummaryResource created on azure
             // for more information of creating SpringBootSiteErrorSummaryResource, please refer to the document of SpringBootSiteErrorSummaryResource
-            string subscriptionId = "libzegdqkcxmhqhhhcxm";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgspringbootdiscovery";
             string siteName = "xxkzlvbihwxunadjcpjpjmghmhxrqyvghtpfps";
             string errorSummaryName = "K2lv";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 
             // this example assumes you already have this SpringBootSiteErrorSummaryResource created on azure
             // for more information of creating SpringBootSiteErrorSummaryResource, please refer to the document of SpringBootSiteErrorSummaryResource
-            string subscriptionId = "libzegdqkcxmhqhhhcxm";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgspringbootdiscovery";
             string siteName = "xxkzlvbihwxunadjcpjpjmghmhxrqyvghtpfps";
             string errorSummaryName = "K2lv";

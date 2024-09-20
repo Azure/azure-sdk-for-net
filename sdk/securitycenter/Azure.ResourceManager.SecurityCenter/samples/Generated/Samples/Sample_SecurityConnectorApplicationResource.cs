@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityConnectorApplicationResource created on azure
             // for more information of creating SecurityConnectorApplicationResource, please refer to the document of SecurityConnectorApplicationResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gcpResourceGroup";
             string securityConnectorName = "gcpconnector";
             string applicationId = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityConnectorApplicationResource created on azure
             // for more information of creating SecurityConnectorApplicationResource, please refer to the document of SecurityConnectorApplicationResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gcpResourceGroup";
             string securityConnectorName = "gcpconnector";
             string applicationId = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
@@ -112,7 +112,7 @@ BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             // this example assumes you already have this SecurityConnectorApplicationResource created on azure
             // for more information of creating SecurityConnectorApplicationResource, please refer to the document of SecurityConnectorApplicationResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gcpResourceGroup";
             string securityConnectorName = "gcpconnector";
             string applicationId = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";

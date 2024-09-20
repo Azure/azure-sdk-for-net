@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityContactResource created on azure
             // for more information of creating SecurityContactResource, please refer to the document of SecurityContactResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string securityContactName = "default";
             ResourceIdentifier securityContactResourceId = SecurityContactResource.CreateResourceIdentifier(subscriptionId, securityContactName);
             SecurityContactResource securityContact = client.GetSecurityContactResource(securityContactResourceId);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityContactResource created on azure
             // for more information of creating SecurityContactResource, please refer to the document of SecurityContactResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string securityContactName = "default";
             ResourceIdentifier securityContactResourceId = SecurityContactResource.CreateResourceIdentifier(subscriptionId, securityContactName);
             SecurityContactResource securityContact = client.GetSecurityContactResource(securityContactResourceId);
@@ -109,7 +109,7 @@ SecurityAlertReceivingRole.Owner
 
             // this example assumes you already have this SecurityContactResource created on azure
             // for more information of creating SecurityContactResource, please refer to the document of SecurityContactResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string securityContactName = "default";
             ResourceIdentifier securityContactResourceId = SecurityContactResource.CreateResourceIdentifier(subscriptionId, securityContactName);
             SecurityContactResource securityContact = client.GetSecurityContactResource(securityContactResourceId);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageAccountMigrationResource created on azure
             // for more information of creating StorageAccountMigrationResource, please refer to the document of StorageAccountMigrationResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resource-group-name";
             string accountName = "accountname";
             StorageAccountMigrationName migrationName = StorageAccountMigrationName.Default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageAccountMigrationResource created on azure
             // for more information of creating StorageAccountMigrationResource, please refer to the document of StorageAccountMigrationResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resource-group-name";
             string accountName = "accountname";
             StorageAccountMigrationName migrationName = StorageAccountMigrationName.Default;

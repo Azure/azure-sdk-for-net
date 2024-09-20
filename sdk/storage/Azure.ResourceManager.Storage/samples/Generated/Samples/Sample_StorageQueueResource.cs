@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageQueueResource created on azure
             // for more information of creating StorageQueueResource, please refer to the document of StorageQueueResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             string queueName = "queue6185";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageQueueResource created on azure
             // for more information of creating StorageQueueResource, please refer to the document of StorageQueueResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             string queueName = "queue6185";
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageQueueResource created on azure
             // for more information of creating StorageQueueResource, please refer to the document of StorageQueueResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             string queueName = "queue6185";

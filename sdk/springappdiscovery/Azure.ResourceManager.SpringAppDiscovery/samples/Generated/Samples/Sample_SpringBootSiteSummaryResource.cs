@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 
             // this example assumes you already have this SpringBootSiteSummaryResource created on azure
             // for more information of creating SpringBootSiteSummaryResource, please refer to the document of SpringBootSiteSummaryResource
-            string subscriptionId = "libzegdqkcxmhqhhhcxm";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgspringbootdiscovery";
             string siteName = "xxkzlvbihwxunadjcpjpjmghmhxrqyvghtpfps";
             string summaryName = "vjB";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 
             // this example assumes you already have this SpringBootSiteSummaryResource created on azure
             // for more information of creating SpringBootSiteSummaryResource, please refer to the document of SpringBootSiteSummaryResource
-            string subscriptionId = "libzegdqkcxmhqhhhcxm";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgspringbootdiscovery";
             string siteName = "xxkzlvbihwxunadjcpjpjmghmhxrqyvghtpfps";
             string summaryName = "vjB";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-6730";
             string serverName = "sqlcrudtest-9007";
             string elasticPoolName = "3481";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-6730";
             string serverName = "sqlcrudtest-9007";
             string elasticPoolName = "3481";
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-4291";
             string serverName = "sqlcrudtest-6574";
             string elasticPoolName = "8749";
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "9d4e2ad0-e20b-4464-9219-353bded52513";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-4673";
             string serverName = "sqlcrudtest-603";
             string elasticPoolName = "7537";
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-7398";
             string serverName = "sqlcrudtest-6661";
             string elasticPoolName = "testpool";
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtestgroup";
             string serverName = "sqlcrudtestserver";
             string elasticPoolName = "testpool";
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string elasticPoolName = "pool1";
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-2369";
             string serverName = "sqlcrudtest-8069";
             string elasticPoolName = "sqlcrudtest-8102";
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-2369";
             string serverName = "sqlcrudtest-8069";
             string elasticPoolName = "sqlcrudtest-8102";
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-2369";
             string serverName = "sqlcrudtest-8069";
             string elasticPoolName = "sqlcrudtest-8102";
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-2369";
             string serverName = "sqlcrudtest-8069";
             string elasticPoolName = "sqlcrudtest-8102";
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-3129";
             string serverName = "sqlcrudtest-228";
             string elasticPoolName = "sqlcrudtest-3851";
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-2369";
             string serverName = "sqlcrudtest-8069";
             string elasticPoolName = "sqlcrudtest-8102";
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-2369";
             string serverName = "sqlcrudtest-8069";
             string elasticPoolName = "sqlcrudtest-8102";
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-2369";
             string serverName = "sqlcrudtest-8069";
             string elasticPoolName = "sqlcrudtest-8102";
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-2369";
             string serverName = "sqlcrudtest-8069";
             string elasticPoolName = "sqlcrudtest-8102";
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-2369";
             string serverName = "sqlcrudtest-8069";
             string elasticPoolName = "sqlcrudtest-8102";
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-2369";
             string serverName = "sqlcrudtest-8069";
             string elasticPoolName = "sqlcrudtest-8102";
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-2369";
             string serverName = "sqlcrudtest-8069";
             string elasticPoolName = "sqlcrudtest-8102";
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ElasticPoolResource created on azure
             // for more information of creating ElasticPoolResource, please refer to the document of ElasticPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string serverName = "testServer";
             string elasticPoolName = "testElasticPool";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this EncryptionScopeResource created on azure
             // for more information of creating EncryptionScopeResource, please refer to the document of EncryptionScopeResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resource-group-name";
             string accountName = "accountname";
             string encryptionScopeName = "{encryption-scope-name}";
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this EncryptionScopeResource created on azure
             // for more information of creating EncryptionScopeResource, please refer to the document of EncryptionScopeResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resource-group-name";
             string accountName = "accountname";
             string encryptionScopeName = "{encryption-scope-name}";

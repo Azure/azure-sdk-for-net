@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ServiceObjectiveResource created on azure
             // for more information of creating ServiceObjectiveResource, please refer to the document of ServiceObjectiveResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string serverName = "sqlcrudtest";
             string serviceObjectiveName = "29dd7459-4a7c-4e56-be22-f0adda49440d";

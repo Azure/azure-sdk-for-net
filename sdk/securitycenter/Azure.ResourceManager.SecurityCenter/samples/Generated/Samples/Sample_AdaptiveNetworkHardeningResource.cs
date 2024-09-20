@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this AdaptiveNetworkHardeningResource created on azure
             // for more information of creating AdaptiveNetworkHardeningResource, please refer to the document of AdaptiveNetworkHardeningResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string resourceNamespace = "Microsoft.Compute";
             string resourceType = "virtualMachines";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this AdaptiveNetworkHardeningResource created on azure
             // for more information of creating AdaptiveNetworkHardeningResource, please refer to the document of AdaptiveNetworkHardeningResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string resourceNamespace = "Microsoft.Compute";
             string resourceType = "virtualMachines";

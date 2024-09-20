@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
 
             // this example assumes you already have this TrafficControllerResource created on azure
             // for more information of creating TrafficControllerResource, please refer to the document of TrafficControllerResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string trafficControllerName = "tc1";
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
 
             // this example assumes you already have this TrafficControllerResource created on azure
             // for more information of creating TrafficControllerResource, please refer to the document of TrafficControllerResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string trafficControllerName = "tc1";
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
 
             // this example assumes you already have this TrafficControllerResource created on azure
             // for more information of creating TrafficControllerResource, please refer to the document of TrafficControllerResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string trafficControllerName = "tc1";
             ResourceIdentifier trafficControllerResourceId = TrafficControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName);

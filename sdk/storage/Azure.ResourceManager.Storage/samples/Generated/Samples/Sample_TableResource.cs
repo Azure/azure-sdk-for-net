@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this TableResource created on azure
             // for more information of creating TableResource, please refer to the document of TableResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             string tableName = "table6185";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this TableResource created on azure
             // for more information of creating TableResource, please refer to the document of TableResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             string tableName = "table6185";
@@ -116,7 +116,7 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
 
             // this example assumes you already have this TableResource created on azure
             // for more information of creating TableResource, please refer to the document of TableResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             string tableName = "table6185";
@@ -148,7 +148,7 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
 
             // this example assumes you already have this TableResource created on azure
             // for more information of creating TableResource, please refer to the document of TableResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             string tableName = "table6185";

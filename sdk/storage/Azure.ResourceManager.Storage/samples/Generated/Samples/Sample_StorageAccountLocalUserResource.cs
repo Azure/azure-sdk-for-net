@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageAccountLocalUserResource created on azure
             // for more information of creating StorageAccountLocalUserResource, please refer to the document of StorageAccountLocalUserResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             string username = "user1";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageAccountLocalUserResource created on azure
             // for more information of creating StorageAccountLocalUserResource, please refer to the document of StorageAccountLocalUserResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             string username = "user1";
@@ -114,7 +114,7 @@ Key = "ssh-rsa keykeykeykeykey=",
 
             // this example assumes you already have this StorageAccountLocalUserResource created on azure
             // for more information of creating StorageAccountLocalUserResource, please refer to the document of StorageAccountLocalUserResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             string username = "user1";
@@ -155,7 +155,7 @@ Key = "ssh-rsa keykeykeykeykey=",
 
             // this example assumes you already have this StorageAccountLocalUserResource created on azure
             // for more information of creating StorageAccountLocalUserResource, please refer to the document of StorageAccountLocalUserResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             string username = "user1";
@@ -202,7 +202,7 @@ Key = "ssh-rsa keykeykeykeykey=",
 
             // this example assumes you already have this StorageAccountLocalUserResource created on azure
             // for more information of creating StorageAccountLocalUserResource, please refer to the document of StorageAccountLocalUserResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             string username = "user1";
@@ -230,7 +230,7 @@ Key = "ssh-rsa keykeykeykeykey=",
 
             // this example assumes you already have this StorageAccountLocalUserResource created on azure
             // for more information of creating StorageAccountLocalUserResource, please refer to the document of StorageAccountLocalUserResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             string username = "user1";
@@ -258,7 +258,7 @@ Key = "ssh-rsa keykeykeykeykey=",
 
             // this example assumes you already have this StorageAccountLocalUserResource created on azure
             // for more information of creating StorageAccountLocalUserResource, please refer to the document of StorageAccountLocalUserResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             string username = "user1";

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityConnectorResource created on azure
             // for more information of creating SecurityConnectorResource, please refer to the document of SecurityConnectorResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gcpResourceGroup";
             string securityConnectorName = "gcpconnector";
             ResourceIdentifier securityConnectorResourceId = SecurityConnectorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, securityConnectorName);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityConnectorResource created on azure
             // for more information of creating SecurityConnectorResource, please refer to the document of SecurityConnectorResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gcpResourceGroup";
             string securityConnectorName = "gcpconnector";
             ResourceIdentifier securityConnectorResourceId = SecurityConnectorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, securityConnectorName);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityConnectorResource created on azure
             // for more information of creating SecurityConnectorResource, please refer to the document of SecurityConnectorResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gcpResourceGroup";
             string securityConnectorName = "gcpconnector";
             ResourceIdentifier securityConnectorResourceId = SecurityConnectorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, securityConnectorName);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityConnectorResource created on azure
             // for more information of creating SecurityConnectorResource, please refer to the document of SecurityConnectorResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gcpResourceGroup";
             string securityConnectorName = "gcpconnector";
             ResourceIdentifier securityConnectorResourceId = SecurityConnectorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, securityConnectorName);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityConnectorResource created on azure
             // for more information of creating SecurityConnectorResource, please refer to the document of SecurityConnectorResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gcpResourceGroup";
             string securityConnectorName = "gcpconnector";
             ResourceIdentifier securityConnectorResourceId = SecurityConnectorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, securityConnectorName);

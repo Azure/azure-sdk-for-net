@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceServerTrustCertificateResource created on azure
             // for more information of creating ManagedInstanceServerTrustCertificateResource, please refer to the document of ManagedInstanceServerTrustCertificateResource
-            string subscriptionId = "38e0dc56-907f-45ba-a97c-74233baad471";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string managedInstanceName = "testcl";
             string certificateName = "customerCertificateName";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceServerTrustCertificateResource created on azure
             // for more information of creating ManagedInstanceServerTrustCertificateResource, please refer to the document of ManagedInstanceServerTrustCertificateResource
-            string subscriptionId = "0574222d-5c7f-489c-a172-b3013eafab53";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string managedInstanceName = "testcl";
             string certificateName = "customerCertificateName";
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceServerTrustCertificateResource created on azure
             // for more information of creating ManagedInstanceServerTrustCertificateResource, please refer to the document of ManagedInstanceServerTrustCertificateResource
-            string subscriptionId = "38e0dc56-907f-45ba-a97c-74233baad471";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string managedInstanceName = "testcl";
             string certificateName = "customerCertificateName";

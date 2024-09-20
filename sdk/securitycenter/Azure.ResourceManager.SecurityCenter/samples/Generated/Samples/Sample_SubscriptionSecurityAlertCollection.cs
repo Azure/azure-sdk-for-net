@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityCenterLocationResource created on azure
             // for more information of creating SecurityCenterLocationResource, please refer to the document of SecurityCenterLocationResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             ResourceIdentifier securityCenterLocationResourceId = SecurityCenterLocationResource.CreateResourceIdentifier(subscriptionId, ascLocation);
             SecurityCenterLocationResource securityCenterLocation = client.GetSecurityCenterLocationResource(securityCenterLocationResourceId);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityCenterLocationResource created on azure
             // for more information of creating SecurityCenterLocationResource, please refer to the document of SecurityCenterLocationResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             ResourceIdentifier securityCenterLocationResourceId = SecurityCenterLocationResource.CreateResourceIdentifier(subscriptionId, ascLocation);
             SecurityCenterLocationResource securityCenterLocation = client.GetSecurityCenterLocationResource(securityCenterLocationResourceId);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityCenterLocationResource created on azure
             // for more information of creating SecurityCenterLocationResource, please refer to the document of SecurityCenterLocationResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             ResourceIdentifier securityCenterLocationResourceId = SecurityCenterLocationResource.CreateResourceIdentifier(subscriptionId, ascLocation);
             SecurityCenterLocationResource securityCenterLocation = client.GetSecurityCenterLocationResource(securityCenterLocationResourceId);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityCenterLocationResource created on azure
             // for more information of creating SecurityCenterLocationResource, please refer to the document of SecurityCenterLocationResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             ResourceIdentifier securityCenterLocationResourceId = SecurityCenterLocationResource.CreateResourceIdentifier(subscriptionId, ascLocation);
             SecurityCenterLocationResource securityCenterLocation = client.GetSecurityCenterLocationResource(securityCenterLocationResourceId);
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityCenterLocationResource created on azure
             // for more information of creating SecurityCenterLocationResource, please refer to the document of SecurityCenterLocationResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation ascLocation = new AzureLocation("centralus");
             ResourceIdentifier securityCenterLocationResourceId = SecurityCenterLocationResource.CreateResourceIdentifier(subscriptionId, ascLocation);
             SecurityCenterLocationResource securityCenterLocation = client.GetSecurityCenterLocationResource(securityCenterLocationResourceId);

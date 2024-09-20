@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this ObjectReplicationPolicyResource created on azure
             // for more information of creating ObjectReplicationPolicyResource, please refer to the document of ObjectReplicationPolicyResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             string objectReplicationPolicyId = "{objectReplicationPolicy-Id}";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this ObjectReplicationPolicyResource created on azure
             // for more information of creating ObjectReplicationPolicyResource, please refer to the document of ObjectReplicationPolicyResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res7687";
             string accountName = "dst112";
             string objectReplicationPolicyId = "default";
@@ -113,7 +113,7 @@ PrefixMatch =
 
             // this example assumes you already have this ObjectReplicationPolicyResource created on azure
             // for more information of creating ObjectReplicationPolicyResource, please refer to the document of ObjectReplicationPolicyResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res7687";
             string accountName = "src1122";
             string objectReplicationPolicyId = "2a20bb73-5717-4635-985a-5d4cf777438f";
@@ -166,7 +166,7 @@ MinCreationTime = "2020-02-19T16:05:00Z",
 
             // this example assumes you already have this ObjectReplicationPolicyResource created on azure
             // for more information of creating ObjectReplicationPolicyResource, please refer to the document of ObjectReplicationPolicyResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res7687";
             string accountName = "dst112";
             string objectReplicationPolicyId = "2a20bb73-5717-4635-985a-5d4cf777438f";
@@ -218,7 +218,7 @@ PrefixMatch =
 
             // this example assumes you already have this ObjectReplicationPolicyResource created on azure
             // for more information of creating ObjectReplicationPolicyResource, please refer to the document of ObjectReplicationPolicyResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res7687";
             string accountName = "src1122";
             string objectReplicationPolicyId = "2a20bb73-5717-4635-985a-5d4cf777438f";
@@ -273,7 +273,7 @@ RuleId = "cfbb4bc2-8b60-429f-b05a-d1e0942b33b2",
 
             // this example assumes you already have this ObjectReplicationPolicyResource created on azure
             // for more information of creating ObjectReplicationPolicyResource, please refer to the document of ObjectReplicationPolicyResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             string objectReplicationPolicyId = "{objectReplicationPolicy-Id}";

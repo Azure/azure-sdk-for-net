@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this JitNetworkAccessPolicyResource created on azure
             // for more information of creating JitNetworkAccessPolicyResource, please refer to the document of JitNetworkAccessPolicyResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRg1";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             string jitNetworkAccessPolicyName = "default";
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this JitNetworkAccessPolicyResource created on azure
             // for more information of creating JitNetworkAccessPolicyResource, please refer to the document of JitNetworkAccessPolicyResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRg1";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             string jitNetworkAccessPolicyName = "default";
@@ -191,7 +191,7 @@ AllowedSourceAddressPrefix = "192.127.0.2",
 
             // this example assumes you already have this JitNetworkAccessPolicyResource created on azure
             // for more information of creating JitNetworkAccessPolicyResource, please refer to the document of JitNetworkAccessPolicyResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRg1";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             string jitNetworkAccessPolicyName = "default";
@@ -219,7 +219,7 @@ AllowedSourceAddressPrefix = "192.127.0.2",
 
             // this example assumes you already have this JitNetworkAccessPolicyResource created on azure
             // for more information of creating JitNetworkAccessPolicyResource, please refer to the document of JitNetworkAccessPolicyResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRg1";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             string jitNetworkAccessPolicyName = "default";

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this ResourceGroupSecurityAlertResource created on azure
             // for more information of creating ResourceGroupSecurityAlertResource, please refer to the document of ResourceGroupSecurityAlertResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRg1";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             string alertName = "2518298467986649999_4d25bfef-2d77-4a08-adc0-3e35715cc92a";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this ResourceGroupSecurityAlertResource created on azure
             // for more information of creating ResourceGroupSecurityAlertResource, please refer to the document of ResourceGroupSecurityAlertResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRg2";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             string alertName = "2518765996949954086_2325cf9e-42a2-4f72-ae7f-9b863cba2d22";
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this ResourceGroupSecurityAlertResource created on azure
             // for more information of creating ResourceGroupSecurityAlertResource, please refer to the document of ResourceGroupSecurityAlertResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRg2";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             string alertName = "2518765996949954086_2325cf9e-42a2-4f72-ae7f-9b863cba2d22";
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this ResourceGroupSecurityAlertResource created on azure
             // for more information of creating ResourceGroupSecurityAlertResource, please refer to the document of ResourceGroupSecurityAlertResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRg2";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             string alertName = "2518765996949954086_2325cf9e-42a2-4f72-ae7f-9b863cba2d22";
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this ResourceGroupSecurityAlertResource created on azure
             // for more information of creating ResourceGroupSecurityAlertResource, please refer to the document of ResourceGroupSecurityAlertResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRg2";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             string alertName = "2518765996949954086_2325cf9e-42a2-4f72-ae7f-9b863cba2d22";

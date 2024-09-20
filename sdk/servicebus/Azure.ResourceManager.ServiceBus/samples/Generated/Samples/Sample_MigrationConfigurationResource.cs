@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this MigrationConfigurationResource created on azure
             // for more information of creating MigrationConfigurationResource, please refer to the document of MigrationConfigurationResource
-            string subscriptionId = "SubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-41";
             MigrationConfigurationName configName = MigrationConfigurationName.Default;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this MigrationConfigurationResource created on azure
             // for more information of creating MigrationConfigurationResource, please refer to the document of MigrationConfigurationResource
-            string subscriptionId = "SubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-41";
             MigrationConfigurationName configName = MigrationConfigurationName.Default;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this MigrationConfigurationResource created on azure
             // for more information of creating MigrationConfigurationResource, please refer to the document of MigrationConfigurationResource
-            string subscriptionId = "SubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-41";
             MigrationConfigurationName configName = MigrationConfigurationName.Default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this MigrationConfigurationResource created on azure
             // for more information of creating MigrationConfigurationResource, please refer to the document of MigrationConfigurationResource
-            string subscriptionId = "SubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-41";
             MigrationConfigurationName configName = MigrationConfigurationName.Default;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this MigrationConfigurationResource created on azure
             // for more information of creating MigrationConfigurationResource, please refer to the document of MigrationConfigurationResource
-            string subscriptionId = "SubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-41";
             MigrationConfigurationName configName = MigrationConfigurationName.Default;

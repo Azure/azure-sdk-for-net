@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this DeletedAccountResource created on azure
             // for more information of creating DeletedAccountResource, please refer to the document of DeletedAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("eastus");
             string deletedAccountName = "sto1125";
             ResourceIdentifier deletedAccountResourceId = DeletedAccountResource.CreateResourceIdentifier(subscriptionId, location, deletedAccountName);

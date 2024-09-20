@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageTaskAssignmentResource created on azure
             // for more information of creating StorageTaskAssignmentResource, please refer to the document of StorageTaskAssignmentResource
-            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4228";
             string accountName = "sto4445";
             string storageTaskAssignmentName = "myassignment1";
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageTaskAssignmentResource created on azure
             // for more information of creating StorageTaskAssignmentResource, please refer to the document of StorageTaskAssignmentResource
-            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4228";
             string accountName = "sto4445";
             string storageTaskAssignmentName = "myassignment1";
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageTaskAssignmentResource created on azure
             // for more information of creating StorageTaskAssignmentResource, please refer to the document of StorageTaskAssignmentResource
-            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4228";
             string accountName = "sto4445";
             string storageTaskAssignmentName = "myassignment1";
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageTaskAssignmentResource created on azure
             // for more information of creating StorageTaskAssignmentResource, please refer to the document of StorageTaskAssignmentResource
-            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4228";
             string accountName = "sto4445";
             string storageTaskAssignmentName = "myassignment1";

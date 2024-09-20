@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this TableServiceResource created on azure
             // for more information of creating TableServiceResource, please refer to the document of TableServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             ResourceIdentifier tableServiceResourceId = TableServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this TableServiceResource created on azure
             // for more information of creating TableServiceResource, please refer to the document of TableServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             ResourceIdentifier tableServiceResourceId = TableServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -124,7 +124,7 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
 
             // this example assumes you already have this TableServiceResource created on azure
             // for more information of creating TableServiceResource, please refer to the document of TableServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             ResourceIdentifier tableServiceResourceId = TableServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -159,7 +159,7 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
 
             // this example assumes you already have this TableServiceResource created on azure
             // for more information of creating TableServiceResource, please refer to the document of TableServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             ResourceIdentifier tableServiceResourceId = TableServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -190,7 +190,7 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
 
             // this example assumes you already have this TableServiceResource created on azure
             // for more information of creating TableServiceResource, please refer to the document of TableServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             ResourceIdentifier tableServiceResourceId = TableServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -233,7 +233,7 @@ ExpireOn = DateTimeOffset.Parse("2022-03-20T08:49:37.0000000Z"),
 
             // this example assumes you already have this TableServiceResource created on azure
             // for more information of creating TableServiceResource, please refer to the document of TableServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9290";
             string accountName = "sto328";
             ResourceIdentifier tableServiceResourceId = TableServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);

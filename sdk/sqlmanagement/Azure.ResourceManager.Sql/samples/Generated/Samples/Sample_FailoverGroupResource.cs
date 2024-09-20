@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this FailoverGroupResource created on azure
             // for more information of creating FailoverGroupResource, please refer to the document of FailoverGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default";
             string serverName = "failovergroupprimaryserver";
             string failoverGroupName = "failovergrouptest3";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this FailoverGroupResource created on azure
             // for more information of creating FailoverGroupResource, please refer to the document of FailoverGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default";
             string serverName = "failover-group-primary-server";
             string failoverGroupName = "failover-group-test-1";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this FailoverGroupResource created on azure
             // for more information of creating FailoverGroupResource, please refer to the document of FailoverGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default";
             string serverName = "failover-group-primary-server";
             string failoverGroupName = "failover-group-test-1";
@@ -135,7 +135,7 @@ new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/reso
 
             // this example assumes you already have this FailoverGroupResource created on azure
             // for more information of creating FailoverGroupResource, please refer to the document of FailoverGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default";
             string serverName = "failover-group-primary-server";
             string failoverGroupName = "failover-group-test-1";
@@ -179,7 +179,7 @@ new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/reso
 
             // this example assumes you already have this FailoverGroupResource created on azure
             // for more information of creating FailoverGroupResource, please refer to the document of FailoverGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default";
             string serverName = "failover-group-secondary-server";
             string failoverGroupName = "failover-group-test-3";
@@ -212,7 +212,7 @@ new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/reso
 
             // this example assumes you already have this FailoverGroupResource created on azure
             // for more information of creating FailoverGroupResource, please refer to the document of FailoverGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default";
             string serverName = "failover-group-secondary-server";
             string failoverGroupName = "failover-group-test-3";
@@ -245,7 +245,7 @@ new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/reso
 
             // this example assumes you already have this FailoverGroupResource created on azure
             // for more information of creating FailoverGroupResource, please refer to the document of FailoverGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default";
             string serverName = "failovergroupsecondaryserver";
             string failoverGroupName = "failovergrouptest3";

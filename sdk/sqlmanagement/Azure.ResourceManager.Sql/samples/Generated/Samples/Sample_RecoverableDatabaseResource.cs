@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this RecoverableDatabaseResource created on azure
             // for more information of creating RecoverableDatabaseResource, please refer to the document of RecoverableDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "recoverabledatabasetest-6852";
             string serverName = "recoverabledatabasetest-2080";
             string databaseName = "recoverabledatabasetest-9187";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this RecoverableDatabaseResource created on azure
             // for more information of creating RecoverableDatabaseResource, please refer to the document of RecoverableDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "recoverabledatabasetest-6852";
             string serverName = "recoverabledatabasetest-2080";
             string databaseName = "recoverabledatabasetest-9187";

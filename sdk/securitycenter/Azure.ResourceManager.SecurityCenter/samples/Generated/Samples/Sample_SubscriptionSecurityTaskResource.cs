@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SubscriptionSecurityTaskResource created on azure
             // for more information of creating SubscriptionSecurityTaskResource, please refer to the document of SubscriptionSecurityTaskResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             string taskName = "62609ee7-d0a5-8616-9fe4-1df5cca7758d";
             ResourceIdentifier subscriptionSecurityTaskResourceId = SubscriptionSecurityTaskResource.CreateResourceIdentifier(subscriptionId, ascLocation, taskName);

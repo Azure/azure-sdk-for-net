@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-6730";
             string serverName = "sqlcrudtest-9007";
             string databaseName = "3481";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-6730";
             string serverName = "sqlcrudtest-9007";
             string databaseName = "3481";
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string serverName = "serverName";
             string databaseName = "myDatabase";
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string serverName = "serverName";
             string databaseName = "myDatabase";
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testserver";
             string databaseName = "testDatabase";
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "a1c0814d-3c18-4e1e-a247-c128c12b1677";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg_20cbe0f0-c2d9-4522-9177-5469aad53029";
             string serverName = "srv_1ffd1cf8-9951-47fb-807d-a9c384763849";
             string databaseName = "878e303f-1ea0-4f17-aa3d-a22ac5e9da08";
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "7b2515fe-f230-4017-8cf0-695163acab85";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg_4007c5a9-b3b0-41e1-bd46-9eef38768a4a";
             string serverName = "srv_3b67ec2a-519b-43a7-8533-fb62dce3431e";
             string databaseName = "719d8fa4-bf0f-48fc-8cd3-ef40fe6ba1fe";
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string serverName = "myServer";
             string databaseName = "myDatabase";
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string serverName = "myServer";
             string databaseName = "myDatabase";
@@ -418,7 +418,7 @@ Column = "Column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string serverName = "myServer";
             string databaseName = "myDatabase";
@@ -453,7 +453,7 @@ Column = "Column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string serverName = "myServer";
             string databaseName = "myDatabase";
@@ -506,7 +506,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "dbSynapse";
@@ -537,7 +537,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-7398";
             string serverName = "sqlcrudtest-4645";
             string databaseName = "sqlcrudtestdb-2342";
@@ -566,7 +566,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-7398";
             string serverName = "sqlcrudtest-4645";
             string databaseName = "sqlcrudtestdb-2342";
@@ -595,7 +595,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -627,7 +627,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -659,7 +659,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -691,7 +691,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -724,7 +724,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -756,7 +756,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -784,7 +784,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -822,7 +822,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -859,7 +859,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -914,7 +914,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -952,7 +952,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -989,7 +989,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -1028,7 +1028,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -1066,7 +1066,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -1099,7 +1099,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string serverName = "testServer";
             string databaseName = "testDatabase";
@@ -1128,7 +1128,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -1166,7 +1166,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -1199,7 +1199,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -1228,7 +1228,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdwdb";
@@ -1261,7 +1261,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdwdb";
@@ -1294,7 +1294,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdwdb";
@@ -1322,7 +1322,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             string databaseName = "testdb";
@@ -1353,7 +1353,7 @@ Column = "column3",
 
             // this example assumes you already have this SqlDatabaseResource created on azure
             // for more information of creating SqlDatabaseResource, please refer to the document of SqlDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-7398";
             string serverName = "sqlcrudtest-6661";
             string databaseName = "testdb";

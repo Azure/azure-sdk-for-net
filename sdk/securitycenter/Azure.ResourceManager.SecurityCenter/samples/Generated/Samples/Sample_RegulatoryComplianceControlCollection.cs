@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this RegulatoryComplianceStandardResource created on azure
             // for more information of creating RegulatoryComplianceStandardResource, please refer to the document of RegulatoryComplianceStandardResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string regulatoryComplianceStandardName = "PCI-DSS-3.2";
             ResourceIdentifier regulatoryComplianceStandardResourceId = RegulatoryComplianceStandardResource.CreateResourceIdentifier(subscriptionId, regulatoryComplianceStandardName);
             RegulatoryComplianceStandardResource regulatoryComplianceStandard = client.GetRegulatoryComplianceStandardResource(regulatoryComplianceStandardResourceId);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this RegulatoryComplianceStandardResource created on azure
             // for more information of creating RegulatoryComplianceStandardResource, please refer to the document of RegulatoryComplianceStandardResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string regulatoryComplianceStandardName = "PCI-DSS-3.2";
             ResourceIdentifier regulatoryComplianceStandardResourceId = RegulatoryComplianceStandardResource.CreateResourceIdentifier(subscriptionId, regulatoryComplianceStandardName);
             RegulatoryComplianceStandardResource regulatoryComplianceStandard = client.GetRegulatoryComplianceStandardResource(regulatoryComplianceStandardResourceId);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this RegulatoryComplianceStandardResource created on azure
             // for more information of creating RegulatoryComplianceStandardResource, please refer to the document of RegulatoryComplianceStandardResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string regulatoryComplianceStandardName = "PCI-DSS-3.2";
             ResourceIdentifier regulatoryComplianceStandardResourceId = RegulatoryComplianceStandardResource.CreateResourceIdentifier(subscriptionId, regulatoryComplianceStandardName);
             RegulatoryComplianceStandardResource regulatoryComplianceStandard = client.GetRegulatoryComplianceStandardResource(regulatoryComplianceStandardResourceId);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this RegulatoryComplianceStandardResource created on azure
             // for more information of creating RegulatoryComplianceStandardResource, please refer to the document of RegulatoryComplianceStandardResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string regulatoryComplianceStandardName = "PCI-DSS-3.2";
             ResourceIdentifier regulatoryComplianceStandardResourceId = RegulatoryComplianceStandardResource.CreateResourceIdentifier(subscriptionId, regulatoryComplianceStandardName);
             RegulatoryComplianceStandardResource regulatoryComplianceStandard = client.GetRegulatoryComplianceStandardResource(regulatoryComplianceStandardResourceId);

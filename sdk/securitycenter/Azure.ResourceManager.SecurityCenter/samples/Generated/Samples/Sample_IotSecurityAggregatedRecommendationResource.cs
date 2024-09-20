@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this IotSecurityAggregatedRecommendationResource created on azure
             // for more information of creating IotSecurityAggregatedRecommendationResource, please refer to the document of IotSecurityAggregatedRecommendationResource
-            string subscriptionId = "075423e9-7d33-4166-8bdf-3920b04e3735";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "IoTEdgeResources";
             string solutionName = "default";
             string aggregatedRecommendationName = "OpenPortsOnDevice";

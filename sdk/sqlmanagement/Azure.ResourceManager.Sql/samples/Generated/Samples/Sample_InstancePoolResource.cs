@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this InstancePoolResource created on azure
             // for more information of creating InstancePoolResource, please refer to the document of InstancePoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string instancePoolName = "testIP";
             ResourceIdentifier instancePoolResourceId = InstancePoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, instancePoolName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this InstancePoolResource created on azure
             // for more information of creating InstancePoolResource, please refer to the document of InstancePoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string instancePoolName = "testIP";
             ResourceIdentifier instancePoolResourceId = InstancePoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, instancePoolName);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this InstancePoolResource created on azure
             // for more information of creating InstancePoolResource, please refer to the document of InstancePoolResource
-            string subscriptionId = "20D7082A-0FC7-4468-82BD-542694D5042B";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Test1";
             string instancePoolName = "pool1";
             ResourceIdentifier instancePoolResourceId = InstancePoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, instancePoolName);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this InstancePoolResource created on azure
             // for more information of creating InstancePoolResource, please refer to the document of InstancePoolResource
-            string subscriptionId = "20D7082A-0FC7-4468-82BD-542694D5042B";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Test1";
             string instancePoolName = "pool1";
             ResourceIdentifier instancePoolResourceId = InstancePoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, instancePoolName);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this InstancePoolResource created on azure
             // for more information of creating InstancePoolResource, please refer to the document of InstancePoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string instancePoolName = "testIP";
             ResourceIdentifier instancePoolResourceId = InstancePoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, instancePoolName);
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this InstancePoolResource created on azure
             // for more information of creating InstancePoolResource, please refer to the document of InstancePoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string instancePoolName = "testIP";
             ResourceIdentifier instancePoolResourceId = InstancePoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, instancePoolName);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this InstancePoolResource created on azure
             // for more information of creating InstancePoolResource, please refer to the document of InstancePoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string instancePoolName = "testIP";
             ResourceIdentifier instancePoolResourceId = InstancePoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, instancePoolName);

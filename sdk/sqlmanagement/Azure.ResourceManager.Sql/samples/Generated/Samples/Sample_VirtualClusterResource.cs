@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "20d7082a-0fc7-4468-82bd-542694d5042b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this VirtualClusterResource created on azure
             // for more information of creating VirtualClusterResource, please refer to the document of VirtualClusterResource
-            string subscriptionId = "20d7082a-0fc7-4468-82bd-542694d5042b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string virtualClusterName = "vc-f769ed71-b3ad-491a-a9d5-26eeceaa6be2";
             ResourceIdentifier virtualClusterResourceId = VirtualClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualClusterName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this VirtualClusterResource created on azure
             // for more information of creating VirtualClusterResource, please refer to the document of VirtualClusterResource
-            string subscriptionId = "20d7082a-0fc7-4468-82bd-542694d5042b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string virtualClusterName = "vc-subnet1-f769ed71-b3ad-491a-a9d5-26eeceaa6be2";
             ResourceIdentifier virtualClusterResourceId = VirtualClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualClusterName);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this VirtualClusterResource created on azure
             // for more information of creating VirtualClusterResource, please refer to the document of VirtualClusterResource
-            string subscriptionId = "20d7082a-0fc7-4468-82bd-542694d5042b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string virtualClusterName = "vc-subnet1-f769ed71-b3ad-491a-a9d5-26eeceaa6be2";
             ResourceIdentifier virtualClusterResourceId = VirtualClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualClusterName);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this VirtualClusterResource created on azure
             // for more information of creating VirtualClusterResource, please refer to the document of VirtualClusterResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-7398";
             string virtualClusterName = "VirtualCluster2b9a846b-2e37-43ef-a8e9-f2c6d645c1d7";
             ResourceIdentifier virtualClusterResourceId = VirtualClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualClusterName);

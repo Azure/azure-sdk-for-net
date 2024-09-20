@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SubscriptionSecurityAlertResource created on azure
             // for more information of creating SubscriptionSecurityAlertResource, please refer to the document of SubscriptionSecurityAlertResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             string alertName = "2518770965529163669_F144EE95-A3E5-42DA-A279-967D115809AA";
             ResourceIdentifier subscriptionSecurityAlertResourceId = SubscriptionSecurityAlertResource.CreateResourceIdentifier(subscriptionId, ascLocation, alertName);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SubscriptionSecurityAlertResource created on azure
             // for more information of creating SubscriptionSecurityAlertResource, please refer to the document of SubscriptionSecurityAlertResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             string alertName = "2518298467986649999_4d25bfef-2d77-4a08-adc0-3e35715cc92a";
             ResourceIdentifier subscriptionSecurityAlertResourceId = SubscriptionSecurityAlertResource.CreateResourceIdentifier(subscriptionId, ascLocation, alertName);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SubscriptionSecurityAlertResource created on azure
             // for more information of creating SubscriptionSecurityAlertResource, please refer to the document of SubscriptionSecurityAlertResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             string alertName = "2518298467986649999_4d25bfef-2d77-4a08-adc0-3e35715cc92a";
             ResourceIdentifier subscriptionSecurityAlertResourceId = SubscriptionSecurityAlertResource.CreateResourceIdentifier(subscriptionId, ascLocation, alertName);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SubscriptionSecurityAlertResource created on azure
             // for more information of creating SubscriptionSecurityAlertResource, please refer to the document of SubscriptionSecurityAlertResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             string alertName = "2518298467986649999_4d25bfef-2d77-4a08-adc0-3e35715cc92a";
             ResourceIdentifier subscriptionSecurityAlertResourceId = SubscriptionSecurityAlertResource.CreateResourceIdentifier(subscriptionId, ascLocation, alertName);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SubscriptionSecurityAlertResource created on azure
             // for more information of creating SubscriptionSecurityAlertResource, please refer to the document of SubscriptionSecurityAlertResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             string alertName = "2518298467986649999_4d25bfef-2d77-4a08-adc0-3e35715cc92a";
             ResourceIdentifier subscriptionSecurityAlertResourceId = SubscriptionSecurityAlertResource.CreateResourceIdentifier(subscriptionId, ascLocation, alertName);

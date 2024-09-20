@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4228";
             string accountName = "sto2434";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9407";
             string accountName = "sto8596";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9407";
             string accountName = "sto8596";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9407";
             string accountName = "sto8596";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9407";
             string accountName = "sto8596";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9407";
             string accountName = "sto8596";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9407";
             string accountName = "sto8596";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9407";
             string accountName = "sto8596";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9407";
             string accountName = "sto8596";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9407";
             string accountName = "sto8596";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -453,7 +453,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9407";
             string accountName = "sto8596";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -527,7 +527,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9407";
             string accountName = "sto8596";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -601,7 +601,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9101";
             string accountName = "sto4445";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -671,7 +671,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res131918";
             string accountName = "sto131918";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -742,7 +742,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9407";
             string accountName = "sto8596";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -786,7 +786,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -818,7 +818,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res418";
             string accountName = "sto2220";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -848,7 +848,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4167";
             string accountName = "sto3539";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -879,7 +879,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4167";
             string accountName = "sto3539";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -910,7 +910,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res7985";
             string accountName = "sto8588";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -943,7 +943,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res7439";
             string accountName = "sto1299";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -976,7 +976,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4228";
             string accountName = "sto2434";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1003,7 +1003,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4228";
             string accountName = "sto2434";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1031,7 +1031,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4228";
             string accountName = "sto2434";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1059,7 +1059,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4228";
             string accountName = "sto2434";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1086,7 +1086,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resource-group-name";
             string accountName = "accountname";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1114,7 +1114,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9101";
             string accountName = "sto4445";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1146,7 +1146,7 @@ new BlobRestoreRange("container/blobpath1","container/blobpath2"),new BlobRestor
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4167";
             string accountName = "sto3539";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1173,7 +1173,7 @@ new BlobRestoreRange("container/blobpath1","container/blobpath2"),new BlobRestor
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -1203,7 +1203,7 @@ new BlobRestoreRange("container/blobpath1","container/blobpath2"),new BlobRestor
 
             // this example assumes you already have this StorageAccountResource created on azure
             // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4228";
             string accountName = "sto4445";
             ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 
             // this example assumes you already have this SpringBootSiteResource created on azure
             // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
-            string subscriptionId = "etmdxomjncqvygm";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgspringbootservers";
             string siteName = "hlkrzldhyobavtabgpubtjbhlslnjmsvkthwcfboriwyxndacjypzbj";
             ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 
             // this example assumes you already have this SpringBootSiteResource created on azure
             // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
-            string subscriptionId = "etmdxomjncqvygm";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgspringbootservers";
             string siteName = "hlkrzldhyobavtabgpubtjbhlslnjmsvkthwcfboriwyxndacjypzbj";
             ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 
             // this example assumes you already have this SpringBootSiteResource created on azure
             // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
-            string subscriptionId = "etmdxomjncqvygm";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgspringbootservers";
             string siteName = "hlkrzldhyobavtabgpubtjbhlslnjmsvkthwcfboriwyxndacjypzbj";
             ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 
             // this example assumes you already have this SpringBootSiteResource created on azure
             // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
-            string subscriptionId = "etmdxomjncqvygm";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgspringbootservers";
             string siteName = "hlkrzldhyobavtabgpubtjbhlslnjmsvkthwcfboriwyxndacjypzbj";
             ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 
             // this example assumes you already have this SpringBootSiteResource created on azure
             // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
-            string subscriptionId = "etmdxomjncqvygm";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgspringbootservers";
             string siteName = "hlkrzldhyobavtabgpubtjbhlslnjmsvkthwcfboriwyxndacjypzbj";
             ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 
             // this example assumes you already have this SpringBootSiteResource created on azure
             // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
-            string subscriptionId = "etmdxomjncqvygm";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgspringbootservers";
             string siteName = "hlkrzldhyobavtabgpubtjbhlslnjmsvkthwcfboriwyxndacjypzbj";
             ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 
             // this example assumes you already have this SpringBootSiteResource created on azure
             // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
-            string subscriptionId = "etmdxomjncqvygm";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgspringbootservers";
             string siteName = "hlkrzldhyobavtabgpubtjbhlslnjmsvkthwcfboriwyxndacjypzbj";
             ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 
             // this example assumes you already have this SpringBootSiteResource created on azure
             // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
-            string subscriptionId = "etmdxomjncqvygm";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgspringbootservers";
             string siteName = "hlkrzldhyobavtabgpubtjbhlslnjmsvkthwcfboriwyxndacjypzbj";
             ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 
             // this example assumes you already have this SpringBootSiteResource created on azure
             // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
-            string subscriptionId = "etmdxomjncqvygm";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgspringbootservers";
             string siteName = "hlkrzldhyobavtabgpubtjbhlslnjmsvkthwcfboriwyxndacjypzbj";
             ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 
             // this example assumes you already have this SpringBootSiteResource created on azure
             // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
-            string subscriptionId = "etmdxomjncqvygm";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgspringbootservers";
             string siteName = "hlkrzldhyobavtabgpubtjbhlslnjmsvkthwcfboriwyxndacjypzbj";
             ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);

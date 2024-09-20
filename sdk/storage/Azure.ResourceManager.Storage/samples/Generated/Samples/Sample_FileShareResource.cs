@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this FileShareResource created on azure
             // for more information of creating FileShareResource, please refer to the document of FileShareResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             string shareName = "share6185";
@@ -78,7 +78,7 @@ Permission = "rwd",
 
             // this example assumes you already have this FileShareResource created on azure
             // for more information of creating FileShareResource, please refer to the document of FileShareResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             string shareName = "share6185";
@@ -117,7 +117,7 @@ Permission = "rwd",
 
             // this example assumes you already have this FileShareResource created on azure
             // for more information of creating FileShareResource, please refer to the document of FileShareResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9871";
             string accountName = "sto6217";
             string shareName = "share1634";
@@ -150,7 +150,7 @@ Permission = "rwd",
 
             // this example assumes you already have this FileShareResource created on azure
             // for more information of creating FileShareResource, please refer to the document of FileShareResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9871";
             string accountName = "sto6217";
             string shareName = "share1634";
@@ -182,7 +182,7 @@ Permission = "rwd",
 
             // this example assumes you already have this FileShareResource created on azure
             // for more information of creating FileShareResource, please refer to the document of FileShareResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4079";
             string accountName = "sto4506";
             string shareName = "share9689";
@@ -210,7 +210,7 @@ Permission = "rwd",
 
             // this example assumes you already have this FileShareResource created on azure
             // for more information of creating FileShareResource, please refer to the document of FileShareResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             string shareName = "share1249";
@@ -239,7 +239,7 @@ Permission = "rwd",
 
             // this example assumes you already have this FileShareResource created on azure
             // for more information of creating FileShareResource, please refer to the document of FileShareResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             string shareName = "share124";
@@ -274,7 +274,7 @@ Permission = "rwd",
 
             // this example assumes you already have this FileShareResource created on azure
             // for more information of creating FileShareResource, please refer to the document of FileShareResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             string shareName = "share12";

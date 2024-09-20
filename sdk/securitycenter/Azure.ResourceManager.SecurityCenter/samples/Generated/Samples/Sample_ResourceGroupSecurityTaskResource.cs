@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this ResourceGroupSecurityTaskResource created on azure
             // for more information of creating ResourceGroupSecurityTaskResource, please refer to the document of ResourceGroupSecurityTaskResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRg";
             AzureLocation ascLocation = new AzureLocation("westeurope");
             string taskName = "d55b4dc0-779c-c66c-33e5-d7bce24c4222";

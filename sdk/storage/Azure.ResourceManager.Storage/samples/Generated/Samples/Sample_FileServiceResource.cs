@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this FileServiceResource created on azure
             // for more information of creating FileServiceResource, please refer to the document of FileServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4410";
             string accountName = "sto8607";
             ResourceIdentifier fileServiceResourceId = FileServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -105,7 +105,7 @@ CorsRuleAllowedMethod.Get,CorsRuleAllowedMethod.Put
 
             // this example assumes you already have this FileServiceResource created on azure
             // for more information of creating FileServiceResource, please refer to the document of FileServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4410";
             string accountName = "sto8607";
             ResourceIdentifier fileServiceResourceId = FileServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -144,7 +144,7 @@ CorsRuleAllowedMethod.Get,CorsRuleAllowedMethod.Put
 
             // this example assumes you already have this FileServiceResource created on azure
             // for more information of creating FileServiceResource, please refer to the document of FileServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4410";
             string accountName = "sto8607";
             ResourceIdentifier fileServiceResourceId = FileServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -186,7 +186,7 @@ CorsRuleAllowedMethod.Get,CorsRuleAllowedMethod.Put
 
             // this example assumes you already have this FileServiceResource created on azure
             // for more information of creating FileServiceResource, please refer to the document of FileServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4410";
             string accountName = "sto8607";
             ResourceIdentifier fileServiceResourceId = FileServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusTopicResource created on azure
             // for more information of creating ServiceBusTopicResource, please refer to the document of ServiceBusTopicResource
-            string subscriptionId = "5{Subscriptionid}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-1349";
             string topicName = "sdk-Topics-8740";
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusTopicResource created on azure
             // for more information of creating ServiceBusTopicResource, please refer to the document of ServiceBusTopicResource
-            string subscriptionId = "Subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-1349";
             string topicName = "sdk-Topics-8740";
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusTopicResource created on azure
             // for more information of creating ServiceBusTopicResource, please refer to the document of ServiceBusTopicResource
-            string subscriptionId = "Subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-1349";
             string topicName = "sdk-Topics-8740";
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusTopicResource created on azure
             // for more information of creating ServiceBusTopicResource, please refer to the document of ServiceBusTopicResource
-            string subscriptionId = "Subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-1349";
             string topicName = "sdk-Topics-8740";
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusTopicResource created on azure
             // for more information of creating ServiceBusTopicResource, please refer to the document of ServiceBusTopicResource
-            string subscriptionId = "Subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-1349";
             string topicName = "sdk-Topics-8740";

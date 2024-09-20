@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
 
             // this example assumes you already have this SqlVmGroupResource created on azure
             // for more information of creating SqlVmGroupResource, please refer to the document of SqlVmGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string sqlVmGroupName = "testvmgroup";
             ResourceIdentifier sqlVmGroupResourceId = SqlVmGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sqlVmGroupName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
 
             // this example assumes you already have this SqlVmGroupResource created on azure
             // for more information of creating SqlVmGroupResource, please refer to the document of SqlVmGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string sqlVmGroupName = "testvmgroup";
             ResourceIdentifier sqlVmGroupResourceId = SqlVmGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sqlVmGroupName);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
 
             // this example assumes you already have this SqlVmGroupResource created on azure
             // for more information of creating SqlVmGroupResource, please refer to the document of SqlVmGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string sqlVmGroupName = "testvmgroup";
             ResourceIdentifier sqlVmGroupResourceId = SqlVmGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sqlVmGroupName);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
 
             // this example assumes you already have this SqlVmGroupResource created on azure
             // for more information of creating SqlVmGroupResource, please refer to the document of SqlVmGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string sqlVmGroupName = "testvmgroup";
             ResourceIdentifier sqlVmGroupResourceId = SqlVmGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sqlVmGroupName);
@@ -198,7 +198,7 @@ new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/reso
 
             // this example assumes you already have this SqlVmGroupResource created on azure
             // for more information of creating SqlVmGroupResource, please refer to the document of SqlVmGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string sqlVmGroupName = "testvmgroup";
             ResourceIdentifier sqlVmGroupResourceId = SqlVmGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sqlVmGroupName);
@@ -251,7 +251,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-333
 
             // this example assumes you already have this SqlVmGroupResource created on azure
             // for more information of creating SqlVmGroupResource, please refer to the document of SqlVmGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string sqlVmGroupName = "testvmgroup";
             ResourceIdentifier sqlVmGroupResourceId = SqlVmGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sqlVmGroupName);

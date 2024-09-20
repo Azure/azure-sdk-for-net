@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobServiceResource created on azure
             // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9290";
             string accountName = "sto1590";
             ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobServiceResource created on azure
             // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9290";
             string accountName = "sto1590";
             ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobServiceResource created on azure
             // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobServiceResource created on azure
             // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobServiceResource created on azure
             // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobServiceResource created on azure
             // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9871";
             string accountName = "sto6217";
             ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobServiceResource created on azure
             // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9871";
             string accountName = "sto6217";
             ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobServiceResource created on azure
             // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9871";
             string accountName = "sto6217";
             ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobServiceResource created on azure
             // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9871";
             string accountName = "sto6217";
             ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobServiceResource created on azure
             // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9871";
             string accountName = "sto6217";
             ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobServiceResource created on azure
             // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9871";
             string accountName = "sto6217";
             ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);

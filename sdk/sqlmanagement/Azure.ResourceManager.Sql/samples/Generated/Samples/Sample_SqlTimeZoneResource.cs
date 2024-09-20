@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlTimeZoneResource created on azure
             // for more information of creating SqlTimeZoneResource, please refer to the document of SqlTimeZoneResource
-            string subscriptionId = "37d5e605-6142-4d79-b564-28b6dbfeec0f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation locationName = new AzureLocation("canadaeast");
             string timeZoneId = "Haiti Standard Time";
             ResourceIdentifier sqlTimeZoneResourceId = SqlTimeZoneResource.CreateResourceIdentifier(subscriptionId, locationName, timeZoneId);

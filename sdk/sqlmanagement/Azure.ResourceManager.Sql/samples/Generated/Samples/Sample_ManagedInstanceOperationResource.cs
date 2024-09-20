@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceOperationResource created on azure
             // for more information of creating ManagedInstanceOperationResource, please refer to the document of ManagedInstanceOperationResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-7398";
             string managedInstanceName = "sqlcrudtest-4645";
             Guid operationId = Guid.Parse("00000000-1111-2222-3333-444444444444");
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceOperationResource created on azure
             // for more information of creating ManagedInstanceOperationResource, please refer to the document of ManagedInstanceOperationResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-7398";
             string managedInstanceName = "sqlcrudtest-4645";
             Guid operationId = Guid.Parse("11111111-1111-1111-1111-111111111111");

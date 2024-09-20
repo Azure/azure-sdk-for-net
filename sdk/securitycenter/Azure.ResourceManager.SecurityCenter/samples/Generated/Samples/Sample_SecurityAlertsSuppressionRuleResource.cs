@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityAlertsSuppressionRuleResource created on azure
             // for more information of creating SecurityAlertsSuppressionRuleResource, please refer to the document of SecurityAlertsSuppressionRuleResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string alertsSuppressionRuleName = "dismissIpAnomalyAlerts";
             ResourceIdentifier securityAlertsSuppressionRuleResourceId = SecurityAlertsSuppressionRuleResource.CreateResourceIdentifier(subscriptionId, alertsSuppressionRuleName);
             SecurityAlertsSuppressionRuleResource securityAlertsSuppressionRule = client.GetSecurityAlertsSuppressionRuleResource(securityAlertsSuppressionRuleResourceId);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityAlertsSuppressionRuleResource created on azure
             // for more information of creating SecurityAlertsSuppressionRuleResource, please refer to the document of SecurityAlertsSuppressionRuleResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string alertsSuppressionRuleName = "dismissIpAnomalyAlerts";
             ResourceIdentifier securityAlertsSuppressionRuleResourceId = SecurityAlertsSuppressionRuleResource.CreateResourceIdentifier(subscriptionId, alertsSuppressionRuleName);
             SecurityAlertsSuppressionRuleResource securityAlertsSuppressionRule = client.GetSecurityAlertsSuppressionRuleResource(securityAlertsSuppressionRuleResourceId);
@@ -109,7 +109,7 @@ Field = "entities.process.commandline",
 
             // this example assumes you already have this SecurityAlertsSuppressionRuleResource created on azure
             // for more information of creating SecurityAlertsSuppressionRuleResource, please refer to the document of SecurityAlertsSuppressionRuleResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string alertsSuppressionRuleName = "dismissIpAnomalyAlerts";
             ResourceIdentifier securityAlertsSuppressionRuleResourceId = SecurityAlertsSuppressionRuleResource.CreateResourceIdentifier(subscriptionId, alertsSuppressionRuleName);
             SecurityAlertsSuppressionRuleResource securityAlertsSuppressionRule = client.GetSecurityAlertsSuppressionRuleResource(securityAlertsSuppressionRuleResourceId);
