@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this EventGridNamespaceClientResource created on azure
             // for more information of creating EventGridNamespaceClientResource, please refer to the document of EventGridNamespaceClientResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string namespaceName = "exampleNamespaceName1";
             string clientName = "exampleClientName1";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this EventGridNamespaceClientResource created on azure
             // for more information of creating EventGridNamespaceClientResource, please refer to the document of EventGridNamespaceClientResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string namespaceName = "exampleNamespaceName1";
             string clientName = "exampleClientName1";
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this EventGridNamespaceClientResource created on azure
             // for more information of creating EventGridNamespaceClientResource, please refer to the document of EventGridNamespaceClientResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string namespaceName = "exampleNamespaceName1";
             string clientName = "exampleClientName1";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // this example assumes you already have this DevTestLabResource created on azure
             // for more information of creating DevTestLabResource, please refer to the document of DevTestLabResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string labName = "{devtestlabName}";
             ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // this example assumes you already have this DevTestLabResource created on azure
             // for more information of creating DevTestLabResource, please refer to the document of DevTestLabResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string labName = "{devtestlabName}";
             ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // this example assumes you already have this DevTestLabResource created on azure
             // for more information of creating DevTestLabResource, please refer to the document of DevTestLabResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string labName = "{devtestlabName}";
             ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // this example assumes you already have this DevTestLabResource created on azure
             // for more information of creating DevTestLabResource, please refer to the document of DevTestLabResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string labName = "{devtestlabName}";
             ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // this example assumes you already have this DevTestLabResource created on azure
             // for more information of creating DevTestLabResource, please refer to the document of DevTestLabResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string labName = "{devtestlabName}";
             ResourceIdentifier devTestLabResourceId = DevTestLabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName);

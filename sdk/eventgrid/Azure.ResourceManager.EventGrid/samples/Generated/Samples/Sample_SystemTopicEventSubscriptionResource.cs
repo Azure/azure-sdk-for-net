@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this SystemTopicEventSubscriptionResource created on azure
             // for more information of creating SystemTopicEventSubscriptionResource, please refer to the document of SystemTopicEventSubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string systemTopicName = "exampleSystemTopic1";
             string eventSubscriptionName = "examplesubscription1";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this SystemTopicEventSubscriptionResource created on azure
             // for more information of creating SystemTopicEventSubscriptionResource, please refer to the document of SystemTopicEventSubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string systemTopicName = "exampleSystemTopic1";
             string eventSubscriptionName = "examplesubscription1";
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this SystemTopicEventSubscriptionResource created on azure
             // for more information of creating SystemTopicEventSubscriptionResource, please refer to the document of SystemTopicEventSubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string systemTopicName = "exampleSystemTopic1";
             string eventSubscriptionName = "examplesubscription1";
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this SystemTopicEventSubscriptionResource created on azure
             // for more information of creating SystemTopicEventSubscriptionResource, please refer to the document of SystemTopicEventSubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string systemTopicName = "exampleSystemTopic1";
             string eventSubscriptionName = "exampleEventSubscriptionName1";
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this SystemTopicEventSubscriptionResource created on azure
             // for more information of creating SystemTopicEventSubscriptionResource, please refer to the document of SystemTopicEventSubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string systemTopicName = "exampleSystemTopic1";
             string eventSubscriptionName = "examplesubscription1";

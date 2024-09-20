@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsDisasterRecoveryResource created on azure
             // for more information of creating EventHubsDisasterRecoveryResource, please refer to the document of EventHubsDisasterRecoveryResource
-            string subscriptionId = "exampleSubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string namespaceName = "sdk-Namespace-9080";
             string @alias = "sdk-DisasterRecovery-4047";
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsDisasterRecoveryResource created on azure
             // for more information of creating EventHubsDisasterRecoveryResource, please refer to the document of EventHubsDisasterRecoveryResource
-            string subscriptionId = "exampleSubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string namespaceName = "sdk-Namespace-9080";
             string @alias = "sdk-DisasterRecovery-4879";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsDisasterRecoveryResource created on azure
             // for more information of creating EventHubsDisasterRecoveryResource, please refer to the document of EventHubsDisasterRecoveryResource
-            string subscriptionId = "exampleSubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string namespaceName = "sdk-Namespace-9080";
             string @alias = "sdk-DisasterRecovery-4879";
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsDisasterRecoveryResource created on azure
             // for more information of creating EventHubsDisasterRecoveryResource, please refer to the document of EventHubsDisasterRecoveryResource
-            string subscriptionId = "exampleSubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string namespaceName = "sdk-Namespace-9080";
             string @alias = "sdk-DisasterRecovery-4879";

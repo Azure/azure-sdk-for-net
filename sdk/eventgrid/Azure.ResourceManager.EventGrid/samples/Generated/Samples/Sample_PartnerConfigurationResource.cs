@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerConfigurationResource created on azure
             // for more information of creating PartnerConfigurationResource, please refer to the document of PartnerConfigurationResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             ResourceIdentifier partnerConfigurationResourceId = PartnerConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             PartnerConfigurationResource partnerConfiguration = client.GetPartnerConfigurationResource(partnerConfigurationResourceId);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerConfigurationResource created on azure
             // for more information of creating PartnerConfigurationResource, please refer to the document of PartnerConfigurationResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             ResourceIdentifier partnerConfigurationResourceId = PartnerConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             PartnerConfigurationResource partnerConfiguration = client.GetPartnerConfigurationResource(partnerConfigurationResourceId);
@@ -113,7 +113,7 @@ AuthorizationExpireOn = DateTimeOffset.Parse("2022-02-20T01:00:00.142Z"),
 
             // this example assumes you already have this PartnerConfigurationResource created on azure
             // for more information of creating PartnerConfigurationResource, please refer to the document of PartnerConfigurationResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             ResourceIdentifier partnerConfigurationResourceId = PartnerConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             PartnerConfigurationResource partnerConfiguration = client.GetPartnerConfigurationResource(partnerConfigurationResourceId);
@@ -139,7 +139,7 @@ AuthorizationExpireOn = DateTimeOffset.Parse("2022-02-20T01:00:00.142Z"),
 
             // this example assumes you already have this PartnerConfigurationResource created on azure
             // for more information of creating PartnerConfigurationResource, please refer to the document of PartnerConfigurationResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             ResourceIdentifier partnerConfigurationResourceId = PartnerConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             PartnerConfigurationResource partnerConfiguration = client.GetPartnerConfigurationResource(partnerConfigurationResourceId);
@@ -179,7 +179,7 @@ AuthorizationExpireOn = DateTimeOffset.Parse("2022-02-20T01:00:00.142Z"),
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -211,7 +211,7 @@ AuthorizationExpireOn = DateTimeOffset.Parse("2022-02-20T01:00:00.142Z"),
 
             // this example assumes you already have this PartnerConfigurationResource created on azure
             // for more information of creating PartnerConfigurationResource, please refer to the document of PartnerConfigurationResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             ResourceIdentifier partnerConfigurationResourceId = PartnerConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             PartnerConfigurationResource partnerConfiguration = client.GetPartnerConfigurationResource(partnerConfigurationResourceId);
@@ -247,7 +247,7 @@ AuthorizationExpireOn = DateTimeOffset.Parse("2022-02-20T01:00:00.142Z"),
 
             // this example assumes you already have this PartnerConfigurationResource created on azure
             // for more information of creating PartnerConfigurationResource, please refer to the document of PartnerConfigurationResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             ResourceIdentifier partnerConfigurationResourceId = PartnerConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             PartnerConfigurationResource partnerConfiguration = client.GetPartnerConfigurationResource(partnerConfigurationResourceId);

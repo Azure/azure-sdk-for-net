@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsSchemaGroupResource created on azure
             // for more information of creating EventHubsSchemaGroupResource, please refer to the document of EventHubsSchemaGroupResource
-            string subscriptionId = "e8baea74-64ce-459b-bee3-5aa4c47b3ae3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "alitest";
             string namespaceName = "ali-ua-test-eh-system-1";
             string schemaGroupName = "testSchemaGroup1";
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsSchemaGroupResource created on azure
             // for more information of creating EventHubsSchemaGroupResource, please refer to the document of EventHubsSchemaGroupResource
-            string subscriptionId = "e8baea74-64ce-459b-bee3-5aa4c47b3ae3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "alitest";
             string namespaceName = "ali-ua-test-eh-system-1";
             string schemaGroupName = "testSchemaGroup1";
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsSchemaGroupResource created on azure
             // for more information of creating EventHubsSchemaGroupResource, please refer to the document of EventHubsSchemaGroupResource
-            string subscriptionId = "e8baea74-64ce-459b-bee3-5aa4c47b3ae3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "alitest";
             string namespaceName = "ali-ua-test-eh-system-1";
             string schemaGroupName = "testSchemaGroup1";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // this example assumes you already have this DevTestLabCostResource created on azure
             // for more information of creating DevTestLabCostResource, please refer to the document of DevTestLabCostResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string labName = "{labName}";
             string name = "targetCost";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // this example assumes you already have this DevTestLabCostResource created on azure
             // for more information of creating DevTestLabCostResource, please refer to the document of DevTestLabCostResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string labName = "{labName}";
             string name = "targetCost";

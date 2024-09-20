@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerNamespaceChannelResource created on azure
             // for more information of creating PartnerNamespaceChannelResource, please refer to the document of PartnerNamespaceChannelResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string partnerNamespaceName = "examplePartnerNamespaceName1";
             string channelName = "exampleChannelName1";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerNamespaceChannelResource created on azure
             // for more information of creating PartnerNamespaceChannelResource, please refer to the document of PartnerNamespaceChannelResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string partnerNamespaceName = "examplePartnerNamespaceName1";
             string channelName = "exampleEventChannelName1";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerNamespaceChannelResource created on azure
             // for more information of creating PartnerNamespaceChannelResource, please refer to the document of PartnerNamespaceChannelResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string partnerNamespaceName = "examplePartnerNamespaceName1";
             string channelName = "exampleChannelName1";
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerNamespaceChannelResource created on azure
             // for more information of creating PartnerNamespaceChannelResource, please refer to the document of PartnerNamespaceChannelResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string partnerNamespaceName = "examplenamespace";
             string channelName = "examplechannel";

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EdgeZones.Samples
 
             // this example assumes you already have this ExtendedZoneResource created on azure
             // for more information of creating ExtendedZoneResource, please refer to the document of ExtendedZoneResource
-            string subscriptionId = "a1ffc958-d2c7-493e-9f1e-125a0477f536";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string extendedZoneName = "losangeles";
             ResourceIdentifier extendedZoneResourceId = ExtendedZoneResource.CreateResourceIdentifier(subscriptionId, extendedZoneName);
             ExtendedZoneResource extendedZone = client.GetExtendedZoneResource(extendedZoneResourceId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EdgeZones.Samples
 
             // this example assumes you already have this ExtendedZoneResource created on azure
             // for more information of creating ExtendedZoneResource, please refer to the document of ExtendedZoneResource
-            string subscriptionId = "a1ffc958-d2c7-493e-9f1e-125a0477f536";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string extendedZoneName = "losangeles";
             ResourceIdentifier extendedZoneResourceId = ExtendedZoneResource.CreateResourceIdentifier(subscriptionId, extendedZoneName);
             ExtendedZoneResource extendedZone = client.GetExtendedZoneResource(extendedZoneResourceId);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EdgeZones.Samples
 
             // this example assumes you already have this ExtendedZoneResource created on azure
             // for more information of creating ExtendedZoneResource, please refer to the document of ExtendedZoneResource
-            string subscriptionId = "a1ffc958-d2c7-493e-9f1e-125a0477f536";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string extendedZoneName = "losangeles";
             ResourceIdentifier extendedZoneResourceId = ExtendedZoneResource.CreateResourceIdentifier(subscriptionId, extendedZoneName);
             ExtendedZoneResource extendedZone = client.GetExtendedZoneResource(extendedZoneResourceId);

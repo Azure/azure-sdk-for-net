@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this NamespaceTopicEventSubscriptionResource created on azure
             // for more information of creating NamespaceTopicEventSubscriptionResource, please refer to the document of NamespaceTopicEventSubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string namespaceName = "examplenamespace2";
             string topicName = "examplenamespacetopic2";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this NamespaceTopicEventSubscriptionResource created on azure
             // for more information of creating NamespaceTopicEventSubscriptionResource, please refer to the document of NamespaceTopicEventSubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string namespaceName = "examplenamespace2";
             string topicName = "examplenamespacetopic2";
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this NamespaceTopicEventSubscriptionResource created on azure
             // for more information of creating NamespaceTopicEventSubscriptionResource, please refer to the document of NamespaceTopicEventSubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string namespaceName = "exampleNamespaceName1";
             string topicName = "exampleNamespaceTopicName1";
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this NamespaceTopicEventSubscriptionResource created on azure
             // for more information of creating NamespaceTopicEventSubscriptionResource, please refer to the document of NamespaceTopicEventSubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string namespaceName = "exampleNamespace";
             string topicName = "exampleNamespaceTopic";
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this NamespaceTopicEventSubscriptionResource created on azure
             // for more information of creating NamespaceTopicEventSubscriptionResource, please refer to the document of NamespaceTopicEventSubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string namespaceName = "exampleNamespaceName1";
             string topicName = "exampleDomainTopic1";
