@@ -87,7 +87,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             OcrSkillLanguage? defaultLanguageCode = default;
             bool? detectOrientation = default;
-            OcrLineEnding? lineEnding = default;
+            LineEnding? lineEnding = default;
             string odataType = default;
             string name = default;
             string description = default;
@@ -122,7 +122,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    lineEnding = new OcrLineEnding(property.Value.GetString());
+                    lineEnding = new LineEnding(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))

@@ -13,7 +13,7 @@ We will create an instace of `SearchIndex` and define `Hotel` fields.
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Reduced_Vector_Search_Index
 string vectorSearchProfileName = "my-vector-profile";
 string vectorSearchHnswConfig = "my-hsnw-vector-config";
-string deploymentName = "my-text-embedding-3-small";
+string deploymentId = "my-text-embedding-3-small";
 int modelDimensions = 256; // Here's the reduced model dimensions
 
 string indexName = "hotel";
@@ -34,7 +34,7 @@ SearchIndex searchIndex = new(indexName)
         {
             new VectorSearchProfile(vectorSearchProfileName, vectorSearchHnswConfig)
             {
-                VectorizerName = "openai"
+                Vectorizer = "openai"
             }
         },
         Algorithms =
@@ -45,11 +45,11 @@ SearchIndex searchIndex = new(indexName)
         {
             new AzureOpenAIVectorizer("openai")
             {
-                Parameters  = new AzureOpenAIVectorizerParameters()
+                AzureOpenAIParameters  = new AzureOpenAIParameters()
                 {
                     ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
                     ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
-                    DeploymentName = deploymentName,
+                    DeploymentId = deploymentId,
                     ModelName = AzureOpenAIModelName.TextEmbedding3Small
                 }
             }

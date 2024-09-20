@@ -40,10 +40,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("knowledgeStore"u8);
                 writer.WriteObjectValue(KnowledgeStore);
             }
-            if (Optional.IsDefined(IndexProjection))
+            if (Optional.IsDefined(IndexProjections))
             {
                 writer.WritePropertyName("indexProjections"u8);
-                writer.WriteObjectValue(IndexProjection);
+                writer.WriteObjectValue(IndexProjections);
             }
             if (Optional.IsDefined(_etag))
             {
@@ -76,7 +76,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<SearchIndexerSkill> skills = default;
             CognitiveServicesAccount cognitiveServices = default;
             KnowledgeStore knowledgeStore = default;
-            SearchIndexerIndexProjection indexProjections = default;
+            SearchIndexerIndexProjections indexProjections = default;
             string odataEtag = default;
             SearchResourceEncryptionKey encryptionKey = default;
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    indexProjections = SearchIndexerIndexProjection.DeserializeSearchIndexerIndexProjection(property.Value);
+                    indexProjections = SearchIndexerIndexProjections.DeserializeSearchIndexerIndexProjections(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.etag"u8))

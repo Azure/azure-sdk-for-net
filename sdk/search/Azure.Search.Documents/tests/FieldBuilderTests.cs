@@ -232,6 +232,7 @@ namespace Azure.Search.Documents.Tests
             fields.OnlyTrueFor(
                 field => field.IsSearchable.GetValueOrDefault(false),
                 nameof(ReflectableModel.Text),
+                nameof(ReflectableModel.TextWithNormalizer),
                 nameof(ReflectableModel.MoreText),
                 nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Name),
                 nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City),
@@ -263,6 +264,7 @@ namespace Azure.Search.Documents.Tests
             fields.OnlyTrueFor(
                 field => field.IsFilterable.GetValueOrDefault(false),
                 nameof(ReflectableModel.FilterableText),
+                nameof(ReflectableModel.TextWithNormalizer),
                 nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Rating),
                 nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
                 nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Rating),
@@ -341,6 +343,15 @@ namespace Azure.Search.Documents.Tests
             fields.OnlyTrueFor(
                 field => field.IndexAnalyzerName == LexicalAnalyzerName.Whitespace,
                 nameof(ReflectableModel.TextWithIndexAnalyzer));
+        }
+
+        [TestCaseSource(nameof(TestModelTypeTestData))]
+        public void NormalizerSetOnlyOnPropertiesWithNormalizerAttribute(Type modelType)
+        {
+            var fields = new FieldMap(BuildForType(modelType));
+            fields.OnlyTrueFor(
+                field => field.NormalizerName == LexicalNormalizerName.Lowercase,
+                nameof(ReflectableModel.TextWithNormalizer));
         }
 
         [TestCaseSource(nameof(TestModelTypeTestData))]

@@ -34,22 +34,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DeploymentName))
+            if (Optional.IsDefined(DeploymentId))
             {
                 writer.WritePropertyName("deploymentId"u8);
-                writer.WriteStringValue(DeploymentName);
+                writer.WriteStringValue(DeploymentId);
             }
             if (Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Optional.IsDefined(AuthenticationIdentity))
+            if (Optional.IsDefined(AuthIdentity))
             {
-                if (AuthenticationIdentity != null)
+                if (AuthIdentity != null)
                 {
                     writer.WritePropertyName("authIdentity"u8);
-                    writer.WriteObjectValue(AuthenticationIdentity);
+                    writer.WriteObjectValue(AuthIdentity);
                 }
                 else
                 {

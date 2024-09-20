@@ -23,10 +23,10 @@ namespace Azure.Search.Documents.Models
             IReadOnlyDictionary<string, IList<FacetResult>> searchFacets = default;
             IReadOnlyList<QueryAnswerResult> searchAnswers = default;
             SearchOptions searchNextPageParameters = default;
-            IReadOnlyList<SearchResult> value = default;
-            string odataNextLink = default;
             SemanticErrorReason? searchSemanticPartialResponseReason = default;
             SemanticSearchResultsType? searchSemanticPartialResponseType = default;
+            IReadOnlyList<SearchResult> value = default;
+            string odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.count"u8))
@@ -97,21 +97,6 @@ namespace Azure.Search.Documents.Models
                     searchNextPageParameters = SearchOptions.DeserializeSearchOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("value"u8))
-                {
-                    List<SearchResult> array = new List<SearchResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(SearchResult.DeserializeSearchResult(item));
-                    }
-                    value = array;
-                    continue;
-                }
-                if (property.NameEquals("@odata.nextLink"u8))
-                {
-                    odataNextLink = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("@search.semanticPartialResponseReason"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -130,6 +115,21 @@ namespace Azure.Search.Documents.Models
                     searchSemanticPartialResponseType = new SemanticSearchResultsType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("value"u8))
+                {
+                    List<SearchResult> array = new List<SearchResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SearchResult.DeserializeSearchResult(item));
+                    }
+                    value = array;
+                    continue;
+                }
+                if (property.NameEquals("@odata.nextLink"u8))
+                {
+                    odataNextLink = property.Value.GetString();
+                    continue;
+                }
             }
             return new SearchDocumentsResult(
                 odataCount,
@@ -137,10 +137,10 @@ namespace Azure.Search.Documents.Models
                 searchFacets ?? new ChangeTrackingDictionary<string, IList<FacetResult>>(),
                 searchAnswers ?? new ChangeTrackingList<QueryAnswerResult>(),
                 searchNextPageParameters,
-                value,
-                odataNextLink,
                 searchSemanticPartialResponseReason,
-                searchSemanticPartialResponseType);
+                searchSemanticPartialResponseType,
+                value,
+                odataNextLink);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

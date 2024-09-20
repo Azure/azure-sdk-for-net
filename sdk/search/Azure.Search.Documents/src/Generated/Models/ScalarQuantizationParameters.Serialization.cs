@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            VectorSearchCompressionTarget? quantizedDataType = default;
+            VectorSearchCompressionTargetDataType? quantizedDataType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("quantizedDataType"u8))
@@ -46,7 +46,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         quantizedDataType = null;
                         continue;
                     }
-                    quantizedDataType = new VectorSearchCompressionTarget(property.Value.GetString());
+                    quantizedDataType = new VectorSearchCompressionTargetDataType(property.Value.GetString());
                     continue;
                 }
             }

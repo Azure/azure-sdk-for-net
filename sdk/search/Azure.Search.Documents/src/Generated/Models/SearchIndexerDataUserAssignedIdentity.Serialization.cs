@@ -28,13 +28,13 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            ResourceIdentifier userAssignedIdentity = default;
+            string userAssignedIdentity = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentity"u8))
                 {
-                    userAssignedIdentity = new ResourceIdentifier(property.Value.GetString());
+                    userAssignedIdentity = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))

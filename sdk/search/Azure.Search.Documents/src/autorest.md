@@ -11,8 +11,8 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/dc27f9b32787533cd4d07fe0de5245f2f8354dbe/specification/search/data-plane/Azure.Search/stable/2024-07-01/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/dc27f9b32787533cd4d07fe0de5245f2f8354dbe/specification/search/data-plane/Azure.Search/stable/2024-07-01/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/5a1fe448805429403c38a2637ee32c82ba755530/specification/search/data-plane/Azure.Search/preview/2024-05-01-preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/5a1fe448805429403c38a2637ee32c82ba755530/specification/search/data-plane/Azure.Search/preview/2024-05-01-preview/searchservice.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
@@ -79,41 +79,6 @@ directive:
   where: $.paths["/docs('{key}')"].get.responses["200"].schema
   transform:  >
     $.additionalProperties = true;
-```
-
-### Archboard feedback for 2024-07-01
-
-```yaml
-directive:
-- from: "searchservice.json"
-  where: $.definitions
-  transform: >
-    $.AzureOpenAIParameters["x-ms-client-name"] = "AzureOpenAIVectorizerParameters";
-    $.AzureOpenAIParameters.properties.authIdentity["x-ms-client-name"] = "AuthenticationIdentity";
-    $.AzureOpenAIParameters.properties.resourceUri["x-ms-client-name"] = "resourceUri";
-
-    $.VectorSearchVectorizer.properties.name["x-ms-client-name"] = "VectorizerName";
-    $.AzureOpenAIVectorizer.properties.azureOpenAIParameters["x-ms-client-name"] = "Parameters";
-
-    $.ScalarQuantizationVectorSearchCompressionConfiguration["x-ms-client-name"] = "ScalarQuantizationCompression";
-    $.BinaryQuantizationVectorSearchCompressionConfiguration["x-ms-client-name"] = "BinaryQuantizationCompression";
-    $.VectorSearchCompressionConfiguration["x-ms-client-name"] = "VectorSearchCompression";
-    $.VectorSearchCompressionConfiguration.properties.name["x-ms-client-name"] = "CompressionName";
-    $.VectorSearchProfile.properties.compression["x-ms-client-name"] = "CompressionName";
-
-    $.OcrSkillLineEnding["x-ms-client-name"] = "OcrLineEnding";
-    $.OcrSkillLineEnding["x-ms-enum"].name = "OcrLineEnding";
-
-    $.SearchIndexerDataUserAssignedIdentity.properties.userAssignedIdentity["x-ms-format"] = "arm-id";
-    $.SearchIndexerIndexProjections["x-ms-client-name"] = "SearchIndexerIndexProjection";
-    $.SearchIndexerSkillset.properties.indexProjections["x-ms-client-name"] = "indexProjection";
-
-    $.VectorSearchCompressionTargetDataType["x-ms-client-name"] = "VectorSearchCompressionTarget";
-    $.VectorSearchCompressionTargetDataType["x-ms-enum"].name = "VectorSearchCompressionTarget";
-
-    $.WebApiVectorizer.properties.customWebApiParameters["x-ms-client-name"] = "Parameters";
-    $.WebApiParameters["x-ms-client-name"] = "WebApiVectorizerParameters";
-    $.WebApiParameters.properties.uri["x-ms-client-name"] = "uri";
 ```
 
 ### Change VectorizableImageUrlQuery.Url type to Uri

@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(VectorizerName);
+            writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
@@ -33,8 +33,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "aiServicesVision": return AIServicesVisionVectorizer.DeserializeAIServicesVisionVectorizer(element);
+                    case "aml": return AzureMachineLearningVectorizer.DeserializeAzureMachineLearningVectorizer(element);
                     case "azureOpenAI": return AzureOpenAIVectorizer.DeserializeAzureOpenAIVectorizer(element);
-                    case "customWebApi": return WebApiVectorizer.DeserializeWebApiVectorizer(element);
+                    case "customWebApi": return CustomVectorizer.DeserializeCustomVectorizer(element);
                 }
             }
             return UnknownVectorSearchVectorizer.DeserializeUnknownVectorSearchVectorizer(element);

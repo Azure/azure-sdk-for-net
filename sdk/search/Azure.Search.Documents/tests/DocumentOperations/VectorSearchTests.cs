@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_11_01, SearchClientOptions.ServiceVersion.V2024_05_01_Preview)]
     public partial class VectorSearchTests : SearchTestBase
     {
         public VectorSearchTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -102,6 +103,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_05_01_Preview)]
         [PlaybackOnly("The availability of Semantic Search is limited to specific regions, as indicated in the list provided here: https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search. Due to this limitation, the deployment of resources for weekly test pipeline for setting the \"semanticSearch\": \"free\" fails in the UsGov and China cloud regions.")]
         public async Task SemanticHybridSearch()
         {
@@ -127,6 +129,7 @@ namespace Azure.Search.Documents.Tests
                         },
                         QueryType = SearchQueryType.Semantic,
                         Select = { "hotelId", "hotelName", "description", "category" },
+                        QueryLanguage = QueryLanguage.EnUs
                     });
 
             Assert.NotNull(response.SemanticSearch.Answers);
@@ -236,6 +239,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_05_01_Preview)]
         public async Task UpdatingVectorProfileNameThrows()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -312,6 +316,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_05_01_Preview)]
         public async Task VectorFieldNotStoredNotHiddenThrows()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -349,6 +354,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_05_01_Preview)]
         public async Task VectorFieldStoredNotHidden()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -385,6 +391,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_05_01_Preview)]
         public async Task VectorFieldStoredAndHidden()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -421,6 +428,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_05_01_Preview)]
         public async Task CannotUpdateIsStoredAfterIndexCreation()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -464,6 +472,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_05_01_Preview)]
         public async Task CanUpdateIsHiddenAfterIndexCreation()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -504,6 +513,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_05_01_Preview)]
         public async Task CreateIndexUsingFieldBuilder()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
