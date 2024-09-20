@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this GalleryApplicationResource created on azure
             // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryApplicationName = "myGalleryApplicationName";
@@ -104,7 +104,7 @@ IsExcludedFromLatest = false,
 
             // this example assumes you already have this GalleryApplicationResource created on azure
             // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryApplicationName = "myGalleryApplicationName";
@@ -141,7 +141,7 @@ IsExcludedFromLatest = false,
 
             // this example assumes you already have this GalleryApplicationResource created on azure
             // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryApplicationName = "myGalleryApplicationName";
@@ -174,7 +174,7 @@ IsExcludedFromLatest = false,
 
             // this example assumes you already have this GalleryApplicationResource created on azure
             // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryApplicationName = "myGalleryApplicationName";
@@ -219,7 +219,7 @@ IsExcludedFromLatest = false,
 
             // this example assumes you already have this GalleryApplicationResource created on azure
             // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryApplicationName = "myGalleryApplicationName";
@@ -255,7 +255,7 @@ IsExcludedFromLatest = false,
 
             // this example assumes you already have this GalleryApplicationResource created on azure
             // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryApplicationName = "myGalleryApplicationName";
@@ -287,7 +287,7 @@ IsExcludedFromLatest = false,
 
             // this example assumes you already have this GalleryApplicationResource created on azure
             // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryApplicationName = "myGalleryApplicationName";
@@ -331,7 +331,7 @@ IsExcludedFromLatest = false,
 
             // this example assumes you already have this GalleryApplicationResource created on azure
             // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             string galleryApplicationName = "myGalleryApplicationName";

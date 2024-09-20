@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this RestorePointGroupResource created on azure
             // for more information of creating RestorePointGroupResource, please refer to the document of RestorePointGroupResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string restorePointGroupName = "rpcName";
             ResourceIdentifier restorePointGroupResourceId = RestorePointGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, restorePointGroupName);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this RestorePointGroupResource created on azure
             // for more information of creating RestorePointGroupResource, please refer to the document of RestorePointGroupResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string restorePointGroupName = "rpcName";
             ResourceIdentifier restorePointGroupResourceId = RestorePointGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, restorePointGroupName);
@@ -116,7 +116,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
             // this example assumes you already have this RestorePointGroupResource created on azure
             // for more information of creating RestorePointGroupResource, please refer to the document of RestorePointGroupResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string restorePointGroupName = "rpcName";
             ResourceIdentifier restorePointGroupResourceId = RestorePointGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, restorePointGroupName);
@@ -151,7 +151,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
             // this example assumes you already have this RestorePointGroupResource created on azure
             // for more information of creating RestorePointGroupResource, please refer to the document of RestorePointGroupResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string restorePointGroupName = "rpcName";
             ResourceIdentifier restorePointGroupResourceId = RestorePointGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, restorePointGroupName);
@@ -182,7 +182,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
             // this example assumes you already have this RestorePointGroupResource created on azure
             // for more information of creating RestorePointGroupResource, please refer to the document of RestorePointGroupResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string restorePointGroupName = "rpcName";
             ResourceIdentifier restorePointGroupResourceId = RestorePointGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, restorePointGroupName);
@@ -225,7 +225,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
             // this example assumes you already have this RestorePointGroupResource created on azure
             // for more information of creating RestorePointGroupResource, please refer to the document of RestorePointGroupResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string restorePointGroupName = "rpcName";
             ResourceIdentifier restorePointGroupResourceId = RestorePointGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, restorePointGroupName);
@@ -260,7 +260,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
             // this example assumes you already have this RestorePointGroupResource created on azure
             // for more information of creating RestorePointGroupResource, please refer to the document of RestorePointGroupResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string restorePointGroupName = "rpcName";
             ResourceIdentifier restorePointGroupResourceId = RestorePointGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, restorePointGroupName);
@@ -291,7 +291,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
             // this example assumes you already have this RestorePointGroupResource created on azure
             // for more information of creating RestorePointGroupResource, please refer to the document of RestorePointGroupResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string restorePointGroupName = "rpcName";
             ResourceIdentifier restorePointGroupResourceId = RestorePointGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, restorePointGroupName);

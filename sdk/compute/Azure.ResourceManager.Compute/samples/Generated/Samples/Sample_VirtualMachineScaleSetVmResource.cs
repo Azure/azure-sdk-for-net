@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaa";
             string instanceId = "aaaaaaaaaaaaa";
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaaaa";
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "vmssToApproveRollingUpgradeOn";
             string instanceId = "0123";
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaaaaaaa";
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             string instanceId = "aaaaaa";
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
@@ -597,7 +597,7 @@ DeleteOption = ComputeDeleteOption.Delete,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaaaaa";
@@ -631,7 +631,7 @@ DeleteOption = ComputeDeleteOption.Delete,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "myvmScaleSet";
             string instanceId = "0";
@@ -660,7 +660,7 @@ DeleteOption = ComputeDeleteOption.Delete,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "{vmss-name}";
             string instanceId = "0";
@@ -692,7 +692,7 @@ DeleteOption = ComputeDeleteOption.Delete,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "{vmss-name}";
             string instanceId = "0";
@@ -724,7 +724,7 @@ DeleteOption = ComputeDeleteOption.Delete,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
             string instanceId = "0";
@@ -752,7 +752,7 @@ DeleteOption = ComputeDeleteOption.Delete,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaa";
             string instanceId = "aaaaaaaaa";
@@ -781,7 +781,7 @@ DeleteOption = ComputeDeleteOption.Delete,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaaaaaaa";
@@ -809,7 +809,7 @@ DeleteOption = ComputeDeleteOption.Delete,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aa";
             string instanceId = "aaaaaaaaaaaaaaaaa";
@@ -837,7 +837,7 @@ DeleteOption = ComputeDeleteOption.Delete,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaa";
             string instanceId = "aaaaaa";
@@ -865,7 +865,7 @@ DeleteOption = ComputeDeleteOption.Delete,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaa";
@@ -893,7 +893,7 @@ DeleteOption = ComputeDeleteOption.Delete,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaa";
@@ -921,7 +921,7 @@ DeleteOption = ComputeDeleteOption.Delete,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
@@ -949,7 +949,7 @@ DeleteOption = ComputeDeleteOption.Delete,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
@@ -977,7 +977,7 @@ DeleteOption = ComputeDeleteOption.Delete,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ResourceGroup";
             string virtualMachineScaleSetName = "myvmScaleSet";
             string instanceId = "0";
@@ -1006,7 +1006,7 @@ DeleteOption = ComputeDeleteOption.Delete,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaa";
             string instanceId = "aaaaaaaaaaaa";
@@ -1034,7 +1034,7 @@ DeleteOption = ComputeDeleteOption.Delete,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaa";
             string instanceId = "aaaa";
@@ -1062,7 +1062,7 @@ DeleteOption = ComputeDeleteOption.Delete,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ResourceGroup";
             string virtualMachineScaleSetName = "VmScaleSetName";
             string instanceId = "InstanceId";
@@ -1090,7 +1090,7 @@ DeleteOption = ComputeDeleteOption.Delete,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "azure-vmscaleset";
             string instanceId = "0";
@@ -1148,7 +1148,7 @@ DetachOption = DiskDetachOptionType.ForceDetach,
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "azure-vmscaleset";
             string instanceId = "0";
@@ -1188,7 +1188,7 @@ new DataDisksToDetach("/subscriptions/{subscription-id}/resourceGroups/myResourc
 
             // this example assumes you already have this VirtualMachineScaleSetVmResource created on azure
             // for more information of creating VirtualMachineScaleSetVmResource, please refer to the document of VirtualMachineScaleSetVmResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
             string instanceId = "0";

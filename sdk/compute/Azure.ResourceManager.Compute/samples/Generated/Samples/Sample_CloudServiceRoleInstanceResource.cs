@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this CloudServiceRoleInstanceResource created on azure
             // for more information of creating CloudServiceRoleInstanceResource, please refer to the document of CloudServiceRoleInstanceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
             string roleInstanceName = "{roleInstance-name}";
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this CloudServiceRoleInstanceResource created on azure
             // for more information of creating CloudServiceRoleInstanceResource, please refer to the document of CloudServiceRoleInstanceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
             string roleInstanceName = "{roleInstance-name}";
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this CloudServiceRoleInstanceResource created on azure
             // for more information of creating CloudServiceRoleInstanceResource, please refer to the document of CloudServiceRoleInstanceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
             string roleInstanceName = "{roleInstance-name}";
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this CloudServiceRoleInstanceResource created on azure
             // for more information of creating CloudServiceRoleInstanceResource, please refer to the document of CloudServiceRoleInstanceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
             string roleInstanceName = "{roleInstance-name}";
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this CloudServiceRoleInstanceResource created on azure
             // for more information of creating CloudServiceRoleInstanceResource, please refer to the document of CloudServiceRoleInstanceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
             string roleInstanceName = "{roleInstance-name}";
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this CloudServiceRoleInstanceResource created on azure
             // for more information of creating CloudServiceRoleInstanceResource, please refer to the document of CloudServiceRoleInstanceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ConstosoRG";
             string cloudServiceName = "{cs-name}";
             string roleInstanceName = "{roleInstance-name}";
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this CloudServiceRoleInstanceResource created on azure
             // for more information of creating CloudServiceRoleInstanceResource, please refer to the document of CloudServiceRoleInstanceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcloudService";
             string cloudServiceName = "aaaa";
             string roleInstanceName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";

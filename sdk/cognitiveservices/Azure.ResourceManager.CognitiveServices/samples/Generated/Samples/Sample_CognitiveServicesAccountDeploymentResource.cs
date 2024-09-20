@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CognitiveServicesAccountDeploymentResource created on azure
             // for more information of creating CognitiveServicesAccountDeploymentResource, please refer to the document of CognitiveServicesAccountDeploymentResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string accountName = "accountName";
             string deploymentName = "deploymentName";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CognitiveServicesAccountDeploymentResource created on azure
             // for more information of creating CognitiveServicesAccountDeploymentResource, please refer to the document of CognitiveServicesAccountDeploymentResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string accountName = "accountName";
             string deploymentName = "deploymentName";
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CognitiveServicesAccountDeploymentResource created on azure
             // for more information of creating CognitiveServicesAccountDeploymentResource, please refer to the document of CognitiveServicesAccountDeploymentResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string accountName = "accountName";
             string deploymentName = "deploymentName";

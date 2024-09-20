@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this GalleryResource created on azure
             // for more information of creating GalleryResource, please refer to the document of GalleryResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             ResourceIdentifier galleryResourceId = GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this GalleryResource created on azure
             // for more information of creating GalleryResource, please refer to the document of GalleryResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             ResourceIdentifier galleryResourceId = GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this GalleryResource created on azure
             // for more information of creating GalleryResource, please refer to the document of GalleryResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             ResourceIdentifier galleryResourceId = GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this GalleryResource created on azure
             // for more information of creating GalleryResource, please refer to the document of GalleryResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             ResourceIdentifier galleryResourceId = GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this GalleryResource created on azure
             // for more information of creating GalleryResource, please refer to the document of GalleryResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             ResourceIdentifier galleryResourceId = GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName);
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this GalleryResource created on azure
             // for more information of creating GalleryResource, please refer to the document of GalleryResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             ResourceIdentifier galleryResourceId = GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName);
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this GalleryResource created on azure
             // for more information of creating GalleryResource, please refer to the document of GalleryResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             ResourceIdentifier galleryResourceId = GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName);
@@ -301,7 +301,7 @@ Ids =
 
             // this example assumes you already have this GalleryResource created on azure
             // for more information of creating GalleryResource, please refer to the document of GalleryResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             ResourceIdentifier galleryResourceId = GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName);
@@ -330,7 +330,7 @@ Ids =
 
             // this example assumes you already have this GalleryResource created on azure
             // for more information of creating GalleryResource, please refer to the document of GalleryResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string galleryName = "myGalleryName";
             ResourceIdentifier galleryResourceId = GalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName);

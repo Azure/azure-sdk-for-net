@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this RestorePointResource created on azure
             // for more information of creating RestorePointResource, please refer to the document of RestorePointResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string restorePointGroupName = "rpc";
             string vmRestorePointName = "vmrp";
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this RestorePointResource created on azure
             // for more information of creating RestorePointResource, please refer to the document of RestorePointResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string restorePointGroupName = "rpc";
             string vmRestorePointName = "vmrp";
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this RestorePointResource created on azure
             // for more information of creating RestorePointResource, please refer to the document of RestorePointResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string restorePointGroupName = "rpc";
             string vmRestorePointName = "vmrp";
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this RestorePointResource created on azure
             // for more information of creating RestorePointResource, please refer to the document of RestorePointResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string restorePointGroupName = "rpc";
             string vmRestorePointName = "vmrp";
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this RestorePointResource created on azure
             // for more information of creating RestorePointResource, please refer to the document of RestorePointResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string restorePointGroupName = "rpc";
             string vmRestorePointName = "vmrp";
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this RestorePointResource created on azure
             // for more information of creating RestorePointResource, please refer to the document of RestorePointResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string restorePointGroupName = "rpc";
             string vmRestorePointName = "vmrp";
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this RestorePointResource created on azure
             // for more information of creating RestorePointResource, please refer to the document of RestorePointResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string restorePointGroupName = "rpc";
             string vmRestorePointName = "vmrp";

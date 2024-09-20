@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this VirtualMachineExtensionResource created on azure
             // for more information of creating VirtualMachineExtensionResource, please refer to the document of VirtualMachineExtensionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
             string vmExtensionName = "myVMExtension";
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this VirtualMachineExtensionResource created on azure
             // for more information of creating VirtualMachineExtensionResource, please refer to the document of VirtualMachineExtensionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaaaaaaaa";
             string vmExtensionName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this VirtualMachineExtensionResource created on azure
             // for more information of creating VirtualMachineExtensionResource, please refer to the document of VirtualMachineExtensionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaaaaaaaaaaaaaaaaaaaa";
             string vmExtensionName = "aa";
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this VirtualMachineExtensionResource created on azure
             // for more information of creating VirtualMachineExtensionResource, please refer to the document of VirtualMachineExtensionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string vmName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             string vmExtensionName = "aaaaaaa";
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this VirtualMachineExtensionResource created on azure
             // for more information of creating VirtualMachineExtensionResource, please refer to the document of VirtualMachineExtensionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string vmName = "myVM";
             string vmExtensionName = "myVMExtension";

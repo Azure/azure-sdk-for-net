@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -416,7 +416,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -449,7 +449,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "myvmScaleSet";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -477,7 +477,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -509,7 +509,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -540,7 +540,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -571,7 +571,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -603,7 +603,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -638,7 +638,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -665,7 +665,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -697,7 +697,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -728,7 +728,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -755,7 +755,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -782,7 +782,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -814,7 +814,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -846,7 +846,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -876,7 +876,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -906,7 +906,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -936,7 +936,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -966,7 +966,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1001,7 +1001,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "a";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1028,7 +1028,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1062,7 +1062,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1089,7 +1089,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1123,7 +1123,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1150,7 +1150,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "b4f1213b-cacc-4816-8bfb-f30f90643de8";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "VirtualMachineScaleSetReapplyTestRG";
             string virtualMachineScaleSetName = "VMSSReapply-Test-ScaleSet";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1177,7 +1177,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "b4f1213b-cacc-4816-8bfb-f30f90643de8";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "VirtualMachineScaleSetReapplyTestRG";
             string virtualMachineScaleSetName = "VMSSReapply-Test-ScaleSet";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1204,7 +1204,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1238,7 +1238,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1265,7 +1265,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1299,7 +1299,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1326,7 +1326,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1357,7 +1357,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1388,7 +1388,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1424,7 +1424,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1451,7 +1451,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1485,7 +1485,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1512,7 +1512,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "vmssToApproveRollingUpgradeOn";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1546,7 +1546,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1574,7 +1574,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1602,7 +1602,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1633,7 +1633,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1661,7 +1661,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1689,7 +1689,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1717,7 +1717,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1744,7 +1744,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1771,7 +1771,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1798,7 +1798,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -1825,7 +1825,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string virtualMachineScaleSetName = "{vmss-name}";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);

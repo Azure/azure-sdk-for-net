@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this CommunityGalleryImageVersionResource created on azure
             // for more information of creating CommunityGalleryImageVersionResource, please refer to the document of CommunityGalleryImageVersionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("myLocation");
             string publicGalleryName = "publicGalleryName";
             string galleryImageName = "myGalleryImageName";

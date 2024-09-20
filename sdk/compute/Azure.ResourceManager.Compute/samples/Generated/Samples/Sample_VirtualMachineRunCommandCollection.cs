@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this VirtualMachineResource created on azure
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
@@ -88,7 +88,7 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
 
             // this example assumes you already have this VirtualMachineResource created on azure
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
@@ -123,7 +123,7 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
 
             // this example assumes you already have this VirtualMachineResource created on azure
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
@@ -154,7 +154,7 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
 
             // this example assumes you already have this VirtualMachineResource created on azure
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
@@ -197,7 +197,7 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
 
             // this example assumes you already have this VirtualMachineResource created on azure
             // for more information of creating VirtualMachineResource, please refer to the document of VirtualMachineResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string vmName = "myVM";
             ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);

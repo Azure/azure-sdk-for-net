@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this VirtualMachineScaleSetRollingUpgradeResource created on azure
             // for more information of creating VirtualMachineScaleSetRollingUpgradeResource, please refer to the document of VirtualMachineScaleSetRollingUpgradeResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetRollingUpgradeResourceId = VirtualMachineScaleSetRollingUpgradeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this VirtualMachineScaleSetRollingUpgradeResource created on azure
             // for more information of creating VirtualMachineScaleSetRollingUpgradeResource, please refer to the document of VirtualMachineScaleSetRollingUpgradeResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetRollingUpgradeResourceId = VirtualMachineScaleSetRollingUpgradeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);

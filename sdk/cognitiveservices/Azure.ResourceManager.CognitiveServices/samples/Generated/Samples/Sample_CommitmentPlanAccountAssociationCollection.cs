@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CognitiveServicesCommitmentPlanResource created on azure
             // for more information of creating CognitiveServicesCommitmentPlanResource, please refer to the document of CognitiveServicesCommitmentPlanResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string commitmentPlanName = "commitmentPlanName";
             ResourceIdentifier cognitiveServicesCommitmentPlanResourceId = CognitiveServicesCommitmentPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, commitmentPlanName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CognitiveServicesCommitmentPlanResource created on azure
             // for more information of creating CognitiveServicesCommitmentPlanResource, please refer to the document of CognitiveServicesCommitmentPlanResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string commitmentPlanName = "commitmentPlanName";
             ResourceIdentifier cognitiveServicesCommitmentPlanResourceId = CognitiveServicesCommitmentPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, commitmentPlanName);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CognitiveServicesCommitmentPlanResource created on azure
             // for more information of creating CognitiveServicesCommitmentPlanResource, please refer to the document of CognitiveServicesCommitmentPlanResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string commitmentPlanName = "commitmentPlanName";
             ResourceIdentifier cognitiveServicesCommitmentPlanResourceId = CognitiveServicesCommitmentPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, commitmentPlanName);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CognitiveServicesCommitmentPlanResource created on azure
             // for more information of creating CognitiveServicesCommitmentPlanResource, please refer to the document of CognitiveServicesCommitmentPlanResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string commitmentPlanName = "commitmentPlanName";
             ResourceIdentifier cognitiveServicesCommitmentPlanResourceId = CognitiveServicesCommitmentPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, commitmentPlanName);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CognitiveServicesCommitmentPlanResource created on azure
             // for more information of creating CognitiveServicesCommitmentPlanResource, please refer to the document of CognitiveServicesCommitmentPlanResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string commitmentPlanName = "commitmentPlanName";
             ResourceIdentifier cognitiveServicesCommitmentPlanResourceId = CognitiveServicesCommitmentPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, commitmentPlanName);
