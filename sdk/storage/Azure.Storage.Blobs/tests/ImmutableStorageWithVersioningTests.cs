@@ -18,7 +18,6 @@ using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
