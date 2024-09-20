@@ -37,7 +37,6 @@ The following examples demonstrate how to add the `AzureMonitorExporter` to your
 
 It's important to keep the `TracerProvider`, `MeterProvider`, and `LoggerFactory` instances active throughout the process lifetime. These must be properly disposed when your application is shutting down to flush any remaining telemetry items.
 
-
 - Traces
     ```csharp
     var tracerProvider = Sdk.CreateTracerProviderBuilder()
