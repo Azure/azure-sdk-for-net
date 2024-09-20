@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Relay.Samples
 
             // this example assumes you already have this RelayNamespaceResource created on azure
             // for more information of creating RelayNamespaceResource, please refer to the document of RelayNamespaceResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup";
             string namespaceName = "example-RelayNamespace-5849";
             ResourceIdentifier relayNamespaceResourceId = RelayNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Relay.Samples
 
             // this example assumes you already have this RelayNamespaceResource created on azure
             // for more information of creating RelayNamespaceResource, please refer to the document of RelayNamespaceResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup";
             string namespaceName = "example-RelayNamespace-5849";
             ResourceIdentifier relayNamespaceResourceId = RelayNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Relay.Samples
 
             // this example assumes you already have this RelayNamespaceResource created on azure
             // for more information of creating RelayNamespaceResource, please refer to the document of RelayNamespaceResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup";
             string namespaceName = "example-RelayNamespace-5849";
             ResourceIdentifier relayNamespaceResourceId = RelayNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Relay.Samples
 
             // this example assumes you already have this RelayNamespaceResource created on azure
             // for more information of creating RelayNamespaceResource, please refer to the document of RelayNamespaceResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup";
             string namespaceName = "example-RelayNamespace-5849";
             ResourceIdentifier relayNamespaceResourceId = RelayNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);

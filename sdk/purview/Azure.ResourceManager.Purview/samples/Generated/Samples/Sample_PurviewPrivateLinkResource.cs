@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Purview.Samples
 
             // this example assumes you already have this PurviewPrivateLinkResource created on azure
             // for more information of creating PurviewPrivateLinkResource, please refer to the document of PurviewPrivateLinkResource
-            string subscriptionId = "12345678-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
             string groupId = "group1";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
 
             // this example assumes you already have this MoverResourceSetResource created on azure
             // for more information of creating MoverResourceSetResource, please refer to the document of MoverResourceSetResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string moverResourceSetName = "movecollection1";
             ResourceIdentifier moverResourceSetResourceId = MoverResourceSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, moverResourceSetName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
 
             // this example assumes you already have this MoverResourceSetResource created on azure
             // for more information of creating MoverResourceSetResource, please refer to the document of MoverResourceSetResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string moverResourceSetName = "movecollection1";
             ResourceIdentifier moverResourceSetResourceId = MoverResourceSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, moverResourceSetName);
@@ -128,7 +128,7 @@ TargetId = new ResourceIdentifier("/subscriptions/c4488a3f-a7f7-4ad4-aa72-0e1f4d
 
             // this example assumes you already have this MoverResourceSetResource created on azure
             // for more information of creating MoverResourceSetResource, please refer to the document of MoverResourceSetResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string moverResourceSetName = "movecollection1";
             ResourceIdentifier moverResourceSetResourceId = MoverResourceSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, moverResourceSetName);
@@ -163,7 +163,7 @@ TargetId = new ResourceIdentifier("/subscriptions/c4488a3f-a7f7-4ad4-aa72-0e1f4d
 
             // this example assumes you already have this MoverResourceSetResource created on azure
             // for more information of creating MoverResourceSetResource, please refer to the document of MoverResourceSetResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string moverResourceSetName = "movecollection1";
             ResourceIdentifier moverResourceSetResourceId = MoverResourceSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, moverResourceSetName);
@@ -194,7 +194,7 @@ TargetId = new ResourceIdentifier("/subscriptions/c4488a3f-a7f7-4ad4-aa72-0e1f4d
 
             // this example assumes you already have this MoverResourceSetResource created on azure
             // for more information of creating MoverResourceSetResource, please refer to the document of MoverResourceSetResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string moverResourceSetName = "movecollection1";
             ResourceIdentifier moverResourceSetResourceId = MoverResourceSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, moverResourceSetName);

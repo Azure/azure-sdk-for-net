@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryProtectionContainerResource created on azure
             // for more information of creating SiteRecoveryProtectionContainerResource, please refer to the document of SiteRecoveryProtectionContainerResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryProtectionContainerResource created on azure
             // for more information of creating SiteRecoveryProtectionContainerResource, please refer to the document of SiteRecoveryProtectionContainerResource
-            string subscriptionId = "7c943c1b-5122-4097-90c8-861411bdd574";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MadhaviVRG";
             string resourceName = "MadhaviVault";
             string fabricName = "V2A-W2K12-660";
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryProtectionContainerResource created on azure
             // for more information of creating SiteRecoveryProtectionContainerResource, please refer to the document of SiteRecoveryProtectionContainerResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryProtectionContainerResource created on azure
             // for more information of creating SiteRecoveryProtectionContainerResource, please refer to the document of SiteRecoveryProtectionContainerResource
-            string subscriptionId = "42195872-7e70-4f8a-837f-84b28ecbb78b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "priyanprg";
             string resourceName = "priyanponeboxvault";
             string fabricName = "CentralUSCanSite";
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

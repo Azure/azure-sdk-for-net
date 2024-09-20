@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

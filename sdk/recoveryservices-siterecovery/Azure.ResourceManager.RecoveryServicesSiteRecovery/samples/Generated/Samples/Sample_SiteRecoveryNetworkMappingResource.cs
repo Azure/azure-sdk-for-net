@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryNetworkMappingResource created on azure
             // for more information of creating SiteRecoveryNetworkMappingResource, please refer to the document of SiteRecoveryNetworkMappingResource
-            string subscriptionId = "9112a37f-0f3e-46ec-9c00-060c6edca071";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "srcBvte2a14C27";
             string resourceName = "srce2avaultbvtaC27";
             string fabricName = "b0cef6e9a4437b81803d0b55ada4f700ab66caae59c35d62723a1589c0cd13ac";
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryNetworkMappingResource created on azure
             // for more information of creating SiteRecoveryNetworkMappingResource, please refer to the document of SiteRecoveryNetworkMappingResource
-            string subscriptionId = "9112a37f-0f3e-46ec-9c00-060c6edca071";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "srcBvte2a14C27";
             string resourceName = "srce2avaultbvtaC27";
             string fabricName = "b0cef6e9a4437b81803d0b55ada4f700ab66caae59c35d62723a1589c0cd13ac";
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryNetworkMappingResource created on azure
             // for more information of creating SiteRecoveryNetworkMappingResource, please refer to the document of SiteRecoveryNetworkMappingResource
-            string subscriptionId = "9112a37f-0f3e-46ec-9c00-060c6edca071";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "srcBvte2a14C27";
             string resourceName = "srce2avaultbvtaC27";
             string fabricName = "b0cef6e9a4437b81803d0b55ada4f700ab66caae59c35d62723a1589c0cd13ac";
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "9112a37f-0f3e-46ec-9c00-060c6edca071";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "srcBvte2a14C27";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

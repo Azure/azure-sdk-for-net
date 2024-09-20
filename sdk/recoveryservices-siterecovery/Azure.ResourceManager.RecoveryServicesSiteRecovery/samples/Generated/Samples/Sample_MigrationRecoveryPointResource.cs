@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this MigrationRecoveryPointResource created on azure
             // for more information of creating MigrationRecoveryPointResource, please refer to the document of MigrationRecoveryPointResource
-            string subscriptionId = "cb53d0c3-bd59-4721-89bc-06916a9147ef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup1";
             string resourceName = "migrationvault";
             string fabricName = "vmwarefabric1";

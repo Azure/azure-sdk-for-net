@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -111,7 +111,7 @@ Description = "Resource name suffix",
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -198,7 +198,7 @@ Description = "The required diagnostic logs retention in days",
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -231,7 +231,7 @@ Description = "The required diagnostic logs retention in days",
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -260,7 +260,7 @@ Description = "The required diagnostic logs retention in days",
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -301,7 +301,7 @@ Description = "The required diagnostic logs retention in days",
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
 

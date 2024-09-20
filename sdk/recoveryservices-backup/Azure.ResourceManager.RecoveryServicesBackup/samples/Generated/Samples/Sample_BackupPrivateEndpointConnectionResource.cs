@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
 
             // this example assumes you already have this BackupPrivateEndpointConnectionResource created on azure
             // for more information of creating BackupPrivateEndpointConnectionResource, please refer to the document of BackupPrivateEndpointConnectionResource
-            string subscriptionId = "04cf684a-d41f-4550-9f70-7708a3a2283b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gaallaRG";
             string vaultName = "gaallavaultbvtd2msi";
             string privateEndpointConnectionName = "gaallatestpe2.5704c932-249a-490b-a142-1396838cd3b";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
 
             // this example assumes you already have this BackupPrivateEndpointConnectionResource created on azure
             // for more information of creating BackupPrivateEndpointConnectionResource, please refer to the document of BackupPrivateEndpointConnectionResource
-            string subscriptionId = "04cf684a-d41f-4550-9f70-7708a3a2283b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gaallaRG";
             string vaultName = "gaallavaultbvtd2msi";
             string privateEndpointConnectionName = "gaallatestpe2.5704c932-249a-490b-a142-1396838cd3b";
@@ -112,7 +112,7 @@ VaultSubResourceType.AzureBackupSecondary
 
             // this example assumes you already have this BackupPrivateEndpointConnectionResource created on azure
             // for more information of creating BackupPrivateEndpointConnectionResource, please refer to the document of BackupPrivateEndpointConnectionResource
-            string subscriptionId = "04cf684a-d41f-4550-9f70-7708a3a2283b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gaallaRG";
             string vaultName = "gaallavaultbvtd2msi";
             string privateEndpointConnectionName = "gaallatestpe2.5704c932-249a-490b-a142-1396838cd3b";

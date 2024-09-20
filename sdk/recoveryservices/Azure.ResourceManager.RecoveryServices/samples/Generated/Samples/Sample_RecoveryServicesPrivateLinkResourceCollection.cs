@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this RecoveryServicesVaultResource created on azure
             // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
-            string subscriptionId = "6c48fa17-39c7-45f1-90ac-47a587128ace";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "petesting";
             string vaultName = "pemsi-ecy-rsv2";
             ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this RecoveryServicesVaultResource created on azure
             // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
-            string subscriptionId = "6c48fa17-39c7-45f1-90ac-47a587128ace";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "petesting";
             string vaultName = "pemsi-ecy-rsv2";
             ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this RecoveryServicesVaultResource created on azure
             // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
-            string subscriptionId = "6c48fa17-39c7-45f1-90ac-47a587128ace";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "petesting";
             string vaultName = "pemsi-ecy-rsv2";
             ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this RecoveryServicesVaultResource created on azure
             // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
-            string subscriptionId = "6c48fa17-39c7-45f1-90ac-47a587128ace";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "petesting";
             string vaultName = "pemsi-ecy-rsv2";
             ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);

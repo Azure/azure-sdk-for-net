@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Relay.Samples
 
             // this example assumes you already have this WcfRelayResource created on azure
             // for more information of creating WcfRelayResource, please refer to the document of WcfRelayResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup";
             string namespaceName = "example-RelayNamespace-9953";
             string relayName = "example-Relay-Wcf-1194";
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Relay.Samples
 
             // this example assumes you already have this WcfRelayResource created on azure
             // for more information of creating WcfRelayResource, please refer to the document of WcfRelayResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup";
             string namespaceName = "example-RelayNamespace-01";
             string relayName = "example-Relay-wcf-01";
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Relay.Samples
 
             // this example assumes you already have this WcfRelayResource created on azure
             // for more information of creating WcfRelayResource, please refer to the document of WcfRelayResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup";
             string namespaceName = "example-RelayNamespace-9953";
             string relayName = "example-Relay-Wcf-1194";

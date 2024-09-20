@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Reservations.Samples
 
             // this example assumes you already have this ReservationQuotaResource created on azure
             // for more information of creating ReservationQuotaResource, please refer to the document of ReservationQuotaResource
-            string subscriptionId = "D7EC67B3-7657-4966-BFFC-41EFD36BAAB3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerId = "Microsoft.Compute";
             AzureLocation location = new AzureLocation("eastus");
             string resourceName = "standardFSv2Family";

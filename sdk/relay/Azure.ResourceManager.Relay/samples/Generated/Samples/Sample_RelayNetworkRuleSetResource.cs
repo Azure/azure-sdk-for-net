@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Relay.Samples
 
             // this example assumes you already have this RelayNetworkRuleSetResource created on azure
             // for more information of creating RelayNetworkRuleSetResource, please refer to the document of RelayNetworkRuleSetResource
-            string subscriptionId = "Subscription";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "example-RelayNamespace-6019";
             ResourceIdentifier relayNetworkRuleSetResourceId = RelayNetworkRuleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -90,7 +90,7 @@ Action = RelayNetworkRuleIPAction.Allow,
 
             // this example assumes you already have this RelayNetworkRuleSetResource created on azure
             // for more information of creating RelayNetworkRuleSetResource, please refer to the document of RelayNetworkRuleSetResource
-            string subscriptionId = "Subscription";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "example-RelayNamespace-6019";
             ResourceIdentifier relayNetworkRuleSetResourceId = RelayNetworkRuleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);

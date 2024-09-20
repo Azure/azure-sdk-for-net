@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryRecoveryPlanResource created on azure
             // for more information of creating SiteRecoveryRecoveryPlanResource, please refer to the document of SiteRecoveryRecoveryPlanResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string recoveryPlanName = "RPtest1";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryRecoveryPlanResource created on azure
             // for more information of creating SiteRecoveryRecoveryPlanResource, please refer to the document of SiteRecoveryRecoveryPlanResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string recoveryPlanName = "RPtest1";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryRecoveryPlanResource created on azure
             // for more information of creating SiteRecoveryRecoveryPlanResource, please refer to the document of SiteRecoveryRecoveryPlanResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string recoveryPlanName = "RPtest1";
@@ -184,7 +184,7 @@ EndGroupActions =
 
             // this example assumes you already have this SiteRecoveryRecoveryPlanResource created on azure
             // for more information of creating SiteRecoveryRecoveryPlanResource, please refer to the document of SiteRecoveryRecoveryPlanResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string recoveryPlanName = "RPtest1";
@@ -217,7 +217,7 @@ EndGroupActions =
 
             // this example assumes you already have this SiteRecoveryRecoveryPlanResource created on azure
             // for more information of creating SiteRecoveryRecoveryPlanResource, please refer to the document of SiteRecoveryRecoveryPlanResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string recoveryPlanName = "RPtest1";
@@ -250,7 +250,7 @@ EndGroupActions =
 
             // this example assumes you already have this SiteRecoveryRecoveryPlanResource created on azure
             // for more information of creating SiteRecoveryRecoveryPlanResource, please refer to the document of SiteRecoveryRecoveryPlanResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string recoveryPlanName = "RPtest1";
@@ -290,7 +290,7 @@ new RecoveryPlanHyperVReplicaAzureFailoverContent()
 
             // this example assumes you already have this SiteRecoveryRecoveryPlanResource created on azure
             // for more information of creating SiteRecoveryRecoveryPlanResource, please refer to the document of SiteRecoveryRecoveryPlanResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string recoveryPlanName = "RPtest1";
@@ -323,7 +323,7 @@ new RecoveryPlanHyperVReplicaAzureFailoverContent()
 
             // this example assumes you already have this SiteRecoveryRecoveryPlanResource created on azure
             // for more information of creating SiteRecoveryRecoveryPlanResource, please refer to the document of SiteRecoveryRecoveryPlanResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string recoveryPlanName = "RPtest1";
@@ -364,7 +364,7 @@ new RecoveryPlanHyperVReplicaAzureFailoverContent()
 
             // this example assumes you already have this SiteRecoveryRecoveryPlanResource created on azure
             // for more information of creating SiteRecoveryRecoveryPlanResource, please refer to the document of SiteRecoveryRecoveryPlanResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string recoveryPlanName = "RPtest1";
@@ -401,7 +401,7 @@ new RecoveryPlanHyperVReplicaAzureFailoverContent()
 
             // this example assumes you already have this SiteRecoveryRecoveryPlanResource created on azure
             // for more information of creating SiteRecoveryRecoveryPlanResource, please refer to the document of SiteRecoveryRecoveryPlanResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string recoveryPlanName = "RPtest1";

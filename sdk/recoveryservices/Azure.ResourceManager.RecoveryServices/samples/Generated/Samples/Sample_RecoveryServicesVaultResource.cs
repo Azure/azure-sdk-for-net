@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this RecoveryServicesVaultResource created on azure
             // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
-            string subscriptionId = "77777777-d41f-4550-9f70-7708a3a2283b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "BCDRIbzRG";
             string vaultName = "BCDRIbzVault";
             ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this RecoveryServicesVaultResource created on azure
             // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
-            string subscriptionId = "77777777-d41f-4550-9f70-7708a3a2283b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "BCDRIbzRG";
             string vaultName = "BCDRIbzVault";
             ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this RecoveryServicesVaultResource created on azure
             // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
-            string subscriptionId = "6808dbbc-98c7-431f-a1b1-9580902423b7";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "avrai7517RG1";
             string vaultName = "avrai7517Vault1";
             ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this RecoveryServicesVaultResource created on azure
             // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
-            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-RecoveryServices-ResourceGroup";
             string vaultName = "swaggerExample";
             ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this RecoveryServicesVaultResource created on azure
             // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
-            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-RecoveryServices-ResourceGroup";
             string vaultName = "swaggerExample";
             ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this RecoveryServicesVaultResource created on azure
             // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
-            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "HelloWorld";
             string vaultName = "swaggerExample";
             ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this RecoveryServicesVaultResource created on azure
             // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
-            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "HelloWorld";
             string vaultName = "swaggerExample";
             ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this RecoveryServicesVaultResource created on azure
             // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
-            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "HelloWorld";
             string vaultName = "swaggerExample";
             ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this RecoveryServicesVaultResource created on azure
             // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
-            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "HelloWorld";
             string vaultName = "swaggerExample";
             ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this RecoveryServicesVaultResource created on azure
             // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
-            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "HelloWorld";
             string vaultName = "swaggerExample";
             ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this RecoveryServicesVaultResource created on azure
             // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
-            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "HelloWorld";
             string vaultName = "swaggerExample";
             ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this RecoveryServicesVaultResource created on azure
             // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
-            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-RecoveryServices-ResourceGroup";
             string vaultName = "swaggerExample";
             ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
             // this example assumes you already have this DataReplicationFabricResource created on azure
             // for more information of creating DataReplicationFabricResource, please refer to the document of DataReplicationFabricResource
-            string subscriptionId = "930CEC23-4430-4513-B855-DBA237E2F3BF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgrecoveryservicesdatareplication";
             string fabricName = "wPR";
             ResourceIdentifier dataReplicationFabricResourceId = DataReplicationFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fabricName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
             // this example assumes you already have this DataReplicationFabricResource created on azure
             // for more information of creating DataReplicationFabricResource, please refer to the document of DataReplicationFabricResource
-            string subscriptionId = "930CEC23-4430-4513-B855-DBA237E2F3BF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgrecoveryservicesdatareplication";
             string fabricName = "wPR";
             ResourceIdentifier dataReplicationFabricResourceId = DataReplicationFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fabricName);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
             // this example assumes you already have this DataReplicationFabricResource created on azure
             // for more information of creating DataReplicationFabricResource, please refer to the document of DataReplicationFabricResource
-            string subscriptionId = "930CEC23-4430-4513-B855-DBA237E2F3BF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgrecoveryservicesdatareplication";
             string fabricName = "wPR";
             ResourceIdentifier dataReplicationFabricResourceId = DataReplicationFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fabricName);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "930CEC23-4430-4513-B855-DBA237E2F3BF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

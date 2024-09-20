@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this RecoveryServicesPrivateLinkResource created on azure
             // for more information of creating RecoveryServicesPrivateLinkResource, please refer to the document of RecoveryServicesPrivateLinkResource
-            string subscriptionId = "6c48fa17-39c7-45f1-90ac-47a587128ace";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "petesting";
             string vaultName = "pemsi-ecy-rsv2";
             string privateLinkResourceName = "backupResource";

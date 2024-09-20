@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Relay.Samples
 
             // this example assumes you already have this RelayHybridConnectionResource created on azure
             // for more information of creating RelayHybridConnectionResource, please refer to the document of RelayHybridConnectionResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup";
             string namespaceName = "example-RelayNamespace-01";
             string hybridConnectionName = "example-Relay-Hybrid-01";
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Relay.Samples
 
             // this example assumes you already have this RelayHybridConnectionResource created on azure
             // for more information of creating RelayHybridConnectionResource, please refer to the document of RelayHybridConnectionResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup";
             string namespaceName = "example-RelayNamespace-01";
             string hybridConnectionName = "example-Relay-Hybrid-01";
@@ -112,7 +112,7 @@ RelayAccessRight.Listen,RelayAccessRight.Send
 
             // this example assumes you already have this RelayHybridConnectionResource created on azure
             // for more information of creating RelayHybridConnectionResource, please refer to the document of RelayHybridConnectionResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup";
             string namespaceName = "example-RelayNamespace-01";
             string hybridConnectionName = "example-Relay-Hybrid-01";
@@ -148,7 +148,7 @@ RelayAccessRight.Listen,RelayAccessRight.Send
 
             // this example assumes you already have this RelayHybridConnectionResource created on azure
             // for more information of creating RelayHybridConnectionResource, please refer to the document of RelayHybridConnectionResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup";
             string namespaceName = "example-RelayNamespace-01";
             string hybridConnectionName = "example-Relay-Hybrid-01";
@@ -180,7 +180,7 @@ RelayAccessRight.Listen,RelayAccessRight.Send
 
             // this example assumes you already have this RelayHybridConnectionResource created on azure
             // for more information of creating RelayHybridConnectionResource, please refer to the document of RelayHybridConnectionResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup";
             string namespaceName = "example-RelayNamespace-01";
             string hybridConnectionName = "example-Relay-Hybrid-01";

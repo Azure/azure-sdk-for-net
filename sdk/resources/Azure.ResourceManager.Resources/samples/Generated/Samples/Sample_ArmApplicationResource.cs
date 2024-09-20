@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // this example assumes you already have this ArmApplicationResource created on azure
             // for more information of creating ArmApplicationResource, please refer to the document of ArmApplicationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string applicationName = "myManagedApplication";
             ResourceIdentifier armApplicationResourceId = ArmApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, applicationName);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // this example assumes you already have this ArmApplicationResource created on azure
             // for more information of creating ArmApplicationResource, please refer to the document of ArmApplicationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string applicationName = "myManagedApplication";
             ResourceIdentifier armApplicationResourceId = ArmApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, applicationName);

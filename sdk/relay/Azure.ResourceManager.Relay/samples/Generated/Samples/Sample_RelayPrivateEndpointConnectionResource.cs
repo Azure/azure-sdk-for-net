@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Relay.Samples
 
             // this example assumes you already have this RelayPrivateEndpointConnectionResource created on azure
             // for more information of creating RelayPrivateEndpointConnectionResource, please refer to the document of RelayPrivateEndpointConnectionResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup";
             string namespaceName = "example-RelayNamespace-5849";
             string privateEndpointConnectionName = "{privateEndpointConnection name}";
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Relay.Samples
 
             // this example assumes you already have this RelayPrivateEndpointConnectionResource created on azure
             // for more information of creating RelayPrivateEndpointConnectionResource, please refer to the document of RelayPrivateEndpointConnectionResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string namespaceName = "example-RelayNamespace-5849";
             string privateEndpointConnectionName = "{privateEndpointConnection name}";
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Relay.Samples
 
             // this example assumes you already have this RelayPrivateEndpointConnectionResource created on azure
             // for more information of creating RelayPrivateEndpointConnectionResource, please refer to the document of RelayPrivateEndpointConnectionResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string namespaceName = "example-RelayNamespace-5849";
             string privateEndpointConnectionName = "{privateEndpointConnection name}";

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this ReplicationEligibilityResultResource created on azure
             // for more information of creating ReplicationEligibilityResultResource, please refer to the document of ReplicationEligibilityResultResource
-            string subscriptionId = "d90d145a-4cdd-45a3-b2c4-971d69775278";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testRg1";
             string virtualMachineName = "testVm1";
             ResourceIdentifier replicationEligibilityResultResourceId = ReplicationEligibilityResultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName);

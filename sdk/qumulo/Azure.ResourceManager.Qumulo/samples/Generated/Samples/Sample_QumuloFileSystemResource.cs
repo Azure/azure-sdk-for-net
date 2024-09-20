@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "ulseeqylxb";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "aaaaaaa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
             // this example assumes you already have this QumuloFileSystemResource created on azure
             // for more information of creating QumuloFileSystemResource, please refer to the document of QumuloFileSystemResource
-            string subscriptionId = "ulseeqylxb";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgQumulo";
             string fileSystemName = "nauwwbfoqehgbhdsmkewoboyxeqg";
             ResourceIdentifier qumuloFileSystemResourceId = QumuloFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fileSystemName);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
             // this example assumes you already have this QumuloFileSystemResource created on azure
             // for more information of creating QumuloFileSystemResource, please refer to the document of QumuloFileSystemResource
-            string subscriptionId = "aaaaaaa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgQumulo";
             string fileSystemName = "aaaaaaaaaaaaaaaaa";
             ResourceIdentifier qumuloFileSystemResourceId = QumuloFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fileSystemName);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
             // this example assumes you already have this QumuloFileSystemResource created on azure
             // for more information of creating QumuloFileSystemResource, please refer to the document of QumuloFileSystemResource
-            string subscriptionId = "ulseeqylxb";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgQumulo";
             string fileSystemName = "nauwwbfoqehgbhdsmkewoboyxeqg";
             ResourceIdentifier qumuloFileSystemResourceId = QumuloFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fileSystemName);
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
             // this example assumes you already have this QumuloFileSystemResource created on azure
             // for more information of creating QumuloFileSystemResource, please refer to the document of QumuloFileSystemResource
-            string subscriptionId = "aaaaaaa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgQumulo";
             string fileSystemName = "aaaaaaaaaaaaaaaaa";
             ResourceIdentifier qumuloFileSystemResourceId = QumuloFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fileSystemName);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
             // this example assumes you already have this QumuloFileSystemResource created on azure
             // for more information of creating QumuloFileSystemResource, please refer to the document of QumuloFileSystemResource
-            string subscriptionId = "ulseeqylxb";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgQumulo";
             string fileSystemName = "nauwwbfoqehgbhdsmkewoboyxeqg";
             ResourceIdentifier qumuloFileSystemResourceId = QumuloFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fileSystemName);
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
             // this example assumes you already have this QumuloFileSystemResource created on azure
             // for more information of creating QumuloFileSystemResource, please refer to the document of QumuloFileSystemResource
-            string subscriptionId = "ulseeqylxb";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgQumulo";
             string fileSystemName = "nauwwbfoqehgbhdsmkewoboyxeqg";
             ResourceIdentifier qumuloFileSystemResourceId = QumuloFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fileSystemName);

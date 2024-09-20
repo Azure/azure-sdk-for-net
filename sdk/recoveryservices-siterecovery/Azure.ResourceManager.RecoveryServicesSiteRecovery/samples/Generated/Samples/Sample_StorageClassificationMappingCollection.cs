@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this StorageClassificationResource created on azure
             // for more information of creating StorageClassificationResource, please refer to the document of StorageClassificationResource
-            string subscriptionId = "9112a37f-0f3e-46ec-9c00-060c6edca071";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "2a48e3770ac08aa2be8bfbd94fcfb1cbf2dcc487b78fb9d3bd778304441b06a0";
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this StorageClassificationResource created on azure
             // for more information of creating StorageClassificationResource, please refer to the document of StorageClassificationResource
-            string subscriptionId = "9112a37f-0f3e-46ec-9c00-060c6edca071";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "2a48e3770ac08aa2be8bfbd94fcfb1cbf2dcc487b78fb9d3bd778304441b06a0";
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this StorageClassificationResource created on azure
             // for more information of creating StorageClassificationResource, please refer to the document of StorageClassificationResource
-            string subscriptionId = "9112a37f-0f3e-46ec-9c00-060c6edca071";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "2a48e3770ac08aa2be8bfbd94fcfb1cbf2dcc487b78fb9d3bd778304441b06a0";
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this StorageClassificationResource created on azure
             // for more information of creating StorageClassificationResource, please refer to the document of StorageClassificationResource
-            string subscriptionId = "9112a37f-0f3e-46ec-9c00-060c6edca071";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "2a48e3770ac08aa2be8bfbd94fcfb1cbf2dcc487b78fb9d3bd778304441b06a0";
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this StorageClassificationResource created on azure
             // for more information of creating StorageClassificationResource, please refer to the document of StorageClassificationResource
-            string subscriptionId = "9112a37f-0f3e-46ec-9c00-060c6edca071";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "2a48e3770ac08aa2be8bfbd94fcfb1cbf2dcc487b78fb9d3bd778304441b06a0";

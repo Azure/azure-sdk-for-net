@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Redis.Samples
 
             // this example assumes you already have this RedisLinkedServerWithPropertyResource created on azure
             // for more information of creating RedisLinkedServerWithPropertyResource, please refer to the document of RedisLinkedServerWithPropertyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string name = "cache1";
             string linkedServerName = "cache2";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Redis.Samples
 
             // this example assumes you already have this RedisLinkedServerWithPropertyResource created on azure
             // for more information of creating RedisLinkedServerWithPropertyResource, please refer to the document of RedisLinkedServerWithPropertyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string name = "cache1";
             string linkedServerName = "cache2";
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Redis.Samples
 
             // this example assumes you already have this RedisLinkedServerWithPropertyResource created on azure
             // for more information of creating RedisLinkedServerWithPropertyResource, please refer to the document of RedisLinkedServerWithPropertyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string name = "cache1";
             string linkedServerName = "cache2";

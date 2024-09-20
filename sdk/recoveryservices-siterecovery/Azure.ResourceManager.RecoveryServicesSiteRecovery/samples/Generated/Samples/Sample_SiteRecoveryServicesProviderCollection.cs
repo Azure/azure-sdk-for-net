@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryFabricResource created on azure
             // for more information of creating SiteRecoveryFabricResource, please refer to the document of SiteRecoveryFabricResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryFabricResource created on azure
             // for more information of creating SiteRecoveryFabricResource, please refer to the document of SiteRecoveryFabricResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryFabricResource created on azure
             // for more information of creating SiteRecoveryFabricResource, please refer to the document of SiteRecoveryFabricResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryFabricResource created on azure
             // for more information of creating SiteRecoveryFabricResource, please refer to the document of SiteRecoveryFabricResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryFabricResource created on azure
             // for more information of creating SiteRecoveryFabricResource, please refer to the document of SiteRecoveryFabricResource
-            string subscriptionId = "cb53d0c3-bd59-4721-89bc-06916a9147ef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup1";
             string resourceName = "migrationvault";
             string fabricName = "vmwarefabric1";

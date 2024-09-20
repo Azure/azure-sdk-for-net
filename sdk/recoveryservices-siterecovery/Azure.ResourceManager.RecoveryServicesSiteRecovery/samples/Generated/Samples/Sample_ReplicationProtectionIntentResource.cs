@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this ReplicationProtectionIntentResource created on azure
             // for more information of creating ReplicationProtectionIntentResource, please refer to the document of ReplicationProtectionIntentResource
-            string subscriptionId = "509099b2-9d2c-4636-b43e-bd5cafb6be69";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string intentObjectName = "vm1";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this ReplicationProtectionIntentResource created on azure
             // for more information of creating ReplicationProtectionIntentResource, please refer to the document of ReplicationProtectionIntentResource
-            string subscriptionId = "509099b2-9d2c-4636-b43e-bd5cafb6be69";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string intentObjectName = "vm1";

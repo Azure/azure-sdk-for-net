@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -160,7 +160,7 @@ SelectionType = "SelectedByUser",
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -205,7 +205,7 @@ new A2AVmDiskDetails(new Uri("https://vmstorage.blob.core.windows.net/vhds/datad
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -244,7 +244,7 @@ new A2AVmDiskDetails(new Uri("https://vmstorage.blob.core.windows.net/vhds/datad
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -279,7 +279,7 @@ new A2AVmDiskDetails(new Uri("https://vmstorage.blob.core.windows.net/vhds/datad
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -314,7 +314,7 @@ new A2AVmDiskDetails(new Uri("https://vmstorage.blob.core.windows.net/vhds/datad
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -357,7 +357,7 @@ new A2AVmDiskDetails(new Uri("https://vmstorage.blob.core.windows.net/vhds/datad
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -402,7 +402,7 @@ new Uri("https://vmstorage.blob.core.windows.net/vhds/datadisk1.vhd")
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -437,7 +437,7 @@ new Uri("https://vmstorage.blob.core.windows.net/vhds/datadisk1.vhd")
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -480,7 +480,7 @@ new Uri("https://vmstorage.blob.core.windows.net/vhds/datadisk1.vhd")
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -525,7 +525,7 @@ HealthErrorId = "3:8020",
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -568,7 +568,7 @@ HealthErrorId = "3:8020",
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -610,7 +610,7 @@ HealthErrorId = "3:8020",
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -649,7 +649,7 @@ HealthErrorId = "3:8020",
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "cloud1";
@@ -690,7 +690,7 @@ HealthErrorId = "3:8020",
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "7c943c1b-5122-4097-90c8-861411bdd574";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Ayan-0106-SA-RG";
             string resourceName = "Ayan-0106-SA-Vault";
             string fabricName = "Ayan-0106-SA-Vaultreplicationfabric";
@@ -729,7 +729,7 @@ HealthErrorId = "3:8020",
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "b364ed8d-4279-4bf8-8fd1-56f8fa0ae05c";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "wcusValidations";
             string resourceName = "WCUSVault";
             string fabricName = "WIN-JKKJ31QI8U2";
@@ -768,7 +768,7 @@ HealthErrorId = "3:8020",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -802,7 +802,7 @@ HealthErrorId = "3:8020",
 
             // this example assumes you already have this ReplicationProtectedItemResource created on azure
             // for more information of creating ReplicationProtectedItemResource, please refer to the document of ReplicationProtectedItemResource
-            string subscriptionId = "6808dbbc-98c7-431f-a1b1-9580902423b7";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "avraiMgDiskVaultRG";
             string resourceName = "avraiMgDiskVault";
             string fabricName = "asr-a2a-default-centraluseuap";
