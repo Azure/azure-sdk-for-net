@@ -42,14 +42,14 @@ public class CloudMachineInfrastructure : Infrastructure
     /// </summary>
     public BicepParameter PrincipalNameParameter => new BicepParameter("principalName", typeof(string));
 
-    public CloudMachineInfrastructure(string? name = "cm") : base(name!)
+    public CloudMachineInfrastructure(string name = "cm") : base(name!)
     {
         _name = name ?? "cm";
         _identity = new($"{_name}_identity");
-        var managedServiceIdentity = new ManagedServiceIdentity
+        ManagedServiceIdentity managedServiceIdentity = new()
         {
             ManagedServiceIdentityType = ManagedServiceIdentityType.UserAssigned,
-            UserAssignedIdentities = { { BicepFunction.Interpolate($"{_identity!.Id}").Compile().ToString(), new UserAssignedIdentityDetails() } }
+            UserAssignedIdentities = { { BicepFunction.Interpolate($"{_identity.Id}").Compile().ToString(), new UserAssignedIdentityDetails() } }
         };
 
         _storage = StorageResources.CreateAccount($"{_name}_sa");
@@ -81,7 +81,6 @@ public class CloudMachineInfrastructure : Infrastructure
         _serviceBusTopic_main = new($"{_name}_sb_topic_main", "2021-11-01")
         {
             Parent = _serviceBusNamespace,
-            // Name = "default",
             MaxMessageSizeInKilobytes = 256,
             DefaultMessageTimeToLive = new StringLiteral("P14D"),
             RequiresDuplicateDetection = false,
