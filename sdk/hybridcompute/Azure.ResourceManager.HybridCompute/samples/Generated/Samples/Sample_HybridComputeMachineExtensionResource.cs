@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this HybridComputeMachineExtensionResource created on azure
             // for more information of creating HybridComputeMachineExtensionResource, please refer to the document of HybridComputeMachineExtensionResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
             string extensionName = "CustomScriptExtension";
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this HybridComputeMachineExtensionResource created on azure
             // for more information of creating HybridComputeMachineExtensionResource, please refer to the document of HybridComputeMachineExtensionResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
             string extensionName = "MMA";
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this HybridComputeMachineExtensionResource created on azure
             // for more information of creating HybridComputeMachineExtensionResource, please refer to the document of HybridComputeMachineExtensionResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
             string extensionName = "CustomScriptExtension";

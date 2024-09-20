@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkServiceDesignGroupResource created on azure
             // for more information of creating NetworkServiceDesignGroupResource, please refer to the document of NetworkServiceDesignGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string publisherName = "TestPublisher";
             string networkServiceDesignGroupName = "TestNetworkServiceDesignGroupName";
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkServiceDesignGroupResource created on azure
             // for more information of creating NetworkServiceDesignGroupResource, please refer to the document of NetworkServiceDesignGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string publisherName = "TestPublisher";
             string networkServiceDesignGroupName = "TestNetworkServiceDesignGroupName";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkServiceDesignGroupResource created on azure
             // for more information of creating NetworkServiceDesignGroupResource, please refer to the document of NetworkServiceDesignGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string publisherName = "TestPublisher";
             string networkServiceDesignGroupName = "TestNetworkServiceDesignGroupName";

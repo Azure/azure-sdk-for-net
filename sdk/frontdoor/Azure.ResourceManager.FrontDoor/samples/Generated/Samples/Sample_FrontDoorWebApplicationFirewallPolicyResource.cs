@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
 
             // this example assumes you already have this FrontDoorWebApplicationFirewallPolicyResource created on azure
             // for more information of creating FrontDoorWebApplicationFirewallPolicyResource, please refer to the document of FrontDoorWebApplicationFirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string policyName = "Policy1";
             ResourceIdentifier frontDoorWebApplicationFirewallPolicyResourceId = FrontDoorWebApplicationFirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, policyName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
 
             // this example assumes you already have this FrontDoorWebApplicationFirewallPolicyResource created on azure
             // for more information of creating FrontDoorWebApplicationFirewallPolicyResource, please refer to the document of FrontDoorWebApplicationFirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string policyName = "Policy1";
             ResourceIdentifier frontDoorWebApplicationFirewallPolicyResourceId = FrontDoorWebApplicationFirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, policyName);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
 
             // this example assumes you already have this FrontDoorWebApplicationFirewallPolicyResource created on azure
             // for more information of creating FrontDoorWebApplicationFirewallPolicyResource, please refer to the document of FrontDoorWebApplicationFirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string policyName = "Policy1";
             ResourceIdentifier frontDoorWebApplicationFirewallPolicyResourceId = FrontDoorWebApplicationFirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, policyName);

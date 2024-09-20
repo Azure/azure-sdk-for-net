@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
 
             // this example assumes you already have this FrontDoorRulesEngineResource created on azure
             // for more information of creating FrontDoorRulesEngineResource, please refer to the document of FrontDoorRulesEngineResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string frontDoorName = "frontDoor1";
             string rulesEngineName = "rulesEngine1";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
 
             // this example assumes you already have this FrontDoorRulesEngineResource created on azure
             // for more information of creating FrontDoorRulesEngineResource, please refer to the document of FrontDoorRulesEngineResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string frontDoorName = "frontDoor1";
             string rulesEngineName = "rulesEngine1";
@@ -180,7 +180,7 @@ RulesEngineMatchTransform.Lowercase
 
             // this example assumes you already have this FrontDoorRulesEngineResource created on azure
             // for more information of creating FrontDoorRulesEngineResource, please refer to the document of FrontDoorRulesEngineResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string frontDoorName = "frontDoor1";
             string rulesEngineName = "rulesEngine1";

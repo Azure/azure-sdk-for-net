@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.GraphServices.Samples
 
             // this example assumes you already have this GraphServicesAccountResource created on azure
             // for more information of creating GraphServicesAccountResource, please refer to the document of GraphServicesAccountResource
-            string subscriptionId = "11111111-aaaa-1111-bbbb-111111111111";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroupGRAM";
             string resourceName = "11111111-aaaa-1111-bbbb-111111111111";
             ResourceIdentifier graphServicesAccountResourceId = GraphServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);

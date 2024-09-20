@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GuestConfigurationVmAssignmentResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Compute/virtualMachines/{2}", subscriptionId, resourceGroupName, vmName));
@@ -93,7 +93,7 @@ Value = "NotePad,sql",
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GuestConfigurationVmAssignmentResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Compute/virtualMachines/{2}", subscriptionId, resourceGroupName, vmName));
@@ -127,7 +127,7 @@ Value = "NotePad,sql",
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GuestConfigurationVmAssignmentResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Compute/virtualMachines/{2}", subscriptionId, resourceGroupName, vmName));
@@ -157,7 +157,7 @@ Value = "NotePad,sql",
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GuestConfigurationVmAssignmentResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Compute/virtualMachines/{2}", subscriptionId, resourceGroupName, vmName));
@@ -199,7 +199,7 @@ Value = "NotePad,sql",
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this GuestConfigurationVmAssignmentResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Compute/virtualMachines/{2}", subscriptionId, resourceGroupName, vmName));

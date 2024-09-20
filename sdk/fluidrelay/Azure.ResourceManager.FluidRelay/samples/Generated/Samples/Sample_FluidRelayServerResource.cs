@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.FluidRelay.Samples
 
             // this example assumes you already have this FluidRelayServerResource created on azure
             // for more information of creating FluidRelayServerResource, please refer to the document of FluidRelayServerResource
-            string subscriptionId = "xxxx-xxxx-xxxx-xxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroup = "myResourceGroup";
             string fluidRelayServerName = "myFluidRelayServer";
             ResourceIdentifier fluidRelayServerResourceId = FluidRelayServerResource.CreateResourceIdentifier(subscriptionId, resourceGroup, fluidRelayServerName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.FluidRelay.Samples
 
             // this example assumes you already have this FluidRelayServerResource created on azure
             // for more information of creating FluidRelayServerResource, please refer to the document of FluidRelayServerResource
-            string subscriptionId = "xxxx-xxxx-xxxx-xxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroup = "myResourceGroup";
             string fluidRelayServerName = "myFluidRelayServer";
             ResourceIdentifier fluidRelayServerResourceId = FluidRelayServerResource.CreateResourceIdentifier(subscriptionId, resourceGroup, fluidRelayServerName);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.FluidRelay.Samples
 
             // this example assumes you already have this FluidRelayServerResource created on azure
             // for more information of creating FluidRelayServerResource, please refer to the document of FluidRelayServerResource
-            string subscriptionId = "xxxx-xxxx-xxxx-xxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroup = "myResourceGroup";
             string fluidRelayServerName = "myFluidRelayServer";
             ResourceIdentifier fluidRelayServerResourceId = FluidRelayServerResource.CreateResourceIdentifier(subscriptionId, resourceGroup, fluidRelayServerName);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.FluidRelay.Samples
 
             // this example assumes you already have this FluidRelayServerResource created on azure
             // for more information of creating FluidRelayServerResource, please refer to the document of FluidRelayServerResource
-            string subscriptionId = "xxxx-xxxx-xxxx-xxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroup = "myResourceGroup";
             string fluidRelayServerName = "myFluidRelayServer";
             ResourceIdentifier fluidRelayServerResourceId = FluidRelayServerResource.CreateResourceIdentifier(subscriptionId, resourceGroup, fluidRelayServerName);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.FluidRelay.Samples
 
             // this example assumes you already have this FluidRelayServerResource created on azure
             // for more information of creating FluidRelayServerResource, please refer to the document of FluidRelayServerResource
-            string subscriptionId = "xxxx-xxxx-xxxx-xxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroup = "myResourceGroup";
             string fluidRelayServerName = "myFluidRelayServer";
             ResourceIdentifier fluidRelayServerResourceId = FluidRelayServerResource.CreateResourceIdentifier(subscriptionId, resourceGroup, fluidRelayServerName);
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.FluidRelay.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "xxxx-xxxx-xxxx-xxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

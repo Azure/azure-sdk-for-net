@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HealthBot.Samples
 
             // this example assumes you already have this HealthBotResource created on azure
             // for more information of creating HealthBotResource, please refer to the document of HealthBotResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "healthbotClient";
             string botName = "samplebotname";
             ResourceIdentifier healthBotResourceId = HealthBotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, botName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HealthBot.Samples
 
             // this example assumes you already have this HealthBotResource created on azure
             // for more information of creating HealthBotResource, please refer to the document of HealthBotResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "healthbotClient";
             string botName = "samplebotname";
             ResourceIdentifier healthBotResourceId = HealthBotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, botName);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HealthBot.Samples
 
             // this example assumes you already have this HealthBotResource created on azure
             // for more information of creating HealthBotResource, please refer to the document of HealthBotResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "healthbotClient";
             string botName = "samplebotname";
             ResourceIdentifier healthBotResourceId = HealthBotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, botName);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HealthBot.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

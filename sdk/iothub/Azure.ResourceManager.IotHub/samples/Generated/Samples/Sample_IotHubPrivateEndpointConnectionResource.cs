@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.IotHub.Samples
 
             // this example assumes you already have this IotHubPrivateEndpointConnectionResource created on azure
             // for more information of creating IotHubPrivateEndpointConnectionResource, please refer to the document of IotHubPrivateEndpointConnectionResource
-            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "testHub";
             string privateEndpointConnectionName = "myPrivateEndpointConnection";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotHub.Samples
 
             // this example assumes you already have this IotHubPrivateEndpointConnectionResource created on azure
             // for more information of creating IotHubPrivateEndpointConnectionResource, please refer to the document of IotHubPrivateEndpointConnectionResource
-            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "testHub";
             string privateEndpointConnectionName = "myPrivateEndpointConnection";
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.IotHub.Samples
 
             // this example assumes you already have this IotHubPrivateEndpointConnectionResource created on azure
             // for more information of creating IotHubPrivateEndpointConnectionResource, please refer to the document of IotHubPrivateEndpointConnectionResource
-            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "testHub";
             string privateEndpointConnectionName = "myPrivateEndpointConnection";

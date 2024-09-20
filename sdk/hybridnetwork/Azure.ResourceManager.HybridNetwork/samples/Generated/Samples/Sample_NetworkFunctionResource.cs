@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkFunctionResource created on azure
             // for more information of creating NetworkFunctionResource, please refer to the document of NetworkFunctionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string networkFunctionName = "testNf";
             ResourceIdentifier networkFunctionResourceId = NetworkFunctionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFunctionName);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkFunctionResource created on azure
             // for more information of creating NetworkFunctionResource, please refer to the document of NetworkFunctionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string networkFunctionName = "testNf";
             ResourceIdentifier networkFunctionResourceId = NetworkFunctionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFunctionName);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkFunctionResource created on azure
             // for more information of creating NetworkFunctionResource, please refer to the document of NetworkFunctionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string networkFunctionName = "testNf";
             ResourceIdentifier networkFunctionResourceId = NetworkFunctionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFunctionName);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkFunctionResource created on azure
             // for more information of creating NetworkFunctionResource, please refer to the document of NetworkFunctionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string networkFunctionName = "testNf";
             ResourceIdentifier networkFunctionResourceId = NetworkFunctionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFunctionName);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkFunctionResource created on azure
             // for more information of creating NetworkFunctionResource, please refer to the document of NetworkFunctionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string networkFunctionName = "testNf";
             ResourceIdentifier networkFunctionResourceId = NetworkFunctionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFunctionName);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkFunctionResource created on azure
             // for more information of creating NetworkFunctionResource, please refer to the document of NetworkFunctionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string networkFunctionName = "testNf";
             ResourceIdentifier networkFunctionResourceId = NetworkFunctionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFunctionName);
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkFunctionResource created on azure
             // for more information of creating NetworkFunctionResource, please refer to the document of NetworkFunctionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string networkFunctionName = "testNf";
             ResourceIdentifier networkFunctionResourceId = NetworkFunctionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFunctionName);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkFunctionResource created on azure
             // for more information of creating NetworkFunctionResource, please refer to the document of NetworkFunctionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string networkFunctionName = "testNetworkfunction";
             ResourceIdentifier networkFunctionResourceId = NetworkFunctionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFunctionName);

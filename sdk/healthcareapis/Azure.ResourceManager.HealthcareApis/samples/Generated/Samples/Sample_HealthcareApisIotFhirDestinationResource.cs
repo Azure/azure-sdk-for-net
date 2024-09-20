@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisIotFhirDestinationResource created on azure
             // for more information of creating HealthcareApisIotFhirDestinationResource, please refer to the document of HealthcareApisIotFhirDestinationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testRG";
             string workspaceName = "workspace1";
             string iotConnectorName = "blue";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisIotFhirDestinationResource created on azure
             // for more information of creating HealthcareApisIotFhirDestinationResource, please refer to the document of HealthcareApisIotFhirDestinationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testRG";
             string workspaceName = "workspace1";
             string iotConnectorName = "blue";
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisIotFhirDestinationResource created on azure
             // for more information of creating HealthcareApisIotFhirDestinationResource, please refer to the document of HealthcareApisIotFhirDestinationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testRG";
             string workspaceName = "workspace1";
             string iotConnectorName = "blue";

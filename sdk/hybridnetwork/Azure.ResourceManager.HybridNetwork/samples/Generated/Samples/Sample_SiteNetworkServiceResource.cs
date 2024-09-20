@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this SiteNetworkServiceResource created on azure
             // for more information of creating SiteNetworkServiceResource, please refer to the document of SiteNetworkServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string siteNetworkServiceName = "testSiteNetworkServiceName";
             ResourceIdentifier siteNetworkServiceResourceId = SiteNetworkServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteNetworkServiceName);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this SiteNetworkServiceResource created on azure
             // for more information of creating SiteNetworkServiceResource, please refer to the document of SiteNetworkServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string siteNetworkServiceName = "testSiteNetworkServiceName";
             ResourceIdentifier siteNetworkServiceResourceId = SiteNetworkServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteNetworkServiceName);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this SiteNetworkServiceResource created on azure
             // for more information of creating SiteNetworkServiceResource, please refer to the document of SiteNetworkServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string siteNetworkServiceName = "testSiteNetworkServiceName";
             ResourceIdentifier siteNetworkServiceResourceId = SiteNetworkServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteNetworkServiceName);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

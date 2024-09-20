@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this ConfigurationGroupSchemaResource created on azure
             // for more information of creating ConfigurationGroupSchemaResource, please refer to the document of ConfigurationGroupSchemaResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string publisherName = "testPublisher";
             string configurationGroupSchemaName = "testConfigurationGroupSchema";
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this ConfigurationGroupSchemaResource created on azure
             // for more information of creating ConfigurationGroupSchemaResource, please refer to the document of ConfigurationGroupSchemaResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string publisherName = "testPublisher";
             string configurationGroupSchemaName = "testConfigurationGroupSchema";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this ConfigurationGroupSchemaResource created on azure
             // for more information of creating ConfigurationGroupSchemaResource, please refer to the document of ConfigurationGroupSchemaResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string publisherName = "testPublisher";
             string configurationGroupSchemaName = "testConfigurationGroupSchema";
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this ConfigurationGroupSchemaResource created on azure
             // for more information of creating ConfigurationGroupSchemaResource, please refer to the document of ConfigurationGroupSchemaResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string publisherName = "testPublisher";
             string configurationGroupSchemaName = "testConfigurationGroupSchema";

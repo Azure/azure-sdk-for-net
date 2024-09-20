@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Samples
 
             // this example assumes you already have this GuestConfigurationHcrpAssignmentResource created on azure
             // for more information of creating GuestConfigurationHcrpAssignmentResource, please refer to the document of GuestConfigurationHcrpAssignmentResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string machineName = "myMachineName";
             string guestConfigurationAssignmentName = "NotInstalledApplicationForWindows";
@@ -88,7 +88,7 @@ Value = "NotePad,sql",
 
             // this example assumes you already have this GuestConfigurationHcrpAssignmentResource created on azure
             // for more information of creating GuestConfigurationHcrpAssignmentResource, please refer to the document of GuestConfigurationHcrpAssignmentResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string machineName = "myMachineName";
             string guestConfigurationAssignmentName = "SecureProtocol";
@@ -120,7 +120,7 @@ Value = "NotePad,sql",
 
             // this example assumes you already have this GuestConfigurationHcrpAssignmentResource created on azure
             // for more information of creating GuestConfigurationHcrpAssignmentResource, please refer to the document of GuestConfigurationHcrpAssignmentResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string machineName = "myMachineName";
             string guestConfigurationAssignmentName = "SecureProtocol";
@@ -148,7 +148,7 @@ Value = "NotePad,sql",
 
             // this example assumes you already have this GuestConfigurationHcrpAssignmentResource created on azure
             // for more information of creating GuestConfigurationHcrpAssignmentResource, please refer to the document of GuestConfigurationHcrpAssignmentResource
-            string subscriptionId = "mySubscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string machineName = "myMachineName";
             string guestConfigurationAssignmentName = "AuditSecureProtocol";
@@ -179,7 +179,7 @@ Value = "NotePad,sql",
 
             // this example assumes you already have this GuestConfigurationHcrpAssignmentResource created on azure
             // for more information of creating GuestConfigurationHcrpAssignmentResource, please refer to the document of GuestConfigurationHcrpAssignmentResource
-            string subscriptionId = "mySubscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string machineName = "myMachineName";
             string guestConfigurationAssignmentName = "AuditSecureProtocol";

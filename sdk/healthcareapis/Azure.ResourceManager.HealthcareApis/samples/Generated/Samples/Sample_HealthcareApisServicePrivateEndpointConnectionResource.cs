@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisServicePrivateEndpointConnectionResource created on azure
             // for more information of creating HealthcareApisServicePrivateEndpointConnectionResource, please refer to the document of HealthcareApisServicePrivateEndpointConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgname";
             string resourceName = "service1";
             string privateEndpointConnectionName = "myConnection";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisServicePrivateEndpointConnectionResource created on azure
             // for more information of creating HealthcareApisServicePrivateEndpointConnectionResource, please refer to the document of HealthcareApisServicePrivateEndpointConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgname";
             string resourceName = "service1";
             string privateEndpointConnectionName = "myConnection";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisServicePrivateEndpointConnectionResource created on azure
             // for more information of creating HealthcareApisServicePrivateEndpointConnectionResource, please refer to the document of HealthcareApisServicePrivateEndpointConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgname";
             string resourceName = "service1";
             string privateEndpointConnectionName = "myConnection";

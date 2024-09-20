@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkFunctionDefinitionVersionResource created on azure
             // for more information of creating NetworkFunctionDefinitionVersionResource, please refer to the document of NetworkFunctionDefinitionVersionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string publisherName = "TestPublisher";
             string networkFunctionDefinitionGroupName = "TestNetworkFunctionDefinitionGroupName";
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkFunctionDefinitionVersionResource created on azure
             // for more information of creating NetworkFunctionDefinitionVersionResource, please refer to the document of NetworkFunctionDefinitionVersionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string publisherName = "TestPublisher";
             string networkFunctionDefinitionGroupName = "TestNetworkFunctionDefinitionGroupName";
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkFunctionDefinitionVersionResource created on azure
             // for more information of creating NetworkFunctionDefinitionVersionResource, please refer to the document of NetworkFunctionDefinitionVersionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string publisherName = "TestPublisher";
             string networkFunctionDefinitionGroupName = "TestNetworkFunctionDefinitionGroupName";
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkFunctionDefinitionVersionResource created on azure
             // for more information of creating NetworkFunctionDefinitionVersionResource, please refer to the document of NetworkFunctionDefinitionVersionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string publisherName = "TestPublisher";
             string networkFunctionDefinitionGroupName = "TestNetworkFunctionDefinitionGroupName";
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkFunctionDefinitionVersionResource created on azure
             // for more information of creating NetworkFunctionDefinitionVersionResource, please refer to the document of NetworkFunctionDefinitionVersionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string publisherName = "TestPublisher";
             string networkFunctionDefinitionGroupName = "TestNetworkFunctionDefinitionGroupName";
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkFunctionDefinitionVersionResource created on azure
             // for more information of creating NetworkFunctionDefinitionVersionResource, please refer to the document of NetworkFunctionDefinitionVersionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string publisherName = "TestPublisher";
             string networkFunctionDefinitionGroupName = "TestNetworkFunctionDefinitionGroupName";
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkFunctionDefinitionVersionResource created on azure
             // for more information of creating NetworkFunctionDefinitionVersionResource, please refer to the document of NetworkFunctionDefinitionVersionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string publisherName = "TestPublisher";
             string networkFunctionDefinitionGroupName = "TestNetworkFunctionDefinitionGroupName";
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
             // this example assumes you already have this NetworkFunctionDefinitionVersionResource created on azure
             // for more information of creating NetworkFunctionDefinitionVersionResource, please refer to the document of NetworkFunctionDefinitionVersionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string publisherName = "TestPublisher";
             string networkFunctionDefinitionGroupName = "TestSkuGroup";

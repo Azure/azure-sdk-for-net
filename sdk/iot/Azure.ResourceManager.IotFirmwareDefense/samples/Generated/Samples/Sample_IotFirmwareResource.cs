@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
             string firmwareId = "umrkdttp";
@@ -327,7 +327,7 @@ Message = "ulvhmhokezathzzauiitu",
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
             string firmwareId = "umrkdttp";
@@ -360,7 +360,7 @@ Message = "ulvhmhokezathzzauiitu",
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
             string firmwareId = "umrkdttp";
@@ -388,7 +388,7 @@ Message = "ulvhmhokezathzzauiitu",
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
             string firmwareId = "umrkdttp";
@@ -416,7 +416,7 @@ Message = "ulvhmhokezathzzauiitu",
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
             string firmwareId = "umrkdttp";
@@ -448,7 +448,7 @@ Message = "ulvhmhokezathzzauiitu",
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
             string firmwareId = "umrkdttp";
@@ -480,7 +480,7 @@ Message = "ulvhmhokezathzzauiitu",
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
             string firmwareId = "umrkdttp";
@@ -508,7 +508,7 @@ Message = "ulvhmhokezathzzauiitu",
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
             string firmwareId = "umrkdttp";
@@ -536,7 +536,7 @@ Message = "ulvhmhokezathzzauiitu",
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
             string firmwareId = "umrkdttp";
@@ -564,7 +564,7 @@ Message = "ulvhmhokezathzzauiitu",
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgworkspaces-firmwares";
             string workspaceName = "A7";
             string firmwareId = "umrkdttp";
