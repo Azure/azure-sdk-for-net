@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
 
             // this example assumes you already have this SapDiscoveryServerInstanceResource created on azure
             // for more information of creating SapDiscoveryServerInstanceResource, please refer to the document of SapDiscoveryServerInstanceResource
-            string subscriptionId = "6d875e77-e412-4d7d-9af4-8895278b4443";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string sapDiscoverySiteName = "SampleSite";
             string sapInstanceName = "MPP_MPP";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
 
             // this example assumes you already have this SapDiscoveryServerInstanceResource created on azure
             // for more information of creating SapDiscoveryServerInstanceResource, please refer to the document of SapDiscoveryServerInstanceResource
-            string subscriptionId = "6d875e77-e412-4d7d-9af4-8895278b4443";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string sapDiscoverySiteName = "SampleSite";
             string sapInstanceName = "MPP_MPP";
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
 
             // this example assumes you already have this SapDiscoveryServerInstanceResource created on azure
             // for more information of creating SapDiscoveryServerInstanceResource, please refer to the document of SapDiscoveryServerInstanceResource
-            string subscriptionId = "6d875e77-e412-4d7d-9af4-8895278b4443";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string sapDiscoverySiteName = "SampleSite";
             string sapInstanceName = "MPP_MPP";

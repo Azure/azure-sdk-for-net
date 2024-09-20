@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationServiceEnvironmentManagedApiResource created on azure
             // for more information of creating IntegrationServiceEnvironmentManagedApiResource, please refer to the document of IntegrationServiceEnvironmentManagedApiResource
-            string subscriptionId = "f34b22a3-2202-4fb1-b040-1332bd928c84";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroup = "testResourceGroup";
             string integrationServiceEnvironmentName = "testIntegrationServiceEnvironment";
             string apiName = "servicebus";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationServiceEnvironmentManagedApiResource created on azure
             // for more information of creating IntegrationServiceEnvironmentManagedApiResource, please refer to the document of IntegrationServiceEnvironmentManagedApiResource
-            string subscriptionId = "f34b22a3-2202-4fb1-b040-1332bd928c84";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroup = "testResourceGroup";
             string integrationServiceEnvironmentName = "testIntegrationServiceEnvironment";
             string apiName = "servicebus";
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationServiceEnvironmentManagedApiResource created on azure
             // for more information of creating IntegrationServiceEnvironmentManagedApiResource, please refer to the document of IntegrationServiceEnvironmentManagedApiResource
-            string subscriptionId = "f34b22a3-2202-4fb1-b040-1332bd928c84";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroup = "testResourceGroup";
             string integrationServiceEnvironmentName = "testIntegrationServiceEnvironment";
             string apiName = "servicebus";
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationServiceEnvironmentManagedApiResource created on azure
             // for more information of creating IntegrationServiceEnvironmentManagedApiResource, please refer to the document of IntegrationServiceEnvironmentManagedApiResource
-            string subscriptionId = "80d4fe69-c95b-4dd2-a938-9250f1c8ab03";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroup = "testResourceGroup";
             string integrationServiceEnvironmentName = "testIntegrationServiceEnvironment";
             string apiName = "servicebus";

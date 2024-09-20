@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this LoadBalancerResource created on azure
             // for more information of creating LoadBalancerResource, please refer to the document of LoadBalancerResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string loadBalancerName = "lb";
             ResourceIdentifier loadBalancerResourceId = LoadBalancerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, loadBalancerName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this LoadBalancerResource created on azure
             // for more information of creating LoadBalancerResource, please refer to the document of LoadBalancerResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string loadBalancerName = "lb";
             ResourceIdentifier loadBalancerResourceId = LoadBalancerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, loadBalancerName);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this LoadBalancerResource created on azure
             // for more information of creating LoadBalancerResource, please refer to the document of LoadBalancerResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string loadBalancerName = "lb";
             ResourceIdentifier loadBalancerResourceId = LoadBalancerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, loadBalancerName);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this LoadBalancerResource created on azure
             // for more information of creating LoadBalancerResource, please refer to the document of LoadBalancerResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string loadBalancerName = "lb";
             ResourceIdentifier loadBalancerResourceId = LoadBalancerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, loadBalancerName);

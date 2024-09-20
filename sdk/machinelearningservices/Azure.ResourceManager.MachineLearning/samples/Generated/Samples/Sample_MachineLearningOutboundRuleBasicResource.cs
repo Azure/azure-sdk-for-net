@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningOutboundRuleBasicResource created on azure
             // for more information of creating MachineLearningOutboundRuleBasicResource, please refer to the document of MachineLearningOutboundRuleBasicResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string workspaceName = "aml-workspace-name";
             string ruleName = "rule-name";
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningOutboundRuleBasicResource created on azure
             // for more information of creating MachineLearningOutboundRuleBasicResource, please refer to the document of MachineLearningOutboundRuleBasicResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string workspaceName = "aml-workspace-name";
             string ruleName = "name_of_the_fqdn_rule";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningOutboundRuleBasicResource created on azure
             // for more information of creating MachineLearningOutboundRuleBasicResource, please refer to the document of MachineLearningOutboundRuleBasicResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string workspaceName = "aml-workspace-name";
             string ruleName = "rule_name_1";

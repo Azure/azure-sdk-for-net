@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this LogicWorkflowResource created on azure
             // for more information of creating LogicWorkflowResource, please refer to the document of LogicWorkflowResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             string workflowName = "test-workflow";
             ResourceIdentifier logicWorkflowResourceId = LogicWorkflowResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workflowName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this LogicWorkflowResource created on azure
             // for more information of creating LogicWorkflowResource, please refer to the document of LogicWorkflowResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             string workflowName = "test-workflow";
             ResourceIdentifier logicWorkflowResourceId = LogicWorkflowResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workflowName);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this LogicWorkflowResource created on azure
             // for more information of creating LogicWorkflowResource, please refer to the document of LogicWorkflowResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             string workflowName = "test-workflow";
             ResourceIdentifier logicWorkflowResourceId = LogicWorkflowResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workflowName);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this LogicWorkflowResource created on azure
             // for more information of creating LogicWorkflowResource, please refer to the document of LogicWorkflowResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             string workflowName = "test-workflow";
             ResourceIdentifier logicWorkflowResourceId = LogicWorkflowResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workflowName);

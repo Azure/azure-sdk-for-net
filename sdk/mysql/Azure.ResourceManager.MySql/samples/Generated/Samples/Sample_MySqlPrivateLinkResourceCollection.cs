@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MySql.Samples
 
             // this example assumes you already have this MySqlServerResource created on azure
             // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default";
             string serverName = "test-svr";
             ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MySql.Samples
 
             // this example assumes you already have this MySqlServerResource created on azure
             // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default";
             string serverName = "test-svr";
             ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MySql.Samples
 
             // this example assumes you already have this MySqlServerResource created on azure
             // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default";
             string serverName = "test-svr";
             ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MySql.Samples
 
             // this example assumes you already have this MySqlServerResource created on azure
             // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default";
             string serverName = "test-svr";
             ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
@@ -485,7 +485,7 @@ new AzureLocation("West US")
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);
@@ -523,7 +523,7 @@ new AzureLocation("West US")
 
             // this example assumes you already have this NetworkWatcherResource created on azure
             // for more information of creating NetworkWatcherResource, please refer to the document of NetworkWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkWatcherName = "nw1";
             ResourceIdentifier networkWatcherResourceId = NetworkWatcherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkWatcherName);

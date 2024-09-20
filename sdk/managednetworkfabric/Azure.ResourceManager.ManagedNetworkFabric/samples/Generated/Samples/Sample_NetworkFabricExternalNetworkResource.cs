@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricExternalNetworkResource created on azure
             // for more information of creating NetworkFabricExternalNetworkResource, please refer to the document of NetworkFabricExternalNetworkResource
-            string subscriptionId = "42EEDB3B-8E17-46E3-B0B4-B1CD9842D90D";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgL3IsolationDomains";
             string l3IsolationDomainName = "yhtr";
             string externalNetworkName = "fltpszzikbalrzaqq";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricExternalNetworkResource created on azure
             // for more information of creating NetworkFabricExternalNetworkResource, please refer to the document of NetworkFabricExternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             string externalNetworkName = "example-externalnetwork";
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricExternalNetworkResource created on azure
             // for more information of creating NetworkFabricExternalNetworkResource, please refer to the document of NetworkFabricExternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             string externalNetworkName = "example-externalnetwork";
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricExternalNetworkResource created on azure
             // for more information of creating NetworkFabricExternalNetworkResource, please refer to the document of NetworkFabricExternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             string externalNetworkName = "example-externalnetwork";
@@ -224,7 +224,7 @@ new ResourceIdentifier("")
 
             // this example assumes you already have this NetworkFabricExternalNetworkResource created on azure
             // for more information of creating NetworkFabricExternalNetworkResource, please refer to the document of NetworkFabricExternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             string externalNetworkName = "example-externalnetwork";

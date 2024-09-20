@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceInterfaceResource created on azure
             // for more information of creating NetworkDeviceInterfaceResource, please refer to the document of NetworkDeviceInterfaceResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkDeviceName = "example-device";
             string networkInterfaceName = "example-interface";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceInterfaceResource created on azure
             // for more information of creating NetworkDeviceInterfaceResource, please refer to the document of NetworkDeviceInterfaceResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkDeviceName = "example-device";
             string networkInterfaceName = "example-interface";
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceInterfaceResource created on azure
             // for more information of creating NetworkDeviceInterfaceResource, please refer to the document of NetworkDeviceInterfaceResource
-            string subscriptionId = "94D0FD57-C08B-4CA3-A926-6B76D8B7B956";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgNetworkDevices";
             string networkDeviceName = "sjzd";
             string networkInterfaceName = "emrgu";
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceInterfaceResource created on azure
             // for more information of creating NetworkDeviceInterfaceResource, please refer to the document of NetworkDeviceInterfaceResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkDeviceName = "example-device";
             string networkInterfaceName = "example-interface";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayConnectionResource created on azure
             // for more information of creating VirtualNetworkGatewayConnectionResource, please refer to the document of VirtualNetworkGatewayConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayConnectionName = "vpngw";
             ResourceIdentifier virtualNetworkGatewayConnectionResourceId = VirtualNetworkGatewayConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayConnectionResource created on azure
             // for more information of creating VirtualNetworkGatewayConnectionResource, please refer to the document of VirtualNetworkGatewayConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayConnectionName = "connS2S";
             ResourceIdentifier virtualNetworkGatewayConnectionResourceId = VirtualNetworkGatewayConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayConnectionResource created on azure
             // for more information of creating VirtualNetworkGatewayConnectionResource, please refer to the document of VirtualNetworkGatewayConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayConnectionName = "conn1";
             ResourceIdentifier virtualNetworkGatewayConnectionResourceId = VirtualNetworkGatewayConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayConnectionResource created on azure
             // for more information of creating VirtualNetworkGatewayConnectionResource, please refer to the document of VirtualNetworkGatewayConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayConnectionName = "test";
             ResourceIdentifier virtualNetworkGatewayConnectionResourceId = VirtualNetworkGatewayConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayConnectionResource created on azure
             // for more information of creating VirtualNetworkGatewayConnectionResource, please refer to the document of VirtualNetworkGatewayConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayConnectionName = "connS2S";
             ResourceIdentifier virtualNetworkGatewayConnectionResourceId = VirtualNetworkGatewayConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayConnectionResource created on azure
             // for more information of creating VirtualNetworkGatewayConnectionResource, please refer to the document of VirtualNetworkGatewayConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayConnectionName = "connS2S";
             ResourceIdentifier virtualNetworkGatewayConnectionResourceId = VirtualNetworkGatewayConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayConnectionResource created on azure
             // for more information of creating VirtualNetworkGatewayConnectionResource, please refer to the document of VirtualNetworkGatewayConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayConnectionName = "conn1";
             ResourceIdentifier virtualNetworkGatewayConnectionResourceId = VirtualNetworkGatewayConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayConnectionResource created on azure
             // for more information of creating VirtualNetworkGatewayConnectionResource, please refer to the document of VirtualNetworkGatewayConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayConnectionName = "vpngwcn1";
             ResourceIdentifier virtualNetworkGatewayConnectionResourceId = VirtualNetworkGatewayConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayConnectionResource created on azure
             // for more information of creating VirtualNetworkGatewayConnectionResource, please refer to the document of VirtualNetworkGatewayConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayConnectionName = "vpngwcn1";
             ResourceIdentifier virtualNetworkGatewayConnectionResourceId = VirtualNetworkGatewayConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayConnectionResource created on azure
             // for more information of creating VirtualNetworkGatewayConnectionResource, please refer to the document of VirtualNetworkGatewayConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayConnectionName = "vpngwcn1";
             ResourceIdentifier virtualNetworkGatewayConnectionResourceId = VirtualNetworkGatewayConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayConnectionResource created on azure
             // for more information of creating VirtualNetworkGatewayConnectionResource, please refer to the document of VirtualNetworkGatewayConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayConnectionName = "vpngwcn1";
             ResourceIdentifier virtualNetworkGatewayConnectionResourceId = VirtualNetworkGatewayConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayConnectionResource created on azure
             // for more information of creating VirtualNetworkGatewayConnectionResource, please refer to the document of VirtualNetworkGatewayConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayConnectionName = "conn1";
             ResourceIdentifier virtualNetworkGatewayConnectionResourceId = VirtualNetworkGatewayConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);

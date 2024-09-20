@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricIPPrefixResource created on azure
             // for more information of creating NetworkFabricIPPrefixResource, please refer to the document of NetworkFabricIPPrefixResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string ipPrefixName = "example-ipPrefix";
             ResourceIdentifier networkFabricIPPrefixResourceId = NetworkFabricIPPrefixResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipPrefixName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricIPPrefixResource created on azure
             // for more information of creating NetworkFabricIPPrefixResource, please refer to the document of NetworkFabricIPPrefixResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string ipPrefixName = "example-ipPrefix";
             ResourceIdentifier networkFabricIPPrefixResourceId = NetworkFabricIPPrefixResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipPrefixName);
@@ -110,7 +110,7 @@ SubnetMaskLength = "10",
 
             // this example assumes you already have this NetworkFabricIPPrefixResource created on azure
             // for more information of creating NetworkFabricIPPrefixResource, please refer to the document of NetworkFabricIPPrefixResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string ipPrefixName = "example-ipPrefix";
             ResourceIdentifier networkFabricIPPrefixResourceId = NetworkFabricIPPrefixResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipPrefixName);
@@ -137,7 +137,7 @@ SubnetMaskLength = "10",
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

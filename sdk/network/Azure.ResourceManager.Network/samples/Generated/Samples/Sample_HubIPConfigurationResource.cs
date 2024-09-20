@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this HubIPConfigurationResource created on azure
             // for more information of creating HubIPConfigurationResource, please refer to the document of HubIPConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "hub1";
             string ipConfigName = "ipconfig1";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this HubIPConfigurationResource created on azure
             // for more information of creating HubIPConfigurationResource, please refer to the document of HubIPConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "hub1";
             string ipConfigName = "ipconfig1";
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this HubIPConfigurationResource created on azure
             // for more information of creating HubIPConfigurationResource, please refer to the document of HubIPConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "hub1";
             string ipConfigName = "ipconfig1";

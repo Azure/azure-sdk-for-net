@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningRegistryCodeContainerResource created on azure
             // for more information of creating MachineLearningRegistryCodeContainerResource, please refer to the document of MachineLearningRegistryCodeContainerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string registryName = "my-aml-registry";
             string codeName = "string";
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningRegistryCodeContainerResource created on azure
             // for more information of creating MachineLearningRegistryCodeContainerResource, please refer to the document of MachineLearningRegistryCodeContainerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string registryName = "my-aml-registry";
             string codeName = "string";
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningRegistryCodeContainerResource created on azure
             // for more information of creating MachineLearningRegistryCodeContainerResource, please refer to the document of MachineLearningRegistryCodeContainerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string registryName = "my-aml-registry";
             string codeName = "string";
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningRegistryCodeContainerResource created on azure
             // for more information of creating MachineLearningRegistryCodeContainerResource, please refer to the document of MachineLearningRegistryCodeContainerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string registryName = "my-aml-registry";
             string codeName = "string";
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningRegistryCodeContainerResource created on azure
             // for more information of creating MachineLearningRegistryCodeContainerResource, please refer to the document of MachineLearningRegistryCodeContainerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string registryName = "my-aml-registry";
             string codeName = "string";

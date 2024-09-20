@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this DscpConfigurationResource created on azure
             // for more information of creating DscpConfigurationResource, please refer to the document of DscpConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string dscpConfigurationName = "mydscpconfig";
             ResourceIdentifier dscpConfigurationResourceId = DscpConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dscpConfigurationName);
@@ -153,7 +153,7 @@ Protocol = ProtocolType.Udp,
 
             // this example assumes you already have this DscpConfigurationResource created on azure
             // for more information of creating DscpConfigurationResource, please refer to the document of DscpConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string dscpConfigurationName = "mydscpConfig";
             ResourceIdentifier dscpConfigurationResourceId = DscpConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dscpConfigurationName);
@@ -180,7 +180,7 @@ Protocol = ProtocolType.Udp,
 
             // this example assumes you already have this DscpConfigurationResource created on azure
             // for more information of creating DscpConfigurationResource, please refer to the document of DscpConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string dscpConfigurationName = "mydscpConfig";
             ResourceIdentifier dscpConfigurationResourceId = DscpConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dscpConfigurationName);
@@ -211,7 +211,7 @@ Protocol = ProtocolType.Udp,
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

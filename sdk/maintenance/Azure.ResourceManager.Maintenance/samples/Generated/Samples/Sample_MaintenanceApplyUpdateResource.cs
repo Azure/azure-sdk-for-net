@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
 
             // this example assumes you already have this MaintenanceApplyUpdateResource created on azure
             // for more information of creating MaintenanceApplyUpdateResource, please refer to the document of MaintenanceApplyUpdateResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string providerName = "Microsoft.Compute";
             string resourceType = "virtualMachineScaleSets";
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
 
             // this example assumes you already have this MaintenanceApplyUpdateResource created on azure
             // for more information of creating MaintenanceApplyUpdateResource, please refer to the document of MaintenanceApplyUpdateResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string providerName = "Microsoft.Compute";
             string resourceType = "virtualMachineScaleSets";
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
 
             // this example assumes you already have this MaintenanceApplyUpdateResource created on azure
             // for more information of creating MaintenanceApplyUpdateResource, please refer to the document of MaintenanceApplyUpdateResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string providerName = "Microsoft.Maintenance";
             string resourceType = "maintenanceConfigurations";
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

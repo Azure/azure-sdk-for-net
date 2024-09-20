@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ApplicationGatewayPrivateEndpointConnectionResource created on azure
             // for more information of creating ApplicationGatewayPrivateEndpointConnectionResource, please refer to the document of ApplicationGatewayPrivateEndpointConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string applicationGatewayName = "appgw";
             string connectionName = "connection1";
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ApplicationGatewayPrivateEndpointConnectionResource created on azure
             // for more information of creating ApplicationGatewayPrivateEndpointConnectionResource, please refer to the document of ApplicationGatewayPrivateEndpointConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string applicationGatewayName = "appgw";
             string connectionName = "connection1";
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ApplicationGatewayPrivateEndpointConnectionResource created on azure
             // for more information of creating ApplicationGatewayPrivateEndpointConnectionResource, please refer to the document of ApplicationGatewayPrivateEndpointConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string applicationGatewayName = "appgw";
             string connectionName = "connection1";

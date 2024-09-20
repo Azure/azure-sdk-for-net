@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricSkuResource created on azure
             // for more information of creating NetworkFabricSkuResource, please refer to the document of NetworkFabricSkuResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string networkFabricSkuName = "example-fabricsku";
             ResourceIdentifier networkFabricSkuResourceId = NetworkFabricSkuResource.CreateResourceIdentifier(subscriptionId, networkFabricSkuName);
             NetworkFabricSkuResource networkFabricSku = client.GetNetworkFabricSkuResource(networkFabricSkuResourceId);

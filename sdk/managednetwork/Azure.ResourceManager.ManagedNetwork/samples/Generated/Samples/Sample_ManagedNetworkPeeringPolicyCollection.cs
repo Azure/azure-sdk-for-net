@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
 
             // this example assumes you already have this ManagedNetworkResource created on azure
             // for more information of creating ManagedNetworkResource, please refer to the document of ManagedNetworkResource
-            string subscriptionId = "subscriptionA";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string managedNetworkName = "myManagedNetwork";
             ResourceIdentifier managedNetworkResourceId = ManagedNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedNetworkName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
 
             // this example assumes you already have this ManagedNetworkResource created on azure
             // for more information of creating ManagedNetworkResource, please refer to the document of ManagedNetworkResource
-            string subscriptionId = "subscriptionA";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string managedNetworkName = "myManagedNetwork";
             ResourceIdentifier managedNetworkResourceId = ManagedNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedNetworkName);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
 
             // this example assumes you already have this ManagedNetworkResource created on azure
             // for more information of creating ManagedNetworkResource, please refer to the document of ManagedNetworkResource
-            string subscriptionId = "subscriptionA";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string managedNetworkName = "myManagedNetwork";
             ResourceIdentifier managedNetworkResourceId = ManagedNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedNetworkName);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
 
             // this example assumes you already have this ManagedNetworkResource created on azure
             // for more information of creating ManagedNetworkResource, please refer to the document of ManagedNetworkResource
-            string subscriptionId = "subscriptionA";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string managedNetworkName = "myManagedNetwork";
             ResourceIdentifier managedNetworkResourceId = ManagedNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedNetworkName);
@@ -190,7 +190,7 @@ Id = new ResourceIdentifier("/subscriptionB/resourceGroups/myResourceGroup/provi
 
             // this example assumes you already have this ManagedNetworkResource created on azure
             // for more information of creating ManagedNetworkResource, please refer to the document of ManagedNetworkResource
-            string subscriptionId = "subscriptionA";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string managedNetworkName = "myManagedNetwork";
             ResourceIdentifier managedNetworkResourceId = ManagedNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedNetworkName);

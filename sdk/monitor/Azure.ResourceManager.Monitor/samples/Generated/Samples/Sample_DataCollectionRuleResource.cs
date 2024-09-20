@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this DataCollectionRuleResource created on azure
             // for more information of creating DataCollectionRuleResource, please refer to the document of DataCollectionRuleResource
-            string subscriptionId = "703362b3-f278-4e4b-9179-c76eaf41ffc2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string dataCollectionRuleName = "myCollectionRule";
             ResourceIdentifier dataCollectionRuleResourceId = DataCollectionRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dataCollectionRuleName);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "703362b3-f278-4e4b-9179-c76eaf41ffc2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this DataCollectionRuleResource created on azure
             // for more information of creating DataCollectionRuleResource, please refer to the document of DataCollectionRuleResource
-            string subscriptionId = "703362b3-f278-4e4b-9179-c76eaf41ffc2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string dataCollectionRuleName = "myCollectionRule";
             ResourceIdentifier dataCollectionRuleResourceId = DataCollectionRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dataCollectionRuleName);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this DataCollectionRuleResource created on azure
             // for more information of creating DataCollectionRuleResource, please refer to the document of DataCollectionRuleResource
-            string subscriptionId = "703362b3-f278-4e4b-9179-c76eaf41ffc2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string dataCollectionRuleName = "myCollectionRule";
             ResourceIdentifier dataCollectionRuleResourceId = DataCollectionRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dataCollectionRuleName);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this DataCollectionRuleResource created on azure
             // for more information of creating DataCollectionRuleResource, please refer to the document of DataCollectionRuleResource
-            string subscriptionId = "703362b3-f278-4e4b-9179-c76eaf41ffc2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string dataCollectionRuleName = "myCollectionRule";
             ResourceIdentifier dataCollectionRuleResourceId = DataCollectionRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dataCollectionRuleName);

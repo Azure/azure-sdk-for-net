@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkToNetworkInterconnectResource created on azure
             // for more information of creating NetworkToNetworkInterconnectResource, please refer to the document of NetworkToNetworkInterconnectResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             string networkToNetworkInterconnectName = "example-nni";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkToNetworkInterconnectResource created on azure
             // for more information of creating NetworkToNetworkInterconnectResource, please refer to the document of NetworkToNetworkInterconnectResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             string networkToNetworkInterconnectName = "example-nni";
@@ -149,7 +149,7 @@ new StaticRouteProperties("4FFE:FFFF:0:CD30::ac/127",new string[]
 
             // this example assumes you already have this NetworkToNetworkInterconnectResource created on azure
             // for more information of creating NetworkToNetworkInterconnectResource, please refer to the document of NetworkToNetworkInterconnectResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             string networkToNetworkInterconnectName = "example-nni";
@@ -177,7 +177,7 @@ new StaticRouteProperties("4FFE:FFFF:0:CD30::ac/127",new string[]
 
             // this example assumes you already have this NetworkToNetworkInterconnectResource created on azure
             // for more information of creating NetworkToNetworkInterconnectResource, please refer to the document of NetworkToNetworkInterconnectResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             string networkToNetworkInterconnectName = "example-nni";
@@ -214,7 +214,7 @@ new ResourceIdentifier("")
 
             // this example assumes you already have this NetworkToNetworkInterconnectResource created on azure
             // for more information of creating NetworkToNetworkInterconnectResource, please refer to the document of NetworkToNetworkInterconnectResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             string networkToNetworkInterconnectName = "example-nni";

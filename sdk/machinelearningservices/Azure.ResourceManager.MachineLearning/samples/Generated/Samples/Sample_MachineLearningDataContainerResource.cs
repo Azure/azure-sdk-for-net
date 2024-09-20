@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningDataContainerResource created on azure
             // for more information of creating MachineLearningDataContainerResource, please refer to the document of MachineLearningDataContainerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string workspaceName = "workspace123";
             string name = "datacontainer123";
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningDataContainerResource created on azure
             // for more information of creating MachineLearningDataContainerResource, please refer to the document of MachineLearningDataContainerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string workspaceName = "workspace123";
             string name = "datacontainer123";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningDataContainerResource created on azure
             // for more information of creating MachineLearningDataContainerResource, please refer to the document of MachineLearningDataContainerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string workspaceName = "workspace123";
             string name = "datacontainer123";

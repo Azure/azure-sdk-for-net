@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

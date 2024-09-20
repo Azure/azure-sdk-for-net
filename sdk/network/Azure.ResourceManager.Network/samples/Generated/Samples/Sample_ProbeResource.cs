@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ProbeResource created on azure
             // for more information of creating ProbeResource, please refer to the document of ProbeResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string loadBalancerName = "lb";
             string probeName = "probe1";

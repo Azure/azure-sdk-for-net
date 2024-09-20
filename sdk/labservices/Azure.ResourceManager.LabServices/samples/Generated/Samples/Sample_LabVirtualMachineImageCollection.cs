@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.LabServices.Samples
 
             // this example assumes you already have this LabPlanResource created on azure
             // for more information of creating LabPlanResource, please refer to the document of LabPlanResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string labPlanName = "testlabplan";
             ResourceIdentifier labPlanResourceId = LabPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labPlanName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.LabServices.Samples
 
             // this example assumes you already have this LabPlanResource created on azure
             // for more information of creating LabPlanResource, please refer to the document of LabPlanResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string labPlanName = "testlabplan";
             ResourceIdentifier labPlanResourceId = LabPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labPlanName);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.LabServices.Samples
 
             // this example assumes you already have this LabPlanResource created on azure
             // for more information of creating LabPlanResource, please refer to the document of LabPlanResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string labPlanName = "testlabplan";
             ResourceIdentifier labPlanResourceId = LabPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labPlanName);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.LabServices.Samples
 
             // this example assumes you already have this LabPlanResource created on azure
             // for more information of creating LabPlanResource, please refer to the document of LabPlanResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string labPlanName = "testlabplan";
             ResourceIdentifier labPlanResourceId = LabPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labPlanName);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.LabServices.Samples
 
             // this example assumes you already have this LabPlanResource created on azure
             // for more information of creating LabPlanResource, please refer to the document of LabPlanResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string labPlanName = "testlabplan";
             ResourceIdentifier labPlanResourceId = LabPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labPlanName);

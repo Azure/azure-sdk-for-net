@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this CustomIPPrefixResource created on azure
             // for more information of creating CustomIPPrefixResource, please refer to the document of CustomIPPrefixResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string customIPPrefixName = "test-customipprefix";
             ResourceIdentifier customIPPrefixResourceId = CustomIPPrefixResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customIPPrefixName);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this CustomIPPrefixResource created on azure
             // for more information of creating CustomIPPrefixResource, please refer to the document of CustomIPPrefixResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string customIPPrefixName = "test-customipprefix";
             ResourceIdentifier customIPPrefixResourceId = CustomIPPrefixResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customIPPrefixName);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this CustomIPPrefixResource created on azure
             // for more information of creating CustomIPPrefixResource, please refer to the document of CustomIPPrefixResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string customIPPrefixName = "test-customipprefix";
             ResourceIdentifier customIPPrefixResourceId = CustomIPPrefixResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customIPPrefixName);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

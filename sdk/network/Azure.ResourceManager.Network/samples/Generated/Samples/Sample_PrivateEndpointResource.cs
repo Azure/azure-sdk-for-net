@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this PrivateEndpointResource created on azure
             // for more information of creating PrivateEndpointResource, please refer to the document of PrivateEndpointResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string privateEndpointName = "testPe";
             ResourceIdentifier privateEndpointResourceId = PrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this PrivateEndpointResource created on azure
             // for more information of creating PrivateEndpointResource, please refer to the document of PrivateEndpointResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string privateEndpointName = "testPe";
             ResourceIdentifier privateEndpointResourceId = PrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this PrivateEndpointResource created on azure
             // for more information of creating PrivateEndpointResource, please refer to the document of PrivateEndpointResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string privateEndpointName = "testPe";
             ResourceIdentifier privateEndpointResourceId = PrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this PrivateEndpointResource created on azure
             // for more information of creating PrivateEndpointResource, please refer to the document of PrivateEndpointResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string privateEndpointName = "testPe";
             ResourceIdentifier privateEndpointResourceId = PrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this PrivateEndpointResource created on azure
             // for more information of creating PrivateEndpointResource, please refer to the document of PrivateEndpointResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string privateEndpointName = "testPe";
             ResourceIdentifier privateEndpointResourceId = PrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
@@ -215,7 +215,7 @@ PrivateIPAddress = IPAddress.Parse("192.168.0.6"),
 
             // this example assumes you already have this PrivateEndpointResource created on azure
             // for more information of creating PrivateEndpointResource, please refer to the document of PrivateEndpointResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string privateEndpointName = "testPe";
             ResourceIdentifier privateEndpointResourceId = PrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
@@ -274,7 +274,7 @@ Id = new ResourceIdentifier("/subscriptions/subId/resourceGroups/rg1/provders/Mi
 
             // this example assumes you already have this PrivateEndpointResource created on azure
             // for more information of creating PrivateEndpointResource, please refer to the document of PrivateEndpointResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string privateEndpointName = "testPe";
             ResourceIdentifier privateEndpointResourceId = PrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
@@ -337,7 +337,7 @@ PrivateIPAddress = IPAddress.Parse("192.168.0.5"),
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

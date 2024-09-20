@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ApplicationSecurityGroupResource created on azure
             // for more information of creating ApplicationSecurityGroupResource, please refer to the document of ApplicationSecurityGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string applicationSecurityGroupName = "test-asg";
             ResourceIdentifier applicationSecurityGroupResourceId = ApplicationSecurityGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, applicationSecurityGroupName);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ApplicationSecurityGroupResource created on azure
             // for more information of creating ApplicationSecurityGroupResource, please refer to the document of ApplicationSecurityGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string applicationSecurityGroupName = "test-asg";
             ResourceIdentifier applicationSecurityGroupResourceId = ApplicationSecurityGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, applicationSecurityGroupName);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ApplicationSecurityGroupResource created on azure
             // for more information of creating ApplicationSecurityGroupResource, please refer to the document of ApplicationSecurityGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string applicationSecurityGroupName = "test-asg";
             ResourceIdentifier applicationSecurityGroupResourceId = ApplicationSecurityGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, applicationSecurityGroupName);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

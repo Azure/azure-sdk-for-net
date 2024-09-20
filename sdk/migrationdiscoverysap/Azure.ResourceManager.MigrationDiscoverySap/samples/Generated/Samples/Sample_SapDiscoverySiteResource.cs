@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "6d875e77-e412-4d7d-9af4-8895278b4443";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
 
             // this example assumes you already have this SapDiscoverySiteResource created on azure
             // for more information of creating SapDiscoverySiteResource, please refer to the document of SapDiscoverySiteResource
-            string subscriptionId = "6d875e77-e412-4d7d-9af4-8895278b4443";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string sapDiscoverySiteName = "SampleSite";
             ResourceIdentifier sapDiscoverySiteResourceId = SapDiscoverySiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sapDiscoverySiteName);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
 
             // this example assumes you already have this SapDiscoverySiteResource created on azure
             // for more information of creating SapDiscoverySiteResource, please refer to the document of SapDiscoverySiteResource
-            string subscriptionId = "6d875e77-e412-4d7d-9af4-8895278b4443";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string sapDiscoverySiteName = "SampleSite";
             ResourceIdentifier sapDiscoverySiteResourceId = SapDiscoverySiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sapDiscoverySiteName);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
 
             // this example assumes you already have this SapDiscoverySiteResource created on azure
             // for more information of creating SapDiscoverySiteResource, please refer to the document of SapDiscoverySiteResource
-            string subscriptionId = "6d875e77-e412-4d7d-9af4-8895278b4443";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string sapDiscoverySiteName = "SampleSite";
             ResourceIdentifier sapDiscoverySiteResourceId = SapDiscoverySiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sapDiscoverySiteName);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
 
             // this example assumes you already have this SapDiscoverySiteResource created on azure
             // for more information of creating SapDiscoverySiteResource, please refer to the document of SapDiscoverySiteResource
-            string subscriptionId = "6d875e77-e412-4d7d-9af4-8895278b4443";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string sapDiscoverySiteName = "SampleSite";
             ResourceIdentifier sapDiscoverySiteResourceId = SapDiscoverySiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sapDiscoverySiteName);

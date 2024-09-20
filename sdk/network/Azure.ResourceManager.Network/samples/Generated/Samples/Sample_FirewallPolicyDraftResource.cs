@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this FirewallPolicyDraftResource created on azure
             // for more information of creating FirewallPolicyDraftResource, please refer to the document of FirewallPolicyDraftResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyDraftResourceId = FirewallPolicyDraftResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -161,7 +161,7 @@ DestinationPorts =
 
             // this example assumes you already have this FirewallPolicyDraftResource created on azure
             // for more information of creating FirewallPolicyDraftResource, please refer to the document of FirewallPolicyDraftResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyDraftResourceId = FirewallPolicyDraftResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -188,7 +188,7 @@ DestinationPorts =
 
             // this example assumes you already have this FirewallPolicyDraftResource created on azure
             // for more information of creating FirewallPolicyDraftResource, please refer to the document of FirewallPolicyDraftResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyDraftResourceId = FirewallPolicyDraftResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);

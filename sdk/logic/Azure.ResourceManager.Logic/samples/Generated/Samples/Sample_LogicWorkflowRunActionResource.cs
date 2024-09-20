@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this LogicWorkflowRunActionResource created on azure
             // for more information of creating LogicWorkflowRunActionResource, please refer to the document of LogicWorkflowRunActionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             string workflowName = "test-workflow";
             string runName = "08586676746934337772206998657CU22";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this LogicWorkflowRunActionResource created on azure
             // for more information of creating LogicWorkflowRunActionResource, please refer to the document of LogicWorkflowRunActionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string workflowName = "testFlow";
             string runName = "08586776228332053161046300351";

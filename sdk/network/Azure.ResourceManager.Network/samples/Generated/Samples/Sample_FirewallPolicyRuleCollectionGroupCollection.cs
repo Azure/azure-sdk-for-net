@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "e747cc13-97d4-4a79-b463-42d7f4e558f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "e747cc13-97d4-4a79-b463-42d7f4e558f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "e747cc13-97d4-4a79-b463-42d7f4e558f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -543,7 +543,7 @@ Priority = 100,
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -615,7 +615,7 @@ Priority = 100,
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -686,7 +686,7 @@ Name = "Example-Filter-Rule-Collection",
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "e747cc13-97d4-4a79-b463-42d7f4e558f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -758,7 +758,7 @@ Name = "Example-Filter-Rule-Collection",
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "e747cc13-97d4-4a79-b463-42d7f4e558f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -838,7 +838,7 @@ Name = "Example-Filter-Rule-Collection",
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "e747cc13-97d4-4a79-b463-42d7f4e558f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -875,7 +875,7 @@ Name = "Example-Filter-Rule-Collection",
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
@@ -912,7 +912,7 @@ Name = "Example-Filter-Rule-Collection",
 
             // this example assumes you already have this FirewallPolicyResource created on azure
             // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);

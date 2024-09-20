@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this PeerExpressRouteCircuitConnectionResource created on azure
             // for more information of creating PeerExpressRouteCircuitConnectionResource, please refer to the document of PeerExpressRouteCircuitConnectionResource
-            string subscriptionId = "subid1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string circuitName = "ExpressRouteARMCircuitA";
             string peeringName = "AzurePrivatePeering";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricInternalNetworkResource created on azure
             // for more information of creating NetworkFabricInternalNetworkResource, please refer to the document of NetworkFabricInternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             string internalNetworkName = "example-internalnetwork";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricInternalNetworkResource created on azure
             // for more information of creating NetworkFabricInternalNetworkResource, please refer to the document of NetworkFabricInternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             string internalNetworkName = "example-internalnetwork";
@@ -186,7 +186,7 @@ new StaticRouteProperties("2fff::/64",new string[]
 
             // this example assumes you already have this NetworkFabricInternalNetworkResource created on azure
             // for more information of creating NetworkFabricInternalNetworkResource, please refer to the document of NetworkFabricInternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             string internalNetworkName = "example-internalnetwork";
@@ -214,7 +214,7 @@ new StaticRouteProperties("2fff::/64",new string[]
 
             // this example assumes you already have this NetworkFabricInternalNetworkResource created on azure
             // for more information of creating NetworkFabricInternalNetworkResource, please refer to the document of NetworkFabricInternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             string internalNetworkName = "example-internalnetwork";
@@ -251,7 +251,7 @@ new ResourceIdentifier("")
 
             // this example assumes you already have this NetworkFabricInternalNetworkResource created on azure
             // for more information of creating NetworkFabricInternalNetworkResource, please refer to the document of NetworkFabricInternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             string internalNetworkName = "example-internalNetwork";
@@ -288,7 +288,7 @@ new ResourceIdentifier("")
 
             // this example assumes you already have this NetworkFabricInternalNetworkResource created on azure
             // for more information of creating NetworkFabricInternalNetworkResource, please refer to the document of NetworkFabricInternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string l3IsolationDomainName = "example-l3domain";
             string internalNetworkName = "example-internalNetwork";

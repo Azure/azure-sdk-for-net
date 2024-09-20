@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteConnectionResource created on azure
             // for more information of creating ExpressRouteConnectionResource, please refer to the document of ExpressRouteConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string expressRouteGatewayName = "gateway-2";
             string connectionName = "connectionName";
@@ -98,7 +98,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
 
             // this example assumes you already have this ExpressRouteConnectionResource created on azure
             // for more information of creating ExpressRouteConnectionResource, please refer to the document of ExpressRouteConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string expressRouteGatewayName = "expressRouteGatewayName";
             string connectionName = "connectionName";
@@ -130,7 +130,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
 
             // this example assumes you already have this ExpressRouteConnectionResource created on azure
             // for more information of creating ExpressRouteConnectionResource, please refer to the document of ExpressRouteConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string expressRouteGatewayName = "expressRouteGatewayName";
             string connectionName = "connectionName";

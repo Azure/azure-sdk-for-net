@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
             // this example assumes you already have this MySqlFlexibleServerAadAdministratorResource created on azure
             // for more information of creating MySqlFlexibleServerAadAdministratorResource, please refer to the document of MySqlFlexibleServerAadAdministratorResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "mysqltestsvc4";
             MySqlFlexibleServerAdministratorName administratorName = MySqlFlexibleServerAdministratorName.ActiveDirectory;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
             // this example assumes you already have this MySqlFlexibleServerAadAdministratorResource created on azure
             // for more information of creating MySqlFlexibleServerAadAdministratorResource, please refer to the document of MySqlFlexibleServerAadAdministratorResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "mysqltestsvc4";
             MySqlFlexibleServerAdministratorName administratorName = MySqlFlexibleServerAdministratorName.ActiveDirectory;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
             // this example assumes you already have this MySqlFlexibleServerAadAdministratorResource created on azure
             // for more information of creating MySqlFlexibleServerAadAdministratorResource, please refer to the document of MySqlFlexibleServerAadAdministratorResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "mysqltestsvc4";
             MySqlFlexibleServerAdministratorName administratorName = MySqlFlexibleServerAdministratorName.ActiveDirectory;

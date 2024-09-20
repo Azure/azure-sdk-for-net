@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRoutePortAuthorizationResource created on azure
             // for more information of creating ExpressRoutePortAuthorizationResource, please refer to the document of ExpressRoutePortAuthorizationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string expressRoutePortName = "expressRoutePortName";
             string authorizationName = "authorizationName";
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRoutePortAuthorizationResource created on azure
             // for more information of creating ExpressRoutePortAuthorizationResource, please refer to the document of ExpressRoutePortAuthorizationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string expressRoutePortName = "expressRoutePortName";
             string authorizationName = "authorizationName";
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRoutePortAuthorizationResource created on azure
             // for more information of creating ExpressRoutePortAuthorizationResource, please refer to the document of ExpressRoutePortAuthorizationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string expressRoutePortName = "expressRoutePortName";
             string authorizationName = "authorizatinName";

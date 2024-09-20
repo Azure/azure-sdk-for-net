@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkTapRuleResource created on azure
             // for more information of creating NetworkTapRuleResource, please refer to the document of NetworkTapRuleResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkTapRuleName = "example-tapRule";
             ResourceIdentifier networkTapRuleResourceId = NetworkTapRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkTapRuleName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkTapRuleResource created on azure
             // for more information of creating NetworkTapRuleResource, please refer to the document of NetworkTapRuleResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkTapRuleName = "example-tapRule";
             ResourceIdentifier networkTapRuleResourceId = NetworkTapRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkTapRuleName);
@@ -215,7 +215,7 @@ Ports =
 
             // this example assumes you already have this NetworkTapRuleResource created on azure
             // for more information of creating NetworkTapRuleResource, please refer to the document of NetworkTapRuleResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkTapRuleName = "example-tapRule";
             ResourceIdentifier networkTapRuleResourceId = NetworkTapRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkTapRuleName);
@@ -242,7 +242,7 @@ Ports =
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -274,7 +274,7 @@ Ports =
 
             // this example assumes you already have this NetworkTapRuleResource created on azure
             // for more information of creating NetworkTapRuleResource, please refer to the document of NetworkTapRuleResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkTapRuleName = "example-tapRule";
             ResourceIdentifier networkTapRuleResourceId = NetworkTapRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkTapRuleName);
@@ -310,7 +310,7 @@ new ResourceIdentifier("")
 
             // this example assumes you already have this NetworkTapRuleResource created on azure
             // for more information of creating NetworkTapRuleResource, please refer to the document of NetworkTapRuleResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkTapRuleName = "example-tapRule";
             ResourceIdentifier networkTapRuleResourceId = NetworkTapRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkTapRuleName);
@@ -338,7 +338,7 @@ new ResourceIdentifier("")
 
             // this example assumes you already have this NetworkTapRuleResource created on azure
             // for more information of creating NetworkTapRuleResource, please refer to the document of NetworkTapRuleResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkTapRuleName = "example-tapRule";
             ResourceIdentifier networkTapRuleResourceId = NetworkTapRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkTapRuleName);

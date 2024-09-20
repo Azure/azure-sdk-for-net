@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MixedReality.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MixedReality.Samples
 
             // this example assumes you already have this RemoteRenderingAccountResource created on azure
             // for more information of creating RemoteRenderingAccountResource, please refer to the document of RemoteRenderingAccountResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             ResourceIdentifier remoteRenderingAccountResourceId = RemoteRenderingAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MixedReality.Samples
 
             // this example assumes you already have this RemoteRenderingAccountResource created on azure
             // for more information of creating RemoteRenderingAccountResource, please refer to the document of RemoteRenderingAccountResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             ResourceIdentifier remoteRenderingAccountResourceId = RemoteRenderingAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MixedReality.Samples
 
             // this example assumes you already have this RemoteRenderingAccountResource created on azure
             // for more information of creating RemoteRenderingAccountResource, please refer to the document of RemoteRenderingAccountResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             ResourceIdentifier remoteRenderingAccountResourceId = RemoteRenderingAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MixedReality.Samples
 
             // this example assumes you already have this RemoteRenderingAccountResource created on azure
             // for more information of creating RemoteRenderingAccountResource, please refer to the document of RemoteRenderingAccountResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             ResourceIdentifier remoteRenderingAccountResourceId = RemoteRenderingAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MixedReality.Samples
 
             // this example assumes you already have this RemoteRenderingAccountResource created on azure
             // for more information of creating RemoteRenderingAccountResource, please refer to the document of RemoteRenderingAccountResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             ResourceIdentifier remoteRenderingAccountResourceId = RemoteRenderingAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);

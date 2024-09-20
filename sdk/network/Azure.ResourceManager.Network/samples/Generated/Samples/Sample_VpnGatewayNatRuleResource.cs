@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VpnGatewayNatRuleResource created on azure
             // for more information of creating VpnGatewayNatRuleResource, please refer to the document of VpnGatewayNatRuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             string natRuleName = "natRule1";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VpnGatewayNatRuleResource created on azure
             // for more information of creating VpnGatewayNatRuleResource, please refer to the document of VpnGatewayNatRuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             string natRuleName = "natRule1";
@@ -115,7 +115,7 @@ AddressSpace = "192.168.21.0/24",
 
             // this example assumes you already have this VpnGatewayNatRuleResource created on azure
             // for more information of creating VpnGatewayNatRuleResource, please refer to the document of VpnGatewayNatRuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             string natRuleName = "natRule1";

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
 
             // this example assumes you already have this MaintenancePublicConfigurationResource created on azure
             // for more information of creating MaintenancePublicConfigurationResource, please refer to the document of MaintenancePublicConfigurationResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceName = "configuration1";
             ResourceIdentifier maintenancePublicConfigurationResourceId = MaintenancePublicConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceName);
             MaintenancePublicConfigurationResource maintenancePublicConfiguration = client.GetMaintenancePublicConfigurationResource(maintenancePublicConfigurationResourceId);

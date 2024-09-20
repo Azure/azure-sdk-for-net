@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MySql.Samples
 
             // this example assumes you already have this MySqlWaitStatisticResource created on azure
             // for more information of creating MySqlWaitStatisticResource, please refer to the document of MySqlWaitStatisticResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroupName";
             string serverName = "testServerName";
             string waitStatisticsId = "636927606000000000-636927615000000000-send-wait/io/socket/sql/client_connection-2--0";

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this AutoscaleSettingResource created on azure
             // for more information of creating AutoscaleSettingResource, please refer to the document of AutoscaleSettingResource
-            string subscriptionId = "b67f7fec-69fc-4974-9099-a26bd6ffeda3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestingMetricsScaleSet";
             string autoscaleSettingName = "MySetting";
             ResourceIdentifier autoscaleSettingResourceId = AutoscaleSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autoscaleSettingName);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this AutoscaleSettingResource created on azure
             // for more information of creating AutoscaleSettingResource, please refer to the document of AutoscaleSettingResource
-            string subscriptionId = "b67f7fec-69fc-4974-9099-a26bd6ffeda3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestingMetricsScaleSet";
             string autoscaleSettingName = "MySetting";
             ResourceIdentifier autoscaleSettingResourceId = AutoscaleSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autoscaleSettingName);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this AutoscaleSettingResource created on azure
             // for more information of creating AutoscaleSettingResource, please refer to the document of AutoscaleSettingResource
-            string subscriptionId = "b67f7fec-69fc-4974-9099-a26bd6ffeda3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestingMetricsScaleSet";
             string autoscaleSettingName = "MySetting";
             ResourceIdentifier autoscaleSettingResourceId = AutoscaleSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autoscaleSettingName);
@@ -208,7 +208,7 @@ Properties =
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "b67f7fec-69fc-4974-9099-a26bd6ffeda3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

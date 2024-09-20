@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Samples
 
             // this example assumes you already have this MediaLiveEventResource created on azure
             // for more information of creating MediaLiveEventResource, please refer to the document of MediaLiveEventResource
-            string subscriptionId = "0a6ec948-5a62-437d-b9df-934dc7c1b722";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mediaresources";
             string accountName = "slitestmedia10";
             string liveEventName = "myLiveEvent1";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Media.Samples
 
             // this example assumes you already have this MediaLiveEventResource created on azure
             // for more information of creating MediaLiveEventResource, please refer to the document of MediaLiveEventResource
-            string subscriptionId = "0a6ec948-5a62-437d-b9df-934dc7c1b722";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mediaresources";
             string accountName = "slitestmedia10";
             string liveEventName = "myLiveEvent1";
@@ -130,7 +130,7 @@ Address = IPAddress.Parse("192.1.1.0"),
 
             // this example assumes you already have this MediaLiveEventResource created on azure
             // for more information of creating MediaLiveEventResource, please refer to the document of MediaLiveEventResource
-            string subscriptionId = "0a6ec948-5a62-437d-b9df-934dc7c1b722";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mediaresources";
             string accountName = "slitestmedia10";
             string liveEventName = "myLiveEvent1";
@@ -158,7 +158,7 @@ Address = IPAddress.Parse("192.1.1.0"),
 
             // this example assumes you already have this MediaLiveEventResource created on azure
             // for more information of creating MediaLiveEventResource, please refer to the document of MediaLiveEventResource
-            string subscriptionId = "0a6ec948-5a62-437d-b9df-934dc7c1b722";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mediaresources";
             string accountName = "slitestmedia10";
             string liveEventName = "myLiveEvent1";
@@ -186,7 +186,7 @@ Address = IPAddress.Parse("192.1.1.0"),
 
             // this example assumes you already have this MediaLiveEventResource created on azure
             // for more information of creating MediaLiveEventResource, please refer to the document of MediaLiveEventResource
-            string subscriptionId = "0a6ec948-5a62-437d-b9df-934dc7c1b722";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mediaresources";
             string accountName = "slitestmedia10";
             string liveEventName = "myLiveEvent1";
@@ -214,7 +214,7 @@ Address = IPAddress.Parse("192.1.1.0"),
 
             // this example assumes you already have this MediaLiveEventResource created on azure
             // for more information of creating MediaLiveEventResource, please refer to the document of MediaLiveEventResource
-            string subscriptionId = "0a6ec948-5a62-437d-b9df-934dc7c1b722";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mediaresources";
             string accountName = "slitestmedia10";
             string liveEventName = "myLiveEvent1";
@@ -246,7 +246,7 @@ Address = IPAddress.Parse("192.1.1.0"),
 
             // this example assumes you already have this MediaLiveEventResource created on azure
             // for more information of creating MediaLiveEventResource, please refer to the document of MediaLiveEventResource
-            string subscriptionId = "0a6ec948-5a62-437d-b9df-934dc7c1b722";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mediaresources";
             string accountName = "slitestmedia10";
             string liveEventName = "myLiveEvent1";

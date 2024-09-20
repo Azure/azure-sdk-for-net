@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VpnGatewayResource created on azure
             // for more information of creating VpnGatewayResource, please refer to the document of VpnGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             ResourceIdentifier vpnGatewayResourceId = VpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VpnGatewayResource created on azure
             // for more information of creating VpnGatewayResource, please refer to the document of VpnGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             ResourceIdentifier vpnGatewayResourceId = VpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VpnGatewayResource created on azure
             // for more information of creating VpnGatewayResource, please refer to the document of VpnGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             ResourceIdentifier vpnGatewayResourceId = VpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VpnGatewayResource created on azure
             // for more information of creating VpnGatewayResource, please refer to the document of VpnGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             ResourceIdentifier vpnGatewayResourceId = VpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
@@ -222,7 +222,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
 
             // this example assumes you already have this VpnGatewayResource created on azure
             // for more information of creating VpnGatewayResource, please refer to the document of VpnGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             ResourceIdentifier vpnGatewayResourceId = VpnGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);

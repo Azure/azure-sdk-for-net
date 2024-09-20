@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this FirewallPolicyRuleCollectionGroupDraftResource created on azure
             // for more information of creating FirewallPolicyRuleCollectionGroupDraftResource, please refer to the document of FirewallPolicyRuleCollectionGroupDraftResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             string ruleCollectionGroupName = "ruleCollectionGroup1";
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this FirewallPolicyRuleCollectionGroupDraftResource created on azure
             // for more information of creating FirewallPolicyRuleCollectionGroupDraftResource, please refer to the document of FirewallPolicyRuleCollectionGroupDraftResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             string ruleCollectionGroupName = "ruleCollectionGroup1";
@@ -127,7 +127,7 @@ Priority = 100,
 
             // this example assumes you already have this FirewallPolicyRuleCollectionGroupDraftResource created on azure
             // for more information of creating FirewallPolicyRuleCollectionGroupDraftResource, please refer to the document of FirewallPolicyRuleCollectionGroupDraftResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string firewallPolicyName = "firewallPolicy";
             string ruleCollectionGroupName = "ruleCollectionGroup1";

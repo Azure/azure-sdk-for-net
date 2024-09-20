@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this ActionGroupResource created on azure
             // for more information of creating ActionGroupResource, please refer to the document of ActionGroupResource
-            string subscriptionId = "187f412d-1758-44d9-b052-169e2564721d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-NotificationRules";
             string actionGroupName = "SampleActionGroup";
             ResourceIdentifier actionGroupResourceId = ActionGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, actionGroupName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this ActionGroupResource created on azure
             // for more information of creating ActionGroupResource, please refer to the document of ActionGroupResource
-            string subscriptionId = "187f412d-1758-44d9-b052-169e2564721d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-NotificationRules";
             string actionGroupName = "SampleActionGroup";
             ResourceIdentifier actionGroupResourceId = ActionGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, actionGroupName);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this ActionGroupResource created on azure
             // for more information of creating ActionGroupResource, please refer to the document of ActionGroupResource
-            string subscriptionId = "187f412d-1758-44d9-b052-169e2564721d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-NotificationRules";
             string actionGroupName = "SampleActionGroup";
             ResourceIdentifier actionGroupResourceId = ActionGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, actionGroupName);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this ActionGroupResource created on azure
             // for more information of creating ActionGroupResource, please refer to the document of ActionGroupResource
-            string subscriptionId = "11111111-1111-1111-1111-111111111111";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRgName";
             string actionGroupName = "TestAgName";
             ResourceIdentifier actionGroupResourceId = ActionGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, actionGroupName);
@@ -240,7 +240,7 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
 
             // this example assumes you already have this ActionGroupResource created on azure
             // for more information of creating ActionGroupResource, please refer to the document of ActionGroupResource
-            string subscriptionId = "11111111-1111-1111-1111-111111111111";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRgName";
             string actionGroupName = "TestAgName";
             ResourceIdentifier actionGroupResourceId = ActionGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, actionGroupName);
@@ -268,7 +268,7 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "187f412d-1758-44d9-b052-169e2564721d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -300,7 +300,7 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
 
             // this example assumes you already have this ActionGroupResource created on azure
             // for more information of creating ActionGroupResource, please refer to the document of ActionGroupResource
-            string subscriptionId = "187f412d-1758-44d9-b052-169e2564721d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-NotificationRules";
             string actionGroupName = "SampleActionGroup";
             ResourceIdentifier actionGroupResourceId = ActionGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, actionGroupName);

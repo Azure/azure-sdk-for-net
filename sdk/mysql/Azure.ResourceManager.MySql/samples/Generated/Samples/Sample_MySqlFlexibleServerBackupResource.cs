@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
             // this example assumes you already have this MySqlFlexibleServerBackupResource created on azure
             // for more information of creating MySqlFlexibleServerBackupResource, please refer to the document of MySqlFlexibleServerBackupResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "mysqltestserver";
             string backupName = "mybackup";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
             // this example assumes you already have this MySqlFlexibleServerBackupResource created on azure
             // for more information of creating MySqlFlexibleServerBackupResource, please refer to the document of MySqlFlexibleServerBackupResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "mysqltestserver";
             string backupName = "daily_20210615T160516";

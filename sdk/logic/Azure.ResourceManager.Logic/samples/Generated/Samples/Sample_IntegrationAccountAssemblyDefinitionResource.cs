@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationAccountAssemblyDefinitionResource created on azure
             // for more information of creating IntegrationAccountAssemblyDefinitionResource, please refer to the document of IntegrationAccountAssemblyDefinitionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string integrationAccountName = "testIntegrationAccount";
             string assemblyArtifactName = "testAssembly";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationAccountAssemblyDefinitionResource created on azure
             // for more information of creating IntegrationAccountAssemblyDefinitionResource, please refer to the document of IntegrationAccountAssemblyDefinitionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string integrationAccountName = "testIntegrationAccount";
             string assemblyArtifactName = "testAssembly";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationAccountAssemblyDefinitionResource created on azure
             // for more information of creating IntegrationAccountAssemblyDefinitionResource, please refer to the document of IntegrationAccountAssemblyDefinitionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string integrationAccountName = "testIntegrationAccount";
             string assemblyArtifactName = "testAssembly";
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationAccountAssemblyDefinitionResource created on azure
             // for more information of creating IntegrationAccountAssemblyDefinitionResource, please refer to the document of IntegrationAccountAssemblyDefinitionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string integrationAccountName = "testIntegrationAccount";
             string assemblyArtifactName = "testAssembly";

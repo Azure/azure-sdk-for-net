@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkInterfaceResource created on azure
             // for more information of creating NetworkInterfaceResource, please refer to the document of NetworkInterfaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string networkInterfaceName = "mynic";
             ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkInterfaceName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkInterfaceResource created on azure
             // for more information of creating NetworkInterfaceResource, please refer to the document of NetworkInterfaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string networkInterfaceName = "mynic";
             ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkInterfaceName);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkInterfaceResource created on azure
             // for more information of creating NetworkInterfaceResource, please refer to the document of NetworkInterfaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string networkInterfaceName = "mynic";
             ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkInterfaceName);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkInterfaceResource created on azure
             // for more information of creating NetworkInterfaceResource, please refer to the document of NetworkInterfaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string networkInterfaceName = "mynic";
             ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkInterfaceName);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkInterfaceResource created on azure
             // for more information of creating NetworkInterfaceResource, please refer to the document of NetworkInterfaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string networkInterfaceName = "mynic";
             ResourceIdentifier networkInterfaceResourceId = NetworkInterfaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkInterfaceName);

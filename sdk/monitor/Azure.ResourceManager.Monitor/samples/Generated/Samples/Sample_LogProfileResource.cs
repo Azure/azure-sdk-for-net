@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this LogProfileResource created on azure
             // for more information of creating LogProfileResource, please refer to the document of LogProfileResource
-            string subscriptionId = "b67f7fec-69fc-4974-9099-a26bd6ffeda3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string logProfileName = "Rac46PostSwapRG";
             ResourceIdentifier logProfileResourceId = LogProfileResource.CreateResourceIdentifier(subscriptionId, logProfileName);
             LogProfileResource logProfile = client.GetLogProfileResource(logProfileResourceId);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this LogProfileResource created on azure
             // for more information of creating LogProfileResource, please refer to the document of LogProfileResource
-            string subscriptionId = "df602c9c-7aa0-407d-a6fb-eb20c8bd1192";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string logProfileName = "default";
             ResourceIdentifier logProfileResourceId = LogProfileResource.CreateResourceIdentifier(subscriptionId, logProfileName);
             LogProfileResource logProfile = client.GetLogProfileResource(logProfileResourceId);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this LogProfileResource created on azure
             // for more information of creating LogProfileResource, please refer to the document of LogProfileResource
-            string subscriptionId = "df602c9c-7aa0-407d-a6fb-eb20c8bd1192";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string logProfileName = "Rac46PostSwapRG";
             ResourceIdentifier logProfileResourceId = LogProfileResource.CreateResourceIdentifier(subscriptionId, logProfileName);
             LogProfileResource logProfile = client.GetLogProfileResource(logProfileResourceId);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkSecurityGroupResource created on azure
             // for more information of creating NetworkSecurityGroupResource, please refer to the document of NetworkSecurityGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkSecurityGroupName = "testnsg";
             ResourceIdentifier networkSecurityGroupResourceId = NetworkSecurityGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkSecurityGroupName);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkSecurityGroupResource created on azure
             // for more information of creating NetworkSecurityGroupResource, please refer to the document of NetworkSecurityGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkSecurityGroupName = "testnsg";
             ResourceIdentifier networkSecurityGroupResourceId = NetworkSecurityGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkSecurityGroupName);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkSecurityGroupResource created on azure
             // for more information of creating NetworkSecurityGroupResource, please refer to the document of NetworkSecurityGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkSecurityGroupName = "testnsg";
             ResourceIdentifier networkSecurityGroupResourceId = NetworkSecurityGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkSecurityGroupName);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkSecurityGroupResource created on azure
             // for more information of creating NetworkSecurityGroupResource, please refer to the document of NetworkSecurityGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkSecurityGroupName = "testnsg";
             ResourceIdentifier networkSecurityGroupResourceId = NetworkSecurityGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkSecurityGroupName);
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkSecurityGroupResource created on azure
             // for more information of creating NetworkSecurityGroupResource, please refer to the document of NetworkSecurityGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkSecurityGroupName = "testnsg";
             ResourceIdentifier networkSecurityGroupResourceId = NetworkSecurityGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkSecurityGroupName);

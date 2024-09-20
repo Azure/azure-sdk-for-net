@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this LogicWorkflowRunActionRepetitionResource created on azure
             // for more information of creating LogicWorkflowRunActionRepetitionResource, please refer to the document of LogicWorkflowRunActionRepetitionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             string workflowName = "test-workflow";
             string runName = "08586776228332053161046300351";
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this LogicWorkflowRunActionRepetitionResource created on azure
             // for more information of creating LogicWorkflowRunActionRepetitionResource, please refer to the document of LogicWorkflowRunActionRepetitionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             string workflowName = "test-workflow";
             string runName = "08586776228332053161046300351";
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this LogicWorkflowRunActionRepetitionResource created on azure
             // for more information of creating LogicWorkflowRunActionRepetitionResource, please refer to the document of LogicWorkflowRunActionRepetitionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             string workflowName = "test-workflow";
             string runName = "08586776228332053161046300351";
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this LogicWorkflowRunActionRepetitionResource created on azure
             // for more information of creating LogicWorkflowRunActionRepetitionResource, please refer to the document of LogicWorkflowRunActionRepetitionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             string workflowName = "test-workflow";
             string runName = "08586776228332053161046300351";

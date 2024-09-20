@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningFeatureSetVersionResource created on azure
             // for more information of creating MachineLearningFeatureSetVersionResource, please refer to the document of MachineLearningFeatureSetVersionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string name = "string";
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningFeatureSetVersionResource created on azure
             // for more information of creating MachineLearningFeatureSetVersionResource, please refer to the document of MachineLearningFeatureSetVersionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string name = "string";
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningFeatureSetVersionResource created on azure
             // for more information of creating MachineLearningFeatureSetVersionResource, please refer to the document of MachineLearningFeatureSetVersionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string name = "string";
@@ -189,7 +189,7 @@ EmailNotificationEnableType.JobFailed
 
             // this example assumes you already have this MachineLearningFeatureSetVersionResource created on azure
             // for more information of creating MachineLearningFeatureSetVersionResource, please refer to the document of MachineLearningFeatureSetVersionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string name = "string";

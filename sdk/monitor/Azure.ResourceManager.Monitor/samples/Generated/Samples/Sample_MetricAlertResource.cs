@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this MetricAlertResource created on azure
             // for more information of creating MetricAlertResource, please refer to the document of MetricAlertResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789101";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg-example";
             string ruleName = "webtest-name-example";
             ResourceIdentifier metricAlertResourceId = MetricAlertResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ruleName);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this MetricAlertResource created on azure
             // for more information of creating MetricAlertResource, please refer to the document of MetricAlertResource
-            string subscriptionId = "14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gigtest";
             string ruleName = "MetricAlertOnMultipleResources";
             ResourceIdentifier metricAlertResourceId = MetricAlertResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ruleName);
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this MetricAlertResource created on azure
             // for more information of creating MetricAlertResource, please refer to the document of MetricAlertResource
-            string subscriptionId = "14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gigtest";
             string ruleName = "chiricutin";
             ResourceIdentifier metricAlertResourceId = MetricAlertResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ruleName);
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this MetricAlertResource created on azure
             // for more information of creating MetricAlertResource, please refer to the document of MetricAlertResource
-            string subscriptionId = "14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gigtest1";
             string ruleName = "MetricAlertAtResourceGroupLevel";
             ResourceIdentifier metricAlertResourceId = MetricAlertResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ruleName);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this MetricAlertResource created on azure
             // for more information of creating MetricAlertResource, please refer to the document of MetricAlertResource
-            string subscriptionId = "14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gigtest";
             string ruleName = "MetricAlertAtSubscriptionLevel";
             ResourceIdentifier metricAlertResourceId = MetricAlertResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ruleName);
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this MetricAlertResource created on azure
             // for more information of creating MetricAlertResource, please refer to the document of MetricAlertResource
-            string subscriptionId = "14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gigtest";
             string ruleName = "chiricutin";
             ResourceIdentifier metricAlertResourceId = MetricAlertResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ruleName);
@@ -352,7 +352,7 @@ WebHookProperties =
 
             // this example assumes you already have this MetricAlertResource created on azure
             // for more information of creating MetricAlertResource, please refer to the document of MetricAlertResource
-            string subscriptionId = "14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gigtest";
             string ruleName = "chiricutin";
             ResourceIdentifier metricAlertResourceId = MetricAlertResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ruleName);
@@ -379,7 +379,7 @@ WebHookProperties =
 
             // this example assumes you already have this MetricAlertResource created on azure
             // for more information of creating MetricAlertResource, please refer to the document of MetricAlertResource
-            string subscriptionId = "14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gigtest";
             string ruleName = "chiricutin";
             ResourceIdentifier metricAlertResourceId = MetricAlertResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ruleName);
@@ -409,7 +409,7 @@ WebHookProperties =
 
             // this example assumes you already have this MetricAlertResource created on azure
             // for more information of creating MetricAlertResource, please refer to the document of MetricAlertResource
-            string subscriptionId = "009f6022-67ec-423e-9aa7-691182870588";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "EastUs";
             string ruleName = "custom1";
             ResourceIdentifier metricAlertResourceId = MetricAlertResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ruleName);

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this RegionInfoResource created on azure
             // for more information of creating RegionInfoResource, please refer to the document of RegionInfoResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("eastus");
             ResourceIdentifier regionInfoResourceId = RegionInfoResource.CreateResourceIdentifier(subscriptionId, location);
             RegionInfoResource regionInfoResource = client.GetRegionInfoResource(regionInfoResourceId);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this MonitorPrivateEndpointConnectionResource created on azure
             // for more information of creating MonitorPrivateEndpointConnectionResource, please refer to the document of MonitorPrivateEndpointConnectionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string scopeName = "MyPrivateLinkScope";
             string privateEndpointConnectionName = "private-endpoint-connection-name";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this MonitorPrivateEndpointConnectionResource created on azure
             // for more information of creating MonitorPrivateEndpointConnectionResource, please refer to the document of MonitorPrivateEndpointConnectionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string scopeName = "MyPrivateLinkScope";
             string privateEndpointConnectionName = "private-endpoint-connection-name";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this MonitorPrivateEndpointConnectionResource created on azure
             // for more information of creating MonitorPrivateEndpointConnectionResource, please refer to the document of MonitorPrivateEndpointConnectionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string scopeName = "MyPrivateLinkScope";
             string privateEndpointConnectionName = "private-endpoint-connection-name";

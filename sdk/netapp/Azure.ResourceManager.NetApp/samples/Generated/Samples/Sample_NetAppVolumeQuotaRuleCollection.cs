@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
-            string subscriptionId = "5275316f-a498-48d6-b324-2cbfdc4311b9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account-9957";
             string poolName = "pool-5210";
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
-            string subscriptionId = "5275316f-a498-48d6-b324-2cbfdc4311b9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account-9957";
             string poolName = "pool-5210";
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
-            string subscriptionId = "5275316f-a498-48d6-b324-2cbfdc4311b9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account-9957";
             string poolName = "pool-5210";
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
-            string subscriptionId = "5275316f-a498-48d6-b324-2cbfdc4311b9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account-9957";
             string poolName = "pool-5210";
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
-            string subscriptionId = "5275316f-a498-48d6-b324-2cbfdc4311b9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account-9957";
             string poolName = "pool-5210";

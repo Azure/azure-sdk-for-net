@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this DefaultSecurityRuleResource created on azure
             // for more information of creating DefaultSecurityRuleResource, please refer to the document of DefaultSecurityRuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string networkSecurityGroupName = "nsg1";
             string defaultSecurityRuleName = "AllowVnetInBound";

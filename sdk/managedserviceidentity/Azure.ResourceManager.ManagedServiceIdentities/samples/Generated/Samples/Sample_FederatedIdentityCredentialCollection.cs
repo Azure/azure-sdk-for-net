@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this UserAssignedIdentityResource created on azure
             // for more information of creating UserAssignedIdentityResource, please refer to the document of UserAssignedIdentityResource
-            string subscriptionId = "c267c0e7-0a73-4789-9e17-d26aeb0904e5";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string resourceName = "resourceName";
             ResourceIdentifier userAssignedIdentityResourceId = UserAssignedIdentityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this UserAssignedIdentityResource created on azure
             // for more information of creating UserAssignedIdentityResource, please refer to the document of UserAssignedIdentityResource
-            string subscriptionId = "c267c0e7-0a73-4789-9e17-d26aeb0904e5";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string resourceName = "resourceName";
             ResourceIdentifier userAssignedIdentityResourceId = UserAssignedIdentityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this UserAssignedIdentityResource created on azure
             // for more information of creating UserAssignedIdentityResource, please refer to the document of UserAssignedIdentityResource
-            string subscriptionId = "c267c0e7-0a73-4789-9e17-d26aeb0904e5";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string resourceName = "resourceName";
             ResourceIdentifier userAssignedIdentityResourceId = UserAssignedIdentityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this UserAssignedIdentityResource created on azure
             // for more information of creating UserAssignedIdentityResource, please refer to the document of UserAssignedIdentityResource
-            string subscriptionId = "c267c0e7-0a73-4789-9e17-d26aeb0904e5";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string resourceName = "resourceName";
             ResourceIdentifier userAssignedIdentityResourceId = UserAssignedIdentityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this UserAssignedIdentityResource created on azure
             // for more information of creating UserAssignedIdentityResource, please refer to the document of UserAssignedIdentityResource
-            string subscriptionId = "c267c0e7-0a73-4789-9e17-d26aeb0904e5";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string resourceName = "resourceName";
             ResourceIdentifier userAssignedIdentityResourceId = UserAssignedIdentityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
