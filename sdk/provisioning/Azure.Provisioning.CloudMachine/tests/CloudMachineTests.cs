@@ -13,7 +13,9 @@ public class CloudMachineTests
     [TestCase]
     public void Configure()
     {
-        _ = CloudMachineClient.Configure(["--init"]);
+        _ = CloudMachineClient.Configure(["--init"], (cmi) =>
+        {
+        });
 
         CloudMachineClient cm = new();
 
