@@ -34,8 +34,16 @@ Optional location to use for cspell.json path. Default value is
 .PARAMETER ExitWithError
 Exit with error code 1 if spelling errors are detected.
 
-.PARAMETER Test
-Run test functions against the script logic
+.PARAMETER SourceCommittish
+Commit SHA (or ref) used for file list generation. This is the later commit. The
+default value is useful for Azure DevOps pipelines. The default value is
+`${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}`
+
+.PARAMETER TargetCommittish
+Commit SHA (or ref) used for file list generation. This is the "base" commit.
+The default value is useful for Azure DevOps pipelines. The default value is
+`origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}` with some string manipulation to
+remove the `refs/heads/` prefix.
 
 .EXAMPLE
 ./eng/common/scripts/check-spelling-in-changed-files.ps1 
