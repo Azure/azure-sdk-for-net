@@ -34,21 +34,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         }
 
         /// <summary>
-        /// MQTT connect event method.
-        /// </summary>
-        /// <param name="request"><see cref="MqttConnectEventRequest"/> to get client connect request information.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to cancel the request.</param>
-        /// <returns>
-        /// <para>If you want to accept the connection, return an <see cref="MqttConnectEventRequest.CreateMqttResponse(string, System.Collections.Generic.IEnumerable{string}, System.Collections.Generic.IEnumerable{string})"/>.</para>
-        /// <para>If you want to reject the connection, return an <see cref="MqttConnectEventRequest.CreateMqttV311ErrorResponse(MqttV311ConnectReturnCode, string?)"/> or <see cref="MqttConnectEventRequest.CreateMqttV50ErrorResponse(MqttV500ConnectReasonCode, string?)"/></para>
-        /// </returns>
-        /// <remarks>If you don't override this method, MQTT "connect" events are handled by <see cref="OnConnectAsync(ConnectEventRequest, CancellationToken)"/> method.</remarks>
-        public virtual ValueTask<WebPubSubEventResponse> OnMqttConnectAsync(MqttConnectEventRequest request, CancellationToken cancellationToken)
-        {
-            return default;
-        }
-
-        /// <summary>
         /// User event method.
         /// </summary>
         /// <param name="request"><see cref="UserEventRequest"/> to get client message request information.</param>

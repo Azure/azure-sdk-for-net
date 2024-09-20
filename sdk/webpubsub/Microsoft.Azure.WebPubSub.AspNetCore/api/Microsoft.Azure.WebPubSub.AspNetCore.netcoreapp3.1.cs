@@ -7,6 +7,10 @@ namespace Microsoft.AspNetCore.Builder
 }
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
+    public partial class MqttConnectionException : System.Exception
+    {
+        public MqttConnectionException(Microsoft.Azure.WebPubSub.Common.MqttConnectEventErrorResponse mqttErrorResponse) { }
+    }
     public abstract partial class WebPubSubHub
     {
         protected WebPubSubHub() { }
@@ -14,7 +18,6 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         public virtual System.Threading.Tasks.Task OnConnectedAsync(Microsoft.Azure.WebPubSub.Common.ConnectedEventRequest request) { throw null; }
         public virtual System.Threading.Tasks.Task OnDisconnectedAsync(Microsoft.Azure.WebPubSub.Common.DisconnectedEventRequest request) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Microsoft.Azure.WebPubSub.Common.UserEventResponse> OnMessageReceivedAsync(Microsoft.Azure.WebPubSub.Common.UserEventRequest request, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual System.Threading.Tasks.ValueTask<Microsoft.Azure.WebPubSub.Common.WebPubSubEventResponse> OnMqttConnectAsync(Microsoft.Azure.WebPubSub.Common.MqttConnectEventRequest request, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class WebPubSubOptions
     {

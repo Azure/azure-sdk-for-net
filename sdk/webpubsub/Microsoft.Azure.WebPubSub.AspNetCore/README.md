@@ -81,7 +81,7 @@ For information about general Web PubSub concepts [Concepts in Azure Web PubSub]
 
 > NOTE
 >
-> Among the those methods, `OnConnectAsync()`, `OnMqttconnectAsync()` and `OnMessageReceivedAsync()` are blocking events that service will respect server returns. Besides the mapped correct response, server can throw exceptions whenever the request is against the server side logic. And `UnauthorizedAccessException` and `AuthenticationException` will be converted to `401Unauthorized` and rest will be converted to `500InternalServerError` along with exception message to return service. Then service will drop current client connection.
+> Among the those methods, `OnConnectAsync()` and `OnMessageReceivedAsync()` are blocking events that service will respect server returns. Besides the mapped correct response, server can throw exceptions whenever the request is against the server side logic. And `UnauthorizedAccessException` and `AuthenticationException` will be converted to `401Unauthorized` and rest will be converted to `500InternalServerError` along with exception message to return service. Then service will drop current client connection.
 
 ## Examples
 
@@ -121,20 +121,42 @@ private sealed class SampleHub2 : WebPubSubHub
         _serviceClient = serviceClient;
     }
 
-    public override ValueTask<WebPubSubEventResponse> OnMqttConnectAsync(MqttConnectEventRequest request, CancellationToken cancellationToken)
+    public override ValueTask<ConnectEventResponse> OnConnectAsync(ConnectEventRequest request, CancellationToken cancellationToken)
     {
-        if (request.Mqtt.Username != "baduser")
+        // By converting the request to MqttConnectEventRequest, you can get the MQTT specific information.
+        if (request is MqttConnectEventRequest mqttRequest)
         {
-            return ValueTask.FromResult(request.CreateMqttResponse(request.ConnectionContext.UserId, null, null) as WebPubSubEventResponse);
+            if (mqttRequest.Mqtt.Username != "baduser")
+            {
+                var response = mqttRequest.CreateMqttResponse(mqttRequest.ConnectionContext.UserId, null, null);
+                // You can customize the user properties that will be sent to the client in the MQTT CONNACK packet.
+                response.Mqtt.UserProperties = new List<MqttUserProperty>()
+                {
+                    new("name", "value")
+                };
+                return ValueTask.FromResult(response as ConnectEventResponse);
+            }
+            else
+            {
+                var errorResponse = mqttRequest.Mqtt.ProtocolVersion switch
+                {
+                    // You can specify the MQTT specific error code and message.
+                    MqttProtocolVersion.V311 => mqttRequest.CreateMqttV311ErrorResponse(MqttV311ConnectReturnCode.NotAuthorized, "not authorized"),
+                    MqttProtocolVersion.V500 => mqttRequest.CreateMqttV50ErrorResponse(MqttV500ConnectReasonCode.Banned, "The user is banned."),
+                    _ => throw new System.NotSupportedException("Unsupported MQTT protocol version")
+                };
+                // You can customize the user properties that will be sent to the client in the MQTT CONNACK packet.
+                errorResponse.Mqtt.UserProperties = new List<MqttUserProperty>()
+                {
+                    new("name", "value")
+                };
+                throw new MqttConnectionException(errorResponse);
+            }
         }
         else
         {
-            return request.Mqtt.ProtocolVersion switch
-            {
-                MqttProtocolVersion.V311 => ValueTask.FromResult(request.CreateMqttV311ErrorResponse(MqttV311ConnectReturnCode.NotAuthorized, "not authorized") as WebPubSubEventResponse),
-                MqttProtocolVersion.V500 => ValueTask.FromResult(request.CreateMqttV50ErrorResponse(MqttV500ConnectReasonCode.NotAuthorized, "not authorized") as WebPubSubEventResponse),
-                _ => throw new System.NotSupportedException("Unsupported MQTT protocol version")
-            };
+            // If you don't need to handle MQTT specific logic, you can still return a general response for MQTT clients.
+            return ValueTask.FromResult(request.CreateResponse(request.ConnectionContext.UserId, null, request.Subprotocols.FirstOrDefault(), null));
         }
     }
 }
