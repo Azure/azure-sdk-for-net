@@ -67,14 +67,14 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary>
         /// Optional.  Only applicable to provisioned v2 storage accounts.
-        /// The provisioned IOPS of the share.  For SSD, min IOPS is 3,000 and max is 100,000.  For HDD, min IOPS is 500 and max is 50,000.
+        /// The provisioned IOPS of the share.  For SSD, minimum  IOPS is 3,000 and maximum is 100,000.  For HDD, minimum IOPS is 500 and maximum is 50,000.
         /// </summary>
         public long? ProvisionedMaxIops { get; set; }
 
         /// <summary>
         /// Optional.  Only applicable to provisioned v2 storage accounts.
-        /// The provisioned throughput of the share.  For SSD, min throughput is 125 MiB/sec and max is 10,340 MiB/sec.
-        /// For HDD, min throughput is 60 MiB/sec and max is 5,125 MiB/sec.
+        /// The provisioned throughput of the share.  For SSD, minimum  throughput is 125 MiB/sec and maximum is 10,340 MiB/sec.
+        /// For HDD, minimum  throughput is 60 MiB/sec and maximum is 5,125 MiB/sec.
         /// </summary>
         public long? ProvisionedMaxBandwidthMibps { get; set; }
     }
