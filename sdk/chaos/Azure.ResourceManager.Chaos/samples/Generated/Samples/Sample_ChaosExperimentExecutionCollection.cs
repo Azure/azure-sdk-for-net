@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Chaos.Samples
 
             // this example assumes you already have this ChaosExperimentResource created on azure
             // for more information of creating ChaosExperimentResource, please refer to the document of ChaosExperimentResource
-            string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleRG";
             string experimentName = "exampleExperiment";
             ResourceIdentifier chaosExperimentResourceId = ChaosExperimentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, experimentName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Chaos.Samples
 
             // this example assumes you already have this ChaosExperimentResource created on azure
             // for more information of creating ChaosExperimentResource, please refer to the document of ChaosExperimentResource
-            string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleRG";
             string experimentName = "exampleExperiment";
             ResourceIdentifier chaosExperimentResourceId = ChaosExperimentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, experimentName);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Chaos.Samples
 
             // this example assumes you already have this ChaosExperimentResource created on azure
             // for more information of creating ChaosExperimentResource, please refer to the document of ChaosExperimentResource
-            string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleRG";
             string experimentName = "exampleExperiment";
             ResourceIdentifier chaosExperimentResourceId = ChaosExperimentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, experimentName);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Chaos.Samples
 
             // this example assumes you already have this ChaosExperimentResource created on azure
             // for more information of creating ChaosExperimentResource, please refer to the document of ChaosExperimentResource
-            string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleRG";
             string experimentName = "exampleExperiment";
             ResourceIdentifier chaosExperimentResourceId = ChaosExperimentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, experimentName);

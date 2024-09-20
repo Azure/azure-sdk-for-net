@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnWebApplicationFirewallPolicyResource created on azure
             // for more information of creating CdnWebApplicationFirewallPolicyResource, please refer to the document of CdnWebApplicationFirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string policyName = "MicrosoftCdnWafPolicy";
             ResourceIdentifier cdnWebApplicationFirewallPolicyResourceId = CdnWebApplicationFirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, policyName);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnWebApplicationFirewallPolicyResource created on azure
             // for more information of creating CdnWebApplicationFirewallPolicyResource, please refer to the document of CdnWebApplicationFirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string policyName = "MicrosoftCdnWafPolicy";
             ResourceIdentifier cdnWebApplicationFirewallPolicyResourceId = CdnWebApplicationFirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, policyName);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnWebApplicationFirewallPolicyResource created on azure
             // for more information of creating CdnWebApplicationFirewallPolicyResource, please refer to the document of CdnWebApplicationFirewallPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string policyName = "Policy1";
             ResourceIdentifier cdnWebApplicationFirewallPolicyResourceId = CdnWebApplicationFirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, policyName);

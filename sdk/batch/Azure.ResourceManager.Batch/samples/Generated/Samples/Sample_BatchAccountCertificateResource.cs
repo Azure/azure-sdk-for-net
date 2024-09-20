@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountCertificateResource created on azure
             // for more information of creating BatchAccountCertificateResource, please refer to the document of BatchAccountCertificateResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string certificateName = "sha1-0a0e4f50d51beadeac1d35afc5116098e7902e6e";
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountCertificateResource created on azure
             // for more information of creating BatchAccountCertificateResource, please refer to the document of BatchAccountCertificateResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string certificateName = "sha1-0a0e4f50d51beadeac1d35afc5116098e7902e6e";
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountCertificateResource created on azure
             // for more information of creating BatchAccountCertificateResource, please refer to the document of BatchAccountCertificateResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string certificateName = "sha1-0a0e4f50d51beadeac1d35afc5116098e7902e6e";
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountCertificateResource created on azure
             // for more information of creating BatchAccountCertificateResource, please refer to the document of BatchAccountCertificateResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string certificateName = "sha1-0a0e4f50d51beadeac1d35afc5116098e7902e6e";
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountCertificateResource created on azure
             // for more information of creating BatchAccountCertificateResource, please refer to the document of BatchAccountCertificateResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string certificateName = "sha1-0a0e4f50d51beadeac1d35afc5116098e7902e6e";

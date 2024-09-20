@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ScVmm.Samples
 
             // this example assumes you already have this ScVmmInventoryItemResource created on azure
             // for more information of creating ScVmmInventoryItemResource, please refer to the document of ScVmmInventoryItemResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string vmmServerName = "ContosoVMMServer";
             string inventoryItemResourceName = "12345678-1234-1234-1234-123456789abc";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ScVmm.Samples
 
             // this example assumes you already have this ScVmmInventoryItemResource created on azure
             // for more information of creating ScVmmInventoryItemResource, please refer to the document of ScVmmInventoryItemResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string vmmServerName = "ContosoVMMServer";
             string inventoryItemResourceName = "12345678-1234-1234-1234-123456789abc";
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ScVmm.Samples
 
             // this example assumes you already have this ScVmmInventoryItemResource created on azure
             // for more information of creating ScVmmInventoryItemResource, please refer to the document of ScVmmInventoryItemResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string vmmServerName = "ContosoVMMServer";
             string inventoryItemResourceName = "12345678-1234-1234-1234-123456789abc";

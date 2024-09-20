@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this HybridRunbookWorkerResource created on azure
             // for more information of creating HybridRunbookWorkerResource, please refer to the document of HybridRunbookWorkerResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount20";
             string hybridRunbookWorkerGroupName = "myGroup";
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this HybridRunbookWorkerResource created on azure
             // for more information of creating HybridRunbookWorkerResource, please refer to the document of HybridRunbookWorkerResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "testaccount";
             string hybridRunbookWorkerGroupName = "TestHybridGroup";
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this HybridRunbookWorkerResource created on azure
             // for more information of creating HybridRunbookWorkerResource, please refer to the document of HybridRunbookWorkerResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "testaccount";
             string hybridRunbookWorkerGroupName = "TestHybridGroup";
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this HybridRunbookWorkerResource created on azure
             // for more information of creating HybridRunbookWorkerResource, please refer to the document of HybridRunbookWorkerResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "testaccount";
             string hybridRunbookWorkerGroupName = "TestHybridGroup";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationPrivateEndpointConnectionResource created on azure
             // for more information of creating AutomationPrivateEndpointConnectionResource, please refer to the document of AutomationPrivateEndpointConnectionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string automationAccountName = "ddb1";
             string privateEndpointConnectionName = "privateEndpointConnectionName";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationPrivateEndpointConnectionResource created on azure
             // for more information of creating AutomationPrivateEndpointConnectionResource, please refer to the document of AutomationPrivateEndpointConnectionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string automationAccountName = "ddb1";
             string privateEndpointConnectionName = "privateEndpointConnectionName";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationPrivateEndpointConnectionResource created on azure
             // for more information of creating AutomationPrivateEndpointConnectionResource, please refer to the document of AutomationPrivateEndpointConnectionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string automationAccountName = "ddb1";
             string privateEndpointConnectionName = "privateEndpointConnectionName";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AlertsManagement.Samples
 
             // this example assumes you already have this SmartGroupResource created on azure
             // for more information of creating SmartGroupResource, please refer to the document of SmartGroupResource
-            string subscriptionId = "9e261de7-c804-4b9d-9ebf-6f50fe350a9a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             Guid smartGroupId = Guid.Parse("603675da-9851-4b26-854a-49fc53d32715");
             ResourceIdentifier smartGroupResourceId = SmartGroupResource.CreateResourceIdentifier(subscriptionId, smartGroupId);
             SmartGroupResource smartGroup = client.GetSmartGroupResource(smartGroupResourceId);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AlertsManagement.Samples
 
             // this example assumes you already have this SmartGroupResource created on azure
             // for more information of creating SmartGroupResource, please refer to the document of SmartGroupResource
-            string subscriptionId = "dd91de05-d791-4ceb-b6dc-988682dc7d72";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             Guid smartGroupId = Guid.Parse("a808445e-bb38-4751-85c2-1b109ccc1059");
             ResourceIdentifier smartGroupResourceId = SmartGroupResource.CreateResourceIdentifier(subscriptionId, smartGroupId);
             SmartGroupResource smartGroup = client.GetSmartGroupResource(smartGroupResourceId);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AlertsManagement.Samples
 
             // this example assumes you already have this SmartGroupResource created on azure
             // for more information of creating SmartGroupResource, please refer to the document of SmartGroupResource
-            string subscriptionId = "9e261de7-c804-4b9d-9ebf-6f50fe350a9a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             Guid smartGroupId = Guid.Parse("a808445e-bb38-4751-85c2-1b109ccc1059");
             ResourceIdentifier smartGroupResourceId = SmartGroupResource.CreateResourceIdentifier(subscriptionId, smartGroupId);
             SmartGroupResource smartGroup = client.GetSmartGroupResource(smartGroupResourceId);

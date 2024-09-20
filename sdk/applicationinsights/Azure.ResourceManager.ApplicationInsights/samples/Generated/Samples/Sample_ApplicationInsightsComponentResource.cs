@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OIAutoRest5123";
             string resourceName = "aztest5048";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -199,7 +199,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OIAutoRest5123";
             string resourceName = "aztest5048";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -227,7 +227,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -259,7 +259,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -297,7 +297,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -325,7 +325,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -356,7 +356,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -386,7 +386,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -425,7 +425,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -453,7 +453,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -481,7 +481,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -511,7 +511,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -553,7 +553,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -581,7 +581,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -609,7 +609,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -649,7 +649,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -676,7 +676,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -715,7 +715,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -742,7 +742,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -769,7 +769,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -796,7 +796,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -826,7 +826,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -854,7 +854,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -904,7 +904,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -934,7 +934,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -961,7 +961,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -989,7 +989,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -1017,7 +1017,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-ai-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -1047,7 +1047,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-ai-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -1075,7 +1075,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-ai-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -1117,7 +1117,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-ai-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -1159,7 +1159,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-ai-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -1187,7 +1187,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -1217,7 +1217,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string componentName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, componentName);
@@ -1251,7 +1251,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -1282,7 +1282,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -1311,7 +1311,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -1346,7 +1346,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this ApplicationInsightsComponentResource created on azure
             // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-component";
             ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);

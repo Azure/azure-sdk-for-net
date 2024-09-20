@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Samples
 
             // this example assumes you already have this FarmBeatResource created on azure
             // for more information of creating FarmBeatResource, please refer to the document of FarmBeatResource
-            string subscriptionId = "11111111-2222-3333-4444-555555555555";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examples-rg";
             string farmBeatsResourceName = "examples-farmbeatsResourceName";
             ResourceIdentifier farmBeatResourceId = FarmBeatResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, farmBeatsResourceName);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Samples
 
             // this example assumes you already have this FarmBeatResource created on azure
             // for more information of creating FarmBeatResource, please refer to the document of FarmBeatResource
-            string subscriptionId = "11111111-2222-3333-4444-555555555555";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examples-rg";
             string farmBeatsResourceName = "examples-farmbeatsResourceName";
             ResourceIdentifier farmBeatResourceId = FarmBeatResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, farmBeatsResourceName);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Samples
 
             // this example assumes you already have this FarmBeatResource created on azure
             // for more information of creating FarmBeatResource, please refer to the document of FarmBeatResource
-            string subscriptionId = "11111111-2222-3333-4444-555555555555";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examples-rg";
             string farmBeatsResourceName = "examples-farmbeatsResourceName";
             ResourceIdentifier farmBeatResourceId = FarmBeatResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, farmBeatsResourceName);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Samples
 
             // this example assumes you already have this FarmBeatResource created on azure
             // for more information of creating FarmBeatResource, please refer to the document of FarmBeatResource
-            string subscriptionId = "11111111-2222-3333-4444-555555555555";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examples-rg";
             string farmBeatsResourceName = "examples-farmbeatsResourceName";
             ResourceIdentifier farmBeatResourceId = FarmBeatResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, farmBeatsResourceName);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Samples
 
             // this example assumes you already have this FarmBeatResource created on azure
             // for more information of creating FarmBeatResource, please refer to the document of FarmBeatResource
-            string subscriptionId = "11111111-2222-3333-4444-555555555555";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examples-rg";
             string farmBeatsResourceName = "examples-farmbeatsResourceName";
             ResourceIdentifier farmBeatResourceId = FarmBeatResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, farmBeatsResourceName);

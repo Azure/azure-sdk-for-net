@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Automanage.Samples
 
             // this example assumes you already have this AutomanageHciClusterConfigurationProfileAssignmentReportResource created on azure
             // for more information of creating AutomanageHciClusterConfigurationProfileAssignmentReportResource, please refer to the document of AutomanageHciClusterConfigurationProfileAssignmentReportResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string clusterName = "myClusterName";
             string configurationProfileAssignmentName = "default";

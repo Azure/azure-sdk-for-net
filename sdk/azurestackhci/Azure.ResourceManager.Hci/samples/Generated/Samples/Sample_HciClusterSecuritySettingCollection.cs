@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // this example assumes you already have this HciClusterResource created on azure
             // for more information of creating HciClusterResource, please refer to the document of HciClusterResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string clusterName = "myCluster";
             ResourceIdentifier hciClusterResourceId = HciClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // this example assumes you already have this HciClusterResource created on azure
             // for more information of creating HciClusterResource, please refer to the document of HciClusterResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string clusterName = "myCluster";
             ResourceIdentifier hciClusterResourceId = HciClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // this example assumes you already have this HciClusterResource created on azure
             // for more information of creating HciClusterResource, please refer to the document of HciClusterResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string clusterName = "myCluster";
             ResourceIdentifier hciClusterResourceId = HciClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // this example assumes you already have this HciClusterResource created on azure
             // for more information of creating HciClusterResource, please refer to the document of HciClusterResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string clusterName = "myCluster";
             ResourceIdentifier hciClusterResourceId = HciClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // this example assumes you already have this HciClusterResource created on azure
             // for more information of creating HciClusterResource, please refer to the document of HciClusterResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string clusterName = "myCluster";
             ResourceIdentifier hciClusterResourceId = HciClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);

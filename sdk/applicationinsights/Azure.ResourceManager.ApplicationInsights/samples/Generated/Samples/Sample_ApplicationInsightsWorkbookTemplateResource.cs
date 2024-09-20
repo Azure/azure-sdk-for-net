@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             // this example assumes you already have this ApplicationInsightsWorkbookTemplateResource created on azure
             // for more information of creating ApplicationInsightsWorkbookTemplateResource, please refer to the document of ApplicationInsightsWorkbookTemplateResource
-            string subscriptionId = "6b643656-33eb-422f-aee8-3ac145d124af";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-resource-name";
             ResourceIdentifier applicationInsightsWorkbookTemplateResourceId = ApplicationInsightsWorkbookTemplateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             // this example assumes you already have this ApplicationInsightsWorkbookTemplateResource created on azure
             // for more information of creating ApplicationInsightsWorkbookTemplateResource, please refer to the document of ApplicationInsightsWorkbookTemplateResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-template-resource";
             ResourceIdentifier applicationInsightsWorkbookTemplateResourceId = ApplicationInsightsWorkbookTemplateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             // this example assumes you already have this ApplicationInsightsWorkbookTemplateResource created on azure
             // for more information of creating ApplicationInsightsWorkbookTemplateResource, please refer to the document of ApplicationInsightsWorkbookTemplateResource
-            string subscriptionId = "6b643656-33eb-422f-aee8-3ac145d124af";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "my-template-resource";
             ResourceIdentifier applicationInsightsWorkbookTemplateResourceId = ApplicationInsightsWorkbookTemplateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);

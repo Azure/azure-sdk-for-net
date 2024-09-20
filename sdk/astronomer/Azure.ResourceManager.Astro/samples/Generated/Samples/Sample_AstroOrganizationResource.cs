@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Astro.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "43454B17-172A-40FE-80FA-549EA23D12B3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Astro.Samples
 
             // this example assumes you already have this AstroOrganizationResource created on azure
             // for more information of creating AstroOrganizationResource, please refer to the document of AstroOrganizationResource
-            string subscriptionId = "43454B17-172A-40FE-80FA-549EA23D12B3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgastronomer";
             string organizationName = "S PS";
             ResourceIdentifier astroOrganizationResourceId = AstroOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Astro.Samples
 
             // this example assumes you already have this AstroOrganizationResource created on azure
             // for more information of creating AstroOrganizationResource, please refer to the document of AstroOrganizationResource
-            string subscriptionId = "43454B17-172A-40FE-80FA-549EA23D12B3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgastronomer";
             string organizationName = "6.";
             ResourceIdentifier astroOrganizationResourceId = AstroOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Astro.Samples
 
             // this example assumes you already have this AstroOrganizationResource created on azure
             // for more information of creating AstroOrganizationResource, please refer to the document of AstroOrganizationResource
-            string subscriptionId = "43454B17-172A-40FE-80FA-549EA23D12B3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgastronomer";
             string organizationName = "q:";
             ResourceIdentifier astroOrganizationResourceId = AstroOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);

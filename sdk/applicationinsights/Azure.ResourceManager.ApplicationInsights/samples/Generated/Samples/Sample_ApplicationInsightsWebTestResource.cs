@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             // this example assumes you already have this ApplicationInsightsWebTestResource created on azure
             // for more information of creating ApplicationInsightsWebTestResource, please refer to the document of ApplicationInsightsWebTestResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string webTestName = "my-webtest-01-mywebservice";
             ResourceIdentifier applicationInsightsWebTestResourceId = ApplicationInsightsWebTestResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, webTestName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             // this example assumes you already have this ApplicationInsightsWebTestResource created on azure
             // for more information of creating ApplicationInsightsWebTestResource, please refer to the document of ApplicationInsightsWebTestResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string webTestName = "my-webtest-my-component";
             ResourceIdentifier applicationInsightsWebTestResourceId = ApplicationInsightsWebTestResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, webTestName);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             // this example assumes you already have this ApplicationInsightsWebTestResource created on azure
             // for more information of creating ApplicationInsightsWebTestResource, please refer to the document of ApplicationInsightsWebTestResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string webTestName = "my-webtest-01-mywebservice";
             ResourceIdentifier applicationInsightsWebTestResourceId = ApplicationInsightsWebTestResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, webTestName);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

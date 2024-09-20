@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this NetworkSecurityPerimeterConfigurationResource created on azure
             // for more information of creating NetworkSecurityPerimeterConfigurationResource, please refer to the document of NetworkSecurityPerimeterConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string networkSecurityPerimeterConfigurationName = "00000000-0000-0000-0000-000000000000.sampleassociation";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this NetworkSecurityPerimeterConfigurationResource created on azure
             // for more information of creating NetworkSecurityPerimeterConfigurationResource, please refer to the document of NetworkSecurityPerimeterConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string networkSecurityPerimeterConfigurationName = "00000000-0000-0000-0000-000000000000.sampleassociation";

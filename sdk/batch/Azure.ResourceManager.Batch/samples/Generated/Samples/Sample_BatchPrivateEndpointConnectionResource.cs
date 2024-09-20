@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchPrivateEndpointConnectionResource created on azure
             // for more information of creating BatchPrivateEndpointConnectionResource, please refer to the document of BatchPrivateEndpointConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string privateEndpointConnectionName = "testprivateEndpointConnection5testprivateEndpointConnection5.24d6b4b5-e65c-4330-bbe9-3a290d62f8e0";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchPrivateEndpointConnectionResource created on azure
             // for more information of creating BatchPrivateEndpointConnectionResource, please refer to the document of BatchPrivateEndpointConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string privateEndpointConnectionName = "testprivateEndpointConnection5.24d6b4b5-e65c-4330-bbe9-3a290d62f8e0";
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchPrivateEndpointConnectionResource created on azure
             // for more information of creating BatchPrivateEndpointConnectionResource, please refer to the document of BatchPrivateEndpointConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string privateEndpointConnectionName = "testprivateEndpointConnection5testprivateEndpointConnection5.24d6b4b5-e65c-4330-bbe9-3a290d62f8e0";

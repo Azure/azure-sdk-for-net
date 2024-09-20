@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Chaos.Samples
 
             // this example assumes you already have this ChaosCapabilityTypeResource created on azure
             // for more information of creating ChaosCapabilityTypeResource, please refer to the document of ChaosCapabilityTypeResource
-            string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string locationName = "westus2";
             string targetTypeName = "Microsoft-VirtualMachine";
             string capabilityTypeName = "Shutdown-1.0";

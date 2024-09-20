@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             // this example assumes you already have this ApplicationInsightsWorkbookRevisionResource created on azure
             // for more information of creating ApplicationInsightsWorkbookRevisionResource, please refer to the document of ApplicationInsightsWorkbookRevisionResource
-            string subscriptionId = "6b643656-33eb-422f-aee8-3ac145d124af";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string resourceName = "deadb33f-5e0d-4064-8ebb-1a4ed0313eb2";
             string revisionId = "1e2f8435b98248febee70c64ac22e1ab";

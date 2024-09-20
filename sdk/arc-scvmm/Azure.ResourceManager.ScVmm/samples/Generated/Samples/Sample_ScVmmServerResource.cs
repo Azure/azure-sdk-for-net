@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ScVmm.Samples
 
             // this example assumes you already have this ScVmmServerResource created on azure
             // for more information of creating ScVmmServerResource, please refer to the document of ScVmmServerResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string vmmServerName = "ContosoVMMServer";
             ResourceIdentifier scVmmServerResourceId = ScVmmServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmmServerName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ScVmm.Samples
 
             // this example assumes you already have this ScVmmServerResource created on azure
             // for more information of creating ScVmmServerResource, please refer to the document of ScVmmServerResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string vmmServerName = "ContosoVMMServer";
             ResourceIdentifier scVmmServerResourceId = ScVmmServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmmServerName);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ScVmm.Samples
 
             // this example assumes you already have this ScVmmServerResource created on azure
             // for more information of creating ScVmmServerResource, please refer to the document of ScVmmServerResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string vmmServerName = "ContosoVMMServer";
             ResourceIdentifier scVmmServerResourceId = ScVmmServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmmServerName);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ScVmm.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationJobResource created on azure
             // for more information of creating AutomationJobResource, please refer to the document of AutomationJobResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mygroup";
             string automationAccountName = "ContoseAutomationAccount";
             string jobName = "foo";
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationJobResource created on azure
             // for more information of creating AutomationJobResource, please refer to the document of AutomationJobResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mygroup";
             string automationAccountName = "ContoseAutomationAccount";
             string jobName = "foo";
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationJobResource created on azure
             // for more information of creating AutomationJobResource, please refer to the document of AutomationJobResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mygroup";
             string automationAccountName = "ContoseAutomationAccount";
             string jobName = "foo";
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationJobResource created on azure
             // for more information of creating AutomationJobResource, please refer to the document of AutomationJobResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mygroup";
             string automationAccountName = "ContoseAutomationAccount";
             string jobName = "foo";
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationJobResource created on azure
             // for more information of creating AutomationJobResource, please refer to the document of AutomationJobResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mygroup";
             string automationAccountName = "ContoseAutomationAccount";
             string jobName = "foo";
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationJobResource created on azure
             // for more information of creating AutomationJobResource, please refer to the document of AutomationJobResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mygroup";
             string automationAccountName = "ContoseAutomationAccount";
             string jobName = "foo";
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationJobResource created on azure
             // for more information of creating AutomationJobResource, please refer to the document of AutomationJobResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mygroup";
             string automationAccountName = "ContoseAutomationAccount";
             string jobName = "foo";
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationJobResource created on azure
             // for more information of creating AutomationJobResource, please refer to the document of AutomationJobResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mygroup";
             string automationAccountName = "ContoseAutomationAccount";
             string jobName = "foo";
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationJobResource created on azure
             // for more information of creating AutomationJobResource, please refer to the document of AutomationJobResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mygroup";
             string automationAccountName = "ContoseAutomationAccount";
             string jobName = "foo";

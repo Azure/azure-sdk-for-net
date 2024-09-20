@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this DscNodeConfigurationResource created on azure
             // for more information of creating DscNodeConfigurationResource, please refer to the document of DscNodeConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount20";
             string nodeConfigurationName = "configName.nodeConfigName";
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this DscNodeConfigurationResource created on azure
             // for more information of creating DscNodeConfigurationResource, please refer to the document of DscNodeConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string nodeConfigurationName = "SetupServer.localhost";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this DscNodeConfigurationResource created on azure
             // for more information of creating DscNodeConfigurationResource, please refer to the document of DscNodeConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount20";
             string nodeConfigurationName = "configName.nodeConfigName";

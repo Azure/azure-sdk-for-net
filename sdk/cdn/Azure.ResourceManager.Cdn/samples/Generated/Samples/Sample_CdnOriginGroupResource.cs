@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnOriginGroupResource created on azure
             // for more information of creating CdnOriginGroupResource, please refer to the document of CdnOriginGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnOriginGroupResource created on azure
             // for more information of creating CdnOriginGroupResource, please refer to the document of CdnOriginGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
@@ -115,7 +115,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/RG/providers/Mi
 
             // this example assumes you already have this CdnOriginGroupResource created on azure
             // for more information of creating CdnOriginGroupResource, please refer to the document of CdnOriginGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";

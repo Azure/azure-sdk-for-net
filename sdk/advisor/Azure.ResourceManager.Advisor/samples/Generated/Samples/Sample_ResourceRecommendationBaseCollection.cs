@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Advisor.Samples
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this ResourceRecommendationBaseResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}", subscriptionId));
             ResourceRecommendationBaseCollection collection = client.GetResourceRecommendationBases(scopeId);
 

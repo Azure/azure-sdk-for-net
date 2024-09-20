@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationVariableResource created on azure
             // for more information of creating AutomationVariableResource, please refer to the document of AutomationVariableResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "sampleAccount9";
             string variableName = "sampleVariable";
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationVariableResource created on azure
             // for more information of creating AutomationVariableResource, please refer to the document of AutomationVariableResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "sampleAccount9";
             string variableName = "sampleVariable";
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationVariableResource created on azure
             // for more information of creating AutomationVariableResource, please refer to the document of AutomationVariableResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "sampleAccount9";
             string variableName = "sampleVariable";

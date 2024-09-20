@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnEndpointResource created on azure
             // for more information of creating CdnEndpointResource, please refer to the document of CdnEndpointResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnEndpointResource created on azure
             // for more information of creating CdnEndpointResource, please refer to the document of CdnEndpointResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnEndpointResource created on azure
             // for more information of creating CdnEndpointResource, please refer to the document of CdnEndpointResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnEndpointResource created on azure
             // for more information of creating CdnEndpointResource, please refer to the document of CdnEndpointResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this CdnEndpointResource created on azure
             // for more information of creating CdnEndpointResource, please refer to the document of CdnEndpointResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string endpointName = "endpoint1";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountResource created on azure
             // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mygroup";
             string automationAccountName = "ContoseAutomationAccount";
             ResourceIdentifier automationAccountResourceId = AutomationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountResource created on azure
             // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mygroup";
             string automationAccountName = "ContoseAutomationAccount";
             ResourceIdentifier automationAccountResourceId = AutomationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountResource created on azure
             // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mygroup";
             string automationAccountName = "ContoseAutomationAccount";
             ResourceIdentifier automationAccountResourceId = AutomationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountResource created on azure
             // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mygroup";
             string automationAccountName = "ContoseAutomationAccount";
             ResourceIdentifier automationAccountResourceId = AutomationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName);
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountResource created on azure
             // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mygroup";
             string automationAccountName = "ContoseAutomationAccount";
             ResourceIdentifier automationAccountResourceId = AutomationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName);

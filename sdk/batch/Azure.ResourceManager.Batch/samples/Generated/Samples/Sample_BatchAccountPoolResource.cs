@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountPoolResource created on azure
             // for more information of creating BatchAccountPoolResource, please refer to the document of BatchAccountPoolResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string poolName = "testpool";
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchAccountPoolResource created on azure
             // for more information of creating BatchAccountPoolResource, please refer to the document of BatchAccountPoolResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string poolName = "testpool";
@@ -125,7 +125,7 @@ Version = "1.0",
 
             // this example assumes you already have this BatchAccountPoolResource created on azure
             // for more information of creating BatchAccountPoolResource, please refer to the document of BatchAccountPoolResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string poolName = "testpool";
@@ -161,7 +161,7 @@ Version = "1.0",
 
             // this example assumes you already have this BatchAccountPoolResource created on azure
             // for more information of creating BatchAccountPoolResource, please refer to the document of BatchAccountPoolResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string poolName = "testpool";
@@ -206,7 +206,7 @@ Version = "1.0",
 
             // this example assumes you already have this BatchAccountPoolResource created on azure
             // for more information of creating BatchAccountPoolResource, please refer to the document of BatchAccountPoolResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string poolName = "testpool";
@@ -234,7 +234,7 @@ Version = "1.0",
 
             // this example assumes you already have this BatchAccountPoolResource created on azure
             // for more information of creating BatchAccountPoolResource, please refer to the document of BatchAccountPoolResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string poolName = "testpool";
@@ -266,7 +266,7 @@ Version = "1.0",
 
             // this example assumes you already have this BatchAccountPoolResource created on azure
             // for more information of creating BatchAccountPoolResource, please refer to the document of BatchAccountPoolResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string poolName = "testpool";
@@ -298,7 +298,7 @@ Version = "1.0",
 
             // this example assumes you already have this BatchAccountPoolResource created on azure
             // for more information of creating BatchAccountPoolResource, please refer to the document of BatchAccountPoolResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string poolName = "testpool";
@@ -330,7 +330,7 @@ Version = "1.0",
 
             // this example assumes you already have this BatchAccountPoolResource created on azure
             // for more information of creating BatchAccountPoolResource, please refer to the document of BatchAccountPoolResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string poolName = "testpool";
@@ -362,7 +362,7 @@ Version = "1.0",
 
             // this example assumes you already have this BatchAccountPoolResource created on azure
             // for more information of creating BatchAccountPoolResource, please refer to the document of BatchAccountPoolResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string poolName = "testpool";
@@ -394,7 +394,7 @@ Version = "1.0",
 
             // this example assumes you already have this BatchAccountPoolResource created on azure
             // for more information of creating BatchAccountPoolResource, please refer to the document of BatchAccountPoolResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string poolName = "testpool";
@@ -426,7 +426,7 @@ Version = "1.0",
 
             // this example assumes you already have this BatchAccountPoolResource created on azure
             // for more information of creating BatchAccountPoolResource, please refer to the document of BatchAccountPoolResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string poolName = "testpool";
@@ -458,7 +458,7 @@ Version = "1.0",
 
             // this example assumes you already have this BatchAccountPoolResource created on azure
             // for more information of creating BatchAccountPoolResource, please refer to the document of BatchAccountPoolResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string poolName = "testpool";
@@ -490,7 +490,7 @@ Version = "1.0",
 
             // this example assumes you already have this BatchAccountPoolResource created on azure
             // for more information of creating BatchAccountPoolResource, please refer to the document of BatchAccountPoolResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string poolName = "testpool";

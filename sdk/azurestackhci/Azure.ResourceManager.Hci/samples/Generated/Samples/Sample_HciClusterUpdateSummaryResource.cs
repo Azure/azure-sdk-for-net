@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // this example assumes you already have this HciClusterUpdateSummaryResource created on azure
             // for more information of creating HciClusterUpdateSummaryResource, please refer to the document of HciClusterUpdateSummaryResource
-            string subscriptionId = "b8d594e5-51f3-4c11-9c54-a7771b81c712";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string clusterName = "testcluster";
             ResourceIdentifier hciClusterUpdateSummaryResourceId = HciClusterUpdateSummaryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // this example assumes you already have this HciClusterUpdateSummaryResource created on azure
             // for more information of creating HciClusterUpdateSummaryResource, please refer to the document of HciClusterUpdateSummaryResource
-            string subscriptionId = "b8d594e5-51f3-4c11-9c54-a7771b81c712";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string clusterName = "testcluster";
             ResourceIdentifier hciClusterUpdateSummaryResourceId = HciClusterUpdateSummaryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // this example assumes you already have this HciClusterUpdateSummaryResource created on azure
             // for more information of creating HciClusterUpdateSummaryResource, please refer to the document of HciClusterUpdateSummaryResource
-            string subscriptionId = "b8d594e5-51f3-4c11-9c54-a7771b81c712";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string clusterName = "testcluster";
             ResourceIdentifier hciClusterUpdateSummaryResourceId = HciClusterUpdateSummaryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);

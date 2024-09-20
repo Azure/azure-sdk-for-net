@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "6b643656-33eb-422f-aee8-3ac145d124af";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "6b643656-33eb-422f-aee8-3ac145d124af";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "6b643656-33eb-422f-aee8-3ac145d124af";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "6b643656-33eb-422f-aee8-3ac145d124af";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

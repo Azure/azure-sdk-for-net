@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Billing.Samples
 
             // this example assumes you already have this SubscriptionBillingInvoiceResource created on azure
             // for more information of creating SubscriptionBillingInvoiceResource, please refer to the document of SubscriptionBillingInvoiceResource
-            string subscriptionId = "11111111-1111-1111-1111-111111111111";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string invoiceName = "E123456789";
             ResourceIdentifier subscriptionBillingInvoiceResourceId = SubscriptionBillingInvoiceResource.CreateResourceIdentifier(subscriptionId, invoiceName);
             SubscriptionBillingInvoiceResource subscriptionBillingInvoice = client.GetSubscriptionBillingInvoiceResource(subscriptionBillingInvoiceResourceId);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationCredentialResource created on azure
             // for more information of creating AutomationCredentialResource, please refer to the document of AutomationCredentialResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount20";
             string credentialName = "myCredential";
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationCredentialResource created on azure
             // for more information of creating AutomationCredentialResource, please refer to the document of AutomationCredentialResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount18";
             string credentialName = "myCredential";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationCredentialResource created on azure
             // for more information of creating AutomationCredentialResource, please refer to the document of AutomationCredentialResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount18";
             string credentialName = "myCredential";
