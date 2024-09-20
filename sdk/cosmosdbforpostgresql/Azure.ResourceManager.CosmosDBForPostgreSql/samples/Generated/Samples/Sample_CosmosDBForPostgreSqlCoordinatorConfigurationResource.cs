@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
             // this example assumes you already have this CosmosDBForPostgreSqlCoordinatorConfigurationResource created on azure
             // for more information of creating CosmosDBForPostgreSqlCoordinatorConfigurationResource, please refer to the document of CosmosDBForPostgreSqlCoordinatorConfigurationResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestResourceGroup";
             string clusterName = "testcluster";
             string configurationName = "array_nulls";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
             // this example assumes you already have this CosmosDBForPostgreSqlCoordinatorConfigurationResource created on azure
             // for more information of creating CosmosDBForPostgreSqlCoordinatorConfigurationResource, please refer to the document of CosmosDBForPostgreSqlCoordinatorConfigurationResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestResourceGroup";
             string clusterName = "testcluster";
             string configurationName = "array_nulls";

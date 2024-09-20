@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
 
             // this example assumes you already have this DataBoxEdgeShareResource created on azure
             // for more information of creating DataBoxEdgeShareResource, please refer to the document of DataBoxEdgeShareResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "GroupForEdgeAutomation";
             string deviceName = "testedgedevice";
             string name = "smbshare";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
 
             // this example assumes you already have this DataBoxEdgeShareResource created on azure
             // for more information of creating DataBoxEdgeShareResource, please refer to the document of DataBoxEdgeShareResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "GroupForEdgeAutomation";
             string deviceName = "testedgedevice";
             string name = "smbshare";
@@ -105,7 +105,7 @@ new UserAccessRight(new ResourceIdentifier("/subscriptions/4385cf00-2d3a-425a-83
 
             // this example assumes you already have this DataBoxEdgeShareResource created on azure
             // for more information of creating DataBoxEdgeShareResource, please refer to the document of DataBoxEdgeShareResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "GroupForEdgeAutomation";
             string deviceName = "testedgedevice";
             string name = "smbshare";
@@ -133,7 +133,7 @@ new UserAccessRight(new ResourceIdentifier("/subscriptions/4385cf00-2d3a-425a-83
 
             // this example assumes you already have this DataBoxEdgeShareResource created on azure
             // for more information of creating DataBoxEdgeShareResource, please refer to the document of DataBoxEdgeShareResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "GroupForEdgeAutomation";
             string deviceName = "testedgedevice";
             string name = "smbshare";

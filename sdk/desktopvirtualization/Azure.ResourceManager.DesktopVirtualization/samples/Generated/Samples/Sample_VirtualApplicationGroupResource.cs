@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this VirtualApplicationGroupResource created on azure
             // for more information of creating VirtualApplicationGroupResource, please refer to the document of VirtualApplicationGroupResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string applicationGroupName = "applicationGroup1";
             ResourceIdentifier virtualApplicationGroupResourceId = VirtualApplicationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, applicationGroupName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this VirtualApplicationGroupResource created on azure
             // for more information of creating VirtualApplicationGroupResource, please refer to the document of VirtualApplicationGroupResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string applicationGroupName = "applicationGroup1";
             ResourceIdentifier virtualApplicationGroupResourceId = VirtualApplicationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, applicationGroupName);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this VirtualApplicationGroupResource created on azure
             // for more information of creating VirtualApplicationGroupResource, please refer to the document of VirtualApplicationGroupResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string applicationGroupName = "applicationGroup1";
             ResourceIdentifier virtualApplicationGroupResourceId = VirtualApplicationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, applicationGroupName);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this VirtualApplicationGroupResource created on azure
             // for more information of creating VirtualApplicationGroupResource, please refer to the document of VirtualApplicationGroupResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string applicationGroupName = "applicationGroup1";
             ResourceIdentifier virtualApplicationGroupResourceId = VirtualApplicationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, applicationGroupName);

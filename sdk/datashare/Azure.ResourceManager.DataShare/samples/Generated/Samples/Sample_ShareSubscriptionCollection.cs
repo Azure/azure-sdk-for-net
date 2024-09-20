@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // this example assumes you already have this DataShareAccountResource created on azure
             // for more information of creating DataShareAccountResource, please refer to the document of DataShareAccountResource
-            string subscriptionId = "12345678-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "Account1";
             ResourceIdentifier dataShareAccountResourceId = DataShareAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // this example assumes you already have this DataShareAccountResource created on azure
             // for more information of creating DataShareAccountResource, please refer to the document of DataShareAccountResource
-            string subscriptionId = "12345678-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "Account1";
             ResourceIdentifier dataShareAccountResourceId = DataShareAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // this example assumes you already have this DataShareAccountResource created on azure
             // for more information of creating DataShareAccountResource, please refer to the document of DataShareAccountResource
-            string subscriptionId = "12345678-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "Account1";
             ResourceIdentifier dataShareAccountResourceId = DataShareAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // this example assumes you already have this DataShareAccountResource created on azure
             // for more information of creating DataShareAccountResource, please refer to the document of DataShareAccountResource
-            string subscriptionId = "12345678-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "Account1";
             ResourceIdentifier dataShareAccountResourceId = DataShareAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // this example assumes you already have this DataShareAccountResource created on azure
             // for more information of creating DataShareAccountResource, please refer to the document of DataShareAccountResource
-            string subscriptionId = "12345678-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "Account1";
             ResourceIdentifier dataShareAccountResourceId = DataShareAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);

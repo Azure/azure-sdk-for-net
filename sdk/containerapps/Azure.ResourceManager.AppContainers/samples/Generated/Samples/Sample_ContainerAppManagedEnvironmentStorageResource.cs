@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppManagedEnvironmentStorageResource created on azure
             // for more information of creating ContainerAppManagedEnvironmentStorageResource, please refer to the document of ContainerAppManagedEnvironmentStorageResource
-            string subscriptionId = "8efdecc5-919e-44eb-b179-915dca89ebf9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string environmentName = "managedEnv";
             string storageName = "jlaw-demo1";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppManagedEnvironmentStorageResource created on azure
             // for more information of creating ContainerAppManagedEnvironmentStorageResource, please refer to the document of ContainerAppManagedEnvironmentStorageResource
-            string subscriptionId = "8efdecc5-919e-44eb-b179-915dca89ebf9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string environmentName = "managedEnv";
             string storageName = "jlaw-demo1";
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppManagedEnvironmentStorageResource created on azure
             // for more information of creating ContainerAppManagedEnvironmentStorageResource, please refer to the document of ContainerAppManagedEnvironmentStorageResource
-            string subscriptionId = "8efdecc5-919e-44eb-b179-915dca89ebf9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string environmentName = "managedEnv";
             string storageName = "jlaw-demo1";

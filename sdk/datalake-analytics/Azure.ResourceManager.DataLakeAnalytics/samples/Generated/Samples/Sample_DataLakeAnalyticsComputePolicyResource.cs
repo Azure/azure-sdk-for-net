@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
 
             // this example assumes you already have this DataLakeAnalyticsComputePolicyResource created on azure
             // for more information of creating DataLakeAnalyticsComputePolicyResource, please refer to the document of DataLakeAnalyticsComputePolicyResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "contosorg";
             string accountName = "contosoadla";
             string computePolicyName = "test_policy";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
 
             // this example assumes you already have this DataLakeAnalyticsComputePolicyResource created on azure
             // for more information of creating DataLakeAnalyticsComputePolicyResource, please refer to the document of DataLakeAnalyticsComputePolicyResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "contosorg";
             string accountName = "contosoadla";
             string computePolicyName = "test_policy";
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
 
             // this example assumes you already have this DataLakeAnalyticsComputePolicyResource created on azure
             // for more information of creating DataLakeAnalyticsComputePolicyResource, please refer to the document of DataLakeAnalyticsComputePolicyResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "contosorg";
             string accountName = "contosoadla";
             string computePolicyName = "test_policy";

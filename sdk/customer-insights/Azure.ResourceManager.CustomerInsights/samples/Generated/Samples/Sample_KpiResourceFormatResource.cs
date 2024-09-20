@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
 
             // this example assumes you already have this KpiResourceFormatResource created on azure
             // for more information of creating KpiResourceFormatResource, please refer to the document of KpiResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             string kpiName = "kpiTest45453647";
@@ -89,7 +89,7 @@ new KpiAlias("alias","Id+4")
 
             // this example assumes you already have this KpiResourceFormatResource created on azure
             // for more information of creating KpiResourceFormatResource, please refer to the document of KpiResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             string kpiName = "kpiTest45453647";
@@ -121,7 +121,7 @@ new KpiAlias("alias","Id+4")
 
             // this example assumes you already have this KpiResourceFormatResource created on azure
             // for more information of creating KpiResourceFormatResource, please refer to the document of KpiResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             string kpiName = "kpiTest45453647";
@@ -149,7 +149,7 @@ new KpiAlias("alias","Id+4")
 
             // this example assumes you already have this KpiResourceFormatResource created on azure
             // for more information of creating KpiResourceFormatResource, please refer to the document of KpiResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             string kpiName = "kpiTest45453647";

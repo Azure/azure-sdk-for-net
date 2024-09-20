@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this SqlMigrationServiceResource created on azure
             // for more information of creating SqlMigrationServiceResource, please refer to the document of SqlMigrationServiceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string sqlMigrationServiceName = "service1";
             ResourceIdentifier sqlMigrationServiceResourceId = SqlMigrationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sqlMigrationServiceName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this SqlMigrationServiceResource created on azure
             // for more information of creating SqlMigrationServiceResource, please refer to the document of SqlMigrationServiceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string sqlMigrationServiceName = "service1";
             ResourceIdentifier sqlMigrationServiceResourceId = SqlMigrationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sqlMigrationServiceName);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this SqlMigrationServiceResource created on azure
             // for more information of creating SqlMigrationServiceResource, please refer to the document of SqlMigrationServiceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string sqlMigrationServiceName = "testagent";
             ResourceIdentifier sqlMigrationServiceResourceId = SqlMigrationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sqlMigrationServiceName);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this SqlMigrationServiceResource created on azure
             // for more information of creating SqlMigrationServiceResource, please refer to the document of SqlMigrationServiceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string sqlMigrationServiceName = "service1";
             ResourceIdentifier sqlMigrationServiceResourceId = SqlMigrationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sqlMigrationServiceName);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this SqlMigrationServiceResource created on azure
             // for more information of creating SqlMigrationServiceResource, please refer to the document of SqlMigrationServiceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string sqlMigrationServiceName = "service1";
             ResourceIdentifier sqlMigrationServiceResourceId = SqlMigrationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sqlMigrationServiceName);
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this SqlMigrationServiceResource created on azure
             // for more information of creating SqlMigrationServiceResource, please refer to the document of SqlMigrationServiceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string sqlMigrationServiceName = "service1";
             ResourceIdentifier sqlMigrationServiceResourceId = SqlMigrationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sqlMigrationServiceName);
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this SqlMigrationServiceResource created on azure
             // for more information of creating SqlMigrationServiceResource, please refer to the document of SqlMigrationServiceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string sqlMigrationServiceName = "service1";
             ResourceIdentifier sqlMigrationServiceResourceId = SqlMigrationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sqlMigrationServiceName);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this SqlMigrationServiceResource created on azure
             // for more information of creating SqlMigrationServiceResource, please refer to the document of SqlMigrationServiceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string sqlMigrationServiceName = "service1";
             ResourceIdentifier sqlMigrationServiceResourceId = SqlMigrationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sqlMigrationServiceName);
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.Sql/managedInstances/managedInstance1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

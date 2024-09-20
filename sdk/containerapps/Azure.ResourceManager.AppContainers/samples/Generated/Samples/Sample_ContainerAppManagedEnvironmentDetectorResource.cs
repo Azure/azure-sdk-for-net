@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppManagedEnvironmentDetectorResource created on azure
             // for more information of creating ContainerAppManagedEnvironmentDetectorResource, please refer to the document of ContainerAppManagedEnvironmentDetectorResource
-            string subscriptionId = "f07f3711-b45e-40fe-a941-4e6d93f851e6";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mikono-workerapp-test-rg";
             string environmentName = "mikonokubeenv";
             string detectorName = "ManagedEnvAvailabilityMetrics";

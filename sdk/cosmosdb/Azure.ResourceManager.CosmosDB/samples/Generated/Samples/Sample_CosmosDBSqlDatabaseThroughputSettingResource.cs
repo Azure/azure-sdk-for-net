@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBSqlDatabaseThroughputSettingResource created on azure
             // for more information of creating CosmosDBSqlDatabaseThroughputSettingResource, please refer to the document of CosmosDBSqlDatabaseThroughputSettingResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string databaseName = "databaseName";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBSqlDatabaseThroughputSettingResource created on azure
             // for more information of creating CosmosDBSqlDatabaseThroughputSettingResource, please refer to the document of CosmosDBSqlDatabaseThroughputSettingResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string databaseName = "databaseName";
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBSqlDatabaseThroughputSettingResource created on azure
             // for more information of creating CosmosDBSqlDatabaseThroughputSettingResource, please refer to the document of CosmosDBSqlDatabaseThroughputSettingResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string databaseName = "databaseName";
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBSqlDatabaseThroughputSettingResource created on azure
             // for more information of creating CosmosDBSqlDatabaseThroughputSettingResource, please refer to the document of CosmosDBSqlDatabaseThroughputSettingResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string databaseName = "databaseName";
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBSqlDatabaseThroughputSettingResource created on azure
             // for more information of creating CosmosDBSqlDatabaseThroughputSettingResource, please refer to the document of CosmosDBSqlDatabaseThroughputSettingResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string databaseName = "databaseName";
@@ -210,7 +210,7 @@ Id = new ResourceIdentifier("1"),
 
             // this example assumes you already have this CosmosDBSqlDatabaseThroughputSettingResource created on azure
             // for more information of creating CosmosDBSqlDatabaseThroughputSettingResource, please refer to the document of CosmosDBSqlDatabaseThroughputSettingResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string databaseName = "databaseName";

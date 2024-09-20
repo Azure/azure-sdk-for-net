@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this GremlinGraphThroughputSettingResource created on azure
             // for more information of creating GremlinGraphThroughputSettingResource, please refer to the document of GremlinGraphThroughputSettingResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string databaseName = "databaseName";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this GremlinGraphThroughputSettingResource created on azure
             // for more information of creating GremlinGraphThroughputSettingResource, please refer to the document of GremlinGraphThroughputSettingResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string databaseName = "databaseName";
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this GremlinGraphThroughputSettingResource created on azure
             // for more information of creating GremlinGraphThroughputSettingResource, please refer to the document of GremlinGraphThroughputSettingResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string databaseName = "databaseName";
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this GremlinGraphThroughputSettingResource created on azure
             // for more information of creating GremlinGraphThroughputSettingResource, please refer to the document of GremlinGraphThroughputSettingResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string databaseName = "databaseName";

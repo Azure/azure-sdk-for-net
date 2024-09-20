@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
             // this example assumes you already have this CosmosDBForPostgreSqlRoleResource created on azure
             // for more information of creating CosmosDBForPostgreSqlRoleResource, please refer to the document of CosmosDBForPostgreSqlRoleResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string clusterName = "pgtestsvc4";
             string roleName = "role1";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
             // this example assumes you already have this CosmosDBForPostgreSqlRoleResource created on azure
             // for more information of creating CosmosDBForPostgreSqlRoleResource, please refer to the document of CosmosDBForPostgreSqlRoleResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string clusterName = "pgtestsvc4";
             string roleName = "role1";
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
             // this example assumes you already have this CosmosDBForPostgreSqlRoleResource created on azure
             // for more information of creating CosmosDBForPostgreSqlRoleResource, please refer to the document of CosmosDBForPostgreSqlRoleResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string clusterName = "pgtestsvc4";
             string roleName = "role1";

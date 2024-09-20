@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this ScalingPlanResource created on azure
             // for more information of creating ScalingPlanResource, please refer to the document of ScalingPlanResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string scalingPlanName = "PersonalScalingPlan1";
             ResourceIdentifier scalingPlanResourceId = ScalingPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scalingPlanName);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this ScalingPlanResource created on azure
             // for more information of creating ScalingPlanResource, please refer to the document of ScalingPlanResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string scalingPlanName = "PersonalScalingPlan1";
             ResourceIdentifier scalingPlanResourceId = ScalingPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scalingPlanName);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this ScalingPlanResource created on azure
             // for more information of creating ScalingPlanResource, please refer to the document of ScalingPlanResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string scalingPlanName = "PersonalScalingPlan1";
             ResourceIdentifier scalingPlanResourceId = ScalingPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scalingPlanName);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this ScalingPlanResource created on azure
             // for more information of creating ScalingPlanResource, please refer to the document of ScalingPlanResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string scalingPlanName = "scalingPlan1";
             ResourceIdentifier scalingPlanResourceId = ScalingPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scalingPlanName);
@@ -207,7 +207,7 @@ DesktopVirtualizationDayOfWeek.Monday,DesktopVirtualizationDayOfWeek.Tuesday,Des
 
             // this example assumes you already have this ScalingPlanResource created on azure
             // for more information of creating ScalingPlanResource, please refer to the document of ScalingPlanResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string scalingPlanName = "scalingPlan";
             ResourceIdentifier scalingPlanResourceId = ScalingPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scalingPlanName);

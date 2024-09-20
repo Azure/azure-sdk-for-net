@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleIntegrationRuntime";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleIntegrationRuntime";
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleIntegrationRuntime";
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleIntegrationRuntime";
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "7ad7c73b-38b8-4df3-84ee-52ff91092f61";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleIntegrationRuntime";
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleIntegrationRuntime";
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleIntegrationRuntime";
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleIntegrationRuntime";
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleManagedIntegrationRuntime";
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleManagedIntegrationRuntime";
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleIntegrationRuntime";
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleIntegrationRuntime";
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleIntegrationRuntime";
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleIntegrationRuntime";
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleIntegrationRuntime";
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "testactivityv2";
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "testactivityv2";
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleIntegrationRuntime";
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleIntegrationRuntime";
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleIntegrationRuntime";
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
             // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string integrationRuntimeName = "exampleIntegrationRuntime";

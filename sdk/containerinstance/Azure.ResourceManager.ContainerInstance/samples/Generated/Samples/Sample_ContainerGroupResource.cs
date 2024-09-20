@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
 
             // this example assumes you already have this ContainerGroupResource created on azure
             // for more information of creating ContainerGroupResource, please refer to the document of ContainerGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "demo";
             string containerGroupName = "demo1";
             ResourceIdentifier containerGroupResourceId = ContainerGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerGroupName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
 
             // this example assumes you already have this ContainerGroupResource created on azure
             // for more information of creating ContainerGroupResource, please refer to the document of ContainerGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "demo";
             string containerGroupName = "demo1";
             ResourceIdentifier containerGroupResourceId = ContainerGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerGroupName);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
 
             // this example assumes you already have this ContainerGroupResource created on azure
             // for more information of creating ContainerGroupResource, please refer to the document of ContainerGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "demo";
             string containerGroupName = "demo1";
             ResourceIdentifier containerGroupResourceId = ContainerGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerGroupName);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
 
             // this example assumes you already have this ContainerGroupResource created on azure
             // for more information of creating ContainerGroupResource, please refer to the document of ContainerGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "demoResource";
             string containerGroupName = "demo1";
             ResourceIdentifier containerGroupResourceId = ContainerGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerGroupName);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
 
             // this example assumes you already have this ContainerGroupResource created on azure
             // for more information of creating ContainerGroupResource, please refer to the document of ContainerGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "demo";
             string containerGroupName = "demo1";
             ResourceIdentifier containerGroupResourceId = ContainerGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerGroupName);
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
 
             // this example assumes you already have this ContainerGroupResource created on azure
             // for more information of creating ContainerGroupResource, please refer to the document of ContainerGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "demo";
             string containerGroupName = "demo1";
             ResourceIdentifier containerGroupResourceId = ContainerGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerGroupName);
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
 
             // this example assumes you already have this ContainerGroupResource created on azure
             // for more information of creating ContainerGroupResource, please refer to the document of ContainerGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "demo";
             string containerGroupName = "demo1";
             ResourceIdentifier containerGroupResourceId = ContainerGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerGroupName);
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
 
             // this example assumes you already have this ContainerGroupResource created on azure
             // for more information of creating ContainerGroupResource, please refer to the document of ContainerGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "demo";
             string containerGroupName = "demo1";
             ResourceIdentifier containerGroupResourceId = ContainerGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerGroupName);
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
 
             // this example assumes you already have this ContainerGroupResource created on azure
             // for more information of creating ContainerGroupResource, please refer to the document of ContainerGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "demo";
             string containerGroupName = "demo1";
             ResourceIdentifier containerGroupResourceId = ContainerGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerGroupName);
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
 
             // this example assumes you already have this ContainerGroupResource created on azure
             // for more information of creating ContainerGroupResource, please refer to the document of ContainerGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "demo";
             string containerGroupName = "demo1";
             ResourceIdentifier containerGroupResourceId = ContainerGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerGroupName);
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
 
             // this example assumes you already have this ContainerGroupResource created on azure
             // for more information of creating ContainerGroupResource, please refer to the document of ContainerGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "demo";
             string containerGroupName = "demo1";
             ResourceIdentifier containerGroupResourceId = ContainerGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerGroupName);

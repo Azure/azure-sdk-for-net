@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // this example assumes you already have this ShareDataSetMappingResource created on azure
             // for more information of creating ShareDataSetMappingResource, please refer to the document of ShareDataSetMappingResource
-            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "Account1";
             string shareSubscriptionName = "ShareSubscription1";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // this example assumes you already have this ShareDataSetMappingResource created on azure
             // for more information of creating ShareDataSetMappingResource, please refer to the document of ShareDataSetMappingResource
-            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "Account1";
             string shareSubscriptionName = "ShareSubscription1";
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // this example assumes you already have this ShareDataSetMappingResource created on azure
             // for more information of creating ShareDataSetMappingResource, please refer to the document of ShareDataSetMappingResource
-            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "Account1";
             string shareSubscriptionName = "ShareSubscription1";
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // this example assumes you already have this ShareDataSetMappingResource created on azure
             // for more information of creating ShareDataSetMappingResource, please refer to the document of ShareDataSetMappingResource
-            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "Account1";
             string shareSubscriptionName = "ShareSubscription1";
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // this example assumes you already have this ShareDataSetMappingResource created on azure
             // for more information of creating ShareDataSetMappingResource, please refer to the document of ShareDataSetMappingResource
-            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "Account1";
             string shareSubscriptionName = "ShareSubscription1";
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // this example assumes you already have this ShareDataSetMappingResource created on azure
             // for more information of creating ShareDataSetMappingResource, please refer to the document of ShareDataSetMappingResource
-            string subscriptionId = "0f3dcfc3-18f8-4099-b381-8353e19d43a7";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "consumerAccount";
             string shareSubscriptionName = "ShareSubscription1";
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // this example assumes you already have this ShareDataSetMappingResource created on azure
             // for more information of creating ShareDataSetMappingResource, please refer to the document of ShareDataSetMappingResource
-            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "Account1";
             string shareSubscriptionName = "ShareSubscription1";

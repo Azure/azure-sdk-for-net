@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fc04246f-04c5-437e-ac5e-206a19e7193f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupName = "DmsSdkRg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, groupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fc04246f-04c5-437e-ac5e-206a19e7193f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupName = "DmsSdkRg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, groupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fc04246f-04c5-437e-ac5e-206a19e7193f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupName = "DmsSdkRg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, groupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fc04246f-04c5-437e-ac5e-206a19e7193f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupName = "DmsSdkRg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, groupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "fc04246f-04c5-437e-ac5e-206a19e7193f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupName = "DmsSdkRg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, groupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

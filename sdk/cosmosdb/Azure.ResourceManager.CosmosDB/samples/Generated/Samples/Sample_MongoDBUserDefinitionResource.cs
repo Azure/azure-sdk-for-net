@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this MongoDBUserDefinitionResource created on azure
             // for more information of creating MongoDBUserDefinitionResource, please refer to the document of MongoDBUserDefinitionResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             string mongoUserDefinitionId = "myMongoUserDefinitionId";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this MongoDBUserDefinitionResource created on azure
             // for more information of creating MongoDBUserDefinitionResource, please refer to the document of MongoDBUserDefinitionResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             string mongoUserDefinitionId = "myMongoUserDefinitionId";
@@ -111,7 +111,7 @@ Role = "myReadRole",
 
             // this example assumes you already have this MongoDBUserDefinitionResource created on azure
             // for more information of creating MongoDBUserDefinitionResource, please refer to the document of MongoDBUserDefinitionResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             string mongoUserDefinitionId = "myMongoUserDefinitionId";

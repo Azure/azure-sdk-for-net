@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
 
             // this example assumes you already have this RoleAssignmentResourceFormatResource created on azure
             // for more information of creating RoleAssignmentResourceFormatResource, please refer to the document of RoleAssignmentResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             string assignmentName = "assignmentName8976";
@@ -71,7 +71,7 @@ new AssignmentPrincipal("4c54c38ffa9b416ba5a6d6c8a20cbe7e","User"),new Assignmen
 
             // this example assumes you already have this RoleAssignmentResourceFormatResource created on azure
             // for more information of creating RoleAssignmentResourceFormatResource, please refer to the document of RoleAssignmentResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             string assignmentName = "assignmentName8976";
@@ -103,7 +103,7 @@ new AssignmentPrincipal("4c54c38ffa9b416ba5a6d6c8a20cbe7e","User"),new Assignmen
 
             // this example assumes you already have this RoleAssignmentResourceFormatResource created on azure
             // for more information of creating RoleAssignmentResourceFormatResource, please refer to the document of RoleAssignmentResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             string assignmentName = "assignmentName8976";

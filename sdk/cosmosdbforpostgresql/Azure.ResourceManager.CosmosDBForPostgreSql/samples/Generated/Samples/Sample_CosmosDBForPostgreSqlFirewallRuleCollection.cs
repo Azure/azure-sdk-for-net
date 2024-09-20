@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
             // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
             // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string clusterName = "pgtestsvc4";
             ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
             // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
             // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string clusterName = "pgtestsvc4";
             ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
             // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
             // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string clusterName = "pgtestsvc4";
             ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
             // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
             // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string clusterName = "pgtestsvc4";
             ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
             // this example assumes you already have this CosmosDBForPostgreSqlClusterResource created on azure
             // for more information of creating CosmosDBForPostgreSqlClusterResource, please refer to the document of CosmosDBForPostgreSqlClusterResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string clusterName = "pgtestsvc4";
             ResourceIdentifier cosmosDBForPostgreSqlClusterResourceId = CosmosDBForPostgreSqlClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);

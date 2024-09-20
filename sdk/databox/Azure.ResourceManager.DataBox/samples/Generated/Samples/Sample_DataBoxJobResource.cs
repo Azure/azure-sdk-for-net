@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "YourSubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this DataBoxJobResource created on azure
             // for more information of creating DataBoxJobResource, please refer to the document of DataBoxJobResource
-            string subscriptionId = "YourSubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "YourResourceGroupName";
             string jobName = "TestJobName1";
             ResourceIdentifier dataBoxJobResourceId = DataBoxJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this DataBoxJobResource created on azure
             // for more information of creating DataBoxJobResource, please refer to the document of DataBoxJobResource
-            string subscriptionId = "YourSubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "YourResourceGroupName";
             string jobName = "TestJobName1";
             ResourceIdentifier dataBoxJobResourceId = DataBoxJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this DataBoxJobResource created on azure
             // for more information of creating DataBoxJobResource, please refer to the document of DataBoxJobResource
-            string subscriptionId = "YourSubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "YourResourceGroupName";
             string jobName = "TestJobName1";
             ResourceIdentifier dataBoxJobResourceId = DataBoxJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this DataBoxJobResource created on azure
             // for more information of creating DataBoxJobResource, please refer to the document of DataBoxJobResource
-            string subscriptionId = "YourSubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "YourResourceGroupName";
             string jobName = "TestJobName1";
             ResourceIdentifier dataBoxJobResourceId = DataBoxJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this DataBoxJobResource created on azure
             // for more information of creating DataBoxJobResource, please refer to the document of DataBoxJobResource
-            string subscriptionId = "YourSubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "YourResourceGroupName";
             string jobName = "TestJobName1";
             ResourceIdentifier dataBoxJobResourceId = DataBoxJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this DataBoxJobResource created on azure
             // for more information of creating DataBoxJobResource, please refer to the document of DataBoxJobResource
-            string subscriptionId = "YourSubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "YourResourceGroupName";
             string jobName = "TestJobName1";
             ResourceIdentifier dataBoxJobResourceId = DataBoxJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this DataBoxJobResource created on azure
             // for more information of creating DataBoxJobResource, please refer to the document of DataBoxJobResource
-            string subscriptionId = "YourSubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "YourResourceGroupName";
             string jobName = "TestJobName1";
             ResourceIdentifier dataBoxJobResourceId = DataBoxJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this DataBoxJobResource created on azure
             // for more information of creating DataBoxJobResource, please refer to the document of DataBoxJobResource
-            string subscriptionId = "YourSubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "YourResourceGroupName";
             string jobName = "TestJobName1";
             ResourceIdentifier dataBoxJobResourceId = DataBoxJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this DataBoxJobResource created on azure
             // for more information of creating DataBoxJobResource, please refer to the document of DataBoxJobResource
-            string subscriptionId = "YourSubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "YourResourceGroupName";
             string jobName = "TestJobName1";
             ResourceIdentifier dataBoxJobResourceId = DataBoxJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.DataBox.Samples
 
             // this example assumes you already have this DataBoxJobResource created on azure
             // for more information of creating DataBoxJobResource, please refer to the document of DataBoxJobResource
-            string subscriptionId = "YourSubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "YourResourceGroupName";
             string jobName = "TestJobName1";
             ResourceIdentifier dataBoxJobResourceId = DataBoxJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);

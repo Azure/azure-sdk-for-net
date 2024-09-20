@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this MongoDBRoleDefinitionResource created on azure
             // for more information of creating MongoDBRoleDefinitionResource, please refer to the document of MongoDBRoleDefinitionResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             string mongoRoleDefinitionId = "myMongoRoleDefinitionId";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this MongoDBRoleDefinitionResource created on azure
             // for more information of creating MongoDBRoleDefinitionResource, please refer to the document of MongoDBRoleDefinitionResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             string mongoRoleDefinitionId = "myMongoRoleDefinitionId";
@@ -123,7 +123,7 @@ Role = "myInheritedRole",
 
             // this example assumes you already have this MongoDBRoleDefinitionResource created on azure
             // for more information of creating MongoDBRoleDefinitionResource, please refer to the document of MongoDBRoleDefinitionResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             string mongoRoleDefinitionId = "myMongoRoleDefinitionId";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this VirtualWorkspaceResource created on azure
             // for more information of creating VirtualWorkspaceResource, please refer to the document of VirtualWorkspaceResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string workspaceName = "workspace1";
             ResourceIdentifier virtualWorkspaceResourceId = VirtualWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this VirtualWorkspaceResource created on azure
             // for more information of creating VirtualWorkspaceResource, please refer to the document of VirtualWorkspaceResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string workspaceName = "workspace1";
             ResourceIdentifier virtualWorkspaceResourceId = VirtualWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this VirtualWorkspaceResource created on azure
             // for more information of creating VirtualWorkspaceResource, please refer to the document of VirtualWorkspaceResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string workspaceName = "workspace1";
             ResourceIdentifier virtualWorkspaceResourceId = VirtualWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this VirtualWorkspaceResource created on azure
             // for more information of creating VirtualWorkspaceResource, please refer to the document of VirtualWorkspaceResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string workspaceName = "workspace1";
             ResourceIdentifier virtualWorkspaceResourceId = VirtualWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this VirtualWorkspaceResource created on azure
             // for more information of creating VirtualWorkspaceResource, please refer to the document of VirtualWorkspaceResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string workspaceName = "workspace1";
             ResourceIdentifier virtualWorkspaceResourceId = VirtualWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);

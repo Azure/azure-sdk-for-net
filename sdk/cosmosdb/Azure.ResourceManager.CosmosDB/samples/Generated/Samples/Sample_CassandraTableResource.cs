@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CassandraTableResource created on azure
             // for more information of creating CassandraTableResource, please refer to the document of CassandraTableResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string keyspaceName = "keyspaceName";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CassandraTableResource created on azure
             // for more information of creating CassandraTableResource, please refer to the document of CassandraTableResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string keyspaceName = "keyspaceName";
@@ -134,7 +134,7 @@ OrderBy = "Asc",
 
             // this example assumes you already have this CassandraTableResource created on azure
             // for more information of creating CassandraTableResource, please refer to the document of CassandraTableResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string keyspaceName = "keyspaceName";

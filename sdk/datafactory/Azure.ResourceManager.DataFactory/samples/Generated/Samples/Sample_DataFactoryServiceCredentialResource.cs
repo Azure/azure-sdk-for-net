@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryServiceCredentialResource created on azure
             // for more information of creating DataFactoryServiceCredentialResource, please refer to the document of DataFactoryServiceCredentialResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string credentialName = "exampleCredential";
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryServiceCredentialResource created on azure
             // for more information of creating DataFactoryServiceCredentialResource, please refer to the document of DataFactoryServiceCredentialResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string credentialName = "exampleCredential";
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryServiceCredentialResource created on azure
             // for more information of creating DataFactoryServiceCredentialResource, please refer to the document of DataFactoryServiceCredentialResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string credentialName = "exampleCredential";

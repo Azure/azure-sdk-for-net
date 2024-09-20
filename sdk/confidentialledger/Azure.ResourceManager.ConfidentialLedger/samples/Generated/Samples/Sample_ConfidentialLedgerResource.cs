@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
 
             // this example assumes you already have this ConfidentialLedgerResource created on azure
             // for more information of creating ConfidentialLedgerResource, please refer to the document of ConfidentialLedgerResource
-            string subscriptionId = "0000000-0000-0000-0000-000000000001";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "DummyResourceGroupName";
             string ledgerName = "DummyLedgerName";
             ResourceIdentifier confidentialLedgerResourceId = ConfidentialLedgerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ledgerName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
 
             // this example assumes you already have this ConfidentialLedgerResource created on azure
             // for more information of creating ConfidentialLedgerResource, please refer to the document of ConfidentialLedgerResource
-            string subscriptionId = "0000000-0000-0000-0000-000000000001";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "DummyResourceGroupName";
             string ledgerName = "DummyLedgerName";
             ResourceIdentifier confidentialLedgerResourceId = ConfidentialLedgerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ledgerName);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
 
             // this example assumes you already have this ConfidentialLedgerResource created on azure
             // for more information of creating ConfidentialLedgerResource, please refer to the document of ConfidentialLedgerResource
-            string subscriptionId = "0000000-0000-0000-0000-000000000001";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "DummyResourceGroupName";
             string ledgerName = "DummyLedgerName";
             ResourceIdentifier confidentialLedgerResourceId = ConfidentialLedgerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ledgerName);
@@ -150,7 +150,7 @@ LedgerRoleName = ConfidentialLedgerRoleName.Reader,
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "0000000-0000-0000-0000-000000000001";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -182,7 +182,7 @@ LedgerRoleName = ConfidentialLedgerRoleName.Reader,
 
             // this example assumes you already have this ConfidentialLedgerResource created on azure
             // for more information of creating ConfidentialLedgerResource, please refer to the document of ConfidentialLedgerResource
-            string subscriptionId = "0000000-0000-0000-0000-000000000001";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "DummyResourceGroupName";
             string ledgerName = "DummyLedgerName";
             ResourceIdentifier confidentialLedgerResourceId = ConfidentialLedgerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ledgerName);
@@ -214,7 +214,7 @@ LedgerRoleName = ConfidentialLedgerRoleName.Reader,
 
             // this example assumes you already have this ConfidentialLedgerResource created on azure
             // for more information of creating ConfidentialLedgerResource, please refer to the document of ConfidentialLedgerResource
-            string subscriptionId = "0000000-0000-0000-0000-000000000001";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "DummyResourceGroupName";
             string ledgerName = "DummyLedgerName";
             ResourceIdentifier confidentialLedgerResourceId = ConfidentialLedgerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ledgerName);

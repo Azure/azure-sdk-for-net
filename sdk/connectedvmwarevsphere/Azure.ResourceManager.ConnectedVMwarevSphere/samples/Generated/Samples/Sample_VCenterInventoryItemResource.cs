@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 
             // this example assumes you already have this VCenterInventoryItemResource created on azure
             // for more information of creating VCenterInventoryItemResource, please refer to the document of VCenterInventoryItemResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string vcenterName = "ContosoVCenter";
             string inventoryItemName = "testItem";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 
             // this example assumes you already have this VCenterInventoryItemResource created on azure
             // for more information of creating VCenterInventoryItemResource, please refer to the document of VCenterInventoryItemResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string vcenterName = "ContosoVCenter";
             string inventoryItemName = "testItem";
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 
             // this example assumes you already have this VCenterInventoryItemResource created on azure
             // for more information of creating VCenterInventoryItemResource, please refer to the document of VCenterInventoryItemResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string vcenterName = "ContosoVCenter";
             string inventoryItemName = "testItem";

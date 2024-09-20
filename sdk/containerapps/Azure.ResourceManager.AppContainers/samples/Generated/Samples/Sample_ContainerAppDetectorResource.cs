@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppDetectorResource created on azure
             // for more information of creating ContainerAppDetectorResource, please refer to the document of ContainerAppDetectorResource
-            string subscriptionId = "f07f3711-b45e-40fe-a941-4e6d93f851e6";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mikono-workerapp-test-rg";
             string containerAppName = "mikono-capp-stage1";
             string detectorName = "cappcontainerappnetworkIO";

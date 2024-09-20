@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppResource created on azure
             // for more information of creating ContainerAppResource, please refer to the document of ContainerAppResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string containerAppName = "testcontainerapp0";
             ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppResource created on azure
             // for more information of creating ContainerAppResource, please refer to the document of ContainerAppResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string containerAppName = "testworkerapp0";
             ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppResource created on azure
             // for more information of creating ContainerAppResource, please refer to the document of ContainerAppResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string containerAppName = "testcontainerapp0";
             ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
@@ -282,7 +282,7 @@ Name = "service",
 
             // this example assumes you already have this ContainerAppResource created on azure
             // for more information of creating ContainerAppResource, please refer to the document of ContainerAppResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string containerAppName = "testcontainerapp0";
             ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
@@ -310,7 +310,7 @@ Name = "service",
 
             // this example assumes you already have this ContainerAppResource created on azure
             // for more information of creating ContainerAppResource, please refer to the document of ContainerAppResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string containerAppName = "testcontainerapp0";
             ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
@@ -340,7 +340,7 @@ Name = "service",
 
             // this example assumes you already have this ContainerAppResource created on azure
             // for more information of creating ContainerAppResource, please refer to the document of ContainerAppResource
-            string subscriptionId = "651f8027-33e8-4ec4-97b4-f6e9f3dc8744";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string containerAppName = "testcontainerapp0";
             ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
@@ -367,7 +367,7 @@ Name = "service",
 
             // this example assumes you already have this ContainerAppResource created on azure
             // for more information of creating ContainerAppResource, please refer to the document of ContainerAppResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string containerAppName = "testworkerapp0";
             ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
@@ -399,7 +399,7 @@ Name = "service",
 
             // this example assumes you already have this ContainerAppResource created on azure
             // for more information of creating ContainerAppResource, please refer to the document of ContainerAppResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string containerAppName = "testworkerApp0";
             ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);

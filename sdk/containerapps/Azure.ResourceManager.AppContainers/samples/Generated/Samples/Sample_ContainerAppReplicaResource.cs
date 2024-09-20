@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppReplicaResource created on azure
             // for more information of creating ContainerAppReplicaResource, please refer to the document of ContainerAppReplicaResource
-            string subscriptionId = "651f8027-33e8-4ec4-97b4-f6e9f3dc8744";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "workerapps-rg-xj";
             string containerAppName = "myapp";
             string revisionName = "myapp--0wlqy09";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
 
             // this example assumes you already have this AuthorizationPolicyResourceFormatResource created on azure
             // for more information of creating AuthorizationPolicyResourceFormatResource, please refer to the document of AuthorizationPolicyResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "azSdkTestHub";
             string authorizationPolicyName = "testPolicy4222";
@@ -70,7 +70,7 @@ PermissionType.Read,PermissionType.Write,PermissionType.Manage
 
             // this example assumes you already have this AuthorizationPolicyResourceFormatResource created on azure
             // for more information of creating AuthorizationPolicyResourceFormatResource, please refer to the document of AuthorizationPolicyResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "azSdkTestHub";
             string authorizationPolicyName = "testPolicy4222";
@@ -102,7 +102,7 @@ PermissionType.Read,PermissionType.Write,PermissionType.Manage
 
             // this example assumes you already have this AuthorizationPolicyResourceFormatResource created on azure
             // for more information of creating AuthorizationPolicyResourceFormatResource, please refer to the document of AuthorizationPolicyResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "azSdkTestHub";
             string authorizationPolicyName = "testPolicy4222";
@@ -130,7 +130,7 @@ PermissionType.Read,PermissionType.Write,PermissionType.Manage
 
             // this example assumes you already have this AuthorizationPolicyResourceFormatResource created on azure
             // for more information of creating AuthorizationPolicyResourceFormatResource, please refer to the document of AuthorizationPolicyResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "azSdkTestHub";
             string authorizationPolicyName = "testPolicy4222";

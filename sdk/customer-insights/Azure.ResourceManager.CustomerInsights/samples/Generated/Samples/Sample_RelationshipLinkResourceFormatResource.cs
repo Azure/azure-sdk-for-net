@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
 
             // this example assumes you already have this RelationshipLinkResourceFormatResource created on azure
             // for more information of creating RelationshipLinkResourceFormatResource, please refer to the document of RelationshipLinkResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             string relationshipLinkName = "Somelink";
@@ -84,7 +84,7 @@ new ParticipantProfilePropertyReference("profile1","ProfileId")
 
             // this example assumes you already have this RelationshipLinkResourceFormatResource created on azure
             // for more information of creating RelationshipLinkResourceFormatResource, please refer to the document of RelationshipLinkResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             string relationshipLinkName = "Somelink";
@@ -116,7 +116,7 @@ new ParticipantProfilePropertyReference("profile1","ProfileId")
 
             // this example assumes you already have this RelationshipLinkResourceFormatResource created on azure
             // for more information of creating RelationshipLinkResourceFormatResource, please refer to the document of RelationshipLinkResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             string relationshipLinkName = "Somelink";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this DataTransferJobGetResultResource created on azure
             // for more information of creating DataTransferJobGetResultResource, please refer to the document of DataTransferJobGetResultResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string jobName = "j1";
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this DataTransferJobGetResultResource created on azure
             // for more information of creating DataTransferJobGetResultResource, please refer to the document of DataTransferJobGetResultResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string jobName = "j1";
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this DataTransferJobGetResultResource created on azure
             // for more information of creating DataTransferJobGetResultResource, please refer to the document of DataTransferJobGetResultResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string jobName = "j1";
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this DataTransferJobGetResultResource created on azure
             // for more information of creating DataTransferJobGetResultResource, please refer to the document of DataTransferJobGetResultResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string jobName = "j1";
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this DataTransferJobGetResultResource created on azure
             // for more information of creating DataTransferJobGetResultResource, please refer to the document of DataTransferJobGetResultResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string jobName = "j1";
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this DataTransferJobGetResultResource created on azure
             // for more information of creating DataTransferJobGetResultResource, please refer to the document of DataTransferJobGetResultResource
-            string subscriptionId = "e35cc6eb-c8e3-447b-8de6-b83328cd0098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string jobName = "j1";

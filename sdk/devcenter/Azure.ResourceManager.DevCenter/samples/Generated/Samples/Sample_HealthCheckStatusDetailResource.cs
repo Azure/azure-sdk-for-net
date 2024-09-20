@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this HealthCheckStatusDetailResource created on azure
             // for more information of creating HealthCheckStatusDetailResource, please refer to the document of HealthCheckStatusDetailResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkConnectionName = "eastusnetwork";
             ResourceIdentifier healthCheckStatusDetailResourceId = HealthCheckStatusDetailResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkConnectionName);

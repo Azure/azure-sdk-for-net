@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevCenter.Samples
 
             // this example assumes you already have this ProjectDevBoxDefinitionResource created on azure
             // for more information of creating ProjectDevBoxDefinitionResource, please refer to the document of ProjectDevBoxDefinitionResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string projectName = "ContosoProject";
             string devBoxDefinitionName = "WebDevBox";

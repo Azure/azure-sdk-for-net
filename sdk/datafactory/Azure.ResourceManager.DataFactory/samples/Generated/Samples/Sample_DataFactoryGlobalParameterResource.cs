@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryGlobalParameterResource created on azure
             // for more information of creating DataFactoryGlobalParameterResource, please refer to the document of DataFactoryGlobalParameterResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string globalParameterName = "default";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryGlobalParameterResource created on azure
             // for more information of creating DataFactoryGlobalParameterResource, please refer to the document of DataFactoryGlobalParameterResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string globalParameterName = "default";
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryGlobalParameterResource created on azure
             // for more information of creating DataFactoryGlobalParameterResource, please refer to the document of DataFactoryGlobalParameterResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string globalParameterName = "default";
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryGlobalParameterResource created on azure
             // for more information of creating DataFactoryGlobalParameterResource, please refer to the document of DataFactoryGlobalParameterResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string globalParameterName = "default";

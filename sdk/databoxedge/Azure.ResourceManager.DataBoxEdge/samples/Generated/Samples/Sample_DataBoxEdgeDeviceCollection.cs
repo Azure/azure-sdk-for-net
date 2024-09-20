@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "GroupForEdgeAutomation";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "GroupForEdgeAutomation";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "GroupForEdgeAutomation";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "GroupForEdgeAutomation";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "GroupForEdgeAutomation";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "GroupForEdgeAutomation";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "GroupForEdgeAutomation";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "GroupForEdgeAutomation";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "GroupForEdgeAutomation";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
