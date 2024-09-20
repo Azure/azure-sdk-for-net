@@ -39,8 +39,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public async Task GlobalTeardown()
         {
-            await _cassandraKeyspace.DeleteAsync(WaitUntil.Completed);
-            await _databaseAccount.DeleteAsync(WaitUntil.Completed);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await _cassandraKeyspace.DeleteAsync(WaitUntil.Completed);
+                await _databaseAccount.DeleteAsync(WaitUntil.Completed);
+            }
         }
 
         [SetUp]
@@ -52,12 +55,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (await CassandraTableCollection.ExistsAsync(_tableName))
+            if (Mode != RecordedTestMode.Playback)
             {
-                var id = CassandraTableCollection.Id;
-                id = CassandraTableResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _tableName);
-                CassandraTableResource table = this.ArmClient.GetCassandraTableResource(id);
-                await table.DeleteAsync(WaitUntil.Completed);
+                if (await CassandraTableCollection.ExistsAsync(_tableName))
+                {
+                    var id = CassandraTableCollection.Id;
+                    id = CassandraTableResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _tableName);
+                    CassandraTableResource table = this.ArmClient.GetCassandraTableResource(id);
+                    await table.DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 
