@@ -19,8 +19,6 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="System.ValueTuple" />
     <PackageReference Include="System.ClientModel" />
-
-    <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
   </ItemGroup>
 
   <ItemGroup>
