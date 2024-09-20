@@ -24,7 +24,7 @@ namespace Azure.AI.Inference.Tests.Utilities
         {
             // We have another activity, which is created when we start the http request.
             // that is why we limit the stopped activities by.
-            if (act.DisplayName.StartsWith("Complete_"))
+            if (act.DisplayName.StartsWith("chat "))
                 m_listeners.Enqueue(act);
         }
 
@@ -33,7 +33,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             m_activityListener = new ActivityListener()
             {
                 ActivityStopped = ActivityStopped,
-                ShouldListenTo = s => s.Name == OpenTelemetryConstants.ActivitySourceName,
+                ShouldListenTo = s => s.Name == OpenTelemetryConstants.ClientName,
                 Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded
             };
             ActivitySource.AddActivityListener(m_activityListener);
@@ -118,7 +118,6 @@ namespace Azure.AI.Inference.Tests.Utilities
             {
                 ValidateNoEventsWithName(GenAiChoice);
             }
-            Assert.AreEqual(ActivityStatusCode.Ok, activity.Status);
         }
 
         private void ValidateNoEventsWithName(string name)

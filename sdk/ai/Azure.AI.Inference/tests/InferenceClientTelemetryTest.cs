@@ -47,7 +47,7 @@ namespace Azure.AI.Inference.Tests
                 },
                 Model = "gpt-4o"
             };
-            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableSwitchName, "1");
+            AppContext.SetSwitch(OpenTelemetryConstants.AppContextSwitch, true);
         }
 
         [RecordedTest]
@@ -137,6 +137,7 @@ namespace Azure.AI.Inference.Tests
             {
                 Assert.That(ex is RequestFailedException, $"The exception was of wrong type {ex.GetType()}");
                 actListener.ValidateErrorTag("400", ex.Message);
+                meterListener.VaidateDuration(m_requestStreamingOptions.Model, endpoint, "Azure.RequestFailedException");
             }
         }
 

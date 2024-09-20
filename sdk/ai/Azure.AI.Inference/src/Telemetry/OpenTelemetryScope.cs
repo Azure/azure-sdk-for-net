@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Text.Json;
+using Azure.Core;
 using static Azure.AI.Inference.Telemetry.OpenTelemetryInternalConstants;
 using static Azure.AI.Inference.Telemetry.OpenTelemetryConstants;
 
@@ -18,12 +19,12 @@ namespace Azure.AI.Inference.Telemetry
         /// On the ApplicationInsights events are logged to traces table.
         /// The tags are not logged, but are shown in the console.
         /// </summary>
-        private static readonly ActivitySource s_chatSource = new ActivitySource(ActivitySourceName);
+        private static readonly ActivitySource s_chatSource = new(ClientName);
         /// <summary>
         /// Add histograms to log metrics.
         /// On the ApplicationInsights metrics are logged to customMetrics table.
         /// </summary>
-        private static readonly Meter s_meter = new Meter(ActivitySourceName);
+        private static readonly Meter s_meter = new Meter(ClientName);
         private static readonly Histogram<double> s_duration = s_meter.CreateHistogram<double>(
             GenAiClientOperationDurationMetricName, "s", "Measures GenAI operation duration.");
         private static readonly Histogram<long> s_tokens = s_meter.CreateHistogram<long>(
@@ -34,7 +35,7 @@ namespace Azure.AI.Inference.Telemetry
         private readonly TagList m_commonTags;
         private readonly string m_caller;
         private readonly bool m_traceContent;
-        private readonly bool m_enableTelemetry;
+        private readonly bool m_enableTelemetry = AppContextSwitchHelper.GetConfigValue(AppContextSwitch, EnvironmentVariableSwitchName);
         private readonly DiagnosticListener m_source = null;
         private readonly StreamingRecordedResponse m_recordedStreamingResponse;
 
@@ -85,13 +86,8 @@ namespace Azure.AI.Inference.Telemetry
         /// <param name="caller">The calling method.</param>
         public OpenTelemetryScope(ChatCompletionsOptions requestOptions, Uri endpoint, string caller=null)
         {
-            m_enableTelemetry = GetSwithVariableVal(EnvironmentVariableSwitchName);
-            if (!m_enableTelemetry)
-                return;
-            m_traceContent = GetSwithVariableVal(EnvironmentVariableTraceContents);
-            m_recordedStreamingResponse = new(m_traceContent);
             var model = requestOptions.Model ?? "chat";
-            var activityName = $"Complete_{model}";
+            var activityName = $"chat {model}";
             m_activity = s_chatSource.CreateActivity(activityName, ActivityKind.Client);
             m_caller = caller;
             if (!string.IsNullOrEmpty(caller))
@@ -99,6 +95,10 @@ namespace Azure.AI.Inference.Telemetry
                 m_source = new("Azure.AI.Inference");
                 m_source.Write($"{m_caller}.Start", activityName);
             }
+            if (!m_enableTelemetry)
+                return;
+            m_traceContent = GetSwithVariableVal(EnvironmentVariableTraceContents);
+            m_recordedStreamingResponse = new(m_traceContent);
             m_activity?.Start();
             // Record the request to telemetry;
             m_commonTags = new TagList{
@@ -172,8 +172,10 @@ namespace Azure.AI.Inference.Telemetry
                 return;
             if (!string.IsNullOrEmpty(m_caller))
                 m_source.Write(m_caller + ".Exception", e);
-            s_duration.Record(m_duration.Elapsed.TotalSeconds, m_commonTags);
             var errorType = e?.GetType()?.FullName;
+            var tags = m_commonTags;
+            tags.Add(ErrorTypeKey, errorType);
+            s_duration.Record(m_duration.Elapsed.TotalSeconds, tags);
             if ( e is Azure.RequestFailedException requestFailed)
             {
                 errorType = requestFailed.Status.ToString();
@@ -193,7 +195,7 @@ namespace Azure.AI.Inference.Telemetry
             TagList tags = m_commonTags;
             // Find index of model tag.
             object objOldModel = m_activity?.GetTagItem(GenAiResponseModelKey);
-            if (objOldModel != null)
+            if (objOldModel != null && !objOldModel.ToString().Equals(recordedResponse.Model))
             {
                 tags.Remove(new KeyValuePair<string, object> (GenAiResponseModelKey, objOldModel));
             }
@@ -242,7 +244,6 @@ namespace Azure.AI.Inference.Telemetry
             }
             m_activity?.SetTag(GenAiResponseModelKey, recordedResponse.Model);
             m_activity?.SetTag(GenAiResponseIdKey, recordedResponse.Id);
-            m_activity?.SetStatus(ActivityStatusCode.Ok);
         }
 
         public void Dispose()

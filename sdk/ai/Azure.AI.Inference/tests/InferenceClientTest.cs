@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.AI.Inference.Telemetry;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
@@ -22,6 +23,11 @@ namespace Azure.AI.Inference.Tests
 {
     public class InferenceClientTest: RecordedTestBase<InferenceClientTestEnvironment>
     {
+        [SetUp]
+        public void setup()
+        {
+            AppContext.SetSwitch(OpenTelemetryConstants.AppContextSwitch, false);
+        }
         public enum TargetModel
         {
             MistralSmall,

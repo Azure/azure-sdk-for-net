@@ -25,7 +25,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             {
                 InstrumentPublished = (i, l) =>
                 {
-                    if (i.Meter.Name == OpenTelemetryConstants.ActivitySourceName)
+                    if (i.Meter.Name == OpenTelemetryConstants.ClientName)
                     {
                         l.EnableMeasurementEvents(i);
                         m_instruments.TryAdd(i.Meter.Name, i);
@@ -117,12 +117,16 @@ namespace Azure.AI.Inference.Tests.Utilities
         /// </summary>
         /// <param name="model">The model to be called.</param>
         /// <param name="endpoint">The endpoint called.</param>
-        public void VaidateDuration(string model, Uri endpoint)
+        public void VaidateDuration(string model, Uri endpoint, string error=null)
         {
             var lstExpected = new List<Dictionary<string, object>>()
             {
-                GetDefaultTags(model, endpoint)
+                GetDefaultTags(model, endpoint),
             };
+            if (error != null)
+            {
+                lstExpected[0].Add(ErrorTypeKey, error);
+            }
             ValidateMetrics(GenAiClientOperationDurationMetricName, lstExpected, true);
         }
 
