@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerUserMetricsResource created on azure
             // for more information of creating TrafficManagerUserMetricsResource, please refer to the document of TrafficManagerUserMetricsResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier trafficManagerUserMetricsResourceId = TrafficManagerUserMetricsResource.CreateResourceIdentifier(subscriptionId);
             TrafficManagerUserMetricsResource trafficManagerUserMetrics = client.GetTrafficManagerUserMetricsResource(trafficManagerUserMetricsResourceId);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerUserMetricsResource created on azure
             // for more information of creating TrafficManagerUserMetricsResource, please refer to the document of TrafficManagerUserMetricsResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier trafficManagerUserMetricsResourceId = TrafficManagerUserMetricsResource.CreateResourceIdentifier(subscriptionId);
             TrafficManagerUserMetricsResource trafficManagerUserMetrics = client.GetTrafficManagerUserMetricsResource(trafficManagerUserMetricsResourceId);
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerUserMetricsResource created on azure
             // for more information of creating TrafficManagerUserMetricsResource, please refer to the document of TrafficManagerUserMetricsResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier trafficManagerUserMetricsResourceId = TrafficManagerUserMetricsResource.CreateResourceIdentifier(subscriptionId);
             TrafficManagerUserMetricsResource trafficManagerUserMetrics = client.GetTrafficManagerUserMetricsResource(trafficManagerUserMetricsResourceId);
 

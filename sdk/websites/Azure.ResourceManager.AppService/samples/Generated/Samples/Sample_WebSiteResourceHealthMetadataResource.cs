@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this WebSiteResourceHealthMetadataResource created on azure
             // for more information of creating WebSiteResourceHealthMetadataResource, please refer to the document of WebSiteResourceHealthMetadataResource
-            string subscriptionId = "4adb32ad-8327-4cbb-b775-b84b4465bb38";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-Web-NorthCentralUS";
             string name = "newsiteinnewASE-NCUS";
             ResourceIdentifier webSiteResourceHealthMetadataResourceId = WebSiteResourceHealthMetadataResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);

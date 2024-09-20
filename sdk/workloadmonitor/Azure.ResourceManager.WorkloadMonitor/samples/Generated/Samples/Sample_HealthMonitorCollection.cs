@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "bc27da3b-3ba2-4e00-a6ec-1fde64aa1e21";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "tugamidiAlerts";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "bc27da3b-3ba2-4e00-a6ec-1fde64aa1e21";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "tugamidiAlerts";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "bc27da3b-3ba2-4e00-a6ec-1fde64aa1e21";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "tugamidiAlerts";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "bc27da3b-3ba2-4e00-a6ec-1fde64aa1e21";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "tugamidiAlerts";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "bc27da3b-3ba2-4e00-a6ec-1fde64aa1e21";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "tugamidiAlerts";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "bc27da3b-3ba2-4e00-a6ec-1fde64aa1e21";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "tugamidiAlerts";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "bc27da3b-3ba2-4e00-a6ec-1fde64aa1e21";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "tugamidiAlerts";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "bc27da3b-3ba2-4e00-a6ec-1fde64aa1e21";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "tugamidiAlerts";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "bc27da3b-3ba2-4e00-a6ec-1fde64aa1e21";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "tugamidiAlerts";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

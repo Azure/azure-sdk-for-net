@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamAnalyticsClusterResource created on azure
             // for more information of creating StreamAnalyticsClusterResource, please refer to the document of StreamAnalyticsClusterResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string clusterName = "testcluster";
             ResourceIdentifier streamAnalyticsClusterResourceId = StreamAnalyticsClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamAnalyticsClusterResource created on azure
             // for more information of creating StreamAnalyticsClusterResource, please refer to the document of StreamAnalyticsClusterResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string clusterName = "testcluster";
             ResourceIdentifier streamAnalyticsClusterResourceId = StreamAnalyticsClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamAnalyticsClusterResource created on azure
             // for more information of creating StreamAnalyticsClusterResource, please refer to the document of StreamAnalyticsClusterResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string clusterName = "testcluster";
             ResourceIdentifier streamAnalyticsClusterResourceId = StreamAnalyticsClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamAnalyticsClusterResource created on azure
             // for more information of creating StreamAnalyticsClusterResource, please refer to the document of StreamAnalyticsClusterResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string clusterName = "testcluster";
             ResourceIdentifier streamAnalyticsClusterResourceId = StreamAnalyticsClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);

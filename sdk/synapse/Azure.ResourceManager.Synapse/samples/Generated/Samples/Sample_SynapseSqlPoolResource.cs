@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseSqlPoolResource created on azure
             // for more information of creating SynapseSqlPoolResource, please refer to the document of SynapseSqlPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-6852";
             string workspaceName = "sqlcrudtest-2080";
             string sqlPoolName = "sqlcrudtest-9187";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseSqlPoolResource created on azure
             // for more information of creating SynapseSqlPoolResource, please refer to the document of SynapseSqlPoolResource
-            string subscriptionId = "01234567-89ab-4def-0123-456789abcdef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ExampleResourceGroup";
             string workspaceName = "ExampleWorkspace";
             string sqlPoolName = "ExampleSqlPool";
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseSqlPoolResource created on azure
             // for more information of creating SynapseSqlPoolResource, please refer to the document of SynapseSqlPoolResource
-            string subscriptionId = "01234567-89ab-4def-0123-456789abcdef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ExampleResourceGroup";
             string workspaceName = "ExampleWorkspace";
             string sqlPoolName = "ExampleSqlPool";
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseSqlPoolResource created on azure
             // for more information of creating SynapseSqlPoolResource, please refer to the document of SynapseSqlPoolResource
-            string subscriptionId = "01234567-89ab-4def-0123-456789abcdef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string workspaceName = "testsvr";
             string sqlPoolName = "testdwdb";
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseSqlPoolResource created on azure
             // for more information of creating SynapseSqlPoolResource, please refer to the document of SynapseSqlPoolResource
-            string subscriptionId = "01234567-89ab-4def-0123-456789abcdef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-6852";
             string workspaceName = "sqlcrudtest-2080";
             string sqlPoolName = "sqlcrudtest-9187";
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseSqlPoolResource created on azure
             // for more information of creating SynapseSqlPoolResource, please refer to the document of SynapseSqlPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string workspaceName = "testsvr";
             string sqlPoolName = "testdb";
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseSqlPoolResource created on azure
             // for more information of creating SynapseSqlPoolResource, please refer to the document of SynapseSqlPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string workspaceName = "testserver";
             string sqlPoolName = "testDatabase";
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseSqlPoolResource created on azure
             // for more information of creating SynapseSqlPoolResource, please refer to the document of SynapseSqlPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-6730";
             string workspaceName = "sqlcrudtest-9007";
             string sqlPoolName = "3481";
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseSqlPoolResource created on azure
             // for more information of creating SynapseSqlPoolResource, please refer to the document of SynapseSqlPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string workspaceName = "myServer";
             string sqlPoolName = "myDatabase";
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseSqlPoolResource created on azure
             // for more information of creating SynapseSqlPoolResource, please refer to the document of SynapseSqlPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string workspaceName = "myWorkspace";
             string sqlPoolName = "mySqlPool";
@@ -395,7 +395,7 @@ Column = "Column3",
 
             // this example assumes you already have this SynapseSqlPoolResource created on azure
             // for more information of creating SynapseSqlPoolResource, please refer to the document of SynapseSqlPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string workspaceName = "myServer";
             string sqlPoolName = "myDatabase";
@@ -430,7 +430,7 @@ Column = "Column3",
 
             // this example assumes you already have this SynapseSqlPoolResource created on azure
             // for more information of creating SynapseSqlPoolResource, please refer to the document of SynapseSqlPoolResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string workspaceName = "myWorkspace";
             string sqlPoolName = "mySqlPool";

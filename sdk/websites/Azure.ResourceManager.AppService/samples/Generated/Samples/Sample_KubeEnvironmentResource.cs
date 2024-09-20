@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "8efdecc5-919e-44eb-b179-915dca89ebf9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this KubeEnvironmentResource created on azure
             // for more information of creating KubeEnvironmentResource, please refer to the document of KubeEnvironmentResource
-            string subscriptionId = "8efdecc5-919e-44eb-b179-915dca89ebf9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string name = "jlaw-demo1";
             ResourceIdentifier kubeEnvironmentResourceId = KubeEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this KubeEnvironmentResource created on azure
             // for more information of creating KubeEnvironmentResource, please refer to the document of KubeEnvironmentResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string name = "examplekenv";
             ResourceIdentifier kubeEnvironmentResourceId = KubeEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this KubeEnvironmentResource created on azure
             // for more information of creating KubeEnvironmentResource, please refer to the document of KubeEnvironmentResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string name = "testkubeenv";
             ResourceIdentifier kubeEnvironmentResourceId = KubeEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);

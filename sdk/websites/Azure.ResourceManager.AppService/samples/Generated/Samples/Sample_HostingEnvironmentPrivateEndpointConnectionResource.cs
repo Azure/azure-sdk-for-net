@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this HostingEnvironmentPrivateEndpointConnectionResource created on azure
             // for more information of creating HostingEnvironmentPrivateEndpointConnectionResource, please refer to the document of HostingEnvironmentPrivateEndpointConnectionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string name = "test-ase";
             string privateEndpointConnectionName = "fa38656c-034e-43d8-adce-fe06ce039c98";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this HostingEnvironmentPrivateEndpointConnectionResource created on azure
             // for more information of creating HostingEnvironmentPrivateEndpointConnectionResource, please refer to the document of HostingEnvironmentPrivateEndpointConnectionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string name = "test-ase";
             string privateEndpointConnectionName = "fa38656c-034e-43d8-adce-fe06ce039c98";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this HostingEnvironmentPrivateEndpointConnectionResource created on azure
             // for more information of creating HostingEnvironmentPrivateEndpointConnectionResource, please refer to the document of HostingEnvironmentPrivateEndpointConnectionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string name = "test-ase";
             string privateEndpointConnectionName = "fa38656c-034e-43d8-adce-fe06ce039c98";

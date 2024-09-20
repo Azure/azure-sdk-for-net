@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseExtendedSqlPoolBlobAuditingPolicyResource created on azure
             // for more information of creating SynapseExtendedSqlPoolBlobAuditingPolicyResource, please refer to the document of SynapseExtendedSqlPoolBlobAuditingPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "blobauditingtest-6852";
             string workspaceName = "blobauditingtest-2080";
             string sqlPoolName = "testdb";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseExtendedSqlPoolBlobAuditingPolicyResource created on azure
             // for more information of creating SynapseExtendedSqlPoolBlobAuditingPolicyResource, please refer to the document of SynapseExtendedSqlPoolBlobAuditingPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "blobauditingtest-4799";
             string workspaceName = "blobauditingtest-6440";
             string sqlPoolName = "testdb";
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseExtendedSqlPoolBlobAuditingPolicyResource created on azure
             // for more information of creating SynapseExtendedSqlPoolBlobAuditingPolicyResource, please refer to the document of SynapseExtendedSqlPoolBlobAuditingPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "blobauditingtest-4799";
             string workspaceName = "blobauditingtest-6440";
             string sqlPoolName = "testdb";
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseExtendedSqlPoolBlobAuditingPolicyResource created on azure
             // for more information of creating SynapseExtendedSqlPoolBlobAuditingPolicyResource, please refer to the document of SynapseExtendedSqlPoolBlobAuditingPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "blobauditingtest-4799";
             string workspaceName = "blobauditingtest-6440";
             string sqlPoolName = "testdb";

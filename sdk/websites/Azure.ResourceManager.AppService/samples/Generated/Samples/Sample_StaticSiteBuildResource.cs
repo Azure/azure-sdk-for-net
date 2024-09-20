@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this StaticSiteBuildResource created on azure
             // for more information of creating StaticSiteBuildResource, please refer to the document of StaticSiteBuildResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testStaticSite0";
             string environmentName = "12";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this StaticSiteBuildResource created on azure
             // for more information of creating StaticSiteBuildResource, please refer to the document of StaticSiteBuildResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testStaticSite0";
             string environmentName = "12";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this StaticSiteBuildResource created on azure
             // for more information of creating StaticSiteBuildResource, please refer to the document of StaticSiteBuildResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testStaticSite0";
             string environmentName = "12";
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this StaticSiteBuildResource created on azure
             // for more information of creating StaticSiteBuildResource, please refer to the document of StaticSiteBuildResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testStaticSite0";
             string environmentName = "12";
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this StaticSiteBuildResource created on azure
             // for more information of creating StaticSiteBuildResource, please refer to the document of StaticSiteBuildResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testStaticSite0";
             string environmentName = "default";
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this StaticSiteBuildResource created on azure
             // for more information of creating StaticSiteBuildResource, please refer to the document of StaticSiteBuildResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testStaticSite0";
             string environmentName = "12";
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this StaticSiteBuildResource created on azure
             // for more information of creating StaticSiteBuildResource, please refer to the document of StaticSiteBuildResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testStaticSite0";
             string environmentName = "12";
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this StaticSiteBuildResource created on azure
             // for more information of creating StaticSiteBuildResource, please refer to the document of StaticSiteBuildResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testStaticSite0";
             string environmentName = "default";
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this StaticSiteBuildResource created on azure
             // for more information of creating StaticSiteBuildResource, please refer to the document of StaticSiteBuildResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testStaticSite0";
             string environmentName = "12";

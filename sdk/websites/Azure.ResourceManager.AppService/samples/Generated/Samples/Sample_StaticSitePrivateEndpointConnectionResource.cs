@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this StaticSitePrivateEndpointConnectionResource created on azure
             // for more information of creating StaticSitePrivateEndpointConnectionResource, please refer to the document of StaticSitePrivateEndpointConnectionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testSite";
             string privateEndpointConnectionName = "connection";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this StaticSitePrivateEndpointConnectionResource created on azure
             // for more information of creating StaticSitePrivateEndpointConnectionResource, please refer to the document of StaticSitePrivateEndpointConnectionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testSite";
             string privateEndpointConnectionName = "connection";
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this StaticSitePrivateEndpointConnectionResource created on azure
             // for more information of creating StaticSitePrivateEndpointConnectionResource, please refer to the document of StaticSitePrivateEndpointConnectionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testSite";
             string privateEndpointConnectionName = "connection";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseDatabasePrincipalAssignmentResource created on azure
             // for more information of creating SynapseDatabasePrincipalAssignmentResource, please refer to the document of SynapseDatabasePrincipalAssignmentResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "synapseWorkspaceName";
             string kustoPoolName = "kustoclusterrptest4";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseDatabasePrincipalAssignmentResource created on azure
             // for more information of creating SynapseDatabasePrincipalAssignmentResource, please refer to the document of SynapseDatabasePrincipalAssignmentResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "synapseWorkspaceName";
             string kustoPoolName = "kustoclusterrptest4";
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseDatabasePrincipalAssignmentResource created on azure
             // for more information of creating SynapseDatabasePrincipalAssignmentResource, please refer to the document of SynapseDatabasePrincipalAssignmentResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "synapseWorkspaceName";
             string kustoPoolName = "kustoclusterrptest4";

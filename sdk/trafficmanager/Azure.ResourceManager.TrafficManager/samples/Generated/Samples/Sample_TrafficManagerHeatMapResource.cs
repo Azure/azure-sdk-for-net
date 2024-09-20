@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerHeatMapResource created on azure
             // for more information of creating TrafficManagerHeatMapResource, please refer to the document of TrafficManagerHeatMapResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager1323";
             string profileName = "azuresdkfornetautoresttrafficmanager3880";
             TrafficManagerHeatMapType heatMapType = TrafficManagerHeatMapType.Default;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerHeatMapResource created on azure
             // for more information of creating TrafficManagerHeatMapResource, please refer to the document of TrafficManagerHeatMapResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager1323";
             string profileName = "azuresdkfornetautoresttrafficmanager3880";
             TrafficManagerHeatMapType heatMapType = TrafficManagerHeatMapType.Default;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerHeatMapResource created on azure
             // for more information of creating TrafficManagerHeatMapResource, please refer to the document of TrafficManagerHeatMapResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager1323";
             string profileName = "azuresdkfornetautoresttrafficmanager3880";
             TrafficManagerHeatMapType heatMapType = TrafficManagerHeatMapType.Default;

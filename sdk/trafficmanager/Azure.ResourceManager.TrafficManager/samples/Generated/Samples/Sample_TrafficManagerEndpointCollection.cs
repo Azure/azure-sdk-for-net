@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerProfileResource created on azure
             // for more information of creating TrafficManagerProfileResource, please refer to the document of TrafficManagerProfileResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager2191";
             string profileName = "azuresdkfornetautoresttrafficmanager8224";
             ResourceIdentifier trafficManagerProfileResourceId = TrafficManagerProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerProfileResource created on azure
             // for more information of creating TrafficManagerProfileResource, please refer to the document of TrafficManagerProfileResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager2191";
             string profileName = "azuresdkfornetautoresttrafficmanager8224";
             ResourceIdentifier trafficManagerProfileResourceId = TrafficManagerProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerProfileResource created on azure
             // for more information of creating TrafficManagerProfileResource, please refer to the document of TrafficManagerProfileResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager2191";
             string profileName = "azuresdkfornetautoresttrafficmanager8224";
             ResourceIdentifier trafficManagerProfileResourceId = TrafficManagerProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerProfileResource created on azure
             // for more information of creating TrafficManagerProfileResource, please refer to the document of TrafficManagerProfileResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager1421";
             string profileName = "azsmnet6386";
             ResourceIdentifier trafficManagerProfileResourceId = TrafficManagerProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerProfileResource created on azure
             // for more information of creating TrafficManagerProfileResource, please refer to the document of TrafficManagerProfileResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager1421";
             string profileName = "azsmnet6386";
             ResourceIdentifier trafficManagerProfileResourceId = TrafficManagerProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerProfileResource created on azure
             // for more information of creating TrafficManagerProfileResource, please refer to the document of TrafficManagerProfileResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager1421";
             string profileName = "azsmnet6386";
             ResourceIdentifier trafficManagerProfileResourceId = TrafficManagerProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerProfileResource created on azure
             // for more information of creating TrafficManagerProfileResource, please refer to the document of TrafficManagerProfileResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager2191";
             string profileName = "azuresdkfornetautoresttrafficmanager8224";
             ResourceIdentifier trafficManagerProfileResourceId = TrafficManagerProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerProfileResource created on azure
             // for more information of creating TrafficManagerProfileResource, please refer to the document of TrafficManagerProfileResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager2191";
             string profileName = "azuresdkfornetautoresttrafficmanager8224";
             ResourceIdentifier trafficManagerProfileResourceId = TrafficManagerProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerProfileResource created on azure
             // for more information of creating TrafficManagerProfileResource, please refer to the document of TrafficManagerProfileResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager2191";
             string profileName = "azuresdkfornetautoresttrafficmanager8224";
             ResourceIdentifier trafficManagerProfileResourceId = TrafficManagerProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerProfileResource created on azure
             // for more information of creating TrafficManagerProfileResource, please refer to the document of TrafficManagerProfileResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager1421";
             string profileName = "azsmnet6386";
             ResourceIdentifier trafficManagerProfileResourceId = TrafficManagerProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerProfileResource created on azure
             // for more information of creating TrafficManagerProfileResource, please refer to the document of TrafficManagerProfileResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager1421";
             string profileName = "azsmnet6386";
             ResourceIdentifier trafficManagerProfileResourceId = TrafficManagerProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -470,7 +470,7 @@ Value = "value-2",
 
             // this example assumes you already have this TrafficManagerProfileResource created on azure
             // for more information of creating TrafficManagerProfileResource, please refer to the document of TrafficManagerProfileResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager2191";
             string profileName = "azuresdkfornetautoresttrafficmanager8224";
             ResourceIdentifier trafficManagerProfileResourceId = TrafficManagerProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -518,7 +518,7 @@ Value = "value-2",
 
             // this example assumes you already have this TrafficManagerProfileResource created on azure
             // for more information of creating TrafficManagerProfileResource, please refer to the document of TrafficManagerProfileResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager1421";
             string profileName = "azsmnet6386";
             ResourceIdentifier trafficManagerProfileResourceId = TrafficManagerProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -563,7 +563,7 @@ Value = "value-2",
 
             // this example assumes you already have this TrafficManagerProfileResource created on azure
             // for more information of creating TrafficManagerProfileResource, please refer to the document of TrafficManagerProfileResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager2191";
             string profileName = "azuresdkfornetautoresttrafficmanager8224";
             ResourceIdentifier trafficManagerProfileResourceId = TrafficManagerProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);

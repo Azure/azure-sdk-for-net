@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseWorkspaceResource created on azure
             // for more information of creating SynapseWorkspaceResource, please refer to the document of SynapseWorkspaceResource
-            string subscriptionId = "01234567-89ab-4def-0123-456789abcdef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ExampleResourceGroup";
             string workspaceName = "ExampleWorkspace";
             ResourceIdentifier synapseWorkspaceResourceId = SynapseWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -77,7 +77,7 @@ StartIPAddress = IPAddress.Parse("10.0.0.0"),
 
             // this example assumes you already have this SynapseWorkspaceResource created on azure
             // for more information of creating SynapseWorkspaceResource, please refer to the document of SynapseWorkspaceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "wsg-7398";
             string workspaceName = "testWorkspace";
             ResourceIdentifier synapseWorkspaceResourceId = SynapseWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -107,7 +107,7 @@ StartIPAddress = IPAddress.Parse("10.0.0.0"),
 
             // this example assumes you already have this SynapseWorkspaceResource created on azure
             // for more information of creating SynapseWorkspaceResource, please refer to the document of SynapseWorkspaceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string workspaceName = "workspace1";
             ResourceIdentifier synapseWorkspaceResourceId = SynapseWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -138,7 +138,7 @@ StartIPAddress = IPAddress.Parse("10.0.0.0"),
 
             // this example assumes you already have this SynapseWorkspaceResource created on azure
             // for more information of creating SynapseWorkspaceResource, please refer to the document of SynapseWorkspaceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string workspaceName = "workspace1";
             ResourceIdentifier synapseWorkspaceResourceId = SynapseWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -211,7 +211,7 @@ StartIPAddress = IPAddress.Parse("10.0.0.0"),
 
             // this example assumes you already have this SynapseWorkspaceResource created on azure
             // for more information of creating SynapseWorkspaceResource, please refer to the document of SynapseWorkspaceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string workspaceName = "workspace1";
             ResourceIdentifier synapseWorkspaceResourceId = SynapseWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -243,7 +243,7 @@ StartIPAddress = IPAddress.Parse("10.0.0.0"),
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

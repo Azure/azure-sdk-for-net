@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             // this example assumes you already have this SupportTicketChatTranscriptResource created on azure
             // for more information of creating SupportTicketChatTranscriptResource, please refer to the document of SupportTicketChatTranscriptResource
-            string subscriptionId = "132d901f-189d-4381-9214-fe68e27e05a1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string supportTicketName = "testticket";
             string chatTranscriptName = "69586795-45e9-45b5-bd9e-c9bb237d3e44";
             ResourceIdentifier supportTicketChatTranscriptResourceId = SupportTicketChatTranscriptResource.CreateResourceIdentifier(subscriptionId, supportTicketName, chatTranscriptName);

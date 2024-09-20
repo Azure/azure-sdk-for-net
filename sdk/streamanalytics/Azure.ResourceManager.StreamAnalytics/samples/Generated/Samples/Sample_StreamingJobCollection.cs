@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg3276";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -151,7 +151,7 @@ Name = "outputtest",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6936";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -211,7 +211,7 @@ Name = "outputtest",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6936";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -245,7 +245,7 @@ Name = "outputtest",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6936";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -275,7 +275,7 @@ Name = "outputtest",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6936";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -317,7 +317,7 @@ Name = "outputtest",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg3276";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -352,7 +352,7 @@ Name = "outputtest",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg3276";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -383,7 +383,7 @@ Name = "outputtest",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg3276";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -426,7 +426,7 @@ Name = "outputtest",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6936";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -462,7 +462,7 @@ Name = "outputtest",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg3276";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

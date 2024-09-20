@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg7983";
             string jobName = "sj2331";
             string outputName = "output3022";
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg7983";
             string jobName = "sj2331";
             string outputName = "output3022";
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg3410";
             string jobName = "sj5095";
             string outputName = "output3456";
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6450";
             string jobName = "sj7094";
             string outputName = "output7886";
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg5023";
             string jobName = "sj900";
             string outputName = "output1623";
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6912";
             string jobName = "sj3310";
             string outputName = "output5195";
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string jobName = "sjName";
             string outputName = "dwOutput";
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string jobName = "sjName";
             string outputName = "azureFunction1";
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg2157";
             string jobName = "sj6458";
             string outputName = "output1755";
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg5176";
             string jobName = "sj2790";
             string outputName = "output958";
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6912";
             string jobName = "sj3310";
             string outputName = "output5195";
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg2157";
             string jobName = "sj6458";
             string outputName = "output1755";
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg7983";
             string jobName = "sj2331";
             string outputName = "output3022";
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg7983";
             string jobName = "sj2331";
             string outputName = "output3022";
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg3410";
             string jobName = "sj5095";
             string outputName = "output3456";
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6450";
             string jobName = "sj7094";
             string outputName = "output7886";
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg5023";
             string jobName = "sj900";
             string outputName = "output1623";
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6912";
             string jobName = "sj3310";
             string outputName = "output5195";
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string jobName = "sjName";
             string outputName = "dwOutput";
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string jobName = "sjName";
             string outputName = "azureFunction1";
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg2157";
             string jobName = "sj6458";
             string outputName = "output1755";
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg5176";
             string jobName = "sj2790";
             string outputName = "output958";
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6912";
             string jobName = "sj3310";
             string outputName = "output5195";
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobOutputResource created on azure
             // for more information of creating StreamingJobOutputResource, please refer to the document of StreamingJobOutputResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg2157";
             string jobName = "sj6458";
             string outputName = "output1755";

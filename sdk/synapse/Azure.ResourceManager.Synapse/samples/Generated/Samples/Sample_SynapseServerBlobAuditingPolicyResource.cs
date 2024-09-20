@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseServerBlobAuditingPolicyResource created on azure
             // for more information of creating SynapseServerBlobAuditingPolicyResource, please refer to the document of SynapseServerBlobAuditingPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "wsg-7398";
             string workspaceName = "testWorkspace";
             SynapseBlobAuditingPolicyName blobAuditingPolicyName = SynapseBlobAuditingPolicyName.Default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseServerBlobAuditingPolicyResource created on azure
             // for more information of creating SynapseServerBlobAuditingPolicyResource, please refer to the document of SynapseServerBlobAuditingPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "wsg-7398";
             string workspaceName = "testWorkspace";
             SynapseBlobAuditingPolicyName blobAuditingPolicyName = SynapseBlobAuditingPolicyName.Default;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseServerBlobAuditingPolicyResource created on azure
             // for more information of creating SynapseServerBlobAuditingPolicyResource, please refer to the document of SynapseServerBlobAuditingPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "wsg-7398";
             string workspaceName = "testWorkspace";
             SynapseBlobAuditingPolicyName blobAuditingPolicyName = SynapseBlobAuditingPolicyName.Default;

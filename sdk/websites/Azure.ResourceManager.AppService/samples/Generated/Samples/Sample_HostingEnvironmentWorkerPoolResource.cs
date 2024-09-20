@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this HostingEnvironmentWorkerPoolResource created on azure
             // for more information of creating HostingEnvironmentWorkerPoolResource, please refer to the document of HostingEnvironmentWorkerPoolResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string name = "test-ase";
             string workerPoolName = "workerPool1";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this HostingEnvironmentWorkerPoolResource created on azure
             // for more information of creating HostingEnvironmentWorkerPoolResource, please refer to the document of HostingEnvironmentWorkerPoolResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string name = "test-ase";
             string workerPoolName = "0";
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this HostingEnvironmentWorkerPoolResource created on azure
             // for more information of creating HostingEnvironmentWorkerPoolResource, please refer to the document of HostingEnvironmentWorkerPoolResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string name = "test-ase";
             string workerPoolName = "0";
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this HostingEnvironmentWorkerPoolResource created on azure
             // for more information of creating HostingEnvironmentWorkerPoolResource, please refer to the document of HostingEnvironmentWorkerPoolResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string name = "test-ase";
             string workerPoolName = "0";
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this HostingEnvironmentWorkerPoolResource created on azure
             // for more information of creating HostingEnvironmentWorkerPoolResource, please refer to the document of HostingEnvironmentWorkerPoolResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string name = "test-ase";
             string workerPoolName = "workerPool1";
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this HostingEnvironmentWorkerPoolResource created on azure
             // for more information of creating HostingEnvironmentWorkerPoolResource, please refer to the document of HostingEnvironmentWorkerPoolResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string name = "test-ase";
             string workerPoolName = "0";

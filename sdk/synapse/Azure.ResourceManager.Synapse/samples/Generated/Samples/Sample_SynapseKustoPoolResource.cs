@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseKustoPoolResource created on azure
             // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "synapseWorkspaceName";
             string kustoPoolName = "kustoclusterrptest4";
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseKustoPoolResource created on azure
             // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "synapseWorkspaceName";
             string kustoPoolName = "kustoclusterrptest4";
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseKustoPoolResource created on azure
             // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "kustorptest";
             string kustoPoolName = "kustoclusterrptest4";
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseKustoPoolResource created on azure
             // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "kustorptest";
             string kustoPoolName = "kustoclusterrptest4";
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseKustoPoolResource created on azure
             // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "kustorptest";
             string kustoPoolName = "kustoclusterrptest4";
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseKustoPoolResource created on azure
             // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "synapseWorkspaceName";
             string kustoPoolName = "kustoclusterrptest4";
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseKustoPoolResource created on azure
             // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "kustorptest";
             string kustoPoolName = "kustoclusterrptest4";
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseKustoPoolResource created on azure
             // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "kustorptest";
             string kustoPoolName = "kustoclusterrptest4";
@@ -348,7 +348,7 @@ LanguageExtensionName = SynapseLanguageExtensionName.R,
 
             // this example assumes you already have this SynapseKustoPoolResource created on azure
             // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "kustorptest";
             string kustoPoolName = "kustoclusterrptest4";
@@ -389,7 +389,7 @@ LanguageExtensionName = SynapseLanguageExtensionName.R,
 
             // this example assumes you already have this SynapseKustoPoolResource created on azure
             // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "kustorptest";
             string kustoPoolName = "kustoclusterrptest4";
@@ -420,7 +420,7 @@ LanguageExtensionName = SynapseLanguageExtensionName.R,
 
             // this example assumes you already have this SynapseKustoPoolResource created on azure
             // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "kustorptest";
             string kustoPoolName = "kustoclusterrptest4";
@@ -449,7 +449,7 @@ LanguageExtensionName = SynapseLanguageExtensionName.R,
 
             // this example assumes you already have this SynapseKustoPoolResource created on azure
             // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "kustorptest";
             string kustoPoolName = "kustoclusterrptest4";
@@ -478,7 +478,7 @@ LanguageExtensionName = SynapseLanguageExtensionName.R,
 
             // this example assumes you already have this SynapseKustoPoolResource created on azure
             // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "synapseWorkspaceName";
             string kustoPoolName = "kustoclusterrptest4";
@@ -507,7 +507,7 @@ LanguageExtensionName = SynapseLanguageExtensionName.R,
 
             // this example assumes you already have this SynapseKustoPoolResource created on azure
             // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "synapseWorkspaceName";
             string kustoPoolName = "kustoclusterrptest4";
@@ -536,7 +536,7 @@ LanguageExtensionName = SynapseLanguageExtensionName.R,
 
             // this example assumes you already have this SynapseKustoPoolResource created on azure
             // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
-            string subscriptionId = "7a587823-959d-4ad0-85bd-cf2a7cef436a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "DP-900";
             string workspaceName = "synapse-ws-ebi-data";
             string kustoPoolName = "dataexplorerpool900";

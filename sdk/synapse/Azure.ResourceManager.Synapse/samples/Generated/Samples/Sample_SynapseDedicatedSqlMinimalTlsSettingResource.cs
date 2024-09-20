@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseDedicatedSqlMinimalTlsSettingResource created on azure
             // for more information of creating SynapseDedicatedSqlMinimalTlsSettingResource, please refer to the document of SynapseDedicatedSqlMinimalTlsSettingResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "workspace-6852";
             string workspaceName = "workspace-2080";
             string dedicatedSQLminimalTlsSettingsName = "default";

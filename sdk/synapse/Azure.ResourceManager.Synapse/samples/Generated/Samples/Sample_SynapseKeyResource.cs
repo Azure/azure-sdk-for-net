@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseKeyResource created on azure
             // for more information of creating SynapseKeyResource, please refer to the document of SynapseKeyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ExampleResourceGroup";
             string workspaceName = "ExampleWorkspace";
             string keyName = "somekey";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseKeyResource created on azure
             // for more information of creating SynapseKeyResource, please refer to the document of SynapseKeyResource
-            string subscriptionId = "01234567-89ab-4def-0123-456789abcdef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ExampleResourceGroup";
             string workspaceName = "ExampleWorkspace";
             string keyName = "somekey";
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseKeyResource created on azure
             // for more information of creating SynapseKeyResource, please refer to the document of SynapseKeyResource
-            string subscriptionId = "01234567-89ab-4def-0123-456789abcdef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ExampleResourceGroup";
             string workspaceName = "ExampleWorkspace";
             string keyName = "somekey";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // this example assumes you already have this StorageSyncRegisteredServerResource created on azure
             // for more information of creating StorageSyncRegisteredServerResource, please refer to the document of StorageSyncRegisteredServerResource
-            string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup_1";
             string storageSyncServiceName = "SampleStorageSyncService_1";
             Guid serverId = Guid.Parse("080d4133-bdb5-40a0-96a0-71a6057bfe9a");
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // this example assumes you already have this StorageSyncRegisteredServerResource created on azure
             // for more information of creating StorageSyncRegisteredServerResource, please refer to the document of StorageSyncRegisteredServerResource
-            string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup_1";
             string storageSyncServiceName = "SampleStorageSyncService_1";
             Guid serverId = Guid.Parse("080d4133-bdb5-40a0-96a0-71a6057bfe9a");
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // this example assumes you already have this StorageSyncRegisteredServerResource created on azure
             // for more information of creating StorageSyncRegisteredServerResource, please refer to the document of StorageSyncRegisteredServerResource
-            string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup_1";
             string storageSyncServiceName = "SampleStorageSyncService_1";
             Guid serverId = Guid.Parse("41166691-ab03-43e9-ab3e-0330eda162ac");
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // this example assumes you already have this StorageSyncRegisteredServerResource created on azure
             // for more information of creating StorageSyncRegisteredServerResource, please refer to the document of StorageSyncRegisteredServerResource
-            string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup_1";
             string storageSyncServiceName = "SampleStorageSyncService_1";
             Guid serverId = Guid.Parse("d166ca76-dad2-49df-b409-12345642d730");

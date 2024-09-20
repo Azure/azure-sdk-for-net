@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapsePrivateEndpointConnectionForPrivateLinkHubResource created on azure
             // for more information of creating SynapsePrivateEndpointConnectionForPrivateLinkHubResource, please refer to the document of SynapsePrivateEndpointConnectionForPrivateLinkHubResource
-            string subscriptionId = "48b08652-d7a1-4d52-b13f-5a2471dce57b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "gh-res-grp";
             string privateLinkHubName = "pe0";
             string privateEndpointConnectionName = "pe0-f3ed30f5-338c-4855-a542-24a403694ad2";

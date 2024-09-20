@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseDataMaskingPolicyResource created on azure
             // for more information of creating SynapseDataMaskingPolicyResource, please refer to the document of SynapseDataMaskingPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-6852";
             string workspaceName = "sqlcrudtest-2080";
             string sqlPoolName = "sqlcrudtest-331";
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseDataMaskingPolicyResource created on azure
             // for more information of creating SynapseDataMaskingPolicyResource, please refer to the document of SynapseDataMaskingPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-6852";
             string workspaceName = "sqlcrudtest-2080";
             string sqlPoolName = "sqlcrudtest-331";
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseDataMaskingPolicyResource created on azure
             // for more information of creating SynapseDataMaskingPolicyResource, please refer to the document of SynapseDataMaskingPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-6852";
             string workspaceName = "sqlcrudtest-2080";
             string sqlPoolName = "sqlcrudtest-331";

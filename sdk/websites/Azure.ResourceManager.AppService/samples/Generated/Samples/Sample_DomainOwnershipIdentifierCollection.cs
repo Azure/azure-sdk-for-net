@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this AppServiceDomainResource created on azure
             // for more information of creating AppServiceDomainResource, please refer to the document of AppServiceDomainResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string domainName = "example.com";
             ResourceIdentifier appServiceDomainResourceId = AppServiceDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, domainName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this AppServiceDomainResource created on azure
             // for more information of creating AppServiceDomainResource, please refer to the document of AppServiceDomainResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string domainName = "example.com";
             ResourceIdentifier appServiceDomainResourceId = AppServiceDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, domainName);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this AppServiceDomainResource created on azure
             // for more information of creating AppServiceDomainResource, please refer to the document of AppServiceDomainResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string domainName = "example.com";
             ResourceIdentifier appServiceDomainResourceId = AppServiceDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, domainName);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this AppServiceDomainResource created on azure
             // for more information of creating AppServiceDomainResource, please refer to the document of AppServiceDomainResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string domainName = "example.com";
             ResourceIdentifier appServiceDomainResourceId = AppServiceDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, domainName);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this AppServiceDomainResource created on azure
             // for more information of creating AppServiceDomainResource, please refer to the document of AppServiceDomainResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string domainName = "example.com";
             ResourceIdentifier appServiceDomainResourceId = AppServiceDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, domainName);

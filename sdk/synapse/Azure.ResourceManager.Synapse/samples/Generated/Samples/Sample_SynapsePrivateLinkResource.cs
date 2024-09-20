@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapsePrivateLinkResource created on azure
             // for more information of creating SynapsePrivateLinkResource, please refer to the document of SynapsePrivateLinkResource
-            string subscriptionId = "01234567-89ab-4def-0123-456789abcdef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ExampleResourceGroup";
             string privateLinkHubName = "ExamplePrivateLinkHub";
             string privateLinkResourceName = "sql";
