@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (2024-09-01-preview)
+## 1.2.0-beta.1 (2024-09-25)
 
 ### Features Added
 - Adds support for using Microsoft Entra token-based authentication.
