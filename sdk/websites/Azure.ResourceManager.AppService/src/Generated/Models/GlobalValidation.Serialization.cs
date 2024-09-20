@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class GlobalValidation : IUtf8JsonSerializable, IJsonModel<GlobalValidation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GlobalValidation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GlobalValidation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GlobalValidation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static GlobalValidation DeserializeGlobalValidation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,44 +157,47 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAuthenticationRequired), out propertyOverride);
-            if (Optional.IsDefined(IsAuthenticationRequired) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  requireAuthentication: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAuthenticationRequired))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  requireAuthentication: ");
                     var boolValue = IsAuthenticationRequired.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UnauthenticatedClientAction), out propertyOverride);
-            if (Optional.IsDefined(UnauthenticatedClientAction) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  unauthenticatedClientAction: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UnauthenticatedClientAction))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  unauthenticatedClientAction: ");
                     builder.AppendLine($"'{UnauthenticatedClientAction.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RedirectToProvider), out propertyOverride);
-            if (Optional.IsDefined(RedirectToProvider) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  redirectToProvider: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RedirectToProvider))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  redirectToProvider: ");
                     if (RedirectToProvider.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -208,17 +211,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExcludedPaths), out propertyOverride);
-            if (Optional.IsCollectionDefined(ExcludedPaths) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ExcludedPaths.Any() || hasPropertyOverride)
+                builder.Append("  excludedPaths: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ExcludedPaths))
                 {
-                    builder.Append("  excludedPaths: ");
-                    if (hasPropertyOverride)
+                    if (ExcludedPaths.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  excludedPaths: ");
                         builder.AppendLine("[");
                         foreach (var item in ExcludedPaths)
                         {

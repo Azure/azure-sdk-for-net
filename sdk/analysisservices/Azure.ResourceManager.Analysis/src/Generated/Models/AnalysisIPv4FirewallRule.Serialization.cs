@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Analysis.Models
 {
     public partial class AnalysisIPv4FirewallRule : IUtf8JsonSerializable, IJsonModel<AnalysisIPv4FirewallRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisIPv4FirewallRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisIPv4FirewallRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AnalysisIPv4FirewallRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisIPv4FirewallRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.Analysis.Models
                 throw new FormatException($"The model {nameof(AnalysisIPv4FirewallRule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(FirewallRuleName))
             {
                 writer.WritePropertyName("firewallRuleName"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.Analysis.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AnalysisIPv4FirewallRule IJsonModel<AnalysisIPv4FirewallRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,7 +80,7 @@ namespace Azure.ResourceManager.Analysis.Models
 
         internal static AnalysisIPv4FirewallRule DeserializeAnalysisIPv4FirewallRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

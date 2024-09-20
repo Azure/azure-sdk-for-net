@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 {
     public partial class RetentionDescription : IUtf8JsonSerializable, IJsonModel<RetentionDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RetentionDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RetentionDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RetentionDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static RetentionDescription DeserializeRetentionDescription(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -135,43 +135,46 @@ namespace Azure.ResourceManager.EventHubs.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CleanupPolicy), out propertyOverride);
-            if (Optional.IsDefined(CleanupPolicy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  cleanupPolicy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CleanupPolicy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  cleanupPolicy: ");
                     builder.AppendLine($"'{CleanupPolicy.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionTimeInHours), out propertyOverride);
-            if (Optional.IsDefined(RetentionTimeInHours) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  retentionTimeInHours: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetentionTimeInHours))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  retentionTimeInHours: ");
                     builder.AppendLine($"'{RetentionTimeInHours.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TombstoneRetentionTimeInHours), out propertyOverride);
-            if (Optional.IsDefined(TombstoneRetentionTimeInHours) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  tombstoneRetentionTimeInHours: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TombstoneRetentionTimeInHours))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  tombstoneRetentionTimeInHours: ");
                     builder.AppendLine($"{TombstoneRetentionTimeInHours.Value}");
                 }
             }

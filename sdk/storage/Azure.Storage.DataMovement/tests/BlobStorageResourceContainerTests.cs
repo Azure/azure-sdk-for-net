@@ -245,7 +245,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
-        public async Task GetChildStorageResourceAsync()
+        public async Task GetStorageResourceReferenceAsync_Default()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
             await SetUpContainerForListing(test.Container);
@@ -254,11 +254,33 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             StorageResourceContainer containerResource =
                 new BlobStorageResourceContainer(test.Container, new() { BlobDirectoryPrefix = prefix });
 
-            StorageResourceItem resource = containerResource.GetStorageResourceReference("bar");
+            StorageResourceItem resource = containerResource.GetStorageResourceReference("bar", default);
 
             // Assert
             StorageResourceItemProperties properties = await resource.GetPropertiesAsync();
             Assert.IsNotNull(properties);
+            Assert.AreEqual(DataMovementBlobConstants.ResourceId.BlockBlob, resource.ResourceId);
+        }
+
+        [RecordedTest]
+        [TestCase(DataMovementBlobConstants.ResourceId.BlockBlob)]
+        [TestCase(DataMovementBlobConstants.ResourceId.PageBlob)]
+        [TestCase(DataMovementBlobConstants.ResourceId.AppendBlob)]
+        public async Task GetStorageResourceReferenceAsync_BlobType(string blobResourceId)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            await SetUpContainerForListing(test.Container);
+
+            string prefix = "foo";
+            StorageResourceContainer containerResource =
+                new BlobStorageResourceContainer(test.Container, new() { BlobDirectoryPrefix = prefix });
+
+            StorageResourceItem resource = containerResource.GetStorageResourceReference("bar", blobResourceId);
+
+            // Assert
+            StorageResourceItemProperties properties = await resource.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+            Assert.AreEqual(blobResourceId, resource.ResourceId);
         }
 
         [Test]

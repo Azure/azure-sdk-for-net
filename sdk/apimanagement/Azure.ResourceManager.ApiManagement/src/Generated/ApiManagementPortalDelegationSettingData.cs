@@ -76,12 +76,15 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> A delegation Url. </summary>
+        [WirePath("properties.url")]
         public Uri Uri { get; set; }
         /// <summary> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </summary>
+        [WirePath("properties.validationKey")]
         public string ValidationKey { get; set; }
         /// <summary> Subscriptions delegation settings. </summary>
         internal SubscriptionDelegationSettingProperties Subscriptions { get; set; }
         /// <summary> Enable or disable delegation for subscriptions. </summary>
+        [WirePath("properties.subscriptions.enabled")]
         public bool? IsSubscriptionDelegationEnabled
         {
             get => Subscriptions is null ? default : Subscriptions.IsSubscriptionDelegationEnabled;
@@ -96,6 +99,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> User registration delegation settings. </summary>
         internal RegistrationDelegationSettingProperties UserRegistration { get; set; }
         /// <summary> Enable or disable delegation for user registration. </summary>
+        [WirePath("properties.userRegistration.enabled")]
         public bool? IsUserRegistrationDelegationEnabled
         {
             get => UserRegistration is null ? default : UserRegistration.IsUserRegistrationDelegationEnabled;

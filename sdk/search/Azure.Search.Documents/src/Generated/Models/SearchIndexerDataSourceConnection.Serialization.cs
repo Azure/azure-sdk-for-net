@@ -27,25 +27,13 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WritePropertyName("credentials"u8);
             writer.WriteObjectValue<DataSourceCredentials>(CredentialsInternal);
             writer.WritePropertyName("container"u8);
-            writer.WriteObjectValue<SearchIndexerDataContainer>(Container);
-            if (Optional.IsDefined(Identity))
-            {
-                if (Identity != null)
-                {
-                    writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue<SearchIndexerDataIdentity>(Identity);
-                }
-                else
-                {
-                    writer.WriteNull("identity");
-                }
-            }
+            writer.WriteObjectValue(Container);
             if (Optional.IsDefined(DataChangeDetectionPolicy))
             {
                 if (DataChangeDetectionPolicy != null)
                 {
                     writer.WritePropertyName("dataChangeDetectionPolicy"u8);
-                    writer.WriteObjectValue<DataChangeDetectionPolicy>(DataChangeDetectionPolicy);
+                    writer.WriteObjectValue(DataChangeDetectionPolicy);
                 }
                 else
                 {
@@ -57,7 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (DataDeletionDetectionPolicy != null)
                 {
                     writer.WritePropertyName("dataDeletionDetectionPolicy"u8);
-                    writer.WriteObjectValue<DataDeletionDetectionPolicy>(DataDeletionDetectionPolicy);
+                    writer.WriteObjectValue(DataDeletionDetectionPolicy);
                 }
                 else
                 {
@@ -74,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey);
+                    writer.WriteObjectValue(EncryptionKey);
                 }
                 else
                 {
@@ -95,7 +83,6 @@ namespace Azure.Search.Documents.Indexes.Models
             SearchIndexerDataSourceType type = default;
             DataSourceCredentials credentials = default;
             SearchIndexerDataContainer container = default;
-            SearchIndexerDataIdentity identity = default;
             DataChangeDetectionPolicy dataChangeDetectionPolicy = default;
             DataDeletionDetectionPolicy dataDeletionDetectionPolicy = default;
             string odataEtag = default;
@@ -125,16 +112,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (property.NameEquals("container"u8))
                 {
                     container = SearchIndexerDataContainer.DeserializeSearchIndexerDataContainer(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        identity = null;
-                        continue;
-                    }
-                    identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataChangeDetectionPolicy"u8))
@@ -179,7 +156,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 type,
                 credentials,
                 container,
-                identity,
                 dataChangeDetectionPolicy,
                 dataDeletionDetectionPolicy,
                 odataEtag,
@@ -194,11 +170,11 @@ namespace Azure.Search.Documents.Indexes.Models
             return DeserializeSearchIndexerDataSourceConnection(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchIndexerDataSourceConnection>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

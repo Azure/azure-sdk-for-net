@@ -27,6 +27,7 @@ This troubleshooting guide covers failure investigation techniques, common error
 - [Troubleshoot AzurePowerShellCredential authentication issues](#troubleshoot-azurepowershellcredential-authentication-issues)
 - [Troubleshoot multi-tenant authentication issues](#troubleshoot-multi-tenant-authentication-issues)
 - [Troubleshoot Web Account Manager (WAM) brokered authentication issues](#troubleshoot-web-account-manager-wam-brokered-authentication-issues)
+- [Troubleshoot AzurePipelinesCredential authentication issues](#troubleshoot-azurepipelinescredential-authentication-issues)
 - [Get additional help](#get-additional-help)
 
 ## Handle Azure Identity exceptions
@@ -86,14 +87,14 @@ The Azure Identity library provides the same [logging capabilities](https://gith
 The simplest way to see the logs to help debug authentication issues is to enable the console logger.
 
 ```c#
-// Setup a listener to monitor logged events.
+// Set up a listener to monitor logged events.
 using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
 ```
 
 All credentials can be configured with diagnostic options, in the same way as other clients in the SDK.
 
 ```c#
-DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
+DefaultAzureCredentialOptions options = new
 {
     Diagnostics =
     {
@@ -105,6 +106,20 @@ DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
 ```
 
 > CAUTION: Requests and responses in the Azure Identity library contain sensitive information. Precaution must be taken to protect logs when customizing the output to avoid compromising account security.
+
+When troubleshooting authentication issues, you may also want to enable logging of sensitive information. To enable this type of logging, set the `IsLoggingContentEnabled` property to `true`. To only log details about the account that was used to attempt authentication and authorization, set the `IsAccountIdentifierLoggingEnabled` property to `true`:
+
+```c#
+DefaultAzureCredentialOptions options = new
+{
+    Diagnostics =
+    {
+        LoggedHeaderNames = { "x-ms-request-id" },
+        LoggedQueryParameters = { "api-version" },
+        IsAccountIdentifierLoggingEnabled = true
+    }
+};
+```
 
 ## Troubleshoot `DefaultAzureCredential` authentication issues
 
@@ -364,6 +379,17 @@ Since version `1.0.0-beta.4` of [Azure.Identity.Broker](https://www.nuget.org/pa
 You may also log in another MSA account by selecting "Microsoft account":
 
 ![Microsoft account](./images/MSA4.png)
+
+## Troubleshoot AzurePipelinesCredential authentication issues
+
+| Error Message | Description | Mitigation |
+| --- | --- | --- |
+| AADSTS900023: Specified tenant identifier `<some tenant ID>` is neither a valid DNS name, nor a valid external domain. | The tenant ID passed to the credential is invalid. | Verify the tenant ID is valid. If the service connection was configured via a user-assigned managed identity, the tenant will be the one in which managed identity was registered. If the service connection is configured via a service principal, the tenant should be the one in which the Service Principal is registered.                                                                             |
+| No service connection found with identifier `<GUID>` | The service connection ID provided is incorrect. | Verify the serviceConnectionId provided. This parameter refers to the `resourceId` of the Azure Service Connection. It can also be found in the query string of the respective Service Connection's configuration page in Azure DevOps. More information about service connections can be found [here](https://learn.microsoft.com/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml) |
+| AzurePipelinesCredential: Authentication Failed. oidcToken field not detected in the response. Response = Object moved to here. Status Code: 302. | The system access token seems to be malformed when passing in as a parameter to the credential. | `System.AccessToken` is a required system variable in the Azure Pipelines task and should be provided in the pipeline task, [as mentioned in the docs](https://learn.microsoft.com/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml#systemaccesstoken). Verify that the system access token value provided is the predefined variable in Azure Pipelines and isn't malformed. |
+| AzurePipelinesCredential: Authentication Failed. oidcToken field not detected in the response. Response = {"$id":"1","innerException":null,"message":"`<ACTUAL ERROR MESSAGE>`","typeName":"Microsoft.VisualStudio.Services.WebApi.VssInvalidPreviewVersionException, Microsoft.VisualStudio.Services.WebApi","typeKey":"VssInvalidPreviewVersionException","errorCode":0} | When the OIDC token request fails, the OIDC token api throws an error. More details about the specific error are specified in the "message" field of the Response as shown above. | Mitigation will usually depend on the scenario based on what [error message](https://learn.microsoft.com/azure/devops/pipelines/release/troubleshoot-workload-identity?view=azure-devops#error-messages) is being thrown. Make sure you use the [recommended Azure Pipelines task](https://learn.microsoft.com/azure/devops/pipelines/release/troubleshoot-workload-identity?view=azure-devops#review-pipeline-tasks). |
+| CredentialUnavailableError: AzurePipelinesCredential is not available: Ensure that you're running this task in an Azure Pipeline so that following missing system variable(s) can be defined: SYSTEM_OIDCREQUESTURI is not set. | This code is not running inside of the Azure Pipelines Environment. You may be running this code locally or on some other environment.                                             | This credential is only designed to run from inside the Azure Pipelines environment for the federated identity to work. |
+| AuthenticationRequiredError: unauthorized_client: 700016 - AADSTS700016: Application with identifier 'clientId' was not found in the directory 'Microsoft'. This can happen if the application has not been installed by the administrator of the tenant or consented to by any user in the tenant. You may have sent your authentication request to the wrong tenant.| The `clientId` provided is invalid. | Verify the client ID argument is valid. If the service connection's federated identity was registered via a user-assigned managed identity, the client ID of the managed identity should be provided. If the service connection's federated identity is registered via a Service Principal, the Application (client) ID from your app registration should be provided. |
 
 ## Get additional help
 

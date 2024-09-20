@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServiceAadLoginFlow : IUtf8JsonSerializable, IJsonModel<AppServiceAadLoginFlow>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceAadLoginFlow>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceAadLoginFlow>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServiceAadLoginFlow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceAadLoginFlow DeserializeAppServiceAadLoginFlow(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,17 +131,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LoginParameters), out propertyOverride);
-            if (Optional.IsCollectionDefined(LoginParameters) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (LoginParameters.Any() || hasPropertyOverride)
+                builder.Append("  loginParameters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LoginParameters))
                 {
-                    builder.Append("  loginParameters: ");
-                    if (hasPropertyOverride)
+                    if (LoginParameters.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  loginParameters: ");
                         builder.AppendLine("[");
                         foreach (var item in LoginParameters)
                         {
@@ -166,15 +167,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsWwwAuthenticateDisabled), out propertyOverride);
-            if (Optional.IsDefined(IsWwwAuthenticateDisabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  disableWWWAuthenticate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsWwwAuthenticateDisabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  disableWWWAuthenticate: ");
                     var boolValue = IsWwwAuthenticateDisabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

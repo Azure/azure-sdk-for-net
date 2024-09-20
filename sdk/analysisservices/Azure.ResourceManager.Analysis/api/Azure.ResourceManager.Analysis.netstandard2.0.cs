@@ -45,13 +45,14 @@ namespace Azure.ResourceManager.Analysis
         public string ServerFullName { get { throw null; } }
         public Azure.ResourceManager.Analysis.Models.ServerMonitorMode? ServerMonitorMode { get { throw null; } set { } }
         public Azure.ResourceManager.Analysis.Models.AnalysisState? State { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.AnalysisServerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.AnalysisServerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.AnalysisServerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.AnalysisServerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.AnalysisServerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.AnalysisServerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.AnalysisServerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AnalysisServerResource : Azure.ResourceManager.ArmResource
+    public partial class AnalysisServerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.AnalysisServerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.AnalysisServerData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected AnalysisServerResource() { }
@@ -78,6 +79,11 @@ namespace Azure.ResourceManager.Analysis
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Analysis.AnalysisServerResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Suspend(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SuspendAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Analysis.AnalysisServerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.AnalysisServerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.AnalysisServerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Analysis.AnalysisServerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.AnalysisServerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.AnalysisServerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.AnalysisServerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Analysis.AnalysisServerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Analysis.Models.AnalysisServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Analysis.AnalysisServerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Analysis.Models.AnalysisServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -119,6 +125,7 @@ namespace Azure.ResourceManager.Analysis.Models
         internal AnalysisExistingSku() { }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.ResourceManager.Analysis.Models.AnalysisResourceSku Sku { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.Models.AnalysisExistingSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.Models.AnalysisExistingSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.Models.AnalysisExistingSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.Models.AnalysisExistingSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.Models.AnalysisExistingSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -131,6 +138,7 @@ namespace Azure.ResourceManager.Analysis.Models
         public System.Uri DmtsClusterUri { get { throw null; } }
         public string GatewayObjectId { get { throw null; } }
         public string GatewayResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.Models.AnalysisGatewayDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.Models.AnalysisGatewayDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.Models.AnalysisGatewayDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.Models.AnalysisGatewayDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.Models.AnalysisGatewayDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -141,6 +149,7 @@ namespace Azure.ResourceManager.Analysis.Models
     {
         internal AnalysisGatewayStatus() { }
         public Azure.ResourceManager.Analysis.Models.AnalysisStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.Models.AnalysisGatewayStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.Models.AnalysisGatewayStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.Models.AnalysisGatewayStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.Models.AnalysisGatewayStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.Models.AnalysisGatewayStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -153,6 +162,7 @@ namespace Azure.ResourceManager.Analysis.Models
         public string FirewallRuleName { get { throw null; } set { } }
         public string RangeEnd { get { throw null; } set { } }
         public string RangeStart { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.Models.AnalysisIPv4FirewallRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.Models.AnalysisIPv4FirewallRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.Models.AnalysisIPv4FirewallRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.Models.AnalysisIPv4FirewallRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.Models.AnalysisIPv4FirewallRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -164,6 +174,7 @@ namespace Azure.ResourceManager.Analysis.Models
         public AnalysisIPv4FirewallSettings() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Analysis.Models.AnalysisIPv4FirewallRule> FirewallRules { get { throw null; } }
         public bool? IsPowerBIServiceEnabled { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.Models.AnalysisIPv4FirewallSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.Models.AnalysisIPv4FirewallSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.Models.AnalysisIPv4FirewallSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.Models.AnalysisIPv4FirewallSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.Models.AnalysisIPv4FirewallSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -221,6 +232,7 @@ namespace Azure.ResourceManager.Analysis.Models
         public int? Capacity { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Analysis.Models.AnalysisSkuTier? Tier { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.Models.AnalysisResourceSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.Models.AnalysisResourceSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.Models.AnalysisResourceSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.Models.AnalysisResourceSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.Models.AnalysisResourceSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -232,6 +244,7 @@ namespace Azure.ResourceManager.Analysis.Models
         public AnalysisServerNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
         public string ResourceType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -244,6 +257,7 @@ namespace Azure.ResourceManager.Analysis.Models
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -262,6 +276,7 @@ namespace Azure.ResourceManager.Analysis.Models
         public Azure.ResourceManager.Analysis.Models.ServerMonitorMode? ServerMonitorMode { get { throw null; } set { } }
         public Azure.ResourceManager.Analysis.Models.AnalysisResourceSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.Models.AnalysisServerPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.Models.AnalysisServerPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Analysis.Models.AnalysisServerPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Analysis.Models.AnalysisServerPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Analysis.Models.AnalysisServerPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

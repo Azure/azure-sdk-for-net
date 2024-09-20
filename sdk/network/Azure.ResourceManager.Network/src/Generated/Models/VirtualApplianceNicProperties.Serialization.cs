@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class VirtualApplianceNicProperties : IUtf8JsonSerializable, IJsonModel<VirtualApplianceNicProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualApplianceNicProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualApplianceNicProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualApplianceNicProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(NicType))
+            {
+                writer.WritePropertyName("nicType"u8);
+                writer.WriteStringValue(NicType.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -78,12 +83,13 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualApplianceNicProperties DeserializeVirtualApplianceNicProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            NicTypeInResponse? nicType = default;
             string name = default;
             string publicIPAddress = default;
             string privateIPAddress = default;
@@ -92,6 +98,15 @@ namespace Azure.ResourceManager.Network.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("nicType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nicType = new NicTypeInResponse(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -118,7 +133,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VirtualApplianceNicProperties(name, publicIPAddress, privateIPAddress, instanceName, serializedAdditionalRawData);
+            return new VirtualApplianceNicProperties(
+                nicType,
+                name,
+                publicIPAddress,
+                privateIPAddress,
+                instanceName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualApplianceNicProperties>.Write(ModelReaderWriterOptions options)

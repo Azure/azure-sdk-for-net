@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VirtualNetworkTapData : IUtf8JsonSerializable, IJsonModel<VirtualNetworkTapData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkTapData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkTapData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualNetworkTapData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaceTapConfigurations)
                 {
-                    writer.WriteObjectValue<NetworkInterfaceTapConfigurationData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(DestinationNetworkInterfaceIPConfiguration))
             {
                 writer.WritePropertyName("destinationNetworkInterfaceIPConfiguration"u8);
-                writer.WriteObjectValue<NetworkInterfaceIPConfigurationData>(DestinationNetworkInterfaceIPConfiguration, options);
+                writer.WriteObjectValue(DestinationNetworkInterfaceIPConfiguration, options);
             }
             if (Optional.IsDefined(DestinationLoadBalancerFrontEndIPConfiguration))
             {
                 writer.WritePropertyName("destinationLoadBalancerFrontEndIPConfiguration"u8);
-                writer.WriteObjectValue<FrontendIPConfigurationData>(DestinationLoadBalancerFrontEndIPConfiguration, options);
+                writer.WriteObjectValue(DestinationLoadBalancerFrontEndIPConfiguration, options);
             }
             if (Optional.IsDefined(DestinationPort))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network
 
         internal static VirtualNetworkTapData DeserializeVirtualNetworkTapData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

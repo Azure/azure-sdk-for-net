@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.LabServices.Models
 {
     public partial class LabVirtualMachineResetPasswordContent : IUtf8JsonSerializable, IJsonModel<LabVirtualMachineResetPasswordContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabVirtualMachineResetPasswordContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabVirtualMachineResetPasswordContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LabVirtualMachineResetPasswordContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabVirtualMachineResetPasswordContent DeserializeLabVirtualMachineResetPasswordContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

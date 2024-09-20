@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 {
     public partial class MetricsBasedChart : IUtf8JsonSerializable, IJsonModel<MetricsBasedChart>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricsBasedChart>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricsBasedChart>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MetricsBasedChart>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(FilterGroup))
             {
                 writer.WritePropertyName("filterGroup"u8);
-                writer.WriteObjectValue<FilterGroup>(FilterGroup, options);
+                writer.WriteObjectValue(FilterGroup, options);
             }
             if (Optional.IsDefined(ReplacementKey))
             {
@@ -88,17 +88,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         internal static MetricsBasedChart DeserializeMetricsBasedChart(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            AggregationType? aggregationType = default;
+            ChartAggregationType? aggregationType = default;
             TimeSpan? timeSpanDuration = default;
             string title = default;
-            FilterGroup filterGroup = default;
+            ChartFilterGroup filterGroup = default;
             string replacementKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    aggregationType = new AggregationType(property.Value.GetString());
+                    aggregationType = new ChartAggregationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("timeSpanDuration"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    filterGroup = FilterGroup.DeserializeFilterGroup(property.Value, options);
+                    filterGroup = ChartFilterGroup.DeserializeChartFilterGroup(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("replacementKey"u8))

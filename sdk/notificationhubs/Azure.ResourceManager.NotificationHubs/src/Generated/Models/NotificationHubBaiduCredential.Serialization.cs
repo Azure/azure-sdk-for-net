@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 {
     public partial class NotificationHubBaiduCredential : IUtf8JsonSerializable, IJsonModel<NotificationHubBaiduCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubBaiduCredential>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubBaiduCredential>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NotificationHubBaiduCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -28,21 +28,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(BaiduApiKey))
-            {
-                writer.WritePropertyName("baiduApiKey"u8);
-                writer.WriteStringValue(BaiduApiKey);
-            }
-            if (Optional.IsDefined(BaiduEndpoint))
-            {
-                writer.WritePropertyName("baiduEndPoint"u8);
-                writer.WriteStringValue(BaiduEndpoint.AbsoluteUri);
-            }
-            if (Optional.IsDefined(BaiduSecretKey))
-            {
-                writer.WritePropertyName("baiduSecretKey"u8);
-                writer.WriteStringValue(BaiduSecretKey);
-            }
+            writer.WritePropertyName("baiduApiKey"u8);
+            writer.WriteStringValue(BaiduApiKey);
+            writer.WritePropertyName("baiduEndPoint"u8);
+            writer.WriteStringValue(BaiduEndpoint.AbsoluteUri);
+            writer.WritePropertyName("baiduSecretKey"u8);
+            writer.WriteStringValue(BaiduSecretKey);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -76,7 +67,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubBaiduCredential DeserializeNotificationHubBaiduCredential(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,10 +96,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         }
                         if (property0.NameEquals("baiduEndPoint"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             baiduEndPoint = new Uri(property0.Value.GetString());
                             continue;
                         }

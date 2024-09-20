@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Datadog.Models
 {
     internal partial class DatadogApiKeyListResponse : IUtf8JsonSerializable, IJsonModel<DatadogApiKeyListResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogApiKeyListResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogApiKeyListResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatadogApiKeyListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<DatadogApiKey>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static DatadogApiKeyListResponse DeserializeDatadogApiKeyListResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -36,8 +36,8 @@ namespace Azure.Storage.Queues.Test
         private readonly string SampleUTF8String = Encoding.UTF8.GetString(
             new byte[] { 0xe1, 0x9a, 0xa0, 0xe1, 0x9b, 0x87, 0xe1, 0x9a, 0xbb, 0x0a }); // valid UTF-8 bytes
 
-        public ClientSideEncryptionTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public ClientSideEncryptionTests(bool async, QueueClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
             // TODO: enable after new KeyValue is released (after Dec 2023)
             TestDiagnostics = false;
@@ -55,7 +55,9 @@ namespace Azure.Storage.Queues.Test
             int encryptedDataLength = data.Length + V2.NonceSize + V2.TagSize;
             var result = new Span<byte>(new byte[encryptedDataLength]);
 
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#if NET8_0_OR_GREATER
+            using var gcm = new AesGcm(key, V2.TagSize);
+#elif NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
             using var gcm = new AesGcm(key);
 #else
             using var gcm = new Azure.Storage.Shared.AesGcm.AesGcmWindows(key);

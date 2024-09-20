@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class TableVerticalFeaturizationSettings : IUtf8JsonSerializable, IJsonModel<TableVerticalFeaturizationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TableVerticalFeaturizationSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TableVerticalFeaturizationSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TableVerticalFeaturizationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -26,6 +28,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Mode))
+            {
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(BlockedTransformers))
             {
                 if (BlockedTransformers != null)
@@ -61,16 +68,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columnNameAndTypes");
                 }
             }
-            if (Optional.IsDefined(EnableDnnFeaturization))
-            {
-                writer.WritePropertyName("enableDnnFeaturization"u8);
-                writer.WriteBooleanValue(EnableDnnFeaturization.Value);
-            }
-            if (Optional.IsDefined(Mode))
-            {
-                writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
-            }
             if (Optional.IsCollectionDefined(TransformerParams))
             {
                 if (TransformerParams != null)
@@ -88,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         writer.WriteStartArray();
                         foreach (var item0 in item.Value)
                         {
-                            writer.WriteObjectValue<ColumnTransformer>(item0, options);
+                            writer.WriteObjectValue(item0, options);
                         }
                         writer.WriteEndArray();
                     }
@@ -98,6 +95,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("transformerParams");
                 }
+            }
+            if (Optional.IsDefined(EnableDnnFeaturization))
+            {
+                writer.WritePropertyName("enableDnnFeaturization"u8);
+                writer.WriteBooleanValue(EnableDnnFeaturization.Value);
             }
             if (Optional.IsDefined(DatasetLanguage))
             {
@@ -143,22 +145,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static TableVerticalFeaturizationSettings DeserializeTableVerticalFeaturizationSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            MachineLearningFeaturizationMode? mode = default;
             IList<BlockedTransformer> blockedTransformers = default;
             IDictionary<string, string> columnNameAndTypes = default;
-            bool? enableDnnFeaturization = default;
-            MachineLearningFeaturizationMode? mode = default;
             IDictionary<string, IList<ColumnTransformer>> transformerParams = default;
+            bool? enableDnnFeaturization = default;
             string datasetLanguage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("mode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mode = new MachineLearningFeaturizationMode(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("blockedTransformers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -189,24 +200,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     columnNameAndTypes = dictionary;
                     continue;
                 }
-                if (property.NameEquals("enableDnnFeaturization"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableDnnFeaturization = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("mode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    mode = new MachineLearningFeaturizationMode(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("transformerParams"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -234,6 +227,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     transformerParams = dictionary;
                     continue;
                 }
+                if (property.NameEquals("enableDnnFeaturization"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableDnnFeaturization = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("datasetLanguage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -253,11 +255,174 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new TableVerticalFeaturizationSettings(
                 datasetLanguage,
                 serializedAdditionalRawData,
+                mode,
                 blockedTransformers ?? new ChangeTrackingList<BlockedTransformer>(),
                 columnNameAndTypes ?? new ChangeTrackingDictionary<string, string>(),
-                enableDnnFeaturization,
-                mode,
-                transformerParams ?? new ChangeTrackingDictionary<string, IList<ColumnTransformer>>());
+                transformerParams ?? new ChangeTrackingDictionary<string, IList<ColumnTransformer>>(),
+                enableDnnFeaturization);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  mode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Mode))
+                {
+                    builder.Append("  mode: ");
+                    builder.AppendLine($"'{Mode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlockedTransformers), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  blockedTransformers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BlockedTransformers))
+                {
+                    if (BlockedTransformers.Any())
+                    {
+                        builder.Append("  blockedTransformers: ");
+                        builder.AppendLine("[");
+                        foreach (var item in BlockedTransformers)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ColumnNameAndTypes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  columnNameAndTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ColumnNameAndTypes))
+                {
+                    if (ColumnNameAndTypes.Any())
+                    {
+                        builder.Append("  columnNameAndTypes: ");
+                        builder.AppendLine("{");
+                        foreach (var item in ColumnNameAndTypes)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TransformerParams), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  transformerParams: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(TransformerParams))
+                {
+                    if (TransformerParams.Any())
+                    {
+                        builder.Append("  transformerParams: ");
+                        builder.AppendLine("{");
+                        foreach (var item in TransformerParams)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine("[");
+                            foreach (var item0 in item.Value)
+                            {
+                                BicepSerializationHelpers.AppendChildObject(builder, item0, options, 6, true, "  transformerParams: ");
+                            }
+                            builder.AppendLine("    ]");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableDnnFeaturization), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableDnnFeaturization: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableDnnFeaturization))
+                {
+                    builder.Append("  enableDnnFeaturization: ");
+                    var boolValue = EnableDnnFeaturization.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatasetLanguage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  datasetLanguage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DatasetLanguage))
+                {
+                    builder.Append("  datasetLanguage: ");
+                    if (DatasetLanguage.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DatasetLanguage}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DatasetLanguage}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<TableVerticalFeaturizationSettings>.Write(ModelReaderWriterOptions options)
@@ -268,6 +433,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TableVerticalFeaturizationSettings)} does not support writing '{options.Format}' format.");
             }

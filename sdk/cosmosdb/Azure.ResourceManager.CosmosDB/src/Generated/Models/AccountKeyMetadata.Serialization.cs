@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal partial class AccountKeyMetadata : IUtf8JsonSerializable, IJsonModel<AccountKeyMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccountKeyMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccountKeyMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AccountKeyMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static AccountKeyMetadata DeserializeAccountKeyMetadata(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,15 +105,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeneratedOn), out propertyOverride);
-            if (Optional.IsDefined(GeneratedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  generationTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GeneratedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  generationTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(GeneratedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

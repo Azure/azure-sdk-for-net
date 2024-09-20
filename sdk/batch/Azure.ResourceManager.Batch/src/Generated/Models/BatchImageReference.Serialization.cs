@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchImageReference : IUtf8JsonSerializable, IJsonModel<BatchImageReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchImageReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchImageReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchImageReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -51,6 +51,16 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (Optional.IsDefined(SharedGalleryImageId))
+            {
+                writer.WritePropertyName("sharedGalleryImageId"u8);
+                writer.WriteStringValue(SharedGalleryImageId);
+            }
+            if (Optional.IsDefined(CommunityGalleryImageId))
+            {
+                writer.WritePropertyName("communityGalleryImageId"u8);
+                writer.WriteStringValue(CommunityGalleryImageId);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,7 +93,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchImageReference DeserializeBatchImageReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -94,6 +104,8 @@ namespace Azure.ResourceManager.Batch.Models
             string sku = default;
             string version = default;
             ResourceIdentifier id = default;
+            string sharedGalleryImageId = default;
+            string communityGalleryImageId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,6 +139,16 @@ namespace Azure.ResourceManager.Batch.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("sharedGalleryImageId"u8))
+                {
+                    sharedGalleryImageId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("communityGalleryImageId"u8))
+                {
+                    communityGalleryImageId = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -139,6 +161,8 @@ namespace Azure.ResourceManager.Batch.Models
                 sku,
                 version,
                 id,
+                sharedGalleryImageId,
+                communityGalleryImageId,
                 serializedAdditionalRawData);
         }
 

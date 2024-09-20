@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class ManagementPolicyVersion : IUtf8JsonSerializable, IJsonModel<ManagementPolicyVersion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementPolicyVersion>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementPolicyVersion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagementPolicyVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,27 +30,27 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(TierToCool))
             {
                 writer.WritePropertyName("tierToCool"u8);
-                writer.WriteObjectValue<DateAfterCreation>(TierToCool, options);
+                writer.WriteObjectValue(TierToCool, options);
             }
             if (Optional.IsDefined(TierToArchive))
             {
                 writer.WritePropertyName("tierToArchive"u8);
-                writer.WriteObjectValue<DateAfterCreation>(TierToArchive, options);
+                writer.WriteObjectValue(TierToArchive, options);
             }
             if (Optional.IsDefined(TierToCold))
             {
                 writer.WritePropertyName("tierToCold"u8);
-                writer.WriteObjectValue<DateAfterCreation>(TierToCold, options);
+                writer.WriteObjectValue(TierToCold, options);
             }
             if (Optional.IsDefined(TierToHot))
             {
                 writer.WritePropertyName("tierToHot"u8);
-                writer.WriteObjectValue<DateAfterCreation>(TierToHot, options);
+                writer.WriteObjectValue(TierToHot, options);
             }
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue<DateAfterCreation>(Delete, options);
+                writer.WriteObjectValue(Delete, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicyVersion DeserializeManagementPolicyVersion(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -171,71 +171,76 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TierToCool), out propertyOverride);
-            if (Optional.IsDefined(TierToCool) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  tierToCool: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TierToCool))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  tierToCool: ");
                     BicepSerializationHelpers.AppendChildObject(builder, TierToCool, options, 2, false, "  tierToCool: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TierToArchive), out propertyOverride);
-            if (Optional.IsDefined(TierToArchive) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  tierToArchive: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TierToArchive))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  tierToArchive: ");
                     BicepSerializationHelpers.AppendChildObject(builder, TierToArchive, options, 2, false, "  tierToArchive: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TierToCold), out propertyOverride);
-            if (Optional.IsDefined(TierToCold) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  tierToCold: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TierToCold))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  tierToCold: ");
                     BicepSerializationHelpers.AppendChildObject(builder, TierToCold, options, 2, false, "  tierToCold: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TierToHot), out propertyOverride);
-            if (Optional.IsDefined(TierToHot) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  tierToHot: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TierToHot))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  tierToHot: ");
                     BicepSerializationHelpers.AppendChildObject(builder, TierToHot, options, 2, false, "  tierToHot: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Delete), out propertyOverride);
-            if (Optional.IsDefined(Delete) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  delete: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Delete))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  delete: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Delete, options, 2, false, "  delete: ");
                 }
             }

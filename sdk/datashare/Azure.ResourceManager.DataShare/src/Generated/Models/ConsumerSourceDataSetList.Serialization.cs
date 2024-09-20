@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
 {
     internal partial class ConsumerSourceDataSetList : IUtf8JsonSerializable, IJsonModel<ConsumerSourceDataSetList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumerSourceDataSetList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumerSourceDataSetList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumerSourceDataSetList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<ConsumerSourceDataSet>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static ConsumerSourceDataSetList DeserializeConsumerSourceDataSetList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -71,7 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
-                writer.WriteObjectValue<GitHubClientSecret>(ClientSecret);
+                writer.WriteObjectValue(ClientSecret);
             }
             writer.WriteEndObject();
         }
@@ -181,11 +181,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeWorkspaceRepositoryConfiguration(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<WorkspaceRepositoryConfiguration>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -193,7 +193,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, WorkspaceRepositoryConfiguration model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<WorkspaceRepositoryConfiguration>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override WorkspaceRepositoryConfiguration Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

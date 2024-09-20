@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     internal partial class SharedAccessSignatureAuthorizationRuleListResult : IUtf8JsonSerializable, IJsonModel<SharedAccessSignatureAuthorizationRuleListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharedAccessSignatureAuthorizationRuleListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharedAccessSignatureAuthorizationRuleListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SharedAccessSignatureAuthorizationRuleListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<DeviceProvisioningServicesSharedAccessKey>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         internal static SharedAccessSignatureAuthorizationRuleListResult DeserializeSharedAccessSignatureAuthorizationRuleListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

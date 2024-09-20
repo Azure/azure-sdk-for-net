@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CostManagement
 {
     public partial class CostManagementAlertData : IUtf8JsonSerializable, IJsonModel<CostManagementAlertData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CostManagementAlertData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CostManagementAlertData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CostManagementAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue<AlertPropertiesDefinition>(Definition, options);
+                writer.WriteObjectValue(Definition, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue<AlertPropertiesDetails>(Details, options);
+                writer.WriteObjectValue(Details, options);
             }
             if (Optional.IsDefined(CostEntityId))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CostManagement
 
         internal static CostManagementAlertData DeserializeCostManagementAlertData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

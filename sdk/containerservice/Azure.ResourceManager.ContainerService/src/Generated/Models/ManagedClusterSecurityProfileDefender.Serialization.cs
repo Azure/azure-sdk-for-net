@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ManagedClusterSecurityProfileDefender : IUtf8JsonSerializable, IJsonModel<ManagedClusterSecurityProfileDefender>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterSecurityProfileDefender>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterSecurityProfileDefender>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedClusterSecurityProfileDefender>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(SecurityMonitoring))
             {
                 writer.WritePropertyName("securityMonitoring"u8);
-                writer.WriteObjectValue<ManagedClusterSecurityProfileDefenderSecurityMonitoring>(SecurityMonitoring, options);
+                writer.WriteObjectValue(SecurityMonitoring, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterSecurityProfileDefender DeserializeManagedClusterSecurityProfileDefender(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,6 +108,54 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterSecurityProfileDefender(logAnalyticsWorkspaceResourceId, securityMonitoring, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogAnalyticsWorkspaceResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logAnalyticsWorkspaceResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogAnalyticsWorkspaceResourceId))
+                {
+                    builder.Append("  logAnalyticsWorkspaceResourceId: ");
+                    builder.AppendLine($"'{LogAnalyticsWorkspaceResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsSecurityMonitoringEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  securityMonitoring: ");
+                builder.AppendLine("{");
+                builder.Append("    enabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(SecurityMonitoring))
+                {
+                    builder.Append("  securityMonitoring: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SecurityMonitoring, options, 2, false, "  securityMonitoring: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedClusterSecurityProfileDefender>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfileDefender>)this).GetFormatFromOptions(options) : options.Format;
@@ -115,6 +164,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileDefender)} does not support writing '{options.Format}' format.");
             }

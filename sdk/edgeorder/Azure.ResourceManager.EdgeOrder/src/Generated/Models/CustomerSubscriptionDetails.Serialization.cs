@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class CustomerSubscriptionDetails : IUtf8JsonSerializable, IJsonModel<CustomerSubscriptionDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomerSubscriptionDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomerSubscriptionDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomerSubscriptionDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in RegisteredFeatures)
                 {
-                    writer.WriteObjectValue<CustomerSubscriptionRegisteredFeatures>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static CustomerSubscriptionDetails DeserializeCustomerSubscriptionDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

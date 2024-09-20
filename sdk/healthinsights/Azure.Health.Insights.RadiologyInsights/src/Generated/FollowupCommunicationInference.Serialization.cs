@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 {
     public partial class FollowupCommunicationInference : IUtf8JsonSerializable, IJsonModel<FollowupCommunicationInference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FollowupCommunicationInference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FollowupCommunicationInference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FollowupCommunicationInference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -26,11 +26,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DateTime))
+            if (Optional.IsCollectionDefined(CommunicatedAt))
             {
-                writer.WritePropertyName("dateTime"u8);
+                writer.WritePropertyName("communicatedAt"u8);
                 writer.WriteStartArray();
-                foreach (var item in DateTime)
+                foreach (var item in CommunicatedAt)
                 {
                     writer.WriteStringValue(item, "O");
                 }
@@ -49,14 +49,14 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WritePropertyName("wasAcknowledged"u8);
             writer.WriteBooleanValue(WasAcknowledged);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStartArray();
                 foreach (var item in Extension)
                 {
-                    writer.WriteObjectValue<FhirR4Extension>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,22 +92,22 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         internal static FollowupCommunicationInference DeserializeFollowupCommunicationInference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<DateTimeOffset> dateTime = default;
+            IReadOnlyList<DateTimeOffset> communicatedAt = default;
             IReadOnlyList<MedicalProfessionalType> recipient = default;
             bool wasAcknowledged = default;
-            string kind = default;
+            RadiologyInsightsInferenceType kind = default;
             IReadOnlyList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dateTime"u8))
+                if (property.NameEquals("communicatedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +118,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         array.Add(item.GetDateTimeOffset("O"));
                     }
-                    dateTime = array;
+                    communicatedAt = array;
                     continue;
                 }
                 if (property.NameEquals("recipient"u8))
@@ -142,7 +142,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new RadiologyInsightsInferenceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("extension"u8))
@@ -169,7 +169,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 kind,
                 extension ?? new ChangeTrackingList<FhirR4Extension>(),
                 serializedAdditionalRawData,
-                dateTime ?? new ChangeTrackingList<DateTimeOffset>(),
+                communicatedAt ?? new ChangeTrackingList<DateTimeOffset>(),
                 recipient ?? new ChangeTrackingList<MedicalProfessionalType>(),
                 wasAcknowledged);
         }
@@ -213,11 +213,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             return DeserializeFollowupCommunicationInference(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<FollowupCommunicationInference>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

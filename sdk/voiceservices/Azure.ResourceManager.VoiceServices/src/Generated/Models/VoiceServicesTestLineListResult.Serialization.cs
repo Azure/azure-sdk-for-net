@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
 {
     internal partial class VoiceServicesTestLineListResult : IUtf8JsonSerializable, IJsonModel<VoiceServicesTestLineListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VoiceServicesTestLineListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VoiceServicesTestLineListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VoiceServicesTestLineListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<VoiceServicesTestLineData>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
 
         internal static VoiceServicesTestLineListResult DeserializeVoiceServicesTestLineListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

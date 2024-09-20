@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class AutoscaleSettingPatch : IUtf8JsonSerializable, IJsonModel<AutoscaleSettingPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoscaleSettingPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoscaleSettingPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutoscaleSettingPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Profiles)
                 {
-                    writer.WriteObjectValue<AutoscaleProfile>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteStartArray();
                     foreach (var item in Notifications)
                     {
-                        writer.WriteObjectValue<AutoscaleNotification>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 if (PredictiveAutoscalePolicy != null)
                 {
                     writer.WritePropertyName("predictiveAutoscalePolicy"u8);
-                    writer.WriteObjectValue<PredictiveAutoscalePolicy>(PredictiveAutoscalePolicy, options);
+                    writer.WriteObjectValue(PredictiveAutoscalePolicy, options);
                 }
                 else
                 {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static AutoscaleSettingPatch DeserializeAutoscaleSettingPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

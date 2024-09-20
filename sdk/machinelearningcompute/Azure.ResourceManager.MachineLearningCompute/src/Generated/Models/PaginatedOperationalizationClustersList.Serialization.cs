@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     internal partial class PaginatedOperationalizationClustersList : IUtf8JsonSerializable, IJsonModel<PaginatedOperationalizationClustersList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaginatedOperationalizationClustersList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaginatedOperationalizationClustersList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PaginatedOperationalizationClustersList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<OperationalizationClusterData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         internal static PaginatedOperationalizationClustersList DeserializePaginatedOperationalizationClustersList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

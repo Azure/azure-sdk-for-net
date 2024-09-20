@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class AS2AgreementContent : IUtf8JsonSerializable, IJsonModel<AS2AgreementContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AS2AgreementContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AS2AgreementContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AS2AgreementContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.Logic.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("receiveAgreement"u8);
-            writer.WriteObjectValue<AS2OneWayAgreement>(ReceiveAgreement, options);
+            writer.WriteObjectValue(ReceiveAgreement, options);
             writer.WritePropertyName("sendAgreement"u8);
-            writer.WriteObjectValue<AS2OneWayAgreement>(SendAgreement, options);
+            writer.WriteObjectValue(SendAgreement, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static AS2AgreementContent DeserializeAS2AgreementContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

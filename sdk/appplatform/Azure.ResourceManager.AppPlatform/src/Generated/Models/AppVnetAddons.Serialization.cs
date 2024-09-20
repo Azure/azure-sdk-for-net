@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppVnetAddons : IUtf8JsonSerializable, IJsonModel<AppVnetAddons>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppVnetAddons>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppVnetAddons>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppVnetAddons>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppVnetAddons>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 throw new FormatException($"The model {nameof(AppVnetAddons)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(IsPublicEndpoint))
             {
                 writer.WritePropertyName("publicEndpoint"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppVnetAddons IJsonModel<AppVnetAddons>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +75,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppVnetAddons DeserializeAppVnetAddons(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class NamespaceTopicEventSubscriptionPatch : IUtf8JsonSerializable, IJsonModel<NamespaceTopicEventSubscriptionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NamespaceTopicEventSubscriptionPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NamespaceTopicEventSubscriptionPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NamespaceTopicEventSubscriptionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(DeliveryConfiguration))
             {
                 writer.WritePropertyName("deliveryConfiguration"u8);
-                writer.WriteObjectValue<DeliveryConfiguration>(DeliveryConfiguration, options);
+                writer.WriteObjectValue(DeliveryConfiguration, options);
             }
             if (Optional.IsDefined(EventDeliverySchema))
             {
@@ -41,7 +41,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(FiltersConfiguration))
             {
                 writer.WritePropertyName("filtersConfiguration"u8);
-                writer.WriteObjectValue<FiltersConfiguration>(FiltersConfiguration, options);
+                writer.WriteObjectValue(FiltersConfiguration, options);
+            }
+            if (Optional.IsDefined(ExpireOn))
+            {
+                writer.WritePropertyName("expirationTimeUtc"u8);
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -76,7 +81,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static NamespaceTopicEventSubscriptionPatch DeserializeNamespaceTopicEventSubscriptionPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -85,6 +90,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             DeliveryConfiguration deliveryConfiguration = default;
             DeliverySchema? eventDeliverySchema = default;
             FiltersConfiguration filtersConfiguration = default;
+            DateTimeOffset? expirationTimeUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,6 +131,15 @@ namespace Azure.ResourceManager.EventGrid.Models
                             filtersConfiguration = FiltersConfiguration.DeserializeFiltersConfiguration(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("expirationTimeUtc"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            expirationTimeUtc = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -134,7 +149,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NamespaceTopicEventSubscriptionPatch(deliveryConfiguration, eventDeliverySchema, filtersConfiguration, serializedAdditionalRawData);
+            return new NamespaceTopicEventSubscriptionPatch(deliveryConfiguration, eventDeliverySchema, filtersConfiguration, expirationTimeUtc, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NamespaceTopicEventSubscriptionPatch>.Write(ModelReaderWriterOptions options)

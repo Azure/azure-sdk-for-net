@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class AdlsGen1FolderDataSet : IUtf8JsonSerializable, IJsonModel<AdlsGen1FolderDataSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdlsGen1FolderDataSet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdlsGen1FolderDataSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AdlsGen1FolderDataSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static AdlsGen1FolderDataSet DeserializeAdlsGen1FolderDataSet(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

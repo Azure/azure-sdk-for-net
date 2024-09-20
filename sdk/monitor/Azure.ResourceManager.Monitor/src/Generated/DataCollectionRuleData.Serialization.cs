@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class DataCollectionRuleData : IUtf8JsonSerializable, IJsonModel<DataCollectionRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataCollectionRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Monitor
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue<DataCollectionRuleMetadata>(Metadata, options);
+                writer.WriteObjectValue(Metadata, options);
             }
             if (Optional.IsCollectionDefined(StreamDeclarations))
             {
@@ -105,19 +106,19 @@ namespace Azure.ResourceManager.Monitor
                 foreach (var item in StreamDeclarations)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<DataStreamDeclaration>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(DataSources))
             {
                 writer.WritePropertyName("dataSources"u8);
-                writer.WriteObjectValue<DataCollectionRuleDataSources>(DataSources, options);
+                writer.WriteObjectValue(DataSources, options);
             }
             if (Optional.IsDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
-                writer.WriteObjectValue<DataCollectionRuleDestinations>(Destinations, options);
+                writer.WriteObjectValue(Destinations, options);
             }
             if (Optional.IsCollectionDefined(DataFlows))
             {
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in DataFlows)
                 {
-                    writer.WriteObjectValue<DataFlow>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.Monitor
 
         internal static DataCollectionRuleData DeserializeDataCollectionRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -210,7 +211,8 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

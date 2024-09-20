@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class CommonExportProperties : IUtf8JsonSerializable, IJsonModel<CommonExportProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommonExportProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommonExportProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CommonExportProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStringValue(Format.Value.ToString());
             }
             writer.WritePropertyName("deliveryInfo"u8);
-            writer.WriteObjectValue<ExportDeliveryInfo>(DeliveryInfo, options);
+            writer.WriteObjectValue(DeliveryInfo, options);
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue<ExportDefinition>(Definition, options);
+            writer.WriteObjectValue(Definition, options);
             if (Optional.IsDefined(RunHistory))
             {
                 writer.WritePropertyName("runHistory"u8);
-                writer.WriteObjectValue<ExportExecutionListResult>(RunHistory, options);
+                writer.WriteObjectValue(RunHistory, options);
             }
             if (Optional.IsDefined(PartitionData))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static CommonExportProperties DeserializeCommonExportProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

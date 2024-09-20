@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     public partial class StopVirtualMachineContent : IUtf8JsonSerializable, IJsonModel<StopVirtualMachineContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StopVirtualMachineContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StopVirtualMachineContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StopVirtualMachineContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static StopVirtualMachineContent DeserializeStopVirtualMachineContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

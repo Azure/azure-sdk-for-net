@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FluidRelay
 {
     public partial class FluidRelayContainerData : IUtf8JsonSerializable, IJsonModel<FluidRelayContainerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FluidRelayContainerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FluidRelayContainerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FluidRelayContainerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.FluidRelay
 
         internal static FluidRelayContainerData DeserializeFluidRelayContainerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence
 {
     public partial class DocumentFigure : IUtf8JsonSerializable, IJsonModel<DocumentFigure>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentFigure>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentFigure>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DocumentFigure>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in BoundingRegions)
                 {
-                    writer.WriteObjectValue<BoundingRegion>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -40,7 +40,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Spans)
             {
-                writer.WriteObjectValue<DocumentSpan>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Elements))
@@ -56,7 +56,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("caption"u8);
-                writer.WriteObjectValue<DocumentCaption>(Caption, options);
+                writer.WriteObjectValue(Caption, options);
             }
             if (Optional.IsCollectionDefined(Footnotes))
             {
@@ -64,9 +64,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Footnotes)
                 {
-                    writer.WriteObjectValue<DocumentFootnote>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +105,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal static DocumentFigure DeserializeDocumentFigure(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -111,6 +116,7 @@ namespace Azure.AI.DocumentIntelligence
             IReadOnlyList<string> elements = default;
             DocumentCaption caption = default;
             IReadOnlyList<DocumentFootnote> footnotes = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,6 +182,11 @@ namespace Azure.AI.DocumentIntelligence
                     footnotes = array;
                     continue;
                 }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -188,6 +199,7 @@ namespace Azure.AI.DocumentIntelligence
                 elements ?? new ChangeTrackingList<string>(),
                 caption,
                 footnotes ?? new ChangeTrackingList<DocumentFootnote>(),
+                id,
                 serializedAdditionalRawData);
         }
 
@@ -230,11 +242,11 @@ namespace Azure.AI.DocumentIntelligence
             return DeserializeDocumentFigure(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DocumentFigure>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

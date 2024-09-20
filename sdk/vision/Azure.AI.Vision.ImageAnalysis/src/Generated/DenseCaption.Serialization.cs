@@ -15,7 +15,7 @@ namespace Azure.AI.Vision.ImageAnalysis
 {
     public partial class DenseCaption : IUtf8JsonSerializable, IJsonModel<DenseCaption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DenseCaption>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DenseCaption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DenseCaption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
             writer.WritePropertyName("boundingBox"u8);
-            writer.WriteObjectValue<ImageBoundingBox>(BoundingBox, options);
+            writer.WriteObjectValue(BoundingBox, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -64,7 +64,7 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         internal static DenseCaption DeserializeDenseCaption(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -140,11 +140,11 @@ namespace Azure.AI.Vision.ImageAnalysis
             return DeserializeDenseCaption(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DenseCaption>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

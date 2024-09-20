@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Datadog.Models
 {
     public partial class DatadogApiKey : IUtf8JsonSerializable, IJsonModel<DatadogApiKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogApiKey>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogApiKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatadogApiKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static DatadogApiKey DeserializeDatadogApiKey(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

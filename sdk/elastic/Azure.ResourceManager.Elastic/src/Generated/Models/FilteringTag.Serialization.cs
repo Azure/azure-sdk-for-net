@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Elastic.Models
 {
     public partial class FilteringTag : IUtf8JsonSerializable, IJsonModel<FilteringTag>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FilteringTag>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FilteringTag>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FilteringTag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static FilteringTag DeserializeFilteringTag(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

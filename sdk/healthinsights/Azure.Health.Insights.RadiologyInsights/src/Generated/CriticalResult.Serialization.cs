@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 {
     public partial class CriticalResult : IUtf8JsonSerializable, IJsonModel<CriticalResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CriticalResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CriticalResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CriticalResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Finding))
             {
                 writer.WritePropertyName("finding"u8);
-                writer.WriteObjectValue<FhirR4Observation>(Finding, options);
+                writer.WriteObjectValue(Finding, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,7 +65,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         internal static CriticalResult DeserializeCriticalResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -139,11 +139,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             return DeserializeCriticalResult(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CriticalResult>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

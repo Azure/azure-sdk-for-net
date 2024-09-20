@@ -5,13 +5,13 @@ using System;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     internal class AuthenticationEventResponseConverterFactory : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert)
         {
-            return typeof(AuthenticationEventResponse).IsAssignableFrom(typeToConvert);
+            return typeof(WebJobsAuthenticationEventResponse).IsAssignableFrom(typeToConvert);
         }
 
         public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             return converter;
         }
 
-        internal class AuthEventResponseConverter<T> : JsonConverter<T> where T : AuthenticationEventResponse
+        internal class AuthEventResponseConverter<T> : JsonConverter<T> where T : WebJobsAuthenticationEventResponse
         {
             public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

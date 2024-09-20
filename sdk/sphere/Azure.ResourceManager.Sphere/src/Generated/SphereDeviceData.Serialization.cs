@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sphere
 {
     public partial class SphereDeviceData : IUtf8JsonSerializable, IJsonModel<SphereDeviceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SphereDeviceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SphereDeviceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SphereDeviceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Sphere
 
         internal static SphereDeviceData DeserializeSphereDeviceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

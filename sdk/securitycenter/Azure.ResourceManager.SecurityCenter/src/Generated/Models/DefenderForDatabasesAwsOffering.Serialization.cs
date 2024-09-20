@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class DefenderForDatabasesAwsOffering : IUtf8JsonSerializable, IJsonModel<DefenderForDatabasesAwsOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForDatabasesAwsOffering>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForDatabasesAwsOffering>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DefenderForDatabasesAwsOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ArcAutoProvisioning))
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
-                writer.WriteObjectValue<DefenderForDatabasesAwsOfferingArcAutoProvisioning>(ArcAutoProvisioning, options);
+                writer.WriteObjectValue(ArcAutoProvisioning, options);
             }
             if (Optional.IsDefined(Rds))
             {
                 writer.WritePropertyName("rds"u8);
-                writer.WriteObjectValue<DefenderForDatabasesAwsOfferingRds>(Rds, options);
+                writer.WriteObjectValue(Rds, options);
             }
             if (Optional.IsDefined(DatabasesDspm))
             {
                 writer.WritePropertyName("databasesDspm"u8);
-                writer.WriteObjectValue<DefenderFoDatabasesAwsOfferingDatabasesDspm>(DatabasesDspm, options);
+                writer.WriteObjectValue(DatabasesDspm, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForDatabasesAwsOffering DeserializeDefenderForDatabasesAwsOffering(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

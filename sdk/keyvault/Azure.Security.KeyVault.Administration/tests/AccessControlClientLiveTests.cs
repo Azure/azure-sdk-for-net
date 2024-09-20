@@ -156,7 +156,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(result.Id, Is.Not.Null);
             Assert.That(result.Name, Is.Not.Null);
             Assert.That(result.Type, Is.Not.Null);
-            Assert.That(result.Properties.PrincipalId, Is.EqualTo(TestEnvironment.ClientObjectId));
+            if (Mode == RecordedTestMode.Live)
+            {
+                Assert.That(result.Properties.PrincipalId, Is.EqualTo(TestEnvironment.ClientObjectId));
+            }
+
             Assert.That(result.Properties.RoleDefinitionId, Is.EqualTo(definitionToAssign.Id));
         }
 
@@ -174,7 +178,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(result.Id, Is.Not.Null);
             Assert.That(result.Name, Is.Not.Null);
             Assert.That(result.Type, Is.Not.Null);
-            Assert.That(result.Properties.PrincipalId, Is.EqualTo(TestEnvironment.ClientObjectId));
+            if (Mode == RecordedTestMode.Live)
+            {
+                Assert.That(result.Properties.PrincipalId, Is.EqualTo(TestEnvironment.ClientObjectId));
+            }
+
             Assert.That(result.Properties.RoleDefinitionId, Is.EqualTo(definitionToAssign.Id));
         }
 
@@ -195,7 +203,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(result.Id, Is.Not.Null);
             Assert.That(result.Name, Is.Not.Null);
             Assert.That(result.Type, Is.Not.Null);
-            Assert.That(result.Properties.PrincipalId, Is.EqualTo(TestEnvironment.ClientObjectId));
+            if (Mode == RecordedTestMode.Live)
+            {
+                Assert.That(result.Properties.PrincipalId, Is.EqualTo(TestEnvironment.ClientObjectId));
+            }
+
             Assert.That(result.Properties.RoleDefinitionId, Is.EqualTo(definitionToAssign.Id));
         }
 

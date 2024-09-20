@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class SapLandscapeMonitorPropertiesGrouping : IUtf8JsonSerializable, IJsonModel<SapLandscapeMonitorPropertiesGrouping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapLandscapeMonitorPropertiesGrouping>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapLandscapeMonitorPropertiesGrouping>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapLandscapeMonitorPropertiesGrouping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in Landscape)
                 {
-                    writer.WriteObjectValue<SapLandscapeMonitorSidMapping>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in SapApplication)
                 {
-                    writer.WriteObjectValue<SapLandscapeMonitorSidMapping>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SapLandscapeMonitorPropertiesGrouping DeserializeSapLandscapeMonitorPropertiesGrouping(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

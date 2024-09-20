@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DnsResolver
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DnsForwardingRuleResource : Azure.ResourceManager.ArmResource
+    public partial class DnsForwardingRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.DnsForwardingRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DnsForwardingRuleResource() { }
@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.DnsResolver
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DnsResolver.DnsForwardingRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.DnsForwardingRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DnsResolver.DnsForwardingRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.DnsForwardingRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.DnsForwardingRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.DnsForwardingRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DnsResolver.DnsForwardingRuleResource> Update(Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulePatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.DnsForwardingRuleResource>> UpdateAsync(Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulePatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -76,7 +81,7 @@ namespace Azure.ResourceManager.DnsResolver
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DnsForwardingRulesetResource : Azure.ResourceManager.ArmResource
+    public partial class DnsForwardingRulesetResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DnsForwardingRulesetResource() { }
@@ -99,6 +104,11 @@ namespace Azure.ResourceManager.DnsResolver
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetPatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetPatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -132,7 +142,7 @@ namespace Azure.ResourceManager.DnsResolver
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DnsForwardingRulesetVirtualNetworkLinkResource : Azure.ResourceManager.ArmResource
+    public partial class DnsForwardingRulesetVirtualNetworkLinkResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DnsForwardingRulesetVirtualNetworkLinkResource() { }
@@ -143,6 +153,11 @@ namespace Azure.ResourceManager.DnsResolver
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetVirtualNetworkLinkPatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DnsResolver.Models.DnsForwardingRulesetVirtualNetworkLinkPatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -227,7 +242,7 @@ namespace Azure.ResourceManager.DnsResolver
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DnsResolverInboundEndpointResource : Azure.ResourceManager.ArmResource
+    public partial class DnsResolverInboundEndpointResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DnsResolverInboundEndpointResource() { }
@@ -244,6 +259,11 @@ namespace Azure.ResourceManager.DnsResolver
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DnsResolver.Models.DnsResolverInboundEndpointPatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DnsResolver.DnsResolverInboundEndpointResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DnsResolver.Models.DnsResolverInboundEndpointPatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -277,7 +297,7 @@ namespace Azure.ResourceManager.DnsResolver
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DnsResolverOutboundEndpointResource : Azure.ResourceManager.ArmResource
+    public partial class DnsResolverOutboundEndpointResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DnsResolverOutboundEndpointResource() { }
@@ -294,10 +314,15 @@ namespace Azure.ResourceManager.DnsResolver
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DnsResolver.Models.DnsResolverOutboundEndpointPatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DnsResolver.Models.DnsResolverOutboundEndpointPatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DnsResolverResource : Azure.ResourceManager.ArmResource
+    public partial class DnsResolverResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.DnsResolverData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DnsResolverResource() { }
@@ -320,6 +345,11 @@ namespace Azure.ResourceManager.DnsResolver
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.DnsResolverResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DnsResolver.DnsResolverResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.DnsResolverResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DnsResolver.DnsResolverData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.DnsResolverData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.DnsResolverData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DnsResolver.DnsResolverData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DnsResolver.DnsResolverData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DnsResolver.DnsResolverResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DnsResolver.Models.DnsResolverPatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DnsResolver.DnsResolverResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DnsResolver.Models.DnsResolverPatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     public partial class DeviceProvisioningServicesIPFilterRule : IUtf8JsonSerializable, IJsonModel<DeviceProvisioningServicesIPFilterRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceProvisioningServicesIPFilterRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceProvisioningServicesIPFilterRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeviceProvisioningServicesIPFilterRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         internal static DeviceProvisioningServicesIPFilterRule DeserializeDeviceProvisioningServicesIPFilterRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

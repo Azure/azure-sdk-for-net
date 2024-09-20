@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class AzureReachabilityReport : IUtf8JsonSerializable, IJsonModel<AzureReachabilityReport>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureReachabilityReport>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureReachabilityReport>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureReachabilityReport>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("aggregationLevel"u8);
             writer.WriteStringValue(AggregationLevel);
             writer.WritePropertyName("providerLocation"u8);
-            writer.WriteObjectValue<AzureReachabilityReportLocation>(ProviderLocation, options);
+            writer.WriteObjectValue(ProviderLocation, options);
             writer.WritePropertyName("reachabilityReport"u8);
             writer.WriteStartArray();
             foreach (var item in ReachabilityReport)
             {
-                writer.WriteObjectValue<AzureReachabilityReportItem>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AzureReachabilityReport DeserializeAzureReachabilityReport(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

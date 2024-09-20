@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Text
 {
     public partial class TransliterableScript : IUtf8JsonSerializable, IJsonModel<TransliterableScript>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TransliterableScript>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TransliterableScript>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TransliterableScript>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -28,9 +28,9 @@ namespace Azure.AI.Translation.Text
             writer.WriteStartObject();
             writer.WritePropertyName("toScripts"u8);
             writer.WriteStartArray();
-            foreach (var item in ToScripts)
+            foreach (var item in TargetLanguageScripts)
             {
-                writer.WriteObjectValue<CommonScriptModel>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("code"u8);
@@ -40,7 +40,7 @@ namespace Azure.AI.Translation.Text
             writer.WritePropertyName("nativeName"u8);
             writer.WriteStringValue(NativeName);
             writer.WritePropertyName("dir"u8);
-            writer.WriteStringValue(Dir);
+            writer.WriteStringValue(Directionality.ToSerialString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -73,27 +73,27 @@ namespace Azure.AI.Translation.Text
 
         internal static TransliterableScript DeserializeTransliterableScript(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<CommonScriptModel> toScripts = default;
+            IReadOnlyList<LanguageScript> toScripts = default;
             string code = default;
             string name = default;
             string nativeName = default;
-            string dir = default;
+            LanguageDirectionality dir = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("toScripts"u8))
                 {
-                    List<CommonScriptModel> array = new List<CommonScriptModel>();
+                    List<LanguageScript> array = new List<LanguageScript>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeCommonScriptModel(item, options));
+                        array.Add(DeserializeLanguageScript(item, options));
                     }
                     toScripts = array;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.AI.Translation.Text
                 }
                 if (property.NameEquals("dir"u8))
                 {
-                    dir = property.Value.GetString();
+                    dir = property.Value.GetString().ToLanguageDirectionality();
                     continue;
                 }
                 if (options.Format != "W")
@@ -172,11 +172,11 @@ namespace Azure.AI.Translation.Text
             return DeserializeTransliterableScript(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TransliterableScript>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

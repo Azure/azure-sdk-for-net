@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal partial class TaskSchedulingPolicy : IUtf8JsonSerializable, IJsonModel<TaskSchedulingPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TaskSchedulingPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TaskSchedulingPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TaskSchedulingPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static TaskSchedulingPolicy DeserializeTaskSchedulingPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

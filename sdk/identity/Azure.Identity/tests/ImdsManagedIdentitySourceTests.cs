@@ -46,7 +46,8 @@ namespace Azure.Identity.Tests
                 ExcludeVisualStudioCodeCredential = true,
                 ExcludeVisualStudioCredential = true,
                 ExcludeWorkloadIdentityCredential = true,
-                Transport = mockTransport
+                Transport = mockTransport,
+                IsForceRefreshEnabled = true
             });
 
             //First request uses a 1 second timeout and no retries
@@ -59,6 +60,54 @@ namespace Azure.Identity.Tests
             await cred.GetTokenAsync(new(new[] { "test" }));
 
             expectedTimeouts = new TimeSpan?[] { null };
+            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+        }
+
+        [Test]
+        public async Task DefaultAzureCredentialUsesFirstRequestBehaviorUntilFirstResponse()
+        {
+            int callCount = 0;
+            List<TimeSpan?> networkTimeouts = new();
+
+            // the mock transport succeeds on the 2nd request to avoid long exponential back-offs,
+            // but is sufficient to validate the initial timeout and retry behavior
+            var mockTransport = MockTransport.FromMessageCallback(msg =>
+            {
+                callCount++;
+                networkTimeouts.Add(msg.NetworkTimeout);
+                return callCount switch
+                {
+                    1 => throw new TaskCanceledException(),
+                    2 => CreateMockResponse(400, "Error").WithHeader("Content-Type", "application/json"),
+                    _ => CreateMockResponse(200, "token").WithHeader("Content-Type", "application/json"),
+                };
+            });
+
+            var cred = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+            {
+                ExcludeAzureCliCredential = true,
+                ExcludeAzureDeveloperCliCredential = true,
+                ExcludeAzurePowerShellCredential = true,
+                ExcludeEnvironmentCredential = true,
+                ExcludeSharedTokenCacheCredential = true,
+                ExcludeVisualStudioCodeCredential = true,
+                ExcludeVisualStudioCredential = true,
+                ExcludeWorkloadIdentityCredential = true,
+                Transport = mockTransport,
+                IsForceRefreshEnabled = true
+            });
+
+            //First request times out (throws TaskCancelledException) uses a 1 second timeout and no retries
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
+
+            var expectedTimeouts = new TimeSpan?[] { TimeSpan.FromSeconds(1) };
+            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+            networkTimeouts.Clear();
+
+            // Second request gets the expected probe response and should use the probe timeout on first request and default timeout on the retry
+            await cred.GetTokenAsync(new(new[] { "test" }));
+
+            expectedTimeouts = new TimeSpan?[] { TimeSpan.FromSeconds(1), null };
             CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
         }
 
@@ -87,6 +136,7 @@ namespace Azure.Identity.Tests
                 ExcludeVisualStudioCredential = true,
                 ExcludeWorkloadIdentityCredential = true,
                 Transport = mockTransport,
+                IsForceRefreshEnabled = true,
                 RetryPolicy = new RetryPolicy(7, DelayStrategy.CreateFixedDelayStrategy(TimeSpan.Zero))
             };
 
@@ -120,14 +170,14 @@ namespace Azure.Identity.Tests
 
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
 
-            var expectedTimeouts = new TimeSpan?[] { null, null, null, null };
+            var expectedTimeouts = new TimeSpan?[] { null, null, null, null, null, null };
             CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
         }
 
         private MockResponse CreateMockResponse(int responseCode, string token)
         {
             var response = new MockResponse(responseCode);
-            string jsonData = $"{{ \"access_token\": \"{token}\", \"expires_on\": \"3600\" }}";
+            string jsonData = $"{{ \"access_token\": \"{token}\", \"expires_on\": \"{DateTimeOffset.UtcNow.AddHours(2).ToUnixTimeSeconds()}\" }}";
             byte[] byteArray = Encoding.UTF8.GetBytes(jsonData);
             response.ContentStream = new MemoryStream(byteArray);
             return response;

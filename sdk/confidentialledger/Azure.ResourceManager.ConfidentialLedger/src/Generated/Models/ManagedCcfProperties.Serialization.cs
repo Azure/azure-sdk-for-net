@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     public partial class ManagedCcfProperties : IUtf8JsonSerializable, IJsonModel<ManagedCcfProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedCcfProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedCcfProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedCcfProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -47,14 +47,19 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WriteStartArray();
                 foreach (var item in MemberIdentityCertificates)
                 {
-                    writer.WriteObjectValue<ConfidentialLedgerMemberIdentityCertificate>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DeploymentType))
             {
                 writer.WritePropertyName("deploymentType"u8);
-                writer.WriteObjectValue<ConfidentialLedgerDeploymentType>(DeploymentType, options);
+                writer.WriteObjectValue(DeploymentType, options);
+            }
+            if (Optional.IsDefined(RunningState))
+            {
+                writer.WritePropertyName("runningState"u8);
+                writer.WriteStringValue(RunningState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -98,7 +103,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         internal static ManagedCcfProperties DeserializeManagedCcfProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -109,6 +114,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             Uri identityServiceUri = default;
             IList<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates = default;
             ConfidentialLedgerDeploymentType deploymentType = default;
+            ConfidentialLedgerRunningState? runningState = default;
             ConfidentialLedgerProvisioningState? provisioningState = default;
             int? nodeCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -161,6 +167,15 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     deploymentType = ConfidentialLedgerDeploymentType.DeserializeConfidentialLedgerDeploymentType(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("runningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    runningState = new ConfidentialLedgerRunningState(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -191,6 +206,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 identityServiceUri,
                 memberIdentityCertificates ?? new ChangeTrackingList<ConfidentialLedgerMemberIdentityCertificate>(),
                 deploymentType,
+                runningState,
                 provisioningState,
                 nodeCount,
                 serializedAdditionalRawData);

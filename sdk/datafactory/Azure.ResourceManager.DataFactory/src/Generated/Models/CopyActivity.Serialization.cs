@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class CopyActivity : IUtf8JsonSerializable, IJsonModel<CopyActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CopyActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue<DatasetReference>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue<DatasetReference>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue<PipelineActivityPolicy>(Policy, options);
+                writer.WriteObjectValue(Policy, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue<CopyActivitySource>(Source, options);
+            writer.WriteObjectValue(Source, options);
             writer.WritePropertyName("sink"u8);
-            writer.WriteObjectValue<CopySink>(Sink, options);
+            writer.WriteObjectValue(Sink, options);
             if (Optional.IsDefined(Translator))
             {
                 writer.WritePropertyName("translator"u8);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(StagingSettings))
             {
                 writer.WritePropertyName("stagingSettings"u8);
-                writer.WriteObjectValue<StagingSettings>(StagingSettings, options);
+                writer.WriteObjectValue(StagingSettings, options);
             }
             if (Optional.IsDefined(ParallelCopies))
             {
@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RedirectIncompatibleRowSettings))
             {
                 writer.WritePropertyName("redirectIncompatibleRowSettings"u8);
-                writer.WriteObjectValue<RedirectIncompatibleRowSettings>(RedirectIncompatibleRowSettings, options);
+                writer.WriteObjectValue(RedirectIncompatibleRowSettings, options);
             }
             if (Optional.IsDefined(LogStorageSettings))
             {
                 writer.WritePropertyName("logStorageSettings"u8);
-                writer.WriteObjectValue<LogStorageSettings>(LogStorageSettings, options);
+                writer.WriteObjectValue(LogStorageSettings, options);
             }
             if (Optional.IsDefined(LogSettings))
             {
                 writer.WritePropertyName("logSettings"u8);
-                writer.WriteObjectValue<DataFactoryLogSettings>(LogSettings, options);
+                writer.WriteObjectValue(LogSettings, options);
             }
             if (Optional.IsCollectionDefined(PreserveRules))
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SkipErrorFile))
             {
                 writer.WritePropertyName("skipErrorFile"u8);
-                writer.WriteObjectValue<SkipErrorFile>(SkipErrorFile, options);
+                writer.WriteObjectValue(SkipErrorFile, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CopyActivity DeserializeCopyActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

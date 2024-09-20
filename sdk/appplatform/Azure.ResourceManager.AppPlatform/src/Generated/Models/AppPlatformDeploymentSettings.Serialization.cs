@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformDeploymentSettings : IUtf8JsonSerializable, IJsonModel<AppPlatformDeploymentSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformDeploymentSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformDeploymentSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformDeploymentSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformDeploymentSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,11 +34,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
-                writer.WriteObjectValue<AppPlatformDeploymentResourceRequirements>(ResourceRequests, options);
+                writer.WriteObjectValue(ResourceRequests, options);
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
@@ -79,17 +87,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(LivenessProbe))
             {
                 writer.WritePropertyName("livenessProbe"u8);
-                writer.WriteObjectValue<AppInstanceProbe>(LivenessProbe, options);
+                writer.WriteObjectValue(LivenessProbe, options);
             }
             if (Optional.IsDefined(ReadinessProbe))
             {
                 writer.WritePropertyName("readinessProbe"u8);
-                writer.WriteObjectValue<AppInstanceProbe>(ReadinessProbe, options);
+                writer.WriteObjectValue(ReadinessProbe, options);
             }
             if (Optional.IsDefined(StartupProbe))
             {
                 writer.WritePropertyName("startupProbe"u8);
-                writer.WriteObjectValue<AppInstanceProbe>(StartupProbe, options);
+                writer.WriteObjectValue(StartupProbe, options);
             }
             if (Optional.IsDefined(TerminationGracePeriodInSeconds))
             {
@@ -99,7 +107,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ContainerProbeSettings))
             {
                 writer.WritePropertyName("containerProbeSettings"u8);
-                writer.WriteObjectValue<ContainerProbeSettings>(ContainerProbeSettings, options);
+                writer.WriteObjectValue(ContainerProbeSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -116,7 +124,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppPlatformDeploymentSettings IJsonModel<AppPlatformDeploymentSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -133,7 +140,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformDeploymentSettings DeserializeAppPlatformDeploymentSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

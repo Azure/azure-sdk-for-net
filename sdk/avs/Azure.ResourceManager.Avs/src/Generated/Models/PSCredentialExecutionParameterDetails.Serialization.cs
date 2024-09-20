@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Avs.Models
 {
     public partial class PSCredentialExecutionParameterDetails : IUtf8JsonSerializable, IJsonModel<PSCredentialExecutionParameterDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PSCredentialExecutionParameterDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PSCredentialExecutionParameterDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PSCredentialExecutionParameterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static PSCredentialExecutionParameterDetails DeserializePSCredentialExecutionParameterDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

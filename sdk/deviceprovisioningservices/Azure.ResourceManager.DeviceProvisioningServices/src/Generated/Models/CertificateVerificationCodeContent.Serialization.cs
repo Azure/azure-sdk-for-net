@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     public partial class CertificateVerificationCodeContent : IUtf8JsonSerializable, IJsonModel<CertificateVerificationCodeContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertificateVerificationCodeContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertificateVerificationCodeContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CertificateVerificationCodeContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         internal static CertificateVerificationCodeContent DeserializeCertificateVerificationCodeContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

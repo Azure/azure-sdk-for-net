@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     internal partial class TransportAuthenticationUpdate : IUtf8JsonSerializable, IJsonModel<TransportAuthenticationUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TransportAuthenticationUpdate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TransportAuthenticationUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TransportAuthenticationUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in OwnCertificates)
                 {
-                    writer.WriteObjectValue<OwnCertificate>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         internal static TransportAuthenticationUpdate DeserializeTransportAuthenticationUpdate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

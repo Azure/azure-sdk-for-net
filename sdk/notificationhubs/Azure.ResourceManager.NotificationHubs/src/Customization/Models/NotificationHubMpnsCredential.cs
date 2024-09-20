@@ -8,6 +8,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 {
     public partial class NotificationHubMpnsCredential
     {
+        /// <summary> Initializes a new instance of <see cref="NotificationHubMpnsCredential"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NotificationHubMpnsCredential()
+        {
+        }
+
         /// <summary>
         /// The MPNS certificate Thumbprint
         /// <para>

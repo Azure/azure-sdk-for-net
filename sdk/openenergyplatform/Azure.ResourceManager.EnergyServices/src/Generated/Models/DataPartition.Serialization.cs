@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
 {
     public partial class DataPartition : IUtf8JsonSerializable, IJsonModel<DataPartition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataPartition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataPartition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataPartition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
 
         internal static DataPartition DeserializeDataPartition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

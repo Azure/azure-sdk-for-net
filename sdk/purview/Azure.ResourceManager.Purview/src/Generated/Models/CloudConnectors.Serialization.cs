@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Purview.Models
 {
     internal partial class CloudConnectors : IUtf8JsonSerializable, IJsonModel<CloudConnectors>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudConnectors>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudConnectors>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CloudConnectors>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         internal static CloudConnectors DeserializeCloudConnectors(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

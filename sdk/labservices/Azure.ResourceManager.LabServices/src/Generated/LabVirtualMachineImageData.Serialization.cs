@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.LabServices
 {
     public partial class LabVirtualMachineImageData : IUtf8JsonSerializable, IJsonModel<LabVirtualMachineImageData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabVirtualMachineImageData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabVirtualMachineImageData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LabVirtualMachineImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.LabServices
 
         internal static LabVirtualMachineImageData DeserializeLabVirtualMachineImageData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

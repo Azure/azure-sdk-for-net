@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Automation.Models
 {
     internal partial class AutomationUsageListResult : IUtf8JsonSerializable, IJsonModel<AutomationUsageListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationUsageListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationUsageListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationUsageListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomationUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,14 +34,13 @@ namespace Azure.ResourceManager.Automation.Models
                 throw new FormatException($"The model {nameof(AutomationUsageListResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<AutomationUsage>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.Automation.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AutomationUsageListResult IJsonModel<AutomationUsageListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +75,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationUsageListResult DeserializeAutomationUsageListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

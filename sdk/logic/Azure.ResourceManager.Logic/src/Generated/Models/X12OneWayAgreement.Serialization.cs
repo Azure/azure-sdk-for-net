@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class X12OneWayAgreement : IUtf8JsonSerializable, IJsonModel<X12OneWayAgreement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X12OneWayAgreement>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X12OneWayAgreement>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<X12OneWayAgreement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.Logic.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("senderBusinessIdentity"u8);
-            writer.WriteObjectValue<IntegrationAccountBusinessIdentity>(SenderBusinessIdentity, options);
+            writer.WriteObjectValue(SenderBusinessIdentity, options);
             writer.WritePropertyName("receiverBusinessIdentity"u8);
-            writer.WriteObjectValue<IntegrationAccountBusinessIdentity>(ReceiverBusinessIdentity, options);
+            writer.WriteObjectValue(ReceiverBusinessIdentity, options);
             writer.WritePropertyName("protocolSettings"u8);
-            writer.WriteObjectValue<X12ProtocolSettings>(ProtocolSettings, options);
+            writer.WriteObjectValue(ProtocolSettings, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12OneWayAgreement DeserializeX12OneWayAgreement(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

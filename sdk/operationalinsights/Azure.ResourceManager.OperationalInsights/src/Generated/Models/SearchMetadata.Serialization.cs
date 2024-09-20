@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 {
     internal partial class SearchMetadata : IUtf8JsonSerializable, IJsonModel<SearchMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SearchMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in CoreSummaries)
                 {
-                    writer.WriteObjectValue<OperationalInsightsSearchCoreSummary>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Sort)
                 {
-                    writer.WriteObjectValue<SearchSort>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue<SearchMetadataSchema>(Schema, options);
+                writer.WriteObjectValue(Schema, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static SearchMetadata DeserializeSearchMetadata(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             string status = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? lastUpdated = default;
-            ETag? eTag = default;
+            ETag? etag = default;
             IReadOnlyList<SearchSort> sort = default;
             long? requestTime = default;
             string aggregatedValueField = default;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sort"u8))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 status,
                 startTime,
                 lastUpdated,
-                eTag,
+                etag,
                 sort ?? new ChangeTrackingList<SearchSort>(),
                 requestTime,
                 aggregatedValueField,
@@ -360,15 +360,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SearchId), out propertyOverride);
-            if (Optional.IsDefined(SearchId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  requestId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SearchId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  requestId: ");
                     if (SearchId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -382,15 +383,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResultType), out propertyOverride);
-            if (Optional.IsDefined(ResultType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resultType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResultType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resultType: ");
                     if (ResultType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -404,43 +406,46 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Total), out propertyOverride);
-            if (Optional.IsDefined(Total) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  total: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Total))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  total: ");
                     builder.AppendLine($"'{Total.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Top), out propertyOverride);
-            if (Optional.IsDefined(Top) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  top: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Top))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  top: ");
                     builder.AppendLine($"'{Top.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     if (Id.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -454,17 +459,18 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CoreSummaries), out propertyOverride);
-            if (Optional.IsCollectionDefined(CoreSummaries) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (CoreSummaries.Any() || hasPropertyOverride)
+                builder.Append("  coreSummaries: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CoreSummaries))
                 {
-                    builder.Append("  coreSummaries: ");
-                    if (hasPropertyOverride)
+                    if (CoreSummaries.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  coreSummaries: ");
                         builder.AppendLine("[");
                         foreach (var item in CoreSummaries)
                         {
@@ -476,15 +482,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  status: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  status: ");
                     if (Status.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -498,61 +505,65 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            if (Optional.IsDefined(StartOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  startTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  startTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdated), out propertyOverride);
-            if (Optional.IsDefined(LastUpdated) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  lastUpdated: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastUpdated))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  lastUpdated: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LastUpdated.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (Optional.IsDefined(ETag) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  eTag: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  eTag: ");
                     builder.AppendLine($"'{ETag.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sort), out propertyOverride);
-            if (Optional.IsCollectionDefined(Sort) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Sort.Any() || hasPropertyOverride)
+                builder.Append("  sort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Sort))
                 {
-                    builder.Append("  sort: ");
-                    if (hasPropertyOverride)
+                    if (Sort.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  sort: ");
                         builder.AppendLine("[");
                         foreach (var item in Sort)
                         {
@@ -564,29 +575,31 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestTime), out propertyOverride);
-            if (Optional.IsDefined(RequestTime) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  requestTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestTime))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  requestTime: ");
                     builder.AppendLine($"'{RequestTime.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AggregatedValueField), out propertyOverride);
-            if (Optional.IsDefined(AggregatedValueField) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  aggregatedValueField: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AggregatedValueField))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  aggregatedValueField: ");
                     if (AggregatedValueField.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -600,15 +613,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AggregatedGroupingFields), out propertyOverride);
-            if (Optional.IsDefined(AggregatedGroupingFields) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  aggregatedGroupingFields: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AggregatedGroupingFields))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  aggregatedGroupingFields: ");
                     if (AggregatedGroupingFields.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -622,43 +636,46 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sum), out propertyOverride);
-            if (Optional.IsDefined(Sum) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sum: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Sum))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sum: ");
                     builder.AppendLine($"'{Sum.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Max), out propertyOverride);
-            if (Optional.IsDefined(Max) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  max: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Max))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  max: ");
                     builder.AppendLine($"'{Max.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Schema), out propertyOverride);
-            if (Optional.IsDefined(Schema) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  schema: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Schema))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  schema: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Schema, options, 2, false, "  schema: ");
                 }
             }

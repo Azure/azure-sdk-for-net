@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 {
     public partial class FhirR4ObservationReferenceRange : IUtf8JsonSerializable, IJsonModel<FhirR4ObservationReferenceRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4ObservationReferenceRange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4ObservationReferenceRange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FhirR4ObservationReferenceRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,17 +29,17 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Low))
             {
                 writer.WritePropertyName("low"u8);
-                writer.WriteObjectValue<FhirR4Quantity>(Low, options);
+                writer.WriteObjectValue(Low, options);
             }
             if (Optional.IsDefined(High))
             {
                 writer.WritePropertyName("high"u8);
-                writer.WriteObjectValue<FhirR4Quantity>(High, options);
+                writer.WriteObjectValue(High, options);
             }
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteObjectValue<FhirR4CodeableConcept>(Type, options);
+                writer.WriteObjectValue(Type, options);
             }
             if (Optional.IsCollectionDefined(AppliesTo))
             {
@@ -47,14 +47,14 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in AppliesTo)
                 {
-                    writer.WriteObjectValue<FhirR4CodeableConcept>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Age))
             {
                 writer.WritePropertyName("age"u8);
-                writer.WriteObjectValue<FhirR4Range>(Age, options);
+                writer.WriteObjectValue(Age, options);
             }
             if (Optional.IsDefined(Text))
             {
@@ -93,7 +93,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         internal static FhirR4ObservationReferenceRange DeserializeFhirR4ObservationReferenceRange(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +102,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             FhirR4Quantity low = default;
             FhirR4Quantity high = default;
             FhirR4CodeableConcept type = default;
-            IList<FhirR4CodeableConcept> appliesTo = default;
+            IReadOnlyList<FhirR4CodeableConcept> appliesTo = default;
             FhirR4Range age = default;
             string text = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -219,11 +219,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             return DeserializeFhirR4ObservationReferenceRange(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<FhirR4ObservationReferenceRange>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

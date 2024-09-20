@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class CapacityReservationGroupData : IUtf8JsonSerializable, IJsonModel<CapacityReservationGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapacityReservationGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapacityReservationGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CapacityReservationGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue<CapacityReservationGroupInstanceView>(InstanceView, options);
+                writer.WriteObjectValue(InstanceView, options);
             }
             if (Optional.IsDefined(SharingProfile))
             {
                 writer.WritePropertyName("sharingProfile"u8);
-                writer.WriteObjectValue<ResourceSharingProfile>(SharingProfile, options);
+                writer.WriteObjectValue(SharingProfile, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static CapacityReservationGroupData DeserializeCapacityReservationGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

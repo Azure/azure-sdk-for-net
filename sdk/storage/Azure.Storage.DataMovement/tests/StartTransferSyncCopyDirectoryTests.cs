@@ -486,7 +486,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             long size = Constants.KB;
             int waitTimeInSec = 10;
-            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient service = GetServiceClient_OAuth();
             var containerName = GetNewContainerName();
             await using DisposingContainer testContainer = await GetTestContainerAsync(
                 service,
@@ -941,7 +941,6 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions: transferOptions,
                 destinationBlobOptions: new() // Preserve all properties
                 {
-                    AccessTier = new(true),
                     CacheControl = new(true),
                     ContentDisposition = new(true),
                     ContentEncoding = new(true),
@@ -987,7 +986,6 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions: transferOptions,
                 destinationBlobOptions: new() // Do NOT preserve any property
                 {
-                    AccessTier = new(false),
                     CacheControl = new(false),
                     ContentDisposition = new(false),
                     ContentEncoding = new(false),
@@ -1082,7 +1080,7 @@ namespace Azure.Storage.DataMovement.Tests
                 BlobDirectoryPrefix = destBlobPrefix,
                 BlobOptions = new()
                 {
-                    AccessTier = new(DefaultAccessTier),
+                    AccessTier = DefaultAccessTier,
                     CacheControl = new(DefaultCacheControl),
                     ContentDisposition = new(DefaultContentDisposition),
                     ContentEncoding = new(DefaultContentEncoding),

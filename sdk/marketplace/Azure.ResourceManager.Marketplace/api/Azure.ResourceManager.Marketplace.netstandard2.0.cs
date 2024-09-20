@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Marketplace
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MarketplaceAdminApprovalRequestResource : Azure.ResourceManager.ArmResource
+    public partial class MarketplaceAdminApprovalRequestResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MarketplaceAdminApprovalRequestResource() { }
@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.Marketplace
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(System.Guid privateStoreId, string adminRequestApprovalId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource> Get(string publisherId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource>> GetAsync(string publisherId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -80,7 +85,7 @@ namespace Azure.ResourceManager.Marketplace
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MarketplaceApprovalRequestResource : Azure.ResourceManager.ArmResource
+    public partial class MarketplaceApprovalRequestResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MarketplaceApprovalRequestResource() { }
@@ -91,6 +96,11 @@ namespace Azure.ResourceManager.Marketplace
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestResult> QueryApprovalRequest(Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestResult>> QueryApprovalRequestAsync(Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response WithdrawPlan(Azure.ResourceManager.Marketplace.Models.WithdrawPlanContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -160,7 +170,7 @@ namespace Azure.ResourceManager.Marketplace
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PrivateStoreCollectionInfoResource : Azure.ResourceManager.ArmResource
+    public partial class PrivateStoreCollectionInfoResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PrivateStoreCollectionInfoResource() { }
@@ -186,6 +196,11 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.MarketplaceRule> QueryRulesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SetCollectionRules(Azure.ResourceManager.Marketplace.Models.SetRulesContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetCollectionRulesAsync(Azure.ResourceManager.Marketplace.Models.SetRulesContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.TransferOffersResult> TransferOffers(Azure.ResourceManager.Marketplace.Models.TransferOffersContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.TransferOffersResult>> TransferOffersAsync(Azure.ResourceManager.Marketplace.Models.TransferOffersContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -247,7 +262,7 @@ namespace Azure.ResourceManager.Marketplace
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PrivateStoreOfferResource : Azure.ResourceManager.ArmResource
+    public partial class PrivateStoreOfferResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PrivateStoreOfferResource() { }
@@ -260,12 +275,17 @@ namespace Azure.ResourceManager.Marketplace
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation? payload = default(Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Marketplace.PrivateStoreOfferData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Marketplace.PrivateStoreOfferData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreOfferData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreOfferData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreOfferData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource> UpsertOfferWithMultiContext(Azure.ResourceManager.Marketplace.Models.MultiContextAndPlansContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreOfferResource>> UpsertOfferWithMultiContextAsync(Azure.ResourceManager.Marketplace.Models.MultiContextAndPlansContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PrivateStoreResource : Azure.ResourceManager.ArmResource
+    public partial class PrivateStoreResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PrivateStoreResource() { }
@@ -313,6 +333,11 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult> QueryUserOffersAsync(Azure.ResourceManager.Marketplace.Models.QueryUserOffersContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.Models.MarketplaceRule> QueryUserRules(Azure.ResourceManager.Marketplace.Models.QueryUserRulesContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.MarketplaceRule> QueryUserRulesAsync(Azure.ResourceManager.Marketplace.Models.QueryUserRulesContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Marketplace.PrivateStoreData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.PrivateStoreData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Marketplace.PrivateStoreData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.PrivateStoreData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

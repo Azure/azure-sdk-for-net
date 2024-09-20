@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 {
     public partial class MetadataSupportedValueDetail : IUtf8JsonSerializable, IJsonModel<MetadataSupportedValueDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetadataSupportedValueDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetadataSupportedValueDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MetadataSupportedValueDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         internal static MetadataSupportedValueDetail DeserializeMetadataSupportedValueDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

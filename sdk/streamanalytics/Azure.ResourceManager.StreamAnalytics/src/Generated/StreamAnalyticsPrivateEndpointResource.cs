@@ -288,7 +288,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = await _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsPrivateEndpointResource>(Response.FromValue(new StreamAnalyticsPrivateEndpointResource(Client, response), response.GetRawResponse()));
+                var uri = _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, ifNoneMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsPrivateEndpointResource>(Response.FromValue(new StreamAnalyticsPrivateEndpointResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -336,7 +338,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsPrivateEndpointResource>(Response.FromValue(new StreamAnalyticsPrivateEndpointResource(Client, response), response.GetRawResponse()));
+                var uri = _streamAnalyticsPrivateEndpointPrivateEndpointsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, ifNoneMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsPrivateEndpointResource>(Response.FromValue(new StreamAnalyticsPrivateEndpointResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

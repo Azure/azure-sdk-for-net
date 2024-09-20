@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningStackEnsembleSettings : IUtf8JsonSerializable, IJsonModel<MachineLearningStackEnsembleSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningStackEnsembleSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningStackEnsembleSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningStackEnsembleSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -26,6 +27,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(StackMetaLearnerType))
+            {
+                writer.WritePropertyName("stackMetaLearnerType"u8);
+                writer.WriteStringValue(StackMetaLearnerType.Value.ToString());
+            }
+            if (Optional.IsDefined(StackMetaLearnerTrainPercentage))
+            {
+                writer.WritePropertyName("stackMetaLearnerTrainPercentage"u8);
+                writer.WriteNumberValue(StackMetaLearnerTrainPercentage.Value);
+            }
             if (Optional.IsDefined(StackMetaLearnerKWargs))
             {
                 if (StackMetaLearnerKWargs != null)
@@ -44,16 +55,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("stackMetaLearnerKWargs");
                 }
-            }
-            if (Optional.IsDefined(StackMetaLearnerTrainPercentage))
-            {
-                writer.WritePropertyName("stackMetaLearnerTrainPercentage"u8);
-                writer.WriteNumberValue(StackMetaLearnerTrainPercentage.Value);
-            }
-            if (Optional.IsDefined(StackMetaLearnerType))
-            {
-                writer.WritePropertyName("stackMetaLearnerType"u8);
-                writer.WriteStringValue(StackMetaLearnerType.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,27 +88,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningStackEnsembleSettings DeserializeMachineLearningStackEnsembleSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            BinaryData stackMetaLearnerKWargs = default;
-            double? stackMetaLearnerTrainPercentage = default;
             MachineLearningStackMetaLearnerType? stackMetaLearnerType = default;
+            double? stackMetaLearnerTrainPercentage = default;
+            BinaryData stackMetaLearnerKWargs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stackMetaLearnerKWargs"u8))
+                if (property.NameEquals("stackMetaLearnerType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        stackMetaLearnerKWargs = null;
                         continue;
                     }
-                    stackMetaLearnerKWargs = BinaryData.FromString(property.Value.GetRawText());
+                    stackMetaLearnerType = new MachineLearningStackMetaLearnerType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stackMetaLearnerTrainPercentage"u8))
@@ -119,13 +119,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     stackMetaLearnerTrainPercentage = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("stackMetaLearnerType"u8))
+                if (property.NameEquals("stackMetaLearnerKWargs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        stackMetaLearnerKWargs = null;
                         continue;
                     }
-                    stackMetaLearnerType = new MachineLearningStackMetaLearnerType(property.Value.GetString());
+                    stackMetaLearnerKWargs = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +135,67 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningStackEnsembleSettings(stackMetaLearnerKWargs, stackMetaLearnerTrainPercentage, stackMetaLearnerType, serializedAdditionalRawData);
+            return new MachineLearningStackEnsembleSettings(stackMetaLearnerType, stackMetaLearnerTrainPercentage, stackMetaLearnerKWargs, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StackMetaLearnerType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  stackMetaLearnerType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StackMetaLearnerType))
+                {
+                    builder.Append("  stackMetaLearnerType: ");
+                    builder.AppendLine($"'{StackMetaLearnerType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StackMetaLearnerTrainPercentage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  stackMetaLearnerTrainPercentage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StackMetaLearnerTrainPercentage))
+                {
+                    builder.Append("  stackMetaLearnerTrainPercentage: ");
+                    builder.AppendLine($"'{StackMetaLearnerTrainPercentage.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StackMetaLearnerKWargs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  stackMetaLearnerKWargs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StackMetaLearnerKWargs))
+                {
+                    builder.Append("  stackMetaLearnerKWargs: ");
+                    builder.AppendLine($"'{StackMetaLearnerKWargs.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningStackEnsembleSettings>.Write(ModelReaderWriterOptions options)
@@ -145,6 +206,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningStackEnsembleSettings)} does not support writing '{options.Format}' format.");
             }

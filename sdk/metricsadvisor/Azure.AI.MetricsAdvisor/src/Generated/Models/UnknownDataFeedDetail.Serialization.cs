@@ -44,7 +44,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
-                writer.WriteObjectValue<DataFeedMetric>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Dimension))
@@ -490,11 +490,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             return DeserializeUnknownDataFeedDetail(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UnknownDataFeedDetail>(this);
+            content.JsonWriter.WriteObjectValue<DataFeedDetail>(this);
             return content;
         }
     }

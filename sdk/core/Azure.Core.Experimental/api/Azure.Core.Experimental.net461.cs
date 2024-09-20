@@ -132,16 +132,6 @@ namespace Azure.Core
         Azure.Core.AccessToken GetToken(Azure.Core.PopTokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
         System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.PopTokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
     }
-    public partial class LruCache<TKey, TValue> : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.IEnumerable where TKey : notnull
-    {
-        public LruCache(int capacity) { }
-        public int Count { get { throw null; } }
-        public int TotalLength { get { throw null; } }
-        public void AddOrUpdate(TKey key, TValue? val, int length) { }
-        public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, TValue>> GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public bool TryGet(TKey key, out TValue? value) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PopTokenRequestContext
     {
@@ -166,13 +156,6 @@ namespace Azure.Core
     {
         public ProvisionableTemplateAttribute(string resourceName) { }
         public string ResourceName { get { throw null; } }
-    }
-    public abstract partial class SchemaValidator
-    {
-        protected SchemaValidator() { }
-        public abstract string GenerateSchema(System.Type dataType);
-        public abstract bool TryValidate(object data, System.Type dataType, string schemaDefinition, out System.Collections.Generic.IEnumerable<System.Exception> validationErrors);
-        public virtual void Validate(object data, System.Type dataType, string schemaDefinition) { }
     }
 }
 namespace Azure.Core.Pipeline

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 {
     public partial class TroubleshooterResult : IUtf8JsonSerializable, IJsonModel<TroubleshooterResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TroubleshooterResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TroubleshooterResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TroubleshooterResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         internal static TroubleshooterResult DeserializeTroubleshooterResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string questionId = default;
-            QuestionType? questionType = default;
+            TroubleshooterQuestionType? questionType = default;
             string response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    questionType = new QuestionType(property.Value.GetString());
+                    questionType = new TroubleshooterQuestionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("response"u8))

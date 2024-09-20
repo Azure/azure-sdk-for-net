@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     public partial class VCenterInventoryItemData : IUtf8JsonSerializable, IJsonModel<VCenterInventoryItemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VCenterInventoryItemData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VCenterInventoryItemData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VCenterInventoryItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static VCenterInventoryItemData DeserializeVCenterInventoryItemData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

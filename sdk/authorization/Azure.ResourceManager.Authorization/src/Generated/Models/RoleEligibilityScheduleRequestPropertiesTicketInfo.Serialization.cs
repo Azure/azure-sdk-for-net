@@ -16,9 +16,18 @@ namespace Azure.ResourceManager.Authorization.Models
 {
     public partial class RoleEligibilityScheduleRequestPropertiesTicketInfo : IUtf8JsonSerializable, IJsonModel<RoleEligibilityScheduleRequestPropertiesTicketInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleEligibilityScheduleRequestPropertiesTicketInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleEligibilityScheduleRequestPropertiesTicketInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleEligibilityScheduleRequestPropertiesTicketInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RoleEligibilityScheduleRequestPropertiesTicketInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -26,7 +35,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestPropertiesTicketInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(TicketNumber))
             {
                 writer.WritePropertyName("ticketNumber"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.Authorization.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RoleEligibilityScheduleRequestPropertiesTicketInfo IJsonModel<RoleEligibilityScheduleRequestPropertiesTicketInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +76,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleEligibilityScheduleRequestPropertiesTicketInfo DeserializeRoleEligibilityScheduleRequestPropertiesTicketInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -112,15 +119,16 @@ namespace Azure.ResourceManager.Authorization.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TicketNumber), out propertyOverride);
-            if (Optional.IsDefined(TicketNumber) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ticketNumber: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TicketNumber))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ticketNumber: ");
                     if (TicketNumber.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +142,16 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TicketSystem), out propertyOverride);
-            if (Optional.IsDefined(TicketSystem) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ticketSystem: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TicketSystem))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ticketSystem: ");
                     if (TicketSystem.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

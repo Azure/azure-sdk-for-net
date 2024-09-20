@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ResourceHealth
 {
     public partial class ResourceHealthEventData : IUtf8JsonSerializable, IJsonModel<ResourceHealthEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceHealthEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceHealthEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceHealthEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ResourceHealth
             if (Optional.IsDefined(Article))
             {
                 writer.WritePropertyName("article"u8);
-                writer.WriteObjectValue<ResourceHealthEventArticle>(Article, options);
+                writer.WriteObjectValue(Article, options);
             }
             if (Optional.IsCollectionDefined(Links))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue<ResourceHealthEventLink>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in Impact)
                 {
-                    writer.WriteObjectValue<ResourceHealthEventImpact>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(RecommendedActions))
             {
                 writer.WritePropertyName("recommendedActions"u8);
-                writer.WriteObjectValue<ResourceHealthEventRecommendedActions>(RecommendedActions, options);
+                writer.WriteObjectValue(RecommendedActions, options);
             }
             if (Optional.IsCollectionDefined(Faqs))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in Faqs)
                 {
-                    writer.WriteObjectValue<ResourceHealthEventFaq>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ResourceHealth
             if (Optional.IsDefined(AdditionalInformation))
             {
                 writer.WritePropertyName("additionalInformation"u8);
-                writer.WriteObjectValue<ResourceHealthEventAdditionalInformation>(AdditionalInformation, options);
+                writer.WriteObjectValue(AdditionalInformation, options);
             }
             if (Optional.IsDefined(Duration))
             {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ResourceHealth
 
         internal static ResourceHealthEventData DeserializeResourceHealthEventData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

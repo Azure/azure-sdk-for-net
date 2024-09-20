@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     public partial class UpdateSystemServicesResponse : IUtf8JsonSerializable, IJsonModel<UpdateSystemServicesResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateSystemServicesResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateSystemServicesResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UpdateSystemServicesResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         internal static UpdateSystemServicesResponse DeserializeUpdateSystemServicesResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

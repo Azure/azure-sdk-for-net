@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class AadExternalSecuritySolution : IUtf8JsonSerializable, IJsonModel<AadExternalSecuritySolution>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AadExternalSecuritySolution>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AadExternalSecuritySolution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AadExternalSecuritySolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<AadSolutionProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Kind != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AadExternalSecuritySolution DeserializeAadExternalSecuritySolution(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

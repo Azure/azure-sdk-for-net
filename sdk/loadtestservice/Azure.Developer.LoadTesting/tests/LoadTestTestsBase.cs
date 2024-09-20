@@ -68,10 +68,9 @@ namespace Azure.Developer.LoadTesting.Tests
             _testRunId = "test-run-id-from-csharp-sdk";
             _testHelper = new TestHelper();
 
-            BodyKeySanitizers.Add(new BodyKeySanitizer(SanitizeValue)
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..url")
             {
                 GroupForReplace = "group",
-                JsonPath = "$..url",
                 Regex = @"sig=(?<group>.*?)(?=$|&)"
             });
         }

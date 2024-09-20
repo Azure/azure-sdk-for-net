@@ -19,15 +19,15 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("algorithm"u8);
             writer.WriteStringValue(AlgorithmConfigurationName);
-            if (Optional.IsDefined(Vectorizer))
+            if (Optional.IsDefined(VectorizerName))
             {
                 writer.WritePropertyName("vectorizer"u8);
-                writer.WriteStringValue(Vectorizer);
+                writer.WriteStringValue(VectorizerName);
             }
-            if (Optional.IsDefined(CompressionConfigurationName))
+            if (Optional.IsDefined(CompressionName))
             {
                 writer.WritePropertyName("compression"u8);
-                writer.WriteStringValue(CompressionConfigurationName);
+                writer.WriteStringValue(CompressionName);
             }
             writer.WriteEndObject();
         }
@@ -76,11 +76,11 @@ namespace Azure.Search.Documents.Indexes.Models
             return DeserializeVectorSearchProfile(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<VectorSearchProfile>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

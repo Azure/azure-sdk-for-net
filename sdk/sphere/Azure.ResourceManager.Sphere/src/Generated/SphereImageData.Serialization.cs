@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sphere
 {
     public partial class SphereImageData : IUtf8JsonSerializable, IJsonModel<SphereImageData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SphereImageData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SphereImageData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SphereImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sphere
 
         internal static SphereImageData DeserializeSphereImageData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

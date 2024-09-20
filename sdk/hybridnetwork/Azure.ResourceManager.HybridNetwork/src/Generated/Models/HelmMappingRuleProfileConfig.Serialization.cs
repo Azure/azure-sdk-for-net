@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class HelmMappingRuleProfileConfig : IUtf8JsonSerializable, IJsonModel<HelmMappingRuleProfileConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HelmMappingRuleProfileConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HelmMappingRuleProfileConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HelmMappingRuleProfileConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(InstallOptions))
             {
                 writer.WritePropertyName("installOptions"u8);
-                writer.WriteObjectValue<HelmInstallConfig>(InstallOptions, options);
+                writer.WriteObjectValue(InstallOptions, options);
             }
             if (Optional.IsDefined(UpgradeOptions))
             {
                 writer.WritePropertyName("upgradeOptions"u8);
-                writer.WriteObjectValue<HelmUpgradeConfig>(UpgradeOptions, options);
+                writer.WriteObjectValue(UpgradeOptions, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static HelmMappingRuleProfileConfig DeserializeHelmMappingRuleProfileConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

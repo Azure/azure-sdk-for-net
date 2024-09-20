@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 {
     public partial class DateTimeInterval : IUtf8JsonSerializable, IJsonModel<DateTimeInterval>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DateTimeInterval>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DateTimeInterval>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DateTimeInterval>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         internal static DateTimeInterval DeserializeDateTimeInterval(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

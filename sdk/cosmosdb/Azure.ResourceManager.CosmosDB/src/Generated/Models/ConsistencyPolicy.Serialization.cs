@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class ConsistencyPolicy : IUtf8JsonSerializable, IJsonModel<ConsistencyPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsistencyPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsistencyPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsistencyPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ConsistencyPolicy DeserializeConsistencyPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -128,40 +128,43 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultConsistencyLevel), out propertyOverride);
-            builder.Append("  defaultConsistencyLevel: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  defaultConsistencyLevel: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  defaultConsistencyLevel: ");
                 builder.AppendLine($"'{DefaultConsistencyLevel.ToSerialString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxStalenessPrefix), out propertyOverride);
-            if (Optional.IsDefined(MaxStalenessPrefix) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxStalenessPrefix: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxStalenessPrefix))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxStalenessPrefix: ");
                     builder.AppendLine($"'{MaxStalenessPrefix.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxIntervalInSeconds), out propertyOverride);
-            if (Optional.IsDefined(MaxIntervalInSeconds) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxIntervalInSeconds: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxIntervalInSeconds))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxIntervalInSeconds: ");
                     builder.AppendLine($"{MaxIntervalInSeconds.Value}");
                 }
             }

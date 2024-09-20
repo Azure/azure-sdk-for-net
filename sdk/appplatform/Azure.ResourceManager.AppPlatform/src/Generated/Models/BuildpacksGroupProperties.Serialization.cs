@@ -16,9 +16,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class BuildpacksGroupProperties : IUtf8JsonSerializable, IJsonModel<BuildpacksGroupProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BuildpacksGroupProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BuildpacksGroupProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BuildpacksGroupProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BuildpacksGroupProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -26,7 +35,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 throw new FormatException($"The model {nameof(BuildpacksGroupProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -57,7 +65,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BuildpacksGroupProperties IJsonModel<BuildpacksGroupProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -74,7 +81,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static BuildpacksGroupProperties DeserializeBuildpacksGroupProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

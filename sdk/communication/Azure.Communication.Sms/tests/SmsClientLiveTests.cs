@@ -3,13 +3,12 @@
 
 #region Snippet:Azure_Communication_Sms_Tests_UsingStatements
 using System;
-/*@@*/ using System.IO;
 //@@ using Azure.Communication.Sms;
 #endregion Snippet:Azure_Communication_Sms_Tests_UsingStatements
 
+using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.Communication.Sms.Tests
@@ -109,6 +108,7 @@ namespace Azure.Communication.Sms.Tests
                    options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
                    {
                        Tag = "marketing", // custom tags
+                       DeliveryReportTimeoutInSeconds = 90 // OPTIONAL
                    });
                 AssertRawResponseHappyPath(response.GetRawResponse().ContentStream ?? new MemoryStream());
                 foreach (SmsSendResult result in response.Value)

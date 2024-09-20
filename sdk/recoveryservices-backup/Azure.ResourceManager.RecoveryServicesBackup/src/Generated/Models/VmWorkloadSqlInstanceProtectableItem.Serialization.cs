@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class VmWorkloadSqlInstanceProtectableItem : IUtf8JsonSerializable, IJsonModel<VmWorkloadSqlInstanceProtectableItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadSqlInstanceProtectableItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadSqlInstanceProtectableItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VmWorkloadSqlInstanceProtectableItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(PreBackupValidation))
             {
                 writer.WritePropertyName("prebackupvalidation"u8);
-                writer.WriteObjectValue<PreBackupValidation>(PreBackupValidation, options);
+                writer.WriteObjectValue(PreBackupValidation, options);
             }
             if (Optional.IsDefined(IsProtectable))
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static VmWorkloadSqlInstanceProtectableItem DeserializeVmWorkloadSqlInstanceProtectableItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

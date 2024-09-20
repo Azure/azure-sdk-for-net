@@ -477,6 +477,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             replicationList.Should().NotBeNullOrEmpty();
             replicationList.Should().HaveCount(1);
 
+            await LiveDelay(5000);
             //Break Replication
             ArmOperation breakReplicationOperation = (await remoteVolume.BreakReplicationAsync(WaitUntil.Completed, new()));
             Assert.IsTrue(breakReplicationOperation.HasCompleted);

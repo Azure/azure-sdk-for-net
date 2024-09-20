@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class DataBoxEdgeNetworkAdapter : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeNetworkAdapter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeNetworkAdapter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeNetworkAdapter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxEdgeNetworkAdapter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(AdapterPosition))
             {
                 writer.WritePropertyName("adapterPosition"u8);
-                writer.WriteObjectValue<DataBoxEdgeNetworkAdapterPosition>(AdapterPosition, options);
+                writer.WriteObjectValue(AdapterPosition, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Index))
             {
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(IPv4Configuration))
             {
                 writer.WritePropertyName("ipv4Configuration"u8);
-                writer.WriteObjectValue<DataBoxEdgeIPv4Config>(IPv4Configuration, options);
+                writer.WriteObjectValue(IPv4Configuration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IPv6Configuration))
             {
                 writer.WritePropertyName("ipv6Configuration"u8);
-                writer.WriteObjectValue<DataBoxEdgeIPv6Config>(IPv6Configuration, options);
+                writer.WriteObjectValue(IPv6Configuration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IPv6LinkLocalAddress))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeNetworkAdapter DeserializeDataBoxEdgeNetworkAdapter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

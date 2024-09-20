@@ -19,7 +19,7 @@ namespace Azure.Communication.Email
             writer.WriteStartArray();
             foreach (var item in To)
             {
-                writer.WriteObjectValue<EmailAddress>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(CC))
@@ -28,7 +28,7 @@ namespace Azure.Communication.Email
                 writer.WriteStartArray();
                 foreach (var item in CC)
                 {
-                    writer.WriteObjectValue<EmailAddress>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -38,18 +38,18 @@ namespace Azure.Communication.Email
                 writer.WriteStartArray();
                 foreach (var item in BCC)
                 {
-                    writer.WriteObjectValue<EmailAddress>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<EmailRecipients>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

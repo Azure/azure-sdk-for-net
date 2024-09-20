@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.BillingBenefits
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BillingBenefitsReservationOrderAliasResource : Azure.ResourceManager.ArmResource
+    public partial class BillingBenefitsReservationOrderAliasResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected BillingBenefitsReservationOrderAliasResource() { }
@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.BillingBenefits
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string reservationOrderAliasName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservationOrderAliasCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservationOrderAliasCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -148,7 +153,7 @@ namespace Azure.ResourceManager.BillingBenefits
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BillingBenefitsSavingsPlanOrderAliasResource : Azure.ResourceManager.ArmResource
+    public partial class BillingBenefitsSavingsPlanOrderAliasResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected BillingBenefitsSavingsPlanOrderAliasResource() { }
@@ -157,6 +162,11 @@ namespace Azure.ResourceManager.BillingBenefits
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string savingsPlanOrderAliasName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -198,7 +208,7 @@ namespace Azure.ResourceManager.BillingBenefits
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BillingBenefitsSavingsPlanOrderResource : Azure.ResourceManager.ArmResource
+    public partial class BillingBenefitsSavingsPlanOrderResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected BillingBenefitsSavingsPlanOrderResource() { }
@@ -212,8 +222,13 @@ namespace Azure.ResourceManager.BillingBenefits
         public virtual Azure.Response<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlan(string savingsPlanId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource>> GetBillingBenefitsSavingsPlanAsync(string savingsPlanId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanCollection GetBillingBenefitsSavingsPlans() { throw null; }
+        Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BillingBenefitsSavingsPlanResource : Azure.ResourceManager.ArmResource
+    public partial class BillingBenefitsSavingsPlanResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected BillingBenefitsSavingsPlanResource() { }
@@ -222,6 +237,11 @@ namespace Azure.ResourceManager.BillingBenefits
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string savingsPlanOrderId, string savingsPlanId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource> Update(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource>> UpdateAsync(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanValidateResult> ValidateUpdate(Azure.ResourceManager.BillingBenefits.Models.SavingsPlanUpdateValidateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

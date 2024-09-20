@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppNameAvailabilityContent : IUtf8JsonSerializable, IJsonModel<ContainerAppNameAvailabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppNameAvailabilityContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppNameAvailabilityContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppNameAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 throw new FormatException($"The model {nameof(ContainerAppNameAvailabilityContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContainerAppNameAvailabilityContent IJsonModel<ContainerAppNameAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +75,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppNameAvailabilityContent DeserializeContainerAppNameAvailabilityContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

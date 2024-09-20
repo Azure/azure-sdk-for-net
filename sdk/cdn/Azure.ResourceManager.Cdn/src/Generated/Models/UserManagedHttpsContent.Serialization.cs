@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class UserManagedHttpsContent : IUtf8JsonSerializable, IJsonModel<UserManagedHttpsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserManagedHttpsContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserManagedHttpsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UserManagedHttpsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("certificateSourceParameters"u8);
-            writer.WriteObjectValue<KeyVaultCertificateSource>(CertificateSourceParameters, options);
+            writer.WriteObjectValue(CertificateSourceParameters, options);
             writer.WritePropertyName("certificateSource"u8);
             writer.WriteStringValue(CertificateSource.ToString());
             writer.WritePropertyName("protocolType"u8);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UserManagedHttpsContent DeserializeUserManagedHttpsContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

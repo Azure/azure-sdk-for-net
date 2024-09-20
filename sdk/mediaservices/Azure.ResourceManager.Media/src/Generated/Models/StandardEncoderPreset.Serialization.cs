@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class StandardEncoderPreset : IUtf8JsonSerializable, IJsonModel<StandardEncoderPreset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandardEncoderPreset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandardEncoderPreset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StandardEncoderPreset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -40,20 +40,20 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue<FilteringOperations>(Filters, options);
+                writer.WriteObjectValue(Filters, options);
             }
             writer.WritePropertyName("codecs"u8);
             writer.WriteStartArray();
             foreach (var item in Codecs)
             {
-                writer.WriteObjectValue<MediaCodecBase>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("formats"u8);
             writer.WriteStartArray();
             foreach (var item in Formats)
             {
-                writer.WriteObjectValue<MediaFormatBase>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("@odata.type"u8);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StandardEncoderPreset DeserializeStandardEncoderPreset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

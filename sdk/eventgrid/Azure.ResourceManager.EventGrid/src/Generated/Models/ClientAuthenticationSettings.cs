@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Client authentication settings for namespace resource. </summary>
-    internal partial class ClientAuthenticationSettings
+    public partial class ClientAuthenticationSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -53,14 +53,20 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Initializes a new instance of <see cref="ClientAuthenticationSettings"/>. </summary>
         /// <param name="alternativeAuthenticationNameSources"> Alternative authentication name sources related to client authentication settings for namespace resource. </param>
+        /// <param name="customJwtAuthentication"> Custom JWT authentication settings for namespace resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClientAuthenticationSettings(IList<AlternativeAuthenticationNameSource> alternativeAuthenticationNameSources, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClientAuthenticationSettings(IList<AlternativeAuthenticationNameSource> alternativeAuthenticationNameSources, CustomJwtAuthenticationSettings customJwtAuthentication, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlternativeAuthenticationNameSources = alternativeAuthenticationNameSources;
+            CustomJwtAuthentication = customJwtAuthentication;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Alternative authentication name sources related to client authentication settings for namespace resource. </summary>
+        [WirePath("alternativeAuthenticationNameSources")]
         public IList<AlternativeAuthenticationNameSource> AlternativeAuthenticationNameSources { get; }
+        /// <summary> Custom JWT authentication settings for namespace resource. </summary>
+        [WirePath("customJwtAuthentication")]
+        public CustomJwtAuthenticationSettings CustomJwtAuthentication { get; set; }
     }
 }

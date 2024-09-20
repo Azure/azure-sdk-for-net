@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="phoneNumber"> The phone number. </param>
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
         /// <param name="microsoftTeamsApp"> The Microsoft Teams application. </param>
-        internal CommunicationIdentifierModel(CommunicationIdentifierKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, MicrosoftTeamsAppIdentifier microsoftTeamsApp)
+        internal CommunicationIdentifierModel(AcsCommunicationIdentifierKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, AcsMicrosoftTeamsAppIdentifier microsoftTeamsApp)
         {
             Kind = kind;
             RawId = rawId;
@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
 
         /// <summary> The identifier kind. Only required in responses. </summary>
-        public CommunicationIdentifierKind? Kind { get; }
+        public AcsCommunicationIdentifierKind? Kind { get; }
         /// <summary> Raw Id of the identifier. Optional in requests, required in responses. </summary>
         public string RawId { get; }
         /// <summary> The communication user. </summary>
@@ -43,6 +43,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The Microsoft Teams user. </summary>
         public MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUser { get; }
         /// <summary> The Microsoft Teams application. </summary>
-        public MicrosoftTeamsAppIdentifier MicrosoftTeamsApp { get; }
+        public AcsMicrosoftTeamsAppIdentifier MicrosoftTeamsApp { get; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkGroupData : IUtf8JsonSerializable, IJsonModel<NetworkGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(MemberType))
+            {
+                writer.WritePropertyName("memberType"u8);
+                writer.WriteStringValue(MemberType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -103,7 +108,7 @@ namespace Azure.ResourceManager.Network
 
         internal static NetworkGroupData DeserializeNetworkGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -115,6 +120,7 @@ namespace Azure.ResourceManager.Network
             ResourceType type = default;
             SystemData systemData = default;
             string description = default;
+            NetworkGroupMemberType? memberType = default;
             NetworkProvisioningState? provisioningState = default;
             Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -168,6 +174,15 @@ namespace Azure.ResourceManager.Network
                             description = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("memberType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            memberType = new NetworkGroupMemberType(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -201,6 +216,7 @@ namespace Azure.ResourceManager.Network
                 type,
                 systemData,
                 description,
+                memberType,
                 provisioningState,
                 resourceGuid,
                 etag,

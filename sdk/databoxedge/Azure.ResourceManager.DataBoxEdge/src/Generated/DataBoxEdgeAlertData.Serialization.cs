@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     public partial class DataBoxEdgeAlertData : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeAlertData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeAlertData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeAlertData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxEdgeAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
-                writer.WriteObjectValue<DataBoxEdgeAlertErrorDetails>(ErrorDetails, options);
+                writer.WriteObjectValue(ErrorDetails, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(DetailedInformation))
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         internal static DataBoxEdgeAlertData DeserializeDataBoxEdgeAlertData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

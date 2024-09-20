@@ -36,6 +36,22 @@ namespace Azure.ResourceManager.Peering
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, PeeringLocationsKind kind, PeeringLocationsDirectPeeringType? directPeeringType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Peering/peeringLocations", false);
+            uri.AppendQuery("kind", kind.ToString(), true);
+            if (directPeeringType != null)
+            {
+                uri.AppendQuery("directPeeringType", directPeeringType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, PeeringLocationsKind kind, PeeringLocationsDirectPeeringType? directPeeringType)
         {
             var message = _pipeline.CreateMessage();
@@ -110,6 +126,14 @@ namespace Azure.ResourceManager.Peering
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, PeeringLocationsKind kind, PeeringLocationsDirectPeeringType? directPeeringType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, PeeringLocationsKind kind, PeeringLocationsDirectPeeringType? directPeeringType)

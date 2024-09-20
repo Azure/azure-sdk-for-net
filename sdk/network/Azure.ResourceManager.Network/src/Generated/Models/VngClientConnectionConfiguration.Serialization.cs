@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class VngClientConnectionConfiguration : IUtf8JsonSerializable, IJsonModel<VngClientConnectionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VngClientConnectionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VngClientConnectionConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VngClientConnectionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(VpnClientAddressPool))
             {
                 writer.WritePropertyName("vpnClientAddressPool"u8);
-                writer.WriteObjectValue<AddressSpace>(VpnClientAddressPool, options);
+                writer.WriteObjectValue(VpnClientAddressPool, options);
             }
             if (Optional.IsCollectionDefined(VirtualNetworkGatewayPolicyGroups))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VngClientConnectionConfiguration DeserializeVngClientConnectionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

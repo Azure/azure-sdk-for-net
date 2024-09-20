@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Orbital
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.AvailableGroundStationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.AvailableGroundStationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AvailableGroundStationResource : Azure.ResourceManager.ArmResource
+    public partial class AvailableGroundStationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.AvailableGroundStationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.AvailableGroundStationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected AvailableGroundStationResource() { }
@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.Orbital
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string groundStationName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Orbital.AvailableGroundStationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Orbital.AvailableGroundStationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Orbital.AvailableGroundStationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.AvailableGroundStationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.AvailableGroundStationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Orbital.AvailableGroundStationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.AvailableGroundStationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.AvailableGroundStationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.AvailableGroundStationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class OrbitalContactCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Orbital.OrbitalContactResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Orbital.OrbitalContactResource>, System.Collections.IEnumerable
     {
@@ -116,7 +121,7 @@ namespace Azure.ResourceManager.Orbital
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalContactProfileData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalContactProfileData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OrbitalContactProfileResource : Azure.ResourceManager.ArmResource
+    public partial class OrbitalContactProfileResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.OrbitalContactProfileData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalContactProfileData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected OrbitalContactProfileResource() { }
@@ -133,10 +138,15 @@ namespace Azure.ResourceManager.Orbital
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Orbital.OrbitalContactProfileResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Orbital.OrbitalContactProfileResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Orbital.OrbitalContactProfileResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Orbital.OrbitalContactProfileData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.OrbitalContactProfileData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.OrbitalContactProfileData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Orbital.OrbitalContactProfileData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalContactProfileData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalContactProfileData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalContactProfileData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Orbital.OrbitalContactProfileResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftTags orbitalSpacecraftTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Orbital.OrbitalContactProfileResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftTags orbitalSpacecraftTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class OrbitalContactResource : Azure.ResourceManager.ArmResource
+    public partial class OrbitalContactResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.OrbitalContactData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalContactData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected OrbitalContactResource() { }
@@ -147,6 +157,11 @@ namespace Azure.ResourceManager.Orbital
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Orbital.OrbitalContactResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Orbital.OrbitalContactResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Orbital.OrbitalContactData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.OrbitalContactData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.OrbitalContactData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Orbital.OrbitalContactData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalContactData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalContactData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalContactData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Orbital.OrbitalContactResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Orbital.OrbitalContactData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Orbital.OrbitalContactResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Orbital.OrbitalContactData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -203,7 +218,7 @@ namespace Azure.ResourceManager.Orbital
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalSpacecraftData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalSpacecraftData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OrbitalSpacecraftResource : Azure.ResourceManager.ArmResource
+    public partial class OrbitalSpacecraftResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.OrbitalSpacecraftData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalSpacecraftData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected OrbitalSpacecraftResource() { }
@@ -225,6 +240,11 @@ namespace Azure.ResourceManager.Orbital
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Orbital.OrbitalSpacecraftResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Orbital.OrbitalSpacecraftResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Orbital.OrbitalSpacecraftResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Orbital.OrbitalSpacecraftData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.OrbitalSpacecraftData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Orbital.OrbitalSpacecraftData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Orbital.OrbitalSpacecraftData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalSpacecraftData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalSpacecraftData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.OrbitalSpacecraftData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Orbital.OrbitalSpacecraftResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftTags orbitalSpacecraftTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Orbital.OrbitalSpacecraftResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftTags orbitalSpacecraftTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

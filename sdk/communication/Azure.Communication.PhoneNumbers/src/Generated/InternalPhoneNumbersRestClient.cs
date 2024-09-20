@@ -189,7 +189,7 @@ namespace Azure.Communication.PhoneNumbers
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PhoneNumberSearchRequest>(body);
+            content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
         }
@@ -336,7 +336,7 @@ namespace Azure.Communication.PhoneNumbers
                 SearchId = searchId
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PhoneNumberPurchaseRequest>(model);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
@@ -395,7 +395,7 @@ namespace Azure.Communication.PhoneNumbers
                 Sms = sms
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PhoneNumberCapabilitiesRequest>(model);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
@@ -619,7 +619,7 @@ namespace Azure.Communication.PhoneNumbers
                 Options = options
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<OperatorInformationRequest>(model);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }

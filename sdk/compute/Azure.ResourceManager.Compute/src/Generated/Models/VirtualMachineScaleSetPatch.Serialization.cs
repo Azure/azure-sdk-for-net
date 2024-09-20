@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineScaleSetPatch : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineScaleSetPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,17 +31,27 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<ComputeSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue<ComputePlan>(Plan, options);
+                writer.WriteObjectValue(Plan, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
+            }
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                writer.WritePropertyName("zones"u8);
+                writer.WriteStartArray();
+                foreach (var item in Zones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -59,17 +69,17 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
-                writer.WriteObjectValue<VirtualMachineScaleSetUpgradePolicy>(UpgradePolicy, options);
+                writer.WriteObjectValue(UpgradePolicy, options);
             }
             if (Optional.IsDefined(AutomaticRepairsPolicy))
             {
                 writer.WritePropertyName("automaticRepairsPolicy"u8);
-                writer.WriteObjectValue<AutomaticRepairsPolicy>(AutomaticRepairsPolicy, options);
+                writer.WriteObjectValue(AutomaticRepairsPolicy, options);
             }
             if (Optional.IsDefined(VirtualMachineProfile))
             {
                 writer.WritePropertyName("virtualMachineProfile"u8);
-                writer.WriteObjectValue<VirtualMachineScaleSetUpdateVmProfile>(VirtualMachineProfile, options);
+                writer.WriteObjectValue(VirtualMachineProfile, options);
             }
             if (Optional.IsDefined(Overprovision))
             {
@@ -89,12 +99,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
-                writer.WriteObjectValue<AdditionalCapabilities>(AdditionalCapabilities, options);
+                writer.WriteObjectValue(AdditionalCapabilities, options);
             }
             if (Optional.IsDefined(ScaleInPolicy))
             {
                 writer.WritePropertyName("scaleInPolicy"u8);
-                writer.WriteObjectValue<ScaleInPolicy>(ScaleInPolicy, options);
+                writer.WriteObjectValue(ScaleInPolicy, options);
             }
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
@@ -104,17 +114,27 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PriorityMixPolicy))
             {
                 writer.WritePropertyName("priorityMixPolicy"u8);
-                writer.WriteObjectValue<VirtualMachineScaleSetPriorityMixPolicy>(PriorityMixPolicy, options);
+                writer.WriteObjectValue(PriorityMixPolicy, options);
             }
             if (Optional.IsDefined(SpotRestorePolicy))
             {
                 writer.WritePropertyName("spotRestorePolicy"u8);
-                writer.WriteObjectValue<SpotRestorePolicy>(SpotRestorePolicy, options);
+                writer.WriteObjectValue(SpotRestorePolicy, options);
             }
             if (Optional.IsDefined(ResiliencyPolicy))
             {
                 writer.WritePropertyName("resiliencyPolicy"u8);
-                writer.WriteObjectValue<ResiliencyPolicy>(ResiliencyPolicy, options);
+                writer.WriteObjectValue(ResiliencyPolicy, options);
+            }
+            if (Optional.IsDefined(ZonalPlatformFaultDomainAlignMode))
+            {
+                writer.WritePropertyName("zonalPlatformFaultDomainAlignMode"u8);
+                writer.WriteStringValue(ZonalPlatformFaultDomainAlignMode.Value.ToString());
+            }
+            if (Optional.IsDefined(SkuProfile))
+            {
+                writer.WritePropertyName("skuProfile"u8);
+                writer.WriteObjectValue(SkuProfile, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -149,7 +169,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetPatch DeserializeVirtualMachineScaleSetPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -158,6 +178,7 @@ namespace Azure.ResourceManager.Compute.Models
             ComputeSku sku = default;
             ComputePlan plan = default;
             ManagedServiceIdentity identity = default;
+            IList<string> zones = default;
             IDictionary<string, string> tags = default;
             VirtualMachineScaleSetUpgradePolicy upgradePolicy = default;
             AutomaticRepairsPolicy automaticRepairsPolicy = default;
@@ -171,6 +192,8 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = default;
             SpotRestorePolicy spotRestorePolicy = default;
             ResiliencyPolicy resiliencyPolicy = default;
+            ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default;
+            ComputeSkuProfile skuProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,6 +223,20 @@ namespace Azure.ResourceManager.Compute.Models
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("zones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    zones = array;
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -333,6 +370,24 @@ namespace Azure.ResourceManager.Compute.Models
                             resiliencyPolicy = ResiliencyPolicy.DeserializeResiliencyPolicy(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("zonalPlatformFaultDomainAlignMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            zonalPlatformFaultDomainAlignMode = new ZonalPlatformFaultDomainAlignMode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("skuProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            skuProfile = ComputeSkuProfile.DeserializeComputeSkuProfile(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -348,6 +403,7 @@ namespace Azure.ResourceManager.Compute.Models
                 sku,
                 plan,
                 identity,
+                zones ?? new ChangeTrackingList<string>(),
                 upgradePolicy,
                 automaticRepairsPolicy,
                 virtualMachineProfile,
@@ -359,7 +415,9 @@ namespace Azure.ResourceManager.Compute.Models
                 proximityPlacementGroup,
                 priorityMixPolicy,
                 spotRestorePolicy,
-                resiliencyPolicy);
+                resiliencyPolicy,
+                zonalPlatformFaultDomainAlignMode,
+                skuProfile);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetPatch>.Write(ModelReaderWriterOptions options)

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ManagedClusterAadProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterAadProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterAadProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterAadProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedClusterAadProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +100,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterAadProfile DeserializeManagedClusterAadProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -196,6 +198,144 @@ namespace Azure.ResourceManager.ContainerService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsManagedAadEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  managed: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsManagedAadEnabled))
+                {
+                    builder.Append("  managed: ");
+                    var boolValue = IsManagedAadEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAzureRbacEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableAzureRBAC: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAzureRbacEnabled))
+                {
+                    builder.Append("  enableAzureRBAC: ");
+                    var boolValue = IsAzureRbacEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdminGroupObjectIds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  adminGroupObjectIDs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AdminGroupObjectIds))
+                {
+                    if (AdminGroupObjectIds.Any())
+                    {
+                        builder.Append("  adminGroupObjectIDs: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AdminGroupObjectIds)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientAppId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clientAppID: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientAppId))
+                {
+                    builder.Append("  clientAppID: ");
+                    builder.AppendLine($"'{ClientAppId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerAppId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serverAppID: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerAppId))
+                {
+                    builder.Append("  serverAppID: ");
+                    builder.AppendLine($"'{ServerAppId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerAppSecret), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serverAppSecret: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerAppSecret))
+                {
+                    builder.Append("  serverAppSecret: ");
+                    if (ServerAppSecret.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServerAppSecret}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServerAppSecret}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tenantID: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TenantId))
+                {
+                    builder.Append("  tenantID: ");
+                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedClusterAadProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAadProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -204,6 +344,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedClusterAadProfile)} does not support writing '{options.Format}' format.");
             }

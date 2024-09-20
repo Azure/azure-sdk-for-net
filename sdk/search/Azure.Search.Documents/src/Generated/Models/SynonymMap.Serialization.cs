@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey);
+                    writer.WriteObjectValue(EncryptionKey);
                 }
                 else
                 {
@@ -96,11 +96,11 @@ namespace Azure.Search.Documents.Indexes.Models
             return DeserializeSynonymMap(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SynonymMap>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

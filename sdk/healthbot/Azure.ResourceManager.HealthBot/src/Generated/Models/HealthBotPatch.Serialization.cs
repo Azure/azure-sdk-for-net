@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HealthBot.Models
 {
     public partial class HealthBotPatch : IUtf8JsonSerializable, IJsonModel<HealthBotPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthBotPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthBotPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HealthBotPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<HealthBotProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<HealthBotSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HealthBot.Models
 
         internal static HealthBotPatch DeserializeHealthBotPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

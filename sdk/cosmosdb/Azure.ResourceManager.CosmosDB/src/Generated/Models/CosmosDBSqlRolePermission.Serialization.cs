@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CosmosDBSqlRolePermission : IUtf8JsonSerializable, IJsonModel<CosmosDBSqlRolePermission>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBSqlRolePermission>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBSqlRolePermission>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBSqlRolePermission>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBSqlRolePermission DeserializeCosmosDBSqlRolePermission(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -141,17 +141,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(DataActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (DataActions.Any() || hasPropertyOverride)
+                builder.Append("  dataActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DataActions))
                 {
-                    builder.Append("  dataActions: ");
-                    if (hasPropertyOverride)
+                    if (DataActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  dataActions: ");
                         builder.AppendLine("[");
                         foreach (var item in DataActions)
                         {
@@ -176,17 +177,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotDataActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(NotDataActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (NotDataActions.Any() || hasPropertyOverride)
+                builder.Append("  notDataActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NotDataActions))
                 {
-                    builder.Append("  notDataActions: ");
-                    if (hasPropertyOverride)
+                    if (NotDataActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  notDataActions: ");
                         builder.AppendLine("[");
                         foreach (var item in NotDataActions)
                         {

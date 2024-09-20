@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CustomerInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AuthorizationPolicyResourceFormatResource : Azure.ResourceManager.ArmResource
+    public partial class AuthorizationPolicyResourceFormatResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected AuthorizationPolicyResourceFormatResource() { }
@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.Models.AuthorizationPolicy>> RegeneratePrimaryKeyAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CustomerInsights.Models.AuthorizationPolicy> RegenerateSecondaryKey(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.Models.AuthorizationPolicy>> RegenerateSecondaryKeyAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -87,7 +92,7 @@ namespace Azure.ResourceManager.CustomerInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConnectorMappingResourceFormatResource : Azure.ResourceManager.ArmResource
+    public partial class ConnectorMappingResourceFormatResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ConnectorMappingResourceFormatResource() { }
@@ -98,6 +103,11 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -138,7 +148,7 @@ namespace Azure.ResourceManager.CustomerInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConnectorResourceFormatResource : Azure.ResourceManager.ArmResource
+    public partial class ConnectorResourceFormatResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ConnectorResourceFormatResource() { }
@@ -152,6 +162,11 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual Azure.Response<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource> GetConnectorMappingResourceFormat(string mappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource>> GetConnectorMappingResourceFormatAsync(string mappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatCollection GetConnectorMappingResourceFormats() { throw null; }
+        Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -208,7 +223,7 @@ namespace Azure.ResourceManager.CustomerInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.HubData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.HubData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HubResource : Azure.ResourceManager.ArmResource
+    public partial class HubResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.HubData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.HubData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected HubResource() { }
@@ -267,6 +282,11 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.HubResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CustomerInsights.HubResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.HubResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CustomerInsights.HubData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.HubData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.HubData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CustomerInsights.HubData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.HubData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.HubData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.HubData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CustomerInsights.HubResource> Update(Azure.ResourceManager.CustomerInsights.HubData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.HubResource>> UpdateAsync(Azure.ResourceManager.CustomerInsights.HubData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -323,7 +343,7 @@ namespace Azure.ResourceManager.CustomerInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class InteractionResourceFormatResource : Azure.ResourceManager.ArmResource
+    public partial class InteractionResourceFormatResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected InteractionResourceFormatResource() { }
@@ -334,6 +354,11 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatResource>> GetAsync(string localeCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CustomerInsights.Models.SuggestRelationshipLinksResponse> SuggestRelationshipLinks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.Models.SuggestRelationshipLinksResponse>> SuggestRelationshipLinksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CustomerInsights.InteractionResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CustomerInsights.InteractionResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.InteractionResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.InteractionResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -382,7 +407,7 @@ namespace Azure.ResourceManager.CustomerInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.KpiResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.KpiResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KpiResourceFormatResource : Azure.ResourceManager.ArmResource
+    public partial class KpiResourceFormatResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.KpiResourceFormatData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.KpiResourceFormatData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected KpiResourceFormatResource() { }
@@ -395,6 +420,11 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.KpiResourceFormatResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Reprocess(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ReprocessAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CustomerInsights.KpiResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.KpiResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.KpiResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CustomerInsights.KpiResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.KpiResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.KpiResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.KpiResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.KpiResourceFormatResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.KpiResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.KpiResourceFormatResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.KpiResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -437,7 +467,7 @@ namespace Azure.ResourceManager.CustomerInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.LinkResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.LinkResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LinkResourceFormatResource : Azure.ResourceManager.ArmResource
+    public partial class LinkResourceFormatResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.LinkResourceFormatData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.LinkResourceFormatData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected LinkResourceFormatResource() { }
@@ -448,6 +478,11 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CustomerInsights.LinkResourceFormatResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.LinkResourceFormatResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CustomerInsights.LinkResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.LinkResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.LinkResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CustomerInsights.LinkResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.LinkResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.LinkResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.LinkResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.LinkResourceFormatResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.LinkResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.LinkResourceFormatResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.LinkResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -494,7 +529,7 @@ namespace Azure.ResourceManager.CustomerInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PredictionResourceFormatResource : Azure.ResourceManager.ArmResource
+    public partial class PredictionResourceFormatResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PredictionResourceFormatResource() { }
@@ -511,6 +546,11 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.Models.PredictionTrainingResults>> GetTrainingResultsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ModelStatus(Azure.ResourceManager.CustomerInsights.Models.PredictionModelStatus predictionModelStatus, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ModelStatusAsync(Azure.ResourceManager.CustomerInsights.Models.PredictionModelStatus predictionModelStatus, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CustomerInsights.PredictionResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CustomerInsights.PredictionResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.PredictionResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.PredictionResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -558,7 +598,7 @@ namespace Azure.ResourceManager.CustomerInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProfileResourceFormatResource : Azure.ResourceManager.ArmResource
+    public partial class ProfileResourceFormatResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ProfileResourceFormatResource() { }
@@ -571,6 +611,11 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatResource>> GetAsync(string localeCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CustomerInsights.Models.KpiDefinition> GetEnrichingKpis(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CustomerInsights.Models.KpiDefinition> GetEnrichingKpisAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CustomerInsights.ProfileResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CustomerInsights.ProfileResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.ProfileResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.ProfileResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -611,7 +656,7 @@ namespace Azure.ResourceManager.CustomerInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RelationshipLinkResourceFormatResource : Azure.ResourceManager.ArmResource
+    public partial class RelationshipLinkResourceFormatResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected RelationshipLinkResourceFormatResource() { }
@@ -622,6 +667,11 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -663,7 +713,7 @@ namespace Azure.ResourceManager.CustomerInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RelationshipResourceFormatResource : Azure.ResourceManager.ArmResource
+    public partial class RelationshipResourceFormatResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected RelationshipResourceFormatResource() { }
@@ -674,6 +724,11 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -723,7 +778,7 @@ namespace Azure.ResourceManager.CustomerInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RoleAssignmentResourceFormatResource : Azure.ResourceManager.ArmResource
+    public partial class RoleAssignmentResourceFormatResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected RoleAssignmentResourceFormatResource() { }
@@ -734,6 +789,11 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -767,7 +827,7 @@ namespace Azure.ResourceManager.CustomerInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ViewResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ViewResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ViewResourceFormatResource : Azure.ResourceManager.ArmResource
+    public partial class ViewResourceFormatResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ViewResourceFormatData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ViewResourceFormatData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ViewResourceFormatResource() { }
@@ -778,6 +838,11 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CustomerInsights.ViewResourceFormatResource> Get(string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.ViewResourceFormatResource>> GetAsync(string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CustomerInsights.ViewResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ViewResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.ViewResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CustomerInsights.ViewResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ViewResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ViewResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.ViewResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.ViewResourceFormatResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.ViewResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CustomerInsights.ViewResourceFormatResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CustomerInsights.ViewResourceFormatData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -814,7 +879,7 @@ namespace Azure.ResourceManager.CustomerInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WidgetTypeResourceFormatResource : Azure.ResourceManager.ArmResource
+    public partial class WidgetTypeResourceFormatResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected WidgetTypeResourceFormatResource() { }
@@ -823,6 +888,11 @@ namespace Azure.ResourceManager.CustomerInsights
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hubName, string widgetTypeName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.CustomerInsights.Mocking

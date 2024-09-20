@@ -55,8 +55,8 @@ internal static class TracerProviderBuilderExtensions
 
     public static TracerProviderBuilder AddSqlClientInstrumentation(
         this TracerProviderBuilder builder,
-        string name,
-        Action<SqlClientTraceInstrumentationOptions> configureSqlClientTraceInstrumentationOptions)
+        string? name,
+        Action<SqlClientTraceInstrumentationOptions>? configureSqlClientTraceInstrumentationOptions)
     {
         Guard.ThrowIfNull(builder);
 

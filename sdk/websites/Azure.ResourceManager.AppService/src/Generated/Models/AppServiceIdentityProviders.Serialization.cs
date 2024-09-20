@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServiceIdentityProviders : IUtf8JsonSerializable, IJsonModel<AppServiceIdentityProviders>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceIdentityProviders>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceIdentityProviders>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServiceIdentityProviders>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,42 +31,42 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
-                writer.WriteObjectValue<AppServiceAadProvider>(AzureActiveDirectory, options);
+                writer.WriteObjectValue(AzureActiveDirectory, options);
             }
             if (Optional.IsDefined(Facebook))
             {
                 writer.WritePropertyName("facebook"u8);
-                writer.WriteObjectValue<AppServiceFacebookProvider>(Facebook, options);
+                writer.WriteObjectValue(Facebook, options);
             }
             if (Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
-                writer.WriteObjectValue<AppServiceGitHubProvider>(GitHub, options);
+                writer.WriteObjectValue(GitHub, options);
             }
             if (Optional.IsDefined(Google))
             {
                 writer.WritePropertyName("google"u8);
-                writer.WriteObjectValue<AppServiceGoogleProvider>(Google, options);
+                writer.WriteObjectValue(Google, options);
             }
             if (Optional.IsDefined(LegacyMicrosoftAccount))
             {
                 writer.WritePropertyName("legacyMicrosoftAccount"u8);
-                writer.WriteObjectValue<LegacyMicrosoftAccount>(LegacyMicrosoftAccount, options);
+                writer.WriteObjectValue(LegacyMicrosoftAccount, options);
             }
             if (Optional.IsDefined(Twitter))
             {
                 writer.WritePropertyName("twitter"u8);
-                writer.WriteObjectValue<AppServiceTwitterProvider>(Twitter, options);
+                writer.WriteObjectValue(Twitter, options);
             }
             if (Optional.IsDefined(Apple))
             {
                 writer.WritePropertyName("apple"u8);
-                writer.WriteObjectValue<AppServiceAppleProvider>(Apple, options);
+                writer.WriteObjectValue(Apple, options);
             }
             if (Optional.IsDefined(AzureStaticWebApps))
             {
                 writer.WritePropertyName("azureStaticWebApps"u8);
-                writer.WriteObjectValue<AppServiceStaticWebAppsProvider>(AzureStaticWebApps, options);
+                writer.WriteObjectValue(AzureStaticWebApps, options);
             }
             if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
                 foreach (var item in CustomOpenIdConnectProviders)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<CustomOpenIdConnectProvider>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceIdentityProviders DeserializeAppServiceIdentityProviders(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -247,129 +247,138 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureActiveDirectory), out propertyOverride);
-            if (Optional.IsDefined(AzureActiveDirectory) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  azureActiveDirectory: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureActiveDirectory))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  azureActiveDirectory: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AzureActiveDirectory, options, 2, false, "  azureActiveDirectory: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Facebook), out propertyOverride);
-            if (Optional.IsDefined(Facebook) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  facebook: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Facebook))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  facebook: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Facebook, options, 2, false, "  facebook: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHub), out propertyOverride);
-            if (Optional.IsDefined(GitHub) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  gitHub: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GitHub))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  gitHub: ");
                     BicepSerializationHelpers.AppendChildObject(builder, GitHub, options, 2, false, "  gitHub: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Google), out propertyOverride);
-            if (Optional.IsDefined(Google) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  google: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Google))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  google: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Google, options, 2, false, "  google: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LegacyMicrosoftAccount), out propertyOverride);
-            if (Optional.IsDefined(LegacyMicrosoftAccount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  legacyMicrosoftAccount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LegacyMicrosoftAccount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  legacyMicrosoftAccount: ");
                     BicepSerializationHelpers.AppendChildObject(builder, LegacyMicrosoftAccount, options, 2, false, "  legacyMicrosoftAccount: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Twitter), out propertyOverride);
-            if (Optional.IsDefined(Twitter) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  twitter: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Twitter))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  twitter: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Twitter, options, 2, false, "  twitter: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Apple), out propertyOverride);
-            if (Optional.IsDefined(Apple) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  apple: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Apple))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  apple: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Apple, options, 2, false, "  apple: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureStaticWebApps), out propertyOverride);
-            if (Optional.IsDefined(AzureStaticWebApps) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  azureStaticWebApps: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureStaticWebApps))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  azureStaticWebApps: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AzureStaticWebApps, options, 2, false, "  azureStaticWebApps: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomOpenIdConnectProviders), out propertyOverride);
-            if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (CustomOpenIdConnectProviders.Any() || hasPropertyOverride)
+                builder.Append("  customOpenIdConnectProviders: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
                 {
-                    builder.Append("  customOpenIdConnectProviders: ");
-                    if (hasPropertyOverride)
+                    if (CustomOpenIdConnectProviders.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  customOpenIdConnectProviders: ");
                         builder.AppendLine("{");
                         foreach (var item in CustomOpenIdConnectProviders)
                         {

@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence
 {
     public partial class ComposeDocumentModelContent : IUtf8JsonSerializable, IJsonModel<ComposeDocumentModelContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComposeDocumentModelContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComposeDocumentModelContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ComposeDocumentModelContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,13 +33,21 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("componentModels"u8);
-            writer.WriteStartArray();
-            foreach (var item in ComponentModels)
+            writer.WritePropertyName("classifierId"u8);
+            writer.WriteStringValue(ClassifierId);
+            if (Optional.IsDefined(Split))
             {
-                writer.WriteObjectValue<ComponentDocumentModelDetails>(item, options);
+                writer.WritePropertyName("split"u8);
+                writer.WriteStringValue(Split.Value.ToString());
             }
-            writer.WriteEndArray();
+            writer.WritePropertyName("docTypes"u8);
+            writer.WriteStartObject();
+            foreach (var item in DocTypes)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value, options);
+            }
+            writer.WriteEndObject();
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -83,7 +91,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal static ComposeDocumentModelContent DeserializeComposeDocumentModelContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -91,7 +99,9 @@ namespace Azure.AI.DocumentIntelligence
             }
             string modelId = default;
             string description = default;
-            IList<ComponentDocumentModelDetails> componentModels = default;
+            string classifierId = default;
+            SplitMode? split = default;
+            IDictionary<string, DocumentTypeDetails> docTypes = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -107,14 +117,28 @@ namespace Azure.AI.DocumentIntelligence
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("componentModels"u8))
+                if (property.NameEquals("classifierId"u8))
                 {
-                    List<ComponentDocumentModelDetails> array = new List<ComponentDocumentModelDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    classifierId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("split"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        array.Add(ComponentDocumentModelDetails.DeserializeComponentDocumentModelDetails(item, options));
+                        continue;
                     }
-                    componentModels = array;
+                    split = new SplitMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("docTypes"u8))
+                {
+                    Dictionary<string, DocumentTypeDetails> dictionary = new Dictionary<string, DocumentTypeDetails>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, DocumentTypeDetails.DeserializeDocumentTypeDetails(property0.Value, options));
+                    }
+                    docTypes = dictionary;
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -137,7 +161,14 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ComposeDocumentModelContent(modelId, description, componentModels, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new ComposeDocumentModelContent(
+                modelId,
+                description,
+                classifierId,
+                split,
+                docTypes,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComposeDocumentModelContent>.Write(ModelReaderWriterOptions options)
@@ -179,11 +210,11 @@ namespace Azure.AI.DocumentIntelligence
             return DeserializeComposeDocumentModelContent(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ComposeDocumentModelContent>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

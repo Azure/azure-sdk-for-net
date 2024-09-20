@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ApplicationGatewayWafDynamicManifestData : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayWafDynamicManifestData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayWafDynamicManifestData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayWafDynamicManifestData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationGatewayWafDynamicManifestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AvailableRuleSets)
                 {
-                    writer.WriteObjectValue<ApplicationGatewayFirewallManifestRuleSet>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ApplicationGatewayWafDynamicManifestData DeserializeApplicationGatewayWafDynamicManifestData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

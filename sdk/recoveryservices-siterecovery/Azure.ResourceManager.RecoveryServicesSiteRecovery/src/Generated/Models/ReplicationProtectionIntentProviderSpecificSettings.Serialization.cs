@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     [PersistableModelProxy(typeof(UnknownReplicationProtectionIntentProviderSpecificSettings))]
     public partial class ReplicationProtectionIntentProviderSpecificSettings : IUtf8JsonSerializable, IJsonModel<ReplicationProtectionIntentProviderSpecificSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationProtectionIntentProviderSpecificSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationProtectionIntentProviderSpecificSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReplicationProtectionIntentProviderSpecificSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static ReplicationProtectionIntentProviderSpecificSettings DeserializeReplicationProtectionIntentProviderSpecificSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

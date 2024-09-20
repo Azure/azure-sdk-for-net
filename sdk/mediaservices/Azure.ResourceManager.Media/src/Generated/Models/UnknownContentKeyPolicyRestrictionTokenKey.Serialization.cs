@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     internal partial class UnknownContentKeyPolicyRestrictionTokenKey : IUtf8JsonSerializable, IJsonModel<ContentKeyPolicyRestrictionTokenKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyRestrictionTokenKey>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyRestrictionTokenKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContentKeyPolicyRestrictionTokenKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static UnknownContentKeyPolicyRestrictionTokenKey DeserializeUnknownContentKeyPolicyRestrictionTokenKey(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

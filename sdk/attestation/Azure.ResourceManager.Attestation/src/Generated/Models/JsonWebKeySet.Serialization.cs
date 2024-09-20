@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Attestation.Models
 {
     internal partial class JsonWebKeySet : IUtf8JsonSerializable, IJsonModel<JsonWebKeySet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JsonWebKeySet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JsonWebKeySet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<JsonWebKeySet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<JsonWebKeySet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,14 +34,13 @@ namespace Azure.ResourceManager.Attestation.Models
                 throw new FormatException($"The model {nameof(JsonWebKeySet)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartArray();
                 foreach (var item in Keys)
                 {
-                    writer.WriteObjectValue<JsonWebKey>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.Attestation.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         JsonWebKeySet IJsonModel<JsonWebKeySet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +75,7 @@ namespace Azure.ResourceManager.Attestation.Models
 
         internal static JsonWebKeySet DeserializeJsonWebKeySet(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

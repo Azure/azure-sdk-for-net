@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Dns
 {
     public partial class DnsZoneData : IUtf8JsonSerializable, IJsonModel<DnsZoneData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsZoneData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsZoneData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DnsZoneData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -126,6 +126,16 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SigningKeys))
+            {
+                writer.WritePropertyName("signingKeys"u8);
+                writer.WriteStartArray();
+                foreach (var item in SigningKeys)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -159,7 +169,7 @@ namespace Azure.ResourceManager.Dns
 
         internal static DnsZoneData DeserializeDnsZoneData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -171,7 +181,7 @@ namespace Azure.ResourceManager.Dns
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             long? maxNumberOfRecordSets = default;
             long? maxNumberOfRecordsPerRecordSet = default;
             long? numberOfRecordSets = default;
@@ -179,6 +189,7 @@ namespace Azure.ResourceManager.Dns
             DnsZoneType? zoneType = default;
             IList<WritableSubResource> registrationVirtualNetworks = default;
             IList<WritableSubResource> resolutionVirtualNetworks = default;
+            IReadOnlyList<DnsSigningKey> signingKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,7 +243,7 @@ namespace Azure.ResourceManager.Dns
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -323,6 +334,20 @@ namespace Azure.ResourceManager.Dns
                             resolutionVirtualNetworks = array;
                             continue;
                         }
+                        if (property0.NameEquals("signingKeys"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<DnsSigningKey> array = new List<DnsSigningKey>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DnsSigningKey.DeserializeDnsSigningKey(item, options));
+                            }
+                            signingKeys = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -347,6 +372,7 @@ namespace Azure.ResourceManager.Dns
                 zoneType,
                 registrationVirtualNetworks ?? new ChangeTrackingList<WritableSubResource>(),
                 resolutionVirtualNetworks ?? new ChangeTrackingList<WritableSubResource>(),
+                signingKeys ?? new ChangeTrackingList<DnsSigningKey>(),
                 serializedAdditionalRawData);
         }
 

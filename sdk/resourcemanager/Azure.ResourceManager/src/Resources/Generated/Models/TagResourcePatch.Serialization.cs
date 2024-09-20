@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class TagResourcePatch : IUtf8JsonSerializable, IJsonModel<TagResourcePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TagResourcePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TagResourcePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TagResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TagResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new FormatException($"The model {nameof(TagResourcePatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(PatchMode))
             {
                 writer.WritePropertyName("operation"u8);
@@ -34,7 +42,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<Tag>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.Resources.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TagResourcePatch IJsonModel<TagResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +75,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static TagResourcePatch DeserializeTagResourcePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

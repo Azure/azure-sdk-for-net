@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class PolicySignaturesOverridesForIdpsData : IUtf8JsonSerializable, IJsonModel<PolicySignaturesOverridesForIdpsData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicySignaturesOverridesForIdpsData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicySignaturesOverridesForIdpsData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PolicySignaturesOverridesForIdpsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<PolicySignaturesOverridesForIdpsProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network
 
         internal static PolicySignaturesOverridesForIdpsData DeserializePolicySignaturesOverridesForIdpsData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

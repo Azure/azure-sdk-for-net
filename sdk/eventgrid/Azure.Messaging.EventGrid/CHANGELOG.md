@@ -1,6 +1,25 @@
 # Release History
 
-## 4.24.0 (2024-04-04)
+## 4.26.0 (2024-09-18)
+
+### Features Added
+
+- Added `TierToColdSummary` property to `StorageLifecyclePolicyCompletedEventData`.
+
+## 4.25.0 (2024-08-21)
+
+### Features Added
+
+- Added `AccessTier` and `PreviousTier` properties to `StorageBlobTierChangedEventData` system event.
+- Added `AccessTier` to `StorageBlobCreatedEventData` system event.
+
+## 4.24.1 (2024-07-16)
+
+### Bugs Fixed
+
+- Fixed deserialization bugs in `AcsEmailEngagementTrackingReportReceivedEventData` and `AcsEmailDeliveryReportReceivedEventData` system events that caused the `DeliveryAttemptTimestamp` and `UserActionTimeStamp` properties to be null.
+
+## 4.24.0 (2024-04-09)
 
 ### Features Added
 

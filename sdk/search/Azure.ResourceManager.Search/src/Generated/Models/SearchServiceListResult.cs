@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Response containing a list of search services. </summary>
+    /// <summary> Response containing a list of Azure AI Search services. </summary>
     internal partial class SearchServiceListResult
     {
         /// <summary>

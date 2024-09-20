@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 {
     public partial class SystemAssignedIdentityAuthInfo : IUtf8JsonSerializable, IJsonModel<SystemAssignedIdentityAuthInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemAssignedIdentityAuthInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemAssignedIdentityAuthInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SystemAssignedIdentityAuthInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static SystemAssignedIdentityAuthInfo DeserializeSystemAssignedIdentityAuthInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

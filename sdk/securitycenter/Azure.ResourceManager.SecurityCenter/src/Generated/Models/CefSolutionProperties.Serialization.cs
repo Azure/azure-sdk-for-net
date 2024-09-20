@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class CefSolutionProperties : IUtf8JsonSerializable, IJsonModel<CefSolutionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CefSolutionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CefSolutionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CefSolutionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static CefSolutionProperties DeserializeCefSolutionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

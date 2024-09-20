@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CosmosDBLocationProperties : IUtf8JsonSerializable, IJsonModel<CosmosDBLocationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBLocationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBLocationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBLocationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBLocationProperties DeserializeCosmosDBLocationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -198,47 +198,50 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DoesSupportAvailabilityZone), out propertyOverride);
-            if (Optional.IsDefined(DoesSupportAvailabilityZone) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  supportsAvailabilityZone: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DoesSupportAvailabilityZone))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  supportsAvailabilityZone: ");
                     var boolValue = DoesSupportAvailabilityZone.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsResidencyRestricted), out propertyOverride);
-            if (Optional.IsDefined(IsResidencyRestricted) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isResidencyRestricted: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsResidencyRestricted))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isResidencyRestricted: ");
                     var boolValue = IsResidencyRestricted.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupStorageRedundancies), out propertyOverride);
-            if (Optional.IsCollectionDefined(BackupStorageRedundancies) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (BackupStorageRedundancies.Any() || hasPropertyOverride)
+                builder.Append("  backupStorageRedundancies: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BackupStorageRedundancies))
                 {
-                    builder.Append("  backupStorageRedundancies: ");
-                    if (hasPropertyOverride)
+                    if (BackupStorageRedundancies.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  backupStorageRedundancies: ");
                         builder.AppendLine("[");
                         foreach (var item in BackupStorageRedundancies)
                         {
@@ -250,45 +253,48 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSubscriptionRegionAccessAllowedForRegular), out propertyOverride);
-            if (Optional.IsDefined(IsSubscriptionRegionAccessAllowedForRegular) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isSubscriptionRegionAccessAllowedForRegular: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsSubscriptionRegionAccessAllowedForRegular))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isSubscriptionRegionAccessAllowedForRegular: ");
                     var boolValue = IsSubscriptionRegionAccessAllowedForRegular.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSubscriptionRegionAccessAllowedForAz), out propertyOverride);
-            if (Optional.IsDefined(IsSubscriptionRegionAccessAllowedForAz) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isSubscriptionRegionAccessAllowedForAz: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsSubscriptionRegionAccessAllowedForAz))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isSubscriptionRegionAccessAllowedForAz: ");
                     var boolValue = IsSubscriptionRegionAccessAllowedForAz.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  status: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  status: ");
                     builder.AppendLine($"'{Status.Value.ToString()}'");
                 }
             }

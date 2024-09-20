@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Name of package dependency. </summary>
+        [WirePath("dependencyName")]
         public string DependencyName { get; set; }
         /// <summary> Name of dependency publisher. </summary>
+        [WirePath("publisher")]
         public string Publisher { get; set; }
         /// <summary> Dependency version required. </summary>
+        [WirePath("minVersion")]
         public string MinVersion { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.AI.Vision.ImageAnalysis
 {
     public partial class DetectedTextLine : IUtf8JsonSerializable, IJsonModel<DetectedTextLine>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DetectedTextLine>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DetectedTextLine>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DetectedTextLine>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,14 +32,14 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WriteStartArray();
             foreach (var item in BoundingPolygon)
             {
-                writer.WriteObjectValue<ImagePoint>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("words"u8);
             writer.WriteStartArray();
             foreach (var item in Words)
             {
-                writer.WriteObjectValue<DetectedTextWord>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -74,7 +74,7 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         internal static DetectedTextLine DeserializeDetectedTextLine(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -160,11 +160,11 @@ namespace Azure.AI.Vision.ImageAnalysis
             return DeserializeDetectedTextLine(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DetectedTextLine>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

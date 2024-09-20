@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     public partial class CveComponent : IUtf8JsonSerializable, IJsonModel<CveComponent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CveComponent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CveComponent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CveComponent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         internal static CveComponent DeserializeCveComponent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

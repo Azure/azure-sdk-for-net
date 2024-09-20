@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class SysctlConfig : IUtf8JsonSerializable, IJsonModel<SysctlConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SysctlConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SysctlConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SysctlConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static SysctlConfig DeserializeSysctlConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -522,6 +523,450 @@ namespace Azure.ResourceManager.ContainerService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetCoreSomaxconn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netCoreSomaxconn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetCoreSomaxconn))
+                {
+                    builder.Append("  netCoreSomaxconn: ");
+                    builder.AppendLine($"{NetCoreSomaxconn.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetCoreNetdevMaxBacklog), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netCoreNetdevMaxBacklog: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetCoreNetdevMaxBacklog))
+                {
+                    builder.Append("  netCoreNetdevMaxBacklog: ");
+                    builder.AppendLine($"{NetCoreNetdevMaxBacklog.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetCoreRmemDefault), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netCoreRmemDefault: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetCoreRmemDefault))
+                {
+                    builder.Append("  netCoreRmemDefault: ");
+                    builder.AppendLine($"{NetCoreRmemDefault.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetCoreRmemMax), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netCoreRmemMax: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetCoreRmemMax))
+                {
+                    builder.Append("  netCoreRmemMax: ");
+                    builder.AppendLine($"{NetCoreRmemMax.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetCoreWmemDefault), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netCoreWmemDefault: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetCoreWmemDefault))
+                {
+                    builder.Append("  netCoreWmemDefault: ");
+                    builder.AppendLine($"{NetCoreWmemDefault.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetCoreWmemMax), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netCoreWmemMax: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetCoreWmemMax))
+                {
+                    builder.Append("  netCoreWmemMax: ");
+                    builder.AppendLine($"{NetCoreWmemMax.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetCoreOptmemMax), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netCoreOptmemMax: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetCoreOptmemMax))
+                {
+                    builder.Append("  netCoreOptmemMax: ");
+                    builder.AppendLine($"{NetCoreOptmemMax.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4TcpMaxSynBacklog), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4TcpMaxSynBacklog: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4TcpMaxSynBacklog))
+                {
+                    builder.Append("  netIpv4TcpMaxSynBacklog: ");
+                    builder.AppendLine($"{NetIPv4TcpMaxSynBacklog.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4TcpMaxTwBuckets), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4TcpMaxTwBuckets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4TcpMaxTwBuckets))
+                {
+                    builder.Append("  netIpv4TcpMaxTwBuckets: ");
+                    builder.AppendLine($"{NetIPv4TcpMaxTwBuckets.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4TcpFinTimeout), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4TcpFinTimeout: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4TcpFinTimeout))
+                {
+                    builder.Append("  netIpv4TcpFinTimeout: ");
+                    builder.AppendLine($"{NetIPv4TcpFinTimeout.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4TcpKeepaliveTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4TcpKeepaliveTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4TcpKeepaliveTime))
+                {
+                    builder.Append("  netIpv4TcpKeepaliveTime: ");
+                    builder.AppendLine($"{NetIPv4TcpKeepaliveTime.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4TcpKeepaliveProbes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4TcpKeepaliveProbes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4TcpKeepaliveProbes))
+                {
+                    builder.Append("  netIpv4TcpKeepaliveProbes: ");
+                    builder.AppendLine($"{NetIPv4TcpKeepaliveProbes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4TcpKeepaliveIntvl), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4TcpkeepaliveIntvl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4TcpKeepaliveIntvl))
+                {
+                    builder.Append("  netIpv4TcpkeepaliveIntvl: ");
+                    builder.AppendLine($"{NetIPv4TcpKeepaliveIntvl.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4TcpTwReuse), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4TcpTwReuse: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4TcpTwReuse))
+                {
+                    builder.Append("  netIpv4TcpTwReuse: ");
+                    var boolValue = NetIPv4TcpTwReuse.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4IPLocalPortRange), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4IpLocalPortRange: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4IPLocalPortRange))
+                {
+                    builder.Append("  netIpv4IpLocalPortRange: ");
+                    if (NetIPv4IPLocalPortRange.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NetIPv4IPLocalPortRange}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NetIPv4IPLocalPortRange}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4NeighDefaultGcThresh1), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4NeighDefaultGcThresh1: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh1))
+                {
+                    builder.Append("  netIpv4NeighDefaultGcThresh1: ");
+                    builder.AppendLine($"{NetIPv4NeighDefaultGcThresh1.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4NeighDefaultGcThresh2), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4NeighDefaultGcThresh2: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh2))
+                {
+                    builder.Append("  netIpv4NeighDefaultGcThresh2: ");
+                    builder.AppendLine($"{NetIPv4NeighDefaultGcThresh2.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetIPv4NeighDefaultGcThresh3), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netIpv4NeighDefaultGcThresh3: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh3))
+                {
+                    builder.Append("  netIpv4NeighDefaultGcThresh3: ");
+                    builder.AppendLine($"{NetIPv4NeighDefaultGcThresh3.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetNetfilterNfConntrackMax), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netNetfilterNfConntrackMax: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetNetfilterNfConntrackMax))
+                {
+                    builder.Append("  netNetfilterNfConntrackMax: ");
+                    builder.AppendLine($"{NetNetfilterNfConntrackMax.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetNetfilterNfConntrackBuckets), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netNetfilterNfConntrackBuckets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetNetfilterNfConntrackBuckets))
+                {
+                    builder.Append("  netNetfilterNfConntrackBuckets: ");
+                    builder.AppendLine($"{NetNetfilterNfConntrackBuckets.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FsInotifyMaxUserWatches), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fsInotifyMaxUserWatches: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FsInotifyMaxUserWatches))
+                {
+                    builder.Append("  fsInotifyMaxUserWatches: ");
+                    builder.AppendLine($"{FsInotifyMaxUserWatches.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FsFileMax), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fsFileMax: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FsFileMax))
+                {
+                    builder.Append("  fsFileMax: ");
+                    builder.AppendLine($"{FsFileMax.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FsAioMaxNr), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fsAioMaxNr: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FsAioMaxNr))
+                {
+                    builder.Append("  fsAioMaxNr: ");
+                    builder.AppendLine($"{FsAioMaxNr.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FsNrOpen), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fsNrOpen: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FsNrOpen))
+                {
+                    builder.Append("  fsNrOpen: ");
+                    builder.AppendLine($"{FsNrOpen.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KernelThreadsMax), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kernelThreadsMax: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KernelThreadsMax))
+                {
+                    builder.Append("  kernelThreadsMax: ");
+                    builder.AppendLine($"{KernelThreadsMax.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VmMaxMapCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vmMaxMapCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VmMaxMapCount))
+                {
+                    builder.Append("  vmMaxMapCount: ");
+                    builder.AppendLine($"{VmMaxMapCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VmSwappiness), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vmSwappiness: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VmSwappiness))
+                {
+                    builder.Append("  vmSwappiness: ");
+                    builder.AppendLine($"{VmSwappiness.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VmVfsCachePressure), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vmVfsCachePressure: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VmVfsCachePressure))
+                {
+                    builder.Append("  vmVfsCachePressure: ");
+                    builder.AppendLine($"{VmVfsCachePressure.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SysctlConfig>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SysctlConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -530,6 +975,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SysctlConfig)} does not support writing '{options.Format}' format.");
             }

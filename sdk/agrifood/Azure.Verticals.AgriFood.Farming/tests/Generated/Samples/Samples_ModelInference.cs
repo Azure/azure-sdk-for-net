@@ -22,7 +22,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             Response response = client.GetBiomassModelJob("<jobId>", null);
 
@@ -46,7 +46,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             Response response = await client.GetBiomassModelJobAsync("<jobId>", null);
 
@@ -70,7 +70,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             Response response = client.GetBiomassModelJob("<jobId>", null);
 
@@ -108,7 +108,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             Response response = await client.GetBiomassModelJobAsync("<jobId>", null);
 
@@ -146,7 +146,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             Response response = client.GetSensorPlacementModelJob("<jobId>", null);
 
@@ -168,7 +168,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             Response response = await client.GetSensorPlacementModelJobAsync("<jobId>", null);
 
@@ -190,7 +190,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             Response response = client.GetSensorPlacementModelJob("<jobId>", null);
 
@@ -226,7 +226,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             Response response = await client.GetSensorPlacementModelJobAsync("<jobId>", null);
 
@@ -262,7 +262,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             Response response = client.GetSoilMoistureModelJob("<jobId>", null);
 
@@ -289,7 +289,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             Response response = await client.GetSoilMoistureModelJobAsync("<jobId>", null);
 
@@ -316,7 +316,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             Response response = client.GetSoilMoistureModelJob("<jobId>", null);
 
@@ -357,7 +357,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             Response response = await client.GetSoilMoistureModelJobAsync("<jobId>", null);
 
@@ -398,7 +398,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -437,7 +437,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -476,7 +476,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -535,7 +535,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -594,7 +594,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -629,7 +629,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -664,7 +664,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -719,7 +719,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -774,7 +774,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -822,7 +822,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -870,7 +870,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -938,7 +938,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient(apiVersion: "2022-11-01-preview");
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
             using RequestContent content = RequestContent.Create(new
             {

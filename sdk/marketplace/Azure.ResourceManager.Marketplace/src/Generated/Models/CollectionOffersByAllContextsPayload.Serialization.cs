@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 {
     public partial class CollectionOffersByAllContextsPayload : IUtf8JsonSerializable, IJsonModel<CollectionOffersByAllContextsPayload>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CollectionOffersByAllContextsPayload>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CollectionOffersByAllContextsPayload>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CollectionOffersByAllContextsPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         internal static CollectionOffersByAllContextsPayload DeserializeCollectionOffersByAllContextsPayload(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

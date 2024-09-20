@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class LiveEventTranscription : IUtf8JsonSerializable, IJsonModel<LiveEventTranscription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LiveEventTranscription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LiveEventTranscription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LiveEventTranscription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in InputTrackSelection)
                 {
-                    writer.WriteObjectValue<LiveEventInputTrackSelection>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OutputTranscriptionTrack))
             {
                 writer.WritePropertyName("outputTranscriptionTrack"u8);
-                writer.WriteObjectValue<LiveEventOutputTranscriptionTrack>(OutputTranscriptionTrack, options);
+                writer.WriteObjectValue(OutputTranscriptionTrack, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventTranscription DeserializeLiveEventTranscription(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

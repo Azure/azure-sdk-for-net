@@ -26,18 +26,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("accessCredentials"u8);
                 writer.WriteObjectValue<AzureActiveDirectoryApplicationCredentials>(AccessCredentialsInternal);
             }
-            if (Optional.IsDefined(Identity))
-            {
-                if (Identity != null)
-                {
-                    writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue<SearchIndexerDataIdentity>(Identity);
-                }
-                else
-                {
-                    writer.WriteNull("identity");
-                }
-            }
             writer.WriteEndObject();
         }
 
@@ -51,7 +39,6 @@ namespace Azure.Search.Documents.Indexes.Models
             string keyVaultKeyVersion = default;
             string keyVaultUri = default;
             AzureActiveDirectoryApplicationCredentials accessCredentials = default;
-            SearchIndexerDataIdentity identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultKeyName"u8))
@@ -78,18 +65,8 @@ namespace Azure.Search.Documents.Indexes.Models
                     accessCredentials = AzureActiveDirectoryApplicationCredentials.DeserializeAzureActiveDirectoryApplicationCredentials(property.Value);
                     continue;
                 }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        identity = null;
-                        continue;
-                    }
-                    identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
-                    continue;
-                }
             }
-            return new SearchResourceEncryptionKey(keyVaultKeyName, keyVaultKeyVersion, keyVaultUri, accessCredentials, identity);
+            return new SearchResourceEncryptionKey(keyVaultKeyName, keyVaultKeyVersion, keyVaultUri, accessCredentials);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
@@ -100,11 +77,11 @@ namespace Azure.Search.Documents.Indexes.Models
             return DeserializeSearchResourceEncryptionKey(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchResourceEncryptionKey>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

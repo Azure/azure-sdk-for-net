@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class NotificationStatus : IUtf8JsonSerializable, IJsonModel<NotificationStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NotificationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
-                writer.WriteObjectValue<NotificationContext>(Context, options);
+                writer.WriteObjectValue(Context, options);
             }
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in ActionDetails)
                 {
-                    writer.WriteObjectValue<NotificationActionDetail>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static NotificationStatus DeserializeNotificationStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

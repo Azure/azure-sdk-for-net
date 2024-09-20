@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.ScVmm.Models
 {
     internal partial class AvailabilitySetListResult : IUtf8JsonSerializable, IJsonModel<AvailabilitySetListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilitySetListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilitySetListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvailabilitySetListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AvailabilitySetListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,14 +34,13 @@ namespace Azure.ResourceManager.ScVmm.Models
                 throw new FormatException($"The model {nameof(AvailabilitySetListResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<ScVmmAvailabilitySetData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.ScVmm.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AvailabilitySetListResult IJsonModel<AvailabilitySetListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,7 +80,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         internal static AvailabilitySetListResult DeserializeAvailabilitySetListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

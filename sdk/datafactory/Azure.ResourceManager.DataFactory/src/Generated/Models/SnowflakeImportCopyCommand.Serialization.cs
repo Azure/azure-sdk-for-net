@@ -10,12 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SnowflakeImportCopyCommand : IUtf8JsonSerializable, IJsonModel<SnowflakeImportCopyCommand>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnowflakeImportCopyCommand>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnowflakeImportCopyCommand>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SnowflakeImportCopyCommand>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,6 +73,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(StorageIntegration))
+            {
+                writer.WritePropertyName("storageIntegration"u8);
+                JsonSerializer.Serialize(writer, StorageIntegration);
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ImportSettingsType);
             foreach (var item in AdditionalProperties)
@@ -103,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SnowflakeImportCopyCommand DeserializeSnowflakeImportCopyCommand(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -111,6 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             IDictionary<string, BinaryData> additionalCopyOptions = default;
             IDictionary<string, BinaryData> additionalFormatOptions = default;
+            DataFactoryElement<string> storageIntegration = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -158,6 +165,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalFormatOptions = dictionary;
                     continue;
                 }
+                if (property.NameEquals("storageIntegration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageIntegration = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    continue;
+                }
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
@@ -166,7 +182,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SnowflakeImportCopyCommand(type, additionalProperties, additionalCopyOptions ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalFormatOptions ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new SnowflakeImportCopyCommand(type, additionalProperties, additionalCopyOptions ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalFormatOptions ?? new ChangeTrackingDictionary<string, BinaryData>(), storageIntegration);
         }
 
         BinaryData IPersistableModel<SnowflakeImportCopyCommand>.Write(ModelReaderWriterOptions options)

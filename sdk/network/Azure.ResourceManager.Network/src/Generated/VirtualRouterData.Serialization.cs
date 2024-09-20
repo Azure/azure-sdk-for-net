@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VirtualRouterData : IUtf8JsonSerializable, IJsonModel<VirtualRouterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualRouterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualRouterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualRouterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network
 
         internal static VirtualRouterData DeserializeVirtualRouterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
@@ -19,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 return null;
             }
             string requestId = default;
-            DateTimeOffset? responseDateTime = default;
+            string responseDateTime = default;
             string code = default;
             string message = default;
             string exception = default;
@@ -32,11 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 if (property.NameEquals("ResponseDateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    responseDateTime = property.Value.GetDateTimeOffset("O");
+                    responseDateTime = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("Code"u8))

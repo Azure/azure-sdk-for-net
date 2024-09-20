@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class TriggerDependencyReference : IUtf8JsonSerializable, IJsonModel<TriggerDependencyReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriggerDependencyReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriggerDependencyReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TriggerDependencyReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("referenceTrigger"u8);
-            writer.WriteObjectValue<DataFactoryTriggerReference>(ReferenceTrigger, options);
+            writer.WriteObjectValue(ReferenceTrigger, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DependencyReferenceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static TriggerDependencyReference DeserializeTriggerDependencyReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

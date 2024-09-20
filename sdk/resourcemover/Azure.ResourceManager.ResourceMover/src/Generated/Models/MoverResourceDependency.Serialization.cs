@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 {
     public partial class MoverResourceDependency : IUtf8JsonSerializable, IJsonModel<MoverResourceDependency>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverResourceDependency>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverResourceDependency>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MoverResourceDependency>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (Optional.IsDefined(ManualResolution))
             {
                 writer.WritePropertyName("manualResolution"u8);
-                writer.WriteObjectValue<ManualResolutionProperties>(ManualResolution, options);
+                writer.WriteObjectValue(ManualResolution, options);
             }
             if (Optional.IsDefined(AutomaticResolution))
             {
                 writer.WritePropertyName("automaticResolution"u8);
-                writer.WriteObjectValue<AutomaticResolutionProperties>(AutomaticResolution, options);
+                writer.WriteObjectValue(AutomaticResolution, options);
             }
             if (Optional.IsDefined(IsDependencyOptional))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static MoverResourceDependency DeserializeMoverResourceDependency(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

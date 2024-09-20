@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     internal partial class OpenAuthenticationAccessPolicies : IUtf8JsonSerializable, IJsonModel<OpenAuthenticationAccessPolicies>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OpenAuthenticationAccessPolicies>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OpenAuthenticationAccessPolicies>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OpenAuthenticationAccessPolicies>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in AccessPolicies)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<OpenAuthenticationAccessPolicy>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static OpenAuthenticationAccessPolicies DeserializeOpenAuthenticationAccessPolicies(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

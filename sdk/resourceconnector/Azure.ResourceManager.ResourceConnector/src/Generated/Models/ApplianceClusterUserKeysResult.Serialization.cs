@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 {
     public partial class ApplianceClusterUserKeysResult : IUtf8JsonSerializable, IJsonModel<ApplianceClusterUserKeysResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplianceClusterUserKeysResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplianceClusterUserKeysResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplianceClusterUserKeysResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 foreach (var item in ArtifactProfiles)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ApplianceArtifactProfile>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 writer.WriteStartArray();
                 foreach (var item in Kubeconfigs)
                 {
-                    writer.WriteObjectValue<ApplianceCredentialKubeconfig>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 foreach (var item in SshKeys)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ApplianceSshKey>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 
         internal static ApplianceClusterUserKeysResult DeserializeApplianceClusterUserKeysResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

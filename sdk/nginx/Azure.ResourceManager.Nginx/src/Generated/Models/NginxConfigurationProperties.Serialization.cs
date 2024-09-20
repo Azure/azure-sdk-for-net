@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Nginx.Models
 {
     public partial class NginxConfigurationProperties : IUtf8JsonSerializable, IJsonModel<NginxConfigurationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxConfigurationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxConfigurationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NginxConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in Files)
                 {
-                    writer.WriteObjectValue<NginxConfigurationFile>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedFiles)
                 {
-                    writer.WriteObjectValue<NginxConfigurationFile>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Package))
             {
                 writer.WritePropertyName("package"u8);
-                writer.WriteObjectValue<NginxConfigurationPackage>(Package, options);
+                writer.WriteObjectValue(Package, options);
             }
             if (Optional.IsDefined(RootFile))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxConfigurationProperties DeserializeNginxConfigurationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

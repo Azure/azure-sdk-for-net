@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class SharedScopeBenefitRecommendationProperties : IUtf8JsonSerializable, IJsonModel<SharedScopeBenefitRecommendationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharedScopeBenefitRecommendationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharedScopeBenefitRecommendationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SharedScopeBenefitRecommendationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
-                writer.WriteObjectValue<RecommendationUsageDetails>(Usage, options);
+                writer.WriteObjectValue(Usage, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ArmSkuName))
             {
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(RecommendationDetails))
             {
                 writer.WritePropertyName("recommendationDetails"u8);
-                writer.WriteObjectValue<AllSavingsBenefitDetails>(RecommendationDetails, options);
+                writer.WriteObjectValue(RecommendationDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AllRecommendationDetails))
             {
                 writer.WritePropertyName("allRecommendationDetails"u8);
-                writer.WriteObjectValue<AllSavingsList>(AllRecommendationDetails, options);
+                writer.WriteObjectValue(AllRecommendationDetails, options);
             }
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope.ToString());
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static SharedScopeBenefitRecommendationProperties DeserializeSharedScopeBenefitRecommendationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

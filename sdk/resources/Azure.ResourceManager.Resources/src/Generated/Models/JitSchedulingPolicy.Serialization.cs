@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class JitSchedulingPolicy : IUtf8JsonSerializable, IJsonModel<JitSchedulingPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JitSchedulingPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JitSchedulingPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<JitSchedulingPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static JitSchedulingPolicy DeserializeJitSchedulingPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -117,36 +117,39 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SchedulingType), out propertyOverride);
-            builder.Append("  type: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  type: ");
                 builder.AppendLine($"'{SchedulingType.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Duration), out propertyOverride);
-            builder.Append("  duration: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  duration: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  duration: ");
                 var formattedTimeSpan = TypeFormatters.ToString(Duration, "P");
                 builder.AppendLine($"'{formattedTimeSpan}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            builder.Append("  startTime: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  startTime: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  startTime: ");
                 var formattedDateTimeString = TypeFormatters.ToString(StartOn, "o");
                 builder.AppendLine($"'{formattedDateTimeString}'");
             }

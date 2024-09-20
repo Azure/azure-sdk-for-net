@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     internal partial class StorageAccountKeyPolicy : IUtf8JsonSerializable, IJsonModel<StorageAccountKeyPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountKeyPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountKeyPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageAccountKeyPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountKeyPolicy DeserializeStorageAccountKeyPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -98,13 +98,14 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyExpirationPeriodInDays), out propertyOverride);
-            builder.Append("  keyExpirationPeriodInDays: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  keyExpirationPeriodInDays: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  keyExpirationPeriodInDays: ");
                 builder.AppendLine($"{KeyExpirationPeriodInDays}");
             }
 

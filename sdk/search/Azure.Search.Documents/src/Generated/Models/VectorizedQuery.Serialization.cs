@@ -45,6 +45,11 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("oversampling"u8);
                 writer.WriteNumberValue(Oversampling.Value);
             }
+            if (Optional.IsDefined(Weight))
+            {
+                writer.WritePropertyName("weight"u8);
+                writer.WriteNumberValue(Weight.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -60,6 +65,7 @@ namespace Azure.Search.Documents.Models
             string fields = default;
             bool? exhaustive = default;
             double? oversampling = default;
+            float? weight = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vector"u8))
@@ -115,6 +121,15 @@ namespace Azure.Search.Documents.Models
                     oversampling = property.Value.GetDouble();
                     continue;
                 }
+                if (property.NameEquals("weight"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    weight = property.Value.GetSingle();
+                    continue;
+                }
             }
             return new VectorizedQuery(
                 kind,
@@ -122,6 +137,7 @@ namespace Azure.Search.Documents.Models
                 fields,
                 exhaustive,
                 oversampling,
+                weight,
                 vector);
         }
 
@@ -133,11 +149,11 @@ namespace Azure.Search.Documents.Models
             return DeserializeVectorizedQuery(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<VectorizedQuery>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

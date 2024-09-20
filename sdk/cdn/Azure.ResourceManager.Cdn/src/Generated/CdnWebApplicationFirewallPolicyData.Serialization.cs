@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class CdnWebApplicationFirewallPolicyData : IUtf8JsonSerializable, IJsonModel<CdnWebApplicationFirewallPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnWebApplicationFirewallPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnWebApplicationFirewallPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CdnWebApplicationFirewallPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<CdnSku>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -74,22 +74,22 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(PolicySettings))
             {
                 writer.WritePropertyName("policySettings"u8);
-                writer.WriteObjectValue<WafPolicySettings>(PolicySettings, options);
+                writer.WriteObjectValue(PolicySettings, options);
             }
             if (Optional.IsDefined(RateLimitSettings))
             {
                 writer.WritePropertyName("rateLimitRules"u8);
-                writer.WriteObjectValue<RateLimitRuleList>(RateLimitSettings, options);
+                writer.WriteObjectValue(RateLimitSettings, options);
             }
             if (Optional.IsDefined(CustomSettings))
             {
                 writer.WritePropertyName("customRules"u8);
-                writer.WriteObjectValue<CustomRuleList>(CustomSettings, options);
+                writer.WriteObjectValue(CustomSettings, options);
             }
             if (Optional.IsDefined(ManagedRules))
             {
                 writer.WritePropertyName("managedRules"u8);
-                writer.WriteObjectValue<ManagedRuleSetList>(ManagedRules, options);
+                writer.WriteObjectValue(ManagedRules, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(EndpointLinks))
             {
@@ -100,6 +100,17 @@ namespace Azure.ResourceManager.Cdn
                     JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ExtendedProperties))
+            {
+                writer.WritePropertyName("extendedProperties"u8);
+                writer.WriteStartObject();
+                foreach (var item in ExtendedProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -144,7 +155,7 @@ namespace Azure.ResourceManager.Cdn
 
         internal static CdnWebApplicationFirewallPolicyData DeserializeCdnWebApplicationFirewallPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -163,6 +174,7 @@ namespace Azure.ResourceManager.Cdn
             CustomRuleList customRules = default;
             ManagedRuleSetList managedRules = default;
             IReadOnlyList<SubResource> endpointLinks = default;
+            IDictionary<string, string> extendedProperties = default;
             WebApplicationFirewallPolicyProvisioningState? provisioningState = default;
             PolicyResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -285,6 +297,20 @@ namespace Azure.ResourceManager.Cdn
                             endpointLinks = array;
                             continue;
                         }
+                        if (property0.NameEquals("extendedProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            extendedProperties = dictionary;
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -326,6 +352,7 @@ namespace Azure.ResourceManager.Cdn
                 customRules,
                 managedRules,
                 endpointLinks ?? new ChangeTrackingList<SubResource>(),
+                extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
                 provisioningState,
                 resourceState,
                 serializedAdditionalRawData);

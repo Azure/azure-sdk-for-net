@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class KpiParticipantProfilesMetadata : IUtf8JsonSerializable, IJsonModel<KpiParticipantProfilesMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KpiParticipantProfilesMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KpiParticipantProfilesMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KpiParticipantProfilesMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static KpiParticipantProfilesMetadata DeserializeKpiParticipantProfilesMetadata(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

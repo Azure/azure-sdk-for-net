@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class UpdateDeviceAdministrativeStateContent : IUtf8JsonSerializable, IJsonModel<UpdateDeviceAdministrativeStateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateDeviceAdministrativeStateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateDeviceAdministrativeStateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UpdateDeviceAdministrativeStateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static UpdateDeviceAdministrativeStateContent DeserializeUpdateDeviceAdministrativeStateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

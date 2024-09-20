@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class ClusterAvailableUpgradeVersion : IUtf8JsonSerializable, IJsonModel<ClusterAvailableUpgradeVersion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterAvailableUpgradeVersion>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterAvailableUpgradeVersion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterAvailableUpgradeVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         internal static ClusterAvailableUpgradeVersion DeserializeClusterAvailableUpgradeVersion(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

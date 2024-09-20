@@ -72,10 +72,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// app logs to a destination. Currently only "log-analytics" is
         /// supported
         /// </param>
+        /// <param name="containerAppsConfiguration"> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </param>
         /// <param name="aksResourceId"></param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KubeEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? isInternalLoadBalancerEnabled, string defaultDomain, string staticIP, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, ResourceIdentifier aksResourceId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal KubeEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? isInternalLoadBalancerEnabled, string defaultDomain, string staticIP, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, ContainerAppsConfiguration containerAppsConfiguration, ResourceIdentifier aksResourceId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentErrors = deploymentErrors;
@@ -84,6 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
             StaticIP = staticIP;
             ArcConfiguration = arcConfiguration;
             AppLogsConfiguration = appLogsConfiguration;
+            ContainerAppsConfiguration = containerAppsConfiguration;
             AksResourceId = aksResourceId;
             Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -118,6 +120,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         [WirePath("properties.appLogsConfiguration")]
         public AppLogsConfiguration AppLogsConfiguration { get; set; }
+        /// <summary> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </summary>
+        [WirePath("properties.containerAppsConfiguration")]
+        public ContainerAppsConfiguration ContainerAppsConfiguration { get; set; }
         /// <summary> Gets or sets the aks resource id. </summary>
         [WirePath("properties.aksResourceID")]
         public ResourceIdentifier AksResourceId { get; set; }

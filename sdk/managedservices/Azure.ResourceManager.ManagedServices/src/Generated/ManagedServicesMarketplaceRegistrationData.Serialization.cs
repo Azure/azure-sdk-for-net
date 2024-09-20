@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedServices
 {
     public partial class ManagedServicesMarketplaceRegistrationData : IUtf8JsonSerializable, IJsonModel<ManagedServicesMarketplaceRegistrationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServicesMarketplaceRegistrationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServicesMarketplaceRegistrationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedServicesMarketplaceRegistrationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.ManagedServices
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<ManagedServicesMarketplaceRegistrationProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue<ManagedServicesPlan>(Plan, options);
+                writer.WriteObjectValue(Plan, options);
             }
             if (options.Format != "W")
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManagedServices
 
         internal static ManagedServicesMarketplaceRegistrationData DeserializeManagedServicesMarketplaceRegistrationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

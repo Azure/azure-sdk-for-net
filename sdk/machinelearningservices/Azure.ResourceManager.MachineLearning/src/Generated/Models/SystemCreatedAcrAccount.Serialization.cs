@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class SystemCreatedAcrAccount : IUtf8JsonSerializable, IJsonModel<SystemCreatedAcrAccount>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemCreatedAcrAccount>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemCreatedAcrAccount>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SystemCreatedAcrAccount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ArmResourceIdentifier != null)
                 {
                     writer.WritePropertyName("armResourceId"u8);
-                    writer.WriteObjectValue<ArmResourceId>(ArmResourceIdentifier, options);
+                    writer.WriteObjectValue(ArmResourceIdentifier, options);
                 }
                 else
                 {
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static SystemCreatedAcrAccount DeserializeSystemCreatedAcrAccount(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,6 +147,85 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new SystemCreatedAcrAccount(acrAccountName, acrAccountSku, armResourceId, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AcrAccountName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  acrAccountName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AcrAccountName))
+                {
+                    builder.Append("  acrAccountName: ");
+                    if (AcrAccountName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AcrAccountName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AcrAccountName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AcrAccountSku), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  acrAccountSku: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AcrAccountSku))
+                {
+                    builder.Append("  acrAccountSku: ");
+                    if (AcrAccountSku.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AcrAccountSku}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AcrAccountSku}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ArmResourceId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  armResourceId: ");
+                builder.AppendLine("{");
+                builder.Append("    resourceId: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ArmResourceIdentifier))
+                {
+                    builder.Append("  armResourceId: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ArmResourceIdentifier, options, 2, false, "  armResourceId: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SystemCreatedAcrAccount>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SystemCreatedAcrAccount>)this).GetFormatFromOptions(options) : options.Format;
@@ -154,6 +234,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SystemCreatedAcrAccount)} does not support writing '{options.Format}' format.");
             }

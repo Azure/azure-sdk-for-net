@@ -1,6 +1,6 @@
 # Release History
 
-## 1.14.0-beta.1 (Unreleased)
+## 1.15.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.14.0 (2024-05-24)
+
+### Other Changes
+* Update `System.IdentityModel.Tokens.Jwt` to 6.35.0
+* Update `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` to 1.25.2
 
 ## 1.13.0 (2024-02-06)
 

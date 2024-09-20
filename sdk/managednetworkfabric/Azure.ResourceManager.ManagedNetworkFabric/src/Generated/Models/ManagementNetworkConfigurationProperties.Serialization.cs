@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class ManagementNetworkConfigurationProperties : IUtf8JsonSerializable, IJsonModel<ManagementNetworkConfigurationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementNetworkConfigurationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementNetworkConfigurationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagementNetworkConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("infrastructureVpnConfiguration"u8);
-            writer.WriteObjectValue<VpnConfigurationProperties>(InfrastructureVpnConfiguration, options);
+            writer.WriteObjectValue(InfrastructureVpnConfiguration, options);
             writer.WritePropertyName("workloadVpnConfiguration"u8);
-            writer.WriteObjectValue<VpnConfigurationProperties>(WorkloadVpnConfiguration, options);
+            writer.WriteObjectValue(WorkloadVpnConfiguration, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static ManagementNetworkConfigurationProperties DeserializeManagementNetworkConfigurationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecuritySubAssessmentData : IUtf8JsonSerializable, IJsonModel<SecuritySubAssessmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecuritySubAssessmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecuritySubAssessmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecuritySubAssessmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<SubAssessmentStatus>(Status, options);
+                writer.WriteObjectValue(Status, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Remediation))
             {
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
-                writer.WriteObjectValue<SecurityCenterResourceDetails>(ResourceDetails, options);
+                writer.WriteObjectValue(ResourceDetails, options);
             }
             if (Optional.IsDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
-                writer.WriteObjectValue<SecuritySubAssessmentAdditionalInfo>(AdditionalData, options);
+                writer.WriteObjectValue(AdditionalData, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static SecuritySubAssessmentData DeserializeSecuritySubAssessmentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

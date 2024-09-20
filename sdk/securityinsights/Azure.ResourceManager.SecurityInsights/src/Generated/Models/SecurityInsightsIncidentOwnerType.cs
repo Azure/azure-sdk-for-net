@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The type of the owner the incident is assigned to. </summary>
+    /// <summary> The type of the owner the hunt is assigned to. </summary>
     public readonly partial struct SecurityInsightsIncidentOwnerType : IEquatable<SecurityInsightsIncidentOwnerType>
     {
         private readonly string _value;
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string UserValue = "User";
         private const string GroupValue = "Group";
 
-        /// <summary> The incident owner type is unknown. </summary>
+        /// <summary> The hunt owner type is unknown. </summary>
         public static SecurityInsightsIncidentOwnerType Unknown { get; } = new SecurityInsightsIncidentOwnerType(UnknownValue);
-        /// <summary> The incident owner type is an AAD user. </summary>
+        /// <summary> The hunt owner type is an AAD user. </summary>
         public static SecurityInsightsIncidentOwnerType User { get; } = new SecurityInsightsIncidentOwnerType(UserValue);
-        /// <summary> The incident owner type is an AAD group. </summary>
+        /// <summary> The hunt owner type is an AAD group. </summary>
         public static SecurityInsightsIncidentOwnerType Group { get; } = new SecurityInsightsIncidentOwnerType(GroupValue);
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentOwnerType"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsIncidentOwnerType left, SecurityInsightsIncidentOwnerType right) => left.Equals(right);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

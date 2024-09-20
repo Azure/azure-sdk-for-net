@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class CheckManagementGroupPolicyRestrictionsContent : IUtf8JsonSerializable, IJsonModel<CheckManagementGroupPolicyRestrictionsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckManagementGroupPolicyRestrictionsContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckManagementGroupPolicyRestrictionsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CheckManagementGroupPolicyRestrictionsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
-                writer.WriteObjectValue<CheckRestrictionsResourceDetails>(ResourceDetails, options);
+                writer.WriteObjectValue(ResourceDetails, options);
             }
             if (Optional.IsCollectionDefined(PendingFields))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PendingFields)
                 {
-                    writer.WriteObjectValue<PendingField>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static CheckManagementGroupPolicyRestrictionsContent DeserializeCheckManagementGroupPolicyRestrictionsContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

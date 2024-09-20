@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 {
     public partial class StandbyContainerGroupPoolElasticityProfile : IUtf8JsonSerializable, IJsonModel<StandbyContainerGroupPoolElasticityProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyContainerGroupPoolElasticityProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyContainerGroupPoolElasticityProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StandbyContainerGroupPoolElasticityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         internal static StandbyContainerGroupPoolElasticityProfile DeserializeStandbyContainerGroupPoolElasticityProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             long maxReadyCapacity = default;
-            StandbyPoolRefillPolicy? refillPolicy = default;
+            StandbyRefillPolicy? refillPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     {
                         continue;
                     }
-                    refillPolicy = new StandbyPoolRefillPolicy(property.Value.GetString());
+                    refillPolicy = new StandbyRefillPolicy(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

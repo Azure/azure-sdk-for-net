@@ -1,12 +1,79 @@
 # Release History
 
-## 5.12.0-beta.1 (Unreleased)
+## 5.12.0-beta.2 (Unreleased)
 
 ### Features Added
 
-  - It is now possible for processors extending `EventProcessor<T>` to disable the batch-level tracing emitted when processing events.  This is intended to allow derived processors dispatching single events or partial batches to emit their own trace information that more accurately correlates to the set of events being processed.  Previously all events in a batch were tracked under a single span regardless of how they were dispatched for processing.
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.11.5 (2024-07-31)
+
+### Other Changes
+
+- Bump `Azure.Core.Amqp` dependency to 1.3.1, which includes a fix to serialization of binary application properties.
+
+## 5.11.4 (2024-07-17)
+
+### Bugs Fixed
+
+- Fixed an error that prevented relative URIs from being used with [application properties](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties) in the `EventData.Properties` collection.
+
+- Fixed an error with ETW logs which caused structured arguments for Id 105 (Event Processor position determined) to be out-of-order with the message format.  This also caused the date to render incorrectly for some captures.
+
+### Other Changes
+
+- The client will now refresh the maximum message size each time a new AMQP link is opened; this is necessary for large message support, where the maximum message size for entities can be reconfigured and adjusted on the fly.  Because the client had cached the value, it would not be aware of the change and would enforce the wrong size for batch creation.
+
+- The `PluggableCheckpointStoreEventProcessor` will now emit a diagnostic span when a checkpoint is created/updated.  While this span is not defined by the Open Telemetry specification, this change aligns diagnostic spans with those emitted by `EventProcessorClient`.
+
+- Adjusted the options used by `EventProcessor<TPartition>` and descendants during startup validation to reduce the amount of data transferred and minimize impact on the outgoing events metric.
+
+## 5.12.0-beta.1 (2024-05-17)
+
+### Features Added
+
+- Preview support for the Event Hubs geographic data replication feature has been enabled. Checking for whether or not this feature is enabled for your namespace can be done by querying for Event Hub properties using `EventHubProducerClient` or `EventHubConsumerClient` and referencing the the `IsGeoReplicationEnabled` property of the result.
 
 ### Breaking Changes
+
+  ### Major
+
+  The type of offset-related data has been changed from `long` to `string` to align with changes to the Event Hubs service API.  The default value for any offset-related data has been changed from `long.MinValue` to `null`.
+
+  Impacted properties:
+  - EventData.Offset
+  - CheckpointPosition.Offset
+  - LastEnqueuedEventProperties.Offset
+  - PartitionProperties.LastEnqueuedOffset
+
+  Impacted methods:
+  - CheckpointPosition constructor
+  - EventPosition.FromOffset
+  - EventHubsModelFactory.EventData
+  - BlobCheckpointStore.UpdateCheckpointAsync _(deprecated overload)_
+  - EventProcessorClient.UpdateCheckpointAsync _(deprecated overload)_
+
+## 5.11.3 (2024-05-15)
+
+### Bugs Fixed
+
+- Fixed an error that caused connection strings using host names without a scheme to fail parsing and be considered invalid.
+
+### Other Changes
+
+- Removed the restriction that endpoints used with the development emulator had to resolve to a `localhost` variant.
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.7, which contains several bug fixes, including for an internal `NullReferenceException` that would sometimes impact creating new links. _(see: [#258](https://github.com/azure/azure-amqp/issues/258))_
+
+## 5.11.2 (2024-04-10)
+
+### Features Added
+
+- It is now possible for processors extending `EventProcessor<T>` to disable the batch-level tracing emitted when processing events.  This is intended to allow derived processors dispatching single events or partial batches to emit their own trace information that more accurately correlates to the set of events being processed.  Previously all events in a batch were tracked under a single span regardless of how they were dispatched for processing.
 
 ### Bugs Fixed
 

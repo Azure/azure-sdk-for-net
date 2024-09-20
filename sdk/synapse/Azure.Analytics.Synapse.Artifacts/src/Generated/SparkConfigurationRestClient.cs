@@ -107,7 +107,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SparkConfigurationResource>(sparkConfiguration);
+            content.JsonWriter.WriteObjectValue(sparkConfiguration);
             request.Content = content;
             return message;
         }
@@ -327,7 +327,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ArtifactRenameRequest>(request);
+            content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
             return message;
         }

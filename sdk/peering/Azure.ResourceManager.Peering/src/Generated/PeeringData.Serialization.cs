@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Peering
 {
     public partial class PeeringData : IUtf8JsonSerializable, IJsonModel<PeeringData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PeeringData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Peering
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<PeeringSku>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsCollectionDefined(Tags))
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Peering
             if (Optional.IsDefined(Direct))
             {
                 writer.WritePropertyName("direct"u8);
-                writer.WriteObjectValue<DirectPeeringProperties>(Direct, options);
+                writer.WriteObjectValue(Direct, options);
             }
             if (Optional.IsDefined(Exchange))
             {
                 writer.WritePropertyName("exchange"u8);
-                writer.WriteObjectValue<ExchangePeeringProperties>(Exchange, options);
+                writer.WriteObjectValue(Exchange, options);
             }
             if (Optional.IsDefined(PeeringLocation))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Peering
 
         internal static PeeringData DeserializePeeringData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Purview.Models
 {
     public partial class PurviewAccountProperties : IUtf8JsonSerializable, IJsonModel<PurviewAccountProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewAccountProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewAccountProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PurviewAccountProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Purview.Models
             if (options.Format != "W" && Optional.IsDefined(AccountStatus))
             {
                 writer.WritePropertyName("accountStatus"u8);
-                writer.WriteObjectValue<PurviewAccountStatus>(AccountStatus, options);
+                writer.WriteObjectValue(AccountStatus, options);
             }
             if (Optional.IsDefined(CloudConnectors))
             {
                 writer.WritePropertyName("cloudConnectors"u8);
-                writer.WriteObjectValue<CloudConnectors>(CloudConnectors, options);
+                writer.WriteObjectValue(CloudConnectors, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Purview.Models
             if (options.Format != "W" && Optional.IsDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
-                writer.WriteObjectValue<PurviewAccountEndpoint>(Endpoints, options);
+                writer.WriteObjectValue(Endpoints, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Purview.Models
             if (Optional.IsDefined(IngestionStorage))
             {
                 writer.WritePropertyName("ingestionStorage"u8);
-                writer.WriteObjectValue<PurviewIngestionStorage>(IngestionStorage, options);
+                writer.WriteObjectValue(IngestionStorage, options);
             }
             if (Optional.IsDefined(ManagedEventHubState))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Purview.Models
             if (options.Format != "W" && Optional.IsDefined(ManagedResources))
             {
                 writer.WritePropertyName("managedResources"u8);
-                writer.WriteObjectValue<PurviewManagedResource>(ManagedResources, options);
+                writer.WriteObjectValue(ManagedResources, options);
             }
             if (Optional.IsDefined(ManagedResourcesPublicNetworkAccess))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Purview.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue<PurviewPrivateEndpointConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         internal static PurviewAccountProperties DeserializePurviewAccountProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

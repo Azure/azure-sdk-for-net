@@ -35,13 +35,15 @@ namespace Azure.Storage.Files.Shares.Tests
                     ShareClientOptions.ServiceVersion.V2023_11_03,
                     ShareClientOptions.ServiceVersion.V2024_02_04,
                     ShareClientOptions.ServiceVersion.V2024_05_04,
+                    ShareClientOptions.ServiceVersion.V2024_08_04,
+                    ShareClientOptions.ServiceVersion.V2024_11_04,
                     StorageVersionExtensions.LatestVersion,
                     StorageVersionExtensions.MaxVersion
                 },
                 additionalParameters: additionalParameters)
         {
-            RecordingServiceVersion = StorageVersionExtensions.MaxVersion;
-            LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion, };
+            RecordingServiceVersion = StorageVersionExtensions.LatestVersion;
+            LiveServiceVersions = new object[] { StorageVersionExtensions.MaxVersion, };
         }
     }
 }

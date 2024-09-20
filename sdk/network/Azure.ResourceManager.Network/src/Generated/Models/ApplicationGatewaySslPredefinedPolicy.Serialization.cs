@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ApplicationGatewaySslPredefinedPolicy : IUtf8JsonSerializable, IJsonModel<ApplicationGatewaySslPredefinedPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewaySslPredefinedPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewaySslPredefinedPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationGatewaySslPredefinedPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {

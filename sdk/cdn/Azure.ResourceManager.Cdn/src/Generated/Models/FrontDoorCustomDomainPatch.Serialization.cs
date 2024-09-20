@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class FrontDoorCustomDomainPatch : IUtf8JsonSerializable, IJsonModel<FrontDoorCustomDomainPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorCustomDomainPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorCustomDomainPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontDoorCustomDomainPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(TlsSettings))
             {
                 writer.WritePropertyName("tlsSettings"u8);
-                writer.WriteObjectValue<FrontDoorCustomDomainHttpsContent>(TlsSettings, options);
+                writer.WriteObjectValue(TlsSettings, options);
             }
             if (Optional.IsDefined(DnsZone))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (PreValidatedCustomDomainResource != null)
                 {
                     writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
-                    writer.WriteObjectValue<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId>(PreValidatedCustomDomainResource, options);
+                    writer.WriteObjectValue(PreValidatedCustomDomainResource, options);
                 }
                 else
                 {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static FrontDoorCustomDomainPatch DeserializeFrontDoorCustomDomainPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

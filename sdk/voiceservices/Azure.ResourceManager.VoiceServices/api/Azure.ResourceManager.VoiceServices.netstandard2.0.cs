@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.VoiceServices
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VoiceServicesCommunicationsGatewayResource : Azure.ResourceManager.ArmResource
+    public partial class VoiceServicesCommunicationsGatewayResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected VoiceServicesCommunicationsGatewayResource() { }
@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.VoiceServices
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> Update(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>> UpdateAsync(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -103,7 +108,7 @@ namespace Azure.ResourceManager.VoiceServices
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VoiceServicesTestLineResource : Azure.ResourceManager.ArmResource
+    public partial class VoiceServicesTestLineResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected VoiceServicesTestLineResource() { }
@@ -120,6 +125,11 @@ namespace Azure.ResourceManager.VoiceServices
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource> Update(Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource>> UpdateAsync(Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class OutboundRuleData : IUtf8JsonSerializable, IJsonModel<OutboundRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OutboundRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OutboundRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OutboundRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
 
         internal static OutboundRuleData DeserializeOutboundRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

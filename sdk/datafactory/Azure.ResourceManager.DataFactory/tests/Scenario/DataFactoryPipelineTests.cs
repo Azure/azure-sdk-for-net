@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
     internal class DataFactoryPipelineTests : DataFactoryManagementTestBase
     {
-        public DataFactoryPipelineTests(bool isAsync) : base(isAsync)
+        public DataFactoryPipelineTests(bool isAsync) : base(isAsync)//,RecordedTestMode.Record)
         {
         }
 

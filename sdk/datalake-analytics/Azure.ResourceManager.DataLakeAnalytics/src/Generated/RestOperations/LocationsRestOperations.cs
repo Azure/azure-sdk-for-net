@@ -36,6 +36,19 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetCapabilityRequestUri(string subscriptionId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeAnalytics/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/capability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetCapabilityRequest(string subscriptionId, AzureLocation location)
         {
             var message = _pipeline.CreateMessage();

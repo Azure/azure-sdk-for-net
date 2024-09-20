@@ -181,8 +181,8 @@ namespace Azure.Monitor.Query
         /// Converts a <see cref="string"/> value to it's <see cref="QueryTimeRange"/> representation.
         /// </summary>
         /// <param name="value">The string to convert.</param>
-        /// <returns>A <see langword="QueryTimeRange" /> equivalent of the string.</returns>
-        /// <exception cref="FormatException"><paramref name="value" /> is not in correct format to represent a <see langword="QueryTimeRange" /> value.</exception>
+        /// <returns>A <see cref="QueryTimeRange" /> equivalent of the string.</returns>
+        /// <exception cref="FormatException"><paramref name="value" /> is not in correct format to represent a <see cref="QueryTimeRange" /> value.</exception>
         internal static QueryTimeRange Parse(string value)
         {
             Argument.AssertNotNullOrWhiteSpace(value, nameof(value));

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Quantum.Models
 {
     public partial class WorkspaceKeyListResult : IUtf8JsonSerializable, IJsonModel<WorkspaceKeyListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkspaceKeyListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkspaceKeyListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkspaceKeyListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Quantum.Models
             if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
-                writer.WriteObjectValue<WorkspaceApiKey>(PrimaryKey, options);
+                writer.WriteObjectValue(PrimaryKey, options);
             }
             if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
-                writer.WriteObjectValue<WorkspaceApiKey>(SecondaryKey, options);
+                writer.WriteObjectValue(SecondaryKey, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PrimaryConnectionString))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Quantum.Models
 
         internal static WorkspaceKeyListResult DeserializeWorkspaceKeyListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

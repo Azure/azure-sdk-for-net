@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kusto
 {
     public partial class KustoScriptData : IUtf8JsonSerializable, IJsonModel<KustoScriptData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoScriptData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoScriptData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KustoScriptData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Kusto
 
         internal static KustoScriptData DeserializeKustoScriptData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

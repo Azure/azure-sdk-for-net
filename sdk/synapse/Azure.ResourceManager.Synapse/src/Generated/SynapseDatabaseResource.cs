@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.Synapse
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KustoPoolDataConnections_dataConnectionValidation</description>
+        /// <description>KustoPoolDataConnections_DataConnectionValidation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.Synapse
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KustoPoolDataConnections_dataConnectionValidation</description>
+        /// <description>KustoPoolDataConnections_DataConnectionValidation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

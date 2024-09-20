@@ -7,6 +7,8 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     [PersistableModelProxy(typeof(UnknownAutoMLVertical))]
     public partial class AutoMLVertical : IUtf8JsonSerializable, IJsonModel<AutoMLVertical>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoMLVertical>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoMLVertical>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutoMLVertical>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -26,11 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("taskType"u8);
+            writer.WriteStringValue(TaskType.ToString());
             if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
+            writer.WritePropertyName("trainingData"u8);
+            writer.WriteObjectValue(TrainingData, options);
             if (Optional.IsDefined(TargetColumnName))
             {
                 if (TargetColumnName != null)
@@ -43,10 +49,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("targetColumnName");
                 }
             }
-            writer.WritePropertyName("taskType"u8);
-            writer.WriteStringValue(TaskType.ToString());
-            writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue<MachineLearningTableJobInput>(TrainingData, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -79,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static AutoMLVertical DeserializeAutoMLVertical(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -104,6 +106,86 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return UnknownAutoMLVertical.DeserializeUnknownAutoMLVertical(element, options);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TaskType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  taskType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  taskType: ");
+                builder.AppendLine($"'{TaskType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogVerbosity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logVerbosity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogVerbosity))
+                {
+                    builder.Append("  logVerbosity: ");
+                    builder.AppendLine($"'{LogVerbosity.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrainingData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  trainingData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TrainingData))
+                {
+                    builder.Append("  trainingData: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TrainingData, options, 2, false, "  trainingData: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetColumnName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetColumnName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetColumnName))
+                {
+                    builder.Append("  targetColumnName: ");
+                    if (TargetColumnName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TargetColumnName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TargetColumnName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AutoMLVertical>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutoMLVertical>)this).GetFormatFromOptions(options) : options.Format;
@@ -112,6 +194,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AutoMLVertical)} does not support writing '{options.Format}' format.");
             }

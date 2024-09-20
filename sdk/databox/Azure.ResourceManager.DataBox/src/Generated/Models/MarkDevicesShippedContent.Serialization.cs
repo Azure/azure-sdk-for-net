@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class MarkDevicesShippedContent : IUtf8JsonSerializable, IJsonModel<MarkDevicesShippedContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarkDevicesShippedContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarkDevicesShippedContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MarkDevicesShippedContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("deliverToDcPackageDetails"u8);
-            writer.WriteObjectValue<PackageCarrierInfo>(DeliverToDataCenterPackageDetails, options);
+            writer.WriteObjectValue(DeliverToDataCenterPackageDetails, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static MarkDevicesShippedContent DeserializeMarkDevicesShippedContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

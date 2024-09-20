@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests.Scenario
         public async Task CreateOrUpdate()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            var workbookTemplateCollection = resourceGroup.GetWorkbookTemplates();
+            var workbookTemplateCollection = resourceGroup.GetApplicationInsightsWorkbookTemplates();
             var resourceName = Recording.GenerateAssetName("testname");
-            var data = new WorkbookTemplateData(AzureLocation.EastUS);
+            var data = new ApplicationInsightsWorkbookTemplateData(AzureLocation.EastUS);
             var lro = await workbookTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
             var workbookTemplate = lro.Value;
             Assert.AreEqual(resourceName, workbookTemplate.Data.Name);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests.Scenario
         public async Task Get()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            var workbookTemplateCollection = resourceGroup.GetWorkbookTemplates();
+            var workbookTemplateCollection = resourceGroup.GetApplicationInsightsWorkbookTemplates();
             var resourceName = Recording.GenerateAssetName("workbookTemplate");
-            var data = new WorkbookTemplateData(AzureLocation.EastUS);
+            var data = new ApplicationInsightsWorkbookTemplateData(AzureLocation.EastUS);
             var lro = await workbookTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
             var workbookTemplate1 = lro.Value;
             var workbookTemplate2 = (await workbookTemplateCollection.GetAsync(resourceName)).Value;
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests.Scenario
         public async Task GetAll()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            var workbookTemplateCollection = resourceGroup.GetWorkbookTemplates();
+            var workbookTemplateCollection = resourceGroup.GetApplicationInsightsWorkbookTemplates();
             var resourceName1 = Recording.GenerateAssetName("workbook1");
             var resourceName2 = Recording.GenerateAssetName("workbook2");
-            var data1 = new WorkbookTemplateData(AzureLocation.EastUS);
-            var data2 = new WorkbookTemplateData(AzureLocation.EastUS);
+            var data1 = new ApplicationInsightsWorkbookTemplateData(AzureLocation.EastUS);
+            var data2 = new ApplicationInsightsWorkbookTemplateData(AzureLocation.EastUS);
             _ = await workbookTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName1, data1);
             _ = await workbookTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName2, data2);
             int count = 0;
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Tests.Scenario
         public async Task Exists()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            var workbookTemplateCollection = resourceGroup.GetWorkbookTemplates();
+            var workbookTemplateCollection = resourceGroup.GetApplicationInsightsWorkbookTemplates();
             var resourceName = Recording.GenerateAssetName("workbookTemplate");
-            var data = new WorkbookTemplateData(AzureLocation.EastUS);
+            var data = new ApplicationInsightsWorkbookTemplateData(AzureLocation.EastUS);
             _ = await workbookTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
             Assert.IsTrue(await workbookTemplateCollection.ExistsAsync(resourceName));
             Assert.IsFalse(await workbookTemplateCollection.ExistsAsync(resourceName + "1"));

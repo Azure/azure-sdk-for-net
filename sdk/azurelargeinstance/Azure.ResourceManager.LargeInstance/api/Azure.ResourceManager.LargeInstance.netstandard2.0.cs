@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.LargeInstance
         public static Azure.Pageable<Azure.ResourceManager.LargeInstance.LargeStorageInstanceResource> GetLargeStorageInstances(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.LargeInstance.LargeStorageInstanceResource> GetLargeStorageInstancesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class LargeInstanceResource : Azure.ResourceManager.ArmResource
+    public partial class LargeInstanceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.LargeInstanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.LargeInstanceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected LargeInstanceResource() { }
@@ -72,6 +72,11 @@ namespace Azure.ResourceManager.LargeInstance
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LargeInstance.Models.LargeInstanceOperationStatusResult>> ShutdownAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LargeInstance.Models.LargeInstanceOperationStatusResult> Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LargeInstance.Models.LargeInstanceOperationStatusResult>> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.LargeInstance.LargeInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.LargeInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.LargeInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LargeInstance.LargeInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.LargeInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.LargeInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.LargeInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.LargeInstance.LargeInstanceResource> Update(Azure.ResourceManager.LargeInstance.Models.LargeInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LargeInstance.LargeInstanceResource>> UpdateAsync(Azure.ResourceManager.LargeInstance.Models.LargeInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -103,7 +108,7 @@ namespace Azure.ResourceManager.LargeInstance
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.LargeStorageInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.LargeStorageInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LargeStorageInstanceResource : Azure.ResourceManager.ArmResource
+    public partial class LargeStorageInstanceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.LargeStorageInstanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.LargeStorageInstanceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected LargeStorageInstanceResource() { }
@@ -118,6 +123,11 @@ namespace Azure.ResourceManager.LargeInstance
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LargeInstance.LargeStorageInstanceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.LargeInstance.LargeStorageInstanceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LargeInstance.LargeStorageInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.LargeInstance.LargeStorageInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.LargeStorageInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LargeInstance.LargeStorageInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LargeInstance.LargeStorageInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.LargeStorageInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.LargeStorageInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LargeInstance.LargeStorageInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.LargeInstance.LargeStorageInstanceResource> Update(Azure.ResourceManager.LargeInstance.Models.LargeStorageInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LargeInstance.LargeStorageInstanceResource>> UpdateAsync(Azure.ResourceManager.LargeInstance.Models.LargeStorageInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

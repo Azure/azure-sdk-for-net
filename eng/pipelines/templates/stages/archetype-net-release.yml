@@ -105,7 +105,6 @@ stages:
                             ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
                             PackageRepository: Nuget
                             ReleaseSha: $(Build.SourceVersion)
-                            RepoId: Azure/azure-sdk-for-net
 
             - ${{if ne(artifact.skipPublishPackage, 'true')}}:
               - deployment: PublishPackage
@@ -156,17 +155,23 @@ stages:
                     runOnce:
                       deploy:
                         steps:
-                          - checkout: none
-                          - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
-                          - task: MSBuild@1
-                            displayName: 'Upload Symbols for ${{artifact.name}}'
-                            inputs:
-                              solution: '$(Pipeline.Workspace)/azure-sdk-build-tools/tools/symboltool/SymbolUploader.proj'
-                              msbuildArguments: >-
-                                /p:PackagesPath=$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
-                                /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat)
-                                /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat)
-                                /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)
+                          - checkout: self
+                            path: s  # Keep this in the same path it would be if it was only a single checkout
+                          - checkout: azure-sdk-build-tools
+                            path: azure-sdk-build-tools
+                          - template: /pipelines/steps/publish-symbols.yml@azure-sdk-build-tools
+                            parameters:
+                              BuildToolsRepositoryPath: $(Pipeline.Workspace)/azure-sdk-build-tools
+                              PackagesPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
+                              StagingDirectory: $(Build.ArtifactStagingDirectory)/symbols
+                          - template: /eng/common/pipelines/templates/steps/create-apireview.yml
+                            parameters:
+                              ArtifactPath: $(Pipeline.Workspace)/packages
+                              Artifacts: ${{parameters.Artifacts}}
+                              ConfigFileDir: $(Pipeline.Workspace)/packages/PackageInfo
+                              MarkPackageAsShipped: true
+                              ArtifactName: ${{parameters.ArtifactName}}
+                              PackageName: ${{artifact.name}}
 
               - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
                 - deployment: PublicDocsMS
@@ -223,12 +228,8 @@ stages:
                           - template: /eng/common/pipelines/templates/steps/publish-blobs.yml
                             parameters:
                               FolderForUpload: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}'
-                              BlobSASKey: '$(azure-sdk-docs-prod-sas)'
-                              BlobName: '$(azure-sdk-docs-prod-blob-name)'
                               TargetLanguage: 'dotnet'
                               ArtifactLocation: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}'
-                              # we override the regular script path because we have cloned the build tools repo as a separate artifact.
-                              ScriptPath: 'eng/common/scripts/copy-docs-to-blobstorage.ps1'
 
               - ${{if ne(artifact.skipUpdatePackageVersion, 'true')}}:
                 - deployment: UpdatePackageVersion
@@ -311,7 +312,7 @@ stages:
 
       - job: PublishDocsToNightlyBranch
         dependsOn: PublishPackages
-        condition: or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal')))
+        condition: and(succeeded(), or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal'))))
         pool:
           name: $(LINUXPOOL)
           image: $(LINUXVMIMAGE)
@@ -330,7 +331,8 @@ stages:
             parameters:
               PackageInfoLocations:
                 - ${{ each artifact in parameters.Artifacts }}:
-                  - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
+                  - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
+                    - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
               WorkingDirectory: $(System.DefaultWorkingDirectory)
               TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
               TargetDocRepoName: ${{parameters.TargetDocRepoName}}

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ApplicationGatewayOnDemandProbe : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayOnDemandProbe>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayOnDemandProbe>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayOnDemandProbe>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationGatewayOnDemandProbe>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Match))
             {
                 writer.WritePropertyName("match"u8);
-                writer.WriteObjectValue<ApplicationGatewayProbeHealthResponseMatch>(Match, options);
+                writer.WriteObjectValue(Match, options);
             }
             if (Optional.IsDefined(BackendAddressPool))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayOnDemandProbe DeserializeApplicationGatewayOnDemandProbe(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

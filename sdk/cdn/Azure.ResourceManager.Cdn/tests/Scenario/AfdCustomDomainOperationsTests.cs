@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             //This test doesn't create a new afd custom domain bucause the update actoin needs to manualy add dns txt record and validate.
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
+            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("azure_cli_test");
             ProfileResource afdProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
-            FrontDoorCustomDomainResource afdCustomDomain = await afdProfile.GetFrontDoorCustomDomains().GetAsync("customdomain4afd-azuretest-net");
+            FrontDoorCustomDomainResource afdCustomDomain = await afdProfile.GetFrontDoorCustomDomains().GetAsync("domainupdatetest-clitest-azfdtest-xyz-edc3");
             FrontDoorCustomDomainPatch updateOptions = new FrontDoorCustomDomainPatch
             {
                 TlsSettings = new FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType.ManagedCertificate)
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             //This test doesn't create a new afd custom domain bucause the refresh validation token actoin needs to manualy add dns txt record and validate.
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
+            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("azure_cli_test");
             ProfileResource afdProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
-            FrontDoorCustomDomainResource afdCustomDomain = await afdProfile.GetFrontDoorCustomDomains().GetAsync("customdomain4afd-azuretest-net");
+            FrontDoorCustomDomainResource afdCustomDomain = await afdProfile.GetFrontDoorCustomDomains().GetAsync("azuretest-azuretest-net-91c8");
             Assert.DoesNotThrowAsync(async () => await afdCustomDomain.RefreshValidationTokenAsync(WaitUntil.Completed));
         }
     }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class DdosProtectionPlanData : IUtf8JsonSerializable, IJsonModel<DdosProtectionPlanData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DdosProtectionPlanData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DdosProtectionPlanData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DdosProtectionPlanData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network
 
         internal static DdosProtectionPlanData DeserializeDdosProtectionPlanData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

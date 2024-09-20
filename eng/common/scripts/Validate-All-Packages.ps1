@@ -12,7 +12,6 @@ Param (
   [string]$BuildDefinition,
   [string]$PipelineUrl,
   [string]$APIViewUri  = "https://apiview.dev/AutoReview/GetReviewStatus",
-  [string]$Devops_pat = $env:DEVOPS_PAT,
   [bool] $IsReleaseBuild = $false
 )
 
@@ -33,8 +32,7 @@ function ProcessPackage($PackageName, $ConfigFileDir)
         -APIKey $APIKey `
         -BuildDefinition $BuildDefinition `
         -PipelineUrl $PipelineUrl `
-        -ConfigFileDir $ConfigFileDir `
-        -Devops_pat $Devops_pat
+        -ConfigFileDir $ConfigFileDir
     if ($LASTEXITCODE -ne 0) {
         Write-Error "Failed to validate package $PackageName"
         exit 1

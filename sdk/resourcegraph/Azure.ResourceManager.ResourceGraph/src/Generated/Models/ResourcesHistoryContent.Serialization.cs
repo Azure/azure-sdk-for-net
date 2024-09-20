@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 {
     public partial class ResourcesHistoryContent : IUtf8JsonSerializable, IJsonModel<ResourcesHistoryContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourcesHistoryContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourcesHistoryContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourcesHistoryContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue<ResourcesHistoryRequestOptions>(Options, options);
+                writer.WriteObjectValue(Options, options);
             }
             if (Optional.IsCollectionDefined(ManagementGroups))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         internal static ResourcesHistoryContent DeserializeResourcesHistoryContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

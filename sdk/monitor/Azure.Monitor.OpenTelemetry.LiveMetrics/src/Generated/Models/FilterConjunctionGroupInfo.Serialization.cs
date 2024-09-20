@@ -23,10 +23,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             {
                 if (property.NameEquals("Filters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<FilterInfo> array = new List<FilterInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -36,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     continue;
                 }
             }
-            return new FilterConjunctionGroupInfo(filters ?? new ChangeTrackingList<FilterInfo>());
+            return new FilterConjunctionGroupInfo(filters);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

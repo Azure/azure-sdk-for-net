@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media
 {
     public partial class MediaLiveOutputData : IUtf8JsonSerializable, IJsonModel<MediaLiveOutputData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaLiveOutputData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaLiveOutputData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaLiveOutputData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Hls))
             {
                 writer.WritePropertyName("hls"u8);
-                writer.WriteObjectValue<Hls>(Hls, options);
+                writer.WriteObjectValue(Hls, options);
             }
             if (Optional.IsDefined(OutputSnapTime))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Media
 
         internal static MediaLiveOutputData DeserializeMediaLiveOutputData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

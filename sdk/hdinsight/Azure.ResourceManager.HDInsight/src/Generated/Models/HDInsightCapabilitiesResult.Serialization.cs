@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class HDInsightCapabilitiesResult : IUtf8JsonSerializable, IJsonModel<HDInsightCapabilitiesResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightCapabilitiesResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightCapabilitiesResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HDInsightCapabilitiesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 foreach (var item in Versions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<HDInsightVersionsCapability>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 foreach (var item in Regions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<RegionsCapability>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (options.Format != "W" && Optional.IsDefined(Quota))
             {
                 writer.WritePropertyName("quota"u8);
-                writer.WriteObjectValue<QuotaCapability>(Quota, options);
+                writer.WriteObjectValue(Quota, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightCapabilitiesResult DeserializeHDInsightCapabilitiesResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

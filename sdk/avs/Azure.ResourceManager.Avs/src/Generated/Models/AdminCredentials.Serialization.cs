@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Avs.Models
 {
     public partial class AdminCredentials : IUtf8JsonSerializable, IJsonModel<AdminCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdminCredentials>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdminCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AdminCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static AdminCredentials DeserializeAdminCredentials(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

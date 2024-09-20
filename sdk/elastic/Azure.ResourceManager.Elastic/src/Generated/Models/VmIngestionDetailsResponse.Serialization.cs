@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Elastic.Models
 {
     public partial class VmIngestionDetailsResponse : IUtf8JsonSerializable, IJsonModel<VmIngestionDetailsResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmIngestionDetailsResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmIngestionDetailsResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VmIngestionDetailsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static VmIngestionDetailsResponse DeserializeVmIngestionDetailsResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class TrackedResourceModificationDetails : IUtf8JsonSerializable, IJsonModel<TrackedResourceModificationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrackedResourceModificationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrackedResourceModificationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TrackedResourceModificationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(PolicyDetails))
             {
                 writer.WritePropertyName("policyDetails"u8);
-                writer.WriteObjectValue<PolicyDetails>(PolicyDetails, options);
+                writer.WriteObjectValue(PolicyDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DeploymentId))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static TrackedResourceModificationDetails DeserializeTrackedResourceModificationDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Attestation.Models
 {
     internal partial class AttestationServicePatchSpecificParams : IUtf8JsonSerializable, IJsonModel<AttestationServicePatchSpecificParams>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttestationServicePatchSpecificParams>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttestationServicePatchSpecificParams>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AttestationServicePatchSpecificParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AttestationServicePatchSpecificParams>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.Attestation.Models
                 throw new FormatException($"The model {nameof(AttestationServicePatchSpecificParams)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.Attestation.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AttestationServicePatchSpecificParams IJsonModel<AttestationServicePatchSpecificParams>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -63,7 +70,7 @@ namespace Azure.ResourceManager.Attestation.Models
 
         internal static AttestationServicePatchSpecificParams DeserializeAttestationServicePatchSpecificParams(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

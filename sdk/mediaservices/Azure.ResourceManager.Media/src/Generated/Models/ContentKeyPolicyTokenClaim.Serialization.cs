@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class ContentKeyPolicyTokenClaim : IUtf8JsonSerializable, IJsonModel<ContentKeyPolicyTokenClaim>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyTokenClaim>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyTokenClaim>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContentKeyPolicyTokenClaim>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyTokenClaim DeserializeContentKeyPolicyTokenClaim(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

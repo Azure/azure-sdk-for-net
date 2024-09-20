@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class TopQueries : IUtf8JsonSerializable, IJsonModel<TopQueries>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TopQueries>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TopQueries>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TopQueries>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Queries)
                 {
-                    writer.WriteObjectValue<QueryStatisticsProperties>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static TopQueries DeserializeTopQueries(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -198,29 +198,31 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfQueries), out propertyOverride);
-            if (Optional.IsDefined(NumberOfQueries) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  numberOfQueries: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NumberOfQueries))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  numberOfQueries: ");
                     builder.AppendLine($"{NumberOfQueries.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AggregationFunction), out propertyOverride);
-            if (Optional.IsDefined(AggregationFunction) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  aggregationFunction: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AggregationFunction))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  aggregationFunction: ");
                     if (AggregationFunction.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -234,15 +236,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ObservationMetric), out propertyOverride);
-            if (Optional.IsDefined(ObservationMetric) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  observationMetric: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ObservationMetric))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  observationMetric: ");
                     if (ObservationMetric.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -256,29 +259,31 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntervalType), out propertyOverride);
-            if (Optional.IsDefined(IntervalType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  intervalType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IntervalType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  intervalType: ");
                     builder.AppendLine($"'{IntervalType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartTime), out propertyOverride);
-            if (Optional.IsDefined(StartTime) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  startTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartTime))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  startTime: ");
                     if (StartTime.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -292,15 +297,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndTime), out propertyOverride);
-            if (Optional.IsDefined(EndTime) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  endTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndTime))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  endTime: ");
                     if (EndTime.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -314,17 +320,18 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Queries), out propertyOverride);
-            if (Optional.IsCollectionDefined(Queries) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Queries.Any() || hasPropertyOverride)
+                builder.Append("  queries: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Queries))
                 {
-                    builder.Append("  queries: ");
-                    if (hasPropertyOverride)
+                    if (Queries.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  queries: ");
                         builder.AppendLine("[");
                         foreach (var item in Queries)
                         {

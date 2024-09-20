@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     internal partial class CspWorkspaceAdminProperties : IUtf8JsonSerializable, IJsonModel<CspWorkspaceAdminProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CspWorkspaceAdminProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CspWorkspaceAdminProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CspWorkspaceAdminProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static CspWorkspaceAdminProperties DeserializeCspWorkspaceAdminProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

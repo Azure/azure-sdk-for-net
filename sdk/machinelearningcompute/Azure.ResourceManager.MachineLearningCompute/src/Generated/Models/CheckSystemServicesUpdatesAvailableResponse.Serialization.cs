@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     public partial class CheckSystemServicesUpdatesAvailableResponse : IUtf8JsonSerializable, IJsonModel<CheckSystemServicesUpdatesAvailableResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckSystemServicesUpdatesAvailableResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckSystemServicesUpdatesAvailableResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CheckSystemServicesUpdatesAvailableResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         internal static CheckSystemServicesUpdatesAvailableResponse DeserializeCheckSystemServicesUpdatesAvailableResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

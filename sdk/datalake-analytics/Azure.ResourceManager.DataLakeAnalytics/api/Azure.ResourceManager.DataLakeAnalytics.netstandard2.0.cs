@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataLakeAnalyticsAccountResource : Azure.ResourceManager.ArmResource
+    public partial class DataLakeAnalyticsAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataLakeAnalyticsAccountResource() { }
@@ -82,6 +82,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationResource>> GetDataLakeAnalyticsStorageAccountInformationAsync(string storageAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationResource> GetDataLakeStoreAccountInformation(string dataLakeStoreAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationResource>> GetDataLakeStoreAccountInformationAsync(string dataLakeStoreAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -115,7 +120,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataLakeAnalyticsComputePolicyResource : Azure.ResourceManager.ArmResource
+    public partial class DataLakeAnalyticsComputePolicyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataLakeAnalyticsComputePolicyResource() { }
@@ -126,6 +131,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyResource> Update(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsComputePolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyResource>> UpdateAsync(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsComputePolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -177,7 +187,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataLakeAnalyticsFirewallRuleResource : Azure.ResourceManager.ArmResource
+    public partial class DataLakeAnalyticsFirewallRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataLakeAnalyticsFirewallRuleResource() { }
@@ -188,6 +198,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleResource> Update(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsFirewallRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleResource>> UpdateAsync(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsFirewallRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -220,7 +235,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataLakeAnalyticsStorageAccountInformationResource : Azure.ResourceManager.ArmResource
+    public partial class DataLakeAnalyticsStorageAccountInformationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataLakeAnalyticsStorageAccountInformationResource() { }
@@ -234,6 +249,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         public virtual Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerResource> GetDataLakeAnalyticsStorageContainer(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerResource>> GetDataLakeAnalyticsStorageContainerAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerCollection GetDataLakeAnalyticsStorageContainers() { throw null; }
+        Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response Update(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsStorageAccountInformationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsStorageAccountInformationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -262,7 +282,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataLakeAnalyticsStorageContainerResource : Azure.ResourceManager.ArmResource
+    public partial class DataLakeAnalyticsStorageContainerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataLakeAnalyticsStorageContainerResource() { }
@@ -273,6 +293,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsSasTokenInformation> GetSasTokens(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsSasTokenInformation> GetSasTokensAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DataLakeStoreAccountInformationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationResource>, System.Collections.IEnumerable
     {
@@ -303,7 +328,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataLakeStoreAccountInformationResource : Azure.ResourceManager.ArmResource
+    public partial class DataLakeStoreAccountInformationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataLakeStoreAccountInformationResource() { }
@@ -314,6 +339,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreAccountInformationCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreAccountInformationCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

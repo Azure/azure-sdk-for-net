@@ -10,6 +10,7 @@ using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -776,6 +777,63 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
 
                 Assert.That(blobCount, Is.EqualTo(1));
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobCheckpointStore.UpdateCheckpointAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CheckpointUpdateWritesAnInvalidOffsetString()
+        {
+            await using (StorageScope storageScope = await StorageScope.CreateAsync())
+            {
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
+                var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
+                var checkpointStore = new BlobCheckpointStoreInternal(containerClient);
+
+                var checkpoint = new EventProcessorCheckpoint
+                {
+                    FullyQualifiedNamespace = "namespace",
+                    EventHubName = "eventHubName",
+                    ConsumerGroup = "consumerGroup",
+                    PartitionId = "partitionId",
+                    ClientIdentifier = "Id"
+                };
+
+                var mockEvent = new MockEventData(
+                    eventBody: Array.Empty<byte>(),
+                    offset: 10,
+                    sequenceNumber: 20);
+
+                // Calling update should create the checkpoint.
+
+                await checkpointStore.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientIdentifier, new CheckpointPosition(mockEvent.SequenceNumber), default);
+
+                var blobCount = 0;
+                var checkpointBlobName = default(string);
+                var checkpointBlob = default(BlobProperties);
+                var storedCheckpoint = await checkpointStore.GetCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, default);
+
+                await foreach (var blob in containerClient.GetBlobsAsync())
+                {
+                    ++blobCount;
+                    checkpointBlobName = blob.Name;
+                    checkpointBlob = await containerClient.GetBlobClient(blob.Name).GetPropertiesAsync();
+
+                    if (blobCount > 1)
+                    {
+                        break;
+                    }
+                }
+
+                Assert.That(blobCount, Is.EqualTo(1));
+                Assert.That(checkpointBlobName, Is.EqualTo(checkpointStore.GetCheckpointBlobName(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId)));
+                Assert.That(checkpointBlob.Metadata.TryGetValue("offset", out var offset), Is.True);
+                Assert.That(offset, Is.Not.Null);
+                Assert.That(long.TryParse(offset, out _), Is.False);
             }
         }
 

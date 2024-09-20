@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class X12DelimiterOverrides : IUtf8JsonSerializable, IJsonModel<X12DelimiterOverrides>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X12DelimiterOverrides>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X12DelimiterOverrides>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<X12DelimiterOverrides>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12DelimiterOverrides DeserializeX12DelimiterOverrides(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

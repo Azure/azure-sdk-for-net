@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -17,6 +18,8 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
 {
     internal static class ModelSerializationExtensions
     {
+        internal static readonly ModelReaderWriterOptions WireOptions = new ModelReaderWriterOptions("W");
+
         public static object GetObject(this JsonElement element)
         {
             switch (element.ValueKind)
@@ -164,7 +167,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             writer.WriteNumberValue(value.ToUnixTimeSeconds());
         }
 
-        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, object value)
+        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value)
         {
             switch (value)
             {

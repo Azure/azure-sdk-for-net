@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.BotService.Models
 {
     public partial class BotChannelSite : IUtf8JsonSerializable, IJsonModel<BotChannelSite>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotChannelSite>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotChannelSite>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BotChannelSite>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static BotChannelSite DeserializeBotChannelSite(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.BotService.Models
             bool? isDetailedLoggingEnabled = default;
             bool? isBlockUserUploadEnabled = default;
             bool? isNoStorageEnabled = default;
-            ETag? eTag = default;
+            ETag? etag = default;
             string appId = default;
             bool? isV1Enabled = default;
             bool? isV3Enabled = default;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("appId"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.BotService.Models
                 isDetailedLoggingEnabled,
                 isBlockUserUploadEnabled,
                 isNoStorageEnabled,
-                eTag,
+                etag,
                 appId,
                 isV1Enabled,
                 isV3Enabled,

@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The subnetId that the private endpoint is connected to. </summary>
+        [WirePath("subnetArmId")]
         public ResourceIdentifier SubnetArmId { get; set; }
     }
 }

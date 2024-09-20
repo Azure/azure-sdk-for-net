@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<KqlScriptResource>(kqlScript);
+            content.JsonWriter.WriteObjectValue(kqlScript);
             request.Content = content;
             return message;
         }
@@ -257,7 +257,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ArtifactRenameRequest>(renameRequest);
+            content.JsonWriter.WriteObjectValue(renameRequest);
             request.Content = content;
             return message;
         }

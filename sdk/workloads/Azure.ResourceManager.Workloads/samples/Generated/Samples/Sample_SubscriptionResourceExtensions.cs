@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         public async Task SapSizingRecommendations_SAPSizingRecommendationsS4HANADistributed()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPSizingRecommendations_S4HANA_Distributed.json
-            // this example is just showing the usage of "SAPSizingRecommendations" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SapSizingRecommendations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         public async Task SapSizingRecommendations_SAPSizingRecommendationsS4HANADistributedHAAvSet()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPSizingRecommendations_S4HANA_HA_AvSet.json
-            // this example is just showing the usage of "SAPSizingRecommendations" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SapSizingRecommendations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         public async Task SapSizingRecommendations_SAPSizingRecommendationsS4HANADistributedHAAvZone()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPSizingRecommendations_S4HANA_HA_AvZone.json
-            // this example is just showing the usage of "SAPSizingRecommendations" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SapSizingRecommendations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         public async Task SapSizingRecommendations_SAPSizingRecommendationsS4HANASingleServer()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPSizingRecommendations_S4HANA_SingleServer.json
-            // this example is just showing the usage of "SAPSizingRecommendations" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SapSizingRecommendations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         public async Task SapSupportedSku_SAPSupportedSkusDistributed()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPSupportedSkus_Distributed.json
-            // this example is just showing the usage of "SAPSupportedSku" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SapSupportedSku" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         public async Task SapSupportedSku_SAPSupportedSkusDistributedHAAvSet()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPSupportedSkus_DistributedHA_AvSet.json
-            // this example is just showing the usage of "SAPSupportedSku" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SapSupportedSku" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         public async Task SapSupportedSku_SAPSupportedSkusDistributedHAAvZone()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPSupportedSkus_DistributedHA_AvZone.json
-            // this example is just showing the usage of "SAPSupportedSku" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SapSupportedSku" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         public async Task SapSupportedSku_SAPSupportedSkusSingleServer()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPSupportedSkus_SingleServer.json
-            // this example is just showing the usage of "SAPSupportedSku" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SapSupportedSku" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         public async Task SapDiskConfigurations_SAPDiskConfigurationsNonProd()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPDiskConfigurations_NonProd.json
-            // this example is just showing the usage of "SAPDiskConfigurations" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SapDiskConfigurations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         public async Task SapDiskConfigurations_SAPDiskConfigurationsProd()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPDiskConfigurations_Prod.json
-            // this example is just showing the usage of "SAPDiskConfigurations" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SapDiskConfigurations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         public async Task SapAvailabilityZoneDetails_SAPAvailabilityZoneDetailsEastus()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPAvailabilityZoneDetails_eastus.json
-            // this example is just showing the usage of "SAPAvailabilityZoneDetails" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SapAvailabilityZoneDetails" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         public async Task SapAvailabilityZoneDetails_SAPAvailabilityZoneDetailsNortheurope()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPAvailabilityZoneDetails_northeurope.json
-            // this example is just showing the usage of "SAPAvailabilityZoneDetails" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SapAvailabilityZoneDetails" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

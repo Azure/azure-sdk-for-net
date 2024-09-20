@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class SwaggerSchema : IUtf8JsonSerializable, IJsonModel<SwaggerSchema>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SwaggerSchema>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SwaggerSchema>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SwaggerSchema>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Items))
             {
                 writer.WritePropertyName("items"u8);
-                writer.WriteObjectValue<SwaggerSchema>(Items, options);
+                writer.WriteObjectValue(Items, options);
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<SwaggerSchema>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in AllOf)
                 {
-                    writer.WriteObjectValue<SwaggerSchema>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Xml))
             {
                 writer.WritePropertyName("xml"u8);
-                writer.WriteObjectValue<SwaggerXml>(Xml, options);
+                writer.WriteObjectValue(Xml, options);
             }
             if (Optional.IsDefined(ExternalDocs))
             {
                 writer.WritePropertyName("externalDocs"u8);
-                writer.WriteObjectValue<SwaggerExternalDocumentation>(ExternalDocs, options);
+                writer.WriteObjectValue(ExternalDocs, options);
             }
             if (Optional.IsDefined(Example))
             {
@@ -139,22 +139,22 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(DynamicSchemaOld))
             {
                 writer.WritePropertyName("dynamicSchemaOld"u8);
-                writer.WriteObjectValue<SwaggerCustomDynamicSchema>(DynamicSchemaOld, options);
+                writer.WriteObjectValue(DynamicSchemaOld, options);
             }
             if (Optional.IsDefined(DynamicSchemaNew))
             {
                 writer.WritePropertyName("dynamicSchemaNew"u8);
-                writer.WriteObjectValue<SwaggerCustomDynamicProperties>(DynamicSchemaNew, options);
+                writer.WriteObjectValue(DynamicSchemaNew, options);
             }
             if (Optional.IsDefined(DynamicListNew))
             {
                 writer.WritePropertyName("dynamicListNew"u8);
-                writer.WriteObjectValue<SwaggerCustomDynamicList>(DynamicListNew, options);
+                writer.WriteObjectValue(DynamicListNew, options);
             }
             if (Optional.IsDefined(DynamicTree))
             {
                 writer.WritePropertyName("dynamicTree"u8);
-                writer.WriteObjectValue<SwaggerCustomDynamicTree>(DynamicTree, options);
+                writer.WriteObjectValue(DynamicTree, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static SwaggerSchema DeserializeSwaggerSchema(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -24,12 +24,13 @@ namespace Azure.Messaging.EventGrid
         /// <param name="contentLength"> The size of the blob in bytes. This is the same as what would be returned in the Content-Length header from the blob. </param>
         /// <param name="contentOffset"> The offset of the blob in bytes. </param>
         /// <param name="blobType"> The type of blob. </param>
+        /// <param name="accessTier"> The current tier of the blob. </param>
         /// <param name="url"> The path to the blob. </param>
         /// <param name="sequencer"> An opaque string value representing the logical sequence of events for any particular blob name. Users can use standard string comparison to understand the relative sequence of two events on the same blob name. </param>
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageBlobCreatedEventData"/> instance for mocking. </returns>
-        public static StorageBlobCreatedEventData StorageBlobCreatedEventData(string api = null, string clientRequestId = null, string requestId = null, string eTag = null, string contentType = null, long? contentLength = null, long? contentOffset = null, string blobType = null, string url = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
+        public static StorageBlobCreatedEventData StorageBlobCreatedEventData(string api = null, string clientRequestId = null, string requestId = null, string eTag = null, string contentType = null, long? contentLength = null, long? contentOffset = null, string blobType = null, StorageBlobAccessTier accessTier = default, string url = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
         {
             return new StorageBlobCreatedEventData(
                 api,
@@ -40,6 +41,7 @@ namespace Azure.Messaging.EventGrid
                 contentLength,
                 contentOffset,
                 blobType,
+                accessTier,
                 url,
                 sequencer,
                 identity,
@@ -144,11 +146,12 @@ namespace Azure.Messaging.EventGrid
         /// <param name="scheduleTime"> The time the policy task was scheduled. </param>
         /// <param name="deleteSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToCoolSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
+        /// <param name="tierToColdSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToArchiveSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <returns> A new <see cref="SystemEvents.StorageLifecyclePolicyCompletedEventData"/> instance for mocking. </returns>
-        public static StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime = null, StorageLifecyclePolicyActionSummaryDetail deleteSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary = null)
+        public static StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime = null, StorageLifecyclePolicyActionSummaryDetail deleteSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToColdSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary = null)
         {
-            return new StorageLifecyclePolicyCompletedEventData(scheduleTime, deleteSummary, tierToCoolSummary, tierToArchiveSummary);
+            return new StorageLifecyclePolicyCompletedEventData(scheduleTime, deleteSummary, tierToCoolSummary, tierToColdSummary, tierToArchiveSummary);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageLifecyclePolicyActionSummaryDetail"/>. </summary>
@@ -168,12 +171,14 @@ namespace Azure.Messaging.EventGrid
         /// <param name="contentType"> The content type of the blob. This is the same as what would be returned in the Content-Type header from the blob. </param>
         /// <param name="contentLength"> The size of the blob in bytes. This is the same as what would be returned in the Content-Length header from the blob. </param>
         /// <param name="blobType"> The type of blob. </param>
+        /// <param name="accessTier"> The current tier of the blob. </param>
+        /// <param name="previousTier"> The previous tier of the blob. </param>
         /// <param name="url"> The path to the blob. </param>
         /// <param name="sequencer"> An opaque string value representing the logical sequence of events for any particular blob name. Users can use standard string comparison to understand the relative sequence of two events on the same blob name. </param>
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageBlobTierChangedEventData"/> instance for mocking. </returns>
-        public static StorageBlobTierChangedEventData StorageBlobTierChangedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, long? contentLength = null, string blobType = null, string url = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
+        public static StorageBlobTierChangedEventData StorageBlobTierChangedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, long? contentLength = null, string blobType = null, StorageBlobAccessTier accessTier = default, StorageBlobAccessTier previousTier = default, string url = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
         {
             return new StorageBlobTierChangedEventData(
                 api,
@@ -182,6 +187,8 @@ namespace Azure.Messaging.EventGrid
                 contentType,
                 contentLength,
                 blobType,
+                accessTier,
+                previousTier,
                 url,
                 sequencer,
                 identity,
@@ -2119,7 +2126,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
         /// <param name="microsoftTeamsApp"> The Microsoft Teams application. </param>
         /// <returns> A new <see cref="SystemEvents.CommunicationIdentifierModel"/> instance for mocking. </returns>
-        public static CommunicationIdentifierModel CommunicationIdentifierModel(CommunicationIdentifierKind? kind = null, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, MicrosoftTeamsAppIdentifier microsoftTeamsApp = null)
+        public static CommunicationIdentifierModel CommunicationIdentifierModel(AcsCommunicationIdentifierKind? kind = null, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, AcsMicrosoftTeamsAppIdentifier microsoftTeamsApp = null)
         {
             return new CommunicationIdentifierModel(
                 kind,
@@ -2168,13 +2175,13 @@ namespace Azure.Messaging.EventGrid
             return new MicrosoftTeamsUserIdentifierModel(userId, isAnonymous, cloud);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.MicrosoftTeamsAppIdentifier"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMicrosoftTeamsAppIdentifier"/>. </summary>
         /// <param name="appId"> The Id of the Microsoft Teams application. </param>
         /// <param name="cloud"> The cloud that the Microsoft Teams application belongs to. By default 'public' if missing. </param>
-        /// <returns> A new <see cref="SystemEvents.MicrosoftTeamsAppIdentifier"/> instance for mocking. </returns>
-        public static MicrosoftTeamsAppIdentifier MicrosoftTeamsAppIdentifier(string appId = null, CommunicationCloudEnvironmentModel? cloud = null)
+        /// <returns> A new <see cref="SystemEvents.AcsMicrosoftTeamsAppIdentifier"/> instance for mocking. </returns>
+        public static AcsMicrosoftTeamsAppIdentifier AcsMicrosoftTeamsAppIdentifier(string appId = null, CommunicationCloudEnvironmentModel? cloud = null)
         {
-            return new MicrosoftTeamsAppIdentifier(appId, cloud);
+            return new AcsMicrosoftTeamsAppIdentifier(appId, cloud);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsIncomingCallCustomContext"/>. </summary>
@@ -3476,62 +3483,62 @@ namespace Azure.Messaging.EventGrid
                 engagement);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsAdvancedMessageMediaContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageMediaContent"/>. </summary>
         /// <param name="mimeType"> The MIME type of the file this media represents. </param>
         /// <param name="mediaId"> The media identifier. </param>
         /// <param name="fileName"> The filename of the underlying media file as specified when uploaded. </param>
         /// <param name="caption"> The caption for the media object, if supported and provided. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsAdvancedMessageMediaContent"/> instance for mocking. </returns>
-        public static AcsAdvancedMessageMediaContent AcsAdvancedMessageMediaContent(string mimeType = null, string mediaId = null, string fileName = null, string caption = null)
+        /// <returns> A new <see cref="SystemEvents.AcsMessageMediaContent"/> instance for mocking. </returns>
+        public static AcsMessageMediaContent AcsMessageMediaContent(string mimeType = null, string mediaId = null, string fileName = null, string caption = null)
         {
-            return new AcsAdvancedMessageMediaContent(mimeType, mediaId, fileName, caption);
+            return new AcsMessageMediaContent(mimeType, mediaId, fileName, caption);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsAdvancedMessageContext"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageContext"/>. </summary>
         /// <param name="from"> The WhatsApp ID for the customer who replied to an inbound message. </param>
         /// <param name="messageId"> The message ID for the sent message for an inbound reply. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsAdvancedMessageContext"/> instance for mocking. </returns>
-        public static AcsAdvancedMessageContext AcsAdvancedMessageContext(string @from = null, string messageId = null)
+        /// <returns> A new <see cref="SystemEvents.AcsMessageContext"/> instance for mocking. </returns>
+        public static AcsMessageContext AcsMessageContext(string @from = null, string messageId = null)
         {
-            return new AcsAdvancedMessageContext(@from, messageId);
+            return new AcsMessageContext(@from, messageId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsAdvancedMessageButtonContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageButtonContent"/>. </summary>
         /// <param name="text"> The Text of the button. </param>
         /// <param name="payload"> The Payload of the button which was clicked by the user, setup by the business. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsAdvancedMessageButtonContent"/> instance for mocking. </returns>
-        public static AcsAdvancedMessageButtonContent AcsAdvancedMessageButtonContent(string text = null, string payload = null)
+        /// <returns> A new <see cref="SystemEvents.AcsMessageButtonContent"/> instance for mocking. </returns>
+        public static AcsMessageButtonContent AcsMessageButtonContent(string text = null, string payload = null)
         {
-            return new AcsAdvancedMessageButtonContent(text, payload);
+            return new AcsMessageButtonContent(text, payload);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsAdvancedMessageInteractiveContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageInteractiveContent"/>. </summary>
         /// <param name="replyKind"> The Message interactive reply type. </param>
         /// <param name="buttonReply"> The Message Sent when a customer clicks a button. </param>
         /// <param name="listReply"> The Message Sent when a customer selects an item from a list. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsAdvancedMessageInteractiveContent"/> instance for mocking. </returns>
-        public static AcsAdvancedMessageInteractiveContent AcsAdvancedMessageInteractiveContent(AcsInteractiveReplyKind? replyKind = null, AcsAdvancedMessageInteractiveButtonReplyContent buttonReply = null, AcsAdvancedMessageInteractiveListReplyContent listReply = null)
+        /// <returns> A new <see cref="SystemEvents.AcsMessageInteractiveContent"/> instance for mocking. </returns>
+        public static AcsMessageInteractiveContent AcsMessageInteractiveContent(AcsInteractiveReplyKind? replyKind = null, AcsMessageInteractiveButtonReplyContent buttonReply = null, AcsMessageInteractiveListReplyContent listReply = null)
         {
-            return new AcsAdvancedMessageInteractiveContent(replyKind, buttonReply, listReply);
+            return new AcsMessageInteractiveContent(replyKind, buttonReply, listReply);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsAdvancedMessageInteractiveButtonReplyContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageInteractiveButtonReplyContent"/>. </summary>
         /// <param name="buttonId"> The ID of the button. </param>
         /// <param name="title"> The title of the button. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsAdvancedMessageInteractiveButtonReplyContent"/> instance for mocking. </returns>
-        public static AcsAdvancedMessageInteractiveButtonReplyContent AcsAdvancedMessageInteractiveButtonReplyContent(string buttonId = null, string title = null)
+        /// <returns> A new <see cref="SystemEvents.AcsMessageInteractiveButtonReplyContent"/> instance for mocking. </returns>
+        public static AcsMessageInteractiveButtonReplyContent AcsMessageInteractiveButtonReplyContent(string buttonId = null, string title = null)
         {
-            return new AcsAdvancedMessageInteractiveButtonReplyContent(buttonId, title);
+            return new AcsMessageInteractiveButtonReplyContent(buttonId, title);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsAdvancedMessageInteractiveListReplyContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageInteractiveListReplyContent"/>. </summary>
         /// <param name="listItemId"> The ID of the selected list item. </param>
         /// <param name="title"> The title of the selected list item. </param>
         /// <param name="description"> The sescription of the selected row. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsAdvancedMessageInteractiveListReplyContent"/> instance for mocking. </returns>
-        public static AcsAdvancedMessageInteractiveListReplyContent AcsAdvancedMessageInteractiveListReplyContent(string listItemId = null, string title = null, string description = null)
+        /// <returns> A new <see cref="SystemEvents.AcsMessageInteractiveListReplyContent"/> instance for mocking. </returns>
+        public static AcsMessageInteractiveListReplyContent AcsMessageInteractiveListReplyContent(string listItemId = null, string title = null, string description = null)
         {
-            return new AcsAdvancedMessageInteractiveListReplyContent(listItemId, title, description);
+            return new AcsMessageInteractiveListReplyContent(listItemId, title, description);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.PolicyInsightsPolicyStateCreatedEventData"/>. </summary>

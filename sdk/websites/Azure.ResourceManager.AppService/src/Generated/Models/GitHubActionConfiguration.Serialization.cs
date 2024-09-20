@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class GitHubActionConfiguration : IUtf8JsonSerializable, IJsonModel<GitHubActionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitHubActionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitHubActionConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GitHubActionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CodeConfiguration))
             {
                 writer.WritePropertyName("codeConfiguration"u8);
-                writer.WriteObjectValue<GitHubActionCodeConfiguration>(CodeConfiguration, options);
+                writer.WriteObjectValue(CodeConfiguration, options);
             }
             if (Optional.IsDefined(ContainerConfiguration))
             {
                 writer.WritePropertyName("containerConfiguration"u8);
-                writer.WriteObjectValue<GitHubActionContainerConfiguration>(ContainerConfiguration, options);
+                writer.WriteObjectValue(ContainerConfiguration, options);
             }
             if (Optional.IsDefined(IsLinux))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static GitHubActionConfiguration DeserializeGitHubActionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,58 +150,62 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CodeConfiguration), out propertyOverride);
-            if (Optional.IsDefined(CodeConfiguration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  codeConfiguration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CodeConfiguration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  codeConfiguration: ");
                     BicepSerializationHelpers.AppendChildObject(builder, CodeConfiguration, options, 2, false, "  codeConfiguration: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerConfiguration), out propertyOverride);
-            if (Optional.IsDefined(ContainerConfiguration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  containerConfiguration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerConfiguration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  containerConfiguration: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ContainerConfiguration, options, 2, false, "  containerConfiguration: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLinux), out propertyOverride);
-            if (Optional.IsDefined(IsLinux) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isLinux: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsLinux))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isLinux: ");
                     var boolValue = IsLinux.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GenerateWorkflowFile), out propertyOverride);
-            if (Optional.IsDefined(GenerateWorkflowFile) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  generateWorkflowFile: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GenerateWorkflowFile))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  generateWorkflowFile: ");
                     var boolValue = GenerateWorkflowFile.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

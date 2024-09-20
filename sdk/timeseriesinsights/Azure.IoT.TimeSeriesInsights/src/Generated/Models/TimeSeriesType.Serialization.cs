@@ -33,7 +33,7 @@ namespace Azure.IoT.TimeSeriesInsights
             foreach (var item in Variables)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<TimeSeriesVariable>(item.Value);
+                writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -88,11 +88,11 @@ namespace Azure.IoT.TimeSeriesInsights
             return DeserializeTimeSeriesType(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TimeSeriesType>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

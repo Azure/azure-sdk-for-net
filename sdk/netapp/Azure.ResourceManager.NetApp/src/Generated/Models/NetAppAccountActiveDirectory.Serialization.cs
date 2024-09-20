@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppAccountActiveDirectory : IUtf8JsonSerializable, IJsonModel<NetAppAccountActiveDirectory>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppAccountActiveDirectory>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppAccountActiveDirectory>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetAppAccountActiveDirectory>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(LdapSearchScope))
             {
                 writer.WritePropertyName("ldapSearchScope"u8);
-                writer.WriteObjectValue<NetAppLdapSearchScopeConfiguration>(LdapSearchScope, options);
+                writer.WriteObjectValue(LdapSearchScope, options);
             }
             if (Optional.IsDefined(PreferredServersForLdapClient))
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppAccountActiveDirectory DeserializeNetAppAccountActiveDirectory(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

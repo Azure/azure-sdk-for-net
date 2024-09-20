@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 {
     public partial class ServicePrincipalCertificateAuthInfo : IUtf8JsonSerializable, IJsonModel<ServicePrincipalCertificateAuthInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServicePrincipalCertificateAuthInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServicePrincipalCertificateAuthInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServicePrincipalCertificateAuthInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static ServicePrincipalCertificateAuthInfo DeserializeServicePrincipalCertificateAuthInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

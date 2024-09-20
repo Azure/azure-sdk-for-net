@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class EdgeOrderItemAddressDetails : IUtf8JsonSerializable, IJsonModel<EdgeOrderItemAddressDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderItemAddressDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderItemAddressDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeOrderItemAddressDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("forwardAddress"u8);
-            writer.WriteObjectValue<EdgeOrderItemAddressProperties>(ForwardAddress, options);
+            writer.WriteObjectValue(ForwardAddress, options);
             if (options.Format != "W" && Optional.IsDefined(ReturnAddress))
             {
                 writer.WritePropertyName("returnAddress"u8);
-                writer.WriteObjectValue<EdgeOrderItemAddressProperties>(ReturnAddress, options);
+                writer.WriteObjectValue(ReturnAddress, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static EdgeOrderItemAddressDetails DeserializeEdgeOrderItemAddressDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

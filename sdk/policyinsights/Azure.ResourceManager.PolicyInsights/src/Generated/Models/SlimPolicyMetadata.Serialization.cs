@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class SlimPolicyMetadata : IUtf8JsonSerializable, IJsonModel<SlimPolicyMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SlimPolicyMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SlimPolicyMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SlimPolicyMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static SlimPolicyMetadata DeserializeSlimPolicyMetadata(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

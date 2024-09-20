@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     public partial class SignalRNetworkAcls : IUtf8JsonSerializable, IJsonModel<SignalRNetworkAcls>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRNetworkAcls>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRNetworkAcls>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SignalRNetworkAcls>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SignalR.Models
             if (Optional.IsDefined(PublicNetwork))
             {
                 writer.WritePropertyName("publicNetwork"u8);
-                writer.WriteObjectValue<SignalRNetworkAcl>(PublicNetwork, options);
+                writer.WriteObjectValue(PublicNetwork, options);
             }
             if (Optional.IsCollectionDefined(PrivateEndpoints))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpoints)
                 {
-                    writer.WriteObjectValue<SignalRPrivateEndpointAcl>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRNetworkAcls DeserializeSignalRNetworkAcls(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,45 +146,48 @@ namespace Azure.ResourceManager.SignalR.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultAction), out propertyOverride);
-            if (Optional.IsDefined(DefaultAction) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  defaultAction: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultAction))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  defaultAction: ");
                     builder.AppendLine($"'{DefaultAction.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetwork), out propertyOverride);
-            if (Optional.IsDefined(PublicNetwork) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  publicNetwork: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetwork))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  publicNetwork: ");
                     BicepSerializationHelpers.AppendChildObject(builder, PublicNetwork, options, 2, false, "  publicNetwork: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpoints), out propertyOverride);
-            if (Optional.IsCollectionDefined(PrivateEndpoints) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (PrivateEndpoints.Any() || hasPropertyOverride)
+                builder.Append("  privateEndpoints: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpoints))
                 {
-                    builder.Append("  privateEndpoints: ");
-                    if (hasPropertyOverride)
+                    if (PrivateEndpoints.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  privateEndpoints: ");
                         builder.AppendLine("[");
                         foreach (var item in PrivateEndpoints)
                         {

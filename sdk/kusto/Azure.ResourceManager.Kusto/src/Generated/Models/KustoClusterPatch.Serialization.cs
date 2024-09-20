@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kusto.Models
 {
     public partial class KustoClusterPatch : IUtf8JsonSerializable, IJsonModel<KustoClusterPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoClusterPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoClusterPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KustoClusterPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<KustoSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -113,14 +113,14 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in TrustedExternalTenants)
                 {
-                    writer.WriteObjectValue<KustoClusterTrustedExternalTenant>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OptimizedAutoscale))
             {
                 writer.WritePropertyName("optimizedAutoscale"u8);
-                writer.WriteObjectValue<OptimizedAutoscale>(OptimizedAutoscale, options);
+                writer.WriteObjectValue(OptimizedAutoscale, options);
             }
             if (Optional.IsDefined(IsDiskEncryptionEnabled))
             {
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
-                writer.WriteObjectValue<KustoClusterVirtualNetworkConfiguration>(VirtualNetworkConfiguration, options);
+                writer.WriteObjectValue(VirtualNetworkConfiguration, options);
             }
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue<KustoKeyVaultProperties>(KeyVaultProperties, options);
+                writer.WriteObjectValue(KeyVaultProperties, options);
             }
             if (Optional.IsDefined(IsPurgeEnabled))
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(LanguageExtensions))
             {
                 writer.WritePropertyName("languageExtensions"u8);
-                writer.WriteObjectValue<KustoLanguageExtensionList>(LanguageExtensions, options);
+                writer.WriteObjectValue(LanguageExtensions, options);
             }
             if (Optional.IsDefined(IsDoubleEncryptionEnabled))
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in AcceptedAudiences)
                 {
-                    writer.WriteObjectValue<AcceptedAudience>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -223,14 +223,14 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue<KustoPrivateEndpointConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(MigrationCluster))
             {
                 writer.WritePropertyName("migrationCluster"u8);
-                writer.WriteObjectValue<MigrationClusterProperties>(MigrationCluster, options);
+                writer.WriteObjectValue(MigrationCluster, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoClusterPatch DeserializeKustoClusterPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

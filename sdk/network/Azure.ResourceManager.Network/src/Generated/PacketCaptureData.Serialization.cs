@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class PacketCaptureData : IUtf8JsonSerializable, IJsonModel<PacketCaptureData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PacketCaptureData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PacketCaptureData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PacketCaptureData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue<PacketCaptureMachineScope>(Scope, options);
+                writer.WriteObjectValue(Scope, options);
             }
             if (Optional.IsDefined(TargetType))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(StorageLocation))
             {
                 writer.WritePropertyName("storageLocation"u8);
-                writer.WriteObjectValue<PacketCaptureStorageLocation>(StorageLocation, options);
+                writer.WriteObjectValue(StorageLocation, options);
             }
             if (Optional.IsCollectionDefined(Filters))
             {
@@ -96,9 +96,19 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue<PacketCaptureFilter>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(IsContinuousCapture))
+            {
+                writer.WritePropertyName("continuousCapture"u8);
+                writer.WriteBooleanValue(IsContinuousCapture.Value);
+            }
+            if (Optional.IsDefined(CaptureSettings))
+            {
+                writer.WritePropertyName("captureSettings"u8);
+                writer.WriteObjectValue(CaptureSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -138,7 +148,7 @@ namespace Azure.ResourceManager.Network
 
         internal static PacketCaptureData DeserializePacketCaptureData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,6 +167,8 @@ namespace Azure.ResourceManager.Network
             int? timeLimitInSeconds = default;
             PacketCaptureStorageLocation storageLocation = default;
             IReadOnlyList<PacketCaptureFilter> filters = default;
+            bool? continuousCapture = default;
+            PacketCaptureSettings captureSettings = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -277,6 +289,24 @@ namespace Azure.ResourceManager.Network
                             filters = array;
                             continue;
                         }
+                        if (property0.NameEquals("continuousCapture"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            continuousCapture = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("captureSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            captureSettings = PacketCaptureSettings.DeserializePacketCaptureSettings(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -309,6 +339,8 @@ namespace Azure.ResourceManager.Network
                 timeLimitInSeconds,
                 storageLocation,
                 filters ?? new ChangeTrackingList<PacketCaptureFilter>(),
+                continuousCapture,
+                captureSettings,
                 provisioningState,
                 serializedAdditionalRawData);
         }

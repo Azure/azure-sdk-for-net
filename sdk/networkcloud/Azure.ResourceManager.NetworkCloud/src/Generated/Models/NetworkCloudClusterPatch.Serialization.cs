@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class NetworkCloudClusterPatch : IUtf8JsonSerializable, IJsonModel<NetworkCloudClusterPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudClusterPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudClusterPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkCloudClusterPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(AggregatorOrSingleRackDefinition))
             {
                 writer.WritePropertyName("aggregatorOrSingleRackDefinition"u8);
-                writer.WriteObjectValue<NetworkCloudRackDefinition>(AggregatorOrSingleRackDefinition, options);
+                writer.WriteObjectValue(AggregatorOrSingleRackDefinition, options);
             }
             if (Optional.IsDefined(ClusterLocation))
             {
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(ClusterServicePrincipal))
             {
                 writer.WritePropertyName("clusterServicePrincipal"u8);
-                writer.WriteObjectValue<ServicePrincipalInformation>(ClusterServicePrincipal, options);
+                writer.WriteObjectValue(ClusterServicePrincipal, options);
             }
             if (Optional.IsDefined(ComputeDeploymentThreshold))
             {
                 writer.WritePropertyName("computeDeploymentThreshold"u8);
-                writer.WriteObjectValue<ValidationThreshold>(ComputeDeploymentThreshold, options);
+                writer.WriteObjectValue(ComputeDeploymentThreshold, options);
             }
             if (Optional.IsCollectionDefined(ComputeRackDefinitions))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in ComputeRackDefinitions)
                 {
-                    writer.WriteObjectValue<NetworkCloudRackDefinition>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         internal static NetworkCloudClusterPatch DeserializeNetworkCloudClusterPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

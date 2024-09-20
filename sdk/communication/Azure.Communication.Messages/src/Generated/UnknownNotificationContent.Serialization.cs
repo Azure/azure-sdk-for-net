@@ -15,7 +15,7 @@ namespace Azure.Communication.Messages
 {
     internal partial class UnknownNotificationContent : IUtf8JsonSerializable, IJsonModel<NotificationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NotificationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.Communication.Messages
 
         internal static UnknownNotificationContent DeserializeUnknownNotificationContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,11 +150,11 @@ namespace Azure.Communication.Messages
             return DeserializeUnknownNotificationContent(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UnknownNotificationContent>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue<NotificationContent>(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

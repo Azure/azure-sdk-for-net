@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class AdaptiveApplicationControlGroupData : IUtf8JsonSerializable, IJsonModel<AdaptiveApplicationControlGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdaptiveApplicationControlGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdaptiveApplicationControlGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AdaptiveApplicationControlGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(ProtectionMode))
             {
                 writer.WritePropertyName("protectionMode"u8);
-                writer.WriteObjectValue<SecurityCenterFileProtectionMode>(ProtectionMode, options);
+                writer.WriteObjectValue(ProtectionMode, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationStatus))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Issues)
                 {
-                    writer.WriteObjectValue<AdaptiveApplicationControlIssueSummary>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in VmRecommendations)
                 {
-                    writer.WriteObjectValue<VmRecommendation>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in PathRecommendations)
                 {
-                    writer.WriteObjectValue<PathRecommendation>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static AdaptiveApplicationControlGroupData DeserializeAdaptiveApplicationControlGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

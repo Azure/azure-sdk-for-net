@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.Peering
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateInvokeRequestUri(string subscriptionId, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Peering/lookingGlass", false);
+            uri.AppendQuery("command", command.ToString(), true);
+            uri.AppendQuery("sourceType", sourceType.ToString(), true);
+            uri.AppendQuery("sourceLocation", sourceLocation, true);
+            uri.AppendQuery("destinationIP", destinationIP, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateInvokeRequest(string subscriptionId, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP)
         {
             var message = _pipeline.CreateMessage();

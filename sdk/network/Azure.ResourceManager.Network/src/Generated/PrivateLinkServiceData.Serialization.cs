@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class PrivateLinkServiceData : IUtf8JsonSerializable, IJsonModel<PrivateLinkServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateLinkServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateLinkServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PrivateLinkServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerFrontendIPConfigurations)
                 {
-                    writer.WriteObjectValue<FrontendIPConfigurationData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,9 +87,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue<PrivateLinkServiceIPConfiguration>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DestinationIPAddress))
+            {
+                writer.WritePropertyName("destinationIPAddress"u8);
+                writer.WriteStringValue(DestinationIPAddress);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(NetworkInterfaces))
             {
@@ -97,7 +102,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue<NetworkInterfaceData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,19 +117,19 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue<NetworkPrivateEndpointConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
-                writer.WriteObjectValue<PrivateLinkServicePropertiesVisibility>(Visibility, options);
+                writer.WriteObjectValue(Visibility, options);
             }
             if (Optional.IsDefined(AutoApproval))
             {
                 writer.WritePropertyName("autoApproval"u8);
-                writer.WriteObjectValue<PrivateLinkServicePropertiesAutoApproval>(AutoApproval, options);
+                writer.WriteObjectValue(AutoApproval, options);
             }
             if (Optional.IsCollectionDefined(Fqdns))
             {
@@ -179,7 +184,7 @@ namespace Azure.ResourceManager.Network
 
         internal static PrivateLinkServiceData DeserializePrivateLinkServiceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -194,6 +199,7 @@ namespace Azure.ResourceManager.Network
             IDictionary<string, string> tags = default;
             IList<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations = default;
             IList<PrivateLinkServiceIPConfiguration> ipConfigurations = default;
+            string destinationIPAddress = default;
             IReadOnlyList<NetworkInterfaceData> networkInterfaces = default;
             NetworkProvisioningState? provisioningState = default;
             IReadOnlyList<NetworkPrivateEndpointConnectionData> privateEndpointConnections = default;
@@ -307,6 +313,11 @@ namespace Azure.ResourceManager.Network
                             ipConfigurations = array;
                             continue;
                         }
+                        if (property0.NameEquals("destinationIPAddress"u8))
+                        {
+                            destinationIPAddress = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("networkInterfaces"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -410,6 +421,7 @@ namespace Azure.ResourceManager.Network
                 etag,
                 loadBalancerFrontendIPConfigurations ?? new ChangeTrackingList<FrontendIPConfigurationData>(),
                 ipConfigurations ?? new ChangeTrackingList<PrivateLinkServiceIPConfiguration>(),
+                destinationIPAddress,
                 networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
                 provisioningState,
                 privateEndpointConnections ?? new ChangeTrackingList<NetworkPrivateEndpointConnectionData>(),

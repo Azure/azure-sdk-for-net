@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.VoiceServices
 {
     public partial class VoiceServicesCommunicationsGatewayData : IUtf8JsonSerializable, IJsonModel<VoiceServicesCommunicationsGatewayData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VoiceServicesCommunicationsGatewayData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VoiceServicesCommunicationsGatewayData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VoiceServicesCommunicationsGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.VoiceServices
                 writer.WriteStartArray();
                 foreach (var item in ServiceLocations)
                 {
-                    writer.WriteObjectValue<VoiceServicesServiceRegionProperties>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.VoiceServices
 
         internal static VoiceServicesCommunicationsGatewayData DeserializeVoiceServicesCommunicationsGatewayData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

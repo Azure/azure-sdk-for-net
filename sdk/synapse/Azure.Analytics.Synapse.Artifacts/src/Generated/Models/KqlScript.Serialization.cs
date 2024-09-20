@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
-                writer.WriteObjectValue<KqlScriptContent>(Content);
+                writer.WriteObjectValue(Content);
             }
             writer.WriteEndObject();
         }
@@ -56,11 +56,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeKqlScript(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<KqlScript>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, KqlScript model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<KqlScript>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override KqlScript Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

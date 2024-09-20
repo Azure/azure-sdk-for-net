@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
+                writer.WriteObjectValue(ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
+                    writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DeveloperToken))
             {
                 writer.WritePropertyName("developerToken"u8);
-                writer.WriteObjectValue<SecretBase>(DeveloperToken);
+                writer.WriteObjectValue(DeveloperToken);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
-                writer.WriteObjectValue<SecretBase>(RefreshToken);
+                writer.WriteObjectValue(RefreshToken);
             }
             if (Optional.IsDefined(ClientId))
             {
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
-                writer.WriteObjectValue<SecretBase>(ClientSecret);
+                writer.WriteObjectValue(ClientSecret);
             }
             if (Optional.IsDefined(Email))
             {
@@ -113,6 +113,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WritePropertyName("useSystemTrustStore"u8);
                 writer.WriteObjectValue<object>(UseSystemTrustStore);
+            }
+            if (Optional.IsDefined(PrivateKey))
+            {
+                writer.WritePropertyName("privateKey"u8);
+                writer.WriteObjectValue(PrivateKey);
+            }
+            if (Optional.IsDefined(LoginCustomerID))
+            {
+                writer.WritePropertyName("loginCustomerID"u8);
+                writer.WriteObjectValue<object>(LoginCustomerID);
+            }
+            if (Optional.IsDefined(GoogleAdsApiVersion))
+            {
+                writer.WritePropertyName("googleAdsApiVersion"u8);
+                writer.WriteObjectValue<object>(GoogleAdsApiVersion);
+            }
+            if (Optional.IsDefined(SupportLegacyDataTypes))
+            {
+                writer.WritePropertyName("supportLegacyDataTypes"u8);
+                writer.WriteObjectValue<object>(SupportLegacyDataTypes);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -150,6 +170,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object keyFilePath = default;
             object trustedCertPath = default;
             object useSystemTrustStore = default;
+            SecretBase privateKey = default;
+            object loginCustomerID = default;
+            object googleAdsApiVersion = default;
+            object supportLegacyDataTypes = default;
             object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -317,6 +341,42 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             useSystemTrustStore = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("privateKey"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            privateKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("loginCustomerID"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            loginCustomerID = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("googleAdsApiVersion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            googleAdsApiVersion = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("supportLegacyDataTypes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            supportLegacyDataTypes = property0.Value.GetObject();
+                            continue;
+                        }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -350,6 +410,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 keyFilePath,
                 trustedCertPath,
                 useSystemTrustStore,
+                privateKey,
+                loginCustomerID,
+                googleAdsApiVersion,
+                supportLegacyDataTypes,
                 encryptedCredential);
         }
 
@@ -361,11 +425,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeGoogleAdWordsLinkedService(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<GoogleAdWordsLinkedService>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -373,7 +437,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, GoogleAdWordsLinkedService model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<GoogleAdWordsLinkedService>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override GoogleAdWordsLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

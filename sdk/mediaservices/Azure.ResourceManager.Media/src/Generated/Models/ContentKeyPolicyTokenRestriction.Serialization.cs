@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class ContentKeyPolicyTokenRestriction : IUtf8JsonSerializable, IJsonModel<ContentKeyPolicyTokenRestriction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyTokenRestriction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyTokenRestriction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContentKeyPolicyTokenRestriction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
             if (PrimaryVerificationKey != null)
             {
                 writer.WritePropertyName("primaryVerificationKey"u8);
-                writer.WriteObjectValue<ContentKeyPolicyRestrictionTokenKey>(PrimaryVerificationKey, options);
+                writer.WriteObjectValue(PrimaryVerificationKey, options);
             }
             else
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in AlternateVerificationKeys)
                 {
-                    writer.WriteObjectValue<ContentKeyPolicyRestrictionTokenKey>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in RequiredClaims)
                 {
-                    writer.WriteObjectValue<ContentKeyPolicyTokenClaim>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyTokenRestriction DeserializeContentKeyPolicyTokenRestriction(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

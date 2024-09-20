@@ -1383,6 +1383,87 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
+        /// Deletes up to <paramref name="messageCount"/> number of messages from the entity. Only messages that
+        /// were added to the queue prior to <paramref name="beforeEnqueueTimeUtc"/> will be deleted. The actual number
+        /// of deleted messages may be less if there are fewer eligible messages in the entity.
+        /// </summary>
+        /// <param name="messageCount">The desired number of messages to delete.</param>
+        /// <param name="beforeEnqueueTimeUtc">A <see cref="DateTimeOffset"/> representing the cutoff time for deletion. Only messages that were enqueued before this time will be deleted.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <returns>The number of messages that were deleted.</returns>
+        public override async Task<int> DeleteMessagesAsync(
+            int messageCount,
+            DateTimeOffset beforeEnqueueTimeUtc,
+            CancellationToken cancellationToken = default) => await _retryPolicy.RunOperation(
+                static async (value, timeout, token) =>
+                {
+                    var (receiver, innerMessageCount, innerBeforeEnqueueTimeUtc) = value;
+                    return await receiver.DeleteMessagesInternalAsync(
+                            innerMessageCount,
+                            innerBeforeEnqueueTimeUtc,
+                            timeout,
+                            token)
+                        .ConfigureAwait(false);
+                },
+                (this, messageCount, beforeEnqueueTimeUtc),
+                _connectionScope,
+                cancellationToken).ConfigureAwait(false);
+
+        private async Task<int> DeleteMessagesInternalAsync(
+            int messageCount,
+            DateTimeOffset beforeEnqueueTimeUtc,
+            TimeSpan timeout,
+            CancellationToken cancellationToken)
+        {
+            var stopWatch = ValueStopwatch.StartNew();
+
+            AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(
+                    ManagementConstants.Operations.DeleteMessagesOperation,
+                    timeout,
+                    null);
+
+            if (_receiveLink.TryGetOpenedObject(out ReceivingAmqpLink receiveLink))
+            {
+                amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+            }
+
+            amqpRequestMessage.Map[ManagementConstants.Properties.MessageCount] = messageCount;
+            amqpRequestMessage.Map[ManagementConstants.Properties.EnqueuedTimeUtc] = beforeEnqueueTimeUtc.UtcDateTime;
+
+            if (!string.IsNullOrWhiteSpace(SessionId))
+            {
+                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = SessionId;
+            }
+
+            RequestResponseAmqpLink link = await _managementLink.GetOrCreateAsync(
+                timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
+                cancellationToken)
+                .ConfigureAwait(false);
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            using AmqpMessage responseAmqpMessage = await link.RequestAsync(
+                amqpRequestMessage.AmqpMessage,
+                timeout.CalculateRemaining(stopWatch.GetElapsedTime()))
+                .ConfigureAwait(false);
+
+            AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
+
+            if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
+            {
+                return amqpResponseMessage.GetValue<int>(ManagementConstants.Properties.MessageCount);
+            }
+
+            if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent ||
+                (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound && Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition())))
+            {
+                return 0;
+            }
+
+            throw amqpResponseMessage.ToMessagingContractException();
+        }
+
+        /// <summary>
         /// Closes the connection to the transport receiver instance.
         /// </summary>
         ///

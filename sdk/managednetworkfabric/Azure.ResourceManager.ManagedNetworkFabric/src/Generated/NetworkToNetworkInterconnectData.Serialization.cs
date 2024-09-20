@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkToNetworkInterconnectData : IUtf8JsonSerializable, IJsonModel<NetworkToNetworkInterconnectData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkToNetworkInterconnectData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkToNetworkInterconnectData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkToNetworkInterconnectData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,27 +65,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (Optional.IsDefined(Layer2Configuration))
             {
                 writer.WritePropertyName("layer2Configuration"u8);
-                writer.WriteObjectValue<Layer2Configuration>(Layer2Configuration, options);
+                writer.WriteObjectValue(Layer2Configuration, options);
             }
             if (Optional.IsDefined(OptionBLayer3Configuration))
             {
                 writer.WritePropertyName("optionBLayer3Configuration"u8);
-                writer.WriteObjectValue<NetworkToNetworkInterconnectOptionBLayer3Configuration>(OptionBLayer3Configuration, options);
+                writer.WriteObjectValue(OptionBLayer3Configuration, options);
             }
             if (Optional.IsDefined(NpbStaticRouteConfiguration))
             {
                 writer.WritePropertyName("npbStaticRouteConfiguration"u8);
-                writer.WriteObjectValue<NpbStaticRouteConfiguration>(NpbStaticRouteConfiguration, options);
+                writer.WriteObjectValue(NpbStaticRouteConfiguration, options);
             }
             if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
-                writer.WriteObjectValue<ImportRoutePolicyInformation>(ImportRoutePolicy, options);
+                writer.WriteObjectValue(ImportRoutePolicy, options);
             }
             if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue<ExportRoutePolicyInformation>(ExportRoutePolicy, options);
+                writer.WriteObjectValue(ExportRoutePolicy, options);
             }
             if (Optional.IsDefined(EgressAclId))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         internal static NetworkToNetworkInterconnectData DeserializeNetworkToNetworkInterconnectData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

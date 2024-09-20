@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
             } while (retry && startOn > DateTime.UtcNow);

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsOfficeDataConnectorDataTypes : IUtf8JsonSerializable, IJsonModel<SecurityInsightsOfficeDataConnectorDataTypes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsOfficeDataConnectorDataTypes>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsOfficeDataConnectorDataTypes>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsOfficeDataConnectorDataTypes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -26,21 +27,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Exchange))
-            {
-                writer.WritePropertyName("exchange"u8);
-                writer.WriteObjectValue<OfficeDataConnectorDataTypesExchange>(Exchange, options);
-            }
-            if (Optional.IsDefined(SharePoint))
-            {
-                writer.WritePropertyName("sharePoint"u8);
-                writer.WriteObjectValue<OfficeDataConnectorDataTypesSharePoint>(SharePoint, options);
-            }
-            if (Optional.IsDefined(Teams))
-            {
-                writer.WritePropertyName("teams"u8);
-                writer.WriteObjectValue<OfficeDataConnectorDataTypesTeams>(Teams, options);
-            }
+            writer.WritePropertyName("exchange"u8);
+            writer.WriteObjectValue(Exchange, options);
+            writer.WritePropertyName("sharePoint"u8);
+            writer.WriteObjectValue(SharePoint, options);
+            writer.WritePropertyName("teams"u8);
+            writer.WriteObjectValue(Teams, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -73,44 +65,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsOfficeDataConnectorDataTypes DeserializeSecurityInsightsOfficeDataConnectorDataTypes(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            OfficeDataConnectorDataTypesExchange exchange = default;
-            OfficeDataConnectorDataTypesSharePoint sharePoint = default;
-            OfficeDataConnectorDataTypesTeams teams = default;
+            DataConnectorDataTypeCommon exchange = default;
+            DataConnectorDataTypeCommon sharePoint = default;
+            DataConnectorDataTypeCommon teams = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exchange"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    exchange = OfficeDataConnectorDataTypesExchange.DeserializeOfficeDataConnectorDataTypesExchange(property.Value, options);
+                    exchange = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sharePoint"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sharePoint = OfficeDataConnectorDataTypesSharePoint.DeserializeOfficeDataConnectorDataTypesSharePoint(property.Value, options);
+                    sharePoint = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("teams"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    teams = OfficeDataConnectorDataTypesTeams.DeserializeOfficeDataConnectorDataTypesTeams(property.Value, options);
+                    teams = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -122,6 +102,75 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityInsightsOfficeDataConnectorDataTypes(exchange, sharePoint, teams, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ExchangeState", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  exchange: ");
+                builder.AppendLine("{");
+                builder.Append("    state: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Exchange))
+                {
+                    builder.Append("  exchange: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Exchange, options, 2, false, "  exchange: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SharePointState", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sharePoint: ");
+                builder.AppendLine("{");
+                builder.Append("    state: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(SharePoint))
+                {
+                    builder.Append("  sharePoint: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SharePoint, options, 2, false, "  sharePoint: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("TeamsState", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  teams: ");
+                builder.AppendLine("{");
+                builder.Append("    state: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Teams))
+                {
+                    builder.Append("  teams: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Teams, options, 2, false, "  teams: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +179,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsOfficeDataConnectorDataTypes)} does not support writing '{options.Format}' format.");
             }

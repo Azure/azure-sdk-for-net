@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Chaos.Models
 {
     public partial class ExperimentExecutionActionTargetDetailsError : IUtf8JsonSerializable, IJsonModel<ExperimentExecutionActionTargetDetailsError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExperimentExecutionActionTargetDetailsError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExperimentExecutionActionTargetDetailsError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExperimentExecutionActionTargetDetailsError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static ExperimentExecutionActionTargetDetailsError DeserializeExperimentExecutionActionTargetDetailsError(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

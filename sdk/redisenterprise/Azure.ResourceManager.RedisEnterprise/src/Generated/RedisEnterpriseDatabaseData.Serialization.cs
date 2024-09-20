@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RedisEnterprise
 {
     public partial class RedisEnterpriseDatabaseData : IUtf8JsonSerializable, IJsonModel<RedisEnterpriseDatabaseData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseDatabaseData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseDatabaseData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisEnterpriseDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             if (Optional.IsDefined(Persistence))
             {
                 writer.WritePropertyName("persistence"u8);
-                writer.WriteObjectValue<RedisPersistenceSettings>(Persistence, options);
+                writer.WriteObjectValue(Persistence, options);
             }
             if (Optional.IsCollectionDefined(Modules))
             {
@@ -91,14 +91,14 @@ namespace Azure.ResourceManager.RedisEnterprise
                 writer.WriteStartArray();
                 foreach (var item in Modules)
                 {
-                    writer.WriteObjectValue<RedisEnterpriseModule>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(GeoReplication))
             {
                 writer.WritePropertyName("geoReplication"u8);
-                writer.WriteObjectValue<RedisEnterpriseDatabaseGeoReplication>(GeoReplication, options);
+                writer.WriteObjectValue(GeoReplication, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         internal static RedisEnterpriseDatabaseData DeserializeRedisEnterpriseDatabaseData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

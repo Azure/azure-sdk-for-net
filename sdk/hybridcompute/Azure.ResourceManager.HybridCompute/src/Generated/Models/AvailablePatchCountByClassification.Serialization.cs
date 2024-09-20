@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class AvailablePatchCountByClassification : IUtf8JsonSerializable, IJsonModel<AvailablePatchCountByClassification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailablePatchCountByClassification>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailablePatchCountByClassification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvailablePatchCountByClassification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static AvailablePatchCountByClassification DeserializeAvailablePatchCountByClassification(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -222,6 +223,156 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Security), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  security: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Security))
+                {
+                    builder.Append("  security: ");
+                    builder.AppendLine($"{Security.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Critical), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  critical: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Critical))
+                {
+                    builder.Append("  critical: ");
+                    builder.AppendLine($"{Critical.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Definition), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  definition: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Definition))
+                {
+                    builder.Append("  definition: ");
+                    builder.AppendLine($"{Definition.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpdateRollup), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  updateRollup: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UpdateRollup))
+                {
+                    builder.Append("  updateRollup: ");
+                    builder.AppendLine($"{UpdateRollup.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FeaturePack), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  featurePack: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FeaturePack))
+                {
+                    builder.Append("  featurePack: ");
+                    builder.AppendLine($"{FeaturePack.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServicePack), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  servicePack: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServicePack))
+                {
+                    builder.Append("  servicePack: ");
+                    builder.AppendLine($"{ServicePack.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tools), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tools: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Tools))
+                {
+                    builder.Append("  tools: ");
+                    builder.AppendLine($"{Tools.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Updates), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  updates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Updates))
+                {
+                    builder.Append("  updates: ");
+                    builder.AppendLine($"{Updates.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Other), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  other: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Other))
+                {
+                    builder.Append("  other: ");
+                    builder.AppendLine($"{Other.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AvailablePatchCountByClassification>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AvailablePatchCountByClassification>)this).GetFormatFromOptions(options) : options.Format;
@@ -230,6 +381,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AvailablePatchCountByClassification)} does not support writing '{options.Format}' format.");
             }

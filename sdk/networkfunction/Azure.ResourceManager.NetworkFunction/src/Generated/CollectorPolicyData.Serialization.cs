@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkFunction
 {
     public partial class CollectorPolicyData : IUtf8JsonSerializable, IJsonModel<CollectorPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CollectorPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CollectorPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CollectorPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetworkFunction
             if (Optional.IsDefined(IngestionPolicy))
             {
                 writer.WritePropertyName("ingestionPolicy"u8);
-                writer.WriteObjectValue<IngestionPolicyPropertiesFormat>(IngestionPolicy, options);
+                writer.WriteObjectValue(IngestionPolicy, options);
             }
             if (Optional.IsCollectionDefined(EmissionPolicies))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 writer.WriteStartArray();
                 foreach (var item in EmissionPolicies)
                 {
-                    writer.WriteObjectValue<EmissionPoliciesPropertiesFormat>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NetworkFunction
 
         internal static CollectorPolicyData DeserializeCollectorPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

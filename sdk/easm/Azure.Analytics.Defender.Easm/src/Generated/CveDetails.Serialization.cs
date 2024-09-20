@@ -15,7 +15,7 @@ namespace Azure.Analytics.Defender.Easm
 {
     public partial class CveDetails : IUtf8JsonSerializable, IJsonModel<CveDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CveDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CveDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CveDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Defender.Easm
             if (Optional.IsDefined(Cvss3Summary))
             {
                 writer.WritePropertyName("cvss3Summary"u8);
-                writer.WriteObjectValue<Cvss3Summary>(Cvss3Summary, options);
+                writer.WriteObjectValue(Cvss3Summary, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Defender.Easm
 
         internal static CveDetails DeserializeCveDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,11 +168,11 @@ namespace Azure.Analytics.Defender.Easm
             return DeserializeCveDetails(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CveDetails>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

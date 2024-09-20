@@ -41,10 +41,23 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="keyVirtualPath"></param>
         /// <param name="certificateVirtualPath"></param>
         /// <param name="keyVaultSecretId"></param>
+        /// <param name="sha1Thumbprint"></param>
+        /// <param name="keyVaultSecretVersion"></param>
+        /// <param name="keyVaultSecretCreated"></param>
+        /// <param name="certificateError"></param>
         /// <returns> A new <see cref="Models.NginxCertificateProperties"/> instance for mocking. </returns>
-        public static NginxCertificateProperties NginxCertificateProperties(NginxProvisioningState? provisioningState = null, string keyVirtualPath = null, string certificateVirtualPath = null, string keyVaultSecretId = null)
+        public static NginxCertificateProperties NginxCertificateProperties(NginxProvisioningState? provisioningState = null, string keyVirtualPath = null, string certificateVirtualPath = null, string keyVaultSecretId = null, string sha1Thumbprint = null, string keyVaultSecretVersion = null, DateTimeOffset? keyVaultSecretCreated = null, NginxCertificateError certificateError = null)
         {
-            return new NginxCertificateProperties(provisioningState, keyVirtualPath, certificateVirtualPath, keyVaultSecretId, serializedAdditionalRawData: null);
+            return new NginxCertificateProperties(
+                provisioningState,
+                keyVirtualPath,
+                certificateVirtualPath,
+                keyVaultSecretId,
+                sha1Thumbprint,
+                keyVaultSecretVersion,
+                keyVaultSecretCreated,
+                certificateError,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Nginx.NginxConfigurationData"/>. </summary>
@@ -88,6 +101,39 @@ namespace Azure.ResourceManager.Nginx.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.NginxAnalysisResult"/>. </summary>
+        /// <param name="status"> The status of the analysis. </param>
+        /// <param name="dataErrors"></param>
+        /// <returns> A new <see cref="Models.NginxAnalysisResult"/> instance for mocking. </returns>
+        public static NginxAnalysisResult NginxAnalysisResult(string status = null, IEnumerable<NginxAnalysisDiagnostic> dataErrors = null)
+        {
+            dataErrors ??= new List<NginxAnalysisDiagnostic>();
+
+            return new NginxAnalysisResult(status, dataErrors != null ? new AnalysisResultData(dataErrors?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NginxAnalysisDiagnostic"/>. </summary>
+        /// <param name="id"> Unique identifier for the error. </param>
+        /// <param name="directive"></param>
+        /// <param name="description"></param>
+        /// <param name="file"> the filepath of the most relevant config file. </param>
+        /// <param name="line"></param>
+        /// <param name="message"></param>
+        /// <param name="rule"></param>
+        /// <returns> A new <see cref="Models.NginxAnalysisDiagnostic"/> instance for mocking. </returns>
+        public static NginxAnalysisDiagnostic NginxAnalysisDiagnostic(string id = null, string directive = null, string description = null, string file = null, float line = default, string message = null, string rule = null)
+        {
+            return new NginxAnalysisDiagnostic(
+                id,
+                directive,
+                description,
+                file,
+                line,
+                message,
+                rule,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Nginx.NginxDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -124,10 +170,11 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="ipAddress"> The IP address of the deployment. </param>
         /// <param name="enableDiagnosticsSupport"></param>
         /// <param name="loggingStorageAccount"></param>
-        /// <param name="scalingCapacity"></param>
+        /// <param name="scalingProperties"> Information on how the deployment will be scaled. </param>
+        /// <param name="upgradeChannel"> Autoupgrade settings of a deployment. </param>
         /// <param name="userPreferredEmail"></param>
         /// <returns> A new <see cref="Models.NginxDeploymentProperties"/> instance for mocking. </returns>
-        public static NginxDeploymentProperties NginxDeploymentProperties(NginxProvisioningState? provisioningState = null, string nginxVersion = null, string managedResourceGroup = null, NginxNetworkProfile networkProfile = null, string ipAddress = null, bool? enableDiagnosticsSupport = null, NginxStorageAccount loggingStorageAccount = null, int? scalingCapacity = null, string userPreferredEmail = null)
+        public static NginxDeploymentProperties NginxDeploymentProperties(NginxProvisioningState? provisioningState = null, string nginxVersion = null, string managedResourceGroup = null, NginxNetworkProfile networkProfile = null, string ipAddress = null, bool? enableDiagnosticsSupport = null, NginxStorageAccount loggingStorageAccount = null, NginxDeploymentScalingProperties scalingProperties = null, string upgradeChannel = null, string userPreferredEmail = null)
         {
             return new NginxDeploymentProperties(
                 provisioningState,
@@ -137,7 +184,8 @@ namespace Azure.ResourceManager.Nginx.Models
                 ipAddress,
                 enableDiagnosticsSupport,
                 loggingStorageAccount != null ? new NginxLogging(loggingStorageAccount, serializedAdditionalRawData: null) : null,
-                scalingCapacity != null ? new NginxDeploymentScalingProperties(scalingCapacity, serializedAdditionalRawData: null) : null,
+                scalingProperties,
+                upgradeChannel != null ? new AutoUpgradeProfile(upgradeChannel, serializedAdditionalRawData: null) : null,
                 userPreferredEmail != null ? new NginxDeploymentUserProfile(userPreferredEmail, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
         }

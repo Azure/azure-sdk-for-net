@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class CdnEndpointPatch : IUtf8JsonSerializable, IJsonModel<CdnEndpointPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnEndpointPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnEndpointPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CdnEndpointPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in GeoFilters)
                 {
-                    writer.WriteObjectValue<GeoFilter>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (DefaultOriginGroup != null)
                 {
                     writer.WritePropertyName("defaultOriginGroup"u8);
-                    writer.WriteObjectValue<EndpointPropertiesUpdateParametersDefaultOriginGroup>(DefaultOriginGroup, options);
+                    writer.WriteObjectValue(DefaultOriginGroup, options);
                 }
                 else
                 {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteStartArray();
                     foreach (var item in UriSigningKeys)
                     {
-                        writer.WriteObjectValue<UriSigningKey>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (DeliveryPolicy != null)
                 {
                     writer.WritePropertyName("deliveryPolicy"u8);
-                    writer.WriteObjectValue<EndpointDeliveryPolicy>(DeliveryPolicy, options);
+                    writer.WriteObjectValue(DeliveryPolicy, options);
                 }
                 else
                 {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (WebApplicationFirewallPolicyLink != null)
                 {
                     writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
-                    writer.WriteObjectValue<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink>(WebApplicationFirewallPolicyLink, options);
+                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink, options);
                 }
                 else
                 {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CdnEndpointPatch DeserializeCdnEndpointPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

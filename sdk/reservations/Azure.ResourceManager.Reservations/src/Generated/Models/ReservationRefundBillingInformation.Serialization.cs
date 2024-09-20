@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ReservationRefundBillingInformation : IUtf8JsonSerializable, IJsonModel<ReservationRefundBillingInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationRefundBillingInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationRefundBillingInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReservationRefundBillingInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(BillingCurrencyTotalPaidAmount))
             {
                 writer.WritePropertyName("billingCurrencyTotalPaidAmount"u8);
-                writer.WriteObjectValue<PurchasePrice>(BillingCurrencyTotalPaidAmount, options);
+                writer.WriteObjectValue(BillingCurrencyTotalPaidAmount, options);
             }
             if (Optional.IsDefined(BillingCurrencyProratedAmount))
             {
                 writer.WritePropertyName("billingCurrencyProratedAmount"u8);
-                writer.WriteObjectValue<PurchasePrice>(BillingCurrencyProratedAmount, options);
+                writer.WriteObjectValue(BillingCurrencyProratedAmount, options);
             }
             if (Optional.IsDefined(BillingCurrencyRemainingCommitmentAmount))
             {
                 writer.WritePropertyName("billingCurrencyRemainingCommitmentAmount"u8);
-                writer.WriteObjectValue<PurchasePrice>(BillingCurrencyRemainingCommitmentAmount, options);
+                writer.WriteObjectValue(BillingCurrencyRemainingCommitmentAmount, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static ReservationRefundBillingInformation DeserializeReservationRefundBillingInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

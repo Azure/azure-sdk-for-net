@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class IPAllocationData : IUtf8JsonSerializable, IJsonModel<IPAllocationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPAllocationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPAllocationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IPAllocationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network
 
         internal static IPAllocationData DeserializeIPAllocationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

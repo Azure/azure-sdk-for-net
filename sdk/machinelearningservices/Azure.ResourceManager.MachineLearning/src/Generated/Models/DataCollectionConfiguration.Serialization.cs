@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class DataCollectionConfiguration : IUtf8JsonSerializable, IJsonModel<DataCollectionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataCollectionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -26,17 +27,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(SamplingRate))
             {
-                if (ClientId != null)
-                {
-                    writer.WritePropertyName("clientId"u8);
-                    writer.WriteStringValue(ClientId);
-                }
-                else
-                {
-                    writer.WriteNull("clientId");
-                }
+                writer.WritePropertyName("samplingRate"u8);
+                writer.WriteNumberValue(SamplingRate.Value);
             }
             if (Optional.IsDefined(DataCollectionMode))
             {
@@ -55,10 +49,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dataId");
                 }
             }
-            if (Optional.IsDefined(SamplingRate))
+            if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("samplingRate"u8);
-                writer.WriteNumberValue(SamplingRate.Value);
+                if (ClientId != null)
+                {
+                    writer.WritePropertyName("clientId"u8);
+                    writer.WriteStringValue(ClientId);
+                }
+                else
+                {
+                    writer.WriteNull("clientId");
+                }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -92,28 +93,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static DataCollectionConfiguration DeserializeDataCollectionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string clientId = default;
+            double? samplingRate = default;
             DataCollectionMode? dataCollectionMode = default;
             string dataId = default;
-            double? samplingRate = default;
+            string clientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientId"u8))
+                if (property.NameEquals("samplingRate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        clientId = null;
                         continue;
                     }
-                    clientId = property.Value.GetString();
+                    samplingRate = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("dataCollectionMode"u8))
@@ -135,13 +135,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     dataId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("samplingRate"u8))
+                if (property.NameEquals("clientId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        clientId = null;
                         continue;
                     }
-                    samplingRate = property.Value.GetDouble();
+                    clientId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +151,98 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataCollectionConfiguration(clientId, dataCollectionMode, dataId, samplingRate, serializedAdditionalRawData);
+            return new DataCollectionConfiguration(samplingRate, dataCollectionMode, dataId, clientId, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SamplingRate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  samplingRate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SamplingRate))
+                {
+                    builder.Append("  samplingRate: ");
+                    builder.AppendLine($"'{SamplingRate.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataCollectionMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataCollectionMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataCollectionMode))
+                {
+                    builder.Append("  dataCollectionMode: ");
+                    builder.AppendLine($"'{DataCollectionMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataId))
+                {
+                    builder.Append("  dataId: ");
+                    if (DataId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DataId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DataId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientId))
+                {
+                    builder.Append("  clientId: ");
+                    if (ClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<DataCollectionConfiguration>.Write(ModelReaderWriterOptions options)
@@ -161,6 +253,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataCollectionConfiguration)} does not support writing '{options.Format}' format.");
             }

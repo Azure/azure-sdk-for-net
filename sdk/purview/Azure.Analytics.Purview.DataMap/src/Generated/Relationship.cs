@@ -47,31 +47,31 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Create a new relationship between entities. </summary>
-        /// <param name="atlasRelationship"> Atlas relationship instance. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasRelationship"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='CreateAsync(AtlasRelationship,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasRelationship>> CreateAsync(AtlasRelationship atlasRelationship, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasRelationship>> CreateAsync(AtlasRelationship body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
+            Argument.AssertNotNull(body, nameof(body));
 
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = atlasRelationship.ToRequestContent();
             Response response = await CreateAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasRelationship.FromResponse(response), response);
         }
 
         /// <summary> Create a new relationship between entities. </summary>
-        /// <param name="atlasRelationship"> Atlas relationship instance. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasRelationship"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Create(AtlasRelationship,CancellationToken)']/*" />
-        public virtual Response<AtlasRelationship> Create(AtlasRelationship atlasRelationship, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasRelationship> Create(AtlasRelationship body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
+            Argument.AssertNotNull(body, nameof(body));
 
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = atlasRelationship.ToRequestContent();
             Response response = Create(content, context);
             return Response.FromValue(AtlasRelationship.FromResponse(response), response);
         }
@@ -155,31 +155,31 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Update an existing relationship between entities. </summary>
-        /// <param name="atlasRelationship"> Atlas relationship instance. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasRelationship"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='UpdateAsync(AtlasRelationship,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasRelationship>> UpdateAsync(AtlasRelationship atlasRelationship, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasRelationship>> UpdateAsync(AtlasRelationship body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
+            Argument.AssertNotNull(body, nameof(body));
 
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = atlasRelationship.ToRequestContent();
             Response response = await UpdateAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasRelationship.FromResponse(response), response);
         }
 
         /// <summary> Update an existing relationship between entities. </summary>
-        /// <param name="atlasRelationship"> Atlas relationship instance. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasRelationship"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Update(AtlasRelationship,CancellationToken)']/*" />
-        public virtual Response<AtlasRelationship> Update(AtlasRelationship atlasRelationship, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasRelationship> Update(AtlasRelationship body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
+            Argument.AssertNotNull(body, nameof(body));
 
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = atlasRelationship.ToRequestContent();
             Response response = Update(content, context);
             return Response.FromValue(AtlasRelationship.FromResponse(response), response);
         }

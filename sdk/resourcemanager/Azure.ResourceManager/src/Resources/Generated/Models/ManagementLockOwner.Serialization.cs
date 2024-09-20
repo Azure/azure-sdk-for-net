@@ -16,9 +16,18 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ManagementLockOwner : IUtf8JsonSerializable, IJsonModel<ManagementLockOwner>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementLockOwner>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementLockOwner>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagementLockOwner>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagementLockOwner>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -26,7 +35,6 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new FormatException($"The model {nameof(ManagementLockOwner)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.Resources.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ManagementLockOwner IJsonModel<ManagementLockOwner>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -64,7 +71,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ManagementLockOwner DeserializeManagementLockOwner(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,15 +108,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationId), out propertyOverride);
-            if (Optional.IsDefined(ApplicationId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  applicationId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApplicationId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  applicationId: ");
                     if (ApplicationId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

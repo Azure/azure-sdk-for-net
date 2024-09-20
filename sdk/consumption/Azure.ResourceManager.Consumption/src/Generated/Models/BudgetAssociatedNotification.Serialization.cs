@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class BudgetAssociatedNotification : IUtf8JsonSerializable, IJsonModel<BudgetAssociatedNotification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BudgetAssociatedNotification>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BudgetAssociatedNotification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BudgetAssociatedNotification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static BudgetAssociatedNotification DeserializeBudgetAssociatedNotification(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

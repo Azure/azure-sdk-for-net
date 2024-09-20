@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public partial class UEQosFlow : IUtf8JsonSerializable, IJsonModel<UEQosFlow>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UEQosFlow>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UEQosFlow>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UEQosFlow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static UEQosFlow DeserializeUEQosFlow(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -174,6 +175,143 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Qfi), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  qfi: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  qfi: ");
+                builder.AppendLine($"{Qfi}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Fiveqi), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fiveqi: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  fiveqi: ");
+                builder.AppendLine($"{Fiveqi}");
+            }
+
+            builder.Append("  gbr:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UplinkGbrUplink), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    uplink: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UplinkGbrUplink))
+                {
+                    builder.Append("    uplink: ");
+                    if (UplinkGbrUplink.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UplinkGbrUplink}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UplinkGbrUplink}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DownlinkGbrDownlink), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    downlink: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DownlinkGbrDownlink))
+                {
+                    builder.Append("    downlink: ");
+                    if (DownlinkGbrDownlink.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DownlinkGbrDownlink}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DownlinkGbrDownlink}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.Append("  mbr:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UplinkMbrUplink), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    uplink: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UplinkMbrUplink))
+                {
+                    builder.Append("    uplink: ");
+                    if (UplinkMbrUplink.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UplinkMbrUplink}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UplinkMbrUplink}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DownlinkMbrDownlink), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    downlink: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DownlinkMbrDownlink))
+                {
+                    builder.Append("    downlink: ");
+                    if (DownlinkMbrDownlink.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DownlinkMbrDownlink}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DownlinkMbrDownlink}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<UEQosFlow>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UEQosFlow>)this).GetFormatFromOptions(options) : options.Format;
@@ -182,6 +320,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(UEQosFlow)} does not support writing '{options.Format}' format.");
             }

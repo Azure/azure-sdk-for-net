@@ -1,6 +1,6 @@
 # Release History
 
-## 1.12.0-beta.2 (Unreleased)
+## 1.14.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,11 +10,31 @@
 
 ### Other Changes
 
+## 1.13.0 (2024-09-03)
+
+### Features Added
+- Added `JsonModelWriteCore` to serialization file so that derived models could call it without doing the serialization of base properties themselves.
+
+### Other Changes
+- Added to the sample code to authenticate with the azure in China in the README.md file.
+
+## 1.12.0 (2024-05-07)
+
+### Bugs Fixed
+
+- Fixed bicep serialization of flattened properties.
+
+## 1.11.1 (2024-04-23)
+
+### Features Added
+
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
 ## 1.12.0-beta.1 (2024-03-22)
 
 ### Features Added
 
-- Enable long-running operation rehydration.
+- Added experimental Bicep serialization.
 
 ## 1.11.0 (2024-03-22)
 

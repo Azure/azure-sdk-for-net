@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class ContinuousBackupRestoreLocation : IUtf8JsonSerializable, IJsonModel<ContinuousBackupRestoreLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContinuousBackupRestoreLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContinuousBackupRestoreLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContinuousBackupRestoreLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ContinuousBackupRestoreLocation DeserializeContinuousBackupRestoreLocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

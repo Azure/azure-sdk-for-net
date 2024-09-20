@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FrontDoor
 {
     public partial class FrontendEndpointData : IUtf8JsonSerializable, IJsonModel<FrontendEndpointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontendEndpointData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontendEndpointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontendEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.FrontDoor
                 if (CustomHttpsConfiguration != null)
                 {
                     writer.WritePropertyName("customHttpsConfiguration"u8);
-                    writer.WriteObjectValue<CustomHttpsConfiguration>(CustomHttpsConfiguration, options);
+                    writer.WriteObjectValue(CustomHttpsConfiguration, options);
                 }
                 else
                 {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.FrontDoor
 
         internal static FrontendEndpointData DeserializeFrontendEndpointData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

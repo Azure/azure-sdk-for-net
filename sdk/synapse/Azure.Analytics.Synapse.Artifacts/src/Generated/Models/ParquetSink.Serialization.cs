@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue<StoreWriteSettings>(StoreSettings);
+                writer.WriteObjectValue(StoreSettings);
             }
             if (Optional.IsDefined(FormatSettings))
             {
                 writer.WritePropertyName("formatSettings"u8);
-                writer.WriteObjectValue<ParquetWriteSettings>(FormatSettings);
+                writer.WriteObjectValue(FormatSettings);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -173,11 +173,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeParquetSink(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ParquetSink>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -185,7 +185,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, ParquetSink model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<ParquetSink>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override ParquetSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

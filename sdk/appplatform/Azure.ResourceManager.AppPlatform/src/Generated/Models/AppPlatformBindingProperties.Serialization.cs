@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformBindingProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformBindingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformBindingProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformBindingProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformBindingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBindingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 throw new FormatException($"The model {nameof(AppPlatformBindingProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("resourceName"u8);
@@ -99,7 +107,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppPlatformBindingProperties IJsonModel<AppPlatformBindingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -116,7 +123,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformBindingProperties DeserializeAppPlatformBindingProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

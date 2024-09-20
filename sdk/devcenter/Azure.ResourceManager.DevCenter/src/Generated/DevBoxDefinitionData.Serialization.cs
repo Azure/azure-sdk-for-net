@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter
 {
     public partial class DevBoxDefinitionData : IUtf8JsonSerializable, IJsonModel<DevBoxDefinitionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevBoxDefinitionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevBoxDefinitionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevBoxDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.DevCenter
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue<DevCenterImageReference>(ImageReference, options);
+                writer.WriteObjectValue(ImageReference, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<DevCenterSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(OSStorageType))
             {
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.DevCenter
             if (options.Format != "W" && Optional.IsDefined(ImageValidationErrorDetails))
             {
                 writer.WritePropertyName("imageValidationErrorDetails"u8);
-                writer.WriteObjectValue<ImageValidationErrorDetails>(ImageValidationErrorDetails, options);
+                writer.WriteObjectValue(ImageValidationErrorDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ActiveImageReference))
             {
                 writer.WritePropertyName("activeImageReference"u8);
-                writer.WriteObjectValue<DevCenterImageReference>(ActiveImageReference, options);
+                writer.WriteObjectValue(ActiveImageReference, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static DevBoxDefinitionData DeserializeDevBoxDefinitionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

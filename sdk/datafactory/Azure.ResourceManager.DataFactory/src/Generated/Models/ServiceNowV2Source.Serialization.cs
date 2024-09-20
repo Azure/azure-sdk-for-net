@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ServiceNowV2Source : IUtf8JsonSerializable, IJsonModel<ServiceNowV2Source>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceNowV2Source>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceNowV2Source>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceNowV2Source>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Expression))
             {
                 writer.WritePropertyName("expression"u8);
-                writer.WriteObjectValue<DataFactoryExpressionV2>(Expression, options);
+                writer.WriteObjectValue(Expression, options);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ServiceNowV2Source DeserializeServiceNowV2Source(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

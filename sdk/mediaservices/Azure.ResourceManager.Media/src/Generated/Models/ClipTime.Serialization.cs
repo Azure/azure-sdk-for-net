@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
     [PersistableModelProxy(typeof(UnknownClipTime))]
     public partial class ClipTime : IUtf8JsonSerializable, IJsonModel<ClipTime>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClipTime>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClipTime>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClipTime>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ClipTime DeserializeClipTime(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class JitNetworkAccessPolicyInitiateVirtualMachine : IUtf8JsonSerializable, IJsonModel<JitNetworkAccessPolicyInitiateVirtualMachine>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JitNetworkAccessPolicyInitiateVirtualMachine>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JitNetworkAccessPolicyInitiateVirtualMachine>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<JitNetworkAccessPolicyInitiateVirtualMachine>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartArray();
             foreach (var item in Ports)
             {
-                writer.WriteObjectValue<JitNetworkAccessPolicyInitiatePort>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static JitNetworkAccessPolicyInitiateVirtualMachine DeserializeJitNetworkAccessPolicyInitiateVirtualMachine(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

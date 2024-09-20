@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ConnectionMonitorEndpoint : IUtf8JsonSerializable, IJsonModel<ConnectionMonitorEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionMonitorEndpoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionMonitorEndpoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectionMonitorEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -46,17 +46,27 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue<ConnectionMonitorEndpointFilter>(Filter, options);
+                writer.WriteObjectValue(Filter, options);
             }
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue<ConnectionMonitorEndpointScope>(Scope, options);
+                writer.WriteObjectValue(Scope, options);
             }
             if (Optional.IsDefined(CoverageLevel))
             {
                 writer.WritePropertyName("coverageLevel"u8);
                 writer.WriteStringValue(CoverageLevel.Value.ToString());
+            }
+            if (Optional.IsDefined(LocationDetails))
+            {
+                writer.WritePropertyName("locationDetails"u8);
+                writer.WriteObjectValue(LocationDetails, options);
+            }
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -90,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorEndpoint DeserializeConnectionMonitorEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,6 +113,8 @@ namespace Azure.ResourceManager.Network.Models
             ConnectionMonitorEndpointFilter filter = default;
             ConnectionMonitorEndpointScope scope = default;
             CoverageLevel? coverageLevel = default;
+            ConnectionMonitorEndpointLocationDetails locationDetails = default;
+            Guid? subscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,6 +174,24 @@ namespace Azure.ResourceManager.Network.Models
                     coverageLevel = new CoverageLevel(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("locationDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    locationDetails = ConnectionMonitorEndpointLocationDetails.DeserializeConnectionMonitorEndpointLocationDetails(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("subscriptionId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subscriptionId = property.Value.GetGuid();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -176,6 +206,8 @@ namespace Azure.ResourceManager.Network.Models
                 filter,
                 scope,
                 coverageLevel,
+                locationDetails,
+                subscriptionId,
                 serializedAdditionalRawData);
         }
 

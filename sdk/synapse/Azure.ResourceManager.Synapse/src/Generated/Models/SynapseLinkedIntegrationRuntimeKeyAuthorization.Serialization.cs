@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseLinkedIntegrationRuntimeKeyAuthorization : IUtf8JsonSerializable, IJsonModel<SynapseLinkedIntegrationRuntimeKeyAuthorization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseLinkedIntegrationRuntimeKeyAuthorization>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseLinkedIntegrationRuntimeKeyAuthorization>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseLinkedIntegrationRuntimeKeyAuthorization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
-            writer.WriteObjectValue<SynapseSecureString>(Key, options);
+            writer.WriteObjectValue(Key, options);
             writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseLinkedIntegrationRuntimeKeyAuthorization DeserializeSynapseLinkedIntegrationRuntimeKeyAuthorization(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

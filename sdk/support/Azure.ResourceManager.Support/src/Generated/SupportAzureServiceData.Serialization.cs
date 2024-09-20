@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Support
 {
     public partial class SupportAzureServiceData : IUtf8JsonSerializable, IJsonModel<SupportAzureServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportAzureServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportAzureServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SupportAzureServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,17 +64,6 @@ namespace Azure.ResourceManager.Support
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Metadata))
-            {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteStartObject();
-                foreach (var item in Metadata)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,7 +97,7 @@ namespace Azure.ResourceManager.Support
 
         internal static SupportAzureServiceData DeserializeSupportAzureServiceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,7 +109,6 @@ namespace Azure.ResourceManager.Support
             SystemData systemData = default;
             string displayName = default;
             IReadOnlyList<string> resourceTypes = default;
-            IReadOnlyDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,20 +165,6 @@ namespace Azure.ResourceManager.Support
                             resourceTypes = array;
                             continue;
                         }
-                        if (property0.NameEquals("metadata"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            metadata = dictionary;
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -207,7 +181,6 @@ namespace Azure.ResourceManager.Support
                 systemData,
                 displayName,
                 resourceTypes ?? new ChangeTrackingList<string>(),
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

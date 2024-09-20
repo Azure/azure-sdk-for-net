@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Entities)
             {
-                writer.WriteObjectValue<Entity>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("id"u8);
@@ -31,13 +31,13 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Warnings)
             {
-                writer.WriteObjectValue<DocumentWarning>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue<TextDocumentStatistics?>(Statistics);
+                writer.WriteObjectValue(Statistics);
             }
             writer.WriteEndObject();
         }
@@ -106,11 +106,11 @@ namespace Azure.AI.TextAnalytics.Models
             return DeserializePiiResultDocumentsItem(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PiiResultDocumentsItem>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

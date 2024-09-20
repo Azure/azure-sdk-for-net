@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class CdnEndpointData : IUtf8JsonSerializable, IJsonModel<CdnEndpointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnEndpointData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnEndpointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CdnEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in GeoFilters)
                 {
-                    writer.WriteObjectValue<GeoFilter>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Cdn
                 if (DefaultOriginGroup != null)
                 {
                     writer.WritePropertyName("defaultOriginGroup"u8);
-                    writer.WriteObjectValue<EndpointPropertiesUpdateParametersDefaultOriginGroup>(DefaultOriginGroup, options);
+                    writer.WriteObjectValue(DefaultOriginGroup, options);
                 }
                 else
                 {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteStartArray();
                     foreach (var item in UriSigningKeys)
                     {
-                        writer.WriteObjectValue<UriSigningKey>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Cdn
                 if (DeliveryPolicy != null)
                 {
                     writer.WritePropertyName("deliveryPolicy"u8);
-                    writer.WriteObjectValue<EndpointDeliveryPolicy>(DeliveryPolicy, options);
+                    writer.WriteObjectValue(DeliveryPolicy, options);
                 }
                 else
                 {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Cdn
                 if (WebApplicationFirewallPolicyLink != null)
                 {
                     writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
-                    writer.WriteObjectValue<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink>(WebApplicationFirewallPolicyLink, options);
+                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink, options);
                 }
                 else
                 {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in Origins)
                 {
-                    writer.WriteObjectValue<DeepCreatedOrigin>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -204,17 +204,17 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in OriginGroups)
                 {
-                    writer.WriteObjectValue<DeepCreatedOriginGroup>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CustomDomains))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DeepCreatedCustomDomains))
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
-                foreach (var item in CustomDomains)
+                foreach (var item in DeepCreatedCustomDomains)
                 {
-                    writer.WriteObjectValue<CdnCustomDomainData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Cdn
 
         internal static CdnEndpointData DeserializeCdnEndpointData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Cdn
             string hostName = default;
             IList<DeepCreatedOrigin> origins = default;
             IList<DeepCreatedOriginGroup> originGroups = default;
-            IReadOnlyList<CdnCustomDomainData> customDomains = default;
+            IReadOnlyList<DeepCreatedCustomDomain> customDomains = default;
             EndpointResourceState? resourceState = default;
             CdnEndpointProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -522,10 +522,10 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            List<CdnCustomDomainData> array = new List<CdnCustomDomainData>();
+                            List<DeepCreatedCustomDomain> array = new List<DeepCreatedCustomDomain>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CdnCustomDomainData.DeserializeCdnCustomDomainData(item, options));
+                                array.Add(DeepCreatedCustomDomain.DeserializeDeepCreatedCustomDomain(item, options));
                             }
                             customDomains = array;
                             continue;
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.Cdn
                 hostName,
                 origins ?? new ChangeTrackingList<DeepCreatedOrigin>(),
                 originGroups ?? new ChangeTrackingList<DeepCreatedOriginGroup>(),
-                customDomains ?? new ChangeTrackingList<CdnCustomDomainData>(),
+                customDomains ?? new ChangeTrackingList<DeepCreatedCustomDomain>(),
                 resourceState,
                 provisioningState,
                 serializedAdditionalRawData);

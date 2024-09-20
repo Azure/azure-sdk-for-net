@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MixedReality.Models
 {
     public partial class MixedRealitySku : IUtf8JsonSerializable, IJsonModel<MixedRealitySku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MixedRealitySku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MixedRealitySku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MixedRealitySku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MixedReality.Models
 
         internal static MixedRealitySku DeserializeMixedRealitySku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

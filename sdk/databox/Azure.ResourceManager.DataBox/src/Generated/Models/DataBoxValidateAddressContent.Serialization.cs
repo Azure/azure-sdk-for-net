@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxValidateAddressContent : IUtf8JsonSerializable, IJsonModel<DataBoxValidateAddressContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxValidateAddressContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxValidateAddressContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxValidateAddressContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.DataBox.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("shippingAddress"u8);
-            writer.WriteObjectValue<DataBoxShippingAddress>(ShippingAddress, options);
+            writer.WriteObjectValue(ShippingAddress, options);
             writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
             if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
-                writer.WriteObjectValue<TransportPreferences>(TransportPreferences, options);
+                writer.WriteObjectValue(TransportPreferences, options);
             }
             writer.WritePropertyName("validationType"u8);
             writer.WriteStringValue(ValidationType.ToSerialString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxValidateAddressContent DeserializeDataBoxValidateAddressContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

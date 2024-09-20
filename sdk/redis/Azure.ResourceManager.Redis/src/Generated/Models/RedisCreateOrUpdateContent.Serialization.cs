@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Redis.Models
 {
     public partial class RedisCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<RedisCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Redis.Models
             if (Optional.IsDefined(RedisConfiguration))
             {
                 writer.WritePropertyName("redisConfiguration"u8);
-                writer.WriteObjectValue<RedisCommonConfiguration>(RedisConfiguration, options);
+                writer.WriteObjectValue(RedisConfiguration, options);
             }
             if (Optional.IsDefined(RedisVersion))
             {
@@ -114,8 +114,13 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("updateChannel"u8);
                 writer.WriteStringValue(UpdateChannel.Value.ToString());
             }
+            if (Optional.IsDefined(IsAccessKeyAuthenticationDisabled))
+            {
+                writer.WritePropertyName("disableAccessKeyAuthentication"u8);
+                writer.WriteBooleanValue(IsAccessKeyAuthenticationDisabled.Value);
+            }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<RedisSku>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
@@ -159,7 +164,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         internal static RedisCreateOrUpdateContent DeserializeRedisCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -179,6 +184,7 @@ namespace Azure.ResourceManager.Redis.Models
             RedisTlsVersion? minimumTlsVersion = default;
             RedisPublicNetworkAccess? publicNetworkAccess = default;
             UpdateChannel? updateChannel = default;
+            bool? disableAccessKeyAuthentication = default;
             RedisSku sku = default;
             ResourceIdentifier subnetId = default;
             IPAddress staticIP = default;
@@ -328,6 +334,15 @@ namespace Azure.ResourceManager.Redis.Models
                             updateChannel = new UpdateChannel(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("disableAccessKeyAuthentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            disableAccessKeyAuthentication = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("sku"u8))
                         {
                             sku = RedisSku.DeserializeRedisSku(property0.Value, options);
@@ -375,6 +390,7 @@ namespace Azure.ResourceManager.Redis.Models
                 minimumTlsVersion,
                 publicNetworkAccess,
                 updateChannel,
+                disableAccessKeyAuthentication,
                 sku,
                 subnetId,
                 staticIP,

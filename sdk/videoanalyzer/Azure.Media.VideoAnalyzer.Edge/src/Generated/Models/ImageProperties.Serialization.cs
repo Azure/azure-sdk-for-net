@@ -18,12 +18,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Scale))
             {
                 writer.WritePropertyName("scale"u8);
-                writer.WriteObjectValue<ImageScale>(Scale);
+                writer.WriteObjectValue(Scale);
             }
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
-                writer.WriteObjectValue<ImageFormatProperties>(Format);
+                writer.WriteObjectValue(Format);
             }
             writer.WriteEndObject();
         }
@@ -68,11 +68,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             return DeserializeImageProperties(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ImageProperties>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

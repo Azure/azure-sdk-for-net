@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MySql.Models
 {
     public partial class MySqlServerCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<MySqlServerCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlServerCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.MySql.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<MySqlSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue<MySqlServerPropertiesForCreate>(Properties, options);
+            writer.WriteObjectValue(Properties, options);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Tags))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MySql.Models
 
         internal static MySqlServerCreateOrUpdateContent DeserializeMySqlServerCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

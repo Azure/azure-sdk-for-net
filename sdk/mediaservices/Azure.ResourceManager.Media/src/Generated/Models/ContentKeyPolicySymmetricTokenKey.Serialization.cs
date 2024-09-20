@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class ContentKeyPolicySymmetricTokenKey : IUtf8JsonSerializable, IJsonModel<ContentKeyPolicySymmetricTokenKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicySymmetricTokenKey>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicySymmetricTokenKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContentKeyPolicySymmetricTokenKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicySymmetricTokenKey DeserializeContentKeyPolicySymmetricTokenKey(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

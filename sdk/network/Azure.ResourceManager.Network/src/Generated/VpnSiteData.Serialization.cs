@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VpnSiteData : IUtf8JsonSerializable, IJsonModel<VpnSiteData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnSiteData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnSiteData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VpnSiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(DeviceProperties))
             {
                 writer.WritePropertyName("deviceProperties"u8);
-                writer.WriteObjectValue<DeviceProperties>(DeviceProperties, options);
+                writer.WriteObjectValue(DeviceProperties, options);
             }
             if (Optional.IsDefined(IPAddress))
             {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(AddressSpace))
             {
                 writer.WritePropertyName("addressSpace"u8);
-                writer.WriteObjectValue<AddressSpace>(AddressSpace, options);
+                writer.WriteObjectValue(AddressSpace, options);
             }
             if (Optional.IsDefined(BgpProperties))
             {
                 writer.WritePropertyName("bgpProperties"u8);
-                writer.WriteObjectValue<BgpSettings>(BgpProperties, options);
+                writer.WriteObjectValue(BgpProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -112,14 +112,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VpnSiteLinks)
                 {
-                    writer.WriteObjectValue<VpnSiteLinkData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(O365Policy))
             {
                 writer.WritePropertyName("o365Policy"u8);
-                writer.WriteObjectValue<O365PolicyProperties>(O365Policy, options);
+                writer.WriteObjectValue(O365Policy, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network
 
         internal static VpnSiteData DeserializeVpnSiteData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

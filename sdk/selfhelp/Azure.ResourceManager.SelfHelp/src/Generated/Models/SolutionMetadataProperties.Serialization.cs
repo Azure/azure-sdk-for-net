@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 {
     public partial class SolutionMetadataProperties : IUtf8JsonSerializable, IJsonModel<SolutionMetadataProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SolutionMetadataProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SolutionMetadataProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SolutionMetadataProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,14 +83,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         internal static SolutionMetadataProperties DeserializeSolutionMetadataProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string solutionId = default;
-            SolutionType? solutionType = default;
+            SelfHelpSolutionType? solutionType = default;
             string description = default;
             IReadOnlyList<string> requiredInputs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    solutionType = new SolutionType(property.Value.GetString());
+                    solutionType = new SelfHelpSolutionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"u8))

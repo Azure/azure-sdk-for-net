@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterEnvironmentTypeEnvironmentTypesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<DevCenterEnvironmentTypeResource>(Response.FromValue(new DevCenterEnvironmentTypeResource(Client, response), response.GetRawResponse()));
+                var uri = _devCenterEnvironmentTypeEnvironmentTypesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DevCenterArmOperation<DevCenterEnvironmentTypeResource>(Response.FromValue(new DevCenterEnvironmentTypeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterEnvironmentTypeEnvironmentTypesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, data, cancellationToken);
-                var operation = new DevCenterArmOperation<DevCenterEnvironmentTypeResource>(Response.FromValue(new DevCenterEnvironmentTypeResource(Client, response), response.GetRawResponse()));
+                var uri = _devCenterEnvironmentTypeEnvironmentTypesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DevCenterArmOperation<DevCenterEnvironmentTypeResource>(Response.FromValue(new DevCenterEnvironmentTypeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

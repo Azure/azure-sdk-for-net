@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class IntegrationRuntimeComputeProperties : IUtf8JsonSerializable, IJsonModel<IntegrationRuntimeComputeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntimeComputeProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntimeComputeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IntegrationRuntimeComputeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -49,22 +49,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DataFlowProperties))
             {
                 writer.WritePropertyName("dataFlowProperties"u8);
-                writer.WriteObjectValue<IntegrationRuntimeDataFlowProperties>(DataFlowProperties, options);
+                writer.WriteObjectValue(DataFlowProperties, options);
             }
             if (Optional.IsDefined(VnetProperties))
             {
                 writer.WritePropertyName("vNetProperties"u8);
-                writer.WriteObjectValue<IntegrationRuntimeVnetProperties>(VnetProperties, options);
+                writer.WriteObjectValue(VnetProperties, options);
             }
             if (Optional.IsDefined(CopyComputeScaleProperties))
             {
                 writer.WritePropertyName("copyComputeScaleProperties"u8);
-                writer.WriteObjectValue<CopyComputeScaleProperties>(CopyComputeScaleProperties, options);
+                writer.WriteObjectValue(CopyComputeScaleProperties, options);
             }
             if (Optional.IsDefined(PipelineExternalComputeScaleProperties))
             {
                 writer.WritePropertyName("pipelineExternalComputeScaleProperties"u8);
-                writer.WriteObjectValue<PipelineExternalComputeScaleProperties>(PipelineExternalComputeScaleProperties, options);
+                writer.WriteObjectValue(PipelineExternalComputeScaleProperties, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static IntegrationRuntimeComputeProperties DeserializeIntegrationRuntimeComputeProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public partial class VaultCertificateResult : IUtf8JsonSerializable, IJsonModel<VaultCertificateResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultCertificateResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultCertificateResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VaultCertificateResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<ResourceCertificateDetails>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static VaultCertificateResult DeserializeVaultCertificateResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

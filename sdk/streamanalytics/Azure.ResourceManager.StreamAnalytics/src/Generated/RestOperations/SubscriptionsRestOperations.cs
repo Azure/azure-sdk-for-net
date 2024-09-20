@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +34,19 @@ namespace Azure.ResourceManager.StreamAnalytics
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-10-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListQuotasRequestUri(string subscriptionId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/quotas", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListQuotasRequest(string subscriptionId, AzureLocation location)
@@ -108,6 +120,19 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
         }
 
+        internal RequestUriBuilder CreateTestQueryRequestUri(string subscriptionId, AzureLocation location, StreamAnalyticsTestQuery testQuery)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/testQuery", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateTestQueryRequest(string subscriptionId, AzureLocation location, StreamAnalyticsTestQuery testQuery)
         {
             var message = _pipeline.CreateMessage();
@@ -125,7 +150,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<StreamAnalyticsTestQuery>(testQuery, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(testQuery, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -179,6 +204,19 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
         }
 
+        internal RequestUriBuilder CreateCompileQueryRequestUri(string subscriptionId, AzureLocation location, StreamAnalyticsCompileQuery compileQuery)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/compileQuery", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCompileQueryRequest(string subscriptionId, AzureLocation location, StreamAnalyticsCompileQuery compileQuery)
         {
             var message = _pipeline.CreateMessage();
@@ -196,7 +234,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<StreamAnalyticsCompileQuery>(compileQuery, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(compileQuery, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -258,6 +296,19 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
         }
 
+        internal RequestUriBuilder CreateSampleInputRequestUri(string subscriptionId, AzureLocation location, StreamAnalyticsSampleInputContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/sampleInput", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSampleInputRequest(string subscriptionId, AzureLocation location, StreamAnalyticsSampleInputContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -275,7 +326,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<StreamAnalyticsSampleInputContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -327,6 +378,19 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
         }
 
+        internal RequestUriBuilder CreateTestInputRequestUri(string subscriptionId, AzureLocation location, StreamAnalyticsTestContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/testInput", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateTestInputRequest(string subscriptionId, AzureLocation location, StreamAnalyticsTestContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -344,7 +408,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<StreamAnalyticsTestContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -396,6 +460,19 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
         }
 
+        internal RequestUriBuilder CreateTestOutputRequestUri(string subscriptionId, AzureLocation location, StreamAnalyticsTestOutput testOutput)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/testOutput", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateTestOutputRequest(string subscriptionId, AzureLocation location, StreamAnalyticsTestOutput testOutput)
         {
             var message = _pipeline.CreateMessage();
@@ -413,7 +490,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<StreamAnalyticsTestOutput>(testOutput, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(testOutput, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;

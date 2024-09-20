@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class HDInsightClusterNetworkProperties : IUtf8JsonSerializable, IJsonModel<HDInsightClusterNetworkProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightClusterNetworkProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightClusterNetworkProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HDInsightClusterNetworkProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(OutboundDependenciesManagedType))
+            {
+                writer.WritePropertyName("outboundDependenciesManagedType"u8);
+                writer.WriteStringValue(OutboundDependenciesManagedType.Value.ToString());
+            }
             if (Optional.IsDefined(ResourceProviderConnection))
             {
                 writer.WritePropertyName("resourceProviderConnection"u8);
@@ -35,6 +40,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 writer.WritePropertyName("privateLink"u8);
                 writer.WriteStringValue(PrivateLink.Value.ToString());
+            }
+            if (Optional.IsDefined(PublicIPTag))
+            {
+                writer.WritePropertyName("publicIpTag"u8);
+                writer.WriteObjectValue(PublicIPTag, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,18 +78,29 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightClusterNetworkProperties DeserializeHDInsightClusterNetworkProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            OutboundDependenciesManagedType? outboundDependenciesManagedType = default;
             HDInsightResourceProviderConnection? resourceProviderConnection = default;
             HDInsightPrivateLinkState? privateLink = default;
+            HDInsightClusterIPTag publicIPTag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("outboundDependenciesManagedType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outboundDependenciesManagedType = new OutboundDependenciesManagedType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("resourceProviderConnection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -98,13 +119,22 @@ namespace Azure.ResourceManager.HDInsight.Models
                     privateLink = new HDInsightPrivateLinkState(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("publicIpTag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicIPTag = HDInsightClusterIPTag.DeserializeHDInsightClusterIPTag(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HDInsightClusterNetworkProperties(resourceProviderConnection, privateLink, serializedAdditionalRawData);
+            return new HDInsightClusterNetworkProperties(outboundDependenciesManagedType, resourceProviderConnection, privateLink, publicIPTag, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterNetworkProperties>.Write(ModelReaderWriterOptions options)

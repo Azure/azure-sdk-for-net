@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class QuotaProperties : IUtf8JsonSerializable, IJsonModel<QuotaProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QuotaProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue<ReservationResourceName>(ResourceName, options);
+                writer.WriteObjectValue(ResourceName, options);
             }
             if (Optional.IsDefined(ResourceTypeName))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static QuotaProperties DeserializeQuotaProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

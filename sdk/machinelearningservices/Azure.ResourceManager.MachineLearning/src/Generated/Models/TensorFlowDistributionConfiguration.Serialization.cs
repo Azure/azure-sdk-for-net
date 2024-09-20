@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class TensorFlowDistributionConfiguration : IUtf8JsonSerializable, IJsonModel<TensorFlowDistributionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TensorFlowDistributionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TensorFlowDistributionConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TensorFlowDistributionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -26,11 +27,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ParameterServerCount))
-            {
-                writer.WritePropertyName("parameterServerCount"u8);
-                writer.WriteNumberValue(ParameterServerCount.Value);
-            }
             if (Optional.IsDefined(WorkerCount))
             {
                 if (WorkerCount != null)
@@ -42,6 +38,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("workerCount");
                 }
+            }
+            if (Optional.IsDefined(ParameterServerCount))
+            {
+                writer.WritePropertyName("parameterServerCount"u8);
+                writer.WriteNumberValue(ParameterServerCount.Value);
             }
             writer.WritePropertyName("distributionType"u8);
             writer.WriteStringValue(DistributionType.ToString());
@@ -77,28 +78,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static TensorFlowDistributionConfiguration DeserializeTensorFlowDistributionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? parameterServerCount = default;
             int? workerCount = default;
+            int? parameterServerCount = default;
             DistributionType distributionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("parameterServerCount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    parameterServerCount = property.Value.GetInt32();
-                    continue;
-                }
                 if (property.NameEquals("workerCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -107,6 +99,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     workerCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("parameterServerCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parameterServerCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("distributionType"u8))
@@ -120,7 +121,64 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TensorFlowDistributionConfiguration(distributionType, serializedAdditionalRawData, parameterServerCount, workerCount);
+            return new TensorFlowDistributionConfiguration(distributionType, serializedAdditionalRawData, workerCount, parameterServerCount);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkerCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  workerCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkerCount))
+                {
+                    builder.Append("  workerCount: ");
+                    builder.AppendLine($"{WorkerCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ParameterServerCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  parameterServerCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ParameterServerCount))
+                {
+                    builder.Append("  parameterServerCount: ");
+                    builder.AppendLine($"{ParameterServerCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DistributionType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  distributionType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  distributionType: ");
+                builder.AppendLine($"'{DistributionType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<TensorFlowDistributionConfiguration>.Write(ModelReaderWriterOptions options)
@@ -131,6 +189,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TensorFlowDistributionConfiguration)} does not support writing '{options.Format}' format.");
             }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class LogicExpressionRoot : IUtf8JsonSerializable, IJsonModel<LogicExpressionRoot>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicExpressionRoot>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicExpressionRoot>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogicExpressionRoot>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Subexpressions)
                 {
-                    writer.WriteObjectValue<LogicExpression>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue<LogicExpressionErrorInfo>(Error, options);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicExpressionRoot DeserializeLogicExpressionRoot(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

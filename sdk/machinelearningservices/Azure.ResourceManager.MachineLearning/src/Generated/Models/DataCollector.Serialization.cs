@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class DataCollector : IUtf8JsonSerializable, IJsonModel<DataCollector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollector>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollector>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataCollector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,25 +33,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             foreach (var item in Collections)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<DataCollectionConfiguration>(item.Value, options);
+                writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
+            if (Optional.IsDefined(RollingRate))
+            {
+                writer.WritePropertyName("rollingRate"u8);
+                writer.WriteStringValue(RollingRate.Value.ToString());
+            }
             if (Optional.IsDefined(RequestLogging))
             {
                 if (RequestLogging != null)
                 {
                     writer.WritePropertyName("requestLogging"u8);
-                    writer.WriteObjectValue<RequestLogging>(RequestLogging, options);
+                    writer.WriteObjectValue(RequestLogging, options);
                 }
                 else
                 {
                     writer.WriteNull("requestLogging");
                 }
-            }
-            if (Optional.IsDefined(RollingRate))
-            {
-                writer.WritePropertyName("rollingRate"u8);
-                writer.WriteStringValue(RollingRate.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,15 +85,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static DataCollector DeserializeDataCollector(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, DataCollectionConfiguration> collections = default;
-            RequestLogging requestLogging = default;
             RollingRateType? rollingRate = default;
+            RequestLogging requestLogging = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,6 +108,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     collections = dictionary;
                     continue;
                 }
+                if (property.NameEquals("rollingRate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rollingRate = new RollingRateType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("requestLogging"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -116,22 +127,85 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     requestLogging = RequestLogging.DeserializeRequestLogging(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("rollingRate"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rollingRate = new RollingRateType(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataCollector(collections, requestLogging, rollingRate, serializedAdditionalRawData);
+            return new DataCollector(collections, rollingRate, requestLogging, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Collections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  collections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Collections))
+                {
+                    if (Collections.Any())
+                    {
+                        builder.Append("  collections: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Collections)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  collections: ");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RollingRate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rollingRate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RollingRate))
+                {
+                    builder.Append("  rollingRate: ");
+                    builder.AppendLine($"'{RollingRate.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RequestLoggingCaptureHeaders", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requestLogging: ");
+                builder.AppendLine("{");
+                builder.Append("    captureHeaders: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestLogging))
+                {
+                    builder.Append("  requestLogging: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RequestLogging, options, 2, false, "  requestLogging: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<DataCollector>.Write(ModelReaderWriterOptions options)
@@ -142,6 +216,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataCollector)} does not support writing '{options.Format}' format.");
             }

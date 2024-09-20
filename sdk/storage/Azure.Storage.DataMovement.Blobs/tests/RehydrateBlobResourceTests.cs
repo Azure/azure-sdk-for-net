@@ -2,16 +2,17 @@
 // Licensed under the MIT License.
 
 extern alias DMBlobs;
+extern alias BaseBlobs;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.Models;
+using BaseBlobs::Azure.Storage.Blobs.Models;
 using Azure.Storage.Test;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
 using NUnit.Framework;
-using static Azure.Storage.DataMovement.Tests.TransferUtility;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -22,6 +23,7 @@ namespace Azure.Storage.DataMovement.Tests
         private const string DefaultContentLanguage = "en-US";
         private const string DefaultContentDisposition = "inline";
         private const string DefaultCacheControl = "no-cache";
+        private static string GetNewTransferId() => Guid.NewGuid().ToString();
         public RehydrateBlobResourceTests()
         { }
 
@@ -44,28 +46,28 @@ namespace Azure.Storage.DataMovement.Tests
             };
         }
 
-        private static BlobSourceCheckpointData GetSourceCheckpointData(BlobType blobType)
+        private static BlobSourceCheckpointData GetSourceCheckpointData()
         {
-            return new BlobSourceCheckpointData(blobType);
+            return new BlobSourceCheckpointData();
         }
 
         private static BlobDestinationCheckpointData GetPopulatedDestinationCheckpointData(
             BlobType blobType,
             AccessTier? accessTier = default)
         => new BlobDestinationCheckpointData(
-                blobType: blobType,
+                blobType: new(blobType),
                 contentType: new(DefaultContentType),
                 contentEncoding: new(DefaultContentEncoding),
                 contentLanguage: new(DefaultContentLanguage),
                 contentDisposition: new(DefaultContentDisposition),
                 cacheControl: new(DefaultCacheControl),
-                accessTier: new(accessTier),
+                accessTier: accessTier,
                 metadata: new(DataProvider.BuildMetadata()),
                 tags: new(DataProvider.BuildTags()));
 
         private static BlobDestinationCheckpointData GetDefaultDestinationCheckpointData(BlobType blobType)
         => new BlobDestinationCheckpointData(
-            blobType,
+            new(blobType),
             default,
             default,
             default,
@@ -125,7 +127,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ToProviderId(sourceType),
                 ToProviderId(destinationType),
                 isContainer: false,
-                GetSourceCheckpointData(BlobType.Block),
+                GetSourceCheckpointData(),
                 GetDefaultDestinationCheckpointData(BlobType.Block)).Object;
 
             StorageResource storageResource = isSource
@@ -154,15 +156,14 @@ namespace Azure.Storage.DataMovement.Tests
                 ToProviderId(sourceType),
                 ToProviderId(destinationType),
                 isContainer: false,
-                GetSourceCheckpointData(BlobType.Block),
+                GetSourceCheckpointData(),
                 checkpointData).Object;
 
             BlockBlobStorageResource storageResource = (BlockBlobStorageResource)await new BlobsStorageResourceProvider()
                     .FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
-            Assert.AreEqual(checkpointData.AccessTier.Preserve, storageResource._options.AccessTier.Preserve);
-            Assert.AreEqual(checkpointData.AccessTier.Value, storageResource._options.AccessTier.Value);
+            Assert.AreEqual(checkpointData.AccessTierValue.Value, storageResource._options.AccessTier.Value);
             Assert.AreEqual(checkpointData.Metadata.Preserve, storageResource._options.Metadata.Preserve);
             Assert.AreEqual(checkpointData.Metadata.Value, storageResource._options.Metadata.Value);
             Assert.AreEqual(checkpointData.CacheControl.Preserve, storageResource._options.CacheControl.Preserve);
@@ -196,7 +197,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ToProviderId(sourceType),
                 ToProviderId(destinationType),
                 isContainer: false,
-                GetSourceCheckpointData(BlobType.Page),
+                GetSourceCheckpointData(),
                 GetDefaultDestinationCheckpointData(BlobType.Page)).Object;
 
             StorageResource storageResource = isSource
@@ -204,7 +205,14 @@ namespace Azure.Storage.DataMovement.Tests
                     : await new BlobsStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
-            Assert.IsInstanceOf(typeof(PageBlobStorageResource), storageResource);
+            if (isSource)
+            {
+                Assert.IsInstanceOf(typeof(BlockBlobStorageResource), storageResource);
+            }
+            else
+            {
+                Assert.IsInstanceOf(typeof(PageBlobStorageResource), storageResource);
+            }
         }
 
         [Test]
@@ -225,7 +233,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ToProviderId(sourceType),
                 ToProviderId(destinationType),
                 isContainer: false,
-                GetSourceCheckpointData(BlobType.Page),
+                GetSourceCheckpointData(),
                 checkpointData).Object;
 
             PageBlobStorageResource storageResource = (PageBlobStorageResource)await new BlobsStorageResourceProvider()
@@ -265,7 +273,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ToProviderId(sourceType),
                 ToProviderId(destinationType),
                 isContainer: false,
-                GetSourceCheckpointData(BlobType.Append),
+                GetSourceCheckpointData(),
                 GetDefaultDestinationCheckpointData(BlobType.Append)).Object;
 
             StorageResource storageResource = isSource
@@ -273,7 +281,14 @@ namespace Azure.Storage.DataMovement.Tests
                     : await new BlobsStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
-            Assert.IsInstanceOf(typeof(AppendBlobStorageResource), storageResource);
+            if (isSource)
+            {
+                Assert.IsInstanceOf(typeof(BlockBlobStorageResource), storageResource);
+            }
+            else
+            {
+                Assert.IsInstanceOf(typeof(AppendBlobStorageResource), storageResource);
+            }
         }
 
         [Test]
@@ -294,7 +309,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ToProviderId(sourceType),
                 ToProviderId(destinationType),
                 isContainer: false,
-                GetSourceCheckpointData(BlobType.Append),
+                GetSourceCheckpointData(),
                 checkpointData).Object;
 
             AppendBlobStorageResource storageResource = (AppendBlobStorageResource)await new BlobsStorageResourceProvider()
@@ -344,7 +359,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ToProviderId(sourceType),
                 ToProviderId(destinationType),
                 isContainer: true,
-                GetSourceCheckpointData(BlobType.Block),
+                GetSourceCheckpointData(),
                 GetDefaultDestinationCheckpointData(BlobType.Block)).Object;
 
             StorageResource storageResource = isSource

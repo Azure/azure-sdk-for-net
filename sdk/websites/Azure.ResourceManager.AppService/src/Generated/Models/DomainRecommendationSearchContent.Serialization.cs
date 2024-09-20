@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class DomainRecommendationSearchContent : IUtf8JsonSerializable, IJsonModel<DomainRecommendationSearchContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainRecommendationSearchContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainRecommendationSearchContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DomainRecommendationSearchContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DomainRecommendationSearchContent DeserializeDomainRecommendationSearchContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

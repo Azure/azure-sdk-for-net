@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class ProviderHubMetadata : IUtf8JsonSerializable, IJsonModel<ProviderHubMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderHubMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderHubMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProviderHubMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,19 +32,19 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ProviderAuthorizations)
                 {
-                    writer.WriteObjectValue<ResourceProviderAuthorization>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ProviderAuthentication))
             {
                 writer.WritePropertyName("providerAuthentication"u8);
-                writer.WriteObjectValue<ResourceProviderAuthentication>(ProviderAuthentication, options);
+                writer.WriteObjectValue(ProviderAuthentication, options);
             }
             if (Optional.IsDefined(ThirdPartyProviderAuthorization))
             {
                 writer.WritePropertyName("thirdPartyProviderAuthorization"u8);
-                writer.WriteObjectValue<ThirdPartyProviderAuthorization>(ThirdPartyProviderAuthorization, options);
+                writer.WriteObjectValue(ThirdPartyProviderAuthorization, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ProviderHubMetadata DeserializeProviderHubMetadata(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

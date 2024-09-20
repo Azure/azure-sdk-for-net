@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListOnlineDeployments()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/OnlineDeployment/list.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/OnlineDeployment/list.json
             // this example is just showing the usage of "OnlineDeployments_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetKubernetesOnlineDeployment()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/OnlineDeployment/KubernetesOnlineDeployment/get.json
             // this example is just showing the usage of "OnlineDeployments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetKubernetesOnlineDeployment()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/OnlineDeployment/KubernetesOnlineDeployment/get.json
             // this example is just showing the usage of "OnlineDeployments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetKubernetesOnlineDeployment()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/OnlineDeployment/KubernetesOnlineDeployment/get.json
             // this example is just showing the usage of "OnlineDeployments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetManagedOnlineDeployment()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/OnlineDeployment/ManagedOnlineDeployment/get.json
             // this example is just showing the usage of "OnlineDeployments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetManagedOnlineDeployment()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/OnlineDeployment/ManagedOnlineDeployment/get.json
             // this example is just showing the usage of "OnlineDeployments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetManagedOnlineDeployment()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/OnlineDeployment/ManagedOnlineDeployment/get.json
             // this example is just showing the usage of "OnlineDeployments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateKubernetesOnlineDeployment()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/OnlineDeployment/KubernetesOnlineDeployment/createOrUpdate.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/OnlineDeployment/KubernetesOnlineDeployment/createOrUpdate.json
             // this example is just showing the usage of "OnlineDeployments_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -312,54 +312,55 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             {
                 ContainerResourceRequirements = new MachineLearningContainerResourceRequirements()
                 {
-                    ContainerResourceLimits = new MachineLearningContainerResourceSettings()
-                    {
-                        Cpu = "\"1\"",
-                        Gpu = "\"1\"",
-                        Memory = "\"2Gi\"",
-                    },
                     ContainerResourceRequests = new MachineLearningContainerResourceSettings()
                     {
                         Cpu = "\"1\"",
-                        Gpu = "\"1\"",
                         Memory = "\"2Gi\"",
+                        Gpu = "\"1\"",
+                    },
+                    ContainerResourceLimits = new MachineLearningContainerResourceSettings()
+                    {
+                        Cpu = "\"1\"",
+                        Memory = "\"2Gi\"",
+                        Gpu = "\"1\"",
                     },
                 },
+                ScaleSettings = new MachineLearningDefaultScaleSettings(),
+                RequestSettings = new MachineLearningOnlineRequestSettings()
+                {
+                    MaxQueueWait = XmlConvert.ToTimeSpan("PT5M"),
+                    RequestTimeout = XmlConvert.ToTimeSpan("PT5M"),
+                    MaxConcurrentRequestsPerInstance = 1,
+                },
+                ModelMountPath = "string",
                 AppInsightsEnabled = false,
-                InstanceType = "string",
                 LivenessProbe = new MachineLearningProbeSettings()
                 {
                     FailureThreshold = 1,
-                    InitialDelay = XmlConvert.ToTimeSpan("PT5M"),
-                    Period = XmlConvert.ToTimeSpan("PT5M"),
                     SuccessThreshold = 1,
                     Timeout = XmlConvert.ToTimeSpan("PT5M"),
+                    Period = XmlConvert.ToTimeSpan("PT5M"),
+                    InitialDelay = XmlConvert.ToTimeSpan("PT5M"),
                 },
+                InstanceType = "string",
                 Model = "string",
-                ModelMountPath = "string",
-                RequestSettings = new MachineLearningOnlineRequestSettings()
-                {
-                    MaxConcurrentRequestsPerInstance = 1,
-                    MaxQueueWait = XmlConvert.ToTimeSpan("PT5M"),
-                    RequestTimeout = XmlConvert.ToTimeSpan("PT5M"),
-                },
-                ScaleSettings = new MachineLearningDefaultScaleSettings(),
+                Description = "string",
+                Properties =
+{
+["string"] = "string",
+},
                 CodeConfiguration = new MachineLearningCodeConfiguration("string")
                 {
                     CodeId = new ResourceIdentifier("string"),
                 },
-                Description = "string",
                 EnvironmentId = "string",
                 EnvironmentVariables =
 {
 ["string"] = "string",
 },
-                Properties =
-{
-["string"] = "string",
-},
             })
             {
+                Kind = "string",
                 Identity = new ManagedServiceIdentity("SystemAssigned")
                 {
                     UserAssignedIdentities =
@@ -367,7 +368,6 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 [new ResourceIdentifier("string")] = new UserAssignedIdentity(),
 },
                 },
-                Kind = "string",
                 Sku = new MachineLearningSku("string")
                 {
                     Tier = MachineLearningSkuTier.Free,
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateManagedOnlineDeployment()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/OnlineDeployment/ManagedOnlineDeployment/createOrUpdate.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/OnlineDeployment/ManagedOnlineDeployment/createOrUpdate.json
             // this example is just showing the usage of "OnlineDeployments_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -418,49 +418,50 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             string deploymentName = "testDeploymentName";
             MachineLearningOnlineDeploymentData data = new MachineLearningOnlineDeploymentData(new AzureLocation("string"), new MachineLearningManagedOnlineDeployment()
             {
+                ScaleSettings = new MachineLearningDefaultScaleSettings(),
+                RequestSettings = new MachineLearningOnlineRequestSettings()
+                {
+                    MaxQueueWait = XmlConvert.ToTimeSpan("PT5M"),
+                    RequestTimeout = XmlConvert.ToTimeSpan("PT5M"),
+                    MaxConcurrentRequestsPerInstance = 1,
+                },
+                ModelMountPath = "string",
                 AppInsightsEnabled = false,
-                InstanceType = "string",
                 LivenessProbe = new MachineLearningProbeSettings()
                 {
                     FailureThreshold = 1,
-                    InitialDelay = XmlConvert.ToTimeSpan("PT5M"),
-                    Period = XmlConvert.ToTimeSpan("PT5M"),
                     SuccessThreshold = 1,
                     Timeout = XmlConvert.ToTimeSpan("PT5M"),
+                    Period = XmlConvert.ToTimeSpan("PT5M"),
+                    InitialDelay = XmlConvert.ToTimeSpan("PT5M"),
                 },
-                Model = "string",
-                ModelMountPath = "string",
                 ReadinessProbe = new MachineLearningProbeSettings()
                 {
                     FailureThreshold = 30,
-                    InitialDelay = XmlConvert.ToTimeSpan("PT1S"),
-                    Period = XmlConvert.ToTimeSpan("PT10S"),
                     SuccessThreshold = 1,
                     Timeout = XmlConvert.ToTimeSpan("PT2S"),
+                    Period = XmlConvert.ToTimeSpan("PT10S"),
+                    InitialDelay = XmlConvert.ToTimeSpan("PT1S"),
                 },
-                RequestSettings = new MachineLearningOnlineRequestSettings()
-                {
-                    MaxConcurrentRequestsPerInstance = 1,
-                    MaxQueueWait = XmlConvert.ToTimeSpan("PT5M"),
-                    RequestTimeout = XmlConvert.ToTimeSpan("PT5M"),
-                },
-                ScaleSettings = new MachineLearningDefaultScaleSettings(),
+                InstanceType = "string",
+                Model = "string",
+                Description = "string",
+                Properties =
+{
+["string"] = "string",
+},
                 CodeConfiguration = new MachineLearningCodeConfiguration("string")
                 {
                     CodeId = new ResourceIdentifier("string"),
                 },
-                Description = "string",
                 EnvironmentId = "string",
                 EnvironmentVariables =
 {
 ["string"] = "string",
 },
-                Properties =
-{
-["string"] = "string",
-},
             })
             {
+                Kind = "string",
                 Identity = new ManagedServiceIdentity("SystemAssigned")
                 {
                     UserAssignedIdentities =
@@ -468,7 +469,6 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 [new ResourceIdentifier("string")] = new UserAssignedIdentity(),
 },
                 },
-                Kind = "string",
                 Sku = new MachineLearningSku("string")
                 {
                     Tier = MachineLearningSkuTier.Free,

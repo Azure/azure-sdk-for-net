@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class EdifactAcknowledgementSettings : IUtf8JsonSerializable, IJsonModel<EdifactAcknowledgementSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdifactAcknowledgementSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdifactAcknowledgementSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdifactAcknowledgementSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static EdifactAcknowledgementSettings DeserializeEdifactAcknowledgementSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

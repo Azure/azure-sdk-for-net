@@ -56,7 +56,7 @@ namespace Azure.AI.TextAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnalyzeTextTask>(body);
+            content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
         }
@@ -133,7 +133,7 @@ namespace Azure.AI.TextAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnalyzeTextJobsInput>(body);
+            content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
         }

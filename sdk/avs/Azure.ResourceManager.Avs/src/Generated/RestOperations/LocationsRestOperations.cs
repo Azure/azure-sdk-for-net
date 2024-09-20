@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +36,19 @@ namespace Azure.ResourceManager.Avs
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckTrialAvailabilityRequestUri(string subscriptionId, AzureLocation location, AvsSku sku)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.AVS/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/checkTrialAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckTrialAvailabilityRequest(string subscriptionId, AzureLocation location, AvsSku sku)
         {
             var message = _pipeline.CreateMessage();
@@ -56,7 +68,7 @@ namespace Azure.ResourceManager.Avs
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue<AvsSku>(sku, new ModelReaderWriterOptions("W"));
+                content.JsonWriter.WriteObjectValue(sku, ModelSerializationExtensions.WireOptions);
                 request.Content = content;
             }
             _userAgent.Apply(message);
@@ -115,6 +127,19 @@ namespace Azure.ResourceManager.Avs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCheckQuotaAvailabilityRequestUri(string subscriptionId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.AVS/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/checkQuotaAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckQuotaAvailabilityRequest(string subscriptionId, AzureLocation location)

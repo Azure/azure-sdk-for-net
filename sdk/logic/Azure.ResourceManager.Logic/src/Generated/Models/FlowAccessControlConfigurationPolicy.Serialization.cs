@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class FlowAccessControlConfigurationPolicy : IUtf8JsonSerializable, IJsonModel<FlowAccessControlConfigurationPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlowAccessControlConfigurationPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlowAccessControlConfigurationPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FlowAccessControlConfigurationPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in AllowedCallerIPAddresses)
                 {
-                    writer.WriteObjectValue<FlowAccessControlIPAddressRange>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OpenAuthenticationPolicies))
             {
                 writer.WritePropertyName("openAuthenticationPolicies"u8);
-                writer.WriteObjectValue<OpenAuthenticationAccessPolicies>(OpenAuthenticationPolicies, options);
+                writer.WriteObjectValue(OpenAuthenticationPolicies, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static FlowAccessControlConfigurationPolicy DeserializeFlowAccessControlConfigurationPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

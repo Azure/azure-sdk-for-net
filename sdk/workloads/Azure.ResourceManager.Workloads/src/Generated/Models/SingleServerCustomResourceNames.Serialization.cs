@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
     [PersistableModelProxy(typeof(UnknownSingleServerCustomResourceNames))]
     public partial class SingleServerCustomResourceNames : IUtf8JsonSerializable, IJsonModel<SingleServerCustomResourceNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SingleServerCustomResourceNames>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SingleServerCustomResourceNames>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SingleServerCustomResourceNames>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SingleServerCustomResourceNames DeserializeSingleServerCustomResourceNames(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

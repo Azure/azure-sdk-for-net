@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.ScVmm.Models
 {
     public partial class ScVmmHardwareProfileUpdate : IUtf8JsonSerializable, IJsonModel<ScVmmHardwareProfileUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmHardwareProfileUpdate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmHardwareProfileUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScVmmHardwareProfileUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScVmmHardwareProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.ScVmm.Models
                 throw new FormatException($"The model {nameof(ScVmmHardwareProfileUpdate)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(MemoryMB))
             {
                 writer.WritePropertyName("memoryMB"u8);
@@ -71,7 +79,6 @@ namespace Azure.ResourceManager.ScVmm.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ScVmmHardwareProfileUpdate IJsonModel<ScVmmHardwareProfileUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -88,7 +95,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         internal static ScVmmHardwareProfileUpdate DeserializeScVmmHardwareProfileUpdate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

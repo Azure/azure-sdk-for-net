@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Gets or sets the properties. </summary>
         internal MachineLearningDataLakeAnalyticsProperties Properties { get; set; }
         /// <summary> DataLake Store Account Name. </summary>
+        [WirePath("properties.dataLakeStoreAccountName")]
         public string DataLakeStoreAccountName
         {
             get => Properties is null ? default : Properties.DataLakeStoreAccountName;

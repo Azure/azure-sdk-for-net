@@ -37,6 +37,11 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("oversampling"u8);
                 writer.WriteNumberValue(Oversampling.Value);
             }
+            if (Optional.IsDefined(Weight))
+            {
+                writer.WritePropertyName("weight"u8);
+                writer.WriteNumberValue(Weight.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -65,11 +70,11 @@ namespace Azure.Search.Documents.Models
             return DeserializeVectorQuery(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<VectorQuery>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class RestoreTargetInfo : IUtf8JsonSerializable, IJsonModel<RestoreTargetInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreTargetInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreTargetInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RestoreTargetInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("datasourceInfo"u8);
-            writer.WriteObjectValue<DataSourceInfo>(DataSourceInfo, options);
+            writer.WriteObjectValue(DataSourceInfo, options);
             if (Optional.IsDefined(DataSourceSetInfo))
             {
                 writer.WritePropertyName("datasourceSetInfo"u8);
-                writer.WriteObjectValue<DataSourceSetInfo>(DataSourceSetInfo, options);
+                writer.WriteObjectValue(DataSourceSetInfo, options);
             }
             if (Optional.IsDefined(DataSourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
-                writer.WriteObjectValue<DataProtectionBackupAuthCredentials>(DataSourceAuthCredentials, options);
+                writer.WriteObjectValue(DataSourceAuthCredentials, options);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static RestoreTargetInfo DeserializeRestoreTargetInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

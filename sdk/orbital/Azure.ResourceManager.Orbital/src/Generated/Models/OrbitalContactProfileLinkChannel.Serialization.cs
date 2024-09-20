@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Orbital.Models
 {
     public partial class OrbitalContactProfileLinkChannel : IUtf8JsonSerializable, IJsonModel<OrbitalContactProfileLinkChannel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrbitalContactProfileLinkChannel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrbitalContactProfileLinkChannel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OrbitalContactProfileLinkChannel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WritePropertyName("bandwidthMHz"u8);
             writer.WriteNumberValue(BandwidthMHz);
             writer.WritePropertyName("endPoint"u8);
-            writer.WriteObjectValue<OrbitalContactEndpoint>(EndPoint, options);
+            writer.WriteObjectValue(EndPoint, options);
             if (Optional.IsDefined(ModulationConfiguration))
             {
                 writer.WritePropertyName("modulationConfiguration"u8);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Orbital.Models
 
         internal static OrbitalContactProfileLinkChannel DeserializeOrbitalContactProfileLinkChannel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

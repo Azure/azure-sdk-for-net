@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     public partial class GlobalRulestackCertificateObjectData : IUtf8JsonSerializable, IJsonModel<GlobalRulestackCertificateObjectData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GlobalRulestackCertificateObjectData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GlobalRulestackCertificateObjectData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GlobalRulestackCertificateObjectData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         internal static GlobalRulestackCertificateObjectData DeserializeGlobalRulestackCertificateObjectData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

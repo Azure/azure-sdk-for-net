@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.LabServices.Models
 {
     public partial class LabServicesRecurrencePattern : IUtf8JsonSerializable, IJsonModel<LabServicesRecurrencePattern>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabServicesRecurrencePattern>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabServicesRecurrencePattern>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LabServicesRecurrencePattern>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabServicesRecurrencePattern DeserializeLabServicesRecurrencePattern(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

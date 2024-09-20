@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorSingleMetricBaseline : IUtf8JsonSerializable, IJsonModel<MonitorSingleMetricBaseline>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorSingleMetricBaseline>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorSingleMetricBaseline>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitorSingleMetricBaseline>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Baselines)
             {
-                writer.WriteObjectValue<MonitorTimeSeriesBaseline>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorSingleMetricBaseline DeserializeMonitorSingleMetricBaseline(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

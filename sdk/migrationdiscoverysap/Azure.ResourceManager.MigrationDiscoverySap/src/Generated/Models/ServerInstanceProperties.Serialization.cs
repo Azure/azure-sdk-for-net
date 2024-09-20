@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
     public partial class ServerInstanceProperties : IUtf8JsonSerializable, IJsonModel<ServerInstanceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerInstanceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerInstanceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServerInstanceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             if (options.Format != "W" && Optional.IsDefined(ConfigurationData))
             {
                 writer.WritePropertyName("configurationData"u8);
-                writer.WriteObjectValue<ConfigurationDetail>(ConfigurationData, options);
+                writer.WriteObjectValue(ConfigurationData, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PerformanceData))
             {
                 writer.WritePropertyName("performanceData"u8);
-                writer.WriteObjectValue<PerformanceDetail>(PerformanceData, options);
+                writer.WriteObjectValue(PerformanceData, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue<SapMigrateError>(Errors, options);
+                writer.WriteObjectValue(Errors, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 
         internal static ServerInstanceProperties DeserializeServerInstanceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

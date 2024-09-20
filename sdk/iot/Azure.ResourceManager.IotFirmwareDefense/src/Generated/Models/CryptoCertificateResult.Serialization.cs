@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     public partial class CryptoCertificateResult : IUtf8JsonSerializable, IJsonModel<CryptoCertificateResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CryptoCertificateResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CryptoCertificateResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CryptoCertificateResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 if (Subject != null)
                 {
                     writer.WritePropertyName("subject"u8);
-                    writer.WriteObjectValue<CryptoCertificateEntity>(Subject, options);
+                    writer.WriteObjectValue(Subject, options);
                 }
                 else
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 if (Issuer != null)
                 {
                     writer.WritePropertyName("issuer"u8);
-                    writer.WriteObjectValue<CryptoCertificateEntity>(Issuer, options);
+                    writer.WriteObjectValue(Issuer, options);
                 }
                 else
                 {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 if (PairedKey != null)
                 {
                     writer.WritePropertyName("pairedKey"u8);
-                    writer.WriteObjectValue<CryptoPairedKey>(PairedKey, options);
+                    writer.WriteObjectValue(PairedKey, options);
                 }
                 else
                 {
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         internal static CryptoCertificateResult DeserializeCryptoCertificateResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

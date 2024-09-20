@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="duration"> Total Duration of Job. </param>
         /// <param name="mode"> Mode of job execution. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataTransferJobProperties(string jobName, DataTransferDataSourceSink source, DataTransferDataSourceSink destination, string status, long? processedCount, long? totalCount, DateTimeOffset? lastUpdatedUtcOn, int? workerCount, ErrorResponse error, TimeSpan? duration, DataTransferJobMode? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataTransferJobProperties(string jobName, DataTransferDataSourceSink source, DataTransferDataSourceSink destination, string status, long? processedCount, long? totalCount, DateTimeOffset? lastUpdatedUtcOn, int? workerCount, CosmosDBErrorResult error, TimeSpan? duration, DataTransferJobMode? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobName = jobName;
             Source = source;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public int? WorkerCount { get; set; }
         /// <summary> Error response for Faulted job. </summary>
         [WirePath("error")]
-        public ErrorResponse Error { get; }
+        public CosmosDBErrorResult Error { get; }
         /// <summary> Total Duration of Job. </summary>
         [WirePath("duration")]
         public TimeSpan? Duration { get; }

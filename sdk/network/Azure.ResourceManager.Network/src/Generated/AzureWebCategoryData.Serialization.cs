@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class AzureWebCategoryData : IUtf8JsonSerializable, IJsonModel<AzureWebCategoryData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureWebCategoryData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureWebCategoryData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureWebCategoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
 
         internal static AzureWebCategoryData DeserializeAzureWebCategoryData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

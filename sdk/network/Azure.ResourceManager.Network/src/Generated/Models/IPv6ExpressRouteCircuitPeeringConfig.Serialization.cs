@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class IPv6ExpressRouteCircuitPeeringConfig : IUtf8JsonSerializable, IJsonModel<IPv6ExpressRouteCircuitPeeringConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPv6ExpressRouteCircuitPeeringConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPv6ExpressRouteCircuitPeeringConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IPv6ExpressRouteCircuitPeeringConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(MicrosoftPeeringConfig))
             {
                 writer.WritePropertyName("microsoftPeeringConfig"u8);
-                writer.WriteObjectValue<ExpressRouteCircuitPeeringConfig>(MicrosoftPeeringConfig, options);
+                writer.WriteObjectValue(MicrosoftPeeringConfig, options);
             }
             if (Optional.IsDefined(RouteFilter))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static IPv6ExpressRouteCircuitPeeringConfig DeserializeIPv6ExpressRouteCircuitPeeringConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

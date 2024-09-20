@@ -60,7 +60,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Skills.Custom.AmlSkill": return AzureMachineLearningSkill.DeserializeAzureMachineLearningSkill(element);
                     case "#Microsoft.Skills.Custom.WebApiSkill": return WebApiSkill.DeserializeWebApiSkill(element);
                     case "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill": return AzureOpenAIEmbeddingSkill.DeserializeAzureOpenAIEmbeddingSkill(element);
                     case "#Microsoft.Skills.Text.CustomEntityLookupSkill": return CustomEntityLookupSkill.DeserializeCustomEntityLookupSkill(element);
@@ -93,11 +92,11 @@ namespace Azure.Search.Documents.Indexes.Models
             return DeserializeSearchIndexerSkill(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchIndexerSkill>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

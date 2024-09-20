@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 {
     public partial class EventHubsEncryption : IUtf8JsonSerializable, IJsonModel<EventHubsEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsEncryption>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsEncryption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventHubsEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in KeyVaultProperties)
                 {
-                    writer.WriteObjectValue<EventHubsKeyVaultProperties>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsEncryption DeserializeEventHubsEncryption(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,17 +146,18 @@ namespace Azure.ResourceManager.EventHubs.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultProperties), out propertyOverride);
-            if (Optional.IsCollectionDefined(KeyVaultProperties) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (KeyVaultProperties.Any() || hasPropertyOverride)
+                builder.Append("  keyVaultProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(KeyVaultProperties))
                 {
-                    builder.Append("  keyVaultProperties: ");
-                    if (hasPropertyOverride)
+                    if (KeyVaultProperties.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  keyVaultProperties: ");
                         builder.AppendLine("[");
                         foreach (var item in KeyVaultProperties)
                         {
@@ -168,29 +169,31 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeySource), out propertyOverride);
-            if (Optional.IsDefined(KeySource) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  keySource: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeySource))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  keySource: ");
                     builder.AppendLine($"'{KeySource.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequireInfrastructureEncryption), out propertyOverride);
-            if (Optional.IsDefined(RequireInfrastructureEncryption) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  requireInfrastructureEncryption: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequireInfrastructureEncryption))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  requireInfrastructureEncryption: ");
                     var boolValue = RequireInfrastructureEncryption.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

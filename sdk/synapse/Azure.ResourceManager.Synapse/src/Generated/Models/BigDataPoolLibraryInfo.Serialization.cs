@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class BigDataPoolLibraryInfo : IUtf8JsonSerializable, IJsonModel<BigDataPoolLibraryInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BigDataPoolLibraryInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BigDataPoolLibraryInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BigDataPoolLibraryInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static BigDataPoolLibraryInfo DeserializeBigDataPoolLibraryInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

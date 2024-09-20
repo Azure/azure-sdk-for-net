@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     public partial class ResourceOperation : IUtf8JsonSerializable, IJsonModel<ResourceOperation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceOperation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceOperation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
-                writer.WriteObjectValue<ResourceOperationDisplay>(Display, options);
+                writer.WriteObjectValue(Display, options);
             }
             if (Optional.IsDefined(Origin))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         internal static ResourceOperation DeserializeResourceOperation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

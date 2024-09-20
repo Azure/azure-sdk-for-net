@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class DevTestLabApplicableSchedule : IUtf8JsonSerializable, IJsonModel<DevTestLabApplicableSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabApplicableSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabApplicableSchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevTestLabApplicableSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(LabVmsShutdown))
             {
                 writer.WritePropertyName("labVmsShutdown"u8);
-                writer.WriteObjectValue<DevTestLabScheduleData>(LabVmsShutdown, options);
+                writer.WriteObjectValue(LabVmsShutdown, options);
             }
             if (Optional.IsDefined(LabVmsStartup))
             {
                 writer.WritePropertyName("labVmsStartup"u8);
-                writer.WriteObjectValue<DevTestLabScheduleData>(LabVmsStartup, options);
+                writer.WriteObjectValue(LabVmsStartup, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabApplicableSchedule DeserializeDevTestLabApplicableSchedule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

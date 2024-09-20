@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
 {
     public partial class TrafficManagerMonitorConfigCustomHeaderInfo : IUtf8JsonSerializable, IJsonModel<TrafficManagerMonitorConfigCustomHeaderInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerMonitorConfigCustomHeaderInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerMonitorConfigCustomHeaderInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TrafficManagerMonitorConfigCustomHeaderInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         internal static TrafficManagerMonitorConfigCustomHeaderInfo DeserializeTrafficManagerMonitorConfigCustomHeaderInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

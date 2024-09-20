@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Mappings)
             {
-                writer.WriteObjectValue<InputFieldMappingEntry>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -81,11 +81,11 @@ namespace Azure.Search.Documents.Indexes.Models
             return DeserializeSearchIndexerIndexProjectionSelector(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchIndexerIndexProjectionSelector>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

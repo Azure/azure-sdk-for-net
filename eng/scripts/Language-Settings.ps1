@@ -15,16 +15,22 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   # $addDevVersion is a global variable set by a parameter in
   # Save-Package-Properties.ps1
   $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
+  $ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
+  Write-Host "Get-AllPackageInfoFromRepo::Executing msbuild"
+  Write-Host "dotnet msbuild /nologo /t:GetPackageInfo $ServiceProj /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion"
   $msbuildOutput = dotnet msbuild `
     /nologo `
     /t:GetPackageInfo `
-    $EngDir/service.proj `
+    $ServiceProj `
     /p:ServiceDirectory=$serviceDirectory `
     /p:AddDevVersion=$shouldAddDevVersion
 
   foreach ($projectOutput in $msbuildOutput)
   {
-    if (!$projectOutput) { continue }
+    if (!$projectOutput) {
+      Write-Host "Get-AllPackageInfoFromRepo::projectOutput was null or empty, skipping"
+      continue
+    }
 
     $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries).Trim("'")
     if(!(Test-Path $pkgPath)) {
@@ -32,24 +38,10 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       continue
     }
 
-    # Add a step to extract namespaces
-    $namespaces = @()
-    # The namespaces currently only use for docs.ms toc, which is necessary for internal release.
-    if (Test-Path "$dllFolder/Release/netstandard2.0/") {
-      $defaultDll = Get-ChildItem "$dllFolder/Release/netstandard2.0/*" -Filter "$pkgName.dll" -Recurse
-      if ($defaultDll -and (Test-Path $defaultDll)) {
-        Write-Verbose "Here is the dll file path: $($defaultDll.FullName)"
-        $namespaces = @(Get-NamespacesFromDll $defaultDll.FullName)
-      }
-    }
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = ($isNewSdk -eq 'true')
     $pkgProp.ArtifactName = $pkgName
-    if ($namespaces) {
-      $pkgProp = $pkgProp | Add-Member -MemberType NoteProperty -Name Namespaces -Value $namespaces -PassThru
-      Write-Verbose "Here are the namespaces: $($pkgProp.Namespaces)"
-    }
 
     $allPackageProps += $pkgProp
   }
@@ -376,28 +368,6 @@ function Get-DocsCiConfig($configPath) {
   return $output
 }
 
-function Get-DocsCiLine ($item) {
-  $line = ''
-  if ($item.Properties.Count) {
-    $propertyPairs = @()
-    foreach ($key in $item.Properties.Keys) {
-      $propertyPairs += "$key=$($item.Properties[$key])"
-    }
-    $packageProperties = $propertyPairs -join ';'
-
-    $line = "$($item.Id),[$packageProperties]$($item.Name)"
-  } else {
-    $line = "$($item.Id),$($item.Name)"
-  }
-
-  if ($item.Versions) {
-    $joinedVersions = $item.Versions -join ','
-    $line += ",$joinedVersions"
-  }
-
-  return $line
-}
-
 function EnsureCustomSource($package) {
   # $PackageSourceOverride is a global variable provided in
   # Update-DocsMsPackages.ps1. Its value can set a "customSource" property.
@@ -444,144 +414,6 @@ function EnsureCustomSource($package) {
 
   $package.Properties['customSource'] = $customPackageSource
   return $package
-}
-
-$PackageExclusions = @{
-}
-
-function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {
-
-  Write-Host "Excluded packages:"
-  foreach ($excludedPackage in $PackageExclusions.Keys) {
-    Write-Host "  $excludedPackage - $($PackageExclusions[$excludedPackage])"
-  }
-
-  $FilteredMetadata = $DocsMetadata.Where({ !($PackageExclusions.ContainsKey($_.Package)) })
-
-  UpdateDocsMsPackages `
-    (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet-preview.csv') `
-    'preview' `
-    $FilteredMetadata
-
-  UpdateDocsMsPackages `
-    (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet.csv') `
-    'latest' `
-    $FilteredMetadata
-}
-
-function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
-  Write-Host "Updating configuration: $DocConfigFile with mode: $Mode"
-  $packageConfig = Get-DocsCiConfig $DocConfigFile
-
-  $outputPackages = @()
-  foreach ($package in $packageConfig) {
-    # Do not filter by GA/Preview status because we want differentiate between
-    # tracked and non-tracked packages
-    $matchingPublishedPackageArray = $DocsMetadata.Where({ $_.Package -eq $package.Name })
-
-    # If this package does not match any published packages keep it in the list.
-    # This handles packages which are not tracked in metadata but still need to
-    # be built in Docs CI.
-    if ($matchingPublishedPackageArray.Count -eq 0) {
-      Write-Host "Keep non-tracked preview package: $($package.Name)"
-      $outputPackages += $package
-      continue
-    }
-
-    if ($matchingPublishedPackageArray.Count -gt 1) {
-      LogWarning "Found more than one matching published package in metadata for $($package.Name); only updating first entry"
-    }
-    $matchingPublishedPackage = $matchingPublishedPackageArray[0]
-
-    if ($Mode -eq 'preview' -and !$matchingPublishedPackage.VersionPreview.Trim()) {
-      # If we are in preview mode and the package does not have a superseding
-      # preview version, remove the package from the list.
-      Write-Host "Remove superseded preview package: $($package.Name)"
-      continue
-    }
-
-    if ($matchingPublishedPackage.Support -eq 'deprecated') {
-      if ($Mode -eq 'legacy') {
-
-        # Select the GA version, if none use the preview version
-        $updatedVersion = $matchingPublishedPackage.VersionGA.Trim()
-        if (!$updatedVersion) {
-          $updatedVersion = $matchingPublishedPackage.VersionPreview.Trim()
-        }
-        $package.Versions = @($updatedVersion)
-
-        Write-Host "Add deprecated package to legacy moniker: $($package.Name)"
-        $outputPackages += $package
-      } else {
-        Write-Host "Removing deprecated package: $($package.Name)"
-      }
-
-      continue
-    }
-
-    $updatedVersion = $matchingPublishedPackage.VersionGA.Trim()
-    if ($Mode -eq 'preview') {
-      $updatedVersion = $matchingPublishedPackage.VersionPreview.Trim()
-    }
-
-    if ($updatedVersion -ne $package.Versions[0]) {
-      Write-Host "Update tracked package: $($package.Name) to version $updatedVersion"
-      $package.Versions = @($updatedVersion)
-      $package = EnsureCustomSource $package
-    } else {
-      Write-Host "Keep tracked package: $($package.Name)"
-    }
-
-    $outputPackages += $package
-  }
-
-  $outputPackagesHash = @{}
-  foreach ($package in $outputPackages) {
-    $outputPackagesHash[$package.Name] = $true
-  }
-
-  $remainingPackages = @()
-  if ($Mode -eq 'preview') {
-    $remainingPackages = $DocsMetadata.Where({
-      $_.VersionPreview.Trim() -and !$outputPackagesHash.ContainsKey($_.Package)
-    })
-  } else {
-    $remainingPackages = $DocsMetadata.Where({
-      $_.VersionGA.Trim() -and !$outputPackagesHash.ContainsKey($_.Package)
-    })
-  }
-
-  # Add packages that exist in the metadata but are not onboarded in docs config
-  # TODO: tfm='netstandard2.0' is a temporary workaround for
-  # https://github.com/Azure/azure-sdk-for-net/issues/22494
-  $newPackageProperties = [ordered]@{ tfm = 'netstandard2.0' }
-  if ($Mode -eq 'preview') {
-    $newPackageProperties['isPrerelease'] = 'true'
-  }
-
-  foreach ($package in $remainingPackages) {
-    Write-Host "Add new package from metadata: $($package.Package)"
-    $versions = @($package.VersionGA.Trim())
-    if ($Mode -eq 'preview') {
-      $versions = @($package.VersionPreview.Trim())
-    }
-
-    $newPackage = [PSCustomObject]@{
-      Id = $package.Package.Replace('.', '').ToLower();
-      Name = $package.Package;
-      Properties = $newPackageProperties;
-      Versions = $versions
-    }
-    $newPackage = EnsureCustomSource $newPackage
-
-    $outputPackages += $newPackage
-  }
-
-  $outputLines = @()
-  foreach ($package in $outputPackages) {
-    $outputLines += Get-DocsCiLine $package
-  }
-  Set-Content -Path $DocConfigFile -Value $outputLines
 }
 
 function Get-dotnet-EmitterName() {
@@ -656,4 +488,11 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
   finally {
     Pop-Location
   }
+}
+
+function Get-dotnet-ApiviewStatusCheckRequirement($packageInfo) {
+  if ($packageInfo.IsNewSdk -and ($packageInfo.SdkType -eq "client" -or $packageInfo.SdkType -eq "mgmt")) {
+    return $true
+  }
+  return $false
 }

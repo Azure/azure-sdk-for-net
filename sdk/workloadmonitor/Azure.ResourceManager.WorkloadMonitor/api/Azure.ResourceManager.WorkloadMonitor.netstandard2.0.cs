@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadMonitor.HealthMonitorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadMonitor.HealthMonitorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HealthMonitorResource : Azure.ResourceManager.ArmResource
+    public partial class HealthMonitorResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadMonitor.HealthMonitorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadMonitor.HealthMonitorData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected HealthMonitorResource() { }
@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.WorkloadMonitor
         public virtual Azure.Response<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource> GetHealthMonitorStateChange(string timestampUnix, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource>> GetHealthMonitorStateChangeAsync(string timestampUnix, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeCollection GetHealthMonitorStateChanges() { throw null; }
+        Azure.ResourceManager.WorkloadMonitor.HealthMonitorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadMonitor.HealthMonitorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadMonitor.HealthMonitorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WorkloadMonitor.HealthMonitorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadMonitor.HealthMonitorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadMonitor.HealthMonitorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadMonitor.HealthMonitorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HealthMonitorStateChangeCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource>, System.Collections.IEnumerable
     {
@@ -81,7 +86,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HealthMonitorStateChangeResource : Azure.ResourceManager.ArmResource
+    public partial class HealthMonitorStateChangeResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected HealthMonitorStateChangeResource() { }
@@ -90,6 +95,11 @@ namespace Azure.ResourceManager.WorkloadMonitor
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string timestampUnix) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class WorkloadMonitorExtensions
     {

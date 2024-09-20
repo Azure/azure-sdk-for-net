@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServiceValidateContent : IUtf8JsonSerializable, IJsonModel<AppServiceValidateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceValidateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceValidateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServiceValidateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AppServiceEnvironment))
             {
                 writer.WritePropertyName("appServiceEnvironment"u8);
-                writer.WriteObjectValue<AppServiceEnvironmentProperties>(AppServiceEnvironment, options);
+                writer.WriteObjectValue(AppServiceEnvironment, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceValidateContent DeserializeAppServiceValidateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

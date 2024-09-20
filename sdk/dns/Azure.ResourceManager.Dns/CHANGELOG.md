@@ -1,17 +1,33 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
-
-- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-- Added model factory for all `DnsRecordData`
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- Exposed 'DnsRecordType' property in DnsRecordData.cs and added factory method for DnsRecordData. Issue:https://github.com/Azure/azure-sdk-for-net/issues/45423
+
 ### Other Changes
+
+## 1.2.0-beta.1 (2024-06-01)
+
+### Features Added
+
+- Added `trafficManagementProfile` property in some classes.
+- Added `serializedAdditionalRawData` property in some classes
+- Added resources: `DnsNaptrRecord`, `DnsTlsaRecord`, `DnsDSRecord`, and `DnssecConfig`.
+- Added `SigningKeys` property in DnsZoneData
+
+## 1.1.1 (2024-04-29)
+
+### Features Added
+
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added model factory for all `DnsRecordData`
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
 ## 1.1.0 (2023-11-21)
 

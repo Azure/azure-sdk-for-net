@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("store"u8);
-            writer.WriteObjectValue<LinkedServiceReference>(Store);
+            writer.WriteObjectValue(Store);
             writer.WritePropertyName("secretName"u8);
             writer.WriteObjectValue<object>(SecretName);
             if (Optional.IsDefined(SecretVersion))
@@ -80,11 +80,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeAzureKeyVaultSecretReference(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AzureKeyVaultSecretReference>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, AzureKeyVaultSecretReference model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<AzureKeyVaultSecretReference>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override AzureKeyVaultSecretReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

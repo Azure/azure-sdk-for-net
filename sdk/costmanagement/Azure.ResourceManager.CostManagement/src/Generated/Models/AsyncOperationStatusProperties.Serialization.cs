@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class AsyncOperationStatusProperties : IUtf8JsonSerializable, IJsonModel<AsyncOperationStatusProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AsyncOperationStatusProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AsyncOperationStatusProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AsyncOperationStatusProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static AsyncOperationStatusProperties DeserializeAsyncOperationStatusProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

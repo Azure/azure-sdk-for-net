@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ManagedVirtualNetworkReference : IUtf8JsonSerializable, IJsonModel<ManagedVirtualNetworkReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedVirtualNetworkReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedVirtualNetworkReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedVirtualNetworkReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ManagedVirtualNetworkReference DeserializeManagedVirtualNetworkReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

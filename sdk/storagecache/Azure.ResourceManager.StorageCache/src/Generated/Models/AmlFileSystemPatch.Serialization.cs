@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 {
     public partial class AmlFileSystemPatch : IUtf8JsonSerializable, IJsonModel<AmlFileSystemPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlFileSystemPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlFileSystemPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AmlFileSystemPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue<AmlFileSystemEncryptionSettings>(EncryptionSettings, options);
+                writer.WriteObjectValue(EncryptionSettings, options);
             }
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue<AmlFileSystemUpdatePropertiesMaintenanceWindow>(MaintenanceWindow, options);
+                writer.WriteObjectValue(MaintenanceWindow, options);
             }
             if (Optional.IsDefined(RootSquashSettings))
             {
                 writer.WritePropertyName("rootSquashSettings"u8);
-                writer.WriteObjectValue<AmlFileSystemRootSquashSettings>(RootSquashSettings, options);
+                writer.WriteObjectValue(RootSquashSettings, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static AmlFileSystemPatch DeserializeAmlFileSystemPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

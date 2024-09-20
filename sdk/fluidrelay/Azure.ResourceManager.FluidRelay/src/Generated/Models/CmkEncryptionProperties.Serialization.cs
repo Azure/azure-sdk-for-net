@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
 {
     public partial class CmkEncryptionProperties : IUtf8JsonSerializable, IJsonModel<CmkEncryptionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CmkEncryptionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CmkEncryptionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CmkEncryptionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             if (Optional.IsDefined(KeyEncryptionKeyIdentity))
             {
                 writer.WritePropertyName("keyEncryptionKeyIdentity"u8);
-                writer.WriteObjectValue<CmkIdentity>(KeyEncryptionKeyIdentity, options);
+                writer.WriteObjectValue(KeyEncryptionKeyIdentity, options);
             }
             if (Optional.IsDefined(KeyEncryptionKeyUri))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
 
         internal static CmkEncryptionProperties DeserializeCmkEncryptionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

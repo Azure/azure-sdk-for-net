@@ -18,23 +18,23 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(AnalysisInput))
             {
                 writer.WritePropertyName("analysisInput"u8);
-                writer.WriteObjectValue<MultiLanguageAnalysisInput>(AnalysisInput);
+                writer.WriteObjectValue(AnalysisInput);
             }
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue<EntitiesTaskParameters>(Parameters);
+                writer.WriteObjectValue(Parameters);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnalyzeTextEntityRecognitionInput>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

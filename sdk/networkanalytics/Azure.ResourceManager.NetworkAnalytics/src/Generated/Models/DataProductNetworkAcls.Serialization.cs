@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     public partial class DataProductNetworkAcls : IUtf8JsonSerializable, IJsonModel<DataProductNetworkAcls>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProductNetworkAcls>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProductNetworkAcls>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataProductNetworkAcls>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in VirtualNetworkRule)
             {
-                writer.WriteObjectValue<NetworkAnalyticsVirtualNetworkRule>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("ipRules"u8);
             writer.WriteStartArray();
             foreach (var item in IPRules)
             {
-                writer.WriteObjectValue<NetworkAnalyticsIPRules>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("allowedQueryIpRangeList"u8);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 
         internal static DataProductNetworkAcls DeserializeDataProductNetworkAcls(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

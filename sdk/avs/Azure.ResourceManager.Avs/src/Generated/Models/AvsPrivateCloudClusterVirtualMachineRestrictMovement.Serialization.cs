@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Avs.Models
 {
     public partial class AvsPrivateCloudClusterVirtualMachineRestrictMovement : IUtf8JsonSerializable, IJsonModel<AvsPrivateCloudClusterVirtualMachineRestrictMovement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudClusterVirtualMachineRestrictMovement>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudClusterVirtualMachineRestrictMovement>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvsPrivateCloudClusterVirtualMachineRestrictMovement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static AvsPrivateCloudClusterVirtualMachineRestrictMovement DeserializeAvsPrivateCloudClusterVirtualMachineRestrictMovement(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

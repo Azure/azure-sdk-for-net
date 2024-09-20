@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 {
     public partial class SelfHelpSection : IUtf8JsonSerializable, IJsonModel<SelfHelpSection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelfHelpSection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelfHelpSection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SelfHelpSection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(ReplacementMaps))
             {
                 writer.WritePropertyName("replacementMaps"u8);
-                writer.WriteObjectValue<ReplacementMaps>(ReplacementMaps, options);
+                writer.WriteObjectValue(ReplacementMaps, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         internal static SelfHelpSection DeserializeSelfHelpSection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
             string title = default;
             string content = default;
-            ReplacementMaps replacementMaps = default;
+            SolutionReplacementMaps replacementMaps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    replacementMaps = ReplacementMaps.DeserializeReplacementMaps(property.Value, options);
+                    replacementMaps = SolutionReplacementMaps.DeserializeSolutionReplacementMaps(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

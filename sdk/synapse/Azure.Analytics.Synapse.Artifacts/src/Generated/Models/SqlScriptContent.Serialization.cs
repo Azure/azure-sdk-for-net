@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CurrentConnection))
             {
                 writer.WritePropertyName("currentConnection"u8);
-                writer.WriteObjectValue<SqlConnection>(CurrentConnection);
+                writer.WriteObjectValue(CurrentConnection);
             }
             if (Optional.IsDefined(ResultLimit))
             {
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue<SqlScriptMetadata>(Metadata);
+                writer.WriteObjectValue(Metadata);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -104,11 +104,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeSqlScriptContent(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SqlScriptContent>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -116,7 +116,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SqlScriptContent model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SqlScriptContent>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override SqlScriptContent Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

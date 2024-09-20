@@ -1,6 +1,6 @@
 # Release History
 
-## 5.15.0-beta.1 (Unreleased)
+## 5.17.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,42 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.16.4 (2024-08-08)
+
+### Other Changes
+
+- Bump dependency on `Azure.Messaging.ServiceBus` to 7.18.1. Previous release still depended on 7.17.5.
+
+## 5.16.3 (2024-08-01)
+
+### Other Changes
+
+- Bump dependency on `Azure.Messaging.ServiceBus` to 7.18.1.
+
+## 5.16.2 (2024-07-25)
+
+### Other Changes
+
+- When the trigger's connection property is set to a valid connection string instead of an informational name, the mistake will be detected and sensitive information will be redacted from the error message to avoid accidental capture in logs and similar mechanisms.
+
+## 5.16.1 (2024-06-13)
+
+### Other Changes
+
+- To mitigate a vulnerability, updating the transitive dependency for `Azure.Identity` to v1.11.4 via version bump to `Microsoft.Extensions.Azure`.
+
+## 5.16.0 (2024-05-30)
+
+### Features Added
+
+- Adding support for `ServiceBusSessionMessageActions` and `RenewMessageLock` use in the isolated worker model.
+
+## 5.15.1 (2024-04-17)
+
+### Other Changes
+
+- To mitigate a [disclosure vulnerability](https://github.com/advisories/GHSA-wvxc-855f-jvrv), updating the transitive dependency for `Azure.Identity` to v1.11.1 via version bump to `Microsoft.Extensions.Azure`.
 
 ## 5.14.0 (2024-03-14)
 

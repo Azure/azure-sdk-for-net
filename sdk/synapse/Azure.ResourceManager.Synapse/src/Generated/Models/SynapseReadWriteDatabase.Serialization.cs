@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseReadWriteDatabase : IUtf8JsonSerializable, IJsonModel<SynapseReadWriteDatabase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseReadWriteDatabase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseReadWriteDatabase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseReadWriteDatabase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (options.Format != "W" && Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue<DatabaseStatistics>(Statistics, options);
+                writer.WriteObjectValue(Statistics, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsFollowed))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseReadWriteDatabase DeserializeSynapseReadWriteDatabase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

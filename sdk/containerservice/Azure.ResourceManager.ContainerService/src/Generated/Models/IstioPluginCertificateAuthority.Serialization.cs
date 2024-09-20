@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class IstioPluginCertificateAuthority : IUtf8JsonSerializable, IJsonModel<IstioPluginCertificateAuthority>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IstioPluginCertificateAuthority>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IstioPluginCertificateAuthority>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IstioPluginCertificateAuthority>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static IstioPluginCertificateAuthority DeserializeIstioPluginCertificateAuthority(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,6 +143,128 @@ namespace Azure.ResourceManager.ContainerService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  keyVaultId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyVaultId))
+                {
+                    builder.Append("  keyVaultId: ");
+                    builder.AppendLine($"'{KeyVaultId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertObjectName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  certObjectName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CertObjectName))
+                {
+                    builder.Append("  certObjectName: ");
+                    if (CertObjectName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CertObjectName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CertObjectName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyObjectName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  keyObjectName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyObjectName))
+                {
+                    builder.Append("  keyObjectName: ");
+                    if (KeyObjectName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{KeyObjectName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{KeyObjectName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RootCertObjectName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rootCertObjectName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RootCertObjectName))
+                {
+                    builder.Append("  rootCertObjectName: ");
+                    if (RootCertObjectName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RootCertObjectName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RootCertObjectName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertChainObjectName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  certChainObjectName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CertChainObjectName))
+                {
+                    builder.Append("  certChainObjectName: ");
+                    if (CertChainObjectName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CertChainObjectName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CertChainObjectName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<IstioPluginCertificateAuthority>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IstioPluginCertificateAuthority>)this).GetFormatFromOptions(options) : options.Format;
@@ -150,6 +273,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IstioPluginCertificateAuthority)} does not support writing '{options.Format}' format.");
             }

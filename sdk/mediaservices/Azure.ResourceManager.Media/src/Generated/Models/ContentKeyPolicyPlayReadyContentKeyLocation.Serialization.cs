@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
     [PersistableModelProxy(typeof(UnknownContentKeyPolicyPlayReadyContentKeyLocation))]
     public partial class ContentKeyPolicyPlayReadyContentKeyLocation : IUtf8JsonSerializable, IJsonModel<ContentKeyPolicyPlayReadyContentKeyLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyPlayReadyContentKeyLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyPlayReadyContentKeyLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContentKeyPolicyPlayReadyContentKeyLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyPlayReadyContentKeyLocation DeserializeContentKeyPolicyPlayReadyContentKeyLocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class TroubleshootingRecommendedActions : IUtf8JsonSerializable, IJsonModel<TroubleshootingRecommendedActions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TroubleshootingRecommendedActions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TroubleshootingRecommendedActions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TroubleshootingRecommendedActions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static TroubleshootingRecommendedActions DeserializeTroubleshootingRecommendedActions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

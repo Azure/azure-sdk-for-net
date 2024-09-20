@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     internal partial class Multichannel : IUtf8JsonSerializable, IJsonModel<Multichannel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Multichannel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Multichannel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<Multichannel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static Multichannel DeserializeMultichannel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,15 +105,16 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsMultiChannelEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsMultiChannelEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  enabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsMultiChannelEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  enabled: ");
                     var boolValue = IsMultiChannelEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

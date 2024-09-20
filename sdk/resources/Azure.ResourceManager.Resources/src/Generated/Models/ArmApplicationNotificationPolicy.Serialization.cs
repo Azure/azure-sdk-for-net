@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class ArmApplicationNotificationPolicy : IUtf8JsonSerializable, IJsonModel<ArmApplicationNotificationPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationNotificationPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationNotificationPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmApplicationNotificationPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartArray();
             foreach (var item in NotificationEndpoints)
             {
-                writer.WriteObjectValue<ArmApplicationNotificationEndpoint>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationNotificationPolicy DeserializeArmApplicationNotificationPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -109,17 +109,18 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotificationEndpoints), out propertyOverride);
-            if (Optional.IsCollectionDefined(NotificationEndpoints) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (NotificationEndpoints.Any() || hasPropertyOverride)
+                builder.Append("  notificationEndpoints: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NotificationEndpoints))
                 {
-                    builder.Append("  notificationEndpoints: ");
-                    if (hasPropertyOverride)
+                    if (NotificationEndpoints.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  notificationEndpoints: ");
                         builder.AppendLine("[");
                         foreach (var item in NotificationEndpoints)
                         {

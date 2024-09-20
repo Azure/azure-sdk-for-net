@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 {
     public partial class FrontDoorLoadBalancingSettingsData : IUtf8JsonSerializable, IJsonModel<FrontDoorLoadBalancingSettingsData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorLoadBalancingSettingsData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorLoadBalancingSettingsData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontDoorLoadBalancingSettingsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static FrontDoorLoadBalancingSettingsData DeserializeFrontDoorLoadBalancingSettingsData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

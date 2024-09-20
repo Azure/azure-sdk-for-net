@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public partial class PccRuleQosPolicy : IUtf8JsonSerializable, IJsonModel<PccRuleQosPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PccRuleQosPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PccRuleQosPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PccRuleQosPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(GuaranteedBitRate))
             {
                 writer.WritePropertyName("guaranteedBitRate"u8);
-                writer.WriteObjectValue<Ambr>(GuaranteedBitRate, options);
+                writer.WriteObjectValue(GuaranteedBitRate, options);
             }
             if (Optional.IsDefined(FiveQi))
             {
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStringValue(PreemptionVulnerability.Value.ToString());
             }
             writer.WritePropertyName("maximumBitRate"u8);
-            writer.WriteObjectValue<Ambr>(MaximumBitRate, options);
+            writer.WriteObjectValue(MaximumBitRate, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static PccRuleQosPolicy DeserializePccRuleQosPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -167,6 +168,111 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 guaranteedBitRate);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GuaranteedBitRate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  guaranteedBitRate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GuaranteedBitRate))
+                {
+                    builder.Append("  guaranteedBitRate: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, GuaranteedBitRate, options, 2, false, "  guaranteedBitRate: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FiveQi), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  5qi: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FiveQi))
+                {
+                    builder.Append("  5qi: ");
+                    builder.AppendLine($"{FiveQi.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllocationAndRetentionPriorityLevel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allocationAndRetentionPriorityLevel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllocationAndRetentionPriorityLevel))
+                {
+                    builder.Append("  allocationAndRetentionPriorityLevel: ");
+                    builder.AppendLine($"{AllocationAndRetentionPriorityLevel.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreemptionCapability), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  preemptionCapability: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PreemptionCapability))
+                {
+                    builder.Append("  preemptionCapability: ");
+                    builder.AppendLine($"'{PreemptionCapability.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreemptionVulnerability), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  preemptionVulnerability: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PreemptionVulnerability))
+                {
+                    builder.Append("  preemptionVulnerability: ");
+                    builder.AppendLine($"'{PreemptionVulnerability.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumBitRate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maximumBitRate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaximumBitRate))
+                {
+                    builder.Append("  maximumBitRate: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, MaximumBitRate, options, 2, false, "  maximumBitRate: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PccRuleQosPolicy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PccRuleQosPolicy>)this).GetFormatFromOptions(options) : options.Format;
@@ -175,6 +281,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PccRuleQosPolicy)} does not support writing '{options.Format}' format.");
             }

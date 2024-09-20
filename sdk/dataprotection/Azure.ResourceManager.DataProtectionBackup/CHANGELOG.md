@@ -1,16 +1,27 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2024-06-17)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Upgraded api-version tag from 'package-2023-11' to 'package-2024-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/a6ba164815464151a4adb687ea12a7a7090ed7fe/specification/dataprotection/resource-manager/readme.md
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.40.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.12.0
+- Obsoleted method 'ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceResource
 
 ## 1.4.0 (2023-12-27)
 

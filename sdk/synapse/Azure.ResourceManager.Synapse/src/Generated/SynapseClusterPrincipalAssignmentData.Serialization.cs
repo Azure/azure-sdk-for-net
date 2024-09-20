@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseClusterPrincipalAssignmentData : IUtf8JsonSerializable, IJsonModel<SynapseClusterPrincipalAssignmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseClusterPrincipalAssignmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseClusterPrincipalAssignmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseClusterPrincipalAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseClusterPrincipalAssignmentData DeserializeSynapseClusterPrincipalAssignmentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

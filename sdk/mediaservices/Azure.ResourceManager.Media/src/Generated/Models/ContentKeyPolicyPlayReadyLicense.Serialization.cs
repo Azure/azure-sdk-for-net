@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class ContentKeyPolicyPlayReadyLicense : IUtf8JsonSerializable, IJsonModel<ContentKeyPolicyPlayReadyLicense>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyPlayReadyLicense>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyPlayReadyLicense>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContentKeyPolicyPlayReadyLicense>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(PlayRight))
             {
                 writer.WritePropertyName("playRight"u8);
-                writer.WriteObjectValue<ContentKeyPolicyPlayReadyPlayRight>(PlayRight, options);
+                writer.WriteObjectValue(PlayRight, options);
             }
             writer.WritePropertyName("licenseType"u8);
             writer.WriteStringValue(LicenseType.ToString());
             writer.WritePropertyName("contentKeyLocation"u8);
-            writer.WriteObjectValue<ContentKeyPolicyPlayReadyContentKeyLocation>(ContentKeyLocation, options);
+            writer.WriteObjectValue(ContentKeyLocation, options);
             writer.WritePropertyName("contentType"u8);
             writer.WriteStringValue(ContentType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyPlayReadyLicense DeserializeContentKeyPolicyPlayReadyLicense(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -58,6 +58,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public AzureMonitorExporterOptions(ServiceVersion version = LatestVersion)
         {
             this.Version = version;
+            // users can explicitly change it, but by default we don't want exporter internal logs to be reported to Azure Monitor.
+            this.Diagnostics.IsDistributedTracingEnabled = false;
+            this.Diagnostics.IsLoggingEnabled = false;
         }
 
         /// <summary>

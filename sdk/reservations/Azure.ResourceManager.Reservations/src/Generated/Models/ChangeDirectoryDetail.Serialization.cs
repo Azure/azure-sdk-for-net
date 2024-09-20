@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ChangeDirectoryDetail : IUtf8JsonSerializable, IJsonModel<ChangeDirectoryDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChangeDirectoryDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChangeDirectoryDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChangeDirectoryDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ReservationOrder))
             {
                 writer.WritePropertyName("reservationOrder"u8);
-                writer.WriteObjectValue<ChangeDirectoryResult>(ReservationOrder, options);
+                writer.WriteObjectValue(ReservationOrder, options);
             }
             if (Optional.IsCollectionDefined(Reservations))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Reservations)
                 {
-                    writer.WriteObjectValue<ChangeDirectoryResult>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static ChangeDirectoryDetail DeserializeChangeDirectoryDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

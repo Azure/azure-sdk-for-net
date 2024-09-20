@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Redirect URL to the Publisher Portal containing the SSO token. </summary>
+        [WirePath("redirectUri")]
         public Uri RedirectUri { get; }
     }
 }

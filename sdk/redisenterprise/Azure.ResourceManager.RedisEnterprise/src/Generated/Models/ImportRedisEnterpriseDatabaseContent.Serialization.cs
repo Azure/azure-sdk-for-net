@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     public partial class ImportRedisEnterpriseDatabaseContent : IUtf8JsonSerializable, IJsonModel<ImportRedisEnterpriseDatabaseContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImportRedisEnterpriseDatabaseContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImportRedisEnterpriseDatabaseContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ImportRedisEnterpriseDatabaseContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         internal static ImportRedisEnterpriseDatabaseContent DeserializeImportRedisEnterpriseDatabaseContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

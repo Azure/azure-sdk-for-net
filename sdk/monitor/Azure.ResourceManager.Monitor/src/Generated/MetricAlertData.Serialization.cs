@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class MetricAlertData : IUtf8JsonSerializable, IJsonModel<MetricAlertData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricAlertData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricAlertData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MetricAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Monitor
             if (Criteria != null)
             {
                 writer.WritePropertyName("criteria"u8);
-                writer.WriteObjectValue<MetricAlertCriteria>(Criteria, options);
+                writer.WriteObjectValue(Criteria, options);
             }
             else
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue<MetricAlertAction>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Monitor
 
         internal static MetricAlertData DeserializeMetricAlertData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

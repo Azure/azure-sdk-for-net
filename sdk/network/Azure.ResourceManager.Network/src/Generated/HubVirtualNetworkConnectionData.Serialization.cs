@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class HubVirtualNetworkConnectionData : IUtf8JsonSerializable, IJsonModel<HubVirtualNetworkConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HubVirtualNetworkConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HubVirtualNetworkConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HubVirtualNetworkConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
-                writer.WriteObjectValue<RoutingConfiguration>(RoutingConfiguration, options);
+                writer.WriteObjectValue(RoutingConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network
 
         internal static HubVirtualNetworkConnectionData DeserializeHubVirtualNetworkConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

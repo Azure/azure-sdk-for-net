@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     public partial class TrafficControllerPatch : IUtf8JsonSerializable, IJsonModel<TrafficControllerPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficControllerPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficControllerPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TrafficControllerPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         internal static TrafficControllerPatch DeserializeTrafficControllerPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

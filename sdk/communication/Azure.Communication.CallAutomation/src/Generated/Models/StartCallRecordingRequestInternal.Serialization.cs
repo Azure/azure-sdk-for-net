@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("callLocator"u8);
-            writer.WriteObjectValue<CallLocatorInternal>(CallLocator);
+            writer.WriteObjectValue(CallLocator);
             if (Optional.IsDefined(RecordingStateCallbackUri))
             {
                 writer.WritePropertyName("recordingStateCallbackUri"u8);
@@ -43,7 +43,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStartArray();
                 foreach (var item in AudioChannelParticipantOrdering)
                 {
-                    writer.WriteObjectValue<CommunicationIdentifierModel>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -53,14 +53,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStartArray();
                 foreach (var item in ChannelAffinity)
                 {
-                    writer.WriteObjectValue<ChannelAffinityInternal>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ExternalStorage))
             {
                 writer.WritePropertyName("externalStorage"u8);
-                writer.WriteObjectValue<ExternalStorageInternal>(ExternalStorage);
+                writer.WriteObjectValue(ExternalStorage);
             }
             if (Optional.IsDefined(PauseOnStart))
             {
@@ -70,11 +70,11 @@ namespace Azure.Communication.CallAutomation
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<StartCallRecordingRequestInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

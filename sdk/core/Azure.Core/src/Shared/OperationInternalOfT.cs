@@ -106,7 +106,7 @@ namespace Azure.Core
             _stateLock = new AsyncLockWithValue<OperationState<T>>();
         }
 
-        private OperationInternal(OperationState<T> finalState)
+        internal OperationInternal(OperationState<T> finalState)
             : base(finalState.RawResponse)
         {
             // FinalOperation represents operation that is in final state and can't be updated.

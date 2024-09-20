@@ -32,8 +32,26 @@ namespace Azure.ResourceManager.HybridCompute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-10-03-preview";
+            _apiVersion = apiVersion ?? "2024-05-20-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, string publisher, string extensionType, string version)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.HybridCompute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisher, true);
+            uri.AppendPath("/extensionTypes/", false);
+            uri.AppendPath(extensionType, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string publisher, string extensionType, string version)
@@ -126,6 +144,23 @@ namespace Azure.ResourceManager.HybridCompute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, AzureLocation location, string publisher, string extensionType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.HybridCompute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisher, true);
+            uri.AppendPath("/extensionTypes/", false);
+            uri.AppendPath(extensionType, true);
+            uri.AppendPath("/versions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location, string publisher, string extensionType)

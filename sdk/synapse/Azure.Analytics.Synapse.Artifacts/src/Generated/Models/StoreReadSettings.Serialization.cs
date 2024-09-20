@@ -53,6 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "GoogleCloudStorageReadSettings": return GoogleCloudStorageReadSettings.DeserializeGoogleCloudStorageReadSettings(element);
                     case "HdfsReadSettings": return HdfsReadSettings.DeserializeHdfsReadSettings(element);
                     case "HttpReadSettings": return HttpReadSettings.DeserializeHttpReadSettings(element);
+                    case "LakeHouseReadSettings": return LakeHouseReadSettings.DeserializeLakeHouseReadSettings(element);
                     case "SftpReadSettings": return SftpReadSettings.DeserializeSftpReadSettings(element);
                 }
             }
@@ -67,11 +68,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeStoreReadSettings(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<StoreReadSettings>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -79,7 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, StoreReadSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<StoreReadSettings>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override StoreReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

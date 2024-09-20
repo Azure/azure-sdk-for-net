@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class TransferFilterDetails : IUtf8JsonSerializable, IJsonModel<TransferFilterDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TransferFilterDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TransferFilterDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TransferFilterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(BlobFilterDetails))
             {
                 writer.WritePropertyName("blobFilterDetails"u8);
-                writer.WriteObjectValue<BlobFilterDetails>(BlobFilterDetails, options);
+                writer.WriteObjectValue(BlobFilterDetails, options);
             }
             if (Optional.IsDefined(AzureFileFilterDetails))
             {
                 writer.WritePropertyName("azureFileFilterDetails"u8);
-                writer.WriteObjectValue<AzureFileFilterDetails>(AzureFileFilterDetails, options);
+                writer.WriteObjectValue(AzureFileFilterDetails, options);
             }
             if (Optional.IsCollectionDefined(FilterFileDetails))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in FilterFileDetails)
                 {
-                    writer.WriteObjectValue<FilterFileDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static TransferFilterDetails DeserializeTransferFilterDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

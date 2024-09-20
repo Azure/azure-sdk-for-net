@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class UpdateApplianceForReplicationProtectedItemProperties : IUtf8JsonSerializable, IJsonModel<UpdateApplianceForReplicationProtectedItemProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateApplianceForReplicationProtectedItemProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateApplianceForReplicationProtectedItemProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UpdateApplianceForReplicationProtectedItemProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WritePropertyName("targetApplianceId"u8);
             writer.WriteStringValue(TargetApplianceId);
             writer.WritePropertyName("providerSpecificDetails"u8);
-            writer.WriteObjectValue<UpdateApplianceForReplicationProtectedItemProviderSpecificContent>(ProviderSpecificDetails, options);
+            writer.WriteObjectValue(ProviderSpecificDetails, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static UpdateApplianceForReplicationProtectedItemProperties DeserializeUpdateApplianceForReplicationProtectedItemProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

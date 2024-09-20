@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class LogProfileData : IUtf8JsonSerializable, IJsonModel<LogProfileData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogProfileData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogProfileData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Monitor
             }
             writer.WriteEndArray();
             writer.WritePropertyName("retentionPolicy"u8);
-            writer.WriteObjectValue<RetentionPolicy>(RetentionPolicy, options);
+            writer.WriteObjectValue(RetentionPolicy, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Monitor
 
         internal static LogProfileData DeserializeLogProfileData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

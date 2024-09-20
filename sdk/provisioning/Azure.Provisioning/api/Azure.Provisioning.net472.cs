@@ -1,5 +1,13 @@
 namespace Azure.Provisioning
 {
+    public enum BicepType
+    {
+        String = 0,
+        Int = 1,
+        Bool = 2,
+        Object = 3,
+        Array = 4,
+    }
     public partial class Configuration
     {
         public Configuration() { }
@@ -68,6 +76,7 @@ namespace Azure.Provisioning
         public bool IsLiteral { get { throw null; } }
         public bool IsSecure { get { throw null; } }
         public string Name { get { throw null; } }
+        public Azure.Provisioning.BicepType OutputType { get { throw null; } }
         public string Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -76,12 +85,15 @@ namespace Azure.Provisioning
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public Parameter(Azure.Provisioning.Output output) { throw null; }
-        public Parameter(string name, string? description = null, object? defaultValue = null, bool isSecure = false) { throw null; }
+        public Parameter(string name, Azure.Provisioning.BicepType parameterType = Azure.Provisioning.BicepType.String, string? description = null, object? defaultValue = null, bool isSecure = false) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Parameter(string name, string? description, object? defaultValue, bool isSecure) { throw null; }
         public object? DefaultValue { get { throw null; } }
         public string? Description { get { throw null; } }
         public bool IsFromOutput { get { throw null; } }
         public bool IsSecure { get { throw null; } }
         public string Name { get { throw null; } }
+        public Azure.Provisioning.BicepType ParameterType { get { throw null; } }
         public Azure.Provisioning.IConstruct? Source { get { throw null; } }
         public string? Value { get { throw null; } }
     }
@@ -100,6 +112,7 @@ namespace Azure.Provisioning
         protected object ResourceData { get { throw null; } }
         public Azure.Provisioning.IConstruct Scope { get { throw null; } }
         public string Version { get { throw null; } }
+        public void AddDependency(Azure.Provisioning.Resource resource) { }
         public Azure.Provisioning.RoleAssignment AssignRole(Azure.Provisioning.RoleDefinition roleDefinition, System.Guid? principalId = default(System.Guid?), Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?)) { throw null; }
         protected virtual Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         protected virtual string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
@@ -115,8 +128,12 @@ namespace Azure.Provisioning
     {
         protected Resource(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Resource? parent, string resourceName, Azure.Core.ResourceType resourceType, string version, System.Func<string, T> createProperties, bool isExisting = false) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, object>)) { }
         public T Properties { get { throw null; } }
-        public Azure.Provisioning.Output AddOutput(string outputName, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false) { throw null; }
-        public Azure.Provisioning.Output AddOutput(string outputName, string formattedString, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false) { throw null; }
+        public Azure.Provisioning.Output AddOutput(string outputName, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.BicepType outputType = Azure.Provisioning.BicepType.String, bool isSecure = false) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Provisioning.Output AddOutput(string outputName, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral, bool isSecure) { throw null; }
+        public Azure.Provisioning.Output AddOutput(string outputName, string formattedString, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.BicepType outputType = Azure.Provisioning.BicepType.String, bool isSecure = false) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Provisioning.Output AddOutput(string outputName, string formattedString, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral, bool isSecure) { throw null; }
         public void AssignProperty(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.Parameter parameter) { }
         public void AssignProperty(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, string propertyValue) { }
     }
@@ -144,6 +161,7 @@ namespace Azure.Provisioning
         public static Azure.Provisioning.RoleDefinition StorageBlobDataContributor { get { throw null; } }
         public static Azure.Provisioning.RoleDefinition StorageQueueDataContributor { get { throw null; } }
         public static Azure.Provisioning.RoleDefinition StorageTableDataContributor { get { throw null; } }
+        public static Azure.Provisioning.RoleDefinition WebPubSubServiceOwner { get { throw null; } }
         public bool Equals(Azure.Provisioning.RoleDefinition other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }

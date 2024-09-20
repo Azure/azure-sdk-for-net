@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
     public partial class CapacitySku : IUtf8JsonSerializable, IJsonModel<CapacitySku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapacitySku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapacitySku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CapacitySku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 
         internal static CapacitySku DeserializeCapacitySku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

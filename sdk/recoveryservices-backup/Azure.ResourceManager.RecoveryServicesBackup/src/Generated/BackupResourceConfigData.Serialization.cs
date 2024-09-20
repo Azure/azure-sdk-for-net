@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     public partial class BackupResourceConfigData : IUtf8JsonSerializable, IJsonModel<BackupResourceConfigData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupResourceConfigData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupResourceConfigData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackupResourceConfigData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<BackupResourceConfigProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         internal static BackupResourceConfigData DeserializeBackupResourceConfigData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

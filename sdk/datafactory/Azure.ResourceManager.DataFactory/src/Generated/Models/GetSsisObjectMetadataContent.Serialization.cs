@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class GetSsisObjectMetadataContent : IUtf8JsonSerializable, IJsonModel<GetSsisObjectMetadataContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetSsisObjectMetadataContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetSsisObjectMetadataContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GetSsisObjectMetadataContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static GetSsisObjectMetadataContent DeserializeGetSsisObjectMetadataContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

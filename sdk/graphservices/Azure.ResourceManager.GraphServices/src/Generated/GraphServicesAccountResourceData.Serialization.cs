@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.GraphServices
 {
     public partial class GraphServicesAccountResourceData : IUtf8JsonSerializable, IJsonModel<GraphServicesAccountResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GraphServicesAccountResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GraphServicesAccountResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GraphServicesAccountResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.GraphServices
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue<GraphServicesAccountResourceProperties>(Properties, options);
+            writer.WriteObjectValue(Properties, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.GraphServices
 
         internal static GraphServicesAccountResourceData DeserializeGraphServicesAccountResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -268,7 +268,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             try
             {
                 var response = await _firmwareAnalysisWorkspaceWorkspacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new IotFirmwareDefenseArmOperation(response);
+                var uri = _firmwareAnalysisWorkspaceWorkspacesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotFirmwareDefenseArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -310,7 +312,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             try
             {
                 var response = _firmwareAnalysisWorkspaceWorkspacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new IotFirmwareDefenseArmOperation(response);
+                var uri = _firmwareAnalysisWorkspaceWorkspacesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotFirmwareDefenseArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -415,7 +419,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Workspaces_GenerateUploadUrl</description>
+        /// <description>Workspaces_GenerateUploadUri</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -457,7 +461,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Workspaces_GenerateUploadUrl</description>
+        /// <description>Workspaces_GenerateUploadUri</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

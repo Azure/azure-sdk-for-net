@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,9 +16,18 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppWorkloadProfileStateProperties : IUtf8JsonSerializable, IJsonModel<ContainerAppWorkloadProfileStateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppWorkloadProfileStateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppWorkloadProfileStateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppWorkloadProfileStateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppWorkloadProfileStateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +35,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 throw new FormatException($"The model {nameof(ContainerAppWorkloadProfileStateProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(MinimumCount))
             {
                 writer.WritePropertyName("minimumCount"u8);
@@ -56,7 +65,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContainerAppWorkloadProfileStateProperties IJsonModel<ContainerAppWorkloadProfileStateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,7 +81,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppWorkloadProfileStateProperties DeserializeContainerAppWorkloadProfileStateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -122,6 +130,66 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppWorkloadProfileStateProperties(minimumCount, maximumCount, currentCount, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinimumCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minimumCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinimumCount))
+                {
+                    builder.Append("  minimumCount: ");
+                    builder.AppendLine($"{MinimumCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maximumCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaximumCount))
+                {
+                    builder.Append("  maximumCount: ");
+                    builder.AppendLine($"{MaximumCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  currentCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CurrentCount))
+                {
+                    builder.Append("  currentCount: ");
+                    builder.AppendLine($"{CurrentCount.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerAppWorkloadProfileStateProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppWorkloadProfileStateProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +198,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppWorkloadProfileStateProperties)} does not support writing '{options.Format}' format.");
             }

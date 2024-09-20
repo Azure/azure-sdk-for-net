@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
             }
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
             }
@@ -803,12 +803,12 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var tenantId = tenant.Data.TenantId.Value;
 
             var graphClient = new GraphServiceClient(TestEnvironment.Credential);
-            var servicePrincipals = await graphClient.ServicePrincipals
-                .Request()
-                .Filter($"servicePrincipalNames/any(c:c eq '{TestEnvironment.ClientId}')")
-                .Top(1)
-                .GetAsync();
-            var servicePrincipal = servicePrincipals.FirstOrDefault();
+            var servicePrincipals = await graphClient.ServicePrincipals.GetAsync((requestConfiguration) =>
+            {
+                requestConfiguration.QueryParameters.Filter = $"servicePrincipalNames/any(c:c eq '{TestEnvironment.ClientId}')";
+                requestConfiguration.QueryParameters.Top = 1;
+            });
+            var servicePrincipal = servicePrincipals.Value.FirstOrDefault();
 
             // Create main server
             var serverOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, new PostgreSqlFlexibleServerData(rg.Data.Location)
@@ -909,12 +909,12 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var tenantId = tenant.Data.TenantId.Value;
 
             var graphClient = new GraphServiceClient(TestEnvironment.Credential);
-            var servicePrincipals = await graphClient.ServicePrincipals
-                .Request()
-                .Filter($"servicePrincipalNames/any(c:c eq '{TestEnvironment.ClientId}')")
-                .Top(1)
-                .GetAsync();
-            var servicePrincipal = servicePrincipals.FirstOrDefault();
+            var servicePrincipals = await graphClient.ServicePrincipals.GetAsync((requestConfiguration) =>
+            {
+                requestConfiguration.QueryParameters.Filter = $"servicePrincipalNames/any(c:c eq '{TestEnvironment.ClientId}')";
+                requestConfiguration.QueryParameters.Top = 1;
+            });
+            var servicePrincipal = servicePrincipals.Value.FirstOrDefault();
             #endregion
 
             #region Create main server with Data encryption, active directory auth only enabled and GeoBackup enabled
@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
             }
@@ -1234,7 +1234,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
             }
@@ -1285,7 +1285,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
             }

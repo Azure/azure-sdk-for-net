@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SyncFullSchemaProperties : IUtf8JsonSerializable, IJsonModel<SyncFullSchemaProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncFullSchemaProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncFullSchemaProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SyncFullSchemaProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Tables)
                 {
-                    writer.WriteObjectValue<SyncFullSchemaTable>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SyncFullSchemaProperties DeserializeSyncFullSchemaProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,17 +131,18 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tables), out propertyOverride);
-            if (Optional.IsCollectionDefined(Tables) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Tables.Any() || hasPropertyOverride)
+                builder.Append("  tables: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tables))
                 {
-                    builder.Append("  tables: ");
-                    if (hasPropertyOverride)
+                    if (Tables.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  tables: ");
                         builder.AppendLine("[");
                         foreach (var item in Tables)
                         {
@@ -153,15 +154,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdateOn), out propertyOverride);
-            if (Optional.IsDefined(LastUpdateOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  lastUpdateTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastUpdateOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  lastUpdateTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LastUpdateOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

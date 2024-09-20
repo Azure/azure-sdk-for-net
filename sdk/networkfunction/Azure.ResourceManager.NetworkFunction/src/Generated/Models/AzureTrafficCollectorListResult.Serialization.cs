@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 {
     internal partial class AzureTrafficCollectorListResult : IUtf8JsonSerializable, IJsonModel<AzureTrafficCollectorListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureTrafficCollectorListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureTrafficCollectorListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureTrafficCollectorListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<AzureTrafficCollectorData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
         internal static AzureTrafficCollectorListResult DeserializeAzureTrafficCollectorListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

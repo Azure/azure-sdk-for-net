@@ -15,7 +15,7 @@ namespace Azure.Analytics.Purview.DataMap
 {
     public partial class AtlasRelationship : IUtf8JsonSerializable, IJsonModel<AtlasRelationship>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AtlasRelationship>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AtlasRelationship>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AtlasRelationship>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,12 +72,12 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(End1))
             {
                 writer.WritePropertyName("end1"u8);
-                writer.WriteObjectValue<AtlasObjectId>(End1, options);
+                writer.WriteObjectValue(End1, options);
             }
             if (Optional.IsDefined(End2))
             {
                 writer.WritePropertyName("end2"u8);
-                writer.WriteObjectValue<AtlasObjectId>(End2, options);
+                writer.WriteObjectValue(End2, options);
             }
             if (Optional.IsDefined(Guid))
             {
@@ -151,7 +151,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         internal static AtlasRelationship DeserializeAtlasRelationship(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -359,11 +359,11 @@ namespace Azure.Analytics.Purview.DataMap
             return DeserializeAtlasRelationship(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AtlasRelationship>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

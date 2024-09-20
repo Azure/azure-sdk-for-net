@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetCommunicationDetailsForASubscriptionSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/GetCommunicationDetailsForSubscriptionSupportTicket.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/GetCommunicationDetailsForSubscriptionSupportTicket.json
             // this example is just showing the usage of "Communications_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             // this example assumes you already have this SupportTicketCommunicationResource created on azure
             // for more information of creating SupportTicketCommunicationResource, please refer to the document of SupportTicketCommunicationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "132d901f-189d-4381-9214-fe68e27e05a1";
             string supportTicketName = "testticket";
             string communicationName = "testmessage";
             ResourceIdentifier supportTicketCommunicationResourceId = SupportTicketCommunicationResource.CreateResourceIdentifier(subscriptionId, supportTicketName, communicationName);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_AddCommunicationToSubscriptionTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/CreateSupportTicketCommunication.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateSupportTicketCommunication.json
             // this example is just showing the usage of "Communications_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,18 +60,16 @@ namespace Azure.ResourceManager.Support.Samples
 
             // this example assumes you already have this SupportTicketCommunicationResource created on azure
             // for more information of creating SupportTicketCommunicationResource, please refer to the document of SupportTicketCommunicationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "132d901f-189d-4381-9214-fe68e27e05a1";
             string supportTicketName = "testticket";
             string communicationName = "testcommunication";
             ResourceIdentifier supportTicketCommunicationResourceId = SupportTicketCommunicationResource.CreateResourceIdentifier(subscriptionId, supportTicketName, communicationName);
             SupportTicketCommunicationResource supportTicketCommunication = client.GetSupportTicketCommunicationResource(supportTicketCommunicationResourceId);
 
             // invoke the operation
-            SupportTicketCommunicationData data = new SupportTicketCommunicationData()
+            SupportTicketCommunicationData data = new SupportTicketCommunicationData("This is a test message from a customer!", "This is a test message from a customer!")
             {
                 Sender = "user@contoso.com",
-                Subject = "This is a test message from a customer!",
-                Body = "This is a test message from a customer!",
             };
             ArmOperation<SupportTicketCommunicationResource> lro = await supportTicketCommunication.UpdateAsync(WaitUntil.Completed, data);
             SupportTicketCommunicationResource result = lro.Value;

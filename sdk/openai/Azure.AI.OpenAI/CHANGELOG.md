@@ -1,14 +1,176 @@
 # Release History
 
-## 1.0.0-beta.16 (Unreleased)
+## 2.0.0-beta.5 (2024-09-03)
+
+This update increments library compatibility to `OpenAI 2.0.0-beta.11`, including several breaking changes.
 
 ### Features Added
 
+- Added the `OpenAIChatModelFactory` in the `OpenAI.Chat` namespace (a static class that can be used to instantiate OpenAI models for mocking in non-live test scenarios). ([79014ab](https://github.com/openai/openai-dotnet/commit/79014abc01a00e13d5a334d3f6529ed590b8ee98))
+
 ### Breaking Changes
+
+- Updated fine-tuning pagination methods `GetJobs`, `GetEvents`, and `GetJobCheckpoints` to return `IEnumerable<ClientResult>` instead of `ClientResult`. ([5773292](https://github.com/openai/openai-dotnet/commit/57732927575c6c48f30bded0afb9f5b16d4f30da))
+- Updated the batching pagination method `GetBatches` to return `IEnumerable<ClientResult>` instead of `ClientResult`. ([5773292](https://github.com/openai/openai-dotnet/commit/57732927575c6c48f30bded0afb9f5b16d4f30da))
+- Changed `GeneratedSpeechVoice` from an enum to an "extensible enum". ([79014ab](https://github.com/openai/openai-dotnet/commit/79014abc01a00e13d5a334d3f6529ed590b8ee98))
+- Changed `GeneratedSpeechFormat` from an enum to an "extensible enum". ([cc9169a](https://github.com/openai/openai-dotnet/commit/cc9169ad2ff92bb7312eed3b7e64e45da5da1d18))
+- Renamed `SpeechGenerationOptions`'s `Speed` property to `SpeedRatio`. ([cc9169a](https://github.com/openai/openai-dotnet/commit/cc9169ad2ff92bb7312eed3b7e64e45da5da1d18))
 
 ### Bugs Fixed
 
-### Other Changes
+- Corrected an internal deserialization issue that caused recent updates to Assistants `file_search` to fail when streaming a run. Strongly typed support for `ranking_options` is not included but will arrive soon. ([cc9169a](https://github.com/openai/openai-dotnet/commit/cc9169ad2ff92bb7312eed3b7e64e45da5da1d18))
+- Mitigated a .NET runtime issue that prevented `ChatResponseFormat` from serializing correct on targets including Unity. ([cc9169a](https://github.com/openai/openai-dotnet/commit/cc9169ad2ff92bb7312eed3b7e64e45da5da1d18))
+
+## 2.0.0-beta.4 (2024-08-30)
+
+This small release increments library compatibility to the latest `OpenAI 2.0.0-beta.10`. Prior to this update, interactions with the two breaking changes described below prevented full interoperability.
+
+### Breaking Changes
+
+- `AudioClient`'s `GenerateSpeechFromText()` method is renamed to `GenerateSpeech()`
+- `OpenAIFileInfo`'s `SizeInBytes` is now of type `int?` (previously `long?`)
+
+## 2.0.0-beta.3 (2024-08-23)
+
+This change updates the library for compatibility with the latest `2.0.0-beta.9` of the `OpenAI` package and the `2024-07-01-preview` Azure OpenAI service API version label, as published on 8/5.
+
+### Features Added
+
+- The library now directly supports alternative authentication audiences, including Azure Government. This can be specified by providing an appropriate `AzureOpenAIAudience` value to the `AzureOpenAIClientOptions.Audience` property when creating a client. See the client configuration section of the README for more details.
+
+Additional new features from the `OpenAI` package can be found in [the OpenAI changelog](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md).
+
+**Please note**: Structured Outputs support is not yet available with the `2024-07-01-preview` service API version. This means that attempting to use the feature with this library version will fail with an unrecognized property for either `response_format` or `strict` in request payloads; all existing functionality is unaffected. Azure OpenAI support for Structured Outputs is coming soon.
+
+### Breaking Changes
+
+No Azure-specific breaking changes are present in this update.
+
+The update from `OpenAI` `2.0.0-beta.7` to `2.0.0-beta.9` does bring a number of breaking changes, however, as described in [the OpenAI changelog](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md):
+
+- Removed client constructors that do not explicitly take an API key parameter or an endpoint via an `OpenAIClientOptions` parameter, making it clearer how to appropriately instantiate a client. ([13a9c68](https://github.com/openai/openai-dotnet/commit/13a9c68647c8d54475f1529a63b13ad711bd4ba6))
+- Removed the endpoint parameter from all client constructors, making it clearer that an alternative endpoint must be specified via the `OpenAIClientOptions` parameter. ([13a9c68](https://github.com/openai/openai-dotnet/commit/13a9c68647c8d54475f1529a63b13ad711bd4ba6))
+- Removed `OpenAIClient`'s `Endpoint` `protected` property. ([13a9c68](https://github.com/openai/openai-dotnet/commit/13a9c68647c8d54475f1529a63b13ad711bd4ba6))
+- Made `OpenAIClient`'s constructor that takes a `ClientPipeline` parameter `protected internal` instead of just `protected`. ([13a9c68](https://github.com/openai/openai-dotnet/commit/13a9c68647c8d54475f1529a63b13ad711bd4ba6))
+- Renamed the `User` property in applicable Options classes to `EndUserId`, making its purpose clearer. ([13a9c68](https://github.com/openai/openai-dotnet/commit/13a9c68647c8d54475f1529a63b13ad711bd4ba6))
+- Changed name of return types from methods returning streaming collections from `ResultCollection` to `CollectionResult`. ([7bdecfd](https://github.com/openai/openai-dotnet/commit/7bdecfd8d294be933c7779c7e5b6435ba8a8eab0))
+- Changed return types from methods returning paginated collections from `PageableCollection` to `PageCollection`. ([7bdecfd](https://github.com/openai/openai-dotnet/commit/7bdecfd8d294be933c7779c7e5b6435ba8a8eab0))
+- Users must now call `GetAllValues` on the collection of pages to enumerate collection items directly. Corresponding protocol methods return `IEnumerable<ClientResult>` where each collection item represents a single service response holding a page of values. ([7bdecfd](https://github.com/openai/openai-dotnet/commit/7bdecfd8d294be933c7779c7e5b6435ba8a8eab0))
+- Updated `VectorStoreFileCounts` and `VectorStoreFileAssociationError` types from `readonly struct` to `class`. ([58f93c8](https://github.com/openai/openai-dotnet/commit/58f93c8d5ea080adfee8b37ae3cc034ebb06c79f))
+
+### Bugs Fixed
+
+- Removed an inappropriate null check in `FileClient.GetFiles()` (azure-sdk-for-net 44912)
+- Addressed issues with automatic retry behavior, including for HTTP 429 rate limit errors:
+  - Authorization headers are now appropriately reapplied to retried requests
+  - Automatic retry behavior will now honor header-based intervals from `Retry-After` and related response headers
+- The client will now originate an `x-ms-client-request-id` header to match prior library behavior and facilitate troubleshooting
+
+Additional, non-Azure-specific bug fixes can be found in [the OpenAI changelog](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md).
+
+## 2.0.0-beta.2 (2024-06-14)
+
+### Features Added
+
+- Per changes to the [OpenAI .NET client library](https://github.com/openai/openai-dotnet), most convenience methods now provide the direct ability to provide optional `CancellationTokens`, removing the need to use protocol methods
+
+### Breaking Changes
+
+- In support of `CancellationToken`s in methods, an overriden method signature for streaming chat completions was changed and a new minimum version dependency of 2.0.0-beta.5 is established for the OpenAI dependency. These styles of breaks will be extraordinarily rare.
+
+### Bugs Fixed
+
+- See breaking changes: when streaming chat completions, an error of "Unrecognized request argument supplied: stream_options" is introduced when using Azure.AI.OpenAI 2.0.0-beta.1 with OpenAI 2.0.0-beta.5+. This is fixed with the new version.
+
+## 2.0.0-beta.1 (2024-06-07)
+
+**Please note**: This update brings a *major* set of changes to the Azure.AI.OpenAI library.
+
+With the release of the official [OpenAI .NET client library](https://github.com/openai/openai-dotnet), the `Azure.AI.OpenAI` library has migrated to become a companion to OpenAI's package that offers Azure client configuration and strongly-typed extension support for Azure-specific request and response models.
+
+**We'd love your feedback:** our goal is to move the new `OpenAI` .NET library and its refreshed `Azure.AI.OpenAI` companion into a General Availability status as quickly as we can; we've heard loud and clear that the perpetual preview/prerelease status is an adoption blocker. To reach that goal, your feedback -- either on the issues here, in `azure-sdk-for-net`, or the issues on the new `openai-dotnet` OpenAI repository -- will be invaluable.
+
+### Features Added
+
+**OpenAI parity**: built on the OpenAI .NET library, full parity support is available for the breadth of common features, including:
+
+- Assistants V2 with streaming
+- Audio transcription/translation and text-to-speech generation
+- (Coming soon) Batch
+- Chat completion
+- Embeddings
+- Files
+- Fine-tuning
+- Image generation with dall-e-3
+- Vector stores
+
+**Azure OpenAI**: updated to the latest `2024-05-01-preview` service API, new features include:
+
+- Assistants v2 with streaming
+- Improved configuration for On Your Data
+- Expanded Responsible AI content filter annotations
+
+### Breaking Changes
+
+Given the nature of this update, breaking changes are extensive. Please see the README and the [OpenAI library README](https://github.com/openai/openai-dotnet/blob/master/README.md) for usage details. OpenAI's library carries forward many of the same design concepts as the Azure.AI.OpenAI library used as a standalone library, but considerable improvements have been made to the surface that will require significant code adjustments.
+
+## 1.0.0-beta.17 (2024-05-03)
+
+### Features Added
+
+- Image input support for `gpt-4-turbo` chat completions now works with image data in addition to internet URLs.
+  Images may be now be used as `gpt-4-turbo` message content items via one of three constructors:
+  - `ChatMessageImageContent(Uri)` -- the existing constructor, used for URL-based image references
+  - `ChatMessageImageContent(Stream,string)` -- (new) used with a stream and known MIME type (like `image/png`)
+  - `ChatMessageImageContent(BinaryData,string)` -- (new) used with a BinaryData instance and known MIME type
+  Please see the [readme example](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/README.md#chat-with-images-using-gpt-4-turbo) for more details.
+
+### Breaking Changes
+
+- Public visibility of the `ChatMessageImageUrl` type is removed to promote more flexible use of data sources in
+  `ChatMessageImageContent`. Code that previously created a `ChatMessageImageUrl` using a `Uri` should simply provide
+  the `Uri` to the `ChatMessageImageContent` constructor directly.
+
+## 1.0.0-beta.16 (2024-04-11)
+
+### Features Added
+
+**Audio**
+
+- `GetAudioTranscription()` now supports word-level timestamp granularities via `AudioTranscriptionOptions`:
+  - The `Verbose` option for `ResponseFormat` must be used for any timing information to be populated
+  - `TimestampGranularityFlags` accepts a combination of the `.Word` and `.Segment` granularity values in
+    `AudioTimestampGranularity`, joined when needed via the single-pipe `|` operator
+    - For example, `TimestampGranularityFlags = AudioTimestampGranularity.Word | AudioTimestampGranularity.Segment`
+      will request that both word-level and segment-level timestamps are provided on the transcription result
+  - If not otherwise specified, `Verbose` format will default to using segment-level timestamp information
+  - Corresponding word-level information is found on the `.Words` collection of `AudioTranscription`, peer to the
+    existing `.Segments` collection
+  - Note that word-level timing information incurs a small amount of additional processingly latency; segment-level
+    timestamps do not encounter this behavior
+- `GenerateSpeechFromText()` can now use `Wav` and `Pcm` values from `SpeechGenerationResponseFormat`, these new
+  options providing alternative uncompressed formats to `Flac`
+
+**Chat**
+
+- `ChatCompletions` and `StreamingChatCompletionsUpdate` now include the reported `Model` value from the response
+- Log probability information is now included in `StreamingChatCompletionsUpdate` when `logprobs` are requested on
+  `GetChatCompletionsStreaming()`
+- [AOAI] Custom Blocklist information in content filter results is now represented in a more structured
+  `ContentFilterDetailedResults` type
+- [AOAI] A new `IndirectAttack` content filter entry is now present on content filter results for prompts
+
+### Breaking Changes
+
+- [AOAI] `AzureChatExtensionMessageContext`'s `RequestContentFilterResults`  now uses the new
+  `ContentFilterDetailedResults` type, changed from the previous `IReadOnlyList<ContentFilterBlockListIdResult>`. The
+  previous list is now present on `CustomBlockLists.Details`, supplemented with a new `CustomBlockLists.Filtered`
+  property.
+
+### Bugs Fixed
+
+- [AOAI] An issue that sometimes caused `StreamingChatCompletionUpdates` from Azure OpenAI to inappropriately exclude
+  top-level information like `Id` and `CreatedAt` has been addressed
 
 ## 1.0.0-beta.15 (2024-03-20)
 

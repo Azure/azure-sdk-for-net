@@ -55,11 +55,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="isVaultProtectedByResourceGuard"> Is vault protected by resource guard. </param>
         /// <param name="featureSettings"> Feature Settings. </param>
         /// <param name="secureScore"> Secure Score of Backup Vault. </param>
+        /// <param name="bcdrSecurityLevel"> Security Level of Backup Vault. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="replicatedRegions"> List of replicated regions for Backup Vault. </param>
         /// <returns> A new <see cref="Models.DataProtectionBackupVaultProperties"/> instance for mocking. </returns>
-        public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState? alertSettingsForAllJobFailures = null, DataProtectionBackupProvisioningState? provisioningState = null, BackupVaultResourceMoveState? resourceMoveState = null, BackupVaultResourceMoveDetails resourceMoveDetails = null, BackupVaultSecuritySettings securitySettings = null, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = null, bool? isVaultProtectedByResourceGuard = null, BackupVaultFeatureSettings featureSettings = null, BackupVaultSecureScoreLevel? secureScore = null, IEnumerable<AzureLocation> replicatedRegions = null)
+        public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState? alertSettingsForAllJobFailures = null, DataProtectionBackupProvisioningState? provisioningState = null, BackupVaultResourceMoveState? resourceMoveState = null, BackupVaultResourceMoveDetails resourceMoveDetails = null, BackupVaultSecuritySettings securitySettings = null, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = null, bool? isVaultProtectedByResourceGuard = null, BackupVaultFeatureSettings featureSettings = null, BackupVaultSecureScoreLevel? secureScore = null, BcdrSecurityLevel? bcdrSecurityLevel = null, IEnumerable<string> resourceGuardOperationRequests = null, IEnumerable<AzureLocation> replicatedRegions = null)
         {
             storageSettings ??= new List<DataProtectionBackupStorageSetting>();
+            resourceGuardOperationRequests ??= new List<string>();
             replicatedRegions ??= new List<AzureLocation>();
 
             return new DataProtectionBackupVaultProperties(
@@ -72,6 +75,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 isVaultProtectedByResourceGuard,
                 featureSettings,
                 secureScore,
+                bcdrSecurityLevel,
+                resourceGuardOperationRequests?.ToList(),
                 replicatedRegions?.ToList(),
                 serializedAdditionalRawData: null);
         }
@@ -153,6 +158,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
         /// <param name="dataSourceSetInfo"> Gets or sets the data source set information. </param>
         /// <param name="policyInfo"> Gets or sets the policy information. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="protectionStatus"> Specifies the protection status of the resource. </param>
         /// <param name="currentProtectionState"> Specifies the current protection state of the resource. </param>
         /// <param name="protectionErrorDetails"> Specifies the protection error of the resource. </param>
@@ -169,13 +175,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </param>
         /// <param name="objectType"></param>
         /// <returns> A new <see cref="Models.DataProtectionBackupInstanceProperties"/> instance for mocking. </returns>
-        public static DataProtectionBackupInstanceProperties DataProtectionBackupInstanceProperties(string friendlyName = null, DataSourceInfo dataSourceInfo = null, DataSourceSetInfo dataSourceSetInfo = null, BackupInstancePolicyInfo policyInfo = null, BackupInstanceProtectionStatusDetails protectionStatus = null, CurrentProtectionState? currentProtectionState = null, ResponseError protectionErrorDetails = null, string provisioningState = null, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = null, BackupValidationType? validationType = null, DataProtectionIdentityDetails identityDetails = null, string objectType = null)
+        public static DataProtectionBackupInstanceProperties DataProtectionBackupInstanceProperties(string friendlyName = null, DataSourceInfo dataSourceInfo = null, DataSourceSetInfo dataSourceSetInfo = null, BackupInstancePolicyInfo policyInfo = null, IEnumerable<string> resourceGuardOperationRequests = null, BackupInstanceProtectionStatusDetails protectionStatus = null, CurrentProtectionState? currentProtectionState = null, ResponseError protectionErrorDetails = null, string provisioningState = null, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = null, BackupValidationType? validationType = null, DataProtectionIdentityDetails identityDetails = null, string objectType = null)
         {
+            resourceGuardOperationRequests ??= new List<string>();
+
             return new DataProtectionBackupInstanceProperties(
                 friendlyName,
                 dataSourceInfo,
                 dataSourceSetInfo,
                 policyInfo,
+                resourceGuardOperationRequests?.ToList(),
                 protectionStatus,
                 currentProtectionState,
                 protectionErrorDetails,
@@ -245,18 +254,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </param>
         /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
         /// <param name="sourceResourceId"> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="identityDetails">
         /// Contains information of the Identity Details for the BI.
         /// If it is null, default will be considered as System Assigned.
         /// </param>
         /// <returns> A new <see cref="Models.BackupRestoreContent"/> instance for mocking. </returns>
-        public static BackupRestoreContent BackupRestoreContent(string objectType = null, RestoreTargetInfoBase restoreTargetInfo = null, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = null, DataProtectionIdentityDetails identityDetails = null)
+        public static BackupRestoreContent BackupRestoreContent(string objectType = null, RestoreTargetInfoBase restoreTargetInfo = null, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = null, IEnumerable<string> resourceGuardOperationRequests = null, DataProtectionIdentityDetails identityDetails = null)
         {
+            resourceGuardOperationRequests ??= new List<string>();
+
             return new UnknownAzureBackupRestoreRequest(
                 objectType,
                 restoreTargetInfo,
                 sourceDataStoreType,
                 sourceResourceId,
+                resourceGuardOperationRequests?.ToList(),
                 identityDetails,
                 serializedAdditionalRawData: null);
         }
@@ -489,6 +502,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
         /// <param name="dataSourceSetInfo"> Gets or sets the data source set information. </param>
         /// <param name="policyInfo"> Gets or sets the policy information. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="protectionStatus"> Specifies the protection status of the resource. </param>
         /// <param name="currentProtectionState"> Specifies the current protection state of the resource. </param>
         /// <param name="protectionErrorDetails"> Specifies the protection error of the resource. </param>
@@ -506,13 +520,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="objectType"></param>
         /// <param name="deletionInfo"> Deletion info of Backup Instance. </param>
         /// <returns> A new <see cref="Models.DeletedDataProtectionBackupInstanceProperties"/> instance for mocking. </returns>
-        public static DeletedDataProtectionBackupInstanceProperties DeletedDataProtectionBackupInstanceProperties(string friendlyName = null, DataSourceInfo dataSourceInfo = null, DataSourceSetInfo dataSourceSetInfo = null, BackupInstancePolicyInfo policyInfo = null, BackupInstanceProtectionStatusDetails protectionStatus = null, CurrentProtectionState? currentProtectionState = null, ResponseError protectionErrorDetails = null, string provisioningState = null, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = null, BackupValidationType? validationType = null, DataProtectionIdentityDetails identityDetails = null, string objectType = null, BackupInstanceDeletionInfo deletionInfo = null)
+        public static DeletedDataProtectionBackupInstanceProperties DeletedDataProtectionBackupInstanceProperties(string friendlyName = null, DataSourceInfo dataSourceInfo = null, DataSourceSetInfo dataSourceSetInfo = null, BackupInstancePolicyInfo policyInfo = null, IEnumerable<string> resourceGuardOperationRequests = null, BackupInstanceProtectionStatusDetails protectionStatus = null, CurrentProtectionState? currentProtectionState = null, ResponseError protectionErrorDetails = null, string provisioningState = null, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = null, BackupValidationType? validationType = null, DataProtectionIdentityDetails identityDetails = null, string objectType = null, BackupInstanceDeletionInfo deletionInfo = null)
         {
+            resourceGuardOperationRequests ??= new List<string>();
+
             return new DeletedDataProtectionBackupInstanceProperties(
                 friendlyName,
                 dataSourceInfo,
                 dataSourceSetInfo,
                 policyInfo,
+                resourceGuardOperationRequests?.ToList(),
                 protectionStatus,
                 currentProtectionState,
                 protectionErrorDetails,
@@ -706,19 +723,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </param>
         /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
         /// <param name="sourceResourceId"> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="identityDetails">
         /// Contains information of the Identity Details for the BI.
         /// If it is null, default will be considered as System Assigned.
         /// </param>
         /// <param name="recoveryPointId"></param>
         /// <returns> A new <see cref="Models.BackupRecoveryPointBasedRestoreContent"/> instance for mocking. </returns>
-        public static BackupRecoveryPointBasedRestoreContent BackupRecoveryPointBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo = null, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = null, DataProtectionIdentityDetails identityDetails = null, string recoveryPointId = null)
+        public static BackupRecoveryPointBasedRestoreContent BackupRecoveryPointBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo = null, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = null, IEnumerable<string> resourceGuardOperationRequests = null, DataProtectionIdentityDetails identityDetails = null, string recoveryPointId = null)
         {
+            resourceGuardOperationRequests ??= new List<string>();
+
             return new BackupRecoveryPointBasedRestoreContent(
                 "AzureBackupRecoveryPointBasedRestoreRequest",
                 restoreTargetInfo,
                 sourceDataStoreType,
                 sourceResourceId,
+                resourceGuardOperationRequests?.ToList(),
                 identityDetails,
                 serializedAdditionalRawData: null,
                 recoveryPointId);
@@ -732,6 +753,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </param>
         /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
         /// <param name="sourceResourceId"> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="identityDetails">
         /// Contains information of the Identity Details for the BI.
         /// If it is null, default will be considered as System Assigned.
@@ -740,13 +762,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="rehydrationPriority"> Priority to be used for rehydration. Values High or Standard. </param>
         /// <param name="rehydrationRetentionDuration"> Retention duration in ISO 8601 format i.e P10D . </param>
         /// <returns> A new <see cref="Models.BackupRestoreWithRehydrationContent"/> instance for mocking. </returns>
-        public static BackupRestoreWithRehydrationContent BackupRestoreWithRehydrationContent(RestoreTargetInfoBase restoreTargetInfo = null, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = null, DataProtectionIdentityDetails identityDetails = null, string recoveryPointId = null, BackupRehydrationPriority rehydrationPriority = default, TimeSpan rehydrationRetentionDuration = default)
+        public static BackupRestoreWithRehydrationContent BackupRestoreWithRehydrationContent(RestoreTargetInfoBase restoreTargetInfo = null, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = null, IEnumerable<string> resourceGuardOperationRequests = null, DataProtectionIdentityDetails identityDetails = null, string recoveryPointId = null, BackupRehydrationPriority rehydrationPriority = default, TimeSpan rehydrationRetentionDuration = default)
         {
+            resourceGuardOperationRequests ??= new List<string>();
+
             return new BackupRestoreWithRehydrationContent(
                 "AzureBackupRestoreWithRehydrationRequest",
                 restoreTargetInfo,
                 sourceDataStoreType,
                 sourceResourceId,
+                resourceGuardOperationRequests?.ToList(),
                 identityDetails,
                 serializedAdditionalRawData: null,
                 recoveryPointId,
@@ -762,19 +787,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </param>
         /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
         /// <param name="sourceResourceId"> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="identityDetails">
         /// Contains information of the Identity Details for the BI.
         /// If it is null, default will be considered as System Assigned.
         /// </param>
         /// <param name="recoverOn"> The recovery time in ISO 8601 format example - 2020-08-14T17:30:00.0000000Z. </param>
         /// <returns> A new <see cref="Models.BackupRecoveryTimeBasedRestoreContent"/> instance for mocking. </returns>
-        public static BackupRecoveryTimeBasedRestoreContent BackupRecoveryTimeBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo = null, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = null, DataProtectionIdentityDetails identityDetails = null, DateTimeOffset recoverOn = default)
+        public static BackupRecoveryTimeBasedRestoreContent BackupRecoveryTimeBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo = null, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = null, IEnumerable<string> resourceGuardOperationRequests = null, DataProtectionIdentityDetails identityDetails = null, DateTimeOffset recoverOn = default)
         {
+            resourceGuardOperationRequests ??= new List<string>();
+
             return new BackupRecoveryTimeBasedRestoreContent(
                 "AzureBackupRecoveryTimeBasedRestoreRequest",
                 restoreTargetInfo,
                 sourceDataStoreType,
                 sourceResourceId,
+                resourceGuardOperationRequests?.ToList(),
                 identityDetails,
                 serializedAdditionalRawData: null,
                 recoverOn);
@@ -857,8 +886,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="conflictPolicy"> Gets or sets the Conflict Policy property. This property sets policy during conflict of resources during restore. </param>
         /// <param name="namespaceMappings"> Gets or sets the Namespace Mappings property. This property sets if namespace needs to be change during restore. </param>
         /// <param name="restoreHookReferences"> Gets or sets the restore hook references. This property sets the hook reference to be executed during restore. </param>
+        /// <param name="resourceModifierReference"> Gets or sets the resource modifier reference. This property sets the reference for resource modifier during restore. </param>
         /// <returns> A new <see cref="Models.KubernetesClusterRestoreCriteria"/> instance for mocking. </returns>
-        public static KubernetesClusterRestoreCriteria KubernetesClusterRestoreCriteria(bool isClusterScopeResourcesIncluded = default, IEnumerable<string> includedNamespaces = null, IEnumerable<string> excludedNamespaces = null, IEnumerable<string> includedResourceTypes = null, IEnumerable<string> excludedResourceTypes = null, IEnumerable<string> labelSelectors = null, PersistentVolumeRestoreMode? persistentVolumeRestoreMode = null, KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy = null, IDictionary<string, string> namespaceMappings = null, IEnumerable<NamespacedName> restoreHookReferences = null)
+        public static KubernetesClusterRestoreCriteria KubernetesClusterRestoreCriteria(bool isClusterScopeResourcesIncluded = default, IEnumerable<string> includedNamespaces = null, IEnumerable<string> excludedNamespaces = null, IEnumerable<string> includedResourceTypes = null, IEnumerable<string> excludedResourceTypes = null, IEnumerable<string> labelSelectors = null, PersistentVolumeRestoreMode? persistentVolumeRestoreMode = null, KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy = null, IDictionary<string, string> namespaceMappings = null, IEnumerable<NamespacedName> restoreHookReferences = null, NamespacedName resourceModifierReference = null)
         {
             includedNamespaces ??= new List<string>();
             excludedNamespaces ??= new List<string>();
@@ -880,7 +910,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 persistentVolumeRestoreMode,
                 conflictPolicy,
                 namespaceMappings,
-                restoreHookReferences?.ToList());
+                restoreHookReferences?.ToList(),
+                resourceModifierReference);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesClusterVaultTierRestoreCriteria"/>. </summary>
@@ -896,8 +927,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="restoreHookReferences"> Gets or sets the restore hook references. This property sets the hook reference to be executed during restore from vault. </param>
         /// <param name="stagingResourceGroupId"> Gets or sets the staging RG Id for creating staging disks and snapshots during restore from vault. </param>
         /// <param name="stagingStorageAccountId"> Gets or sets the staging Storage Account Id for creating backup extension object store data during restore from vault. </param>
+        /// <param name="resourceModifierReference"> Gets or sets the resource modifier reference. This property sets the reference for resource modifier during restore. </param>
         /// <returns> A new <see cref="Models.KubernetesClusterVaultTierRestoreCriteria"/> instance for mocking. </returns>
-        public static KubernetesClusterVaultTierRestoreCriteria KubernetesClusterVaultTierRestoreCriteria(bool includeClusterScopeResources = default, IEnumerable<string> includedNamespaces = null, IEnumerable<string> excludedNamespaces = null, IEnumerable<string> includedResourceTypes = null, IEnumerable<string> excludedResourceTypes = null, IEnumerable<string> labelSelectors = null, PersistentVolumeRestoreMode? persistentVolumeRestoreMode = null, KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy = null, IDictionary<string, string> namespaceMappings = null, IEnumerable<NamespacedName> restoreHookReferences = null, ResourceIdentifier stagingResourceGroupId = null, ResourceIdentifier stagingStorageAccountId = null)
+        public static KubernetesClusterVaultTierRestoreCriteria KubernetesClusterVaultTierRestoreCriteria(bool includeClusterScopeResources = default, IEnumerable<string> includedNamespaces = null, IEnumerable<string> excludedNamespaces = null, IEnumerable<string> includedResourceTypes = null, IEnumerable<string> excludedResourceTypes = null, IEnumerable<string> labelSelectors = null, PersistentVolumeRestoreMode? persistentVolumeRestoreMode = null, KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy = null, IDictionary<string, string> namespaceMappings = null, IEnumerable<NamespacedName> restoreHookReferences = null, ResourceIdentifier stagingResourceGroupId = null, ResourceIdentifier stagingStorageAccountId = null, NamespacedName resourceModifierReference = null)
         {
             includedNamespaces ??= new List<string>();
             excludedNamespaces ??= new List<string>();
@@ -921,7 +953,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 namespaceMappings,
                 restoreHookReferences?.ToList(),
                 stagingResourceGroupId,
-                stagingStorageAccountId);
+                stagingStorageAccountId,
+                resourceModifierReference);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestoreFilesTargetInfo"/>. </summary>
@@ -976,6 +1009,79 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 dataSourceInfo,
                 dataSourceSetInfo,
                 dataSourceAuthCredentials);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupVaultProperties" />. </summary>
+        /// <param name="alertSettingsForAllJobFailures"> Monitoring Settings. </param>
+        /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
+        /// <param name="resourceMoveState"> Resource move state for backup vault. </param>
+        /// <param name="resourceMoveDetails"> Resource move details for backup vault. </param>
+        /// <param name="securitySettings"> Security Settings. </param>
+        /// <param name="storageSettings"> Storage Settings. </param>
+        /// <param name="isVaultProtectedByResourceGuard"> Is vault protected by resource guard. </param>
+        /// <param name="featureSettings"> Feature Settings. </param>
+        /// <param name="secureScore"> Secure Score of Backup Vault. </param>
+        /// <param name="replicatedRegions"> List of replicated regions for Backup Vault. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupVaultProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState? alertSettingsForAllJobFailures, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IEnumerable<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, IEnumerable<AzureLocation> replicatedRegions)
+        {
+            return DataProtectionBackupVaultProperties(alertSettingsForAllJobFailures: alertSettingsForAllJobFailures, provisioningState: provisioningState, resourceMoveState: resourceMoveState, resourceMoveDetails: resourceMoveDetails, securitySettings: securitySettings, storageSettings: storageSettings, isVaultProtectedByResourceGuard: isVaultProtectedByResourceGuard, featureSettings: featureSettings, secureScore: secureScore, bcdrSecurityLevel: default, resourceGuardOperationRequests: default, replicatedRegions: replicatedRegions);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupInstanceProperties" />. </summary>
+        /// <param name="friendlyName"> Gets or sets the Backup Instance friendly name. </param>
+        /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
+        /// <param name="dataSourceSetInfo"> Gets or sets the data source set information. </param>
+        /// <param name="policyInfo"> Gets or sets the policy information. </param>
+        /// <param name="protectionStatus"> Specifies the protection status of the resource. </param>
+        /// <param name="currentProtectionState"> Specifies the current protection state of the resource. </param>
+        /// <param name="protectionErrorDetails"> Specifies the protection error of the resource. </param>
+        /// <param name="provisioningState"> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </param>
+        /// <param name="dataSourceAuthCredentials">
+        /// Credentials to use to authenticate with data source provider.
+        /// Please note <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupAuthCredentials" /> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.SecretStoreBasedAuthCredentials" />.
+        /// </param>
+        /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
+        /// <param name="identityDetails">
+        /// Contains information of the Identity Details for the BI.
+        /// If it is null, default will be considered as System Assigned.
+        /// </param>
+        /// <param name="objectType"></param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupInstanceProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataProtectionBackupInstanceProperties DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType)
+        {
+            return DataProtectionBackupInstanceProperties(friendlyName: friendlyName, dataSourceInfo: dataSourceInfo, dataSourceSetInfo: dataSourceSetInfo, policyInfo: policyInfo, resourceGuardOperationRequests: default, protectionStatus: protectionStatus, currentProtectionState: currentProtectionState, protectionErrorDetails: protectionErrorDetails, provisioningState: provisioningState, dataSourceAuthCredentials: dataSourceAuthCredentials, validationType: validationType, identityDetails: identityDetails, objectType: objectType);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.DeletedDataProtectionBackupInstanceProperties" />. </summary>
+        /// <param name="friendlyName"> Gets or sets the Backup Instance friendly name. </param>
+        /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
+        /// <param name="dataSourceSetInfo"> Gets or sets the data source set information. </param>
+        /// <param name="policyInfo"> Gets or sets the policy information. </param>
+        /// <param name="protectionStatus"> Specifies the protection status of the resource. </param>
+        /// <param name="currentProtectionState"> Specifies the current protection state of the resource. </param>
+        /// <param name="protectionErrorDetails"> Specifies the protection error of the resource. </param>
+        /// <param name="provisioningState"> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </param>
+        /// <param name="dataSourceAuthCredentials">
+        /// Credentials to use to authenticate with data source provider.
+        /// Please note <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupAuthCredentials" /> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.SecretStoreBasedAuthCredentials" />.
+        /// </param>
+        /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
+        /// <param name="identityDetails">
+        /// Contains information of the Identity Details for the BI.
+        /// If it is null, default will be considered as System Assigned.
+        /// </param>
+        /// <param name="objectType"></param>
+        /// <param name="deletionInfo"> Deletion info of Backup Instance. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.DeletedDataProtectionBackupInstanceProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DeletedDataProtectionBackupInstanceProperties DeletedDataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType, BackupInstanceDeletionInfo deletionInfo)
+        {
+            return DeletedDataProtectionBackupInstanceProperties(friendlyName: friendlyName, dataSourceInfo: dataSourceInfo, dataSourceSetInfo: dataSourceSetInfo, policyInfo: policyInfo, resourceGuardOperationRequests: default, protectionStatus: protectionStatus, currentProtectionState: currentProtectionState, protectionErrorDetails: protectionErrorDetails, provisioningState: provisioningState, dataSourceAuthCredentials: dataSourceAuthCredentials, validationType: validationType, identityDetails: identityDetails, objectType: objectType, deletionInfo: deletionInfo);
         }
     }
 }

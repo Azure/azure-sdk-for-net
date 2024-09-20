@@ -19,7 +19,7 @@ namespace Azure.DigitalTwins.Core
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue<InnerError>(Innererror);
+                writer.WriteObjectValue(Innererror);
             }
             writer.WriteEndObject();
         }
@@ -81,11 +81,11 @@ namespace Azure.DigitalTwins.Core
             return DeserializeErrorInformation(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ErrorInformation>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

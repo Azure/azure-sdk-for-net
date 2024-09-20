@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
     public partial class SapMigrateError : IUtf8JsonSerializable, IJsonModel<SapMigrateError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapMigrateError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapMigrateError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapMigrateError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue<SapDiscoveryErrorDetail>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 
         internal static SapMigrateError DeserializeSapMigrateError(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

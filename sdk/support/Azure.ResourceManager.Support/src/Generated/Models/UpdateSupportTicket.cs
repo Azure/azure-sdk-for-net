@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    /// <summary> Updates severity, ticket status, and contact details in the support ticket. </summary>
+    /// <summary> Updates severity, ticket status, contact details, advanced diagnostic consent and secondary consent in the support ticket. </summary>
     public partial class UpdateSupportTicket
     {
         /// <summary>

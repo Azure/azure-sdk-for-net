@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class RouteFilterRuleData : IUtf8JsonSerializable, IJsonModel<RouteFilterRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteFilterRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteFilterRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RouteFilterRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
 
         internal static RouteFilterRuleData DeserializeRouteFilterRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

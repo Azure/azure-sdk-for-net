@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 {
     public partial class GitHubConnectorProperties : IUtf8JsonSerializable, IJsonModel<GitHubConnectorProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitHubConnectorProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitHubConnectorProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GitHubConnectorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static GitHubConnectorProperties DeserializeGitHubConnectorProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

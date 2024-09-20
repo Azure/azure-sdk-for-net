@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class FrontDoorOriginGroupData : IUtf8JsonSerializable, IJsonModel<FrontDoorOriginGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorOriginGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorOriginGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontDoorOriginGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
-                writer.WriteObjectValue<LoadBalancingSettings>(LoadBalancingSettings, options);
+                writer.WriteObjectValue(LoadBalancingSettings, options);
             }
             if (Optional.IsDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
-                writer.WriteObjectValue<HealthProbeSettings>(HealthProbeSettings, options);
+                writer.WriteObjectValue(HealthProbeSettings, options);
             }
             if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn
 
         internal static FrontDoorOriginGroupData DeserializeFrontDoorOriginGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

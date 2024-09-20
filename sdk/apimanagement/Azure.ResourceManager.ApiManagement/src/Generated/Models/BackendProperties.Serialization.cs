@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,9 +16,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal partial class BackendProperties : IUtf8JsonSerializable, IJsonModel<BackendProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackendProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackendProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackendProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackendProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,11 +35,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 throw new FormatException($"The model {nameof(BackendProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ServiceFabricCluster))
             {
                 writer.WritePropertyName("serviceFabricCluster"u8);
-                writer.WriteObjectValue<BackendServiceFabricClusterProperties>(ServiceFabricCluster, options);
+                writer.WriteObjectValue(ServiceFabricCluster, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -46,7 +55,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BackendProperties IJsonModel<BackendProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -63,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static BackendProperties DeserializeBackendProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,6 +100,36 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new BackendProperties(serviceFabricCluster, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceFabricCluster), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceFabricCluster: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceFabricCluster))
+                {
+                    builder.Append("  serviceFabricCluster: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ServiceFabricCluster, options, 2, false, "  serviceFabricCluster: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<BackendProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackendProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -100,6 +138,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BackendProperties)} does not support writing '{options.Format}' format.");
             }

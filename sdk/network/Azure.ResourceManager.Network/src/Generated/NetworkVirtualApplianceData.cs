@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualApplianceAsn"> VirtualAppliance ASN. Microsoft private, public and IANA reserved ASN are not supported. </param>
         /// <param name="sshPublicKey"> Public key for SSH login. </param>
         /// <param name="virtualApplianceNics"> List of Virtual Appliance Network Interfaces. </param>
+        /// <param name="networkProfile"> Network Profile containing configurations for Public and Private NIC. </param>
         /// <param name="additionalNics"> Details required for Additional Network Interface. </param>
         /// <param name="internetIngressPublicIPs"> List of Resource Uri of Public IPs for Internet Ingress Scenario. </param>
         /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="deploymentType"> The deployment type. PartnerManaged for the SaaS NVA. </param>
         /// <param name="delegation"> The delegation for the Virtual Appliance. </param>
         /// <param name="partnerManagedResource"> The delegation for the Virtual Appliance. </param>
-        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, WritableSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, IList<VirtualApplianceAdditionalNicProperties> additionalNics, IList<WritableSubResource> internetIngressPublicIPs, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> virtualApplianceConnections, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, WritableSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile, IList<VirtualApplianceAdditionalNicProperties> additionalNics, IList<WritableSubResource> internetIngressPublicIPs, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> virtualApplianceConnections, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             Identity = identity;
             ETag = etag;
@@ -73,6 +74,7 @@ namespace Azure.ResourceManager.Network
             VirtualApplianceAsn = virtualApplianceAsn;
             SshPublicKey = sshPublicKey;
             VirtualApplianceNics = virtualApplianceNics;
+            NetworkProfile = networkProfile;
             AdditionalNics = additionalNics;
             InternetIngressPublicIPs = internetIngressPublicIPs;
             VirtualApplianceSites = virtualApplianceSites;
@@ -118,6 +120,19 @@ namespace Azure.ResourceManager.Network
         public string SshPublicKey { get; set; }
         /// <summary> List of Virtual Appliance Network Interfaces. </summary>
         public IReadOnlyList<VirtualApplianceNicProperties> VirtualApplianceNics { get; }
+        /// <summary> Network Profile containing configurations for Public and Private NIC. </summary>
+        internal NetworkVirtualAppliancePropertiesFormatNetworkProfile NetworkProfile { get; set; }
+        /// <summary> Gets the network interface configurations. </summary>
+        public IList<VirtualApplianceNetworkInterfaceConfiguration> NetworkInterfaceConfigurations
+        {
+            get
+            {
+                if (NetworkProfile is null)
+                    NetworkProfile = new NetworkVirtualAppliancePropertiesFormatNetworkProfile();
+                return NetworkProfile.NetworkInterfaceConfigurations;
+            }
+        }
+
         /// <summary> Details required for Additional Network Interface. </summary>
         public IList<VirtualApplianceAdditionalNicProperties> AdditionalNics { get; }
         /// <summary> List of Resource Uri of Public IPs for Internet Ingress Scenario. </summary>

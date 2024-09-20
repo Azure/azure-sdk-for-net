@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorScaleCapacity : IUtf8JsonSerializable, IJsonModel<MonitorScaleCapacity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorScaleCapacity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorScaleCapacity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitorScaleCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.Monitor.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("minimum"u8);
-            WriteMinimum(writer);
+            WriteMinimum(writer, options);
             writer.WritePropertyName("maximum"u8);
-            WriteMaximum(writer);
+            WriteMaximum(writer, options);
             writer.WritePropertyName("default"u8);
-            WriteDefault(writer);
+            WriteDefault(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorScaleCapacity DeserializeMonitorScaleCapacity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

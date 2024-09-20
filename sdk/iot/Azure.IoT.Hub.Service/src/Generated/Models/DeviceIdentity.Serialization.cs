@@ -69,12 +69,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue<AuthenticationMechanism>(Authentication);
+                writer.WriteObjectValue(Authentication);
             }
             if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue<DeviceCapabilities>(Capabilities);
+                writer.WriteObjectValue(Capabilities);
             }
             if (Optional.IsDefined(DeviceScope))
             {
@@ -227,11 +227,11 @@ namespace Azure.IoT.Hub.Service.Models
             return DeserializeDeviceIdentity(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DeviceIdentity>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

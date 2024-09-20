@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class HcxEnterpriseSiteData : IUtf8JsonSerializable, IJsonModel<HcxEnterpriseSiteData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HcxEnterpriseSiteData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HcxEnterpriseSiteData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HcxEnterpriseSiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
 
         internal static HcxEnterpriseSiteData DeserializeHcxEnterpriseSiteData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

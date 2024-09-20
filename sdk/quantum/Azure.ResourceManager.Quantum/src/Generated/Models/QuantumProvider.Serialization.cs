@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Quantum.Models
 {
     public partial class QuantumProvider : IUtf8JsonSerializable, IJsonModel<QuantumProvider>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuantumProvider>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuantumProvider>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QuantumProvider>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Quantum.Models
 
         internal static QuantumProvider DeserializeQuantumProvider(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

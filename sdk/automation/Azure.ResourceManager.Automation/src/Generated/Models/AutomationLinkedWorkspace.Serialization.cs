@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class AutomationLinkedWorkspace : IUtf8JsonSerializable, IJsonModel<AutomationLinkedWorkspace>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationLinkedWorkspace>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationLinkedWorkspace>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationLinkedWorkspace>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomationLinkedWorkspace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.Automation.Models
                 throw new FormatException($"The model {nameof(AutomationLinkedWorkspace)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.Automation.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AutomationLinkedWorkspace IJsonModel<AutomationLinkedWorkspace>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -63,7 +70,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationLinkedWorkspace DeserializeAutomationLinkedWorkspace(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

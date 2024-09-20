@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MetastoreRegisterObject>(registerBody);
+            content.JsonWriter.WriteObjectValue(registerBody);
             request.Content = content;
             return message;
         }
@@ -201,7 +201,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MetastoreUpdateObject>(updateBody);
+            content.JsonWriter.WriteObjectValue(updateBody);
             request.Content = content;
             return message;
         }

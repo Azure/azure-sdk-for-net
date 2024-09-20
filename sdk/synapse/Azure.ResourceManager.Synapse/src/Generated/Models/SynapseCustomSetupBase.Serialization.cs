@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Synapse.Models
     [PersistableModelProxy(typeof(UnknownCustomSetupBase))]
     public partial class SynapseCustomSetupBase : IUtf8JsonSerializable, IJsonModel<SynapseCustomSetupBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseCustomSetupBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseCustomSetupBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseCustomSetupBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseCustomSetupBase DeserializeSynapseCustomSetupBase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -1,16 +1,50 @@
 # Release History
 
-## 6.3.0-beta.1 (Unreleased)
+## 6.4.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Added a new setting to `EventHubOptions` to allow checkpointing to be disabled for applications that always want to use their `initialOffsetOptions` when starting to process a new partition.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 6.3.5 (2024-08-01)
+
+### Other Changes
+
+- Bump dependency on `Azure.Messaging.EventHubs` to 5.11.5.
+
+## 6.3.4 (2024-07-25)
+
+### Other Changes
+
+- When the trigger's connection property is set to a valid connection string instead of an informational name, the mistake will be detected and sensitive information will be redacted from the error message to avoid accidental capture in logs and similar mechanisms.
+
+## 6.3.3 (2024-06-13)
+
+### Other Changes
+
+- To mitigate a vulnerability, updating the transitive dependency for `Azure.Identity` to v1.11.4 via version bump to `Microsoft.Extensions.Azure`.
+
+## 6.3.2 (2024-04-29)
+
+### Bugs Fixed
+
+- Fixed an issue with scale metrics computation, potentially causing unnecessary scale-up.
+
+## 6.3.1 (2024-04-17)
+
+### Other Changes
+
+- To mitigate a [disclosure vulnerability](https://github.com/advisories/GHSA-wvxc-855f-jvrv), updating the transitive dependency for `Azure.Identity` to v1.11.1 via version bump to `Microsoft.Extensions.Azure`.
+
+## 6.3.0 (2024-04-10)
+
+### Features Added
+
+- Added a new setting to `EventHubOptions` to allow checkpointing to be disabled for applications that always want to use their `initialOffsetOptions` when starting to process a new partition.
 
 ## 6.2.0 (2024-03-05)
 

@@ -15,7 +15,7 @@ namespace Azure.Analytics.Purview.DataMap
 {
     public partial class AtlasEntityDef : IUtf8JsonSerializable, IJsonModel<AtlasEntityDef>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AtlasEntityDef>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AtlasEntityDef>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AtlasEntityDef>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(DateFormatter))
             {
                 writer.WritePropertyName("dateFormatter"u8);
-                writer.WriteObjectValue<AtlasDateFormat>(DateFormatter, options);
+                writer.WriteObjectValue(DateFormatter, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in AttributeDefs)
                 {
-                    writer.WriteObjectValue<AtlasAttributeDef>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +138,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in RelationshipAttributeDefs)
                 {
-                    writer.WriteObjectValue<AtlasRelationshipAttributeDef>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -174,7 +174,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         internal static AtlasEntityDef DeserializeAtlasEntityDef(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -424,11 +424,11 @@ namespace Azure.Analytics.Purview.DataMap
             return DeserializeAtlasEntityDef(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AtlasEntityDef>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

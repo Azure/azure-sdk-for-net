@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Redirect Url containing the SSO URL value. </summary>
+        [WirePath("value")]
         public string Value { get; }
     }
 }

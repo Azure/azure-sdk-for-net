@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Datadog.Models
 {
     public partial class MonitorProperties : IUtf8JsonSerializable, IJsonModel<MonitorProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(DatadogOrganizationProperties))
             {
                 writer.WritePropertyName("datadogOrganizationProperties"u8);
-                writer.WriteObjectValue<DatadogOrganizationProperties>(DatadogOrganizationProperties, options);
+                writer.WriteObjectValue(DatadogOrganizationProperties, options);
             }
             if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue<UserInfo>(UserInfo, options);
+                writer.WriteObjectValue(UserInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static MonitorProperties DeserializeMonitorProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

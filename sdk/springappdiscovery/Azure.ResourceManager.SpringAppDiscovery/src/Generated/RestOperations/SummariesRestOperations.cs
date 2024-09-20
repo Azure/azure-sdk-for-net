@@ -36,6 +36,22 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string siteName, string summaryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OffAzureSpringBoot/springbootsites/", false);
+            uri.AppendPath(siteName, true);
+            uri.AppendPath("/summaries/", false);
+            uri.AppendPath(summaryName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string siteName, string summaryName)
         {
             var message = _pipeline.CreateMessage();
@@ -124,6 +140,21 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             }
         }
 
+        internal RequestUriBuilder CreateListBySiteRequestUri(string subscriptionId, string resourceGroupName, string siteName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OffAzureSpringBoot/springbootsites/", false);
+            uri.AppendPath(siteName, true);
+            uri.AppendPath("/summaries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySiteRequest(string subscriptionId, string resourceGroupName, string siteName)
         {
             var message = _pipeline.CreateMessage();
@@ -201,6 +232,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySiteNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string siteName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySiteNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string siteName)

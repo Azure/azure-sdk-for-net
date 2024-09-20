@@ -109,7 +109,7 @@ namespace Azure.Storage
             this ClientOptions options,
             HttpPipelinePolicy authentication = null,
             Uri geoRedundantSecondaryStorageUri = null,
-            ExpectContinueOptions expectContinue = null)
+            Request100ContinueOptions expectContinue = null)
         {
             StorageResponseClassifier classifier = new();
             var pipelineOptions = new HttpPipelineOptions(options)
@@ -131,20 +131,20 @@ namespace Azure.Storage
             {
                 switch (expectContinue.Mode)
                 {
-                    case ExpectContinueMode.ApplyOnThrottle:
+                    case Request100ContinueMode.Auto:
                         pipelineOptions.PerCallPolicies.Add(new ExpectContinueOnThrottlePolicy()
                         {
-                            ThrottleInterval = expectContinue.ThrottleInterval,
+                            ThrottleInterval = expectContinue.AutoInterval,
                             ContentLengthThreshold = expectContinue.ContentLengthThreshold ?? 0,
                         });
                         break;
-                    case ExpectContinueMode.On:
+                    case Request100ContinueMode.Always:
                         pipelineOptions.PerCallPolicies.Add(new ExpectContinuePolicy()
                         {
                             ContentLengthThreshold = expectContinue.ContentLengthThreshold ?? 0,
                         });
                         break;
-                    case ExpectContinueMode.Off:
+                    case Request100ContinueMode.Never:
                         break;
                 }
             }
@@ -172,7 +172,7 @@ namespace Azure.Storage
             this ClientOptions options,
             object credentials,
             Uri geoRedundantSecondaryStorageUri = null,
-            ExpectContinueOptions expectContinue = null) =>
+            Request100ContinueOptions expectContinue = null) =>
             Build(options, GetAuthenticationPolicy(credentials), geoRedundantSecondaryStorageUri, expectContinue);
     }
 }

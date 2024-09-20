@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of <see cref="WorkbookTemplateGallery"/>. </summary>
         /// <param name="name"> Name of the workbook template in the gallery. </param>
         /// <param name="category"> Category for the gallery. </param>
-        /// <param name="workbookTemplateGalleryType"> Type of workbook supported by the workbook template. </param>
+        /// <param name="workbookType"> Type of workbook supported by the workbook template. </param>
         /// <param name="order"> Order of the template within the gallery. </param>
         /// <param name="resourceType"> Azure resource type supported by the gallery. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkbookTemplateGallery(string name, string category, string workbookTemplateGalleryType, int? order, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkbookTemplateGallery(string name, string category, string workbookType, int? order, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Category = category;
-            WorkbookTemplateGalleryType = workbookTemplateGalleryType;
+            WorkbookType = workbookType;
             Order = order;
             ResourceType = resourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string Category { get; set; }
         /// <summary> Type of workbook supported by the workbook template. </summary>
         [WirePath("type")]
-        public string WorkbookTemplateGalleryType { get; set; }
+        public string WorkbookType { get; set; }
         /// <summary> Order of the template within the gallery. </summary>
         [WirePath("order")]
         public int? Order { get; set; }

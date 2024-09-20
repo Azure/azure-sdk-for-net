@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformServiceTestKeys : IUtf8JsonSerializable, IJsonModel<AppPlatformServiceTestKeys>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformServiceTestKeys>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformServiceTestKeys>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformServiceTestKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformServiceTestKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 throw new FormatException($"The model {nameof(AppPlatformServiceTestKeys)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
@@ -66,7 +74,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppPlatformServiceTestKeys IJsonModel<AppPlatformServiceTestKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -83,7 +90,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformServiceTestKeys DeserializeAppPlatformServiceTestKeys(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

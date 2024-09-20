@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 {
     public partial class ResourceQueryContent : IUtf8JsonSerializable, IJsonModel<ResourceQueryContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceQueryContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceQueryContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceQueryContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue<ResourceQueryRequestOptions>(Options, options);
+                writer.WriteObjectValue(Options, options);
             }
             if (Optional.IsCollectionDefined(Facets))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 writer.WriteStartArray();
                 foreach (var item in Facets)
                 {
-                    writer.WriteObjectValue<FacetRequest>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         internal static ResourceQueryContent DeserializeResourceQueryContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

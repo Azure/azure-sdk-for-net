@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ProviderRegistrationContent : IUtf8JsonSerializable, IJsonModel<ProviderRegistrationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderRegistrationContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderRegistrationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProviderRegistrationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProviderRegistrationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,11 +34,10 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new FormatException($"The model {nameof(ProviderRegistrationContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ThirdPartyProviderConsent))
             {
                 writer.WritePropertyName("thirdPartyProviderConsent"u8);
-                writer.WriteObjectValue<ProviderConsentDefinition>(ThirdPartyProviderConsent, options);
+                writer.WriteObjectValue(ThirdPartyProviderConsent, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.Resources.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ProviderRegistrationContent IJsonModel<ProviderRegistrationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -63,7 +70,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ProviderRegistrationContent DeserializeProviderRegistrationContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

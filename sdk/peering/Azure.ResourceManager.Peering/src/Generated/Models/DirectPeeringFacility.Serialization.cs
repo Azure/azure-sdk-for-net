@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Peering.Models
 {
     public partial class DirectPeeringFacility : IUtf8JsonSerializable, IJsonModel<DirectPeeringFacility>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DirectPeeringFacility>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DirectPeeringFacility>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DirectPeeringFacility>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static DirectPeeringFacility DeserializeDirectPeeringFacility(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

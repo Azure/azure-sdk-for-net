@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +34,37 @@ namespace Azure.ResourceManager.Sphere
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByCatalogRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string filter, int? top, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/certificates", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByCatalogRequest(string subscriptionId, string resourceGroupName, string catalogName, string filter, int? top, int? skip, int? maxpagesize)
@@ -140,6 +170,22 @@ namespace Azure.ResourceManager.Sphere
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(serialNumber, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber)
         {
             var message = _pipeline.CreateMessage();
@@ -228,6 +274,23 @@ namespace Azure.ResourceManager.Sphere
             }
         }
 
+        internal RequestUriBuilder CreateRetrieveCertChainRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(serialNumber, true);
+            uri.AppendPath("/retrieveCertChain", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRetrieveCertChainRequest(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber)
         {
             var message = _pipeline.CreateMessage();
@@ -313,6 +376,23 @@ namespace Azure.ResourceManager.Sphere
             }
         }
 
+        internal RequestUriBuilder CreateRetrieveProofOfPossessionNonceRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber, ProofOfPossessionNonceContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(serialNumber, true);
+            uri.AppendPath("/retrieveProofOfPossessionNonce", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRetrieveProofOfPossessionNonceRequest(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber, ProofOfPossessionNonceContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -334,7 +414,7 @@ namespace Azure.ResourceManager.Sphere
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<ProofOfPossessionNonceContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -404,6 +484,14 @@ namespace Azure.ResourceManager.Sphere
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByCatalogNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string catalogName, string filter, int? top, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByCatalogNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string catalogName, string filter, int? top, int? skip, int? maxpagesize)

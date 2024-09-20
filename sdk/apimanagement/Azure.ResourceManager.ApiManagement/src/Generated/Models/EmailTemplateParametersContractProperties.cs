@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Template parameter name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Template parameter title. </summary>
+        [WirePath("title")]
         public string Title { get; set; }
         /// <summary> Template parameter description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
     }
 }

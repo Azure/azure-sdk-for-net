@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Event handler of a hub. </summary>
+        [WirePath("eventHandlers")]
         public IList<WebPubSubEventHandler> EventHandlers { get; }
         /// <summary> The settings for configuring if anonymous connections are allowed for this hub: "allow" or "deny". Default to "deny". </summary>
+        [WirePath("anonymousConnectPolicy")]
         public string AnonymousConnectPolicy { get; set; }
     }
 }

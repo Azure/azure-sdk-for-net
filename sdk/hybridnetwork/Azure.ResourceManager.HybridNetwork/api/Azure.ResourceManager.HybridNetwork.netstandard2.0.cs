@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HybridNetwork
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ArtifactManifestData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ArtifactManifestData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArtifactManifestResource : Azure.ResourceManager.ArmResource
+    public partial class ArtifactManifestResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.ArtifactManifestData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ArtifactManifestData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ArtifactManifestResource() { }
@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.HybridNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.ArtifactManifestResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.ArtifactManifestResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.ArtifactManifestResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridNetwork.ArtifactManifestData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.ArtifactManifestData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.ArtifactManifestData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridNetwork.ArtifactManifestData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ArtifactManifestData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ArtifactManifestData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ArtifactManifestData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.ArtifactManifestResource> Update(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.ArtifactManifestResource>> UpdateAsync(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridNetwork.Models.ArtifactManifestUpdateState> UpdateState(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridNetwork.Models.ArtifactManifestUpdateState artifactManifestUpdateState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -78,7 +83,7 @@ namespace Azure.ResourceManager.HybridNetwork
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ArtifactStoreData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ArtifactStoreData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArtifactStoreResource : Azure.ResourceManager.ArmResource
+    public partial class ArtifactStoreResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.ArtifactStoreData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ArtifactStoreData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ArtifactStoreResource() { }
@@ -102,6 +107,11 @@ namespace Azure.ResourceManager.HybridNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.ArtifactStoreResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.ArtifactStoreResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.ArtifactStoreResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridNetwork.ArtifactStoreData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.ArtifactStoreData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.ArtifactStoreData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridNetwork.ArtifactStoreData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ArtifactStoreData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ArtifactStoreData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ArtifactStoreData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.ArtifactStoreResource> Update(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.ArtifactStoreResource>> UpdateAsync(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridNetwork.Models.ProxyArtifactVersionsListOverview> UpdateStateProxyArtifact(Azure.WaitUntil waitUntil, string artifactVersionName, string artifactName, Azure.ResourceManager.HybridNetwork.Models.ArtifactChangeState artifactChangeState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -132,7 +142,7 @@ namespace Azure.ResourceManager.HybridNetwork
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ComponentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ComponentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ComponentResource : Azure.ResourceManager.ArmResource
+    public partial class ComponentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.ComponentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ComponentData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ComponentResource() { }
@@ -141,6 +151,11 @@ namespace Azure.ResourceManager.HybridNetwork
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkFunctionName, string componentName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.ComponentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.ComponentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridNetwork.ComponentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.ComponentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.ComponentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridNetwork.ComponentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ComponentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ComponentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ComponentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ConfigurationGroupSchemaCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaResource>, System.Collections.IEnumerable
     {
@@ -169,7 +184,7 @@ namespace Azure.ResourceManager.HybridNetwork
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConfigurationGroupSchemaResource : Azure.ResourceManager.ArmResource
+    public partial class ConfigurationGroupSchemaResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ConfigurationGroupSchemaResource() { }
@@ -186,6 +201,11 @@ namespace Azure.ResourceManager.HybridNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaResource> Update(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaResource>> UpdateAsync(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridNetwork.Models.ConfigurationGroupSchemaVersionUpdateState> UpdateState(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridNetwork.Models.ConfigurationGroupSchemaVersionUpdateState configurationGroupSchemaVersionUpdateState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -218,7 +238,7 @@ namespace Azure.ResourceManager.HybridNetwork
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ConfigurationGroupValueData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ConfigurationGroupValueData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConfigurationGroupValueResource : Azure.ResourceManager.ArmResource
+    public partial class ConfigurationGroupValueResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.ConfigurationGroupValueData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ConfigurationGroupValueData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ConfigurationGroupValueResource() { }
@@ -235,6 +255,11 @@ namespace Azure.ResourceManager.HybridNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.ConfigurationGroupValueResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.ConfigurationGroupValueResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.ConfigurationGroupValueResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridNetwork.ConfigurationGroupValueData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.ConfigurationGroupValueData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.ConfigurationGroupValueData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridNetwork.ConfigurationGroupValueData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ConfigurationGroupValueData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ConfigurationGroupValueData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.ConfigurationGroupValueData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.ConfigurationGroupValueResource> Update(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.ConfigurationGroupValueResource>> UpdateAsync(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -335,7 +360,7 @@ namespace Azure.ResourceManager.HybridNetwork
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkFunctionDefinitionGroupResource : Azure.ResourceManager.ArmResource
+    public partial class NetworkFunctionDefinitionGroupResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionGroupData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected NetworkFunctionDefinitionGroupResource() { }
@@ -355,6 +380,11 @@ namespace Azure.ResourceManager.HybridNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionGroupResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionGroupResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionGroupResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionGroupResource> Update(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionGroupResource>> UpdateAsync(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -385,7 +415,7 @@ namespace Azure.ResourceManager.HybridNetwork
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkFunctionDefinitionVersionResource : Azure.ResourceManager.ArmResource
+    public partial class NetworkFunctionDefinitionVersionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionVersionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected NetworkFunctionDefinitionVersionResource() { }
@@ -402,12 +432,17 @@ namespace Azure.ResourceManager.HybridNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionVersionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionVersionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionVersionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionVersionResource> Update(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionVersionResource>> UpdateAsync(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridNetwork.Models.NetworkFunctionDefinitionVersionUpdateState> UpdateState(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridNetwork.Models.NetworkFunctionDefinitionVersionUpdateState networkFunctionDefinitionVersionUpdateState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridNetwork.Models.NetworkFunctionDefinitionVersionUpdateState>> UpdateStateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridNetwork.Models.NetworkFunctionDefinitionVersionUpdateState networkFunctionDefinitionVersionUpdateState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class NetworkFunctionResource : Azure.ResourceManager.ArmResource
+    public partial class NetworkFunctionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected NetworkFunctionResource() { }
@@ -429,6 +464,11 @@ namespace Azure.ResourceManager.HybridNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkFunctionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkFunctionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkFunctionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridNetwork.NetworkFunctionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridNetwork.NetworkFunctionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkFunctionResource> Update(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkFunctionResource>> UpdateAsync(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -459,7 +499,7 @@ namespace Azure.ResourceManager.HybridNetwork
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkServiceDesignGroupResource : Azure.ResourceManager.ArmResource
+    public partial class NetworkServiceDesignGroupResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignGroupData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected NetworkServiceDesignGroupResource() { }
@@ -479,6 +519,11 @@ namespace Azure.ResourceManager.HybridNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignGroupResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignGroupResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignGroupResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridNetwork.NetworkServiceDesignGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridNetwork.NetworkServiceDesignGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignGroupResource> Update(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignGroupResource>> UpdateAsync(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -509,7 +554,7 @@ namespace Azure.ResourceManager.HybridNetwork
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkServiceDesignVersionResource : Azure.ResourceManager.ArmResource
+    public partial class NetworkServiceDesignVersionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignVersionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected NetworkServiceDesignVersionResource() { }
@@ -526,6 +571,11 @@ namespace Azure.ResourceManager.HybridNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignVersionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignVersionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignVersionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridNetwork.NetworkServiceDesignVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridNetwork.NetworkServiceDesignVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignVersionResource> Update(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.NetworkServiceDesignVersionResource>> UpdateAsync(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridNetwork.Models.NetworkServiceDesignVersionUpdateState> UpdateState(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridNetwork.Models.NetworkServiceDesignVersionUpdateState networkServiceDesignVersionUpdateState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -559,7 +609,7 @@ namespace Azure.ResourceManager.HybridNetwork
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.PublisherData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.PublisherData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PublisherResource : Azure.ResourceManager.ArmResource
+    public partial class PublisherResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.PublisherData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.PublisherData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PublisherResource() { }
@@ -588,6 +638,11 @@ namespace Azure.ResourceManager.HybridNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.PublisherResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.PublisherResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.PublisherResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridNetwork.PublisherData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.PublisherData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.PublisherData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridNetwork.PublisherData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.PublisherData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.PublisherData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.PublisherData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.PublisherResource> Update(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.PublisherResource>> UpdateAsync(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -647,7 +702,7 @@ namespace Azure.ResourceManager.HybridNetwork
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.SiteNetworkServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.SiteNetworkServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SiteNetworkServiceResource : Azure.ResourceManager.ArmResource
+    public partial class SiteNetworkServiceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.SiteNetworkServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.SiteNetworkServiceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SiteNetworkServiceResource() { }
@@ -664,10 +719,15 @@ namespace Azure.ResourceManager.HybridNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.SiteNetworkServiceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.SiteNetworkServiceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.SiteNetworkServiceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridNetwork.SiteNetworkServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.SiteNetworkServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.SiteNetworkServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridNetwork.SiteNetworkServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.SiteNetworkServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.SiteNetworkServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.SiteNetworkServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.SiteNetworkServiceResource> Update(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.SiteNetworkServiceResource>> UpdateAsync(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SiteResource : Azure.ResourceManager.ArmResource
+    public partial class SiteResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.SiteData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.SiteData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SiteResource() { }
@@ -684,6 +744,11 @@ namespace Azure.ResourceManager.HybridNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.SiteResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.SiteResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.SiteResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridNetwork.SiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.SiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.SiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridNetwork.SiteData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.SiteData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.SiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.SiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridNetwork.SiteResource> Update(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridNetwork.SiteResource>> UpdateAsync(Azure.ResourceManager.HybridNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownDataset))]
     public partial class DataFactoryDatasetProperties : IUtf8JsonSerializable, IJsonModel<DataFactoryDatasetProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryDatasetProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryDatasetProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataFactoryDatasetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<EntityParameterSpecification>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue<DatasetFolder>(Folder, options);
+                writer.WriteObjectValue(Folder, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFactoryDatasetProperties DeserializeDataFactoryDatasetProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -167,6 +167,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "HiveObject": return HiveObjectDataset.DeserializeHiveObjectDataset(element, options);
                     case "HttpFile": return DataFactoryHttpDataset.DeserializeDataFactoryHttpDataset(element, options);
                     case "HubspotObject": return HubspotObjectDataset.DeserializeHubspotObjectDataset(element, options);
+                    case "Iceberg": return IcebergDataset.DeserializeIcebergDataset(element, options);
                     case "ImpalaObject": return ImpalaObjectDataset.DeserializeImpalaObjectDataset(element, options);
                     case "InformixTable": return InformixTableDataset.DeserializeInformixTableDataset(element, options);
                     case "JiraObject": return JiraObjectDataset.DeserializeJiraObjectDataset(element, options);

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class PredictiveAutoscalePolicy : IUtf8JsonSerializable, IJsonModel<PredictiveAutoscalePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredictiveAutoscalePolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredictiveAutoscalePolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PredictiveAutoscalePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static PredictiveAutoscalePolicy DeserializePredictiveAutoscalePolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Consumption
 {
     public partial class ConsumptionBudgetData : IUtf8JsonSerializable, IJsonModel<ConsumptionBudgetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionBudgetData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionBudgetData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionBudgetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.Consumption
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue<BudgetTimePeriod>(TimePeriod, options);
+                writer.WriteObjectValue(TimePeriod, options);
             }
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue<ConsumptionBudgetFilter>(Filter, options);
+                writer.WriteObjectValue(Filter, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentSpend))
             {
                 writer.WritePropertyName("currentSpend"u8);
-                writer.WriteObjectValue<BudgetCurrentSpend>(CurrentSpend, options);
+                writer.WriteObjectValue(CurrentSpend, options);
             }
             if (Optional.IsCollectionDefined(Notifications))
             {
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.Consumption
                 foreach (var item in Notifications)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<BudgetAssociatedNotification>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (options.Format != "W" && Optional.IsDefined(ForecastSpend))
             {
                 writer.WritePropertyName("forecastSpend"u8);
-                writer.WriteObjectValue<BudgetForecastSpend>(ForecastSpend, options);
+                writer.WriteObjectValue(ForecastSpend, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.Consumption
 
         internal static ConsumptionBudgetData DeserializeConsumptionBudgetData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? eTag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Consumption
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Consumption
                 currentSpend,
                 notifications ?? new ChangeTrackingDictionary<string, BudgetAssociatedNotification>(),
                 forecastSpend,
-                eTag,
+                etag,
                 serializedAdditionalRawData);
         }
 

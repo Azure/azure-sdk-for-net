@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceNetworking
 {
     public partial class FrontendData : IUtf8JsonSerializable, IJsonModel<FrontendData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontendData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontendData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontendData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ServiceNetworking
 
         internal static FrontendData DeserializeFrontendData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

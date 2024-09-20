@@ -15,7 +15,7 @@ namespace Azure.Analytics.Defender.Easm
 {
     internal partial class UnknownDataConnectionPayload : IUtf8JsonSerializable, IJsonModel<DataConnectionPayload>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataConnectionPayload>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataConnectionPayload>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataConnectionPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Defender.Easm
 
         internal static UnknownDataConnectionPayload DeserializeUnknownDataConnectionPayload(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -186,11 +186,11 @@ namespace Azure.Analytics.Defender.Easm
             return DeserializeUnknownDataConnectionPayload(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UnknownDataConnectionPayload>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue<DataConnectionPayload>(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

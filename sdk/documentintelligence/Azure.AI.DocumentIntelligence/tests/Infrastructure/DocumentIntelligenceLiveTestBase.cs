@@ -15,11 +15,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
             : base(isAsync, mode)
         {
             JsonPathSanitizers.Add("$..accessToken");
-            BodyKeySanitizers.Add(new BodyKeySanitizer("https://sanitized.blob.core.windows.net") { JsonPath = "$..containerUrl" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..containerUrl") { Value = "https://sanitized.blob.core.windows.net" });
             SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
         }
 
-        protected string ServiceVersionString { get; } = "2024-02-29-preview";
+        protected string ServiceVersionString { get; } = "2024-07-31-preview";
 
         protected DocumentIntelligenceClient CreateDocumentIntelligenceClient(bool useTokenCredential = false)
         {

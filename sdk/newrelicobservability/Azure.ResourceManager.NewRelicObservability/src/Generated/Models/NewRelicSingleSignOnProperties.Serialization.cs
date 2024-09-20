@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     public partial class NewRelicSingleSignOnProperties : IUtf8JsonSerializable, IJsonModel<NewRelicSingleSignOnProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicSingleSignOnProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicSingleSignOnProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NewRelicSingleSignOnProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         internal static NewRelicSingleSignOnProperties DeserializeNewRelicSingleSignOnProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -133,6 +134,89 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicSingleSignOnProperties(singleSignOnState, enterpriseAppId, singleSignOnUrl, provisioningState, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SingleSignOnState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  singleSignOnState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SingleSignOnState))
+                {
+                    builder.Append("  singleSignOnState: ");
+                    builder.AppendLine($"'{SingleSignOnState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnterpriseAppId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enterpriseAppId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnterpriseAppId))
+                {
+                    builder.Append("  enterpriseAppId: ");
+                    if (EnterpriseAppId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EnterpriseAppId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EnterpriseAppId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SingleSignOnUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  singleSignOnUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SingleSignOnUri))
+                {
+                    builder.Append("  singleSignOnUrl: ");
+                    builder.AppendLine($"'{SingleSignOnUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("  provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<NewRelicSingleSignOnProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicSingleSignOnProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,6 +225,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NewRelicSingleSignOnProperties)} does not support writing '{options.Format}' format.");
             }

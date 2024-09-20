@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class WorkbookTemplateLocalizedGallery : IUtf8JsonSerializable, IJsonModel<WorkbookTemplateLocalizedGallery>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkbookTemplateLocalizedGallery>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkbookTemplateLocalizedGallery>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkbookTemplateLocalizedGallery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WorkbookTemplateLocalizedGallery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,7 +36,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 throw new FormatException($"The model {nameof(WorkbookTemplateLocalizedGallery)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(TemplateData))
             {
                 writer.WritePropertyName("templateData"u8);
@@ -46,7 +54,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Galleries)
                 {
-                    writer.WriteObjectValue<WorkbookTemplateGallery>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +73,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WorkbookTemplateLocalizedGallery IJsonModel<WorkbookTemplateLocalizedGallery>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -82,7 +89,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static WorkbookTemplateLocalizedGallery DeserializeWorkbookTemplateLocalizedGallery(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -138,31 +145,33 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateData), out propertyOverride);
-            if (Optional.IsDefined(TemplateData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  templateData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TemplateData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  templateData: ");
                     builder.AppendLine($"'{TemplateData.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Galleries), out propertyOverride);
-            if (Optional.IsCollectionDefined(Galleries) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Galleries.Any() || hasPropertyOverride)
+                builder.Append("  galleries: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Galleries))
                 {
-                    builder.Append("  galleries: ");
-                    if (hasPropertyOverride)
+                    if (Galleries.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  galleries: ");
                         builder.AppendLine("[");
                         foreach (var item in Galleries)
                         {

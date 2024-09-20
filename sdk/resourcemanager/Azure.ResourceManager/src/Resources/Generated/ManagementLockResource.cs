@@ -196,7 +196,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _managementLockRestClient.DeleteByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation(response);
+                var uri = _managementLockRestClient.CreateDeleteByScopeRequestUri(Id.Parent, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ResourcesArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -238,7 +240,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _managementLockRestClient.DeleteByScope(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ResourcesArmOperation(response);
+                var uri = _managementLockRestClient.CreateDeleteByScopeRequestUri(Id.Parent, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ResourcesArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -284,7 +288,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _managementLockRestClient.CreateOrUpdateByScopeAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<ManagementLockResource>(Response.FromValue(new ManagementLockResource(Client, response), response.GetRawResponse()));
+                var uri = _managementLockRestClient.CreateCreateOrUpdateByScopeRequestUri(Id.Parent, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ResourcesArmOperation<ManagementLockResource>(Response.FromValue(new ManagementLockResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -330,7 +336,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _managementLockRestClient.CreateOrUpdateByScope(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new ResourcesArmOperation<ManagementLockResource>(Response.FromValue(new ManagementLockResource(Client, response), response.GetRawResponse()));
+                var uri = _managementLockRestClient.CreateCreateOrUpdateByScopeRequestUri(Id.Parent, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ResourcesArmOperation<ManagementLockResource>(Response.FromValue(new ManagementLockResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

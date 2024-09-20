@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Automation.Models
 {
     internal partial class AutomationScheduleListResult : IUtf8JsonSerializable, IJsonModel<AutomationScheduleListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationScheduleListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationScheduleListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationScheduleListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomationScheduleListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,14 +34,13 @@ namespace Azure.ResourceManager.Automation.Models
                 throw new FormatException($"The model {nameof(AutomationScheduleListResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<AutomationScheduleData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.Automation.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AutomationScheduleListResult IJsonModel<AutomationScheduleListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,7 +80,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationScheduleListResult DeserializeAutomationScheduleListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

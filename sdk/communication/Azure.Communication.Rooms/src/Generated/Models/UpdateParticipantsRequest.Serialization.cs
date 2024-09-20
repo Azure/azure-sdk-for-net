@@ -22,18 +22,18 @@ namespace Azure.Communication.Rooms
                 foreach (var item in Participants)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ParticipantProperties>(item.Value);
+                    writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UpdateParticipantsRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

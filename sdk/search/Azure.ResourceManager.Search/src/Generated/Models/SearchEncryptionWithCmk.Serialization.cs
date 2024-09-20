@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Search.Models
 {
     public partial class SearchEncryptionWithCmk : IUtf8JsonSerializable, IJsonModel<SearchEncryptionWithCmk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchEncryptionWithCmk>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchEncryptionWithCmk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SearchEncryptionWithCmk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static SearchEncryptionWithCmk DeserializeSearchEncryptionWithCmk(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,29 +120,31 @@ namespace Azure.ResourceManager.Search.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enforcement), out propertyOverride);
-            if (Optional.IsDefined(Enforcement) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  enforcement: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Enforcement))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  enforcement: ");
                     builder.AppendLine($"'{Enforcement.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionComplianceStatus), out propertyOverride);
-            if (Optional.IsDefined(EncryptionComplianceStatus) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  encryptionComplianceStatus: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncryptionComplianceStatus))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  encryptionComplianceStatus: ");
                     builder.AppendLine($"'{EncryptionComplianceStatus.Value.ToSerialString()}'");
                 }
             }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotCentral.Models
 {
     public partial class IotCentralAppTemplateLocation : IUtf8JsonSerializable, IJsonModel<IotCentralAppTemplateLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotCentralAppTemplateLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotCentralAppTemplateLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IotCentralAppTemplateLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.IotCentral.Models
 
         internal static IotCentralAppTemplateLocation DeserializeIotCentralAppTemplateLocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityAssessmentMetadataData : IUtf8JsonSerializable, IJsonModel<SecurityAssessmentMetadataData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAssessmentMetadataData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAssessmentMetadataData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityAssessmentMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(PartnerData))
             {
                 writer.WritePropertyName("partnerData"u8);
-                writer.WriteObjectValue<SecurityAssessmentMetadataPartner>(PartnerData, options);
+                writer.WriteObjectValue(PartnerData, options);
             }
             if (Optional.IsDefined(PublishDates))
             {
                 writer.WritePropertyName("publishDates"u8);
-                writer.WriteObjectValue<SecurityAssessmentPublishDates>(PublishDates, options);
+                writer.WriteObjectValue(PublishDates, options);
             }
             if (Optional.IsDefined(PlannedDeprecationDate))
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static SecurityAssessmentMetadataData DeserializeSecurityAssessmentMetadataData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EdgeOrder
 {
     public partial class EdgeOrderItemData : IUtf8JsonSerializable, IJsonModel<EdgeOrderItemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderItemData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderItemData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeOrderItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.EdgeOrder
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("orderItemDetails"u8);
-            writer.WriteObjectValue<EdgeOrderItemDetails>(OrderItemDetails, options);
+            writer.WriteObjectValue(OrderItemDetails, options);
             writer.WritePropertyName("addressDetails"u8);
-            writer.WriteObjectValue<EdgeOrderItemAddressDetails>(AddressDetails, options);
+            writer.WriteObjectValue(AddressDetails, options);
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EdgeOrder
 
         internal static EdgeOrderItemData DeserializeEdgeOrderItemData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

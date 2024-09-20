@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +36,21 @@ namespace Azure.ResourceManager.Confluent
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateValidateOrganizationRequestUri(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/validations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/orgvalidate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateValidateOrganizationRequest(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationData data)
         {
             var message = _pipeline.CreateMessage();
@@ -56,7 +70,7 @@ namespace Azure.ResourceManager.Confluent
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ConfluentOrganizationData>(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -124,6 +138,21 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateValidateOrganizationV2RequestUri(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/validations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/orgvalidateV2", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateValidateOrganizationV2Request(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationData data)
         {
             var message = _pipeline.CreateMessage();
@@ -143,7 +172,7 @@ namespace Azure.ResourceManager.Confluent
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ConfluentOrganizationData>(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;

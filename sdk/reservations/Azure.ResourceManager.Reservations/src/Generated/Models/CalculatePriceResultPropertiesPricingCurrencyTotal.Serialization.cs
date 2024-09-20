@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class CalculatePriceResultPropertiesPricingCurrencyTotal : IUtf8JsonSerializable, IJsonModel<CalculatePriceResultPropertiesPricingCurrencyTotal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CalculatePriceResultPropertiesPricingCurrencyTotal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CalculatePriceResultPropertiesPricingCurrencyTotal>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CalculatePriceResultPropertiesPricingCurrencyTotal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static CalculatePriceResultPropertiesPricingCurrencyTotal DeserializeCalculatePriceResultPropertiesPricingCurrencyTotal(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class PartnerNamespaceChannelPatch : IUtf8JsonSerializable, IJsonModel<PartnerNamespaceChannelPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerNamespaceChannelPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerNamespaceChannelPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PartnerNamespaceChannelPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(PartnerDestinationInfo))
             {
                 writer.WritePropertyName("partnerDestinationInfo"u8);
-                writer.WriteObjectValue<PartnerUpdateDestinationInfo>(PartnerDestinationInfo, options);
+                writer.WriteObjectValue(PartnerDestinationInfo, options);
             }
             if (Optional.IsDefined(PartnerTopicInfo))
             {
                 writer.WritePropertyName("partnerTopicInfo"u8);
-                writer.WriteObjectValue<PartnerUpdateTopicInfo>(PartnerTopicInfo, options);
+                writer.WriteObjectValue(PartnerTopicInfo, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static PartnerNamespaceChannelPatch DeserializePartnerNamespaceChannelPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

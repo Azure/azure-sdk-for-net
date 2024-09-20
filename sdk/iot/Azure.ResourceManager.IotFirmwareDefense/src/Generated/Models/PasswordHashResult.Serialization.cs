@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     public partial class PasswordHashResult : IUtf8JsonSerializable, IJsonModel<PasswordHashResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PasswordHashResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PasswordHashResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PasswordHashResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         internal static PasswordHashResult DeserializePasswordHashResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

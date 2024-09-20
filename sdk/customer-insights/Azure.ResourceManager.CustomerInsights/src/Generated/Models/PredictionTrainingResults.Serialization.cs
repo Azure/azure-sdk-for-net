@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class PredictionTrainingResults : IUtf8JsonSerializable, IJsonModel<PredictionTrainingResults>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredictionTrainingResults>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredictionTrainingResults>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PredictionTrainingResults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             if (options.Format != "W" && Optional.IsDefined(PredictionDistribution))
             {
                 writer.WritePropertyName("predictionDistribution"u8);
-                writer.WriteObjectValue<PredictionDistributionDefinition>(PredictionDistribution, options);
+                writer.WriteObjectValue(PredictionDistribution, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CanonicalProfiles))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in CanonicalProfiles)
                 {
-                    writer.WriteObjectValue<CanonicalProfileDefinition>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static PredictionTrainingResults DeserializePredictionTrainingResults(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

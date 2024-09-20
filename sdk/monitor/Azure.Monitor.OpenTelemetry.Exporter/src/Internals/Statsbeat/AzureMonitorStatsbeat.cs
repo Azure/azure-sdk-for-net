@@ -176,6 +176,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 return;
             }
 
+            var aksArmNamespaceId = platform.GetEnvironmentVariable(EnvironmentVariableConstants.AKS_ARM_NAMESPACE_ID);
+            if (aksArmNamespaceId != null)
+            {
+                _resourceProvider = "aks";
+                _resourceProviderId = aksArmNamespaceId;
+
+                return;
+            }
+
             var vmMetadata = GetVmMetadataResponse();
 
             if (vmMetadata != null)
@@ -185,15 +194,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
                 // osType takes precedence.
                 s_operatingSystem = vmMetadata.osType?.ToLower(CultureInfo.InvariantCulture);
-
-                return;
-            }
-
-            var aksArmNamespaceId = platform.GetEnvironmentVariable(EnvironmentVariableConstants.AKS_ARM_NAMESPACE_ID);
-            if (aksArmNamespaceId != null)
-            {
-                _resourceProvider = "aks";
-                _resourceProviderId = aksArmNamespaceId;
 
                 return;
             }

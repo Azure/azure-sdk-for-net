@@ -16,9 +16,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformServiceRequiredTraffic : IUtf8JsonSerializable, IJsonModel<AppPlatformServiceRequiredTraffic>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformServiceRequiredTraffic>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformServiceRequiredTraffic>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformServiceRequiredTraffic>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformServiceRequiredTraffic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -26,7 +35,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 throw new FormatException($"The model {nameof(AppPlatformServiceRequiredTraffic)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
@@ -82,7 +90,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppPlatformServiceRequiredTraffic IJsonModel<AppPlatformServiceRequiredTraffic>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -99,7 +106,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformServiceRequiredTraffic DeserializeAppPlatformServiceRequiredTraffic(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

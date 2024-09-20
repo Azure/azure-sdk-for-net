@@ -1,14 +1,22 @@
 # Release History
 
-## 3.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 3.4.3 (2024-09-10)
 
 ### Bugs Fixed
 
+- Prevent DateTime values from being translated by NewtonSoft when parsing payloads. They are now treated as strings.
+
+## 3.4.2 (2024-07-30)
+
 ### Other Changes
+
+- To mitigate a [disclosure vulnerability](https://github.com/advisories/GHSA-m5vv-6r4h-3vj9), updating the transitive dependency for `Azure.Identity` to v1.11.4 via version bump to `Microsoft.Extensions.Azure`.
+
+## 3.4.1 (2024-04-17)
+
+### Other Changes
+
+- To mitigate a [disclosure vulnerability](https://github.com/advisories/GHSA-wvxc-855f-jvrv), updating the transitive dependency for `Azure.Identity` to v1.11.1 via version bump to `Microsoft.Extensions.Azure`.
 
 ## 3.3.1 (2023-11-13)
 

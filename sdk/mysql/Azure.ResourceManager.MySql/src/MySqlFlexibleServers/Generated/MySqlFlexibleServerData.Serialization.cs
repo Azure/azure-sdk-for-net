@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     public partial class MySqlFlexibleServerData : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlFlexibleServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<MySqlFlexibleServerSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             if (Optional.IsDefined(DataEncryption))
             {
                 writer.WritePropertyName("dataEncryption"u8);
-                writer.WriteObjectValue<MySqlFlexibleServerDataEncryption>(DataEncryption, options);
+                writer.WriteObjectValue(DataEncryption, options);
             }
             if (options.Format != "W" && Optional.IsDefined(State))
             {
@@ -136,22 +136,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue<MySqlFlexibleServerStorage>(Storage, options);
+                writer.WriteObjectValue(Storage, options);
             }
             if (Optional.IsDefined(Backup))
             {
                 writer.WritePropertyName("backup"u8);
-                writer.WriteObjectValue<MySqlFlexibleServerBackupProperties>(Backup, options);
+                writer.WriteObjectValue(Backup, options);
             }
             if (Optional.IsDefined(HighAvailability))
             {
                 writer.WritePropertyName("highAvailability"u8);
-                writer.WriteObjectValue<MySqlFlexibleServerHighAvailability>(HighAvailability, options);
+                writer.WriteObjectValue(HighAvailability, options);
             }
             if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
-                writer.WriteObjectValue<MySqlFlexibleServerNetwork>(Network, options);
+                writer.WriteObjectValue(Network, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -159,19 +159,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue<MySqlFlexibleServersPrivateEndpointConnection>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue<MySqlFlexibleServerMaintenanceWindow>(MaintenanceWindow, options);
+                writer.WriteObjectValue(MaintenanceWindow, options);
             }
             if (Optional.IsDefined(ImportSourceProperties))
             {
                 writer.WritePropertyName("importSourceProperties"u8);
-                writer.WriteObjectValue<ImportSourceProperties>(ImportSourceProperties, options);
+                writer.WriteObjectValue(ImportSourceProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         internal static MySqlFlexibleServerData DeserializeMySqlFlexibleServerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

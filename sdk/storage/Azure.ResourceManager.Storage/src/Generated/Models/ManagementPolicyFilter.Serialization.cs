@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class ManagementPolicyFilter : IUtf8JsonSerializable, IJsonModel<ManagementPolicyFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementPolicyFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementPolicyFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagementPolicyFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in BlobIndexMatch)
                 {
-                    writer.WriteObjectValue<ManagementPolicyTagFilter>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicyFilter DeserializeManagementPolicyFilter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -159,17 +159,18 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrefixMatch), out propertyOverride);
-            if (Optional.IsCollectionDefined(PrefixMatch) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (PrefixMatch.Any() || hasPropertyOverride)
+                builder.Append("  prefixMatch: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrefixMatch))
                 {
-                    builder.Append("  prefixMatch: ");
-                    if (hasPropertyOverride)
+                    if (PrefixMatch.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  prefixMatch: ");
                         builder.AppendLine("[");
                         foreach (var item in PrefixMatch)
                         {
@@ -194,17 +195,18 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobTypes), out propertyOverride);
-            if (Optional.IsCollectionDefined(BlobTypes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (BlobTypes.Any() || hasPropertyOverride)
+                builder.Append("  blobTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BlobTypes))
                 {
-                    builder.Append("  blobTypes: ");
-                    if (hasPropertyOverride)
+                    if (BlobTypes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  blobTypes: ");
                         builder.AppendLine("[");
                         foreach (var item in BlobTypes)
                         {
@@ -229,17 +231,18 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobIndexMatch), out propertyOverride);
-            if (Optional.IsCollectionDefined(BlobIndexMatch) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (BlobIndexMatch.Any() || hasPropertyOverride)
+                builder.Append("  blobIndexMatch: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BlobIndexMatch))
                 {
-                    builder.Append("  blobIndexMatch: ");
-                    if (hasPropertyOverride)
+                    if (BlobIndexMatch.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  blobIndexMatch: ");
                         builder.AppendLine("[");
                         foreach (var item in BlobIndexMatch)
                         {

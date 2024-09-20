@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class CustomIPPrefixData : IUtf8JsonSerializable, IJsonModel<CustomIPPrefixData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomIPPrefixData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomIPPrefixData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomIPPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network
 
         internal static CustomIPPrefixData DeserializeCustomIPPrefixData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     public partial class FirmwareAnalysisWorkspacePatch : IUtf8JsonSerializable, IJsonModel<FirmwareAnalysisWorkspacePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirmwareAnalysisWorkspacePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirmwareAnalysisWorkspacePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FirmwareAnalysisWorkspacePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         internal static FirmwareAnalysisWorkspacePatch DeserializeFirmwareAnalysisWorkspacePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

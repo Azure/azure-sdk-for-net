@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Chaos.Models
     [PersistableModelProxy(typeof(UnknownChaosExperimentAction))]
     public partial class ChaosExperimentAction : IUtf8JsonSerializable, IJsonModel<ChaosExperimentAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosExperimentAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosExperimentAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChaosExperimentAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static ChaosExperimentAction DeserializeChaosExperimentAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

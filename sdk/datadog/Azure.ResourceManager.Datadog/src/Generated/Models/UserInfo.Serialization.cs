@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Datadog.Models
 {
     public partial class UserInfo : IUtf8JsonSerializable, IJsonModel<UserInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UserInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static UserInfo DeserializeUserInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

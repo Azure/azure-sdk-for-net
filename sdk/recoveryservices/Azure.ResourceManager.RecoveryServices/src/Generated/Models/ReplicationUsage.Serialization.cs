@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public partial class ReplicationUsage : IUtf8JsonSerializable, IJsonModel<ReplicationUsage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationUsage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationUsage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReplicationUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(MonitoringSummary))
             {
                 writer.WritePropertyName("monitoringSummary"u8);
-                writer.WriteObjectValue<VaultMonitoringSummary>(MonitoringSummary, options);
+                writer.WriteObjectValue(MonitoringSummary, options);
             }
             if (Optional.IsDefined(JobsSummary))
             {
                 writer.WritePropertyName("jobsSummary"u8);
-                writer.WriteObjectValue<ReplicationJobSummary>(JobsSummary, options);
+                writer.WriteObjectValue(JobsSummary, options);
             }
             if (Optional.IsDefined(ProtectedItemCount))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static ReplicationUsage DeserializeReplicationUsage(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

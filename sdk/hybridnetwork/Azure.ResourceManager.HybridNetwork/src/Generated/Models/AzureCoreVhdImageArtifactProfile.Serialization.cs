@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class AzureCoreVhdImageArtifactProfile : IUtf8JsonSerializable, IJsonModel<AzureCoreVhdImageArtifactProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureCoreVhdImageArtifactProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureCoreVhdImageArtifactProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureCoreVhdImageArtifactProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(VhdArtifactProfile))
             {
                 writer.WritePropertyName("vhdArtifactProfile"u8);
-                writer.WriteObjectValue<VhdImageArtifactProfile>(VhdArtifactProfile, options);
+                writer.WriteObjectValue(VhdArtifactProfile, options);
             }
             if (Optional.IsDefined(ArtifactStore))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static AzureCoreVhdImageArtifactProfile DeserializeAzureCoreVhdImageArtifactProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

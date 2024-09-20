@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class FetchTieringCostInfoForRehydrationContent : IUtf8JsonSerializable, IJsonModel<FetchTieringCostInfoForRehydrationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FetchTieringCostInfoForRehydrationContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FetchTieringCostInfoForRehydrationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FetchTieringCostInfoForRehydrationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static FetchTieringCostInfoForRehydrationContent DeserializeFetchTieringCostInfoForRehydrationContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

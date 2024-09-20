@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MySql.Models
 {
     public partial class MySqlLogFile : IUtf8JsonSerializable, IJsonModel<MySqlLogFile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlLogFile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlLogFile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlLogFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MySql.Models
 
         internal static MySqlLogFile DeserializeMySqlLogFile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

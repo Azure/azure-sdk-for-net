@@ -53,15 +53,17 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentUpdateProperties"/>. </summary>
         /// <param name="enableDiagnosticsSupport"></param>
         /// <param name="logging"></param>
-        /// <param name="scalingProperties"></param>
+        /// <param name="scalingProperties"> Information on how the deployment will be scaled. </param>
         /// <param name="userProfile"></param>
+        /// <param name="autoUpgradeProfile"> Autoupgrade settings of a deployment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentUpdateProperties(bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, NginxDeploymentUserProfile userProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxDeploymentUpdateProperties(bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, NginxDeploymentUserProfile userProfile, AutoUpgradeProfile autoUpgradeProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnableDiagnosticsSupport = enableDiagnosticsSupport;
             Logging = logging;
             ScalingProperties = scalingProperties;
             UserProfile = userProfile;
+            AutoUpgradeProfile = autoUpgradeProfile;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -81,20 +83,8 @@ namespace Azure.ResourceManager.Nginx.Models
             }
         }
 
-        /// <summary> Gets or sets the scaling properties. </summary>
-        internal NginxDeploymentScalingProperties ScalingProperties { get; set; }
-        /// <summary> Gets or sets the scaling capacity. </summary>
-        public int? ScalingCapacity
-        {
-            get => ScalingProperties is null ? default : ScalingProperties.Capacity;
-            set
-            {
-                if (ScalingProperties is null)
-                    ScalingProperties = new NginxDeploymentScalingProperties();
-                ScalingProperties.Capacity = value;
-            }
-        }
-
+        /// <summary> Information on how the deployment will be scaled. </summary>
+        public NginxDeploymentScalingProperties ScalingProperties { get; set; }
         /// <summary> Gets or sets the user profile. </summary>
         internal NginxDeploymentUserProfile UserProfile { get; set; }
         /// <summary> The preferred support contact email address of the user used for sending alerts and notification. Can be an empty string or a valid email address. </summary>
@@ -107,6 +97,15 @@ namespace Azure.ResourceManager.Nginx.Models
                     UserProfile = new NginxDeploymentUserProfile();
                 UserProfile.PreferredEmail = value;
             }
+        }
+
+        /// <summary> Autoupgrade settings of a deployment. </summary>
+        internal AutoUpgradeProfile AutoUpgradeProfile { get; set; }
+        /// <summary> Channel used for autoupgrade. </summary>
+        public string UpgradeChannel
+        {
+            get => AutoUpgradeProfile is null ? default : AutoUpgradeProfile.UpgradeChannel;
+            set => AutoUpgradeProfile = new AutoUpgradeProfile(value);
         }
     }
 }

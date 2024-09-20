@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     public partial class VmInstanceHybridIdentityMetadataData : IUtf8JsonSerializable, IJsonModel<VmInstanceHybridIdentityMetadataData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmInstanceHybridIdentityMetadataData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmInstanceHybridIdentityMetadataData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VmInstanceHybridIdentityMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static VmInstanceHybridIdentityMetadataData DeserializeVmInstanceHybridIdentityMetadataData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

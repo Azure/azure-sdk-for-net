@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
     public partial class PropertyChange : IUtf8JsonSerializable, IJsonModel<PropertyChange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PropertyChange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PropertyChange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PropertyChange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
 
         internal static PropertyChange DeserializePropertyChange(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

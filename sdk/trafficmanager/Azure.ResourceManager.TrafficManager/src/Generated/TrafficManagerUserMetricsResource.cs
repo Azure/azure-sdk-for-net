@@ -108,7 +108,9 @@ namespace Azure.ResourceManager.TrafficManager
             try
             {
                 var response = await _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient.DeleteAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                var operation = new TrafficManagerArmOperation(response);
+                var uri = _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient.CreateDeleteRequestUri(Id.SubscriptionId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new TrafficManagerArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -150,7 +152,9 @@ namespace Azure.ResourceManager.TrafficManager
             try
             {
                 var response = _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient.Delete(Id.SubscriptionId, cancellationToken);
-                var operation = new TrafficManagerArmOperation(response);
+                var uri = _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient.CreateDeleteRequestUri(Id.SubscriptionId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new TrafficManagerArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -192,7 +196,9 @@ namespace Azure.ResourceManager.TrafficManager
             try
             {
                 var response = await _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient.CreateOrUpdateAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                var operation = new TrafficManagerArmOperation<TrafficManagerUserMetricsResource>(Response.FromValue(new TrafficManagerUserMetricsResource(Client, response), response.GetRawResponse()));
+                var uri = _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new TrafficManagerArmOperation<TrafficManagerUserMetricsResource>(Response.FromValue(new TrafficManagerUserMetricsResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,7 +240,9 @@ namespace Azure.ResourceManager.TrafficManager
             try
             {
                 var response = _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient.CreateOrUpdate(Id.SubscriptionId, cancellationToken);
-                var operation = new TrafficManagerArmOperation<TrafficManagerUserMetricsResource>(Response.FromValue(new TrafficManagerUserMetricsResource(Client, response), response.GetRawResponse()));
+                var uri = _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new TrafficManagerArmOperation<TrafficManagerUserMetricsResource>(Response.FromValue(new TrafficManagerUserMetricsResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

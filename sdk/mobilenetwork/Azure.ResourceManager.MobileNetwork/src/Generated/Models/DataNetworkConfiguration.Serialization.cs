@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -16,7 +18,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public partial class DataNetworkConfiguration : IUtf8JsonSerializable, IJsonModel<DataNetworkConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataNetworkConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataNetworkConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataNetworkConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WritePropertyName("dataNetwork"u8);
             JsonSerializer.Serialize(writer, DataNetwork);
             writer.WritePropertyName("sessionAmbr"u8);
-            writer.WriteObjectValue<Ambr>(SessionAmbr, options);
+            writer.WriteObjectValue(SessionAmbr, options);
             if (Optional.IsDefined(FiveQi))
             {
                 writer.WritePropertyName("5qi"u8);
@@ -110,7 +112,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static DataNetworkConfiguration DeserializeDataNetworkConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -238,6 +240,190 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("DataNetworkId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataNetwork: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(DataNetwork))
+                {
+                    builder.Append("  dataNetwork: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DataNetwork, options, 2, false, "  dataNetwork: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SessionAmbr), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sessionAmbr: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SessionAmbr))
+                {
+                    builder.Append("  sessionAmbr: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SessionAmbr, options, 2, false, "  sessionAmbr: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FiveQi), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  5qi: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FiveQi))
+                {
+                    builder.Append("  5qi: ");
+                    builder.AppendLine($"{FiveQi.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllocationAndRetentionPriorityLevel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allocationAndRetentionPriorityLevel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllocationAndRetentionPriorityLevel))
+                {
+                    builder.Append("  allocationAndRetentionPriorityLevel: ");
+                    builder.AppendLine($"{AllocationAndRetentionPriorityLevel.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreemptionCapability), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  preemptionCapability: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PreemptionCapability))
+                {
+                    builder.Append("  preemptionCapability: ");
+                    builder.AppendLine($"'{PreemptionCapability.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreemptionVulnerability), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  preemptionVulnerability: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PreemptionVulnerability))
+                {
+                    builder.Append("  preemptionVulnerability: ");
+                    builder.AppendLine($"'{PreemptionVulnerability.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultSessionType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  defaultSessionType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultSessionType))
+                {
+                    builder.Append("  defaultSessionType: ");
+                    builder.AppendLine($"'{DefaultSessionType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalAllowedSessionTypes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  additionalAllowedSessionTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AdditionalAllowedSessionTypes))
+                {
+                    if (AdditionalAllowedSessionTypes.Any())
+                    {
+                        builder.Append("  additionalAllowedSessionTypes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AdditionalAllowedSessionTypes)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedServices), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allowedServices: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedServices))
+                {
+                    if (AllowedServices.Any())
+                    {
+                        builder.Append("  allowedServices: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AllowedServices)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  allowedServices: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumNumberOfBufferedPackets), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maximumNumberOfBufferedPackets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaximumNumberOfBufferedPackets))
+                {
+                    builder.Append("  maximumNumberOfBufferedPackets: ");
+                    builder.AppendLine($"{MaximumNumberOfBufferedPackets.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DataNetworkConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -246,6 +432,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataNetworkConfiguration)} does not support writing '{options.Format}' format.");
             }

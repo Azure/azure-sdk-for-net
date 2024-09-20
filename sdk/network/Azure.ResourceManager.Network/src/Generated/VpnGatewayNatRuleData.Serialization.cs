@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VpnGatewayNatRuleData : IUtf8JsonSerializable, IJsonModel<VpnGatewayNatRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnGatewayNatRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnGatewayNatRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VpnGatewayNatRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in InternalMappings)
                 {
-                    writer.WriteObjectValue<VpnNatRuleMapping>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ExternalMappings)
                 {
-                    writer.WriteObjectValue<VpnNatRuleMapping>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network
 
         internal static VpnGatewayNatRuleData DeserializeVpnGatewayNatRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

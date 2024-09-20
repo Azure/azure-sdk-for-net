@@ -143,7 +143,7 @@ namespace Azure.Data.Tables
             request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             request.Headers.Add("Content-Type", "application/json;odata=nometadata");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TableProperties>(tableProperties);
+            content.JsonWriter.WriteObjectValue(tableProperties);
             request.Content = content;
             return message;
         }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration
 {
     public partial class SqlMigrationServiceData : IUtf8JsonSerializable, IJsonModel<SqlMigrationServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlMigrationServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlMigrationServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlMigrationServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataMigration
 
         internal static SqlMigrationServiceData DeserializeSqlMigrationServiceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

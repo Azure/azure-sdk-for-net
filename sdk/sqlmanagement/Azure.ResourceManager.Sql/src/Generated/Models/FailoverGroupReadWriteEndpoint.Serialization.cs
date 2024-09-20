@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class FailoverGroupReadWriteEndpoint : IUtf8JsonSerializable, IJsonModel<FailoverGroupReadWriteEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FailoverGroupReadWriteEndpoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FailoverGroupReadWriteEndpoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FailoverGroupReadWriteEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static FailoverGroupReadWriteEndpoint DeserializeFailoverGroupReadWriteEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -113,26 +113,28 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverPolicy), out propertyOverride);
-            builder.Append("  failoverPolicy: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  failoverPolicy: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  failoverPolicy: ");
                 builder.AppendLine($"'{FailoverPolicy.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverWithDataLossGracePeriodMinutes), out propertyOverride);
-            if (Optional.IsDefined(FailoverWithDataLossGracePeriodMinutes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  failoverWithDataLossGracePeriodMinutes: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FailoverWithDataLossGracePeriodMinutes))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  failoverWithDataLossGracePeriodMinutes: ");
                     builder.AppendLine($"{FailoverWithDataLossGracePeriodMinutes.Value}");
                 }
             }

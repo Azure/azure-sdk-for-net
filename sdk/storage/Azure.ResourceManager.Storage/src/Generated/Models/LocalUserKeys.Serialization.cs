@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class LocalUserKeys : IUtf8JsonSerializable, IJsonModel<LocalUserKeys>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LocalUserKeys>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LocalUserKeys>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LocalUserKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in SshAuthorizedKeys)
                 {
-                    writer.WriteObjectValue<StorageSshPublicKey>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static LocalUserKeys DeserializeLocalUserKeys(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,17 +127,18 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SshAuthorizedKeys), out propertyOverride);
-            if (Optional.IsCollectionDefined(SshAuthorizedKeys) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SshAuthorizedKeys.Any() || hasPropertyOverride)
+                builder.Append("  sshAuthorizedKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SshAuthorizedKeys))
                 {
-                    builder.Append("  sshAuthorizedKeys: ");
-                    if (hasPropertyOverride)
+                    if (SshAuthorizedKeys.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  sshAuthorizedKeys: ");
                         builder.AppendLine("[");
                         foreach (var item in SshAuthorizedKeys)
                         {
@@ -149,15 +150,16 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedKey), out propertyOverride);
-            if (Optional.IsDefined(SharedKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sharedKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SharedKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sharedKey: ");
                     if (SharedKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

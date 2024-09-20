@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class ScalingPlanPersonalSchedulePatch : IUtf8JsonSerializable, IJsonModel<ScalingPlanPersonalSchedulePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingPlanPersonalSchedulePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingPlanPersonalSchedulePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScalingPlanPersonalSchedulePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampUpStartTime))
             {
                 writer.WritePropertyName("rampUpStartTime"u8);
-                writer.WriteObjectValue<ScalingActionTime>(RampUpStartTime, options);
+                writer.WriteObjectValue(RampUpStartTime, options);
             }
             if (Optional.IsDefined(RampUpAutoStartHosts))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(PeakStartTime))
             {
                 writer.WritePropertyName("peakStartTime"u8);
-                writer.WriteObjectValue<ScalingActionTime>(PeakStartTime, options);
+                writer.WriteObjectValue(PeakStartTime, options);
             }
             if (Optional.IsDefined(PeakStartVmOnConnect))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampDownStartTime))
             {
                 writer.WritePropertyName("rampDownStartTime"u8);
-                writer.WriteObjectValue<ScalingActionTime>(RampDownStartTime, options);
+                writer.WriteObjectValue(RampDownStartTime, options);
             }
             if (Optional.IsDefined(RampDownStartVmOnConnect))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(OffPeakStartTime))
             {
                 writer.WritePropertyName("offPeakStartTime"u8);
-                writer.WriteObjectValue<ScalingActionTime>(OffPeakStartTime, options);
+                writer.WriteObjectValue(OffPeakStartTime, options);
             }
             if (Optional.IsDefined(OffPeakStartVmOnConnect))
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static ScalingPlanPersonalSchedulePatch DeserializeScalingPlanPersonalSchedulePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

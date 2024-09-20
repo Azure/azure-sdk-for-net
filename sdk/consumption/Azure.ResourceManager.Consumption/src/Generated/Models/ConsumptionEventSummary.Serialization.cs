@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionEventSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionEventSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionEventSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionEventSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionEventSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -67,27 +67,27 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(NewCredit))
             {
                 writer.WritePropertyName("newCredit"u8);
-                writer.WriteObjectValue<ConsumptionAmount>(NewCredit, options);
+                writer.WriteObjectValue(NewCredit, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Adjustments))
             {
                 writer.WritePropertyName("adjustments"u8);
-                writer.WriteObjectValue<ConsumptionAmount>(Adjustments, options);
+                writer.WriteObjectValue(Adjustments, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreditExpired))
             {
                 writer.WritePropertyName("creditExpired"u8);
-                writer.WriteObjectValue<ConsumptionAmount>(CreditExpired, options);
+                writer.WriteObjectValue(CreditExpired, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Charges))
             {
                 writer.WritePropertyName("charges"u8);
-                writer.WriteObjectValue<ConsumptionAmount>(Charges, options);
+                writer.WriteObjectValue(Charges, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClosedBalance))
             {
                 writer.WritePropertyName("closedBalance"u8);
-                writer.WriteObjectValue<ConsumptionAmount>(ClosedBalance, options);
+                writer.WriteObjectValue(ClosedBalance, options);
             }
             if (Optional.IsDefined(EventType))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(CanceledCredit))
             {
                 writer.WritePropertyName("canceledCredit"u8);
-                writer.WriteObjectValue<ConsumptionAmount>(CanceledCredit, options);
+                writer.WriteObjectValue(CanceledCredit, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreditCurrency))
             {
@@ -137,32 +137,32 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue<ConsumptionReseller>(Reseller, options);
+                writer.WriteObjectValue(Reseller, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreditExpiredInBillingCurrency))
             {
                 writer.WritePropertyName("creditExpiredInBillingCurrency"u8);
-                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(CreditExpiredInBillingCurrency, options);
+                writer.WriteObjectValue(CreditExpiredInBillingCurrency, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NewCreditInBillingCurrency))
             {
                 writer.WritePropertyName("newCreditInBillingCurrency"u8);
-                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(NewCreditInBillingCurrency, options);
+                writer.WriteObjectValue(NewCreditInBillingCurrency, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AdjustmentsInBillingCurrency))
             {
                 writer.WritePropertyName("adjustmentsInBillingCurrency"u8);
-                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(AdjustmentsInBillingCurrency, options);
+                writer.WriteObjectValue(AdjustmentsInBillingCurrency, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ChargesInBillingCurrency))
             {
                 writer.WritePropertyName("chargesInBillingCurrency"u8);
-                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(ChargesInBillingCurrency, options);
+                writer.WriteObjectValue(ChargesInBillingCurrency, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClosedBalanceInBillingCurrency))
             {
                 writer.WritePropertyName("closedBalanceInBillingCurrency"u8);
-                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(ClosedBalanceInBillingCurrency, options);
+                writer.WriteObjectValue(ClosedBalanceInBillingCurrency, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -197,13 +197,13 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionEventSummary DeserializeConsumptionEventSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? eTag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 adjustmentsInBillingCurrency,
                 chargesInBillingCurrency,
                 closedBalanceInBillingCurrency,
-                eTag,
+                etag,
                 serializedAdditionalRawData);
         }
 

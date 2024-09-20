@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<ManagedPrivateEndpointProperties>(Properties);
+                writer.WriteObjectValue(Properties);
             }
             writer.WriteEndObject();
         }
@@ -71,11 +71,11 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             return DeserializeManagedPrivateEndpoint(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ManagedPrivateEndpoint>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

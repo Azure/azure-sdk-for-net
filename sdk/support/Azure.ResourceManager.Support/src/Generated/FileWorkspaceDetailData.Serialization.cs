@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Support
 {
     public partial class FileWorkspaceDetailData : IUtf8JsonSerializable, IJsonModel<FileWorkspaceDetailData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileWorkspaceDetailData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileWorkspaceDetailData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FileWorkspaceDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Support
 
         internal static FileWorkspaceDetailData DeserializeFileWorkspaceDetailData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

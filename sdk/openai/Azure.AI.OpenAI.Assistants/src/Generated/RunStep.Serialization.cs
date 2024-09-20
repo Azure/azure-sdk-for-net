@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI.Assistants
 {
     public partial class RunStep : IUtf8JsonSerializable, IJsonModel<RunStep>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStep>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStep>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RunStep>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -41,11 +41,11 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("step_details"u8);
-            writer.WriteObjectValue<RunStepDetails>(StepDetails, options);
+            writer.WriteObjectValue(StepDetails, options);
             if (LastError != null)
             {
                 writer.WritePropertyName("last_error"u8);
-                writer.WriteObjectValue<RunStepError>(LastError, options);
+                writer.WriteObjectValue(LastError, options);
             }
             else
             {
@@ -56,7 +56,7 @@ namespace Azure.AI.OpenAI.Assistants
             if (ExpiredAt != null)
             {
                 writer.WritePropertyName("expired_at"u8);
-                writer.WriteStringValue(ExpiredAt.Value, "O");
+                writer.WriteNumberValue(ExpiredAt.Value, "U");
             }
             else
             {
@@ -65,7 +65,7 @@ namespace Azure.AI.OpenAI.Assistants
             if (CompletedAt != null)
             {
                 writer.WritePropertyName("completed_at"u8);
-                writer.WriteStringValue(CompletedAt.Value, "O");
+                writer.WriteNumberValue(CompletedAt.Value, "U");
             }
             else
             {
@@ -74,7 +74,7 @@ namespace Azure.AI.OpenAI.Assistants
             if (CancelledAt != null)
             {
                 writer.WritePropertyName("cancelled_at"u8);
-                writer.WriteStringValue(CancelledAt.Value, "O");
+                writer.WriteNumberValue(CancelledAt.Value, "U");
             }
             else
             {
@@ -83,7 +83,7 @@ namespace Azure.AI.OpenAI.Assistants
             if (FailedAt != null)
             {
                 writer.WritePropertyName("failed_at"u8);
-                writer.WriteStringValue(FailedAt.Value, "O");
+                writer.WriteNumberValue(FailedAt.Value, "U");
             }
             else
             {
@@ -136,7 +136,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         internal static RunStep DeserializeRunStep(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -315,11 +315,11 @@ namespace Azure.AI.OpenAI.Assistants
             return DeserializeRunStep(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RunStep>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

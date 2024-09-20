@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class EdgeFileEventTrigger : IUtf8JsonSerializable, IJsonModel<EdgeFileEventTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeFileEventTrigger>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeFileEventTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeFileEventTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("sourceInfo"u8);
-            writer.WriteObjectValue<EdgeFileSourceInfo>(SourceInfo, options);
+            writer.WriteObjectValue(SourceInfo, options);
             writer.WritePropertyName("sinkInfo"u8);
-            writer.WriteObjectValue<DataBoxEdgeRoleSinkInfo>(SinkInfo, options);
+            writer.WriteObjectValue(SinkInfo, options);
             if (Optional.IsDefined(CustomContextTag))
             {
                 writer.WritePropertyName("customContextTag"u8);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeFileEventTrigger DeserializeEdgeFileEventTrigger(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageSync
 {
     public partial class StorageSyncRegisteredServerData : IUtf8JsonSerializable, IJsonModel<StorageSyncRegisteredServerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageSyncRegisteredServerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageSyncRegisteredServerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageSyncRegisteredServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.StorageSync
 
         internal static StorageSyncRegisteredServerData DeserializeStorageSyncRegisteredServerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

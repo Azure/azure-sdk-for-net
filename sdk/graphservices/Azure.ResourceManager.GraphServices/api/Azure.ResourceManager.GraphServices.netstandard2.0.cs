@@ -1,6 +1,6 @@
 namespace Azure.ResourceManager.GraphServices
 {
-    public partial class GraphServicesAccountResource : Azure.ResourceManager.ArmResource
+    public partial class GraphServicesAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected GraphServicesAccountResource() { }
@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.GraphServices
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GraphServices.GraphServicesAccountResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GraphServices.GraphServicesAccountResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> Update(Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GraphServices.GraphServicesAccountResource>> UpdateAsync(Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

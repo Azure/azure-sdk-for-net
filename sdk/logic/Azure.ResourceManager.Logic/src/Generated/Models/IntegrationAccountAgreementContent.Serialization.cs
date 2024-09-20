@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class IntegrationAccountAgreementContent : IUtf8JsonSerializable, IJsonModel<IntegrationAccountAgreementContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationAccountAgreementContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationAccountAgreementContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IntegrationAccountAgreementContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(AS2))
             {
                 writer.WritePropertyName("aS2"u8);
-                writer.WriteObjectValue<AS2AgreementContent>(AS2, options);
+                writer.WriteObjectValue(AS2, options);
             }
             if (Optional.IsDefined(X12))
             {
                 writer.WritePropertyName("x12"u8);
-                writer.WriteObjectValue<X12AgreementContent>(X12, options);
+                writer.WriteObjectValue(X12, options);
             }
             if (Optional.IsDefined(Edifact))
             {
                 writer.WritePropertyName("edifact"u8);
-                writer.WriteObjectValue<EdifactAgreementContent>(Edifact, options);
+                writer.WriteObjectValue(Edifact, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationAccountAgreementContent DeserializeIntegrationAccountAgreementContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

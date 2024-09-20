@@ -138,11 +138,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeUnknownCopySink(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UnknownCopySink>(this);
+            content.JsonWriter.WriteObjectValue<CopySink>(this);
             return content;
         }
     }

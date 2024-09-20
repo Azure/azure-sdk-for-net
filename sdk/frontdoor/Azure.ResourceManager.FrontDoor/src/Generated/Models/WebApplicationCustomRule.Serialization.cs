@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 {
     public partial class WebApplicationCustomRule : IUtf8JsonSerializable, IJsonModel<WebApplicationCustomRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebApplicationCustomRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebApplicationCustomRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebApplicationCustomRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -50,11 +50,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("rateLimitThreshold"u8);
                 writer.WriteNumberValue(RateLimitThreshold.Value);
             }
+            if (Optional.IsCollectionDefined(GroupBy))
+            {
+                writer.WritePropertyName("groupBy"u8);
+                writer.WriteStartArray();
+                foreach (var item in GroupBy)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("matchConditions"u8);
             writer.WriteStartArray();
             foreach (var item in MatchConditions)
             {
-                writer.WriteObjectValue<WebApplicationRuleMatchCondition>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("action"u8);
@@ -91,7 +101,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static WebApplicationCustomRule DeserializeWebApplicationCustomRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,6 +113,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             WebApplicationRuleType ruleType = default;
             int? rateLimitDurationInMinutes = default;
             int? rateLimitThreshold = default;
+            IList<FrontDoorWebApplicationFirewallPolicyGroupByVariable> groupBy = default;
             IList<WebApplicationRuleMatchCondition> matchConditions = default;
             RuleMatchActionType action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -151,6 +162,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     rateLimitThreshold = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("groupBy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FrontDoorWebApplicationFirewallPolicyGroupByVariable> array = new List<FrontDoorWebApplicationFirewallPolicyGroupByVariable>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(FrontDoorWebApplicationFirewallPolicyGroupByVariable.DeserializeFrontDoorWebApplicationFirewallPolicyGroupByVariable(item, options));
+                    }
+                    groupBy = array;
+                    continue;
+                }
                 if (property.NameEquals("matchConditions"u8))
                 {
                     List<WebApplicationRuleMatchCondition> array = new List<WebApplicationRuleMatchCondition>();
@@ -179,6 +204,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 ruleType,
                 rateLimitDurationInMinutes,
                 rateLimitThreshold,
+                groupBy ?? new ChangeTrackingList<FrontDoorWebApplicationFirewallPolicyGroupByVariable>(),
                 matchConditions,
                 action,
                 serializedAdditionalRawData);

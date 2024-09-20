@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     internal partial class RemediationPropertiesFailureThreshold : IUtf8JsonSerializable, IJsonModel<RemediationPropertiesFailureThreshold>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RemediationPropertiesFailureThreshold>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RemediationPropertiesFailureThreshold>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RemediationPropertiesFailureThreshold>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static RemediationPropertiesFailureThreshold DeserializeRemediationPropertiesFailureThreshold(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Marketplace
 {
     public partial class PrivateStoreOfferData : IUtf8JsonSerializable, IJsonModel<PrivateStoreOfferData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateStoreOfferData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateStoreOfferData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PrivateStoreOfferData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WriteStartArray();
                 foreach (var item in Plans)
                 {
-                    writer.WriteObjectValue<PrivateStorePlan>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Marketplace
 
         internal static PrivateStoreOfferData DeserializePrivateStoreOfferData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

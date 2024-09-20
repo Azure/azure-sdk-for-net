@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 {
     public partial class GenericProcedureRecommendation : IUtf8JsonSerializable, IJsonModel<GenericProcedureRecommendation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GenericProcedureRecommendation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GenericProcedureRecommendation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GenericProcedureRecommendation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
             writer.WriteStartObject();
             writer.WritePropertyName("code"u8);
-            writer.WriteObjectValue<FhirR4CodeableConcept>(Code, options);
+            writer.WriteObjectValue(Code, options);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -35,6 +35,16 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
+            if (Optional.IsCollectionDefined(Extension))
+            {
+                writer.WritePropertyName("extension"u8);
+                writer.WriteStartArray();
+                foreach (var item in Extension)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -67,7 +77,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         internal static GenericProcedureRecommendation DeserializeGenericProcedureRecommendation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,6 +86,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             FhirR4CodeableConcept code = default;
             string description = default;
             string kind = default;
+            IReadOnlyList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,13 +106,27 @@ namespace Azure.Health.Insights.RadiologyInsights
                     kind = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("extension"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FhirR4Extension> array = new List<FhirR4Extension>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(FhirR4Extension.DeserializeFhirR4Extension(item, options));
+                    }
+                    extension = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GenericProcedureRecommendation(kind, serializedAdditionalRawData, code, description);
+            return new GenericProcedureRecommendation(kind, extension ?? new ChangeTrackingList<FhirR4Extension>(), serializedAdditionalRawData, code, description);
         }
 
         BinaryData IPersistableModel<GenericProcedureRecommendation>.Write(ModelReaderWriterOptions options)
@@ -143,11 +168,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             return DeserializeGenericProcedureRecommendation(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<GenericProcedureRecommendation>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

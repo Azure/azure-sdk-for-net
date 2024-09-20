@@ -47,7 +47,6 @@
     "sdk/machinelearningservices/*/api/*.cs",
     "sdk/modelsrepository/*/api/*.cs",
     "sdk/monitor/Azure.ResourceManager.Monitor/api/*.cs",
-    "sdk/monitor/Microsoft.Azure.Management.Monitor/**/*.cs",
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
@@ -58,45 +57,70 @@
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
   "words": [
+    "AADDS",
+    "AADKERB",
     "apos",
     "azsdk",
     "blazor",
+    "Byok",
     "centralus",
+    "Colls",
     "contoso",
     "cpus",
     "cref",
+    "Dapr",
     "deduplication",
+    "deletesas",
     "deserializable",
     "deserializes",
     "diagnoser",
     "dicom",
+    "Diffie",
     "distro",
+    "Dmarc",
     "dont",
     "dotnetcli",
     "dtmf",
     "eastus",
     "entra",
     "epsg",
+    "Exfiltration",
     "expando",
     "fhir",
     "finalizer",
     "finalizers",
+    "Fips",
     "flac",
+    "getsas",
+    "Gmsa",
+    "GZRS",
     "hnsw",
     "ienumerable",
     "illumos",
     "imds",
+    "Inotify",
     "interventional",
     "ints",
+    "Intvl",
+    "Istio",
+    "Itsm",
+    "Keda",
+    "Kubelet",
+    "Kubenet",
     "kubernetes",
     "kusto",
+    "Kustomization",
+    "Kustomizations",
+    "listsas",
     "lucene",
     "mgmt",
+    "miscs",
     "msal",
     "Mtls",
     "northcentralus",
     "nunit",
     "odata",
+    "oidc",
     "onco",
     "opinsights",
     "otel",
@@ -105,17 +129,24 @@
     "personalizer",
     "petabit",
     "picometer",
+    "Pids",
     "pkcs",
     "pstn",
+    "Puid",
     "pwsh",
+    "RAGRS",
+    "RAGZRS",
     "referer",
     "renormalize",
     "retriable",
+    "setsas",
     "signalr",
     "signup",
     "skus",
+    "Somaxconn",
     "southcentralus",
     "structs",
+    "Sysctls",
     "Uefi",
     "uints",
     "unbilled",
@@ -123,8 +154,11 @@
     "unformattable",
     "unhold",
     "uninstrumented",
+    "Unparked",
+    "Unprovisioning",
     "vcpus",
     "Vectorizable",
+    "Vectorize",
     "Vectorizer",
     "Vectorizers",
     "vhdx",
@@ -132,10 +166,12 @@
     "vmss",
     "vmuuid",
     "vnet",
+    "VSTSRM",
+    "Wasi",
     "westcentralus",
     "westus",
-    "xunit",
-    "miscs"
+    "Wmem",
+    "xunit"
   ],
   "overrides": [
     {
@@ -175,6 +211,12 @@
       ]
     },
     {
+      "filename": "**/sdk/astronomer/**/*.cs",
+      "words": [
+        "astro"
+      ]
+    },
+    {
       "filename": "**/sdk/automanage/**/*.cs",
       "words": [
         "HCRP"
@@ -203,13 +245,30 @@
       "words": [
         "cref",
         "imds",
-        "IMDS"
+        "IMDS",
+        "Wdac",
+        "Adou",
+        "Drtm",
+        "Hvci"
       ]
     },
     {
       "filename": "**/sdk/batch/**/*.cs",
       "words": [
-        "cifs"
+        "cifs",
+        "ocpdate",
+        "Reimage",
+        "Reimaging",
+        "reimaging",
+        "SSDLRS"
+      ]
+    },
+    {
+      "filename": "**/sdk/billing/**/*.cs",
+      "words": [
+        "puid",
+        "resellee",
+        "cnpj"
       ]
     },
     {
@@ -247,7 +306,16 @@
         "ssdzrs",
         "dscp",
         "vmguest",
-        "vhdx"
+        "vhdx",
+        "Nvme"
+      ]
+    },
+    {
+      "filename": "**/sdk/computefleet/**/*.cs",
+      "words": [
+        "mbps",
+        "unattend",
+        "nvme"
       ]
     },
     {
@@ -263,10 +331,35 @@
       "filename": "**/sdk/cognitivelanguage/**/*",
       "words": [
         "apim",
+        "armn",
+        "bangla",
+        "dbauth",
+        "ethi",
+        "gebr",
+        "geor",
+        "grek",
+        "gujr",
+        "gurmukhi",
+        "hebr",
+        "inclusivity",
+        "jpan",
+        "khmr",
+        "knda",
+        "laoo",
+        "mlym",
+        "mymr",
         "nigiri",
-        "qnas",
+        "odia",
+        "orya",
         "petabit",
-        "Picometer"
+        "picometer",
+        "qnas",
+        "regon",
+        "taml",
+        "telu",
+        "thaa",
+        "thaana",
+        "tibt"
       ]
     },
     {
@@ -369,6 +462,13 @@
       ]
     },
     {
+      "filename": "**/sdk/devopsinfrastructure/**/*.cs",
+      "words": [
+        "Reimage",
+        "Reimaging"
+      ]
+    },
+    {
       "filename": "**/sdk/newrelic/**/*.cs",
       "words": [
         "liftr",
@@ -399,6 +499,7 @@
     {
       "filename": "**/sdk/dataprotection/**/*.cs",
       "words": [
+        "Bcdr",
         "Undelete"
       ]
     },
@@ -444,7 +545,7 @@
         "Twilio",
         "Vertica",
         "Xero",
-		    "Soql"
+        "Soql"
       ]
     },
     {
@@ -559,6 +660,17 @@
       ]
     },
     {
+      "filename": "**/sdk/hdinsightcontainers/**/*.cs",
+      "words": [
+        "trino",
+        "flink",
+        "llap",
+        "SSDLRS",
+        "SSDZRS",
+        "HDDLRS"
+      ]
+    },
+    {
       "filename": "**/sdk/healthcareapis/**/*.cs",
       "words": [
         "dicom",
@@ -591,16 +703,24 @@
       ]
     },
     {
-      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
+      "filename": "**/sdk/informaticadatamanagement/**/*.cs",
       "words": [
-        "kustomization",
-        "kustomizations"
+        "cdie",
+        "infa",
+        "informatica"
       ]
     },
     {
       "filename": "**/sdk/iothub/**/*.cs",
       "words": [
         "fqdns"
+      ]
+    },
+    {
+      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
+      "words": [
+        "kustomization",
+        "kustomizations"
       ]
     },
     {
@@ -779,6 +899,14 @@
       ]
     },
     {
+      "filename": "**/sdk/maps/Azure.Maps.TimeZone/**/*.cs",
+      "words": [
+        "Posix",
+        "posix",
+        "POSIX"
+      ]
+    },
+    {
       "filename": "**/sdk/mediaservices/**/*.cs",
       "words": [
         "cabac",
@@ -837,7 +965,8 @@
       "filename": "**/sdk/notificationhubs/**/*.cs",
       "words": [
         "availiable",
-        "mpns"
+        "mpns",
+        "xiaomi"
       ]
     },
     {
@@ -853,6 +982,35 @@
       ]
     },
     {
+      "filename": "**/sdk/oracle/**/*.cs",
+      "words": [
+        "adbbackupid",
+        "adbscharsetname",
+        "adbsncharsetname",
+        "autonomousdbversionsname",
+        "Exadata",
+        "cloudexadatainfrastructurename",
+        "dbserverocid",
+        "cloudvmclustername",
+        "dbnodeocid",
+        "dbsystemshapename",
+        "dnsprivateviewocid",
+        "Ords",
+        "Ocid",
+        "ncharacter",
+        "ocpu",
+        "Iorm",
+        "Vnic",
+        "Ecpu",
+        "Tpurgent",
+        "Vmdb",
+        "Tcps",
+        "Ezconnect",
+        "Ezconnectplus",
+        "Oltp"
+      ]
+    },
+    {
       "filename": "**/sdk/orbital/**/*.cs",
       "words": [
         "eirpd",
@@ -863,15 +1021,15 @@
     {
       "filename": "**/sdk/paloaltonetworks/**/*",
       "words": [
-      	"armid",
-      	"cpus",
-      	"eastus",
-      	"cloudngfw",
-      	"fqdnlists",
-      	"isvtestuklegacy",
-      	"liftr",
-      	"liftrpantestplan",
-      	"msal",
+        "armid",
+        "cpus",
+        "eastus",
+        "cloudngfw",
+        "fqdnlists",
+        "isvtestuklegacy",
+        "liftr",
+        "liftrpantestplan",
+        "msal",
         "ngfw",
         "panrsid",
         "palo",
@@ -930,7 +1088,7 @@
     {
       "filename": "**/sdk/qumulo/**/*",
       "words": [
-      	"qumulo"
+        "qumulo"
       ]
     },
     {
@@ -1000,7 +1158,9 @@
     {
       "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
       "words": [
-        "Puid"
+        "Puid",
+        "Decompile",
+        "Decompiled"
       ]
     },
     {
@@ -1090,7 +1250,8 @@
         "Puid",
         "Stix",
         "Whois",
-        "Nlstext"
+        "Nlstext",
+        "Criterias"
       ]
     },
     {
@@ -1147,7 +1308,8 @@
         "Soundex",
         "Sorani",
         "Unprocessable",
-        "Beider"
+        "Beider",
+        "Exfiltration"
       ]
     },
     {
@@ -1162,7 +1324,16 @@
         "Ragzrs",
         "Rehydrated",
         "Undelete",
-        "Aadkerb"
+        "Aadkerb",
+        "Mibps",
+        "Nfsv",
+        "Sddl"
+      ]
+    },
+    {
+      "filename": "**/sdk/storageactions/**/*.cs",
+      "words": [
+        "undelete"
       ]
     },
     {
@@ -1174,7 +1345,8 @@
     {
       "filename": "**/sdk/storagemover/**/*.cs",
       "words": [
-        "Unregistering"
+        "Unregistering",
+        "Mbps"
       ]
     },
     {
@@ -1216,7 +1388,8 @@
         "Asana",
         "Ename",
         "Evalue",
-        "Twilio"
+        "Twilio",
+        "Soql"
       ]
     },
     {
@@ -1262,7 +1435,11 @@
         "Guage",
         "Plex",
         "Vstsrm",
-        "Localizable"
+        "Localizable",
+        "Dapr",
+        "TLSAES",
+        "Unregistering",
+        "Diffie"
       ]
     },
     {
@@ -1330,7 +1507,7 @@
         "protobuf",
         "Ackable",
         "awps"
-        ]
+      ]
     },
     {
       "filename": "**/sdk/openai/**/*.cs",
@@ -1368,9 +1545,26 @@
       ]
     },
     {
+      "filename": "**/sdk/healthdataaiservices/**/*",
+      "words": [
+        "Deidentification",
+        "Deidentify",
+        "Deidentified",
+        "Deid",
+        "HEALTHDATAAISERVICES"
+      ]
+    },
+    {
       "filename": "**/sdk/confluent/**/*.cs",
       "words": [
         "Byok"
+      ]
+    },
+    {
+      "filename": "**/sdk/openai/**/*.cs",
+      "words": [
+        "AOAI",
+        "Rerank"
       ]
     }
   ],

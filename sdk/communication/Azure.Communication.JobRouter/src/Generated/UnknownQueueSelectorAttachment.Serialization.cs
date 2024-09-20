@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
 {
     internal partial class UnknownQueueSelectorAttachment : IUtf8JsonSerializable, IJsonModel<QueueSelectorAttachment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueueSelectorAttachment>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueueSelectorAttachment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QueueSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.Communication.JobRouter
 
         internal static UnknownQueueSelectorAttachment DeserializeUnknownQueueSelectorAttachment(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -124,11 +124,11 @@ namespace Azure.Communication.JobRouter
             return DeserializeUnknownQueueSelectorAttachment(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UnknownQueueSelectorAttachment>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue<QueueSelectorAttachment>(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

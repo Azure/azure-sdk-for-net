@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual(name, result.Data.Name);
             Assert.AreEqual(DefaultLocation, result.Data.Location);
-            Assert.AreEqual(SearchSkuName.Standard, result.Data.Sku.Name);
+            Assert.AreEqual(SearchServiceSkuName.Standard, result.Data.SearchSkuName);
             Assert.AreEqual(1, result.Data.PartitionCount);
             Assert.AreEqual(1, result.Data.ReplicaCount);
             Assert.AreEqual(SearchServiceHostingMode.Default, result.Data.HostingMode);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.IsNotNull(item);
             Assert.IsTrue(item.Data.Location == DefaultLocation);
             Assert.AreEqual(name, item.Data.Name);
-            Assert.AreEqual(SearchSkuName.Standard, item.Data.Sku.Name);
+            Assert.AreEqual(SearchServiceSkuName.Standard, item.Data.SearchSkuName);
             Assert.AreEqual(2, item.Data.PartitionCount);
             Assert.AreEqual(3, item.Data.ReplicaCount);
             Assert.AreEqual(SearchServiceHostingMode.Default, item.Data.HostingMode);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(AzureLocation.WestCentralUS)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
                 ReplicaCount = 1,
                 SemanticSearch = SearchSemanticSearch.Disabled

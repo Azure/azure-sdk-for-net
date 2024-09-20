@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class ArmDeploymentScriptPropertiesBase : IUtf8JsonSerializable, IJsonModel<ArmDeploymentScriptPropertiesBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentScriptPropertiesBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentScriptPropertiesBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmDeploymentScriptPropertiesBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
-                writer.WriteObjectValue<ContainerConfiguration>(ContainerSettings, options);
+                writer.WriteObjectValue(ContainerSettings, options);
             }
             if (Optional.IsDefined(StorageAccountSettings))
             {
                 writer.WritePropertyName("storageAccountSettings"u8);
-                writer.WriteObjectValue<ScriptStorageConfiguration>(StorageAccountSettings, options);
+                writer.WriteObjectValue(StorageAccountSettings, options);
             }
             if (Optional.IsDefined(CleanupPreference))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<ScriptStatus>(Status, options);
+                writer.WriteObjectValue(Status, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Outputs))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmDeploymentScriptPropertiesBase DeserializeArmDeploymentScriptPropertiesBase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

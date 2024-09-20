@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class AccessControlListMatchCondition : IUtf8JsonSerializable, IJsonModel<AccessControlListMatchCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessControlListMatchCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessControlListMatchCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AccessControlListMatchCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(PortCondition))
             {
                 writer.WritePropertyName("portCondition"u8);
-                writer.WriteObjectValue<AccessControlListPortCondition>(PortCondition, options);
+                writer.WriteObjectValue(PortCondition, options);
             }
             if (Optional.IsCollectionDefined(ProtocolTypes))
             {
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(VlanMatchCondition))
             {
                 writer.WritePropertyName("vlanMatchCondition"u8);
-                writer.WriteObjectValue<VlanMatchCondition>(VlanMatchCondition, options);
+                writer.WriteObjectValue(VlanMatchCondition, options);
             }
             if (Optional.IsDefined(IPCondition))
             {
                 writer.WritePropertyName("ipCondition"u8);
-                writer.WriteObjectValue<IPMatchCondition>(IPCondition, options);
+                writer.WriteObjectValue(IPCondition, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static AccessControlListMatchCondition DeserializeAccessControlListMatchCondition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

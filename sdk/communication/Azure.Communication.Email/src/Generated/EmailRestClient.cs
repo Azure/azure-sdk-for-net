@@ -125,7 +125,7 @@ namespace Azure.Communication.Email
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<EmailMessage>(message);
+            content.JsonWriter.WriteObjectValue(message);
             request.Content = content;
             return message0;
         }

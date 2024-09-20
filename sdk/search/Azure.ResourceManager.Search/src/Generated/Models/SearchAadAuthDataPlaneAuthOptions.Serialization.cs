@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -17,7 +16,7 @@ namespace Azure.ResourceManager.Search.Models
 {
     public partial class SearchAadAuthDataPlaneAuthOptions : IUtf8JsonSerializable, IJsonModel<SearchAadAuthDataPlaneAuthOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchAadAuthDataPlaneAuthOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchAadAuthDataPlaneAuthOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SearchAadAuthDataPlaneAuthOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.Search.Models
             if (Optional.IsDefined(AadOrApiKey))
             {
                 writer.WritePropertyName("aadOrApiKey"u8);
-                writer.WriteObjectValue<DataPlaneAadOrApiKeyAuthOption>(AadOrApiKey, options);
+                writer.WriteObjectValue(AadOrApiKey, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static SearchAadAuthDataPlaneAuthOptions DeserializeSearchAadAuthDataPlaneAuthOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -125,60 +124,43 @@ namespace Azure.ResourceManager.Search.Models
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiKeyOnly), out propertyOverride);
-            if (Optional.IsDefined(ApiKeyOnly) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  apiKeyOnly: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiKeyOnly))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  apiKeyOnly: ");
                     builder.AppendLine($"'{ApiKeyOnly.ToString()}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadOrApiKey), out propertyOverride);
-            if (Optional.IsDefined(AadOrApiKey) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AadAuthFailureMode", out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  aadOrApiKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine("{");
+                builder.Append("    aadAuthFailureMode: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(AadOrApiKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  aadOrApiKey: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AadOrApiKey, options, 2, false, "  aadOrApiKey: ");
                 }
             }
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "AadAuthFailureMode":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("AadAuthFailureMode", item.Value);
-                        bicepOptions.PropertyOverrides.Add(AadOrApiKey, propertyDictionary);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<SearchAadAuthDataPlaneAuthOptions>.Write(ModelReaderWriterOptions options)

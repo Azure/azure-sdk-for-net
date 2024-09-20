@@ -24,7 +24,7 @@ namespace Azure.Identity.Tests
 
         public static IEnumerable<object[]> ManagedIdentitySources()
         {
-            var mockTransport = new MockTransport(request => CreateMockResponse(200, "secret").WithHeader("Content-Type", "application/json"));
+            var mockTransport = new MockTransport(request => CreateMockResponse(200, "secret", (int)TimeSpan.FromHours(24).TotalSeconds).WithHeader("Content-Type", "application/json"));
             var options = new TokenCredentialOptions() { Transport = mockTransport };
             options.Retry.MaxDelay = TimeSpan.Zero;
             var pipeline = CredentialPipeline.GetInstance(options);
@@ -35,7 +35,7 @@ namespace Azure.Identity.Tests
             var miCredOptions = new ManagedIdentityClientOptions { Pipeline = pipeline };
             var endpoint = new Uri("https://localhost");
 
-            yield return new object[] { new ImdsManagedIdentitySource(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = "mock-client-id" }) };
+            yield return new object[] { new ImdsManagedIdentitySource(new ManagedIdentityClientOptions { Pipeline = pipeline, ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId("mock-client-id") }) };
             yield return new object[] { new AppServiceV2017ManagedIdentitySource(pipeline, endpoint, "mysecret", miCredOptions) };
             yield return new object[] { new AppServiceV2019ManagedIdentitySource(pipeline, endpoint, "mysecret", miCredOptions) };
             yield return new object[] { new AzureArcManagedIdentitySource(endpoint, miCredOptions) };
@@ -54,10 +54,20 @@ namespace Azure.Identity.Tests
             Assert.That(ex.Message, Does.Contain("Response from Managed Identity was successful, but the operation timed out prior to completion."));
         }
 
-        private static MockResponse CreateMockResponse(int responseCode, string token)
+        [Test]
+        [TestCaseSource(nameof(ManagedIdentitySources))]
+        public async Task RefreshOnPopulatedWhenTokenExpirationGreaterThanTwoHours(object miSource)
         {
+            var source = (ManagedIdentitySource)miSource;
+            var token = await source.AuthenticateAsync(IsAsync, new TokenRequestContext(MockScopes.Default), CancellationToken.None);
+            Assert.IsNotNull(token.RefreshOn);
+        }
+
+        private static MockResponse CreateMockResponse(int responseCode, string token, int expiresInSeconds = 3600)
+        {
+            var expireOn = DateTimeOffset.UtcNow.AddSeconds(expiresInSeconds).ToUnixTimeSeconds();
             var response = new MockResponse(responseCode);
-            string jsonData = $"{{ \"access_token\": \"{token}\", \"expires_on\": \"3600\" }}";
+            string jsonData = $"{{ \"access_token\": \"{token}\", \"expires_on\": \"{expireOn}\" }}";
             byte[] byteArray = Encoding.UTF8.GetBytes(jsonData);
             response.ContentStream = new MemoryStream(byteArray);
             return response;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ManagedInstanceOperationSteps : IUtf8JsonSerializable, IJsonModel<ManagedInstanceOperationSteps>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceOperationSteps>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceOperationSteps>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedInstanceOperationSteps>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in StepsList)
                 {
-                    writer.WriteObjectValue<UpsertManagedServerOperationStep>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ManagedInstanceOperationSteps DeserializeManagedInstanceOperationSteps(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,15 +142,16 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalSteps), out propertyOverride);
-            if (Optional.IsDefined(TotalSteps) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  totalSteps: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TotalSteps))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  totalSteps: ");
                     if (TotalSteps.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -164,31 +165,33 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentStep), out propertyOverride);
-            if (Optional.IsDefined(CurrentStep) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  currentStep: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CurrentStep))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  currentStep: ");
                     builder.AppendLine($"{CurrentStep.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StepsList), out propertyOverride);
-            if (Optional.IsCollectionDefined(StepsList) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (StepsList.Any() || hasPropertyOverride)
+                builder.Append("  stepsList: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(StepsList))
                 {
-                    builder.Append("  stepsList: ");
-                    if (hasPropertyOverride)
+                    if (StepsList.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  stepsList: ");
                         builder.AppendLine("[");
                         foreach (var item in StepsList)
                         {

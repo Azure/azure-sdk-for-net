@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="isHidden"> A flag indicating whether the rule is hidden (from the UI). </param>
         /// <param name="isEnabledByDefault"> A flag indicating whether the rule is enabled by default. </param>
         /// <param name="isInPreview"> A flag indicating whether the rule is in preview. </param>
-        /// <param name="supportsEmailNotifications"> A flag indicating whether email notifications are supported for detections for this rule. </param>
+        /// <param name="isEmailNotificationsSupported"> A flag indicating whether email notifications are supported for detections for this rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(string name, string displayName, string description, Uri helpUri, bool? isHidden, bool? isEnabledByDefault, bool? isInPreview, bool? supportsEmailNotifications, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(string name, string displayName, string description, Uri helpUri, bool? isHidden, bool? isEnabledByDefault, bool? isInPreview, bool? isEmailNotificationsSupported, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DisplayName = displayName;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             IsHidden = isHidden;
             IsEnabledByDefault = isEnabledByDefault;
             IsInPreview = isInPreview;
-            SupportsEmailNotifications = supportsEmailNotifications;
+            IsEmailNotificationsSupported = isEmailNotificationsSupported;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -96,6 +96,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public bool? IsInPreview { get; set; }
         /// <summary> A flag indicating whether email notifications are supported for detections for this rule. </summary>
         [WirePath("SupportsEmailNotifications")]
-        public bool? SupportsEmailNotifications { get; set; }
+        public bool? IsEmailNotificationsSupported { get; set; }
     }
 }

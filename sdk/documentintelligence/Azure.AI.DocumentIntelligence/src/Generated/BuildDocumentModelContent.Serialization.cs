@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence
 {
     public partial class BuildDocumentModelContent : IUtf8JsonSerializable, IJsonModel<BuildDocumentModelContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BuildDocumentModelContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BuildDocumentModelContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BuildDocumentModelContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -38,12 +38,12 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(AzureBlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);
-                writer.WriteObjectValue<AzureBlobContentSource>(AzureBlobSource, options);
+                writer.WriteObjectValue(AzureBlobSource, options);
             }
             if (Optional.IsDefined(AzureBlobFileListSource))
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
-                writer.WriteObjectValue<AzureBlobFileListContentSource>(AzureBlobFileListSource, options);
+                writer.WriteObjectValue(AzureBlobFileListSource, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -55,6 +55,16 @@ namespace Azure.AI.DocumentIntelligence
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(MaxTrainingHours))
+            {
+                writer.WritePropertyName("maxTrainingHours"u8);
+                writer.WriteNumberValue(MaxTrainingHours.Value);
+            }
+            if (Optional.IsDefined(AllowOverwrite))
+            {
+                writer.WritePropertyName("allowOverwrite"u8);
+                writer.WriteBooleanValue(AllowOverwrite.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +98,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal static BuildDocumentModelContent DeserializeBuildDocumentModelContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,6 +110,8 @@ namespace Azure.AI.DocumentIntelligence
             AzureBlobContentSource azureBlobSource = default;
             AzureBlobFileListContentSource azureBlobFileListSource = default;
             IDictionary<string, string> tags = default;
+            float? maxTrainingHours = default;
+            bool? allowOverwrite = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,6 +163,24 @@ namespace Azure.AI.DocumentIntelligence
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("maxTrainingHours"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxTrainingHours = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("allowOverwrite"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowOverwrite = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -164,6 +194,8 @@ namespace Azure.AI.DocumentIntelligence
                 azureBlobSource,
                 azureBlobFileListSource,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                maxTrainingHours,
+                allowOverwrite,
                 serializedAdditionalRawData);
         }
 
@@ -206,11 +238,11 @@ namespace Azure.AI.DocumentIntelligence
             return DeserializeBuildDocumentModelContent(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BuildDocumentModelContent>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

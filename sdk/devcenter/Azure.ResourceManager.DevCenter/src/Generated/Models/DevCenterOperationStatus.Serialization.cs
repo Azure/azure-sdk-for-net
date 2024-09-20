@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 {
     public partial class DevCenterOperationStatus : IUtf8JsonSerializable, IJsonModel<DevCenterOperationStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterOperationStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterOperationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevCenterOperationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -58,18 +58,39 @@ namespace Azure.ResourceManager.DevCenter.Models
             writer.WriteStringValue(Status);
             if (Optional.IsDefined(PercentComplete))
             {
-                writer.WritePropertyName("percentComplete"u8);
-                writer.WriteNumberValue(PercentComplete.Value);
+                if (PercentComplete != null)
+                {
+                    writer.WritePropertyName("percentComplete"u8);
+                    writer.WriteNumberValue(PercentComplete.Value);
+                }
+                else
+                {
+                    writer.WriteNull("percentComplete");
+                }
             }
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                if (StartOn != null)
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("startTime");
+                }
             }
             if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                if (EndOn != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime");
+                }
             }
             if (Optional.IsCollectionDefined(Operations))
             {
@@ -123,7 +144,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static DevCenterOperationStatus DeserializeDevCenterOperationStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -184,6 +205,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        percentComplete = null;
                         continue;
                     }
                     percentComplete = property.Value.GetSingle();
@@ -193,6 +215,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        startTime = null;
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -202,6 +225,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        endTime = null;
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotHub.Models
 {
     public partial class IotHubPrivateEndpointGroupInformationProperties : IUtf8JsonSerializable, IJsonModel<IotHubPrivateEndpointGroupInformationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubPrivateEndpointGroupInformationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubPrivateEndpointGroupInformationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IotHubPrivateEndpointGroupInformationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubPrivateEndpointGroupInformationProperties DeserializeIotHubPrivateEndpointGroupInformationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

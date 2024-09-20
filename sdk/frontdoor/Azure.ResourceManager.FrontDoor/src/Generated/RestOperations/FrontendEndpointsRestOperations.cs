@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.FrontDoor
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByFrontDoorRequestUri(string subscriptionId, string resourceGroupName, string frontDoorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/frontDoors/", false);
+            uri.AppendPath(frontDoorName, true);
+            uri.AppendPath("/frontendEndpoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByFrontDoorRequest(string subscriptionId, string resourceGroupName, string frontDoorName)
@@ -114,6 +128,22 @@ namespace Azure.ResourceManager.FrontDoor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/frontDoors/", false);
+            uri.AppendPath(frontDoorName, true);
+            uri.AppendPath("/frontendEndpoints/", false);
+            uri.AppendPath(frontendEndpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName)
@@ -204,6 +234,23 @@ namespace Azure.ResourceManager.FrontDoor
             }
         }
 
+        internal RequestUriBuilder CreateEnableHttpsRequestUri(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CustomHttpsConfiguration customHttpsConfiguration)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/frontDoors/", false);
+            uri.AppendPath(frontDoorName, true);
+            uri.AppendPath("/frontendEndpoints/", false);
+            uri.AppendPath(frontendEndpointName, true);
+            uri.AppendPath("/enableHttps", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateEnableHttpsRequest(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CustomHttpsConfiguration customHttpsConfiguration)
         {
             var message = _pipeline.CreateMessage();
@@ -225,7 +272,7 @@ namespace Azure.ResourceManager.FrontDoor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CustomHttpsConfiguration>(customHttpsConfiguration, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(customHttpsConfiguration, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -287,6 +334,23 @@ namespace Azure.ResourceManager.FrontDoor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDisableHttpsRequestUri(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/frontDoors/", false);
+            uri.AppendPath(frontDoorName, true);
+            uri.AppendPath("/frontendEndpoints/", false);
+            uri.AppendPath(frontendEndpointName, true);
+            uri.AppendPath("/disableHttps", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDisableHttpsRequest(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName)
@@ -364,6 +428,14 @@ namespace Azure.ResourceManager.FrontDoor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByFrontDoorNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string frontDoorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByFrontDoorNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string frontDoorName)

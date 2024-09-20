@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 {
     public partial class NamedPartitionSchemeDescription : IUtf8JsonSerializable, IJsonModel<NamedPartitionSchemeDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NamedPartitionSchemeDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NamedPartitionSchemeDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NamedPartitionSchemeDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static NamedPartitionSchemeDescription DeserializeNamedPartitionSchemeDescription(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -1,17 +1,7 @@
 # Release History
 
-## 0.1.0-beta.2 (Unreleased)
+## 1.0.0-beta.1 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 0.1.0-beta.1 (2024-04-04)
-
-### Features Added
-
-- Initial beta release of Azure.Provisioning.OperationalInsights.
+- Initial beta release of new Azure.Provisioning.OperationalInsights.

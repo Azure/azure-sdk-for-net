@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StandbyPool
 {
     public partial class StandbyContainerGroupPoolData : IUtf8JsonSerializable, IJsonModel<StandbyContainerGroupPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyContainerGroupPoolData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyContainerGroupPoolData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StandbyContainerGroupPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.StandbyPool
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -61,24 +66,6 @@ namespace Azure.ResourceManager.StandbyPool
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ElasticityProfile))
-            {
-                writer.WritePropertyName("elasticityProfile"u8);
-                writer.WriteObjectValue<StandbyContainerGroupPoolElasticityProfile>(ElasticityProfile, options);
-            }
-            if (Optional.IsDefined(ContainerGroupProperties))
-            {
-                writer.WritePropertyName("containerGroupProperties"u8);
-                writer.WriteObjectValue<StandbyContainerGroupProperties>(ContainerGroupProperties, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -111,25 +98,32 @@ namespace Azure.ResourceManager.StandbyPool
 
         internal static StandbyContainerGroupPoolData DeserializeStandbyContainerGroupPoolData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            StandbyContainerGroupPoolProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            StandbyContainerGroupPoolElasticityProfile elasticityProfile = default;
-            StandbyContainerGroupProperties containerGroupProperties = default;
-            StandbyPoolProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = StandbyContainerGroupPoolProperties.DeserializeStandbyContainerGroupPoolProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -173,45 +167,6 @@ namespace Azure.ResourceManager.StandbyPool
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("elasticityProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            elasticityProfile = StandbyContainerGroupPoolElasticityProfile.DeserializeStandbyContainerGroupPoolElasticityProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("containerGroupProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            containerGroupProperties = StandbyContainerGroupProperties.DeserializeStandbyContainerGroupProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new StandbyPoolProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -225,9 +180,7 @@ namespace Azure.ResourceManager.StandbyPool
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                elasticityProfile,
-                containerGroupProperties,
-                provisioningState,
+                properties,
                 serializedAdditionalRawData);
         }
 

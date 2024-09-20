@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SqlSynapseLinkWorkspaceInfo : IUtf8JsonSerializable, IJsonModel<SqlSynapseLinkWorkspaceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlSynapseLinkWorkspaceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlSynapseLinkWorkspaceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlSynapseLinkWorkspaceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SqlSynapseLinkWorkspaceInfo DeserializeSqlSynapseLinkWorkspaceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,29 +116,31 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkspaceId), out propertyOverride);
-            if (Optional.IsDefined(WorkspaceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  workspaceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkspaceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  workspaceId: ");
                     builder.AppendLine($"'{WorkspaceId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkConnectionName), out propertyOverride);
-            if (Optional.IsDefined(LinkConnectionName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  linkConnectionName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinkConnectionName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  linkConnectionName: ");
                     if (LinkConnectionName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

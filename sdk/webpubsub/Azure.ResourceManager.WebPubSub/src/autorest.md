@@ -17,6 +17,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+enable-bicep-serialization: true
 
 no-property-type-replacement: PrivateEndpoint
 

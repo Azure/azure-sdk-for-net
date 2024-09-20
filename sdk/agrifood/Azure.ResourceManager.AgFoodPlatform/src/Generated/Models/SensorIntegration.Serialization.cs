@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
     public partial class SensorIntegration : IUtf8JsonSerializable, IJsonModel<SensorIntegration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SensorIntegration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SensorIntegration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SensorIntegration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SensorIntegration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 throw new FormatException($"The model {nameof(SensorIntegration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
@@ -39,7 +47,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             if (Optional.IsDefined(ProvisioningInfo))
             {
                 writer.WritePropertyName("provisioningInfo"u8);
-                writer.WriteObjectValue<ErrorResponse>(ProvisioningInfo, options);
+                writer.WriteObjectValue(ProvisioningInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SensorIntegration IJsonModel<SensorIntegration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,7 +80,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 
         internal static SensorIntegration DeserializeSensorIntegration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

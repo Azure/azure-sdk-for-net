@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     public partial class ServiceAlertModificationItemInfo : IUtf8JsonSerializable, IJsonModel<ServiceAlertModificationItemInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAlertModificationItemInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAlertModificationItemInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceAlertModificationItemInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertModificationItemInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 throw new FormatException($"The model {nameof(ServiceAlertModificationItemInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ModificationEvent))
             {
                 writer.WritePropertyName("modificationEvent"u8);
@@ -76,7 +84,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ServiceAlertModificationItemInfo IJsonModel<ServiceAlertModificationItemInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -93,7 +100,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertModificationItemInfo DeserializeServiceAlertModificationItemInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

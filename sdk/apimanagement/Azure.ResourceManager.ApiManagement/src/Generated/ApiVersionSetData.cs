@@ -78,14 +78,19 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Description of API Version Set. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Name of query parameter that indicates the API Version if versioningScheme is set to `query`. </summary>
+        [WirePath("properties.versionQueryName")]
         public string VersionQueryName { get; set; }
         /// <summary> Name of HTTP header parameter that indicates the API Version if versioningScheme is set to `header`. </summary>
+        [WirePath("properties.versionHeaderName")]
         public string VersionHeaderName { get; set; }
         /// <summary> Name of API Version Set. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> An value that determines where the API Version identifier will be located in a HTTP request. </summary>
+        [WirePath("properties.versioningScheme")]
         public VersioningScheme? VersioningScheme { get; set; }
     }
 }

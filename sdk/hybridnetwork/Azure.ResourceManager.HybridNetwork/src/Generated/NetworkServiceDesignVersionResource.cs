@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkServiceDesignVersions_updateState</description>
+        /// <description>NetworkServiceDesignVersions_UpdateState</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkServiceDesignVersions_updateState</description>
+        /// <description>NetworkServiceDesignVersions_UpdateState</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

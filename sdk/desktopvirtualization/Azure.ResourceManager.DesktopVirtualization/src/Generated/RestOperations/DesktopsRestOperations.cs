@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,8 +32,24 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-05";
+            _apiVersion = apiVersion ?? "2024-04-03";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/applicationGroups/", false);
+            uri.AppendPath(applicationGroupName, true);
+            uri.AppendPath("/desktops/", false);
+            uri.AppendPath(desktopName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName)
@@ -60,7 +75,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Get a desktop. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="desktopName"> The name of the desktop within the specified desktop group. </param>
@@ -93,7 +108,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Get a desktop. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="desktopName"> The name of the desktop within the specified desktop group. </param>
@@ -125,6 +140,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName, VirtualDesktopPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/applicationGroups/", false);
+            uri.AppendPath(applicationGroupName, true);
+            uri.AppendPath("/desktops/", false);
+            uri.AppendPath(desktopName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName, VirtualDesktopPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -145,14 +176,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<VirtualDesktopPatch>(patch, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Update a desktop. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="desktopName"> The name of the desktop within the specified desktop group. </param>
@@ -185,7 +216,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Update a desktop. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="desktopName"> The name of the desktop within the specified desktop group. </param>
@@ -215,6 +246,33 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string applicationGroupName, int? pageSize, bool? isDescending, int? initialSkip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/applicationGroups/", false);
+            uri.AppendPath(applicationGroupName, true);
+            uri.AppendPath("/desktops", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", pageSize.Value, true);
+            }
+            if (isDescending != null)
+            {
+                uri.AppendQuery("isDescending", isDescending.Value, true);
+            }
+            if (initialSkip != null)
+            {
+                uri.AppendQuery("initialSkip", initialSkip.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string applicationGroupName, int? pageSize, bool? isDescending, int? initialSkip)
@@ -251,7 +309,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> List desktops. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="pageSize"> Number of items per page. </param>
@@ -283,7 +341,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> List desktops. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="pageSize"> Number of items per page. </param>
@@ -314,6 +372,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string applicationGroupName, int? pageSize, bool? isDescending, int? initialSkip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string applicationGroupName, int? pageSize, bool? isDescending, int? initialSkip)
         {
             var message = _pipeline.CreateMessage();
@@ -330,7 +396,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary> List desktops. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="pageSize"> Number of items per page. </param>
@@ -364,7 +430,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary> List desktops. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="pageSize"> Number of items per page. </param>

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByLocalRulestacksRequestUri(string subscriptionId, string resourceGroupName, string localRulestackName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
+            uri.AppendPath(localRulestackName, true);
+            uri.AppendPath("/localRules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByLocalRulestacksRequest(string subscriptionId, string resourceGroupName, string localRulestackName)
@@ -114,6 +128,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string localRulestackName, string priority)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
+            uri.AppendPath(localRulestackName, true);
+            uri.AppendPath("/localRules/", false);
+            uri.AppendPath(priority, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string localRulestackName, string priority)
@@ -204,6 +234,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, LocalRulestackRuleData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
+            uri.AppendPath(localRulestackName, true);
+            uri.AppendPath("/localRules/", false);
+            uri.AppendPath(priority, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, LocalRulestackRuleData data)
         {
             var message = _pipeline.CreateMessage();
@@ -224,7 +270,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<LocalRulestackRuleData>(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -286,6 +332,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string localRulestackName, string priority)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
+            uri.AppendPath(localRulestackName, true);
+            uri.AppendPath("/localRules/", false);
+            uri.AppendPath(priority, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string localRulestackName, string priority)
@@ -364,6 +426,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetCountersRequestUri(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, string firewallName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
+            uri.AppendPath(localRulestackName, true);
+            uri.AppendPath("/localRules/", false);
+            uri.AppendPath(priority, true);
+            uri.AppendPath("/getCounters", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (firewallName != null)
+            {
+                uri.AppendQuery("firewallName", firewallName, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetCountersRequest(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, string firewallName)
@@ -457,6 +540,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        internal RequestUriBuilder CreateRefreshCountersRequestUri(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, string firewallName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
+            uri.AppendPath(localRulestackName, true);
+            uri.AppendPath("/localRules/", false);
+            uri.AppendPath(priority, true);
+            uri.AppendPath("/refreshCounters", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (firewallName != null)
+            {
+                uri.AppendQuery("firewallName", firewallName, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateRefreshCountersRequest(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, string firewallName)
         {
             var message = _pipeline.CreateMessage();
@@ -536,6 +640,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateResetCountersRequestUri(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, string firewallName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
+            uri.AppendPath(localRulestackName, true);
+            uri.AppendPath("/localRules/", false);
+            uri.AppendPath(priority, true);
+            uri.AppendPath("/resetCounters", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (firewallName != null)
+            {
+                uri.AppendQuery("firewallName", firewallName, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateResetCountersRequest(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, string firewallName)
@@ -627,6 +752,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByLocalRulestacksNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string localRulestackName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByLocalRulestacksNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string localRulestackName)

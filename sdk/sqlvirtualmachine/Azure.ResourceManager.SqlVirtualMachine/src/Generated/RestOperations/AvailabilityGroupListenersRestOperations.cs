@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +34,26 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/", false);
+            uri.AppendPath(sqlVmGroupName, true);
+            uri.AppendPath("/availabilityGroupListeners/", false);
+            uri.AppendPath(availabilityGroupListenerName, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, string expand)
@@ -131,6 +150,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, AvailabilityGroupListenerData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/", false);
+            uri.AppendPath(sqlVmGroupName, true);
+            uri.AppendPath("/availabilityGroupListeners/", false);
+            uri.AppendPath(availabilityGroupListenerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, AvailabilityGroupListenerData data)
         {
             var message = _pipeline.CreateMessage();
@@ -151,7 +186,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AvailabilityGroupListenerData>(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -213,6 +248,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/", false);
+            uri.AppendPath(sqlVmGroupName, true);
+            uri.AppendPath("/availabilityGroupListeners/", false);
+            uri.AppendPath(availabilityGroupListenerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName)
@@ -292,6 +343,21 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
         }
 
+        internal RequestUriBuilder CreateListByGroupRequestUri(string subscriptionId, string resourceGroupName, string sqlVmGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/", false);
+            uri.AppendPath(sqlVmGroupName, true);
+            uri.AppendPath("/availabilityGroupListeners", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByGroupRequest(string subscriptionId, string resourceGroupName, string sqlVmGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -369,6 +435,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string sqlVmGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string sqlVmGroupName)

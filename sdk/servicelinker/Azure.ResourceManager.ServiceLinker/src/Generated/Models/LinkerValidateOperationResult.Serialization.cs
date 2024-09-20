@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 {
     public partial class LinkerValidateOperationResult : IUtf8JsonSerializable, IJsonModel<LinkerValidateOperationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkerValidateOperationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkerValidateOperationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LinkerValidateOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteStartArray();
                     foreach (var item in ValidationDetail)
                     {
-                        writer.WriteObjectValue<LinkerValidationResultItemInfo>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static LinkerValidateOperationResult DeserializeLinkerValidateOperationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

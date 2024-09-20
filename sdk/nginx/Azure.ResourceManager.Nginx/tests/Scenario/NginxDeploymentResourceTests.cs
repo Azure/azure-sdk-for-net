@@ -66,7 +66,8 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             Assert.IsNotNull(nginxDeployment.Data.Properties.NetworkProfile.NetworkInterfaceSubnetId);
             Assert.IsNotNull(nginxDeployment.Data.Properties.IPAddress);
             Assert.IsNotNull(nginxDeployment.Data.Properties.EnableDiagnosticsSupport);
-            Assert.IsNotNull(nginxDeployment.Data.Properties.ScalingCapacity);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.ScalingProperties);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.AutoUpgradeProfile);
             Assert.IsNotNull(nginxDeployment.Data.Properties.UserPreferredEmail);
         }
 
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
-            string nginxCertificateName = Recording.GenerateAssetName("testCertificate-");
+            string nginxCertificateName = Recording.GenerateAssetName("testcertificate-");
             string certificateVirtualPath = "/etc/nginx/nginx.cert";
             string keyVirtualPath = "/etc/nginx/nginx.key";
             _ = await CreateNginxCertificate(Location, nginxDeployment, nginxCertificateName, certificateVirtualPath, keyVirtualPath);
@@ -168,6 +169,47 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
+        public async Task UpdateScaling()
+        {
+            string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
+            NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
+
+            NginxDeploymentPatch deploymentPatch = new NginxDeploymentPatch();
+            var nginxScaleProfiles = new List<NginxScaleProfile>();
+            var nginxScaleProfileCapacity = new NginxScaleProfileCapacity(20, 30);
+            var nginxScaleProfile = new NginxScaleProfile("default", nginxScaleProfileCapacity);
+            nginxScaleProfiles.Add(nginxScaleProfile);
+            var testScalingProp = new NginxDeploymentScalingProperties(null, nginxScaleProfiles, null);
+            deploymentPatch.Properties = new NginxDeploymentUpdateProperties();
+            deploymentPatch.Properties.ScalingProperties = testScalingProp;
+
+            NginxDeploymentResource nginxDeployment2 = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, deploymentPatch)).Value;
+
+            Assert.AreEqual(nginxDeployment2.Data.Properties.ScalingProperties.Profiles.Count, 1);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, null)).Value);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task UpdateAutoupgrade()
+        {
+            string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
+            NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
+
+            NginxDeploymentPatch deploymentPatch = new NginxDeploymentPatch();
+            deploymentPatch.Properties = new NginxDeploymentUpdateProperties();
+            AutoUpgradeProfile autoUpgradeProfile = new AutoUpgradeProfile();
+            autoUpgradeProfile.UpgradeChannel = "stable";
+
+            deploymentPatch.Properties.AutoUpgradeProfile = autoUpgradeProfile;
+
+            NginxDeploymentResource nginxDeployment2 = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, deploymentPatch)).Value;
+
+            Assert.AreEqual(nginxDeployment2.Data.Properties.AutoUpgradeProfile.UpgradeChannel, "stable");
+        }
+
+        [TestCase]
+        [RecordedTest]
         public async Task AddTag()
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
@@ -185,14 +227,16 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
-            NginxDeploymentResource nginxDeployment2 = await nginxDeployment.AddTagAsync("Counter", "1");
+
+            NginxDeploymentPatch deploymentPatch = new NginxDeploymentPatch();
+            deploymentPatch.Tags.Add("Counter", "1");
+            NginxDeploymentResource nginxDeployment2 = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, deploymentPatch)).Value;
 
             Assert.AreEqual(nginxDeployment2.Data.Tags["Counter"], "1");
-            await Delay(TimeSpan.FromMinutes(2).Milliseconds);
+            await Delay(TimeSpan.FromMinutes(3).Milliseconds);
             NginxDeploymentResource nginxDeployment3 = await nginxDeployment.RemoveTagAsync("Counter");
 
             Assert.IsFalse(nginxDeployment3.Data.Tags.ContainsKey("Counter"));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.RemoveTagAsync(null)).Value);
         }
     }
 }

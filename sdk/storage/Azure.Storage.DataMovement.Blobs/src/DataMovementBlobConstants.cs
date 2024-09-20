@@ -7,13 +7,19 @@ namespace Azure.Storage.DataMovement.Blobs
 {
     internal class DataMovementBlobConstants
     {
+        internal class ResourceId
+        {
+            internal const string BlockBlob = "BlockBlob";
+            internal const string PageBlob = "PageBlob";
+            internal const string AppendBlob = "AppendBlob";
+        }
+
         internal class SourceCheckpointData
         {
-            internal const int SchemaVersion = 1;
+            internal const int SchemaVersion = 2;
 
             internal const int VersionIndex = 0;
-            internal const int BlobTypeIndex = VersionIndex + IntSizeInBytes;
-            internal const int DataSize = BlobTypeIndex + OneByte;
+            internal const int DataSize = VersionIndex + IntSizeInBytes;
         }
 
         internal class DestinationCheckpointData
@@ -21,7 +27,8 @@ namespace Azure.Storage.DataMovement.Blobs
             internal const int SchemaVersion = 2;
 
             internal const int VersionIndex = 0;
-            internal const int BlobTypeIndex = VersionIndex + IntSizeInBytes;
+            internal const int PreserveBlobTypeIndex = VersionIndex + IntSizeInBytes;
+            internal const int BlobTypeIndex = PreserveBlobTypeIndex + OneByte;
             internal const int PreserveContentTypeIndex = BlobTypeIndex + OneByte;
             internal const int ContentTypeOffsetIndex = PreserveContentTypeIndex + OneByte;
             internal const int ContentTypeLengthIndex = ContentTypeOffsetIndex + IntSizeInBytes;
@@ -42,8 +49,7 @@ namespace Azure.Storage.DataMovement.Blobs
             internal const int CacheControlOffsetIndex = PreserveCacheControlIndex + OneByte;
             internal const int CacheControlLengthIndex = CacheControlOffsetIndex + IntSizeInBytes;
 
-            internal const int PreserveAccessTierIndex = CacheControlLengthIndex + IntSizeInBytes;
-            internal const int AccessTierValueIndex = PreserveAccessTierIndex + OneByte;
+            internal const int AccessTierValueIndex = CacheControlLengthIndex + IntSizeInBytes;
 
             internal const int PreserveMetadataIndex = AccessTierValueIndex + OneByte;
             internal const int MetadataOffsetIndex = PreserveMetadataIndex + OneByte;

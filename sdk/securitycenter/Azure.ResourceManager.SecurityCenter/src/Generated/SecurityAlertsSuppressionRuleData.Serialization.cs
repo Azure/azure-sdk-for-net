@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityAlertsSuppressionRuleData : IUtf8JsonSerializable, IJsonModel<SecurityAlertsSuppressionRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAlertsSuppressionRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAlertsSuppressionRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityAlertsSuppressionRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(SuppressionAlertsScope))
             {
                 writer.WritePropertyName("suppressionAlertsScope"u8);
-                writer.WriteObjectValue<SuppressionAlertsScope>(SuppressionAlertsScope, options);
+                writer.WriteObjectValue(SuppressionAlertsScope, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static SecurityAlertsSuppressionRuleData DeserializeSecurityAlertsSuppressionRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

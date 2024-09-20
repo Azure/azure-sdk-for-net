@@ -15,7 +15,7 @@ namespace Azure.Developer.DevCenter.Models
 {
     public partial class DevBox : IUtf8JsonSerializable, IJsonModel<DevBox>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevBox>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevBox>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevBox>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -86,17 +86,17 @@ namespace Azure.Developer.DevCenter.Models
             if (options.Format != "W" && Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue<DevBoxHardwareProfile>(HardwareProfile, options);
+                writer.WriteObjectValue(HardwareProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue<DevBoxStorageProfile>(StorageProfile, options);
+                writer.WriteObjectValue(StorageProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue<DevBoxImageReference>(ImageReference, options);
+                writer.WriteObjectValue(ImageReference, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedTime))
             {
@@ -140,7 +140,7 @@ namespace Azure.Developer.DevCenter.Models
 
         internal static DevBox DeserializeDevBox(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -370,11 +370,11 @@ namespace Azure.Developer.DevCenter.Models
             return DeserializeDevBox(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DevBox>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class WebAppRuntimes : IUtf8JsonSerializable, IJsonModel<WebAppRuntimes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppRuntimes>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppRuntimes>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebAppRuntimes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(LinuxRuntimeSettings))
             {
                 writer.WritePropertyName("linuxRuntimeSettings"u8);
-                writer.WriteObjectValue<WebAppRuntimeSettings>(LinuxRuntimeSettings, options);
+                writer.WriteObjectValue(LinuxRuntimeSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WindowsRuntimeSettings))
             {
                 writer.WritePropertyName("windowsRuntimeSettings"u8);
-                writer.WriteObjectValue<WebAppRuntimeSettings>(WindowsRuntimeSettings, options);
+                writer.WriteObjectValue(WindowsRuntimeSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LinuxContainerSettings))
             {
                 writer.WritePropertyName("linuxContainerSettings"u8);
-                writer.WriteObjectValue<LinuxJavaContainerSettings>(LinuxContainerSettings, options);
+                writer.WriteObjectValue(LinuxContainerSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WindowsContainerSettings))
             {
                 writer.WritePropertyName("windowsContainerSettings"u8);
-                writer.WriteObjectValue<WindowsJavaContainerSettings>(WindowsContainerSettings, options);
+                writer.WriteObjectValue(WindowsContainerSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static WebAppRuntimes DeserializeWebAppRuntimes(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,57 +150,61 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxRuntimeSettings), out propertyOverride);
-            if (Optional.IsDefined(LinuxRuntimeSettings) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  linuxRuntimeSettings: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinuxRuntimeSettings))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  linuxRuntimeSettings: ");
                     BicepSerializationHelpers.AppendChildObject(builder, LinuxRuntimeSettings, options, 2, false, "  linuxRuntimeSettings: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowsRuntimeSettings), out propertyOverride);
-            if (Optional.IsDefined(WindowsRuntimeSettings) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  windowsRuntimeSettings: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WindowsRuntimeSettings))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  windowsRuntimeSettings: ");
                     BicepSerializationHelpers.AppendChildObject(builder, WindowsRuntimeSettings, options, 2, false, "  windowsRuntimeSettings: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxContainerSettings), out propertyOverride);
-            if (Optional.IsDefined(LinuxContainerSettings) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  linuxContainerSettings: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinuxContainerSettings))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  linuxContainerSettings: ");
                     BicepSerializationHelpers.AppendChildObject(builder, LinuxContainerSettings, options, 2, false, "  linuxContainerSettings: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowsContainerSettings), out propertyOverride);
-            if (Optional.IsDefined(WindowsContainerSettings) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  windowsContainerSettings: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WindowsContainerSettings))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  windowsContainerSettings: ");
                     BicepSerializationHelpers.AppendChildObject(builder, WindowsContainerSettings, options, 2, false, "  windowsContainerSettings: ");
                 }
             }

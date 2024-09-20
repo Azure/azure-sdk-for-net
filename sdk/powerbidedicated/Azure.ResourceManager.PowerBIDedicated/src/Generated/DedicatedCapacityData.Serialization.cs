@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
 {
     public partial class DedicatedCapacityData : IUtf8JsonSerializable, IJsonModel<DedicatedCapacityData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedCapacityData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedCapacityData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DedicatedCapacityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<CapacitySku>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
             if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                writer.WriteObjectValue<SystemData>(SystemData, options);
+                writer.WriteObjectValue(SystemData, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Administration))
             {
                 writer.WritePropertyName("administration"u8);
-                writer.WriteObjectValue<DedicatedCapacityAdministrators>(Administration, options);
+                writer.WriteObjectValue(Administration, options);
             }
             if (Optional.IsDefined(Mode))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         internal static DedicatedCapacityData DeserializeDedicatedCapacityData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

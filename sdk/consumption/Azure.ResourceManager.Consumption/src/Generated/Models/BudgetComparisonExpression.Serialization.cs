@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class BudgetComparisonExpression : IUtf8JsonSerializable, IJsonModel<BudgetComparisonExpression>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BudgetComparisonExpression>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BudgetComparisonExpression>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BudgetComparisonExpression>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static BudgetComparisonExpression DeserializeBudgetComparisonExpression(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

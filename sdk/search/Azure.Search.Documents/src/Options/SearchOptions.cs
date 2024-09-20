@@ -33,29 +33,25 @@ namespace Azure.Search.Documents
         /// <param name="sessionId"> A value to be used to create a sticky session, which can help getting more consistent results. As long as the same sessionId is used, a best-effort attempt will be made to target the same replica set. Be wary that reusing the same sessionID values repeatedly can interfere with the load balancing of the requests across replicas and adversely affect the performance of the search service. The value used as sessionId cannot start with a '_' character. </param>
         /// <param name="scoringParameters"> The list of parameter values to be used in scoring functions (for example, referencePointParameter) using the format name-values. For example, if the scoring profile defines a function with a parameter called 'mylocation' the parameter string would be "mylocation--122.2,44.8" (without the quotes). </param>
         /// <param name="scoringProfile"> The name of a scoring profile to evaluate match scores for matching documents in order to sort the results. </param>
-        /// <param name="semanticQuery"> Allows setting a separate search query that will be solely used for semantic reranking, semantic captions and semantic answers. Is useful for scenarios where there is a need to use different queries between the base retrieval and ranking phase, and the L2 semantic phase. </param>
-        /// <param name="semanticConfigurationName"> The name of a semantic configuration that will be used when processing documents for queries of type semantic. </param>
-        /// <param name="semanticErrorMode"> Allows the user to choose whether a semantic call should fail completely, or to return partial results (default). </param>
-        /// <param name="semanticMaxWaitInMilliseconds"> Allows the user to set an upper bound on the amount of time it takes for semantic enrichment to finish processing before the request fails. </param>
-        /// <param name="debug"> Enables a debugging tool that can be used to further explore your reranked results. </param>
         /// <param name="searchText"> A full-text search query expression; Use "*" or omit this parameter to match all documents. </param>
         /// <param name="searchFieldsRaw"> The comma-separated list of field names to which to scope the full-text search. When using fielded search (fieldName:searchExpression) in a full Lucene query, the field names of each fielded search expression take precedence over any field names listed in this parameter. </param>
         /// <param name="searchMode"> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </param>
-        /// <param name="queryLanguage"> A value that specifies the language of the search query. </param>
-        /// <param name="querySpeller"> A value that specified the type of the speller to use to spell-correct individual search query terms. </param>
-        /// <param name="queryAnswerRaw"> A value that specifies whether answers should be returned as part of the search response. </param>
         /// <param name="selectRaw"> The comma-separated list of fields to retrieve. If unspecified, all fields marked as retrievable in the schema are included. </param>
         /// <param name="skip"> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </param>
         /// <param name="size"> The number of search results to retrieve. This can be used in conjunction with $skip to implement client-side paging of search results. If results are truncated due to server-side paging, the response will include a continuation token that can be used to issue another Search request for the next page of results. </param>
+        /// <param name="semanticConfigurationName"> The name of a semantic configuration that will be used when processing documents for queries of type semantic. </param>
+        /// <param name="semanticErrorMode"> Allows the user to choose whether a semantic call should fail completely (default / current behavior), or to return partial results. </param>
+        /// <param name="semanticMaxWaitInMilliseconds"> Allows the user to set an upper bound on the amount of time it takes for semantic enrichment to finish processing before the request fails. </param>
+        /// <param name="semanticQuery"> Allows setting a separate search query that will be solely used for semantic reranking, semantic captions and semantic answers. Is useful for scenarios where there is a need to use different queries between the base retrieval and ranking phase, and the L2 semantic phase. </param>
+        /// <param name="queryAnswerRaw"> A value that specifies whether answers should be returned as part of the search response. </param>
         /// <param name="queryCaptionRaw"> A value that specifies whether captions should be returned as part of the search response. </param>
-        /// <param name="semanticFieldsRaw"> The comma-separated list of field names used for semantic ranking. </param>
         /// <param name="vectorQueries">
         /// The query parameters for vector and hybrid search queries.
         /// Please note <see cref="VectorQuery"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VectorizableTextQuery"/> and <see cref="VectorizedQuery"/>.
         /// </param>
-        /// <param name="filterMode"> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter'. </param>
-        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string semanticQuery, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size, string queryCaptionRaw, string semanticFieldsRaw, IList<VectorQuery> vectorQueries, VectorFilterMode? filterMode)
+        /// <param name="filterMode"> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter' for new indexes. </param>
+        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string searchText, string searchFieldsRaw, SearchMode? searchMode, string selectRaw, int? skip, int? size, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, string semanticQuery, string queryAnswerRaw, string queryCaptionRaw, IList<VectorQuery> vectorQueries, VectorFilterMode? filterMode)
         {
             IncludeTotalCount = includeTotalCount;
             Facets = facets;
@@ -76,10 +72,8 @@ namespace Azure.Search.Documents
             SelectRaw = selectRaw;
             Skip = skip;
             Size = size;
-            QueryLanguage = queryLanguage;
-            QuerySpeller = querySpeller;
 
-            SemanticSearch = (semanticConfigurationName != null || semanticErrorMode != null || semanticMaxWaitInMilliseconds != null || queryAnswerRaw != null || queryCaptionRaw != null || semanticQuery != null || semanticFieldsRaw != null || debug != null) ? new SemanticSearchOptions() : null;
+            SemanticSearch = (semanticConfigurationName != null || semanticErrorMode != null || semanticMaxWaitInMilliseconds != null || queryAnswerRaw != null || queryCaptionRaw != null || semanticQuery != null) ? new SemanticSearchOptions() : null;
             if (SemanticSearch != null)
             {
                 SemanticSearch.QueryAnswer = queryAnswerRaw != null ? new QueryAnswer() : null;
@@ -91,8 +85,6 @@ namespace Azure.Search.Documents
             QueryAnswerRaw = queryAnswerRaw;
             QueryCaptionRaw = queryCaptionRaw;
             SemanticQuery = semanticQuery;
-            SemanticFieldsRaw = semanticFieldsRaw;
-            Debug = debug;
 
             VectorSearch = (vectorQueries != null || filterMode != null) ? new VectorSearchOptions() : null;
             VectorQueries = vectorQueries;
@@ -238,14 +230,6 @@ namespace Azure.Search.Documents
         [CodeGenMember("ScoringParameters")]
         public IList<string> ScoringParameters { get; internal set; } = new List<string>();
 
-        /// <summary> A value that specifies the language of the search query. </summary>
-        [CodeGenMember("QueryLanguage")]
-        public QueryLanguage? QueryLanguage { get; set; }
-
-        /// <summary> A value that specifies the type of the speller to use to spell-correct individual search query terms. </summary>
-        [CodeGenMember("Speller")]
-        public QuerySpellerType? QuerySpeller { get; set; }
-
         /// <summary> Options for performing Semantic Search. </summary>
         public SemanticSearchOptions SemanticSearch { get; set; }
 
@@ -294,20 +278,6 @@ namespace Azure.Search.Documents
             }
         }
 
-        /// <summary> The comma-separated list of field names used for semantic ranking. </summary>
-        [CodeGenMember("SemanticFields")]
-        private string SemanticFieldsRaw
-        {
-            get { return SemanticSearch?.SemanticFieldsRaw; }
-            set
-            {
-                if (SemanticSearch != null)
-                {
-                    SemanticSearch.SemanticFieldsRaw = value;
-                }
-            }
-        }
-
         /// <summary> Allows setting a separate search query that will be solely used for semantic reranking, semantic captions and semantic answers. Is useful for scenarios where there is a need to use different queries between the base retrieval and ranking phase, and the L2 semantic phase. </summary>
         [CodeGenMember("SemanticQuery")]
         private string SemanticQuery
@@ -318,20 +288,6 @@ namespace Azure.Search.Documents
                 if (SemanticSearch != null)
                 {
                     SemanticSearch.SemanticQuery = value;
-                }
-            }
-        }
-
-        /// <summary> Enables a debugging tool that can be used to further explore your reranked results. </summary>
-        [CodeGenMember("Debug")]
-        private QueryDebugMode? Debug
-        {
-            get { return SemanticSearch?.Debug; }
-            set
-            {
-                if (SemanticSearch != null)
-                {
-                    SemanticSearch.Debug = value;
                 }
             }
         }
@@ -422,8 +378,6 @@ namespace Azure.Search.Documents
             destination.SessionId = source.SessionId;
             destination.Size = source.Size;
             destination.Skip = source.Skip;
-            destination.QueryLanguage = source.QueryLanguage;
-            destination.QuerySpeller = source.QuerySpeller;
             destination.SemanticSearch = source.SemanticSearch;
             destination.VectorSearch = source.VectorSearch;
         }

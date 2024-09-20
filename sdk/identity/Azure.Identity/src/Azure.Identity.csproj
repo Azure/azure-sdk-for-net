@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure SDK Client Library for Azure Identity</Description>
     <AssemblyTitle>Microsoft Azure.Identity Component</AssemblyTitle>
-    <Version>1.11.0</Version>
+    <Version>1.13.0-beta.3</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.10.4</ApiCompatVersion>
+    <ApiCompatVersion>1.12.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Identity;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021;AZC0011</NoWarn>
@@ -17,8 +17,7 @@
         <DefineConstants>PREVIEW_FEATURE_FLAG</DefineConstants>
       </PropertyGroup>
       <ItemGroup>
-        <ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
-        <!-- <PackageReference Include="Azure.Core.Experimental" /> -->
+        <PackageReference Include="Azure.Core.Experimental" />
       </ItemGroup>
     </When>
   </Choose>
@@ -29,7 +28,6 @@
     <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="Microsoft.Identity.Client" />
     <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" />
-    <PackageReference Include="System.Security.Cryptography.ProtectedData" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />

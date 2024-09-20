@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MixedReality.Models
 {
     public partial class MixedRealityAccountKeyRegenerateContent : IUtf8JsonSerializable, IJsonModel<MixedRealityAccountKeyRegenerateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MixedRealityAccountKeyRegenerateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MixedRealityAccountKeyRegenerateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MixedRealityAccountKeyRegenerateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MixedReality.Models
 
         internal static MixedRealityAccountKeyRegenerateContent DeserializeMixedRealityAccountKeyRegenerateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

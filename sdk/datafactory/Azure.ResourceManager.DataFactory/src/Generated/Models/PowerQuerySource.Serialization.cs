@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class PowerQuerySource : IUtf8JsonSerializable, IJsonModel<PowerQuerySource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PowerQuerySource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PowerQuerySource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PowerQuerySource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
-                writer.WriteObjectValue<DatasetReference>(Dataset, options);
+                writer.WriteObjectValue(Dataset, options);
             }
             if (Optional.IsDefined(LinkedService))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Flowlet))
             {
                 writer.WritePropertyName("flowlet"u8);
-                writer.WriteObjectValue<DataFlowReference>(Flowlet, options);
+                writer.WriteObjectValue(Flowlet, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static PowerQuerySource DeserializePowerQuerySource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

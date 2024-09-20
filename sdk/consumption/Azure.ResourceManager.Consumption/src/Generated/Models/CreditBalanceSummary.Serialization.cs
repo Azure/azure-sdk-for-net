@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class CreditBalanceSummary : IUtf8JsonSerializable, IJsonModel<CreditBalanceSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreditBalanceSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreditBalanceSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CreditBalanceSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(EstimatedBalance))
             {
                 writer.WritePropertyName("estimatedBalance"u8);
-                writer.WriteObjectValue<ConsumptionAmount>(EstimatedBalance, options);
+                writer.WriteObjectValue(EstimatedBalance, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentBalance))
             {
                 writer.WritePropertyName("currentBalance"u8);
-                writer.WriteObjectValue<ConsumptionAmount>(CurrentBalance, options);
+                writer.WriteObjectValue(CurrentBalance, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EstimatedBalanceInBillingCurrency))
             {
                 writer.WritePropertyName("estimatedBalanceInBillingCurrency"u8);
-                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(EstimatedBalanceInBillingCurrency, options);
+                writer.WriteObjectValue(EstimatedBalanceInBillingCurrency, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static CreditBalanceSummary DeserializeCreditBalanceSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

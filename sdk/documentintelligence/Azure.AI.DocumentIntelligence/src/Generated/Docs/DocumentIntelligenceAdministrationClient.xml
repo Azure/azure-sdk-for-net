@@ -225,6 +225,8 @@ Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUr
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
 Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
 Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+Console.WriteLine(result.GetProperty("classifierId").ToString());
+Console.WriteLine(result.GetProperty("split").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
@@ -233,10 +235,22 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("trainingHours").ToString());
 ]]></code></example>
     </member>
     <member name="GetModel(string,RequestContext)">
@@ -273,6 +287,8 @@ Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUr
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
 Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
 Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+Console.WriteLine(result.GetProperty("classifierId").ToString());
+Console.WriteLine(result.GetProperty("split").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
@@ -281,10 +297,22 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("trainingHours").ToString());
 ]]></code></example>
     </member>
     <member name="DeleteModelAsync(string,RequestContext)">
@@ -384,9 +412,6 @@ Response response = await client.GetResourceInfoAsync(null);
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("count").ToString());
 Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("limit").ToString());
-Console.WriteLine(result.GetProperty("customNeuralDocumentModelBuilds").GetProperty("used").ToString());
-Console.WriteLine(result.GetProperty("customNeuralDocumentModelBuilds").GetProperty("quota").ToString());
-Console.WriteLine(result.GetProperty("customNeuralDocumentModelBuilds").GetProperty("quotaResetDateTime").ToString());
 ]]></code>
 This sample shows how to call GetResourceInfoAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -399,9 +424,6 @@ Response response = await client.GetResourceInfoAsync(null);
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("count").ToString());
 Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("limit").ToString());
-Console.WriteLine(result.GetProperty("customNeuralDocumentModelBuilds").GetProperty("used").ToString());
-Console.WriteLine(result.GetProperty("customNeuralDocumentModelBuilds").GetProperty("quota").ToString());
-Console.WriteLine(result.GetProperty("customNeuralDocumentModelBuilds").GetProperty("quotaResetDateTime").ToString());
 ]]></code></example>
     </member>
     <member name="GetResourceInfo(RequestContext)">
@@ -417,9 +439,6 @@ Response response = client.GetResourceInfo(null);
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("count").ToString());
 Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("limit").ToString());
-Console.WriteLine(result.GetProperty("customNeuralDocumentModelBuilds").GetProperty("used").ToString());
-Console.WriteLine(result.GetProperty("customNeuralDocumentModelBuilds").GetProperty("quota").ToString());
-Console.WriteLine(result.GetProperty("customNeuralDocumentModelBuilds").GetProperty("quotaResetDateTime").ToString());
 ]]></code>
 This sample shows how to call GetResourceInfo with all parameters and parse the result.
 <code><![CDATA[
@@ -432,9 +451,6 @@ Response response = client.GetResourceInfo(null);
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("count").ToString());
 Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("limit").ToString());
-Console.WriteLine(result.GetProperty("customNeuralDocumentModelBuilds").GetProperty("used").ToString());
-Console.WriteLine(result.GetProperty("customNeuralDocumentModelBuilds").GetProperty("quota").ToString());
-Console.WriteLine(result.GetProperty("customNeuralDocumentModelBuilds").GetProperty("quotaResetDateTime").ToString());
 ]]></code></example>
     </member>
     <member name="GetOperationAsync(string,CancellationToken)">
@@ -559,6 +575,158 @@ Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString())
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
+]]></code></example>
+    </member>
+    <member name="AuthorizeClassifierCopyAsync(AuthorizeClassifierCopyContent,CancellationToken)">
+      <example>
+This sample shows how to call AuthorizeClassifierCopyAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+AuthorizeClassifierCopyContent authorizeCopyRequest = new AuthorizeClassifierCopyContent("<classifierId>");
+Response<ClassifierCopyAuthorization> response = await client.AuthorizeClassifierCopyAsync(authorizeCopyRequest);
+]]></code>
+This sample shows how to call AuthorizeClassifierCopyAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+AuthorizeClassifierCopyContent authorizeCopyRequest = new AuthorizeClassifierCopyContent("<classifierId>")
+{
+    Description = "<description>",
+    Tags =
+    {
+        ["key"] = "<tags>"
+    },
+};
+Response<ClassifierCopyAuthorization> response = await client.AuthorizeClassifierCopyAsync(authorizeCopyRequest);
+]]></code></example>
+    </member>
+    <member name="AuthorizeClassifierCopy(AuthorizeClassifierCopyContent,CancellationToken)">
+      <example>
+This sample shows how to call AuthorizeClassifierCopy.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+AuthorizeClassifierCopyContent authorizeCopyRequest = new AuthorizeClassifierCopyContent("<classifierId>");
+Response<ClassifierCopyAuthorization> response = client.AuthorizeClassifierCopy(authorizeCopyRequest);
+]]></code>
+This sample shows how to call AuthorizeClassifierCopy with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+AuthorizeClassifierCopyContent authorizeCopyRequest = new AuthorizeClassifierCopyContent("<classifierId>")
+{
+    Description = "<description>",
+    Tags =
+    {
+        ["key"] = "<tags>"
+    },
+};
+Response<ClassifierCopyAuthorization> response = client.AuthorizeClassifierCopy(authorizeCopyRequest);
+]]></code></example>
+    </member>
+    <member name="AuthorizeClassifierCopyAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call AuthorizeClassifierCopyAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    classifierId = "<classifierId>",
+});
+Response response = await client.AuthorizeClassifierCopyAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("targetResourceId").ToString());
+Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
+Console.WriteLine(result.GetProperty("targetClassifierId").ToString());
+Console.WriteLine(result.GetProperty("targetClassifierLocation").ToString());
+Console.WriteLine(result.GetProperty("accessToken").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+]]></code>
+This sample shows how to call AuthorizeClassifierCopyAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    classifierId = "<classifierId>",
+    description = "<description>",
+    tags = new
+    {
+        key = "<tags>",
+    },
+});
+Response response = await client.AuthorizeClassifierCopyAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("targetResourceId").ToString());
+Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
+Console.WriteLine(result.GetProperty("targetClassifierId").ToString());
+Console.WriteLine(result.GetProperty("targetClassifierLocation").ToString());
+Console.WriteLine(result.GetProperty("accessToken").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+]]></code></example>
+    </member>
+    <member name="AuthorizeClassifierCopy(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call AuthorizeClassifierCopy and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    classifierId = "<classifierId>",
+});
+Response response = client.AuthorizeClassifierCopy(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("targetResourceId").ToString());
+Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
+Console.WriteLine(result.GetProperty("targetClassifierId").ToString());
+Console.WriteLine(result.GetProperty("targetClassifierLocation").ToString());
+Console.WriteLine(result.GetProperty("accessToken").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+]]></code>
+This sample shows how to call AuthorizeClassifierCopy with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    classifierId = "<classifierId>",
+    description = "<description>",
+    tags = new
+    {
+        key = "<tags>",
+    },
+});
+Response response = client.AuthorizeClassifierCopy(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("targetResourceId").ToString());
+Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
+Console.WriteLine(result.GetProperty("targetClassifierId").ToString());
+Console.WriteLine(result.GetProperty("targetClassifierLocation").ToString());
+Console.WriteLine(result.GetProperty("accessToken").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 ]]></code></example>
     </member>
     <member name="GetClassifierAsync(string,CancellationToken)">
@@ -808,6 +976,8 @@ await foreach (BinaryData item in client.GetModelsAsync(null))
     Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
     Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
     Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+    Console.WriteLine(result.GetProperty("classifierId").ToString());
+    Console.WriteLine(result.GetProperty("split").ToString());
     Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
     Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
@@ -816,10 +986,22 @@ await foreach (BinaryData item in client.GetModelsAsync(null))
     Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
     Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
     Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("trainingHours").ToString());
 }
 ]]></code></example>
     </member>
@@ -858,6 +1040,8 @@ foreach (BinaryData item in client.GetModels(null))
     Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
     Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
     Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+    Console.WriteLine(result.GetProperty("classifierId").ToString());
+    Console.WriteLine(result.GetProperty("split").ToString());
     Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
     Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
@@ -866,10 +1050,22 @@ foreach (BinaryData item in client.GetModels(null))
     Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
     Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
     Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("trainingHours").ToString());
 }
 ]]></code></example>
     </member>
@@ -1171,6 +1367,8 @@ BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("<modelId
     {
         ["key"] = "<tags>"
     },
+    MaxTrainingHours = 123.45F,
+    AllowOverwrite = true,
 };
 Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, buildRequest);
 DocumentModelDetails responseData = operation.Value;
@@ -1206,6 +1404,8 @@ BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("<modelId
     {
         ["key"] = "<tags>"
     },
+    MaxTrainingHours = 123.45F,
+    AllowOverwrite = true,
 };
 Operation<DocumentModelDetails> operation = client.BuildDocumentModel(WaitUntil.Completed, buildRequest);
 DocumentModelDetails responseData = operation.Value;
@@ -1256,6 +1456,8 @@ using RequestContent content = RequestContent.Create(new
     {
         key = "<tags>",
     },
+    maxTrainingHours = 123.45F,
+    allowOverwrite = true,
 });
 Operation<BinaryData> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
 BinaryData responseData = operation.Value;
@@ -1272,6 +1474,8 @@ Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUr
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
 Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
 Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+Console.WriteLine(result.GetProperty("classifierId").ToString());
+Console.WriteLine(result.GetProperty("split").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
@@ -1280,10 +1484,22 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("trainingHours").ToString());
 ]]></code></example>
     </member>
     <member name="BuildDocumentModel(WaitUntil,RequestContent,RequestContext)">
@@ -1331,6 +1547,8 @@ using RequestContent content = RequestContent.Create(new
     {
         key = "<tags>",
     },
+    maxTrainingHours = 123.45F,
+    allowOverwrite = true,
 });
 Operation<BinaryData> operation = client.BuildDocumentModel(WaitUntil.Completed, content);
 BinaryData responseData = operation.Value;
@@ -1347,6 +1565,8 @@ Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUr
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
 Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
 Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+Console.WriteLine(result.GetProperty("classifierId").ToString());
+Console.WriteLine(result.GetProperty("split").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
@@ -1355,10 +1575,22 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("trainingHours").ToString());
 ]]></code></example>
     </member>
     <member name="ComposeModelAsync(WaitUntil,ComposeDocumentModelContent,CancellationToken)">
@@ -1369,9 +1601,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", new ComponentDocumentModelDetails[]
+ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", "<classifierId>", new Dictionary<string, DocumentTypeDetails>
 {
-    new ComponentDocumentModelDetails("<modelId>")
+    ["key"] = new DocumentTypeDetails()
 });
 Operation<DocumentModelDetails> operation = await client.ComposeModelAsync(WaitUntil.Completed, composeRequest);
 DocumentModelDetails responseData = operation.Value;
@@ -1382,12 +1614,39 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", new ComponentDocumentModelDetails[]
+ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", "<classifierId>", new Dictionary<string, DocumentTypeDetails>
 {
-    new ComponentDocumentModelDetails("<modelId>")
+    ["key"] = new DocumentTypeDetails
+    {
+        Description = "<description>",
+        BuildMode = DocumentBuildMode.Template,
+        FieldSchema =
+        {
+            ["key"] = new DocumentFieldSchema(DocumentFieldType.String)
+            {
+                Description = "<description>",
+                Example = "<example>",
+                Items = default,
+                Properties =
+                {
+                    ["key"] = default
+                },
+            }
+        },
+        FieldConfidence =
+        {
+            ["key"] = 123.45F
+        },
+        ModelId = "<modelId>",
+        ConfidenceThreshold = 123.45F,
+        Features = { DocumentAnalysisFeature.OcrHighResolution },
+        QueryFields = { "<queryFields>" },
+        MaxDocumentsToAnalyze = 1234,
+    }
 })
 {
     Description = "<description>",
+    Split = SplitMode.Auto,
     Tags =
     {
         ["key"] = "<tags>"
@@ -1405,9 +1664,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", new ComponentDocumentModelDetails[]
+ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", "<classifierId>", new Dictionary<string, DocumentTypeDetails>
 {
-    new ComponentDocumentModelDetails("<modelId>")
+    ["key"] = new DocumentTypeDetails()
 });
 Operation<DocumentModelDetails> operation = client.ComposeModel(WaitUntil.Completed, composeRequest);
 DocumentModelDetails responseData = operation.Value;
@@ -1418,12 +1677,39 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", new ComponentDocumentModelDetails[]
+ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("<modelId>", "<classifierId>", new Dictionary<string, DocumentTypeDetails>
 {
-    new ComponentDocumentModelDetails("<modelId>")
+    ["key"] = new DocumentTypeDetails
+    {
+        Description = "<description>",
+        BuildMode = DocumentBuildMode.Template,
+        FieldSchema =
+        {
+            ["key"] = new DocumentFieldSchema(DocumentFieldType.String)
+            {
+                Description = "<description>",
+                Example = "<example>",
+                Items = default,
+                Properties =
+                {
+                    ["key"] = default
+                },
+            }
+        },
+        FieldConfidence =
+        {
+            ["key"] = 123.45F
+        },
+        ModelId = "<modelId>",
+        ConfidenceThreshold = 123.45F,
+        Features = { DocumentAnalysisFeature.OcrHighResolution },
+        QueryFields = { "<queryFields>" },
+        MaxDocumentsToAnalyze = 1234,
+    }
 })
 {
     Description = "<description>",
+    Split = SplitMode.Auto,
     Tags =
     {
         ["key"] = "<tags>"
@@ -1444,12 +1730,10 @@ DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdmini
 using RequestContent content = RequestContent.Create(new
 {
     modelId = "<modelId>",
-    componentModels = new object[]
+    classifierId = "<classifierId>",
+    docTypes = new
     {
-        new
-        {
-            modelId = "<modelId>",
-        }
+        key = new object(),
     },
 });
 Operation<BinaryData> operation = await client.ComposeModelAsync(WaitUntil.Completed, content);
@@ -1469,12 +1753,40 @@ using RequestContent content = RequestContent.Create(new
 {
     modelId = "<modelId>",
     description = "<description>",
-    componentModels = new object[]
+    classifierId = "<classifierId>",
+    split = "auto",
+    docTypes = new
     {
-        new
+        key = new
         {
+            description = "<description>",
+            buildMode = "template",
+            fieldSchema = new
+            {
+                key = new
+                {
+                    type = "string",
+                    description = "<description>",
+                    example = "<example>",
+                    properties = new { },
+                },
+            },
+            fieldConfidence = new
+            {
+                key = 123.45F,
+            },
             modelId = "<modelId>",
-        }
+            confidenceThreshold = 123.45F,
+            features = new object[]
+            {
+                "ocrHighResolution"
+            },
+            queryFields = new object[]
+            {
+                "<queryFields>"
+            },
+            maxDocumentsToAnalyze = 1234,
+        },
     },
     tags = new
     {
@@ -1496,6 +1808,8 @@ Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUr
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
 Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
 Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+Console.WriteLine(result.GetProperty("classifierId").ToString());
+Console.WriteLine(result.GetProperty("split").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
@@ -1504,10 +1818,22 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("trainingHours").ToString());
 ]]></code></example>
     </member>
     <member name="ComposeModel(WaitUntil,RequestContent,RequestContext)">
@@ -1521,12 +1847,10 @@ DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdmini
 using RequestContent content = RequestContent.Create(new
 {
     modelId = "<modelId>",
-    componentModels = new object[]
+    classifierId = "<classifierId>",
+    docTypes = new
     {
-        new
-        {
-            modelId = "<modelId>",
-        }
+        key = new object(),
     },
 });
 Operation<BinaryData> operation = client.ComposeModel(WaitUntil.Completed, content);
@@ -1546,12 +1870,40 @@ using RequestContent content = RequestContent.Create(new
 {
     modelId = "<modelId>",
     description = "<description>",
-    componentModels = new object[]
+    classifierId = "<classifierId>",
+    split = "auto",
+    docTypes = new
     {
-        new
+        key = new
         {
+            description = "<description>",
+            buildMode = "template",
+            fieldSchema = new
+            {
+                key = new
+                {
+                    type = "string",
+                    description = "<description>",
+                    example = "<example>",
+                    properties = new { },
+                },
+            },
+            fieldConfidence = new
+            {
+                key = 123.45F,
+            },
             modelId = "<modelId>",
-        }
+            confidenceThreshold = 123.45F,
+            features = new object[]
+            {
+                "ocrHighResolution"
+            },
+            queryFields = new object[]
+            {
+                "<queryFields>"
+            },
+            maxDocumentsToAnalyze = 1234,
+        },
     },
     tags = new
     {
@@ -1573,6 +1925,8 @@ Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUr
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
 Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
 Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+Console.WriteLine(result.GetProperty("classifierId").ToString());
+Console.WriteLine(result.GetProperty("split").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
@@ -1581,10 +1935,22 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("trainingHours").ToString());
 ]]></code></example>
     </member>
     <member name="CopyModelToAsync(WaitUntil,string,CopyAuthorization,CancellationToken)">
@@ -1601,7 +1967,7 @@ CopyAuthorization copyToRequest = new CopyAuthorization(
 "<targetModelId>",
 new Uri("http://localhost:3000"),
 "<accessToken>",
-DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
 Operation<DocumentModelDetails> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", copyToRequest);
 DocumentModelDetails responseData = operation.Value;
 ]]></code>
@@ -1617,7 +1983,7 @@ CopyAuthorization copyToRequest = new CopyAuthorization(
 "<targetModelId>",
 new Uri("http://localhost:3000"),
 "<accessToken>",
-DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
 Operation<DocumentModelDetails> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", copyToRequest);
 DocumentModelDetails responseData = operation.Value;
 ]]></code></example>
@@ -1636,7 +2002,7 @@ CopyAuthorization copyToRequest = new CopyAuthorization(
 "<targetModelId>",
 new Uri("http://localhost:3000"),
 "<accessToken>",
-DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
 Operation<DocumentModelDetails> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", copyToRequest);
 DocumentModelDetails responseData = operation.Value;
 ]]></code>
@@ -1652,7 +2018,7 @@ CopyAuthorization copyToRequest = new CopyAuthorization(
 "<targetModelId>",
 new Uri("http://localhost:3000"),
 "<accessToken>",
-DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
 Operation<DocumentModelDetails> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", copyToRequest);
 DocumentModelDetails responseData = operation.Value;
 ]]></code></example>
@@ -1672,7 +2038,7 @@ using RequestContent content = RequestContent.Create(new
     targetModelId = "<targetModelId>",
     targetModelLocation = "http://localhost:3000",
     accessToken = "<accessToken>",
-    expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+    expirationDateTime = "2022-05-10T18:57:31.2311892Z",
 });
 Operation<BinaryData> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", content);
 BinaryData responseData = operation.Value;
@@ -1694,7 +2060,7 @@ using RequestContent content = RequestContent.Create(new
     targetModelId = "<targetModelId>",
     targetModelLocation = "http://localhost:3000",
     accessToken = "<accessToken>",
-    expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+    expirationDateTime = "2022-05-10T18:57:31.2311892Z",
 });
 Operation<BinaryData> operation = await client.CopyModelToAsync(WaitUntil.Completed, "<modelId>", content);
 BinaryData responseData = operation.Value;
@@ -1711,6 +2077,8 @@ Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUr
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
 Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
 Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+Console.WriteLine(result.GetProperty("classifierId").ToString());
+Console.WriteLine(result.GetProperty("split").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
@@ -1719,10 +2087,22 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("trainingHours").ToString());
 ]]></code></example>
     </member>
     <member name="CopyModelTo(WaitUntil,string,RequestContent,RequestContext)">
@@ -1740,7 +2120,7 @@ using RequestContent content = RequestContent.Create(new
     targetModelId = "<targetModelId>",
     targetModelLocation = "http://localhost:3000",
     accessToken = "<accessToken>",
-    expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+    expirationDateTime = "2022-05-10T18:57:31.2311892Z",
 });
 Operation<BinaryData> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", content);
 BinaryData responseData = operation.Value;
@@ -1762,7 +2142,7 @@ using RequestContent content = RequestContent.Create(new
     targetModelId = "<targetModelId>",
     targetModelLocation = "http://localhost:3000",
     accessToken = "<accessToken>",
-    expirationDateTime = "2022-05-10T14:57:31.2311892-04:00",
+    expirationDateTime = "2022-05-10T18:57:31.2311892Z",
 });
 Operation<BinaryData> operation = client.CopyModelTo(WaitUntil.Completed, "<modelId>", content);
 BinaryData responseData = operation.Value;
@@ -1779,6 +2159,8 @@ Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUr
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
 Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
 Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+Console.WriteLine(result.GetProperty("classifierId").ToString());
+Console.WriteLine(result.GetProperty("split").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
@@ -1787,10 +2169,22 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("example").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("properties").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("confidenceThreshold").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("features")[0].ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("queryFields")[0].ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("maxDocumentsToAnalyze").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("trainingHours").ToString());
 ]]></code></example>
     </member>
     <member name="BuildClassifierAsync(WaitUntil,BuildDocumentClassifierContent,CancellationToken)">
@@ -1829,6 +2223,7 @@ BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent
 {
     Description = "<description>",
     BaseClassifierId = "<baseClassifierId>",
+    AllowOverwrite = true,
 };
 Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, buildRequest);
 DocumentClassifierDetails responseData = operation.Value;
@@ -1870,6 +2265,7 @@ BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent
 {
     Description = "<description>",
     BaseClassifierId = "<baseClassifierId>",
+    AllowOverwrite = true,
 };
 Operation<DocumentClassifierDetails> operation = client.BuildClassifier(WaitUntil.Completed, buildRequest);
 DocumentClassifierDetails responseData = operation.Value;
@@ -1928,6 +2324,7 @@ using RequestContent content = RequestContent.Create(new
             },
         },
     },
+    allowOverwrite = true,
 });
 Operation<BinaryData> operation = await client.BuildClassifierAsync(WaitUntil.Completed, content);
 BinaryData responseData = operation.Value;
@@ -2002,8 +2399,201 @@ using RequestContent content = RequestContent.Create(new
             },
         },
     },
+    allowOverwrite = true,
 });
 Operation<BinaryData> operation = client.BuildClassifier(WaitUntil.Completed, content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("classifierId").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("baseClassifierId").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("sourceKind").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("prefix").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+]]></code></example>
+    </member>
+    <member name="CopyClassifierToAsync(WaitUntil,string,ClassifierCopyAuthorization,CancellationToken)">
+      <example>
+This sample shows how to call CopyClassifierToAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+ClassifierCopyAuthorization copyToRequest = new ClassifierCopyAuthorization(
+"<targetResourceId>",
+"<targetResourceRegion>",
+"<targetClassifierId>",
+new Uri("http://localhost:3000"),
+"<accessToken>",
+DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
+Operation<DocumentClassifierDetails> operation = await client.CopyClassifierToAsync(WaitUntil.Completed, "<classifierId>", copyToRequest);
+DocumentClassifierDetails responseData = operation.Value;
+]]></code>
+This sample shows how to call CopyClassifierToAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+ClassifierCopyAuthorization copyToRequest = new ClassifierCopyAuthorization(
+"<targetResourceId>",
+"<targetResourceRegion>",
+"<targetClassifierId>",
+new Uri("http://localhost:3000"),
+"<accessToken>",
+DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
+Operation<DocumentClassifierDetails> operation = await client.CopyClassifierToAsync(WaitUntil.Completed, "<classifierId>", copyToRequest);
+DocumentClassifierDetails responseData = operation.Value;
+]]></code></example>
+    </member>
+    <member name="CopyClassifierTo(WaitUntil,string,ClassifierCopyAuthorization,CancellationToken)">
+      <example>
+This sample shows how to call CopyClassifierTo.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+ClassifierCopyAuthorization copyToRequest = new ClassifierCopyAuthorization(
+"<targetResourceId>",
+"<targetResourceRegion>",
+"<targetClassifierId>",
+new Uri("http://localhost:3000"),
+"<accessToken>",
+DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
+Operation<DocumentClassifierDetails> operation = client.CopyClassifierTo(WaitUntil.Completed, "<classifierId>", copyToRequest);
+DocumentClassifierDetails responseData = operation.Value;
+]]></code>
+This sample shows how to call CopyClassifierTo with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+ClassifierCopyAuthorization copyToRequest = new ClassifierCopyAuthorization(
+"<targetResourceId>",
+"<targetResourceRegion>",
+"<targetClassifierId>",
+new Uri("http://localhost:3000"),
+"<accessToken>",
+DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
+Operation<DocumentClassifierDetails> operation = client.CopyClassifierTo(WaitUntil.Completed, "<classifierId>", copyToRequest);
+DocumentClassifierDetails responseData = operation.Value;
+]]></code></example>
+    </member>
+    <member name="CopyClassifierToAsync(WaitUntil,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CopyClassifierToAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    targetResourceId = "<targetResourceId>",
+    targetResourceRegion = "<targetResourceRegion>",
+    targetClassifierId = "<targetClassifierId>",
+    targetClassifierLocation = "http://localhost:3000",
+    accessToken = "<accessToken>",
+    expirationDateTime = "2022-05-10T18:57:31.2311892Z",
+});
+Operation<BinaryData> operation = await client.CopyClassifierToAsync(WaitUntil.Completed, "<classifierId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("classifierId").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call CopyClassifierToAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    targetResourceId = "<targetResourceId>",
+    targetResourceRegion = "<targetResourceRegion>",
+    targetClassifierId = "<targetClassifierId>",
+    targetClassifierLocation = "http://localhost:3000",
+    accessToken = "<accessToken>",
+    expirationDateTime = "2022-05-10T18:57:31.2311892Z",
+});
+Operation<BinaryData> operation = await client.CopyClassifierToAsync(WaitUntil.Completed, "<classifierId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("classifierId").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("baseClassifierId").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("sourceKind").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobSource").GetProperty("prefix").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+]]></code></example>
+    </member>
+    <member name="CopyClassifierTo(WaitUntil,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CopyClassifierTo and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    targetResourceId = "<targetResourceId>",
+    targetResourceRegion = "<targetResourceRegion>",
+    targetClassifierId = "<targetClassifierId>",
+    targetClassifierLocation = "http://localhost:3000",
+    accessToken = "<accessToken>",
+    expirationDateTime = "2022-05-10T18:57:31.2311892Z",
+});
+Operation<BinaryData> operation = client.CopyClassifierTo(WaitUntil.Completed, "<classifierId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("classifierId").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call CopyClassifierTo with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    targetResourceId = "<targetResourceId>",
+    targetResourceRegion = "<targetResourceRegion>",
+    targetClassifierId = "<targetClassifierId>",
+    targetClassifierLocation = "http://localhost:3000",
+    accessToken = "<accessToken>",
+    expirationDateTime = "2022-05-10T18:57:31.2311892Z",
+});
+Operation<BinaryData> operation = client.CopyClassifierTo(WaitUntil.Completed, "<classifierId>", content);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

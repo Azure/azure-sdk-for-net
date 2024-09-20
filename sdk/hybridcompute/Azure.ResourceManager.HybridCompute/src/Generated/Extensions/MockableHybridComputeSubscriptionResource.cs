@@ -18,8 +18,12 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableHybridComputeSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _hybridComputeLicenseLicensesClientDiagnostics;
+        private LicensesRestOperations _hybridComputeLicenseLicensesRestClient;
         private ClientDiagnostics _hybridComputeMachineMachinesClientDiagnostics;
         private MachinesRestOperations _hybridComputeMachineMachinesRestClient;
+        private ClientDiagnostics _hybridComputeGatewayGatewaysClientDiagnostics;
+        private GatewaysRestOperations _hybridComputeGatewayGatewaysRestClient;
         private ClientDiagnostics _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics;
         private PrivateLinkScopesRestOperations _hybridComputePrivateLinkScopePrivateLinkScopesRestClient;
 
@@ -35,8 +39,12 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         {
         }
 
+        private ClientDiagnostics HybridComputeLicenseLicensesClientDiagnostics => _hybridComputeLicenseLicensesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeLicenseResource.ResourceType.Namespace, Diagnostics);
+        private LicensesRestOperations HybridComputeLicenseLicensesRestClient => _hybridComputeLicenseLicensesRestClient ??= new LicensesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridComputeLicenseResource.ResourceType));
         private ClientDiagnostics HybridComputeMachineMachinesClientDiagnostics => _hybridComputeMachineMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeMachineResource.ResourceType.Namespace, Diagnostics);
         private MachinesRestOperations HybridComputeMachineMachinesRestClient => _hybridComputeMachineMachinesRestClient ??= new MachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridComputeMachineResource.ResourceType));
+        private ClientDiagnostics HybridComputeGatewayGatewaysClientDiagnostics => _hybridComputeGatewayGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeGatewayResource.ResourceType.Namespace, Diagnostics);
+        private GatewaysRestOperations HybridComputeGatewayGatewaysRestClient => _hybridComputeGatewayGatewaysRestClient ??= new GatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridComputeGatewayResource.ResourceType));
         private ClientDiagnostics HybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics => _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputePrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
         private PrivateLinkScopesRestOperations HybridComputePrivateLinkScopePrivateLinkScopesRestClient => _hybridComputePrivateLinkScopePrivateLinkScopesRestClient ??= new PrivateLinkScopesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridComputePrivateLinkScopeResource.ResourceType));
 
@@ -71,7 +79,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-05-20-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -105,7 +113,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-05-20-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -127,6 +135,66 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         }
 
         /// <summary>
+        /// The operation to get all licenses of a non-Azure machine
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/licenses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Licenses_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputeLicenseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HybridComputeLicenseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridComputeLicenseResource> GetHybridComputeLicensesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridComputeLicenseLicensesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridComputeLicenseLicensesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputeLicenseResource(Client, HybridComputeLicenseData.DeserializeHybridComputeLicenseData(e)), HybridComputeLicenseLicensesClientDiagnostics, Pipeline, "MockableHybridComputeSubscriptionResource.GetHybridComputeLicenses", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// The operation to get all licenses of a non-Azure machine
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/licenses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Licenses_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputeLicenseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HybridComputeLicenseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridComputeLicenseResource> GetHybridComputeLicenses(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridComputeLicenseLicensesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridComputeLicenseLicensesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputeLicenseResource(Client, HybridComputeLicenseData.DeserializeHybridComputeLicenseData(e)), HybridComputeLicenseLicensesClientDiagnostics, Pipeline, "MockableHybridComputeSubscriptionResource.GetHybridComputeLicenses", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Lists all the hybrid machines in the specified subscription. Use the nextLink property in the response to get the next page of hybrid machines.
         /// <list type="bullet">
         /// <item>
@@ -139,7 +207,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-05-20-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -169,7 +237,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-05-20-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -187,6 +255,66 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         }
 
         /// <summary>
+        /// The operation to get all gateways of a non-Azure machine
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/gateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Gateways_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputeGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HybridComputeGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridComputeGatewayResource> GetHybridComputeGatewaysAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridComputeGatewayGatewaysRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridComputeGatewayGatewaysRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputeGatewayResource(Client, HybridComputeGatewayData.DeserializeHybridComputeGatewayData(e)), HybridComputeGatewayGatewaysClientDiagnostics, Pipeline, "MockableHybridComputeSubscriptionResource.GetHybridComputeGateways", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// The operation to get all gateways of a non-Azure machine
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/gateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Gateways_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputeGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HybridComputeGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridComputeGatewayResource> GetHybridComputeGateways(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridComputeGatewayGatewaysRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridComputeGatewayGatewaysRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputeGatewayResource(Client, HybridComputeGatewayData.DeserializeHybridComputeGatewayData(e)), HybridComputeGatewayGatewaysClientDiagnostics, Pipeline, "MockableHybridComputeSubscriptionResource.GetHybridComputeGateways", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a list of all Azure Arc PrivateLinkScopes within a subscription.
         /// <list type="bullet">
         /// <item>
@@ -199,7 +327,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-05-20-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -229,7 +357,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-05-20-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -259,7 +387,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-05-20-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -303,7 +431,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-05-20-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

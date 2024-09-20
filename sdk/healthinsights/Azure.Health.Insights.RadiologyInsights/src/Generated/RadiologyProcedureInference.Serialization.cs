@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 {
     public partial class RadiologyProcedureInference : IUtf8JsonSerializable, IJsonModel<RadiologyProcedureInference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RadiologyProcedureInference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RadiologyProcedureInference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RadiologyProcedureInference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in ProcedureCodes)
                 {
-                    writer.WriteObjectValue<FhirR4CodeableConcept>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -40,20 +40,20 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStartArray();
             foreach (var item in ImagingProcedures)
             {
-                writer.WriteObjectValue<ImagingProcedure>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("orderedProcedure"u8);
-            writer.WriteObjectValue<FhirR4Extendible>(OrderedProcedure, options);
+            writer.WriteObjectValue(OrderedProcedure, options);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStartArray();
                 foreach (var item in Extension)
                 {
-                    writer.WriteObjectValue<FhirR4Extension>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         internal static RadiologyProcedureInference DeserializeRadiologyProcedureInference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -97,8 +97,8 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
             IReadOnlyList<FhirR4CodeableConcept> procedureCodes = default;
             IReadOnlyList<ImagingProcedure> imagingProcedures = default;
-            FhirR4Extendible orderedProcedure = default;
-            string kind = default;
+            OrderedProcedure orderedProcedure = default;
+            RadiologyInsightsInferenceType kind = default;
             IReadOnlyList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -130,12 +130,12 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (property.NameEquals("orderedProcedure"u8))
                 {
-                    orderedProcedure = FhirR4Extendible.DeserializeFhirR4Extendible(property.Value, options);
+                    orderedProcedure = OrderedProcedure.DeserializeOrderedProcedure(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new RadiologyInsightsInferenceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("extension"u8))
@@ -206,11 +206,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             return DeserializeRadiologyProcedureInference(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RadiologyProcedureInference>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

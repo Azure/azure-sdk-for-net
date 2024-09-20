@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class RegistrationAddressInfo : IUtf8JsonSerializable, IJsonModel<RegistrationAddressInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegistrationAddressInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegistrationAddressInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RegistrationAddressInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static RegistrationAddressInfo DeserializeRegistrationAddressInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -148,15 +148,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Address1), out propertyOverride);
-            if (Optional.IsDefined(Address1) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  address1: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Address1))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  address1: ");
                     if (Address1.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -170,15 +171,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Address2), out propertyOverride);
-            if (Optional.IsDefined(Address2) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  address2: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Address2))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  address2: ");
                     if (Address2.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -192,15 +194,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(City), out propertyOverride);
-            if (Optional.IsDefined(City) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  city: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(City))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  city: ");
                     if (City.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -214,15 +217,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Country), out propertyOverride);
-            if (Optional.IsDefined(Country) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  country: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Country))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  country: ");
                     if (Country.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -236,15 +240,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PostalCode), out propertyOverride);
-            if (Optional.IsDefined(PostalCode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  postalCode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PostalCode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  postalCode: ");
                     if (PostalCode.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -258,15 +263,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (Optional.IsDefined(State) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  state: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  state: ");
                     if (State.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

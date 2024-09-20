@@ -27,31 +27,31 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(MediaStreamingConfiguration))
             {
                 writer.WritePropertyName("mediaStreamingConfiguration"u8);
-                writer.WriteObjectValue<MediaStreamingOptionsInternal>(MediaStreamingConfiguration);
+                writer.WriteObjectValue(MediaStreamingConfiguration);
             }
             if (Optional.IsDefined(TranscriptionConfiguration))
             {
                 writer.WritePropertyName("transcriptionConfiguration"u8);
-                writer.WriteObjectValue<TranscriptionOptionsInternal>(TranscriptionConfiguration);
+                writer.WriteObjectValue(TranscriptionConfiguration);
             }
             if (Optional.IsDefined(CallIntelligenceOptions))
             {
                 writer.WritePropertyName("callIntelligenceOptions"u8);
-                writer.WriteObjectValue<CallIntelligenceOptionsInternal>(CallIntelligenceOptions);
+                writer.WriteObjectValue(CallIntelligenceOptions);
             }
             if (Optional.IsDefined(AnsweredBy))
             {
                 writer.WritePropertyName("answeredBy"u8);
-                writer.WriteObjectValue<CommunicationUserIdentifierModel>(AnsweredBy);
+                writer.WriteObjectValue(AnsweredBy);
             }
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnswerCallRequestInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

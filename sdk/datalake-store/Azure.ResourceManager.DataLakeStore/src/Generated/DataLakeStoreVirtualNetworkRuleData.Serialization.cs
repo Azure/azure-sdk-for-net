@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataLakeStore
 {
     public partial class DataLakeStoreVirtualNetworkRuleData : IUtf8JsonSerializable, IJsonModel<DataLakeStoreVirtualNetworkRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeStoreVirtualNetworkRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeStoreVirtualNetworkRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataLakeStoreVirtualNetworkRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataLakeStore
 
         internal static DataLakeStoreVirtualNetworkRuleData DeserializeDataLakeStoreVirtualNetworkRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

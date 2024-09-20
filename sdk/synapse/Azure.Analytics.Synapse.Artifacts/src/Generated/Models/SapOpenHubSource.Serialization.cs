@@ -205,11 +205,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeSapOpenHubSource(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SapOpenHubSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -217,7 +217,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SapOpenHubSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SapOpenHubSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override SapOpenHubSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

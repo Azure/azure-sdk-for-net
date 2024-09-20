@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     [PersistableModelProxy(typeof(UnknownFacet))]
     public partial class Facet : IUtf8JsonSerializable, IJsonModel<Facet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Facet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Facet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<Facet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         internal static Facet DeserializeFacet(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

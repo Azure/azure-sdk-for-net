@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class AzureDatabricksDeltaLakeSource : IUtf8JsonSerializable, IJsonModel<AzureDatabricksDeltaLakeSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDatabricksDeltaLakeSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDatabricksDeltaLakeSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureDatabricksDeltaLakeSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExportSettings))
             {
                 writer.WritePropertyName("exportSettings"u8);
-                writer.WriteObjectValue<AzureDatabricksDeltaLakeExportCommand>(ExportSettings, options);
+                writer.WriteObjectValue(ExportSettings, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureDatabricksDeltaLakeSource DeserializeAzureDatabricksDeltaLakeSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

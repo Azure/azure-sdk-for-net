@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class StatementActionProperties : IUtf8JsonSerializable, IJsonModel<StatementActionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StatementActionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StatementActionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StatementActionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(IPCommunityProperties))
             {
                 writer.WritePropertyName("ipCommunityProperties"u8);
-                writer.WriteObjectValue<ActionIPCommunityProperties>(IPCommunityProperties, options);
+                writer.WriteObjectValue(IPCommunityProperties, options);
             }
             if (Optional.IsDefined(IPExtendedCommunityProperties))
             {
                 writer.WritePropertyName("ipExtendedCommunityProperties"u8);
-                writer.WriteObjectValue<ActionIPExtendedCommunityProperties>(IPExtendedCommunityProperties, options);
+                writer.WriteObjectValue(IPExtendedCommunityProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static StatementActionProperties DeserializeStatementActionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

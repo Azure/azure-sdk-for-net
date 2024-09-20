@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sphere.Models
 {
     public partial class ProofOfPossessionNonceContent : IUtf8JsonSerializable, IJsonModel<ProofOfPossessionNonceContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProofOfPossessionNonceContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProofOfPossessionNonceContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProofOfPossessionNonceContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         internal static ProofOfPossessionNonceContent DeserializeProofOfPossessionNonceContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Blueprint
 {
     public partial class AssignmentData : IUtf8JsonSerializable, IJsonModel<AssignmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssignmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssignmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Blueprint
 
             writer.WriteStartObject();
             writer.WritePropertyName("identity"u8);
-            writer.WriteObjectValue<Models.ManagedServiceIdentity>(Identity, options);
+            writer.WriteObjectValue(Identity, options);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (options.Format != "W")
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Blueprint
             foreach (var item in Parameters)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<ParameterValue>(item.Value, options);
+                writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("resourceGroups"u8);
@@ -87,18 +87,18 @@ namespace Azure.ResourceManager.Blueprint
             foreach (var item in ResourceGroups)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<ResourceGroupValue>(item.Value, options);
+                writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<AssignmentStatus>(Status, options);
+                writer.WriteObjectValue(Status, options);
             }
             if (Optional.IsDefined(Locks))
             {
                 writer.WritePropertyName("locks"u8);
-                writer.WriteObjectValue<AssignmentLockSettings>(Locks, options);
+                writer.WriteObjectValue(Locks, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Blueprint
 
         internal static AssignmentData DeserializeAssignmentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

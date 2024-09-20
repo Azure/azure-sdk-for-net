@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class AutomationJobScheduleCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<AutomationJobScheduleCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationJobScheduleCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationJobScheduleCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationJobScheduleCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomationJobScheduleCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,13 +34,12 @@ namespace Azure.ResourceManager.Automation.Models
                 throw new FormatException($"The model {nameof(AutomationJobScheduleCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue<ScheduleAssociationProperty>(Schedule, options);
+            writer.WriteObjectValue(Schedule, options);
             writer.WritePropertyName("runbook"u8);
-            writer.WriteObjectValue<RunbookAssociationProperty>(Runbook, options);
+            writer.WriteObjectValue(Runbook, options);
             if (Optional.IsDefined(RunOn))
             {
                 writer.WritePropertyName("runOn"u8);
@@ -64,7 +72,6 @@ namespace Azure.ResourceManager.Automation.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AutomationJobScheduleCreateOrUpdateContent IJsonModel<AutomationJobScheduleCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -81,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationJobScheduleCreateOrUpdateContent DeserializeAutomationJobScheduleCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

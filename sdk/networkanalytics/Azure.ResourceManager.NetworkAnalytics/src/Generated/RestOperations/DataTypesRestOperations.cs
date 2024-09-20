@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.NetworkAnalytics
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByDataProductRequestUri(string subscriptionId, string resourceGroupName, string dataProductName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetworkAnalytics/dataProducts/", false);
+            uri.AppendPath(dataProductName, true);
+            uri.AppendPath("/dataTypes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByDataProductRequest(string subscriptionId, string resourceGroupName, string dataProductName)
         {
             var message = _pipeline.CreateMessage();
@@ -113,6 +128,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByDataProductNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string dataProductName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByDataProductNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string dataProductName)

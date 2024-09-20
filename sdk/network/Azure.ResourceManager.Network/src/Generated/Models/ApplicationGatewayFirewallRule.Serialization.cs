@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ApplicationGatewayFirewallRule : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayFirewallRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayFirewallRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayFirewallRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationGatewayFirewallRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
+            }
+            if (Optional.IsDefined(Sensitivity))
+            {
+                writer.WritePropertyName("sensitivity"u8);
+                writer.WriteStringValue(Sensitivity.Value.ToString());
             }
             if (Optional.IsDefined(Description))
             {
@@ -80,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayFirewallRule DeserializeApplicationGatewayFirewallRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -90,6 +95,7 @@ namespace Azure.ResourceManager.Network.Models
             string ruleIdString = default;
             ApplicationGatewayWafRuleStateType? state = default;
             ApplicationGatewayWafRuleActionType? action = default;
+            ApplicationGatewayWafRuleSensitivityType? sensitivity = default;
             string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -123,6 +129,15 @@ namespace Azure.ResourceManager.Network.Models
                     action = new ApplicationGatewayWafRuleActionType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("sensitivity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sensitivity = new ApplicationGatewayWafRuleSensitivityType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
@@ -139,6 +154,7 @@ namespace Azure.ResourceManager.Network.Models
                 ruleIdString,
                 state,
                 action,
+                sensitivity,
                 description,
                 serializedAdditionalRawData);
         }

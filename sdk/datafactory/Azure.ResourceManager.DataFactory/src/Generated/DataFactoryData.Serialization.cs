@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory
 {
     public partial class DataFactoryData : IUtf8JsonSerializable, IJsonModel<DataFactoryData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataFactoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.DataFactory
             if (Optional.IsDefined(PurviewConfiguration))
             {
                 writer.WritePropertyName("purviewConfiguration"u8);
-                writer.WriteObjectValue<DataFactoryPurviewConfiguration>(PurviewConfiguration, options);
+                writer.WriteObjectValue(PurviewConfiguration, options);
             }
             if (Optional.IsDefined(RepoConfiguration))
             {
                 writer.WritePropertyName("repoConfiguration"u8);
-                writer.WriteObjectValue<FactoryRepoConfiguration>(RepoConfiguration, options);
+                writer.WriteObjectValue(RepoConfiguration, options);
             }
             if (Optional.IsCollectionDefined(GlobalParameters))
             {
@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.DataFactory
                 foreach (var item in GlobalParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<DataFactoryGlobalParameterProperties>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<DataFactoryEncryptionConfiguration>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static DataFactoryData DeserializeDataFactoryData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

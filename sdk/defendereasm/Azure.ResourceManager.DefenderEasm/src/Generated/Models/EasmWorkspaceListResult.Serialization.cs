@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
 {
     internal partial class EasmWorkspaceListResult : IUtf8JsonSerializable, IJsonModel<EasmWorkspaceListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EasmWorkspaceListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EasmWorkspaceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EasmWorkspaceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<EasmWorkspaceData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
 
         internal static EasmWorkspaceListResult DeserializeEasmWorkspaceListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class GetSensitivitySettingsResponsePropertiesMipInformation : IUtf8JsonSerializable, IJsonModel<GetSensitivitySettingsResponsePropertiesMipInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetSensitivitySettingsResponsePropertiesMipInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetSensitivitySettingsResponsePropertiesMipInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GetSensitivitySettingsResponsePropertiesMipInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
-                    writer.WriteObjectValue<MipSensitivityLabel>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomInfoTypes)
                 {
-                    writer.WriteObjectValue<UserDefinedInformationType>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in BuiltInInfoTypes)
                 {
-                    writer.WriteObjectValue<BuiltInInfoType>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static GetSensitivitySettingsResponsePropertiesMipInformation DeserializeGetSensitivitySettingsResponsePropertiesMipInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

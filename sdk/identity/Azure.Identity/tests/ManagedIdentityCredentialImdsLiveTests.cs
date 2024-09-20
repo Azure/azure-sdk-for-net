@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
@@ -19,6 +20,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/43401")]
         public async Task ValidateImdsSystemAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.IMDSEnable))
@@ -44,7 +46,8 @@ namespace Azure.Identity.Tests
         }
 
         [NonParallelizable]
-        [Test]
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/43401")]
         public async Task ValidateImdsUserAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.IMDSEnable))

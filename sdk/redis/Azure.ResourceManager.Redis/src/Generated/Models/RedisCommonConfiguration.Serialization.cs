@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Redis.Models
 {
     public partial class RedisCommonConfiguration : IUtf8JsonSerializable, IJsonModel<RedisCommonConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisCommonConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisCommonConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisCommonConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Redis.Models
             if (Optional.IsDefined(RdbBackupMaxSnapshotCount))
             {
                 writer.WritePropertyName("rdb-backup-max-snapshot-count"u8);
-                WriteRdbBackupMaxSnapshotCount(writer);
+                WriteRdbBackupMaxSnapshotCount(writer, options);
             }
             if (Optional.IsDefined(RdbStorageConnectionString))
             {
@@ -86,6 +86,11 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 writer.WritePropertyName("maxclients"u8);
                 writer.WriteStringValue(MaxClients);
+            }
+            if (Optional.IsDefined(NotifyKeyspaceEvents))
+            {
+                writer.WritePropertyName("notify-keyspace-events"u8);
+                writer.WriteStringValue(NotifyKeyspaceEvents);
             }
             if (options.Format != "W" && Optional.IsDefined(PreferredDataArchiveAuthMethod))
             {
@@ -146,7 +151,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         internal static RedisCommonConfiguration DeserializeRedisCommonConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -164,6 +169,7 @@ namespace Azure.ResourceManager.Redis.Models
             string maxmemoryReserved = default;
             string maxmemoryDelta = default;
             string maxclients = default;
+            string notifyKeyspaceEvents = default;
             string preferredDataArchiveAuthMethod = default;
             string preferredDataPersistenceAuthMethod = default;
             string zonalConfiguration = default;
@@ -234,6 +240,11 @@ namespace Azure.ResourceManager.Redis.Models
                     maxclients = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("notify-keyspace-events"u8))
+                {
+                    notifyKeyspaceEvents = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("preferred-data-archive-auth-method"u8))
                 {
                     preferredDataArchiveAuthMethod = property.Value.GetString();
@@ -280,6 +291,7 @@ namespace Azure.ResourceManager.Redis.Models
                 maxmemoryReserved,
                 maxmemoryDelta,
                 maxclients,
+                notifyKeyspaceEvents,
                 preferredDataArchiveAuthMethod,
                 preferredDataPersistenceAuthMethod,
                 zonalConfiguration,
@@ -301,30 +313,32 @@ namespace Azure.ResourceManager.Redis.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRdbBackupEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsRdbBackupEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  rdb-backup-enabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsRdbBackupEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  rdb-backup-enabled: ");
                     var boolValue = IsRdbBackupEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RdbBackupFrequency), out propertyOverride);
-            if (Optional.IsDefined(RdbBackupFrequency) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  rdb-backup-frequency: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RdbBackupFrequency))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  rdb-backup-frequency: ");
                     if (RdbBackupFrequency.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -338,29 +352,31 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RdbBackupMaxSnapshotCount), out propertyOverride);
-            if (Optional.IsDefined(RdbBackupMaxSnapshotCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  rdb-backup-max-snapshot-count: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RdbBackupMaxSnapshotCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  rdb-backup-max-snapshot-count: ");
                     builder.AppendLine($"{RdbBackupMaxSnapshotCount.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RdbStorageConnectionString), out propertyOverride);
-            if (Optional.IsDefined(RdbStorageConnectionString) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  rdb-storage-connection-string: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RdbStorageConnectionString))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  rdb-storage-connection-string: ");
                     if (RdbStorageConnectionString.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -374,30 +390,32 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAofBackupEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsAofBackupEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  aof-backup-enabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAofBackupEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  aof-backup-enabled: ");
                     var boolValue = IsAofBackupEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AofStorageConnectionString0), out propertyOverride);
-            if (Optional.IsDefined(AofStorageConnectionString0) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  aof-storage-connection-string-0: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AofStorageConnectionString0))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  aof-storage-connection-string-0: ");
                     if (AofStorageConnectionString0.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -411,15 +429,16 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AofStorageConnectionString1), out propertyOverride);
-            if (Optional.IsDefined(AofStorageConnectionString1) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  aof-storage-connection-string-1: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AofStorageConnectionString1))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  aof-storage-connection-string-1: ");
                     if (AofStorageConnectionString1.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -433,15 +452,16 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxFragmentationMemoryReserved), out propertyOverride);
-            if (Optional.IsDefined(MaxFragmentationMemoryReserved) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxfragmentationmemory-reserved: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxFragmentationMemoryReserved))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxfragmentationmemory-reserved: ");
                     if (MaxFragmentationMemoryReserved.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -455,15 +475,16 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxMemoryPolicy), out propertyOverride);
-            if (Optional.IsDefined(MaxMemoryPolicy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxmemory-policy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxMemoryPolicy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxmemory-policy: ");
                     if (MaxMemoryPolicy.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -477,15 +498,16 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxMemoryReserved), out propertyOverride);
-            if (Optional.IsDefined(MaxMemoryReserved) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxmemory-reserved: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxMemoryReserved))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxmemory-reserved: ");
                     if (MaxMemoryReserved.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -499,15 +521,16 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxMemoryDelta), out propertyOverride);
-            if (Optional.IsDefined(MaxMemoryDelta) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxmemory-delta: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxMemoryDelta))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxmemory-delta: ");
                     if (MaxMemoryDelta.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -521,15 +544,16 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxClients), out propertyOverride);
-            if (Optional.IsDefined(MaxClients) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxclients: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxClients))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxclients: ");
                     if (MaxClients.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -542,16 +566,40 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotifyKeyspaceEvents), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  notify-keyspace-events: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NotifyKeyspaceEvents))
+                {
+                    builder.Append("  notify-keyspace-events: ");
+                    if (NotifyKeyspaceEvents.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NotifyKeyspaceEvents}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NotifyKeyspaceEvents}'");
+                    }
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreferredDataArchiveAuthMethod), out propertyOverride);
-            if (Optional.IsDefined(PreferredDataArchiveAuthMethod) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  preferred-data-archive-auth-method: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PreferredDataArchiveAuthMethod))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  preferred-data-archive-auth-method: ");
                     if (PreferredDataArchiveAuthMethod.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -565,15 +613,16 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreferredDataPersistenceAuthMethod), out propertyOverride);
-            if (Optional.IsDefined(PreferredDataPersistenceAuthMethod) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  preferred-data-persistence-auth-method: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PreferredDataPersistenceAuthMethod))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  preferred-data-persistence-auth-method: ");
                     if (PreferredDataPersistenceAuthMethod.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -587,15 +636,16 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ZonalConfiguration), out propertyOverride);
-            if (Optional.IsDefined(ZonalConfiguration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  zonal-configuration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ZonalConfiguration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  zonal-configuration: ");
                     if (ZonalConfiguration.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -609,15 +659,16 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthNotRequired), out propertyOverride);
-            if (Optional.IsDefined(AuthNotRequired) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  authnotrequired: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthNotRequired))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  authnotrequired: ");
                     if (AuthNotRequired.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -631,15 +682,16 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageSubscriptionId), out propertyOverride);
-            if (Optional.IsDefined(StorageSubscriptionId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  storage-subscription-id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageSubscriptionId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  storage-subscription-id: ");
                     if (StorageSubscriptionId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -653,15 +705,16 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAadEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsAadEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  aad-enabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAadEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  aad-enabled: ");
                     if (IsAadEnabled.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

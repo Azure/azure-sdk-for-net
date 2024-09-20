@@ -4,13 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security.Authentication;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 }
                 Log.SucceededToHandleRequest(_logger, serviceRequest.ConnectionContext);
             }
-            catch (UnauthorizedAccessException ex)
+            catch (Exception ex) when (ex is UnauthorizedAccessException or AuthenticationException)
             {
                 Log.FailedToHandleRequest(_logger, ex.Message, ex);
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;

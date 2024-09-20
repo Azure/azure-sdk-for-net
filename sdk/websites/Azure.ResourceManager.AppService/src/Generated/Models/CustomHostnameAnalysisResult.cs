@@ -98,9 +98,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> DNS verification test result. </summary>
         [WirePath("properties.customDomainVerificationTest")]
         public DnsVerificationTestResult? CustomDomainVerificationTest { get; }
-        /// <summary> Raw failure information if DNS verification fails. </summary>
-        [WirePath("properties.customDomainVerificationFailureInfo")]
-        public ResponseError CustomDomainVerificationFailureInfo { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict on a scale unit; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.hasConflictOnScaleUnit")]
         public bool? HasConflictOnScaleUnit { get; }

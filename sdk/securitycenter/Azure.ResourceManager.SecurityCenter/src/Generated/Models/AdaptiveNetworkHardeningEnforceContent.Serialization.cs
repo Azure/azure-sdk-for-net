@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class AdaptiveNetworkHardeningEnforceContent : IUtf8JsonSerializable, IJsonModel<AdaptiveNetworkHardeningEnforceContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdaptiveNetworkHardeningEnforceContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdaptiveNetworkHardeningEnforceContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AdaptiveNetworkHardeningEnforceContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartArray();
             foreach (var item in Rules)
             {
-                writer.WriteObjectValue<RecommendedSecurityRule>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("networkSecurityGroups"u8);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AdaptiveNetworkHardeningEnforceContent DeserializeAdaptiveNetworkHardeningEnforceContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

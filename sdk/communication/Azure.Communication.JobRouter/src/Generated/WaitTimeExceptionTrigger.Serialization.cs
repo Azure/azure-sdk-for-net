@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
 {
     public partial class WaitTimeExceptionTrigger : IUtf8JsonSerializable, IJsonModel<WaitTimeExceptionTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WaitTimeExceptionTrigger>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WaitTimeExceptionTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WaitTimeExceptionTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
 
             writer.WriteStartObject();
             writer.WritePropertyName("thresholdSeconds"u8);
-            WriteThresholdSeconds(writer);
+            WriteThresholdSeconds(writer, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -62,7 +62,7 @@ namespace Azure.Communication.JobRouter
 
         internal static WaitTimeExceptionTrigger DeserializeWaitTimeExceptionTrigger(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -132,11 +132,11 @@ namespace Azure.Communication.JobRouter
             return DeserializeWaitTimeExceptionTrigger(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<WaitTimeExceptionTrigger>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

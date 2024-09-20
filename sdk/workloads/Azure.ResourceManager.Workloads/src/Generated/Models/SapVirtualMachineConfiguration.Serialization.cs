@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class SapVirtualMachineConfiguration : IUtf8JsonSerializable, IJsonModel<SapVirtualMachineConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapVirtualMachineConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapVirtualMachineConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapVirtualMachineConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WritePropertyName("vmSize"u8);
             writer.WriteStringValue(VmSize);
             writer.WritePropertyName("imageReference"u8);
-            writer.WriteObjectValue<SapImageReference>(ImageReference, options);
+            writer.WriteObjectValue(ImageReference, options);
             writer.WritePropertyName("osProfile"u8);
-            writer.WriteObjectValue<SapOSProfile>(OSProfile, options);
+            writer.WriteObjectValue(OSProfile, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SapVirtualMachineConfiguration DeserializeSapVirtualMachineConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

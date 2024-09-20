@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CosmosDBAccountCorsPolicy : IUtf8JsonSerializable, IJsonModel<CosmosDBAccountCorsPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBAccountCorsPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBAccountCorsPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBAccountCorsPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBAccountCorsPolicy DeserializeCosmosDBAccountCorsPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -152,15 +152,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedOrigins), out propertyOverride);
-            if (Optional.IsDefined(AllowedOrigins) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  allowedOrigins: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowedOrigins))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  allowedOrigins: ");
                     if (AllowedOrigins.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -174,15 +175,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedMethods), out propertyOverride);
-            if (Optional.IsDefined(AllowedMethods) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  allowedMethods: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowedMethods))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  allowedMethods: ");
                     if (AllowedMethods.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -196,15 +198,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedHeaders), out propertyOverride);
-            if (Optional.IsDefined(AllowedHeaders) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  allowedHeaders: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowedHeaders))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  allowedHeaders: ");
                     if (AllowedHeaders.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -218,15 +221,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExposedHeaders), out propertyOverride);
-            if (Optional.IsDefined(ExposedHeaders) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  exposedHeaders: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExposedHeaders))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  exposedHeaders: ");
                     if (ExposedHeaders.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -240,15 +244,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxAgeInSeconds), out propertyOverride);
-            if (Optional.IsDefined(MaxAgeInSeconds) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxAgeInSeconds: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxAgeInSeconds))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxAgeInSeconds: ");
                     builder.AppendLine($"'{MaxAgeInSeconds.Value.ToString()}'");
                 }
             }

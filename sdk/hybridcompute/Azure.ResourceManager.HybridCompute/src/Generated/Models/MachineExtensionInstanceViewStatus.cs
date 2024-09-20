@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The status code. </summary>
+        [WirePath("code")]
         public string Code { get; set; }
         /// <summary> The level code. </summary>
+        [WirePath("level")]
         public HybridComputeStatusLevelType? Level { get; set; }
         /// <summary> The short localizable label for the status. </summary>
+        [WirePath("displayStatus")]
         public string DisplayStatus { get; set; }
         /// <summary> The detailed status message, including for alerts and error messages. </summary>
+        [WirePath("message")]
         public string Message { get; set; }
         /// <summary> The time of the status. </summary>
+        [WirePath("time")]
         public DateTimeOffset? Time { get; set; }
     }
 }

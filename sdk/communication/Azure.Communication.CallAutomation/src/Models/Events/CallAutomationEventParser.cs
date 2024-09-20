@@ -108,10 +108,6 @@ namespace Azure.Communication.CallAutomation
                     return ParticipantsUpdated.Deserialize(eventData);
                 case nameof(RecordingStateChanged):
                     return RecordingStateChanged.Deserialize(eventData);
-                case nameof(TeamsRecordingStateChanged):
-                    return TeamsRecordingStateChanged.Deserialize(eventData);
-                case nameof(TeamsComplianceRecordingStateChanged):
-                    return TeamsComplianceRecordingStateChanged.Deserialize(eventData);
                 case nameof(PlayCompleted):
                     return PlayCompleted.Deserialize(eventData);
                 case nameof(PlayFailed):
@@ -156,6 +152,12 @@ namespace Azure.Communication.CallAutomation
                     return CreateCallFailed.Deserialize(eventData);
                 case nameof(HoldFailed):
                     return HoldFailed.Deserialize(eventData);
+                case nameof(MediaStreamingStarted):
+                    return MediaStreamingStarted.Deserialize(eventData);
+                case nameof(MediaStreamingStopped):
+                    return MediaStreamingStopped.Deserialize(eventData);
+                case nameof(MediaStreamingFailed):
+                    return MediaStreamingFailed.Deserialize(eventData);
                 #region Dialog
                 case nameof(DialogCompleted):
                     return DialogCompleted.Deserialize(eventData);

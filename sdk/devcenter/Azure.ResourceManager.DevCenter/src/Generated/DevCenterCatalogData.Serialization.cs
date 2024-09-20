@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter
 {
     public partial class DevCenterCatalogData : IUtf8JsonSerializable, IJsonModel<DevCenterCatalogData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterCatalogData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterCatalogData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevCenterCatalogData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.DevCenter
             if (Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
-                writer.WriteObjectValue<DevCenterGitCatalog>(GitHub, options);
+                writer.WriteObjectValue(GitHub, options);
             }
             if (Optional.IsDefined(AdoGit))
             {
                 writer.WritePropertyName("adoGit"u8);
-                writer.WriteObjectValue<DevCenterGitCatalog>(AdoGit, options);
+                writer.WriteObjectValue(AdoGit, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static DevCenterCatalogData DeserializeDevCenterCatalogData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

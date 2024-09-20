@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
 {
     public partial class CustomLocationPatch : IUtf8JsonSerializable, IJsonModel<CustomLocationPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomLocationPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomLocationPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomLocationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue<CustomLocationAuthentication>(Authentication, options);
+                writer.WriteObjectValue(Authentication, options);
             }
             if (Optional.IsCollectionDefined(ClusterExtensionIds))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
 
         internal static CustomLocationPatch DeserializeCustomLocationPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

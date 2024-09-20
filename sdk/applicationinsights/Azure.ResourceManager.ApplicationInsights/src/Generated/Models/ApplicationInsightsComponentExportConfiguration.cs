@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -62,16 +63,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="destinationAccountId"> The name of destination account. </param>
         /// <param name="destinationType"> The destination type. </param>
         /// <param name="isUserEnabled"> This will be 'true' if the Continuous Export configuration is enabled, otherwise it will be 'false'. </param>
-        /// <param name="lastUserUpdate"> Last time the Continuous Export configuration was updated. </param>
-        /// <param name="notificationQueueEnabled"> Deprecated. </param>
+        /// <param name="lastUserUpdatedOn"> Last time the Continuous Export configuration was updated. </param>
+        /// <param name="isNotificationQueueEnabled"> Deprecated. </param>
         /// <param name="exportStatus"> This indicates current Continuous Export configuration status. The possible values are 'Preparing', 'Success', 'Failure'. </param>
-        /// <param name="lastSuccessTime"> The last time data was successfully delivered to the destination storage container for this Continuous Export configuration. </param>
-        /// <param name="lastGapTime"> The last time the Continuous Export configuration started failing. </param>
+        /// <param name="lastSucceededOn"> The last time data was successfully delivered to the destination storage container for this Continuous Export configuration. </param>
+        /// <param name="lastGappedOn"> The last time the Continuous Export configuration started failing. </param>
         /// <param name="permanentErrorReason"> This is the reason the Continuous Export configuration started failing. It can be 'AzureStorageNotFound' or 'AzureStorageAccessDenied'. </param>
         /// <param name="storageName"> The name of the destination storage account. </param>
         /// <param name="containerName"> The name of the destination storage container. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentExportConfiguration(string exportId, string instrumentationKey, string recordTypes, string applicationName, string subscriptionId, string resourceGroup, string destinationStorageSubscriptionId, string destinationStorageLocationId, string destinationAccountId, string destinationType, string isUserEnabled, string lastUserUpdate, string notificationQueueEnabled, string exportStatus, string lastSuccessTime, string lastGapTime, string permanentErrorReason, string storageName, string containerName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationInsightsComponentExportConfiguration(string exportId, string instrumentationKey, string recordTypes, string applicationName, string subscriptionId, string resourceGroup, string destinationStorageSubscriptionId, string destinationStorageLocationId, ResourceIdentifier destinationAccountId, string destinationType, string isUserEnabled, DateTimeOffset? lastUserUpdatedOn, string isNotificationQueueEnabled, string exportStatus, DateTimeOffset? lastSucceededOn, DateTimeOffset? lastGappedOn, string permanentErrorReason, string storageName, string containerName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExportId = exportId;
             InstrumentationKey = instrumentationKey;
@@ -84,11 +85,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             DestinationAccountId = destinationAccountId;
             DestinationType = destinationType;
             IsUserEnabled = isUserEnabled;
-            LastUserUpdate = lastUserUpdate;
-            NotificationQueueEnabled = notificationQueueEnabled;
+            LastUserUpdatedOn = lastUserUpdatedOn;
+            IsNotificationQueueEnabled = isNotificationQueueEnabled;
             ExportStatus = exportStatus;
-            LastSuccessTime = lastSuccessTime;
-            LastGapTime = lastGapTime;
+            LastSucceededOn = lastSucceededOn;
+            LastGappedOn = lastGappedOn;
             PermanentErrorReason = permanentErrorReason;
             StorageName = storageName;
             ContainerName = containerName;
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string DestinationStorageLocationId { get; }
         /// <summary> The name of destination account. </summary>
         [WirePath("DestinationAccountId")]
-        public string DestinationAccountId { get; }
+        public ResourceIdentifier DestinationAccountId { get; }
         /// <summary> The destination type. </summary>
         [WirePath("DestinationType")]
         public string DestinationType { get; }
@@ -130,19 +131,19 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string IsUserEnabled { get; }
         /// <summary> Last time the Continuous Export configuration was updated. </summary>
         [WirePath("LastUserUpdate")]
-        public string LastUserUpdate { get; }
+        public DateTimeOffset? LastUserUpdatedOn { get; }
         /// <summary> Deprecated. </summary>
         [WirePath("NotificationQueueEnabled")]
-        public string NotificationQueueEnabled { get; }
+        public string IsNotificationQueueEnabled { get; }
         /// <summary> This indicates current Continuous Export configuration status. The possible values are 'Preparing', 'Success', 'Failure'. </summary>
         [WirePath("ExportStatus")]
         public string ExportStatus { get; }
         /// <summary> The last time data was successfully delivered to the destination storage container for this Continuous Export configuration. </summary>
         [WirePath("LastSuccessTime")]
-        public string LastSuccessTime { get; }
+        public DateTimeOffset? LastSucceededOn { get; }
         /// <summary> The last time the Continuous Export configuration started failing. </summary>
         [WirePath("LastGapTime")]
-        public string LastGapTime { get; }
+        public DateTimeOffset? LastGappedOn { get; }
         /// <summary> This is the reason the Continuous Export configuration started failing. It can be 'AzureStorageNotFound' or 'AzureStorageAccessDenied'. </summary>
         [WirePath("PermanentErrorReason")]
         public string PermanentErrorReason { get; }

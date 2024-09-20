@@ -17,15 +17,13 @@ namespace Azure.Messaging.ServiceBus.Tests
     public static class ServiceBusScope
     {
         private static ServiceBusAdministrationClient s_adminClient =>
-            new ServiceBusAdministrationClient(
-                $"{ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace}",
+            new(ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace,
                 ServiceBusTestEnvironment.Instance.Credential,
                 // disable tracing so as not to impact any tracing tests
                 new ServiceBusAdministrationClientOptions { Diagnostics = { IsDistributedTracingEnabled = false } });
 
         private static ServiceBusAdministrationClient s_secondaryAdminClient =>
-            new ServiceBusAdministrationClient(
-                $"{ServiceBusTestEnvironment.Instance.SecondaryFullyQualifiedNamespace}",
+            new(ServiceBusTestEnvironment.Instance.SecondaryFullyQualifiedNamespace,
                 ServiceBusTestEnvironment.Instance.Credential,
                 // disable tracing so as not to impact any tracing tests
                 new ServiceBusAdministrationClientOptions { Diagnostics = { IsDistributedTracingEnabled = false } });

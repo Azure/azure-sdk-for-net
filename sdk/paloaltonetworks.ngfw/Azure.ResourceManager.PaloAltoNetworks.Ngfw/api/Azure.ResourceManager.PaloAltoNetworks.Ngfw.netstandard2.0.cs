@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GlobalRulestackCertificateObjectResource : Azure.ResourceManager.ArmResource
+    public partial class GlobalRulestackCertificateObjectResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected GlobalRulestackCertificateObjectResource() { }
@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -114,7 +119,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GlobalRulestackFqdnResource : Azure.ResourceManager.ArmResource
+    public partial class GlobalRulestackFqdnResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected GlobalRulestackFqdnResource() { }
@@ -125,6 +130,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -159,7 +169,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GlobalRulestackPrefixResource : Azure.ResourceManager.ArmResource
+    public partial class GlobalRulestackPrefixResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected GlobalRulestackPrefixResource() { }
@@ -170,10 +180,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class GlobalRulestackResource : Azure.ResourceManager.ArmResource
+    public partial class GlobalRulestackResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected GlobalRulestackResource() { }
@@ -217,6 +232,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceListResult>> GetSecurityServicesAsync(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackSecurityServiceType type, string skip = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Revert(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RevertAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource> Update(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource>> UpdateAsync(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -252,7 +272,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LocalRulestackCertificateObjectResource : Azure.ResourceManager.ArmResource
+    public partial class LocalRulestackCertificateObjectResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected LocalRulestackCertificateObjectResource() { }
@@ -263,6 +283,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCertificateObjectData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -333,7 +358,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LocalRulestackFqdnResource : Azure.ResourceManager.ArmResource
+    public partial class LocalRulestackFqdnResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected LocalRulestackFqdnResource() { }
@@ -344,6 +369,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackFqdnData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -378,7 +408,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LocalRulestackPrefixResource : Azure.ResourceManager.ArmResource
+    public partial class LocalRulestackPrefixResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected LocalRulestackPrefixResource() { }
@@ -389,10 +419,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackPrefixData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class LocalRulestackResource : Azure.ResourceManager.ArmResource
+    public partial class LocalRulestackResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected LocalRulestackResource() { }
@@ -441,6 +476,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual System.Threading.Tasks.Task<Azure.Response> RevertAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> Update(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource>> UpdateAsync(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LocalRulestackPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -490,7 +530,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LocalRulestackRuleResource : Azure.ResourceManager.ArmResource
+    public partial class LocalRulestackRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected LocalRulestackRuleResource() { }
@@ -507,6 +547,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual System.Threading.Tasks.Task<Azure.Response> RefreshCountersAsync(string firewallName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleResetConter> ResetCounters(string firewallName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleResetConter>> ResetCountersAsync(string firewallName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -576,7 +621,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PaloAltoNetworksFirewallResource : Azure.ResourceManager.ArmResource
+    public partial class PaloAltoNetworksFirewallResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PaloAltoNetworksFirewallResource() { }
@@ -602,6 +647,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual System.Threading.Tasks.Task<Azure.Response> SaveLogProfileAsync(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallLogSettings logSettings = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource> Update(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PaloAltoNetworksFirewallPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource>> UpdateAsync(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PaloAltoNetworksFirewallPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -619,7 +669,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PaloAltoNetworksFirewallStatusResource : Azure.ResourceManager.ArmResource
+    public partial class PaloAltoNetworksFirewallStatusResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PaloAltoNetworksFirewallStatusResource() { }
@@ -628,6 +678,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string firewallName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallStatusData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PostRulestackRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleResource>, System.Collections.IEnumerable
     {
@@ -675,7 +730,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PostRulestackRuleResource : Azure.ResourceManager.ArmResource
+    public partial class PostRulestackRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PostRulestackRuleResource() { }
@@ -692,6 +747,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual System.Threading.Tasks.Task<Azure.Response> RefreshCountersAsync(string firewallName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleResetConter> ResetCounters(string firewallName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleResetConter>> ResetCountersAsync(string firewallName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -741,7 +801,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PreRulestackRuleResource : Azure.ResourceManager.ArmResource
+    public partial class PreRulestackRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PreRulestackRuleResource() { }
@@ -758,6 +818,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual System.Threading.Tasks.Task<Azure.Response> RefreshCountersAsync(string firewallName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleResetConter> ResetCounters(string firewallName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallRuleResetConter>> ResetCountersAsync(string firewallName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

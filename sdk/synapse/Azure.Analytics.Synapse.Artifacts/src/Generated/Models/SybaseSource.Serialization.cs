@@ -157,11 +157,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeSybaseSource(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SybaseSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -169,7 +169,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SybaseSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SybaseSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override SybaseSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

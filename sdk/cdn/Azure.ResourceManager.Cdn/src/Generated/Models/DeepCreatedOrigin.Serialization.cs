@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class DeepCreatedOrigin : IUtf8JsonSerializable, IJsonModel<DeepCreatedOrigin>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeepCreatedOrigin>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeepCreatedOrigin>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeepCreatedOrigin>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeepCreatedOrigin DeserializeDeepCreatedOrigin(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

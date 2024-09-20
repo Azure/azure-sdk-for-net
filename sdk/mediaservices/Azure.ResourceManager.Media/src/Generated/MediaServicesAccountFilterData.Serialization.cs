@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media
 {
     public partial class MediaServicesAccountFilterData : IUtf8JsonSerializable, IJsonModel<MediaServicesAccountFilterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaServicesAccountFilterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaServicesAccountFilterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaServicesAccountFilterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(PresentationTimeRange))
             {
                 writer.WritePropertyName("presentationTimeRange"u8);
-                writer.WriteObjectValue<PresentationTimeRange>(PresentationTimeRange, options);
+                writer.WriteObjectValue(PresentationTimeRange, options);
             }
             if (Optional.IsDefined(FirstQuality))
             {
                 writer.WritePropertyName("firstQuality"u8);
-                writer.WriteObjectValue<FirstQuality>(FirstQuality, options);
+                writer.WriteObjectValue(FirstQuality, options);
             }
             if (Optional.IsCollectionDefined(Tracks))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in Tracks)
                 {
-                    writer.WriteObjectValue<FilterTrackSelection>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Media
 
         internal static MediaServicesAccountFilterData DeserializeMediaServicesAccountFilterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

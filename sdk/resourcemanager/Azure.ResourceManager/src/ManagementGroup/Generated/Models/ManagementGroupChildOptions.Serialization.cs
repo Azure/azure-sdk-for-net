@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 {
     public partial class ManagementGroupChildOptions : IUtf8JsonSerializable, IJsonModel<ManagementGroupChildOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementGroupChildOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementGroupChildOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagementGroupChildOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupChildOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 throw new FormatException($"The model {nameof(ManagementGroupChildOptions)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ChildType))
             {
                 writer.WritePropertyName("type"u8);
@@ -52,7 +60,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 writer.WriteStartArray();
                 foreach (var item in Children)
                 {
-                    writer.WriteObjectValue<ManagementGroupChildOptions>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +79,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ManagementGroupChildOptions IJsonModel<ManagementGroupChildOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -88,7 +95,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         internal static ManagementGroupChildOptions DeserializeManagementGroupChildOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

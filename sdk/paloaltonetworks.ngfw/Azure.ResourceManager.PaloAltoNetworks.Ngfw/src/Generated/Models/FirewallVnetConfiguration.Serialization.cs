@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     public partial class FirewallVnetConfiguration : IUtf8JsonSerializable, IJsonModel<FirewallVnetConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallVnetConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallVnetConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FirewallVnetConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("vnet"u8);
-            writer.WriteObjectValue<IPAddressSpaceInfo>(Vnet, options);
+            writer.WriteObjectValue(Vnet, options);
             writer.WritePropertyName("trustSubnet"u8);
-            writer.WriteObjectValue<IPAddressSpaceInfo>(TrustSubnet, options);
+            writer.WriteObjectValue(TrustSubnet, options);
             writer.WritePropertyName("unTrustSubnet"u8);
-            writer.WriteObjectValue<IPAddressSpaceInfo>(UnTrustSubnet, options);
+            writer.WriteObjectValue(UnTrustSubnet, options);
             if (Optional.IsDefined(IPOfTrustSubnetForUdr))
             {
                 writer.WritePropertyName("ipOfTrustSubnetForUdr"u8);
-                writer.WriteObjectValue<IPAddressInfo>(IPOfTrustSubnetForUdr, options);
+                writer.WriteObjectValue(IPOfTrustSubnetForUdr, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         internal static FirewallVnetConfiguration DeserializeFirewallVnetConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

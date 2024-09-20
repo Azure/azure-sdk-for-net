@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 {
     public partial class NotificationHubPolicyKey : IUtf8JsonSerializable, IJsonModel<NotificationHubPolicyKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubPolicyKey>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubPolicyKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NotificationHubPolicyKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -26,11 +26,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicyKey))
-            {
-                writer.WritePropertyName("policyKey"u8);
-                writer.WriteStringValue(PolicyKey);
-            }
+            writer.WritePropertyName("policyKey"u8);
+            writer.WriteStringValue(PolicyKey);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -63,7 +60,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubPolicyKey DeserializeNotificationHubPolicyKey(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

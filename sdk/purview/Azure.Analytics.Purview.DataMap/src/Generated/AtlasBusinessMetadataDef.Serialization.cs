@@ -15,7 +15,7 @@ namespace Azure.Analytics.Purview.DataMap
 {
     public partial class AtlasBusinessMetadataDef : IUtf8JsonSerializable, IJsonModel<AtlasBusinessMetadataDef>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AtlasBusinessMetadataDef>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AtlasBusinessMetadataDef>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AtlasBusinessMetadataDef>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(DateFormatter))
             {
                 writer.WritePropertyName("dateFormatter"u8);
-                writer.WriteObjectValue<AtlasDateFormat>(DateFormatter, options);
+                writer.WriteObjectValue(DateFormatter, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in AttributeDefs)
                 {
-                    writer.WriteObjectValue<AtlasAttributeDef>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +144,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         internal static AtlasBusinessMetadataDef DeserializeAtlasBusinessMetadataDef(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -346,11 +346,11 @@ namespace Azure.Analytics.Purview.DataMap
             return DeserializeAtlasBusinessMetadataDef(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AtlasBusinessMetadataDef>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

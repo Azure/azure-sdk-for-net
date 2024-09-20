@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,9 +16,18 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppRegistryInfo : IUtf8JsonSerializable, IJsonModel<ContainerAppRegistryInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppRegistryInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppRegistryInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppRegistryInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppRegistryInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +35,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 throw new FormatException($"The model {nameof(ContainerAppRegistryInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(RegistryServer))
             {
                 writer.WritePropertyName("registryUrl"u8);
@@ -56,7 +65,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContainerAppRegistryInfo IJsonModel<ContainerAppRegistryInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,7 +81,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppRegistryInfo DeserializeContainerAppRegistryInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -110,6 +118,90 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppRegistryInfo(registryUrl, registryUserName, registryPassword, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistryServer), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  registryUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RegistryServer))
+                {
+                    builder.Append("  registryUrl: ");
+                    if (RegistryServer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RegistryServer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RegistryServer}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistryUserName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  registryUserName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RegistryUserName))
+                {
+                    builder.Append("  registryUserName: ");
+                    if (RegistryUserName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RegistryUserName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RegistryUserName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistryPassword), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  registryPassword: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RegistryPassword))
+                {
+                    builder.Append("  registryPassword: ");
+                    if (RegistryPassword.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RegistryPassword}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RegistryPassword}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerAppRegistryInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppRegistryInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -118,6 +210,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppRegistryInfo)} does not support writing '{options.Format}' format.");
             }

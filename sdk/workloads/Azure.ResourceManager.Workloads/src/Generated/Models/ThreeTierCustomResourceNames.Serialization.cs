@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
     [PersistableModelProxy(typeof(UnknownThreeTierCustomResourceNames))]
     public partial class ThreeTierCustomResourceNames : IUtf8JsonSerializable, IJsonModel<ThreeTierCustomResourceNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreeTierCustomResourceNames>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreeTierCustomResourceNames>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ThreeTierCustomResourceNames>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static ThreeTierCustomResourceNames DeserializeThreeTierCustomResourceNames(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

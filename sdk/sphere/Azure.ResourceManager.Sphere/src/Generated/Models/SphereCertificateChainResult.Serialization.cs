@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sphere.Models
 {
     public partial class SphereCertificateChainResult : IUtf8JsonSerializable, IJsonModel<SphereCertificateChainResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SphereCertificateChainResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SphereCertificateChainResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SphereCertificateChainResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         internal static SphereCertificateChainResult DeserializeSphereCertificateChainResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformConfigurationServiceSettingsValidateResult : IUtf8JsonSerializable, IJsonModel<AppPlatformConfigurationServiceSettingsValidateResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformConfigurationServiceSettingsValidateResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformConfigurationServiceSettingsValidateResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformConfigurationServiceSettingsValidateResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformConfigurationServiceSettingsValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,11 +34,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceSettingsValidateResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(GitPropertyValidationResult))
             {
                 writer.WritePropertyName("gitPropertyValidationResult"u8);
-                writer.WriteObjectValue<AppPlatformConfigurationServiceGitValidateResult>(GitPropertyValidationResult, options);
+                writer.WriteObjectValue(GitPropertyValidationResult, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppPlatformConfigurationServiceSettingsValidateResult IJsonModel<AppPlatformConfigurationServiceSettingsValidateResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -63,7 +70,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformConfigurationServiceSettingsValidateResult DeserializeAppPlatformConfigurationServiceSettingsValidateResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

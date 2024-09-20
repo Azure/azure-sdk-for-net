@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class QueryUtterancesResult : IUtf8JsonSerializable, IJsonModel<QueryUtterancesResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryUtterancesResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryUtterancesResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QueryUtterancesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(SampleUtterance))
             {
                 writer.WritePropertyName("sampleUtterance"u8);
-                writer.WriteObjectValue<SampleUtterance>(SampleUtterance, options);
+                writer.WriteObjectValue(SampleUtterance, options);
             }
             if (Optional.IsDefined(Score))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static QueryUtterancesResult DeserializeQueryUtterancesResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,29 +120,31 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SampleUtterance), out propertyOverride);
-            if (Optional.IsDefined(SampleUtterance) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sampleUtterance: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SampleUtterance))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sampleUtterance: ");
                     BicepSerializationHelpers.AppendChildObject(builder, SampleUtterance, options, 2, false, "  sampleUtterance: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Score), out propertyOverride);
-            if (Optional.IsDefined(Score) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  score: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Score))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  score: ");
                     builder.AppendLine($"'{Score.Value.ToString()}'");
                 }
             }

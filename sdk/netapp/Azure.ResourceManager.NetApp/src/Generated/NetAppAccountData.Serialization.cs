@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp
 {
     public partial class NetAppAccountData : IUtf8JsonSerializable, IJsonModel<NetAppAccountData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppAccountData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppAccountData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetAppAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -85,14 +85,14 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStartArray();
                 foreach (var item in ActiveDirectories)
                 {
-                    writer.WriteObjectValue<NetAppAccountActiveDirectory>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<NetAppAccountEncryption>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DisableShowmount))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetApp
 
         internal static NetAppAccountData DeserializeNetAppAccountData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

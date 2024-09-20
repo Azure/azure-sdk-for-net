@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CostManagement
 {
     public partial class ScheduledActionData : IUtf8JsonSerializable, IJsonModel<ScheduledActionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledActionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledActionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScheduledActionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(FileDestination))
             {
                 writer.WritePropertyName("fileDestination"u8);
-                writer.WriteObjectValue<FileDestination>(FileDestination, options);
+                writer.WriteObjectValue(FileDestination, options);
             }
             if (Optional.IsDefined(Notification))
             {
                 writer.WritePropertyName("notification"u8);
-                writer.WriteObjectValue<NotificationProperties>(Notification, options);
+                writer.WriteObjectValue(Notification, options);
             }
             if (Optional.IsDefined(NotificationEmail))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue<ScheduleProperties>(Schedule, options);
+                writer.WriteObjectValue(Schedule, options);
             }
             if (Optional.IsDefined(Scope))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CostManagement
 
         internal static ScheduledActionData DeserializeScheduledActionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

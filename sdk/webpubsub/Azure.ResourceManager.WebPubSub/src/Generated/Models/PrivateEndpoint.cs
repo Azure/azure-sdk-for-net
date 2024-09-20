@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Full qualified Id of the private endpoint. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
     }
 }

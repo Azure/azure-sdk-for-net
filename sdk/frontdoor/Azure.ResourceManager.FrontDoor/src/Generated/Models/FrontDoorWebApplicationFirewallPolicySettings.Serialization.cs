@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 {
     public partial class FrontDoorWebApplicationFirewallPolicySettings : IUtf8JsonSerializable, IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -56,6 +56,29 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteStringValue(RequestBodyCheck.Value.ToString());
             }
+            if (Optional.IsDefined(JavascriptChallengeExpirationInMinutes))
+            {
+                writer.WritePropertyName("javascriptChallengeExpirationInMinutes"u8);
+                writer.WriteNumberValue(JavascriptChallengeExpirationInMinutes.Value);
+            }
+            writer.WritePropertyName("logScrubbing"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(ScrubbingRules))
+            {
+                writer.WritePropertyName("scrubbingRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in ScrubbingRules)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +111,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static FrontDoorWebApplicationFirewallPolicySettings DeserializeFrontDoorWebApplicationFirewallPolicySettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,6 +123,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             int? customBlockResponseStatusCode = default;
             string customBlockResponseBody = default;
             PolicyRequestBodyCheck? requestBodyCheck = default;
+            int? javascriptChallengeExpirationInMinutes = default;
+            WebApplicationFirewallScrubbingState? state = default;
+            IList<WebApplicationFirewallScrubbingRules> scrubbingRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,6 +180,50 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     requestBodyCheck = new PolicyRequestBodyCheck(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("javascriptChallengeExpirationInMinutes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    javascriptChallengeExpirationInMinutes = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("logScrubbing"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("state"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            state = new WebApplicationFirewallScrubbingState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("scrubbingRules"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<WebApplicationFirewallScrubbingRules> array = new List<WebApplicationFirewallScrubbingRules>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(WebApplicationFirewallScrubbingRules.DeserializeWebApplicationFirewallScrubbingRules(item, options));
+                            }
+                            scrubbingRules = array;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -167,6 +237,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 customBlockResponseStatusCode,
                 customBlockResponseBody,
                 requestBodyCheck,
+                javascriptChallengeExpirationInMinutes,
+                state,
+                scrubbingRules ?? new ChangeTrackingList<WebApplicationFirewallScrubbingRules>(),
                 serializedAdditionalRawData);
         }
 

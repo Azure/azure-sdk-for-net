@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Advisor.Models
 {
     internal partial class ResourceRecommendationBaseListResult : IUtf8JsonSerializable, IJsonModel<ResourceRecommendationBaseListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceRecommendationBaseListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceRecommendationBaseListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceRecommendationBaseListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceRecommendationBaseListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 throw new FormatException($"The model {nameof(ResourceRecommendationBaseListResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
@@ -37,7 +45,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<ResourceRecommendationBaseData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.Advisor.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ResourceRecommendationBaseListResult IJsonModel<ResourceRecommendationBaseListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,7 +80,7 @@ namespace Azure.ResourceManager.Advisor.Models
 
         internal static ResourceRecommendationBaseListResult DeserializeResourceRecommendationBaseListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

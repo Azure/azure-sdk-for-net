@@ -7,36 +7,21 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class GeoJsonPoint : IUtf8JsonSerializable
+    public partial class GeoJsonPoint
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("coordinates"u8);
-            writer.WriteStartArray();
-            foreach (var item in Coordinates)
-            {
-                writer.WriteNumberValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
-            writer.WriteEndObject();
-        }
-
         internal static GeoJsonPoint DeserializeGeoJsonPoint(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<double> coordinates = default;
+            IReadOnlyList<double> coordinates = default;
             GeoJsonObjectType type = default;
+            IReadOnlyList<double> boundingBox = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("coordinates"u8))
@@ -51,11 +36,25 @@ namespace Azure.Maps.Search.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString().ToGeoJsonObjectType();
+                    type = new GeoJsonObjectType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("boundingBox"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<double> array = new List<double>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetDouble());
+                    }
+                    boundingBox = array;
                     continue;
                 }
             }
-            return new GeoJsonPoint(type, coordinates);
+            return new GeoJsonPoint(type, boundingBox ?? new ChangeTrackingList<double>(), coordinates);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
@@ -64,14 +63,6 @@ namespace Azure.Maps.Search.Models
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeGeoJsonPoint(document.RootElement);
-        }
-
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<GeoJsonPoint>(this);
-            return content;
         }
     }
 }

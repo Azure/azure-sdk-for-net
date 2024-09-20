@@ -3080,50 +3080,6 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DatabaseOperationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="databaseName"> The name of the database the operation is being performed on. </param>
-        /// <param name="operation"> The name of operation. </param>
-        /// <param name="operationFriendlyName"> The friendly name of operation. </param>
-        /// <param name="percentComplete"> The percentage of the operation completed. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="startOn"> The operation start time. </param>
-        /// <param name="state"> The operation state. </param>
-        /// <param name="errorCode"> The operation error code. </param>
-        /// <param name="errorDescription"> The operation error description. </param>
-        /// <param name="errorSeverity"> The operation error severity. </param>
-        /// <param name="isUserError"> Whether or not the error is a user error. </param>
-        /// <param name="estimatedCompleteOn"> The estimated completion time of the operation. </param>
-        /// <param name="description"> The operation description. </param>
-        /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
-        /// <returns> A new <see cref="Models.DatabaseOperationData"/> instance for mocking. </returns>
-        public static DatabaseOperationData DatabaseOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string databaseName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = null, string serverName = null, DateTimeOffset? startOn = null, ManagementOperationState? state = null, int? errorCode = null, string errorDescription = null, int? errorSeverity = null, bool? isUserError = null, DateTimeOffset? estimatedCompleteOn = null, string description = null, bool? isCancellable = null)
-        {
-            return new DatabaseOperationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                databaseName,
-                operation,
-                operationFriendlyName,
-                percentComplete,
-                serverName,
-                startOn,
-                state,
-                errorCode,
-                errorDescription,
-                errorSeverity,
-                isUserError,
-                estimatedCompleteOn,
-                description,
-                isCancellable,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseUsage"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -4084,44 +4040,6 @@ namespace Azure.ResourceManager.Sql.Models
                 systemData,
                 state,
                 createdOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerDatabaseReplicationLinkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="partnerServer"> Resource partner server. </param>
-        /// <param name="partnerDatabase"> Resource partner database. </param>
-        /// <param name="partnerLocation"> Resource partner location. </param>
-        /// <param name="role"> Local replication role. </param>
-        /// <param name="partnerRole"> Partner replication role. </param>
-        /// <param name="replicationMode"> Replication mode. </param>
-        /// <param name="startOn"> Time at which the link was created. </param>
-        /// <param name="percentComplete"> Seeding completion percentage for the link. </param>
-        /// <param name="replicationState"> Replication state (PENDING, SEEDING, CATCHUP, SUSPENDED). </param>
-        /// <param name="isTerminationAllowed"> Whether the user is currently allowed to terminate the link. </param>
-        /// <param name="linkType"> Link type (GEO, NAMED, STANDBY). </param>
-        /// <returns> A new <see cref="Sql.SqlServerDatabaseReplicationLinkData"/> instance for mocking. </returns>
-        public static SqlServerDatabaseReplicationLinkData SqlServerDatabaseReplicationLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string partnerServer = null, string partnerDatabase = null, AzureLocation? partnerLocation = null, SqlServerDatabaseReplicationRole? role = null, SqlServerDatabaseReplicationRole? partnerRole = null, string replicationMode = null, DateTimeOffset? startOn = null, int? percentComplete = null, ReplicationLinkState? replicationState = null, bool? isTerminationAllowed = null, ReplicationLinkType? linkType = null)
-        {
-            return new SqlServerDatabaseReplicationLinkData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                partnerServer,
-                partnerDatabase,
-                partnerLocation,
-                role,
-                partnerRole,
-                replicationMode,
-                startOn,
-                percentComplete,
-                replicationState,
-                isTerminationAllowed,
-                linkType,
                 serializedAdditionalRawData: null);
         }
 
@@ -5428,6 +5346,63 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseOperationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="databaseName"> The name of the database the operation is being performed on. </param>
+        /// <param name="operation"> The name of operation. </param>
+        /// <param name="operationFriendlyName"> The friendly name of operation. </param>
+        /// <param name="percentComplete"> The percentage of the operation completed. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="startOn"> The operation start time. </param>
+        /// <param name="state"> The operation state. </param>
+        /// <param name="errorCode"> The operation error code. </param>
+        /// <param name="errorDescription"> The operation error description. </param>
+        /// <param name="errorSeverity"> The operation error severity. </param>
+        /// <param name="isUserError"> Whether or not the error is a user error. </param>
+        /// <param name="estimatedCompleteOn"> The estimated completion time of the operation. </param>
+        /// <param name="description"> The operation description. </param>
+        /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
+        /// <param name="operationPhaseDetails"> The operation phase details. </param>
+        /// <returns> A new <see cref="Models.DatabaseOperationData"/> instance for mocking. </returns>
+        public static DatabaseOperationData DatabaseOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string databaseName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = null, string serverName = null, DateTimeOffset? startOn = null, ManagementOperationState? state = null, int? errorCode = null, string errorDescription = null, int? errorSeverity = null, bool? isUserError = null, DateTimeOffset? estimatedCompleteOn = null, string description = null, bool? isCancellable = null, DatabaseOperationPhaseDetails operationPhaseDetails = null)
+        {
+            return new DatabaseOperationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                databaseName,
+                operation,
+                operationFriendlyName,
+                percentComplete,
+                serverName,
+                startOn,
+                state,
+                errorCode,
+                errorDescription,
+                errorSeverity,
+                isUserError,
+                estimatedCompleteOn,
+                description,
+                isCancellable,
+                operationPhaseDetails,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseOperationPhaseDetails"/>. </summary>
+        /// <param name="phase"> The operation phase. </param>
+        /// <param name="phaseInformation"> The operation phase information. </param>
+        /// <returns> A new <see cref="Models.DatabaseOperationPhaseDetails"/> instance for mocking. </returns>
+        public static DatabaseOperationPhaseDetails DatabaseOperationPhaseDetails(DatabaseOperationPhase? phase = null, IReadOnlyDictionary<string, string> phaseInformation = null)
+        {
+            phaseInformation ??= new Dictionary<string, string>();
+
+            return new DatabaseOperationPhaseDetails(phase, phaseInformation, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Sql.IPv6FirewallRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -5744,8 +5719,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="replicationState"> Replication state of the failover group instance. </param>
         /// <param name="partnerServers"> List of partner server information for the failover group. </param>
         /// <param name="failoverDatabases"> List of databases in the failover group. </param>
+        /// <param name="secondaryType"> Databases secondary type on partner server. </param>
         /// <returns> A new <see cref="Sql.FailoverGroupData"/> instance for mocking. </returns>
-        public static FailoverGroupData FailoverGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IDictionary<string, string> tags = null, FailoverGroupReadWriteEndpoint readWriteEndpoint = null, FailoverGroupReadOnlyEndpoint readOnlyEndpoint = null, FailoverGroupReplicationRole? replicationRole = null, string replicationState = null, IEnumerable<PartnerServerInfo> partnerServers = null, IEnumerable<ResourceIdentifier> failoverDatabases = null)
+        public static FailoverGroupData FailoverGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IDictionary<string, string> tags = null, FailoverGroupReadWriteEndpoint readWriteEndpoint = null, FailoverGroupReadOnlyEndpoint readOnlyEndpoint = null, FailoverGroupReplicationRole? replicationRole = null, string replicationState = null, IEnumerable<PartnerServerInfo> partnerServers = null, IEnumerable<ResourceIdentifier> failoverDatabases = null, FailoverGroupDatabasesSecondaryType? secondaryType = null)
         {
             tags ??= new Dictionary<string, string>();
             partnerServers ??= new List<PartnerServerInfo>();
@@ -5764,6 +5740,7 @@ namespace Azure.ResourceManager.Sql.Models
                 replicationState,
                 partnerServers?.ToList(),
                 failoverDatabases?.ToList(),
+                secondaryType,
                 serializedAdditionalRawData: null);
         }
 
@@ -6119,6 +6096,64 @@ namespace Azure.ResourceManager.Sql.Models
                 serverName,
                 status,
                 errorMessage,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlServerDatabaseReplicationLinkData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="partnerServer"> Resource partner server. </param>
+        /// <param name="partnerDatabase"> Resource partner database. </param>
+        /// <param name="partnerDatabaseId"> Resource partner database Id. </param>
+        /// <param name="partnerLocation"> Resource partner location. </param>
+        /// <param name="role"> Local replication role. </param>
+        /// <param name="partnerRole"> Partner replication role. </param>
+        /// <param name="replicationMode"> Replication mode. </param>
+        /// <param name="startOn"> Time at which the link was created. </param>
+        /// <param name="percentComplete"> Seeding completion percentage for the link. </param>
+        /// <param name="replicationState"> Replication state (PENDING, SEEDING, CATCHUP, SUSPENDED). </param>
+        /// <param name="isTerminationAllowed"> Whether the user is currently allowed to terminate the link. </param>
+        /// <param name="linkType"> Link type (GEO, NAMED, STANDBY). Update operation does not support NAMED. </param>
+        /// <returns> A new <see cref="Sql.SqlServerDatabaseReplicationLinkData"/> instance for mocking. </returns>
+        public static SqlServerDatabaseReplicationLinkData SqlServerDatabaseReplicationLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string partnerServer = null, string partnerDatabase = null, string partnerDatabaseId = null, AzureLocation? partnerLocation = null, SqlServerDatabaseReplicationRole? role = null, SqlServerDatabaseReplicationRole? partnerRole = null, string replicationMode = null, DateTimeOffset? startOn = null, int? percentComplete = null, ReplicationLinkState? replicationState = null, bool? isTerminationAllowed = null, ReplicationLinkType? linkType = null)
+        {
+            return new SqlServerDatabaseReplicationLinkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                partnerServer,
+                partnerDatabase,
+                partnerDatabaseId,
+                partnerLocation,
+                role,
+                partnerRole,
+                replicationMode,
+                startOn,
+                percentComplete,
+                replicationState,
+                isTerminationAllowed,
+                linkType,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SqlServerDatabaseReplicationLinkPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="linkType"> Link type (GEO, NAMED, STANDBY). Update operation does not support NAMED. </param>
+        /// <returns> A new <see cref="Models.SqlServerDatabaseReplicationLinkPatch"/> instance for mocking. </returns>
+        public static SqlServerDatabaseReplicationLinkPatch SqlServerDatabaseReplicationLinkPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReplicationLinkType? linkType = null)
+        {
+            return new SqlServerDatabaseReplicationLinkPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                linkType,
                 serializedAdditionalRawData: null);
         }
     }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class DataBoxEdgeDeviceCapacityInfo : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeDeviceCapacityInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeDeviceCapacityInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeDeviceCapacityInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxEdgeDeviceCapacityInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ClusterStorageCapacityInfo))
             {
                 writer.WritePropertyName("clusterStorageCapacityInfo"u8);
-                writer.WriteObjectValue<EdgeClusterStorageViewInfo>(ClusterStorageCapacityInfo, options);
+                writer.WriteObjectValue(ClusterStorageCapacityInfo, options);
             }
             if (Optional.IsDefined(ClusterComputeCapacityInfo))
             {
                 writer.WritePropertyName("clusterComputeCapacityInfo"u8);
-                writer.WriteObjectValue<EdgeClusterCapacityViewInfo>(ClusterComputeCapacityInfo, options);
+                writer.WriteObjectValue(ClusterComputeCapacityInfo, options);
             }
             if (Optional.IsCollectionDefined(NodeCapacityInfos))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 foreach (var item in NodeCapacityInfos)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<HostCapacity>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeDeviceCapacityInfo DeserializeDataBoxEdgeDeviceCapacityInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

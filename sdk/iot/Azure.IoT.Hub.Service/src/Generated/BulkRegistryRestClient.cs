@@ -55,7 +55,7 @@ namespace Azure.IoT.Hub.Service
             content.JsonWriter.WriteStartArray();
             foreach (var item in devices)
             {
-                content.JsonWriter.WriteObjectValue<ExportImportDevice>(item);
+                content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkInterfaceTapConfigurationData : IUtf8JsonSerializable, IJsonModel<NetworkInterfaceTapConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkInterfaceTapConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkInterfaceTapConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkInterfaceTapConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualNetworkTap))
             {
                 writer.WritePropertyName("virtualNetworkTap"u8);
-                writer.WriteObjectValue<VirtualNetworkTapData>(VirtualNetworkTap, options);
+                writer.WriteObjectValue(VirtualNetworkTap, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
 
         internal static NetworkInterfaceTapConfigurationData DeserializeNetworkInterfaceTapConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

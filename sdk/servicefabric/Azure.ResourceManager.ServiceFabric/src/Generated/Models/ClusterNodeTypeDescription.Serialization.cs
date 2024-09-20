@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 {
     public partial class ClusterNodeTypeDescription : IUtf8JsonSerializable, IJsonModel<ClusterNodeTypeDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterNodeTypeDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterNodeTypeDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterNodeTypeDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(ApplicationPorts))
             {
                 writer.WritePropertyName("applicationPorts"u8);
-                writer.WriteObjectValue<ClusterEndpointRangeDescription>(ApplicationPorts, options);
+                writer.WriteObjectValue(ApplicationPorts, options);
             }
             if (Optional.IsDefined(EphemeralPorts))
             {
                 writer.WritePropertyName("ephemeralPorts"u8);
-                writer.WriteObjectValue<ClusterEndpointRangeDescription>(EphemeralPorts, options);
+                writer.WriteObjectValue(EphemeralPorts, options);
             }
             writer.WritePropertyName("isPrimary"u8);
             writer.WriteBooleanValue(IsPrimary);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterNodeTypeDescription DeserializeClusterNodeTypeDescription(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

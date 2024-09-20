@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.Storage.Models
             StorageProvisioningState.Creating => "Creating",
             StorageProvisioningState.ResolvingDns => "ResolvingDNS",
             StorageProvisioningState.Succeeded => "Succeeded",
+            StorageProvisioningState.ValidateSubscriptionQuotaBegin => "ValidateSubscriptionQuotaBegin",
+            StorageProvisioningState.ValidateSubscriptionQuotaEnd => "ValidateSubscriptionQuotaEnd",
+            StorageProvisioningState.Deleting => "Deleting",
+            StorageProvisioningState.Canceled => "Canceled",
+            StorageProvisioningState.Failed => "Failed",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageProvisioningState value.")
         };
 
@@ -24,6 +29,11 @@ namespace Azure.ResourceManager.Storage.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return StorageProvisioningState.Creating;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "ResolvingDNS")) return StorageProvisioningState.ResolvingDns;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return StorageProvisioningState.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateSubscriptionQuotaBegin")) return StorageProvisioningState.ValidateSubscriptionQuotaBegin;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateSubscriptionQuotaEnd")) return StorageProvisioningState.ValidateSubscriptionQuotaEnd;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return StorageProvisioningState.Deleting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceled")) return StorageProvisioningState.Canceled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return StorageProvisioningState.Failed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageProvisioningState value.");
         }
     }

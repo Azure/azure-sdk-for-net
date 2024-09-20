@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class CommunityGalleryImageData : IUtf8JsonSerializable, IJsonModel<CommunityGalleryImageData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunityGalleryImageData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunityGalleryImageData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CommunityGalleryImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ImageIdentifier))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteObjectValue<CommunityGalleryImageIdentifier>(ImageIdentifier, options);
+                writer.WriteObjectValue(ImageIdentifier, options);
             }
             if (Optional.IsDefined(Recommended))
             {
                 writer.WritePropertyName("recommended"u8);
-                writer.WriteObjectValue<RecommendedMachineConfiguration>(Recommended, options);
+                writer.WriteObjectValue(Recommended, options);
             }
             if (Optional.IsDefined(Disallowed))
             {
                 writer.WritePropertyName("disallowed"u8);
-                writer.WriteObjectValue<Disallowed>(Disallowed, options);
+                writer.WriteObjectValue(Disallowed, options);
             }
             if (Optional.IsDefined(HyperVGeneration))
             {
@@ -85,14 +85,14 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in Features)
                 {
-                    writer.WriteObjectValue<GalleryImageFeature>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue<ImagePurchasePlan>(PurchasePlan, options);
+                writer.WriteObjectValue(PurchasePlan, options);
             }
             if (Optional.IsDefined(Architecture))
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static CommunityGalleryImageData DeserializeCommunityGalleryImageData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

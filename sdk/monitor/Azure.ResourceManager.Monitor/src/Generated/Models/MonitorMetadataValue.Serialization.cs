@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorMetadataValue : IUtf8JsonSerializable, IJsonModel<MonitorMetadataValue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorMetadataValue>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorMetadataValue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitorMetadataValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue<MonitorLocalizableString>(Name, options);
+                writer.WriteObjectValue(Name, options);
             }
             if (Optional.IsDefined(Value))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorMetadataValue DeserializeMonitorMetadataValue(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

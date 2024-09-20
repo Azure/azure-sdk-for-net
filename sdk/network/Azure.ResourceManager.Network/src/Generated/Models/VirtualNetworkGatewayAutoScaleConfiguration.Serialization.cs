@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     internal partial class VirtualNetworkGatewayAutoScaleConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualNetworkGatewayAutoScaleConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkGatewayAutoScaleConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkGatewayAutoScaleConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualNetworkGatewayAutoScaleConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Bounds))
             {
                 writer.WritePropertyName("bounds"u8);
-                writer.WriteObjectValue<VirtualNetworkGatewayAutoScaleBounds>(Bounds, options);
+                writer.WriteObjectValue(Bounds, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualNetworkGatewayAutoScaleConfiguration DeserializeVirtualNetworkGatewayAutoScaleConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

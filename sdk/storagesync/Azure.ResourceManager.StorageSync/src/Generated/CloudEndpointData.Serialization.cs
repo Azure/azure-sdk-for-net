@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageSync
 {
     public partial class CloudEndpointData : IUtf8JsonSerializable, IJsonModel<CloudEndpointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudEndpointData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudEndpointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CloudEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.StorageSync
             if (options.Format != "W" && Optional.IsDefined(ChangeEnumerationStatus))
             {
                 writer.WritePropertyName("changeEnumerationStatus"u8);
-                writer.WriteObjectValue<CloudEndpointChangeEnumerationStatus>(ChangeEnumerationStatus, options);
+                writer.WriteObjectValue(ChangeEnumerationStatus, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.StorageSync
 
         internal static CloudEndpointData DeserializeCloudEndpointData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

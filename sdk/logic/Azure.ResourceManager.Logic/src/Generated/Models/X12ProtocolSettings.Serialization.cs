@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class X12ProtocolSettings : IUtf8JsonSerializable, IJsonModel<X12ProtocolSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X12ProtocolSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X12ProtocolSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<X12ProtocolSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,26 +27,26 @@ namespace Azure.ResourceManager.Logic.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("validationSettings"u8);
-            writer.WriteObjectValue<X12ValidationSettings>(ValidationSettings, options);
+            writer.WriteObjectValue(ValidationSettings, options);
             writer.WritePropertyName("framingSettings"u8);
-            writer.WriteObjectValue<X12FramingSettings>(FramingSettings, options);
+            writer.WriteObjectValue(FramingSettings, options);
             writer.WritePropertyName("envelopeSettings"u8);
-            writer.WriteObjectValue<X12EnvelopeSettings>(EnvelopeSettings, options);
+            writer.WriteObjectValue(EnvelopeSettings, options);
             writer.WritePropertyName("acknowledgementSettings"u8);
-            writer.WriteObjectValue<X12AcknowledgementSettings>(AcknowledgementSettings, options);
+            writer.WriteObjectValue(AcknowledgementSettings, options);
             writer.WritePropertyName("messageFilter"u8);
-            writer.WriteObjectValue<X12MessageFilter>(MessageFilter, options);
+            writer.WriteObjectValue(MessageFilter, options);
             writer.WritePropertyName("securitySettings"u8);
-            writer.WriteObjectValue<X12SecuritySettings>(SecuritySettings, options);
+            writer.WriteObjectValue(SecuritySettings, options);
             writer.WritePropertyName("processingSettings"u8);
-            writer.WriteObjectValue<X12ProcessingSettings>(ProcessingSettings, options);
+            writer.WriteObjectValue(ProcessingSettings, options);
             if (Optional.IsCollectionDefined(EnvelopeOverrides))
             {
                 writer.WritePropertyName("envelopeOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in EnvelopeOverrides)
                 {
-                    writer.WriteObjectValue<X12EnvelopeOverride>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationOverrides)
                 {
-                    writer.WriteObjectValue<X12ValidationOverride>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in MessageFilterList)
                 {
-                    writer.WriteObjectValue<X12MessageIdentifier>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartArray();
             foreach (var item in SchemaReferences)
             {
-                writer.WriteObjectValue<X12SchemaReference>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(X12DelimiterOverrides))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in X12DelimiterOverrides)
                 {
-                    writer.WriteObjectValue<X12DelimiterOverrides>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12ProtocolSettings DeserializeX12ProtocolSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

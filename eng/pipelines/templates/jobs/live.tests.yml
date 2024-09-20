@@ -54,6 +54,8 @@ parameters:
     default: false
   - name: OSName
     type: string
+  - name: UseFederatedAuth
+    type: boolean
 
 jobs:
   - job:
@@ -112,7 +114,12 @@ jobs:
         parameters:
           SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
           SubscriptionConfigurations: ${{ parameters.CloudConfig.SubscriptionConfigurations }}
-          EnvVars: ${{ parameters.EnvVars }}
+          ${{ if parameters.UseFederatedAuth }}:
+            SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
+          EnvVars:
+            Pool: $(Pool)
+            ${{ insert }}: ${{ parameters.EnvVars }}
+
       - pwsh: |
           $project = "${{ parameters.Project }}"
           $directory = "${{ parameters.ServiceDirectory }}"
@@ -134,6 +141,12 @@ jobs:
                 TestResourcesDirectory: '$(TestResourcesDirectory)'
                 SubscriptionConfiguration: $(SubscriptionConfiguration)
                 ArmTemplateParameters: $(ArmTemplateParameters)
+                UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
+                ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
+                SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
+                EnvVars:
+                  Pool: $(Pool)
+                  ${{ insert }}: ${{ parameters.EnvVars }}
         - ${{ if not(parameters.TestResourceDirectories) }}:
           - template: /eng/common/TestResources/deploy-test-resources.yml
             parameters:
@@ -143,6 +156,13 @@ jobs:
               TestResourcesDirectory: '$(TestResourcesDirectory)'
               SubscriptionConfiguration: $(SubscriptionConfiguration)
               ArmTemplateParameters: $(ArmTemplateParameters)
+              UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
+              ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
+              SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
+              EnvVars:
+                Pool: $(Pool)
+                ${{ insert }}: ${{ parameters.EnvVars }}
+
       - pwsh: |
           if ($env:SupportsRecording -and $env:Record) {
             Write-Host "Enabling Record mode"
@@ -152,30 +172,73 @@ jobs:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
           Container: ${{ parameters.UsePlatformContainer }}
-      - script: >
-          dotnet test eng/service.proj
-          --framework $(TestTargetFramework)
-          --filter "TestCategory!=Manually & ($(AdditionalTestFilters))"
-          --logger "trx"
-          --logger:"console;verbosity=normal"
-          --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TimeoutInMinutes}}minutes
-          /p:SDKType=${{ parameters.SDKType }}
-          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-          /p:Project=${{ parameters.Project }}
-          /p:IncludeSrc=false
-          /p:IncludeSamples=false
-          /p:IncludePerf=false
-          /p:IncludeStress=false
-          /p:BuildInParallel=${{ parameters.BuildInParallel }}
-          /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
-          /p:EnableSourceLink=false
-          $(AdditionalTestArguments)
 
-        displayName: "Build & Test (all tests for $(TestTargetFramework))"
-        env:
-          AZURE_TEST_MODE: $(TestMode)
-          ${{ each var in parameters.EnvVars }}:
-            ${{ var.key }}: ${{ var.value }}
+      - ${{ if eq('true', parameters.UseFederatedAuth) }}:
+        - task: AzurePowerShell@5
+          displayName: "Build & Test (all tests for $(TestTargetFramework)) - Federated Auth"
+          inputs:
+            azureSubscription: ${{ parameters.CloudConfig.ServiceConnection }}
+            azurePowerShellVersion: LatestVersion
+            pwsh: true
+            ScriptType: InlineScript
+            Inline: >-
+              . ./eng/common/TestResources/SubConfig-Helpers.ps1
+              $serviceDirectoryPrefix = BuildServiceDirectoryPrefix ${{ parameters.ServiceDirectory }};
+              $account = (Get-AzContext).Account;
+              $env:AZURESUBSCRIPTION_CLIENT_ID = $account.Id;
+              $env:AZURESUBSCRIPTION_TENANT_ID = $account.Tenants;
+              [Environment]::SetEnvironmentVariable("${serviceDirectoryPrefix}CLIENT_ID", $account.Id);
+              [Environment]::SetEnvironmentVariable("${serviceDirectoryPrefix}TENANT_ID", $account.Tenants);
+
+              dotnet test eng/service.proj
+              --framework $(TestTargetFramework)
+              --filter "TestCategory!=Manually & ($(AdditionalTestFilters))"
+              --logger "trx"
+              --logger:"console;verbosity=normal"
+              --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TimeoutInMinutes}}minutes
+              /p:SDKType=${{ parameters.SDKType }}
+              /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+              /p:Project=${{ parameters.Project }}
+              /p:IncludeSrc=false
+              /p:IncludeSamples=false
+              /p:IncludePerf=false
+              /p:IncludeStress=false
+              /p:BuildInParallel=${{ parameters.BuildInParallel }}
+              /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
+              /p:EnableSourceLink=false
+              $(AdditionalTestArguments);
+              Write-Host "Last exit code: $LASTEXITCODE";
+              exit $LASTEXITCODE;
+          env:
+            AZURE_TEST_MODE: $(TestMode)
+            SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+            ${{ each var in parameters.EnvVars }}:
+              ${{ var.key }}: ${{ var.value }}
+
+      - ${{ else }}:
+        - script: >-
+            dotnet test eng/service.proj
+            --framework $(TestTargetFramework)
+            --filter "TestCategory!=Manually & ($(AdditionalTestFilters))"
+            --logger "trx"
+            --logger:"console;verbosity=normal"
+            --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TimeoutInMinutes}}minutes
+            /p:SDKType=${{ parameters.SDKType }}
+            /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+            /p:Project=${{ parameters.Project }}
+            /p:IncludeSrc=false
+            /p:IncludeSamples=false
+            /p:IncludePerf=false
+            /p:IncludeStress=false
+            /p:BuildInParallel=${{ parameters.BuildInParallel }}
+            /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
+            /p:EnableSourceLink=false
+            $(AdditionalTestArguments)
+          displayName: "Build & Test (all tests for $(TestTargetFramework)) - Client Secret Auth"
+          env:
+            AZURE_TEST_MODE: $(TestMode)
+            ${{ each var in parameters.EnvVars }}:
+              ${{ var.key }}: ${{ var.value }}
 
       - ${{ if parameters.DeployTestResources }}:
         - ${{ if parameters.TestResourceDirectories }}:
@@ -184,11 +247,18 @@ jobs:
               parameters:
                 ServiceDirectory: '${{ directory }}'
                 SubscriptionConfiguration: $(SubscriptionConfiguration)
+                UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
+                ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
+                SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
+
         - ${{ if not(parameters.TestResourceDirectories) }}:
           - template: /eng/common/TestResources/remove-test-resources.yml
             parameters:
               ServiceDirectory: '${{ parameters.ServiceDirectory }}'
               SubscriptionConfiguration: $(SubscriptionConfiguration)
+              UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
+              ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
+              SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
 
       - task: PublishTestResults@2
         condition: always()
@@ -211,11 +281,10 @@ jobs:
           filefilters: +$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**
           verbosity: Verbose
 
-      - task: PublishCodeCoverageResults@1
+      - task: PublishCodeCoverageResults@2
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
         displayName: Publish Code Coverage Reports
         inputs:
-          codeCoverageTool: Cobertura
           summaryFileLocation: $(Build.ArtifactStagingDirectory)\coverage\Cobertura.xml
 
       - ${{ parameters.PostSteps }}

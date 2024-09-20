@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Automanage.Models
 {
     public partial class AutomanageResourceUpdateDetails : IUtf8JsonSerializable, IJsonModel<AutomanageResourceUpdateDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomanageResourceUpdateDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomanageResourceUpdateDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomanageResourceUpdateDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomanageResourceUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.Automanage.Models
                 throw new FormatException($"The model {nameof(AutomanageResourceUpdateDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.Automanage.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AutomanageResourceUpdateDetails IJsonModel<AutomanageResourceUpdateDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +76,7 @@ namespace Azure.ResourceManager.Automanage.Models
 
         internal static AutomanageResourceUpdateDetails DeserializeAutomanageResourceUpdateDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

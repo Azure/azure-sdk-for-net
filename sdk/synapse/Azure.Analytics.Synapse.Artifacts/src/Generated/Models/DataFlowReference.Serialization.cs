@@ -120,11 +120,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeDataFlowReference(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DataFlowReference>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, DataFlowReference model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<DataFlowReference>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override DataFlowReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

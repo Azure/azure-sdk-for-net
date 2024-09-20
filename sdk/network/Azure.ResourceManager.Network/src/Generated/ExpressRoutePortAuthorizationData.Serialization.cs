@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ExpressRoutePortAuthorizationData : IUtf8JsonSerializable, IJsonModel<ExpressRoutePortAuthorizationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRoutePortAuthorizationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRoutePortAuthorizationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExpressRoutePortAuthorizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRoutePortAuthorizationData DeserializeExpressRoutePortAuthorizationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -28,22 +28,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue<VideoResolution>(Resolution);
+                writer.WriteObjectValue(Resolution);
             }
             if (Optional.IsDefined(RateControl))
             {
                 writer.WritePropertyName("rateControl"u8);
-                writer.WriteObjectValue<RateControl>(RateControl);
+                writer.WriteObjectValue(RateControl);
             }
             if (Optional.IsDefined(H264))
             {
                 writer.WritePropertyName("h264"u8);
-                writer.WriteObjectValue<H264Configuration>(H264);
+                writer.WriteObjectValue(H264);
             }
             if (Optional.IsDefined(Mpeg4))
             {
                 writer.WritePropertyName("mpeg4"u8);
-                writer.WriteObjectValue<Mpeg4Configuration>(Mpeg4);
+                writer.WriteObjectValue(Mpeg4);
             }
             writer.WriteEndObject();
         }
@@ -134,11 +134,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             return DeserializeVideoEncoderConfiguration(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<VideoEncoderConfiguration>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

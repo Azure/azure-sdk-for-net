@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class SourceLifeCycle : IUtf8JsonSerializable, IJsonModel<SourceLifeCycle>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceLifeCycle>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceLifeCycle>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SourceLifeCycle>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("deleteAfter"u8);
-            writer.WriteObjectValue<DataProtectionBackupDeleteSetting>(DeleteAfter, options);
+            writer.WriteObjectValue(DeleteAfter, options);
             writer.WritePropertyName("sourceDataStore"u8);
-            writer.WriteObjectValue<DataStoreInfoBase>(SourceDataStore, options);
+            writer.WriteObjectValue(SourceDataStore, options);
             if (Optional.IsCollectionDefined(TargetDataStoreCopySettings))
             {
                 writer.WritePropertyName("targetDataStoreCopySettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetDataStoreCopySettings)
                 {
-                    writer.WriteObjectValue<TargetCopySetting>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static SourceLifeCycle DeserializeSourceLifeCycle(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

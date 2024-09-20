@@ -465,6 +465,7 @@ namespace Azure.ResourceManager.PrivateDns
         public VirtualNetworkLinkData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState? PrivateDnsProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.PrivateDns.Models.PrivateDnsResolutionPolicy? PrivateDnsResolutionPolicy { get { throw null; } set { } }
         public bool? RegistrationEnabled { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } set { } }
         public Azure.ResourceManager.PrivateDns.Models.VirtualNetworkLinkState? VirtualNetworkLinkState { get { throw null; } }
@@ -474,7 +475,7 @@ namespace Azure.ResourceManager.PrivateDns
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VirtualNetworkLinkResource : Azure.ResourceManager.ArmResource
+    public partial class VirtualNetworkLinkResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected VirtualNetworkLinkResource() { }
@@ -491,6 +492,11 @@ namespace Azure.ResourceManager.PrivateDns
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PrivateDns.VirtualNetworkLinkResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PrivateDns.VirtualNetworkLinkResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PrivateDns.VirtualNetworkLinkResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PrivateDns.VirtualNetworkLinkResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PrivateDns.VirtualNetworkLinkResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -530,7 +536,9 @@ namespace Azure.ResourceManager.PrivateDns.Models
     public static partial class ArmPrivateDnsModelFactory
     {
         public static Azure.ResourceManager.PrivateDns.PrivateDnsZoneData PrivateDnsZoneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), long? maxNumberOfRecords = default(long?), long? numberOfRecords = default(long?), long? maxNumberOfVirtualNetworkLinks = default(long?), long? numberOfVirtualNetworkLinks = default(long?), long? maxNumberOfVirtualNetworkLinksWithRegistration = default(long?), long? numberOfVirtualNetworkLinksWithRegistration = default(long?), Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState? privateDnsProvisioningState = default(Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState?), string internalId = null) { throw null; }
-        public static Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData VirtualNetworkLinkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier virtualNetworkId = null, bool? registrationEnabled = default(bool?), Azure.ResourceManager.PrivateDns.Models.VirtualNetworkLinkState? virtualNetworkLinkState = default(Azure.ResourceManager.PrivateDns.Models.VirtualNetworkLinkState?), Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState? privateDnsProvisioningState = default(Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData VirtualNetworkLinkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier virtualNetworkId = null, bool? registrationEnabled = default(bool?), Azure.ResourceManager.PrivateDns.Models.PrivateDnsResolutionPolicy? privateDnsResolutionPolicy = default(Azure.ResourceManager.PrivateDns.Models.PrivateDnsResolutionPolicy?), Azure.ResourceManager.PrivateDns.Models.VirtualNetworkLinkState? virtualNetworkLinkState = default(Azure.ResourceManager.PrivateDns.Models.VirtualNetworkLinkState?), Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState? privateDnsProvisioningState = default(Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData VirtualNetworkLinkData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, Azure.Core.ResourceIdentifier virtualNetworkId, bool? registrationEnabled, Azure.ResourceManager.PrivateDns.Models.VirtualNetworkLinkState? virtualNetworkLinkState, Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState? privateDnsProvisioningState) { throw null; }
     }
     public partial class PrivateDnsAaaaRecordInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsAaaaRecordInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsAaaaRecordInfo>
     {
@@ -594,6 +602,24 @@ namespace Azure.ResourceManager.PrivateDns.Models
         Azure.ResourceManager.PrivateDns.Models.PrivateDnsPtrRecordInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsPtrRecordInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsPtrRecordInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsPtrRecordInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PrivateDnsResolutionPolicy : System.IEquatable<Azure.ResourceManager.PrivateDns.Models.PrivateDnsResolutionPolicy>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PrivateDnsResolutionPolicy(string value) { throw null; }
+        public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsResolutionPolicy Default { get { throw null; } }
+        public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsResolutionPolicy NxDomainRedirect { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PrivateDns.Models.PrivateDnsResolutionPolicy other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PrivateDns.Models.PrivateDnsResolutionPolicy left, Azure.ResourceManager.PrivateDns.Models.PrivateDnsResolutionPolicy right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PrivateDns.Models.PrivateDnsResolutionPolicy (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PrivateDns.Models.PrivateDnsResolutionPolicy left, Azure.ResourceManager.PrivateDns.Models.PrivateDnsResolutionPolicy right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class PrivateDnsSoaRecordInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSoaRecordInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PrivateDns.Models.PrivateDnsSoaRecordInfo>
     {

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootAppData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootAppData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SpringBootAppResource : Azure.ResourceManager.ArmResource
+    public partial class SpringBootAppResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootAppData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootAppData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SpringBootAppResource() { }
@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringBootAppResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringBootAppResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringBootAppResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SpringAppDiscovery.SpringBootAppData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootAppData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootAppData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SpringAppDiscovery.SpringBootAppData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootAppData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootAppData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootAppData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringBootAppResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringBootAppResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -89,7 +94,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootServerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootServerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SpringBootServerResource : Azure.ResourceManager.ArmResource
+    public partial class SpringBootServerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootServerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootServerData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SpringBootServerResource() { }
@@ -106,6 +111,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringBootServerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringBootServerResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringBootServerResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SpringAppDiscovery.SpringBootServerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootServerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootServerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SpringAppDiscovery.SpringBootServerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootServerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootServerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootServerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringBootServerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringBootServerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -163,7 +173,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SpringBootSiteErrorSummaryResource : Azure.ResourceManager.ArmResource
+    public partial class SpringBootSiteErrorSummaryResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SpringBootSiteErrorSummaryResource() { }
@@ -172,8 +182,13 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string errorSummaryName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SpringBootSiteResource : Azure.ResourceManager.ArmResource
+    public partial class SpringBootSiteResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SpringBootSiteResource() { }
@@ -202,6 +217,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation TriggerRefreshSite(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> TriggerRefreshSiteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSitePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -233,7 +253,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SpringBootSiteSummaryResource : Azure.ResourceManager.ArmResource
+    public partial class SpringBootSiteSummaryResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SpringBootSiteSummaryResource() { }
@@ -242,6 +262,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string summaryName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.SpringAppDiscovery.Mocking

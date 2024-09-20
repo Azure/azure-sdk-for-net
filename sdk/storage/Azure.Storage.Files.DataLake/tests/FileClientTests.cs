@@ -101,7 +101,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await directory.CreateFileAsync(fileName);
 
-            TokenCredential tokenCredential = Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace);
+            TokenCredential tokenCredential = TestEnvironment.Credential;
             Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}/{fileName}").ToHttps();
             DataLakeFileClient fileClient = InstrumentClient(new DataLakeFileClient(uri, tokenCredential, GetOptions()));
 
@@ -120,7 +120,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
-            TokenCredential tokenCredential = Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace);
+            TokenCredential tokenCredential = TestEnvironment.Credential;
             Uri uri = new Uri(TestConfigHierarchicalNamespace.BlobServiceEndpoint).ToHttp();
 
             // Act
@@ -336,6 +336,39 @@ namespace Azure.Storage.Files.DataLake.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadFileClient.ExistsAsync(),
                 e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        public async Task Ctor_EscapeName()
+        {
+            // Arrange
+            string fileName = "!*'();[]:@&%=+$,#äÄöÖüÜß";
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            int size = Constants.KB;
+            var data = GetRandomBuffer(size);
+            DataLakeFileClient file = InstrumentClient(test.Container.GetFileClient(fileName));
+            ETag originalEtag;
+            using (var stream = new MemoryStream(data))
+            {
+                PathInfo info = await file.UploadAsync(stream);
+                originalEtag = info.ETag;
+            }
+
+            // Act
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint))
+            {
+                FileSystemName = file.FileSystemName,
+                DirectoryOrFilePath = fileName
+            };
+            DataLakeFileClient freshFileClient = InstrumentClient(new DataLakeFileClient(
+                uriBuilder.ToUri(),
+                TestEnvironment.Credential,
+                GetOptions()));
+
+            // Assert
+            Assert.AreEqual(fileName, freshFileClient.Name);
+            PathProperties propertiesResponse = await freshFileClient.GetPropertiesAsync();
+            Assert.AreEqual(originalEtag, propertiesResponse.ETag);
         }
 
         [RecordedTest]
@@ -767,6 +800,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [TestCase(false)]
         [TestCase(true)]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task CreateAsync_CPK(bool createIfNotExists)
         {
             // Arrange
@@ -866,11 +900,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedFile.CreateIfNotExistsAsync(),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task CreateIfNotExistsAsync_CPK()
         {
             // Arrange
@@ -1052,7 +1087,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedFile.DeleteIfExistsAsync(),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [RecordedTest]
@@ -1357,6 +1392,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task RenameAsync_CPK()
         {
             // Arrange
@@ -2302,6 +2338,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task GetSetPropertiesAsync_CPK()
         {
             // Arrange
@@ -2960,6 +2997,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task AppendFlushReadAsync_CPK()
         {
             // Arrange
@@ -6011,7 +6049,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             mock = new Mock<DataLakeFileClient>(new Uri("https://test/test"), new DataLakeClientOptions()).Object;
             mock = new Mock<DataLakeFileClient>(new Uri("https://test/test"), Tenants.GetNewHnsSharedKeyCredentials(), new DataLakeClientOptions()).Object;
             mock = new Mock<DataLakeFileClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new DataLakeClientOptions()).Object;
-            mock = new Mock<DataLakeFileClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace), new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakeFileClient>(new Uri("https://test/test"), TestEnvironment.Credential, new DataLakeClientOptions()).Object;
         }
     }
 }

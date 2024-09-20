@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ExecuteDataFlowActivityComputeType : IUtf8JsonSerializable, IJsonModel<ExecuteDataFlowActivityComputeType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecuteDataFlowActivityComputeType>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecuteDataFlowActivityComputeType>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExecuteDataFlowActivityComputeType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ExecuteDataFlowActivityComputeType DeserializeExecuteDataFlowActivityComputeType(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

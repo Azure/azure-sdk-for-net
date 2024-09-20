@@ -182,12 +182,7 @@ namespace Azure.Storage.Files.DataLake.Samples
         {
             // Create a token credential that can use our Azure Active
             // Directory application to authenticate with Azure Storage
-            TokenCredential credential =
-                new ClientSecretCredential(
-                    ActiveDirectoryTenantId,
-                    ActiveDirectoryApplicationId,
-                    ActiveDirectoryApplicationSecret,
-                    new TokenCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
+            TokenCredential credential = new DefaultAzureCredential();
 
             // Create a client that can authenticate using our token credential
             DataLakeServiceClient service = new DataLakeServiceClient(ActiveDirectoryBlobUri, credential);

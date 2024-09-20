@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Subscription.Models
 {
     public partial class CanceledSubscriptionId : IUtf8JsonSerializable, IJsonModel<CanceledSubscriptionId>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CanceledSubscriptionId>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CanceledSubscriptionId>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CanceledSubscriptionId>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Subscription.Models
 
         internal static CanceledSubscriptionId DeserializeCanceledSubscriptionId(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

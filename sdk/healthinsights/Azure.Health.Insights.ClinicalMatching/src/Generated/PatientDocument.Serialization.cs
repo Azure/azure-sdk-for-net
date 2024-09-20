@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 {
     public partial class PatientDocument : IUtf8JsonSerializable, IJsonModel<PatientDocument>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PatientDocument>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PatientDocument>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PatientDocument>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -46,7 +46,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStringValue(CreatedDateTime.Value, "O");
             }
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue<DocumentContent>(Content, options);
+            writer.WriteObjectValue(Content, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -79,7 +79,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         internal static PatientDocument DeserializePatientDocument(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -188,11 +188,11 @@ namespace Azure.Health.Insights.ClinicalMatching
             return DeserializePatientDocument(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PatientDocument>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

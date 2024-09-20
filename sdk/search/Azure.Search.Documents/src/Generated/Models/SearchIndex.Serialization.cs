@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (CorsOptions != null)
                 {
                     writer.WritePropertyName("corsOptions"u8);
-                    writer.WriteObjectValue<CorsOptions>(CorsOptions);
+                    writer.WriteObjectValue(CorsOptions);
                 }
                 else
                 {
@@ -102,22 +102,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Normalizers))
-            {
-                writer.WritePropertyName("normalizers"u8);
-                writer.WriteStartArray();
-                foreach (var item in Normalizers)
-                {
-                    writer.WriteObjectValue<LexicalNormalizer>(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(EncryptionKey))
             {
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey);
+                    writer.WriteObjectValue(EncryptionKey);
                 }
                 else
                 {
@@ -127,14 +117,14 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(Similarity))
             {
                 writer.WritePropertyName("similarity"u8);
-                writer.WriteObjectValue<SimilarityAlgorithm>(Similarity);
+                writer.WriteObjectValue(Similarity);
             }
             if (Optional.IsDefined(SemanticSearch))
             {
                 if (SemanticSearch != null)
                 {
                     writer.WritePropertyName("semantic"u8);
-                    writer.WriteObjectValue<SemanticSearch>(SemanticSearch);
+                    writer.WriteObjectValue(SemanticSearch);
                 }
                 else
                 {
@@ -146,7 +136,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (VectorSearch != null)
                 {
                     writer.WritePropertyName("vectorSearch"u8);
-                    writer.WriteObjectValue<VectorSearch>(VectorSearch);
+                    writer.WriteObjectValue(VectorSearch);
                 }
                 else
                 {
@@ -177,7 +167,6 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<LexicalTokenizer> tokenizers = default;
             IList<TokenFilter> tokenFilters = default;
             IList<CharFilter> charFilters = default;
-            IList<LexicalNormalizer> normalizers = default;
             SearchResourceEncryptionKey encryptionKey = default;
             SimilarityAlgorithm similarity = default;
             SemanticSearch semantic = default;
@@ -299,20 +288,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     charFilters = array;
                     continue;
                 }
-                if (property.NameEquals("normalizers"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<LexicalNormalizer> array = new List<LexicalNormalizer>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(LexicalNormalizer.DeserializeLexicalNormalizer(item));
-                    }
-                    normalizers = array;
-                    continue;
-                }
                 if (property.NameEquals("encryptionKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -369,7 +344,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 tokenizers ?? new ChangeTrackingList<LexicalTokenizer>(),
                 tokenFilters ?? new ChangeTrackingList<TokenFilter>(),
                 charFilters ?? new ChangeTrackingList<CharFilter>(),
-                normalizers ?? new ChangeTrackingList<LexicalNormalizer>(),
                 encryptionKey,
                 similarity,
                 semantic,
@@ -385,11 +359,11 @@ namespace Azure.Search.Documents.Indexes.Models
             return DeserializeSearchIndex(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchIndex>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

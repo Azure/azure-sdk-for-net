@@ -16,9 +16,18 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 {
     internal partial class DescendantParentGroupInfo : IUtf8JsonSerializable, IJsonModel<DescendantParentGroupInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DescendantParentGroupInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DescendantParentGroupInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DescendantParentGroupInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DescendantParentGroupInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -26,7 +35,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 throw new FormatException($"The model {nameof(DescendantParentGroupInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DescendantParentGroupInfo IJsonModel<DescendantParentGroupInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -64,7 +71,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         internal static DescendantParentGroupInfo DeserializeDescendantParentGroupInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,15 +112,16 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }

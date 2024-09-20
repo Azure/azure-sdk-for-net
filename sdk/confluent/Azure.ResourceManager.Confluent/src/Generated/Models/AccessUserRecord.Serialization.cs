@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Confluent.Models
 {
     public partial class AccessUserRecord : IUtf8JsonSerializable, IJsonModel<AccessUserRecord>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessUserRecord>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessUserRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AccessUserRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue<MetadataEntity>(Metadata, options);
+                writer.WriteObjectValue(Metadata, options);
             }
             if (Optional.IsDefined(Email))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         internal static AccessUserRecord DeserializeAccessUserRecord(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

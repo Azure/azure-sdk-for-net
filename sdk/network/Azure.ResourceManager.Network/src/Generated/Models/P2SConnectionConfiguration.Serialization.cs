@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class P2SConnectionConfiguration : IUtf8JsonSerializable, IJsonModel<P2SConnectionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<P2SConnectionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<P2SConnectionConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<P2SConnectionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(VpnClientAddressPool))
             {
                 writer.WritePropertyName("vpnClientAddressPool"u8);
-                writer.WriteObjectValue<AddressSpace>(VpnClientAddressPool, options);
+                writer.WriteObjectValue(VpnClientAddressPool, options);
             }
             if (Optional.IsDefined(RoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
-                writer.WriteObjectValue<RoutingConfiguration>(RoutingConfiguration, options);
+                writer.WriteObjectValue(RoutingConfiguration, options);
             }
             if (Optional.IsDefined(EnableInternetSecurity))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in PreviousConfigurationPolicyGroupAssociations)
                 {
-                    writer.WriteObjectValue<VpnServerConfigurationPolicyGroupData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static P2SConnectionConfiguration DeserializeP2SConnectionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

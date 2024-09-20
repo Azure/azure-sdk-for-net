@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The name of the Git branch in which to commit the current configuration snapshot. </summary>
+        [WirePath("properties.branch")]
         public string Branch { get; set; }
         /// <summary> The value if true, the current configuration database is committed to the Git repository, even if the Git repository has newer changes that would be overwritten. </summary>
+        [WirePath("properties.force")]
         public bool? ForceUpdate { get; set; }
     }
 }

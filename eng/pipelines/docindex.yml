@@ -172,14 +172,18 @@ jobs:
           ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
           PushArgs: -f
 
-      - task: PowerShell@2
+      - task: AzureCLI@2
         displayName: Queue Docs CI build
         inputs:
-          pwsh: true
-          filePath: eng/common/scripts/Queue-Pipeline.ps1
-          arguments: >
-            -Organization "apidrop"
-            -Project "Content%20CI"
-            -DefinitionId 397
-            -AuthToken "$(azuresdk-apidrop-devops-queue-build-pat)"
-            -BuildParametersJson (@{ params = (Get-Content ./eng/dailydocsconfig.json -Raw) -replace '%%DailyDocsBranchName%%', "$(DailyDocsBranchName)" } | ConvertTo-Json)
+          azureSubscription: msdocs-apidrop-connection
+          scriptType: pscore
+          scriptLocation: inlineScript
+          inlineScript: |
+            $accessToken = az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv
+            $buildParamJson = (@{ params = (Get-Content ./eng/dailydocsconfig.json -Raw) -replace '%%DailyDocsBranchName%%', "$(DailyDocsBranchName)" } | ConvertTo-Json)
+            eng/common/scripts/Queue-Pipeline.ps1 `
+              -Organization "apidrop" `
+              -Project "Content%20CI" `
+              -DefinitionId 397 `
+              -BuildParametersJson $buildParamJson `
+              -BearerToken $accessToken

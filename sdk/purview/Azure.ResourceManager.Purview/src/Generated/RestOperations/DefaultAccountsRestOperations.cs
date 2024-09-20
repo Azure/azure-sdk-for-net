@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.Purview
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Purview/getDefaultAccount", false);
+            uri.AppendQuery("scopeTenantId", scopeTenantId, true);
+            uri.AppendQuery("scopeType", scopeType.ToString(), true);
+            if (scope != null)
+            {
+                uri.AppendQuery("scope", scope, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope)
@@ -104,6 +118,21 @@ namespace Azure.ResourceManager.Purview
             }
         }
 
+        internal RequestUriBuilder CreateRemoveRequestUri(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Purview/removeDefaultAccount", false);
+            uri.AppendQuery("scopeTenantId", scopeTenantId, true);
+            uri.AppendQuery("scopeType", scopeType.ToString(), true);
+            if (scope != null)
+            {
+                uri.AppendQuery("scope", scope, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRemoveRequest(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope)
         {
             var message = _pipeline.CreateMessage();
@@ -163,6 +192,15 @@ namespace Azure.ResourceManager.Purview
             }
         }
 
+        internal RequestUriBuilder CreateSetRequestUri(DefaultPurviewAccountPayload defaultAccountPayload)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Purview/setDefaultAccount", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSetRequest(DefaultPurviewAccountPayload defaultAccountPayload)
         {
             var message = _pipeline.CreateMessage();
@@ -176,7 +214,7 @@ namespace Azure.ResourceManager.Purview
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DefaultPurviewAccountPayload>(defaultAccountPayload, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(defaultAccountPayload, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class RegulatoryComplianceAssessmentData : IUtf8JsonSerializable, IJsonModel<RegulatoryComplianceAssessmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegulatoryComplianceAssessmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegulatoryComplianceAssessmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RegulatoryComplianceAssessmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static RegulatoryComplianceAssessmentData DeserializeRegulatoryComplianceAssessmentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -32,7 +32,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             {
                 if (t.FunctionData.TriggerValue is HttpRequestMessage mockedRequest)
                 {
-                    AuthenticationEventResponseHandler eventsResponseHandler = GetAuthenticationEventResponseHandler(mockedRequest);
+                    WebJobsAuthenticationEventResponseHandler eventsResponseHandler = GetAuthenticationEventResponseHandler(mockedRequest);
 
                     await eventsResponseHandler.SetValueAsync(GetContentForHttpStatus(httpStatusCode), CancellationToken.None);
                 }

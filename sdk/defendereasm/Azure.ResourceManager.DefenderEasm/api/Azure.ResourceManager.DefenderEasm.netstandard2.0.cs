@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DefenderEasm
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DefenderEasm.EasmLabelData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DefenderEasm.EasmLabelData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EasmLabelResource : Azure.ResourceManager.ArmResource
+    public partial class EasmLabelResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DefenderEasm.EasmLabelData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DefenderEasm.EasmLabelData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected EasmLabelResource() { }
@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DefenderEasm
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DefenderEasm.EasmLabelResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DefenderEasm.EasmLabelResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DefenderEasm.EasmLabelData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DefenderEasm.EasmLabelData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DefenderEasm.EasmLabelData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DefenderEasm.EasmLabelData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DefenderEasm.EasmLabelData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DefenderEasm.EasmLabelData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DefenderEasm.EasmLabelData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DefenderEasm.EasmLabelResource> Update(Azure.ResourceManager.DefenderEasm.Models.EasmLabelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DefenderEasm.EasmLabelResource>> UpdateAsync(Azure.ResourceManager.DefenderEasm.Models.EasmLabelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -81,7 +86,7 @@ namespace Azure.ResourceManager.DefenderEasm
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DefenderEasm.EasmWorkspaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DefenderEasm.EasmWorkspaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EasmWorkspaceResource : Azure.ResourceManager.ArmResource
+    public partial class EasmWorkspaceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DefenderEasm.EasmWorkspaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DefenderEasm.EasmWorkspaceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected EasmWorkspaceResource() { }
@@ -103,6 +108,11 @@ namespace Azure.ResourceManager.DefenderEasm
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DefenderEasm.EasmWorkspaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DefenderEasm.EasmWorkspaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DefenderEasm.EasmWorkspaceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DefenderEasm.EasmWorkspaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DefenderEasm.EasmWorkspaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DefenderEasm.EasmWorkspaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DefenderEasm.EasmWorkspaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DefenderEasm.EasmWorkspaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DefenderEasm.EasmWorkspaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DefenderEasm.EasmWorkspaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DefenderEasm.EasmWorkspaceResource> Update(Azure.ResourceManager.DefenderEasm.Models.EasmWorkspacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DefenderEasm.EasmWorkspaceResource>> UpdateAsync(Azure.ResourceManager.DefenderEasm.Models.EasmWorkspacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

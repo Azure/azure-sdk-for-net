@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class GetAccountSasResult : IUtf8JsonSerializable, IJsonModel<GetAccountSasResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetAccountSasResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetAccountSasResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GetAccountSasResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static GetAccountSasResult DeserializeGetAccountSasResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountSasToken), out propertyOverride);
-            if (Optional.IsDefined(AccountSasToken) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  accountSasToken: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccountSasToken))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  accountSasToken: ");
                     if (AccountSasToken.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -107,6 +107,9 @@ namespace Azure.Storage.Files.Shares.Tests
                     new Uri($"{TestConfigDefault.FileServiceEndpoint}?{sasCredentials ?? GetNewFileServiceSasCredentialsFile(shareName, filePath, sharedKeyCredentials ?? Tenants.GetNewSharedKeyCredentials())}"),
                     GetOptions()));
 
+        public ShareServiceClient GetServiceClient_OAuth()
+            => SharesClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential);
+
         public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default,
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.Container,
             AccountSasPermissions permissions = AccountSasPermissions.Create | AccountSasPermissions.Delete)

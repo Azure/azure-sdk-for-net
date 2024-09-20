@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
     public partial class ArmAsyncOperation : IUtf8JsonSerializable, IJsonModel<ArmAsyncOperation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmAsyncOperation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmAsyncOperation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmAsyncOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArmAsyncOperation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 throw new FormatException($"The model {nameof(ArmAsyncOperation)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ArmAsyncOperation IJsonModel<ArmAsyncOperation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -63,7 +70,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 
         internal static ArmAsyncOperation DeserializeArmAsyncOperation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

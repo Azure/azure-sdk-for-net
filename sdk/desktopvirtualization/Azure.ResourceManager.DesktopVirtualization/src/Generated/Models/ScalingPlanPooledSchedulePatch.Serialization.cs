@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,7 +18,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class ScalingPlanPooledSchedulePatch : IUtf8JsonSerializable, IJsonModel<ScalingPlanPooledSchedulePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingPlanPooledSchedulePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingPlanPooledSchedulePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScalingPlanPooledSchedulePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampUpStartTime))
             {
                 writer.WritePropertyName("rampUpStartTime"u8);
-                writer.WriteObjectValue<ScalingActionTime>(RampUpStartTime, options);
+                writer.WriteObjectValue(RampUpStartTime, options);
             }
             if (Optional.IsDefined(RampUpLoadBalancingAlgorithm))
             {
@@ -82,7 +84,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(PeakStartTime))
             {
                 writer.WritePropertyName("peakStartTime"u8);
-                writer.WriteObjectValue<ScalingActionTime>(PeakStartTime, options);
+                writer.WriteObjectValue(PeakStartTime, options);
             }
             if (Optional.IsDefined(PeakLoadBalancingAlgorithm))
             {
@@ -92,7 +94,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampDownStartTime))
             {
                 writer.WritePropertyName("rampDownStartTime"u8);
-                writer.WriteObjectValue<ScalingActionTime>(RampDownStartTime, options);
+                writer.WriteObjectValue(RampDownStartTime, options);
             }
             if (Optional.IsDefined(RampDownLoadBalancingAlgorithm))
             {
@@ -132,7 +134,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(OffPeakStartTime))
             {
                 writer.WritePropertyName("offPeakStartTime"u8);
-                writer.WriteObjectValue<ScalingActionTime>(OffPeakStartTime, options);
+                writer.WriteObjectValue(OffPeakStartTime, options);
             }
             if (Optional.IsDefined(OffPeakLoadBalancingAlgorithm))
             {
@@ -172,7 +174,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static ScalingPlanPooledSchedulePatch DeserializeScalingPlanPooledSchedulePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -424,6 +426,349 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysOfWeek), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    daysOfWeek: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DaysOfWeek))
+                {
+                    if (DaysOfWeek.Any())
+                    {
+                        builder.Append("    daysOfWeek: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DaysOfWeek)
+                        {
+                            builder.AppendLine($"      '{item.ToSerialString()}'");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampUpStartTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampUpStartTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampUpStartTime))
+                {
+                    builder.Append("    rampUpStartTime: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RampUpStartTime, options, 4, false, "    rampUpStartTime: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampUpLoadBalancingAlgorithm), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampUpLoadBalancingAlgorithm: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampUpLoadBalancingAlgorithm))
+                {
+                    builder.Append("    rampUpLoadBalancingAlgorithm: ");
+                    builder.AppendLine($"'{RampUpLoadBalancingAlgorithm.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampUpMinimumHostsPct), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampUpMinimumHostsPct: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampUpMinimumHostsPct))
+                {
+                    builder.Append("    rampUpMinimumHostsPct: ");
+                    builder.AppendLine($"{RampUpMinimumHostsPct.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampUpCapacityThresholdPct), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampUpCapacityThresholdPct: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampUpCapacityThresholdPct))
+                {
+                    builder.Append("    rampUpCapacityThresholdPct: ");
+                    builder.AppendLine($"{RampUpCapacityThresholdPct.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeakStartTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    peakStartTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeakStartTime))
+                {
+                    builder.Append("    peakStartTime: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PeakStartTime, options, 4, false, "    peakStartTime: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeakLoadBalancingAlgorithm), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    peakLoadBalancingAlgorithm: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PeakLoadBalancingAlgorithm))
+                {
+                    builder.Append("    peakLoadBalancingAlgorithm: ");
+                    builder.AppendLine($"'{PeakLoadBalancingAlgorithm.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampDownStartTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampDownStartTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampDownStartTime))
+                {
+                    builder.Append("    rampDownStartTime: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RampDownStartTime, options, 4, false, "    rampDownStartTime: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampDownLoadBalancingAlgorithm), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampDownLoadBalancingAlgorithm: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampDownLoadBalancingAlgorithm))
+                {
+                    builder.Append("    rampDownLoadBalancingAlgorithm: ");
+                    builder.AppendLine($"'{RampDownLoadBalancingAlgorithm.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampDownMinimumHostsPct), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampDownMinimumHostsPct: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampDownMinimumHostsPct))
+                {
+                    builder.Append("    rampDownMinimumHostsPct: ");
+                    builder.AppendLine($"{RampDownMinimumHostsPct.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampDownCapacityThresholdPct), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampDownCapacityThresholdPct: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampDownCapacityThresholdPct))
+                {
+                    builder.Append("    rampDownCapacityThresholdPct: ");
+                    builder.AppendLine($"{RampDownCapacityThresholdPct.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampDownForceLogoffUsers), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampDownForceLogoffUsers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampDownForceLogoffUsers))
+                {
+                    builder.Append("    rampDownForceLogoffUsers: ");
+                    var boolValue = RampDownForceLogoffUsers.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampDownStopHostsWhen), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampDownStopHostsWhen: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampDownStopHostsWhen))
+                {
+                    builder.Append("    rampDownStopHostsWhen: ");
+                    builder.AppendLine($"'{RampDownStopHostsWhen.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampDownWaitTimeMinutes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampDownWaitTimeMinutes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampDownWaitTimeMinutes))
+                {
+                    builder.Append("    rampDownWaitTimeMinutes: ");
+                    builder.AppendLine($"{RampDownWaitTimeMinutes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampDownNotificationMessage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    rampDownNotificationMessage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RampDownNotificationMessage))
+                {
+                    builder.Append("    rampDownNotificationMessage: ");
+                    if (RampDownNotificationMessage.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RampDownNotificationMessage}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RampDownNotificationMessage}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OffPeakStartTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    offPeakStartTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OffPeakStartTime))
+                {
+                    builder.Append("    offPeakStartTime: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, OffPeakStartTime, options, 4, false, "    offPeakStartTime: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OffPeakLoadBalancingAlgorithm), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    offPeakLoadBalancingAlgorithm: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OffPeakLoadBalancingAlgorithm))
+                {
+                    builder.Append("    offPeakLoadBalancingAlgorithm: ");
+                    builder.AppendLine($"'{OffPeakLoadBalancingAlgorithm.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ScalingPlanPooledSchedulePatch>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScalingPlanPooledSchedulePatch>)this).GetFormatFromOptions(options) : options.Format;
@@ -432,6 +777,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ScalingPlanPooledSchedulePatch)} does not support writing '{options.Format}' format.");
             }

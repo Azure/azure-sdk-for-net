@@ -1,7 +1,59 @@
 namespace Azure.ResourceManager.DesktopVirtualization
 {
+    public partial class AppAttachPackageCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource>, System.Collections.IEnumerable
+    {
+        protected AppAttachPackageCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string appAttachPackageName, Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string appAttachPackageName, Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string appAttachPackageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string appAttachPackageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> Get(string appAttachPackageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource>> GetAsync(string appAttachPackageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> GetIfExists(string appAttachPackageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource>> GetIfExistsAsync(string appAttachPackageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class AppAttachPackageData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData>
+    {
+        public AppAttachPackageData(Azure.Core.AzureLocation location, Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties properties) { }
+        public Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AppAttachPackageResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected AppAttachPackageResource() { }
+        public virtual Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string appAttachPackageName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public static partial class DesktopVirtualizationExtensions
     {
+        public static Azure.Response<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> GetAppAttachPackage(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string appAttachPackageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource>> GetAppAttachPackageAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string appAttachPackageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource GetAppAttachPackageResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DesktopVirtualization.AppAttachPackageCollection GetAppAttachPackages(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> GetAppAttachPackages(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> GetAppAttachPackagesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> GetHostPool(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string hostPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource>> GetHostPoolAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string hostPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DesktopVirtualization.HostPoolPrivateEndpointConnectionResource GetHostPoolPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -48,6 +100,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     {
         public DesktopVirtualizationPrivateEndpointConnectionDataData() { }
         public Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
         Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -81,6 +134,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     {
         public HostPoolData(Azure.Core.AzureLocation location, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType hostPoolType, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolLoadBalancerType loadBalancerType, Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType preferredAppGroupType) { }
         public Azure.ResourceManager.DesktopVirtualization.Models.SessionHostAgentUpdateProperties AgentUpdate { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<string> AppAttachPackageReferences { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ApplicationGroupReferences { get { throw null; } }
         public string CustomRdpProperty { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
@@ -135,7 +189,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DesktopVirtualization.HostPoolPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.HostPoolPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class HostPoolPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
+    public partial class HostPoolPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected HostPoolPrivateEndpointConnectionResource() { }
@@ -146,10 +200,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolPrivateEndpointConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolPrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DesktopVirtualization.HostPoolPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection connection, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DesktopVirtualization.HostPoolPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection connection, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class HostPoolResource : Azure.ResourceManager.ArmResource
+    public partial class HostPoolResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.HostPoolData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.HostPoolData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected HostPoolResource() { }
@@ -185,12 +244,19 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.UserSessionResource> GetUserSessions(string filter, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.UserSessionResource> GetUserSessionsAsync(string filter = null, int? pageSize = default(int?), bool? isDescending = default(bool?), int? initialSkip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.UserSessionResource> GetUserSessionsAsync(string filter, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> ImportAppAttachPackageInfos(Azure.ResourceManager.DesktopVirtualization.Models.ImportPackageInfoContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> ImportAppAttachPackageInfosAsync(Azure.ResourceManager.DesktopVirtualization.Models.ImportPackageInfoContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.Models.HostPoolRegistrationInfo> RetrieveRegistrationToken(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.Models.HostPoolRegistrationInfo>> RetrieveRegistrationTokenAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DesktopVirtualization.HostPoolData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.HostPoolData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.HostPoolData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.HostPoolData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.HostPoolData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.HostPoolData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.HostPoolData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -235,7 +301,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.MsixPackageData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.MsixPackageData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MsixPackageResource : Azure.ResourceManager.ArmResource
+    public partial class MsixPackageResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.MsixPackageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.MsixPackageData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MsixPackageResource() { }
@@ -246,6 +312,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DesktopVirtualization.MsixPackageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.MsixPackageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.MsixPackageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.MsixPackageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.MsixPackageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.MsixPackageData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.MsixPackageData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.MsixPackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.MsixPackageResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.MsixPackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -350,7 +421,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScalingPlanPersonalScheduleResource : Azure.ResourceManager.ArmResource
+    public partial class ScalingPlanPersonalScheduleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ScalingPlanPersonalScheduleResource() { }
@@ -361,6 +432,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.ScalingPlanPersonalSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPersonalScheduleResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.ScalingPlanPersonalSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -407,7 +483,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScalingPlanPooledScheduleResource : Azure.ResourceManager.ArmResource
+    public partial class ScalingPlanPooledScheduleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ScalingPlanPooledScheduleResource() { }
@@ -418,10 +494,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.ScalingPlanPooledSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.ScalingPlanPooledSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ScalingPlanResource : Azure.ResourceManager.ArmResource
+    public partial class ScalingPlanResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ScalingPlanResource() { }
@@ -444,6 +525,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DesktopVirtualization.ScalingPlanData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.ScalingPlanData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.ScalingPlanData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.ScalingPlanPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.ScalingPlanResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.ScalingPlanPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -492,7 +578,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.SessionHostData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.SessionHostData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SessionHostResource : Azure.ResourceManager.ArmResource
+    public partial class SessionHostResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.SessionHostData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.SessionHostData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SessionHostResource() { }
@@ -506,6 +592,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.UserSessionResource> GetUserSession(string userSessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.UserSessionResource>> GetUserSessionAsync(string userSessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DesktopVirtualization.UserSessionCollection GetUserSessions() { throw null; }
+        Azure.ResourceManager.DesktopVirtualization.SessionHostData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.SessionHostData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.SessionHostData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.SessionHostData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.SessionHostData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.SessionHostData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.SessionHostData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.SessionHostResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.SessionHostPatch patch, bool? force = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.SessionHostResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.SessionHostPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -547,7 +638,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.UserSessionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.UserSessionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class UserSessionResource : Azure.ResourceManager.ArmResource
+    public partial class UserSessionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.UserSessionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.UserSessionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected UserSessionResource() { }
@@ -562,6 +653,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.UserSessionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SendMessage(Azure.ResourceManager.DesktopVirtualization.Models.UserSessionMessage sendMessage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendMessageAsync(Azure.ResourceManager.DesktopVirtualization.Models.UserSessionMessage sendMessage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DesktopVirtualization.UserSessionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.UserSessionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.UserSessionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.UserSessionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.UserSessionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.UserSessionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.UserSessionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VirtualApplicationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource>, System.Collections.IEnumerable
     {
@@ -654,7 +750,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VirtualApplicationGroupResource : Azure.ResourceManager.ArmResource
+    public partial class VirtualApplicationGroupResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected VirtualApplicationGroupResource() { }
@@ -683,10 +779,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationGroupPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationGroupResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationGroupPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VirtualApplicationResource : Azure.ResourceManager.ArmResource
+    public partial class VirtualApplicationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected VirtualApplicationResource() { }
@@ -697,6 +798,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DesktopVirtualization.VirtualApplicationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.VirtualApplicationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualApplicationResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -733,7 +839,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VirtualDesktopResource : Azure.ResourceManager.ArmResource
+    public partial class VirtualDesktopResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected VirtualDesktopResource() { }
@@ -742,6 +848,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DesktopVirtualization.VirtualDesktopData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.VirtualDesktopData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.VirtualDesktopPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.VirtualDesktopPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -769,7 +880,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     public partial class VirtualWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData>
     {
         public VirtualWorkspaceData(Azure.Core.AzureLocation location) { }
-        public System.Collections.Generic.IList<string> ApplicationGroupReferences { get { throw null; } }
+        public System.Collections.Generic.IList<string> ApplicationGroupReferences { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public string FriendlyName { get { throw null; } set { } }
@@ -788,7 +899,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VirtualWorkspaceResource : Azure.ResourceManager.ArmResource
+    public partial class VirtualWorkspaceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected VirtualWorkspaceResource() { }
@@ -810,6 +921,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource> Update(Azure.ResourceManager.DesktopVirtualization.Models.VirtualWorkspacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource>> UpdateAsync(Azure.ResourceManager.DesktopVirtualization.Models.VirtualWorkspacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -830,7 +946,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DesktopVirtualization.WorkspacePrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.WorkspacePrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WorkspacePrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
+    public partial class WorkspacePrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected WorkspacePrivateEndpointConnectionResource() { }
@@ -841,6 +957,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.WorkspacePrivateEndpointConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.WorkspacePrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DesktopVirtualization.WorkspacePrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection connection, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DesktopVirtualization.WorkspacePrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection connection, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -850,6 +971,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
     public partial class MockableDesktopVirtualizationArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableDesktopVirtualizationArmClient() { }
+        public virtual Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource GetAppAttachPackageResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DesktopVirtualization.HostPoolPrivateEndpointConnectionResource GetHostPoolPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DesktopVirtualization.HostPoolResource GetHostPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DesktopVirtualization.MsixPackageResource GetMsixPackageResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -867,6 +989,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
     public partial class MockableDesktopVirtualizationResourceGroupResource : Azure.ResourceManager.ArmResource
     {
         protected MockableDesktopVirtualizationResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> GetAppAttachPackage(string appAttachPackageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource>> GetAppAttachPackageAsync(string appAttachPackageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DesktopVirtualization.AppAttachPackageCollection GetAppAttachPackages() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> GetHostPool(string hostPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource>> GetHostPoolAsync(string hostPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DesktopVirtualization.HostPoolCollection GetHostPools() { throw null; }
@@ -883,6 +1008,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
     public partial class MockableDesktopVirtualizationSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableDesktopVirtualizationSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> GetAppAttachPackages(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DesktopVirtualization.AppAttachPackageResource> GetAppAttachPackagesAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> GetHostPools(int? pageSize = default(int?), bool? isDescending = default(bool?), int? initialSkip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> GetHostPools(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -903,16 +1030,132 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
 }
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppAttachPackageArchitecture : System.IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppAttachPackageArchitecture(string value) { throw null; }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture All { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture Arm { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture Arm64 { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture Neutral { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture X64 { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture X86 { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture X86A64 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture left, Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture left, Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AppAttachPackageInfoProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties>
+    {
+        public AppAttachPackageInfoProperties() { }
+        public System.DateTimeOffset? CertificateExpireOn { get { throw null; } set { } }
+        public string CertificateName { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public string ImagePath { get { throw null; } set { } }
+        public bool? IsActive { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.PackageTimestamped? IsPackageTimestamped { get { throw null; } set { } }
+        public bool? IsRegularRegistration { get { throw null; } set { } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } set { } }
+        public string PackageAlias { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DesktopVirtualization.Models.MsixPackageApplications> PackageApplications { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DesktopVirtualization.Models.MsixPackageDependencies> PackageDependencies { get { throw null; } set { } }
+        public string PackageFamilyName { get { throw null; } set { } }
+        public string PackageFullName { get { throw null; } set { } }
+        public string PackageName { get { throw null; } set { } }
+        public string PackageRelativePath { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AppAttachPackagePatch : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatch>
+    {
+        public AppAttachPackagePatch() { }
+        public Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatchProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AppAttachPackagePatchProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatchProperties>
+    {
+        public AppAttachPackagePatchProperties() { }
+        public Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure? FailHealthCheckOnStagingFailure { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> HostPoolReferences { get { throw null; } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties Image { get { throw null; } set { } }
+        public System.Uri KeyVaultUri { get { throw null; } set { } }
+        Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatchProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatchProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AppAttachPackageProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties>
+    {
+        public AppAttachPackageProperties() { }
+        public Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure? FailHealthCheckOnStagingFailure { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> HostPoolReferences { get { throw null; } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties Image { get { throw null; } set { } }
+        public System.Uri KeyVaultUri { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppAttachPackageProvisioningState : System.IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppAttachPackageProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState Provisioning { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState left, Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState left, Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public static partial class ArmDesktopVirtualizationModelFactory
     {
-        public static Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection DesktopVirtualizationPrivateEndpointConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnectionProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData DesktopVirtualizationPrivateEndpointConnectionDataData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnectionProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.DesktopVirtualization.AppAttachPackageData AppAttachPackageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatch AppAttachPackagePatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackagePatchProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProperties AppAttachPackageProperties(Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState? provisioningState = default(Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageProvisioningState?), Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageInfoProperties image = null, System.Collections.Generic.IEnumerable<string> hostPoolReferences = null, System.Uri keyVaultUri = null, Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure = default(Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection DesktopVirtualizationPrivateEndpointConnection(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.Core.ResourceIdentifier privateEndpointId, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkServiceConnectionState connectionState, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState) { throw null; }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection DesktopVirtualizationPrivateEndpointConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnectionProvisioningState?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData DesktopVirtualizationPrivateEndpointConnectionDataData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.Core.ResourceIdentifier privateEndpointId, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkServiceConnectionState connectionState, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState) { throw null; }
+        public static Azure.ResourceManager.DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData DesktopVirtualizationPrivateEndpointConnectionDataData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkResourceData DesktopVirtualizationPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationStartMenuItem DesktopVirtualizationStartMenuItem(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string appAlias = null, string filePath = null, string commandLineArguments = null, string iconPath = null, int? iconIndex = default(int?)) { throw null; }
-        public static Azure.ResourceManager.DesktopVirtualization.Models.ExpandMsixImage ExpandMsixImage(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string packageAlias = null, string imagePath = null, string packageName = null, string packageFamilyName = null, string packageFullName = null, string displayName = null, string packageRelativePath = null, bool? isRegularRegistration = default(bool?), bool? isActive = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.Models.MsixPackageDependencies> packageDependencies = null, string version = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.Models.MsixPackageApplications> packageApplications = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DesktopVirtualization.Models.ExpandMsixImage ExpandMsixImage(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string packageAlias, string imagePath, string packageName, string packageFamilyName, string packageFullName, string displayName, string packageRelativePath, bool? isRegularRegistration, bool? isActive, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.Models.MsixPackageDependencies> packageDependencies, string version, System.DateTimeOffset? lastUpdatedOn, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.Models.MsixPackageApplications> packageApplications) { throw null; }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.ExpandMsixImage ExpandMsixImage(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string packageAlias = null, string imagePath = null, string packageName = null, string packageFamilyName = null, string packageFullName = null, string displayName = null, string packageRelativePath = null, bool? isRegularRegistration = default(bool?), bool? isActive = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.Models.MsixPackageDependencies> packageDependencies = null, string version = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.Models.MsixPackageApplications> packageApplications = null, string certificateName = null, System.DateTimeOffset? certificateExpiry = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.DesktopVirtualization.HostPoolData HostPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string objectId = null, string friendlyName = null, string description = null, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType hostPoolType = default(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType), Azure.ResourceManager.DesktopVirtualization.Models.PersonalDesktopAssignmentType? personalDesktopAssignmentType = default(Azure.ResourceManager.DesktopVirtualization.Models.PersonalDesktopAssignmentType?), string customRdpProperty = null, int? maxSessionLimit = default(int?), Azure.ResourceManager.DesktopVirtualization.Models.HostPoolLoadBalancerType loadBalancerType = default(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolLoadBalancerType), int? ring = default(int?), bool? isValidationEnvironment = default(bool?), Azure.ResourceManager.DesktopVirtualization.Models.HostPoolRegistrationInfo registrationInfo = null, string vmTemplate = null, System.Collections.Generic.IEnumerable<string> applicationGroupReferences = null, System.Collections.Generic.IEnumerable<string> appAttachPackageReferences = null, string ssoAdfsAuthority = null, string ssoClientId = null, string ssoClientSecretKeyVaultPath = null, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolSsoSecretType? ssoSecretType = default(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolSsoSecretType?), Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType preferredAppGroupType = default(Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType), bool? startVmOnConnect = default(bool?), bool? isCloudPCResource = default(bool?), Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPublicNetworkAccess?), Azure.ResourceManager.DesktopVirtualization.Models.SessionHostAgentUpdateProperties agentUpdate = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = null, Azure.Core.ResourceIdentifier managedBy = null, string kind = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationSku sku = null, Azure.ResourceManager.Models.ArmPlan plan = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.DesktopVirtualization.HostPoolData HostPoolData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string objectId, string friendlyName, string description, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType hostPoolType, Azure.ResourceManager.DesktopVirtualization.Models.PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolLoadBalancerType loadBalancerType, int? ring, bool? isValidationEnvironment, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolRegistrationInfo registrationInfo, string vmTemplate, System.Collections.Generic.IEnumerable<string> applicationGroupReferences, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolSsoSecretType? ssoSecretType, Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, bool? isCloudPCResource, Azure.ResourceManager.DesktopVirtualization.Models.SessionHostAgentUpdateProperties agentUpdate, Azure.Core.ResourceIdentifier managedBy, string kind, Azure.ETag? etag, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationSku sku, Azure.ResourceManager.Models.ArmPlan plan) { throw null; }
-        public static Azure.ResourceManager.DesktopVirtualization.HostPoolData HostPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string objectId = null, string friendlyName = null, string description = null, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType hostPoolType = default(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType), Azure.ResourceManager.DesktopVirtualization.Models.PersonalDesktopAssignmentType? personalDesktopAssignmentType = default(Azure.ResourceManager.DesktopVirtualization.Models.PersonalDesktopAssignmentType?), string customRdpProperty = null, int? maxSessionLimit = default(int?), Azure.ResourceManager.DesktopVirtualization.Models.HostPoolLoadBalancerType loadBalancerType = default(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolLoadBalancerType), int? ring = default(int?), bool? isValidationEnvironment = default(bool?), Azure.ResourceManager.DesktopVirtualization.Models.HostPoolRegistrationInfo registrationInfo = null, string vmTemplate = null, System.Collections.Generic.IEnumerable<string> applicationGroupReferences = null, string ssoAdfsAuthority = null, string ssoClientId = null, string ssoClientSecretKeyVaultPath = null, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolSsoSecretType? ssoSecretType = default(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolSsoSecretType?), Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType preferredAppGroupType = default(Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType), bool? startVmOnConnect = default(bool?), bool? isCloudPCResource = default(bool?), Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPublicNetworkAccess?), Azure.ResourceManager.DesktopVirtualization.Models.SessionHostAgentUpdateProperties agentUpdate = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = null, Azure.Core.ResourceIdentifier managedBy = null, string kind = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationSku sku = null, Azure.ResourceManager.Models.ArmPlan plan = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.DesktopVirtualization.HostPoolData HostPoolData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string objectId, string friendlyName, string description, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType hostPoolType, Azure.ResourceManager.DesktopVirtualization.Models.PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolLoadBalancerType loadBalancerType, int? ring, bool? isValidationEnvironment, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolRegistrationInfo registrationInfo, string vmTemplate, System.Collections.Generic.IEnumerable<string> applicationGroupReferences, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolSsoSecretType? ssoSecretType, Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, bool? isCloudPCResource, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.DesktopVirtualization.Models.SessionHostAgentUpdateProperties agentUpdate, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, Azure.Core.ResourceIdentifier managedBy, string kind, Azure.ETag? etag, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationSku sku, Azure.ResourceManager.Models.ArmPlan plan) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPatch HostPoolPatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, Azure.ResourceManager.DesktopVirtualization.Models.PersonalDesktopAssignmentType? personalDesktopAssignmentType, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolSsoSecretType? ssoSecretType, Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect, Azure.ResourceManager.DesktopVirtualization.Models.SessionHostAgentUpdatePatchProperties agentUpdate) { throw null; }
         public static Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPatch HostPoolPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, string friendlyName = null, string description = null, string customRdpProperty = null, int? maxSessionLimit = default(int?), Azure.ResourceManager.DesktopVirtualization.Models.PersonalDesktopAssignmentType? personalDesktopAssignmentType = default(Azure.ResourceManager.DesktopVirtualization.Models.PersonalDesktopAssignmentType?), Azure.ResourceManager.DesktopVirtualization.Models.HostPoolLoadBalancerType? loadBalancerType = default(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolLoadBalancerType?), int? ring = default(int?), bool? isValidationEnvironment = default(bool?), Azure.ResourceManager.DesktopVirtualization.Models.HostPoolRegistrationInfoPatch registrationInfo = null, string vmTemplate = null, string ssoAdfsAuthority = null, string ssoClientId = null, string ssoClientSecretKeyVaultPath = null, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolSsoSecretType? ssoSecretType = default(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolSsoSecretType?), Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType? preferredAppGroupType = default(Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType?), bool? startVmOnConnect = default(bool?), Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPublicNetworkAccess?), Azure.ResourceManager.DesktopVirtualization.Models.SessionHostAgentUpdatePatchProperties agentUpdate = null) { throw null; }
@@ -961,6 +1204,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         public DesktopVirtualizationPrivateEndpointConnection() { }
         public Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
         Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPrivateEndpointConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1106,6 +1350,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public partial class ExpandMsixImage : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.ExpandMsixImage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.ExpandMsixImage>
     {
         public ExpandMsixImage() { }
+        public System.DateTimeOffset? CertificateExpiry { get { throw null; } set { } }
+        public string CertificateName { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string ImagePath { get { throw null; } set { } }
         public bool? IsActive { get { throw null; } set { } }
@@ -1124,6 +1370,25 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         Azure.ResourceManager.DesktopVirtualization.Models.ExpandMsixImage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.ExpandMsixImage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.ExpandMsixImage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.ExpandMsixImage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FailHealthCheckOnStagingFailure : System.IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FailHealthCheckOnStagingFailure(string value) { throw null; }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure DoNotFail { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure NeedsAssistance { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure Unhealthy { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure left, Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure left, Azure.ResourceManager.DesktopVirtualization.Models.FailHealthCheckOnStagingFailure right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HostPoolLoadBalancerType : System.IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.HostPoolLoadBalancerType>
@@ -1164,7 +1429,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string SsoClientSecretKeyVaultPath { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.HostPoolSsoSecretType? SsoSecretType { get { throw null; } set { } }
         public bool? StartVmOnConnect { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
         public string VmTemplate { get { throw null; } set { } }
         Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.HostPoolPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1273,6 +1538,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType left, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ImportPackageInfoContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.ImportPackageInfoContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.ImportPackageInfoContent>
+    {
+        public ImportPackageInfoContent() { }
+        public Azure.ResourceManager.DesktopVirtualization.Models.AppAttachPackageArchitecture? PackageArchitecture { get { throw null; } set { } }
+        public string Path { get { throw null; } set { } }
+        Azure.ResourceManager.DesktopVirtualization.Models.ImportPackageInfoContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.ImportPackageInfoContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.ImportPackageInfoContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DesktopVirtualization.Models.ImportPackageInfoContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.ImportPackageInfoContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.ImportPackageInfoContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.ImportPackageInfoContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MaintenanceWindowPatchProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.MaintenanceWindowPatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.MaintenanceWindowPatchProperties>
     {
         public MaintenanceWindowPatchProperties() { }
@@ -1356,6 +1632,24 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         Azure.ResourceManager.DesktopVirtualization.Models.MsixPackagePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.MsixPackagePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.MsixPackagePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.MsixPackagePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PackageTimestamped : System.IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.PackageTimestamped>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PackageTimestamped(string value) { throw null; }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.PackageTimestamped NotTimestamped { get { throw null; } }
+        public static Azure.ResourceManager.DesktopVirtualization.Models.PackageTimestamped Timestamped { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DesktopVirtualization.Models.PackageTimestamped other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DesktopVirtualization.Models.PackageTimestamped left, Azure.ResourceManager.DesktopVirtualization.Models.PackageTimestamped right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DesktopVirtualization.Models.PackageTimestamped (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DesktopVirtualization.Models.PackageTimestamped left, Azure.ResourceManager.DesktopVirtualization.Models.PackageTimestamped right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PersonalDesktopAssignmentType : System.IEquatable<Azure.ResourceManager.DesktopVirtualization.Models.PersonalDesktopAssignmentType>
@@ -1462,7 +1756,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version", false)]
         public Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType? HostPoolType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DesktopVirtualization.Models.ScalingSchedule> Schedules { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
         Azure.ResourceManager.DesktopVirtualization.Models.ScalingPlanPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.ScalingPlanPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.ScalingPlanPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1616,7 +1910,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         public SessionHostAgentUpdatePatchProperties() { }
         public bool? DoesUseSessionHostLocalTime { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DesktopVirtualization.Models.MaintenanceWindowPatchProperties> MaintenanceWindows { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DesktopVirtualization.Models.MaintenanceWindowPatchProperties> MaintenanceWindows { get { throw null; } set { } }
         public string MaintenanceWindowTimeZone { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.SessionHostComponentUpdateType? UpdateType { get { throw null; } set { } }
         Azure.ResourceManager.DesktopVirtualization.Models.SessionHostAgentUpdatePatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.SessionHostAgentUpdatePatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1629,7 +1923,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         public SessionHostAgentUpdateProperties() { }
         public bool? DoesUseSessionHostLocalTime { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DesktopVirtualization.Models.SessionHostMaintenanceWindowProperties> MaintenanceWindows { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DesktopVirtualization.Models.SessionHostMaintenanceWindowProperties> MaintenanceWindows { get { throw null; } set { } }
         public string MaintenanceWindowTimeZone { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.SessionHostComponentUpdateType? UpdateType { get { throw null; } set { } }
         Azure.ResourceManager.DesktopVirtualization.Models.SessionHostAgentUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.SessionHostAgentUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1912,7 +2206,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string Description { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
         public bool? ShowInFeed { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
         Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationGroupPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationGroupPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationGroupPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationGroupPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationGroupPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1951,7 +2245,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string MsixPackageApplicationId { get { throw null; } set { } }
         public string MsixPackageFamilyName { get { throw null; } set { } }
         public bool? ShowInPortal { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
         Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1981,7 +2275,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public VirtualDesktopPatch() { }
         public string Description { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
         Azure.ResourceManager.DesktopVirtualization.Models.VirtualDesktopPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.VirtualDesktopPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.VirtualDesktopPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DesktopVirtualization.Models.VirtualDesktopPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.VirtualDesktopPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1991,11 +2285,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public partial class VirtualWorkspacePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.VirtualWorkspacePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.VirtualWorkspacePatch>
     {
         public VirtualWorkspacePatch() { }
-        public System.Collections.Generic.IList<string> ApplicationGroupReferences { get { throw null; } }
+        public System.Collections.Generic.IList<string> ApplicationGroupReferences { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
         Azure.ResourceManager.DesktopVirtualization.Models.VirtualWorkspacePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.VirtualWorkspacePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.VirtualWorkspacePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DesktopVirtualization.Models.VirtualWorkspacePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.VirtualWorkspacePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

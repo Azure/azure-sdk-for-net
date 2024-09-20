@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string ActiveValue = "Active";
         private const string DeletingValue = "Deleting";
         private const string DisabledValue = "Disabled";
+        private const string MigratingValue = "Migrating";
+        private const string MigratedValue = "Migrated";
+        private const string PendingMigrationCommitValue = "PendingMigrationCommit";
+        private const string CommittingMigrationValue = "CommittingMigration";
+        private const string AbortingMigrationValue = "AbortingMigration";
 
         /// <summary> Creating. </summary>
         public static ProfileResourceState Creating { get; } = new ProfileResourceState(CreatingValue);
@@ -35,6 +40,16 @@ namespace Azure.ResourceManager.Cdn.Models
         public static ProfileResourceState Deleting { get; } = new ProfileResourceState(DeletingValue);
         /// <summary> Disabled. </summary>
         public static ProfileResourceState Disabled { get; } = new ProfileResourceState(DisabledValue);
+        /// <summary> Migrating. </summary>
+        public static ProfileResourceState Migrating { get; } = new ProfileResourceState(MigratingValue);
+        /// <summary> Migrated. </summary>
+        public static ProfileResourceState Migrated { get; } = new ProfileResourceState(MigratedValue);
+        /// <summary> PendingMigrationCommit. </summary>
+        public static ProfileResourceState PendingMigrationCommit { get; } = new ProfileResourceState(PendingMigrationCommitValue);
+        /// <summary> CommittingMigration. </summary>
+        public static ProfileResourceState CommittingMigration { get; } = new ProfileResourceState(CommittingMigrationValue);
+        /// <summary> AbortingMigration. </summary>
+        public static ProfileResourceState AbortingMigration { get; } = new ProfileResourceState(AbortingMigrationValue);
         /// <summary> Determines if two <see cref="ProfileResourceState"/> values are the same. </summary>
         public static bool operator ==(ProfileResourceState left, ProfileResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProfileResourceState"/> values are not the same. </summary>
@@ -50,7 +65,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

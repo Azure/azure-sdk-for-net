@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownCopySink))]
     public partial class CopySink : IUtf8JsonSerializable, IJsonModel<CopySink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopySink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopySink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CopySink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CopySink DeserializeCopySink(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -118,6 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "DynamicsCrmSink": return DynamicsCrmSink.DeserializeDynamicsCrmSink(element, options);
                     case "DynamicsSink": return DynamicsSink.DeserializeDynamicsSink(element, options);
                     case "FileSystemSink": return FileSystemSink.DeserializeFileSystemSink(element, options);
+                    case "IcebergSink": return IcebergSink.DeserializeIcebergSink(element, options);
                     case "InformixSink": return InformixSink.DeserializeInformixSink(element, options);
                     case "JsonSink": return JsonSink.DeserializeJsonSink(element, options);
                     case "LakeHouseTableSink": return LakeHouseTableSink.DeserializeLakeHouseTableSink(element, options);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class HdfsSource : IUtf8JsonSerializable, IJsonModel<HdfsSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HdfsSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HdfsSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HdfsSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DistcpSettings))
             {
                 writer.WritePropertyName("distcpSettings"u8);
-                writer.WriteObjectValue<DistcpSettings>(DistcpSettings, options);
+                writer.WriteObjectValue(DistcpSettings, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static HdfsSource DeserializeHdfsSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseWorkspaceAadAdminInfoData : IUtf8JsonSerializable, IJsonModel<SynapseWorkspaceAadAdminInfoData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseWorkspaceAadAdminInfoData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseWorkspaceAadAdminInfoData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseWorkspaceAadAdminInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseWorkspaceAadAdminInfoData DeserializeSynapseWorkspaceAadAdminInfoData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

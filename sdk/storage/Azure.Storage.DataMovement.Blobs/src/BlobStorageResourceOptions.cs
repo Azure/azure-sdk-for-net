@@ -100,11 +100,11 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Optional. See <see cref="Storage.Blobs.Models.AccessTier"/>.
         /// Indicates the access tier to be set on the destination blob.
         ///
-        /// By default preserves the Access Tier from the source.
+        /// Access Tier is automatically preserved during blob to blob copies.
         ///
         /// Applies to upload and copy transfers.
         /// Also respective Tier Values applies only to Block or Page Blobs.
         /// </summary>
-        public DataTransferProperty<AccessTier?> AccessTier { get; set; }
+        public AccessTier? AccessTier { get; set; }
     }
 }

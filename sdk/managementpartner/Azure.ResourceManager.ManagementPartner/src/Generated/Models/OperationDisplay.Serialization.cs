@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
 {
     public partial class OperationDisplay : IUtf8JsonSerializable, IJsonModel<OperationDisplay>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationDisplay>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationDisplay>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OperationDisplay>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
 
         internal static OperationDisplay DeserializeOperationDisplay(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class SyncMigrationDatabaseErrorEvent : IUtf8JsonSerializable, IJsonModel<SyncMigrationDatabaseErrorEvent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncMigrationDatabaseErrorEvent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncMigrationDatabaseErrorEvent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SyncMigrationDatabaseErrorEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static SyncMigrationDatabaseErrorEvent DeserializeSyncMigrationDatabaseErrorEvent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

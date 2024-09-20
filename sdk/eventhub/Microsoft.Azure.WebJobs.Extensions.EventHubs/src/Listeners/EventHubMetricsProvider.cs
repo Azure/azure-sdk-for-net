@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             }
             catch (Exception e)
             {
-                _logger.LogWarning($"Encountered an exception while checking EventHub '{_client.EventHubName}'. Error: {e.Message}");
+                _logger.LogWarning($"Encountered an exception while checking Event Hub '{_client.EventHubName}'. Error: {e.Message}");
                 return metrics;
             }
 
@@ -72,16 +72,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             }
 
             await Task.WhenAll(partitionPropertiesTasks).ConfigureAwait(false);
-            EventProcessorCheckpoint[] checkpoints;
+            EventProcessorCheckpoint[] checkpoints = null;
 
             try
             {
                 checkpoints = await Task.WhenAll(checkpointTasks).ConfigureAwait(false);
             }
-            catch
+            catch (Exception e)
             {
-                // GetCheckpointsAsync would log
-                return metrics;
+                _logger.LogWarning($"Encountered an exception while getting checkpoints for Event Hub '{_client.EventHubName}' used for scaling. Error: {e.Message}");
             }
 
             return CreateTriggerMetrics(partitionPropertiesTasks.Select(t => t.Result).ToList(), checkpoints);
@@ -103,18 +102,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             {
                 var partitionProperties = partitionRuntimeInfo[i];
 
-                var checkpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoints.SingleOrDefault(c => c?.PartitionId == partitionProperties.Id);
+                BlobCheckpointStoreInternal.BlobStorageCheckpoint checkpoint = null;
+                if (checkpoints != null)
+                {
+                    checkpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoints.SingleOrDefault(c => c?.PartitionId == partitionProperties.Id);
+                }
 
                 // Check for the unprocessed messages when there are messages on the Event Hub partition
-                // In that case, LastEnqueuedSequenceNumber will be >= 0
-
-                if ((partitionProperties.LastEnqueuedSequenceNumber != -1 && partitionProperties.LastEnqueuedSequenceNumber != (checkpoint?.SequenceNumber ?? -1))
-                    || (checkpoint == null && partitionProperties.LastEnqueuedSequenceNumber >= 0)
-                    || (checkpoint != null && checkpoint.Offset == null && partitionProperties.LastEnqueuedSequenceNumber >= 0))
-                {
-                    long partitionUnprocessedEventCount = GetUnprocessedEventCount(partitionProperties, checkpoint);
-                    totalUnprocessedEventCount += partitionUnprocessedEventCount;
-                }
+                long partitionUnprocessedEventCount = GetUnprocessedEventCount(partitionProperties, checkpoint);
+                totalUnprocessedEventCount += partitionUnprocessedEventCount;
             }
 
             // Only log if not all partitions are failing or it's time to log
@@ -143,8 +139,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
         private static long GetUnprocessedEventCount(PartitionProperties partitionInfo, BlobCheckpointStoreInternal.BlobStorageCheckpoint checkpoint)
         {
             // If the partition is empty, there are no events to process.
-
             if (partitionInfo.IsEmpty)
+            {
+                return 0;
+            }
+
+            // If partitionInfo.LastEnqueuedSequenceNumber, no events haven't sent to EH yet.
+            if (partitionInfo.LastEnqueuedSequenceNumber == -1)
             {
                 return 0;
             }
@@ -152,16 +153,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             // If there is no checkpoint and the beginning and last sequence numbers for the partition are the same
             // this partition received its first event.
 
-            if (checkpoint == null
-                && partitionInfo.LastEnqueuedSequenceNumber == partitionInfo.BeginningSequenceNumber)
+            if (checkpoint == null && partitionInfo.LastEnqueuedSequenceNumber == partitionInfo.BeginningSequenceNumber)
             {
                 return 1;
-            }
-
-            // Legacy checkpoint support
-            if (checkpoint != null && checkpoint.Offset == null && partitionInfo.LastEnqueuedSequenceNumber >= 0)
-            {
-                return partitionInfo.LastEnqueuedSequenceNumber + 1;
             }
 
             var startingSequenceNumber = checkpoint?.SequenceNumber switch
@@ -179,7 +173,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             // For normal scenarios, the last sequence number will be greater than the starting number and
             // simple subtraction can be used.
 
-            if (partitionInfo.LastEnqueuedSequenceNumber > startingSequenceNumber)
+            if (partitionInfo.LastEnqueuedSequenceNumber >= startingSequenceNumber)
             {
                 return (partitionInfo.LastEnqueuedSequenceNumber - startingSequenceNumber);
             }

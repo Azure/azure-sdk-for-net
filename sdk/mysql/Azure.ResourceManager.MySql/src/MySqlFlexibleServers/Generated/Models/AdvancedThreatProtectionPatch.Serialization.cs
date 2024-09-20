@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     public partial class AdvancedThreatProtectionPatch : IUtf8JsonSerializable, IJsonModel<AdvancedThreatProtectionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdvancedThreatProtectionPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdvancedThreatProtectionPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AdvancedThreatProtectionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         internal static AdvancedThreatProtectionPatch DeserializeAdvancedThreatProtectionPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

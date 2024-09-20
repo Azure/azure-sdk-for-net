@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class SessionHostAgentUpdatePatchProperties : IUtf8JsonSerializable, IJsonModel<SessionHostAgentUpdatePatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SessionHostAgentUpdatePatchProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SessionHostAgentUpdatePatchProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SessionHostAgentUpdatePatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -43,13 +45,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             if (Optional.IsCollectionDefined(MaintenanceWindows))
             {
-                writer.WritePropertyName("maintenanceWindows"u8);
-                writer.WriteStartArray();
-                foreach (var item in MaintenanceWindows)
+                if (MaintenanceWindows != null)
                 {
-                    writer.WriteObjectValue<MaintenanceWindowPatchProperties>(item, options);
+                    writer.WritePropertyName("maintenanceWindows"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in MaintenanceWindows)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("maintenanceWindows");
+                }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,7 +92,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static SessionHostAgentUpdatePatchProperties DeserializeSessionHostAgentUpdatePatchProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -124,6 +133,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        maintenanceWindows = null;
                         continue;
                     }
                     List<MaintenanceWindowPatchProperties> array = new List<MaintenanceWindowPatchProperties>();
@@ -143,6 +153,98 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostAgentUpdatePatchProperties(type, useSessionHostLocalTime, maintenanceWindowTimeZone, maintenanceWindows ?? new ChangeTrackingList<MaintenanceWindowPatchProperties>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpdateType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UpdateType))
+                {
+                    builder.Append("  type: ");
+                    builder.AppendLine($"'{UpdateType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DoesUseSessionHostLocalTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  useSessionHostLocalTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DoesUseSessionHostLocalTime))
+                {
+                    builder.Append("  useSessionHostLocalTime: ");
+                    var boolValue = DoesUseSessionHostLocalTime.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaintenanceWindowTimeZone), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maintenanceWindowTimeZone: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaintenanceWindowTimeZone))
+                {
+                    builder.Append("  maintenanceWindowTimeZone: ");
+                    if (MaintenanceWindowTimeZone.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MaintenanceWindowTimeZone}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MaintenanceWindowTimeZone}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaintenanceWindows), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maintenanceWindows: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MaintenanceWindows))
+                {
+                    if (MaintenanceWindows.Any())
+                    {
+                        builder.Append("  maintenanceWindows: ");
+                        builder.AppendLine("[");
+                        foreach (var item in MaintenanceWindows)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  maintenanceWindows: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SessionHostAgentUpdatePatchProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SessionHostAgentUpdatePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -151,6 +253,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SessionHostAgentUpdatePatchProperties)} does not support writing '{options.Format}' format.");
             }

@@ -27,11 +27,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("tokenizer"u8);
                 writer.WriteStringValue(TokenizerName.Value.ToString());
             }
-            if (Optional.IsDefined(NormalizerName))
-            {
-                writer.WritePropertyName("normalizer"u8);
-                writer.WriteStringValue(NormalizerName.Value.ToString());
-            }
             if (Optional.IsCollectionDefined(TokenFilters))
             {
                 writer.WritePropertyName("tokenFilters"u8);
@@ -55,11 +50,11 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnalyzeTextOptions>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

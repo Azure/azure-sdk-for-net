@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence
 {
     public partial class BuildDocumentClassifierContent : IUtf8JsonSerializable, IJsonModel<BuildDocumentClassifierContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BuildDocumentClassifierContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BuildDocumentClassifierContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BuildDocumentClassifierContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -43,9 +43,14 @@ namespace Azure.AI.DocumentIntelligence
             foreach (var item in DocTypes)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<ClassifierDocumentTypeDetails>(item.Value, options);
+                writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
+            if (Optional.IsDefined(AllowOverwrite))
+            {
+                writer.WritePropertyName("allowOverwrite"u8);
+                writer.WriteBooleanValue(AllowOverwrite.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -78,7 +83,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal static BuildDocumentClassifierContent DeserializeBuildDocumentClassifierContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -88,6 +93,7 @@ namespace Azure.AI.DocumentIntelligence
             string description = default;
             string baseClassifierId = default;
             IDictionary<string, ClassifierDocumentTypeDetails> docTypes = default;
+            bool? allowOverwrite = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,13 +123,28 @@ namespace Azure.AI.DocumentIntelligence
                     docTypes = dictionary;
                     continue;
                 }
+                if (property.NameEquals("allowOverwrite"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowOverwrite = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BuildDocumentClassifierContent(classifierId, description, baseClassifierId, docTypes, serializedAdditionalRawData);
+            return new BuildDocumentClassifierContent(
+                classifierId,
+                description,
+                baseClassifierId,
+                docTypes,
+                allowOverwrite,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BuildDocumentClassifierContent>.Write(ModelReaderWriterOptions options)
@@ -165,11 +186,11 @@ namespace Azure.AI.DocumentIntelligence
             return DeserializeBuildDocumentClassifierContent(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BuildDocumentClassifierContent>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

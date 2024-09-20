@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class StorageApplianceSkuSlot : IUtf8JsonSerializable, IJsonModel<StorageApplianceSkuSlot>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageApplianceSkuSlot>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageApplianceSkuSlot>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageApplianceSkuSlot>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         internal static StorageApplianceSkuSlot DeserializeStorageApplianceSkuSlot(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

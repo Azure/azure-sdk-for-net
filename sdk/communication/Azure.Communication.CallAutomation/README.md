@@ -73,7 +73,7 @@ public IActionResult OnMidConnectionCallBackEvent([FromBody] CloudEvent[] events
         if (events != null)
         {
             // Helper function to parse CloudEvent to a CallAutomation event.
-            CallAutomationEventData callBackEvent = CallAutomationEventParser.Parse(events.FirstOrDefault());
+            CallAutomationEventBase callBackEvent = CallAutomationEventParser.Parse(events.FirstOrDefault());
 
             switch (callBackEvent)
             {

@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Contexts)
                 {
-                    writer.WriteObjectValue<SummaryContextInternal>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -72,11 +72,11 @@ namespace Azure.AI.TextAnalytics.Models
             return DeserializeAbstractiveSummaryInternal(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AbstractiveSummaryInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

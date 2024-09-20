@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class ResourceNameAvailabilityContent : IUtf8JsonSerializable, IJsonModel<ResourceNameAvailabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceNameAvailabilityContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceNameAvailabilityContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceNameAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("isFqdn"u8);
                 writer.WriteBooleanValue(IsFqdn.Value);
+            }
+            if (Optional.IsDefined(EnvironmentId))
+            {
+                writer.WritePropertyName("environmentId"u8);
+                writer.WriteStringValue(EnvironmentId);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -67,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ResourceNameAvailabilityContent DeserializeResourceNameAvailabilityContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,6 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
             string name = default;
             CheckNameResourceType type = default;
             bool? isFqdn = default;
+            string environmentId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,13 +105,18 @@ namespace Azure.ResourceManager.AppService.Models
                     isFqdn = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("environmentId"u8))
+                {
+                    environmentId = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ResourceNameAvailabilityContent(name, type, isFqdn, serializedAdditionalRawData);
+            return new ResourceNameAvailabilityContent(name, type, isFqdn, environmentId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceNameAvailabilityContent>.Write(ModelReaderWriterOptions options)

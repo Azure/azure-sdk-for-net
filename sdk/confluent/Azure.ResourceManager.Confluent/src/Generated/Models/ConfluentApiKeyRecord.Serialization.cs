@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Confluent.Models
 {
     public partial class ConfluentApiKeyRecord : IUtf8JsonSerializable, IJsonModel<ConfluentApiKeyRecord>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfluentApiKeyRecord>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfluentApiKeyRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConfluentApiKeyRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue<SCMetadataEntity>(Metadata, options);
+                writer.WriteObjectValue(Metadata, options);
             }
             if (Optional.IsDefined(Spec))
             {
                 writer.WritePropertyName("spec"u8);
-                writer.WriteObjectValue<ApiKeySpecEntity>(Spec, options);
+                writer.WriteObjectValue(Spec, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         internal static ConfluentApiKeyRecord DeserializeConfluentApiKeyRecord(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

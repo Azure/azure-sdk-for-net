@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("error"u8);
-            writer.WriteObjectValue<Error>(Error);
+            writer.WriteObjectValue(Error);
             writer.WriteEndObject();
         }
 
@@ -54,11 +54,11 @@ namespace Azure.AI.TextAnalytics.Models
             return DeserializeDocumentError(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DocumentError>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

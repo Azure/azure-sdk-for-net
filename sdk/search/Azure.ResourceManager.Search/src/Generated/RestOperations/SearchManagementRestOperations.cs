@@ -32,8 +32,22 @@ namespace Azure.ResourceManager.Search
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-11-01";
+            _apiVersion = apiVersion ?? "2024-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateUsageBySubscriptionSkuRequestUri(string subscriptionId, AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Search/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/usages/", false);
+            uri.AppendPath(skuName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUsageBySubscriptionSkuRequest(string subscriptionId, AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions)
@@ -56,8 +70,8 @@ namespace Azure.ResourceManager.Search
             return message;
         }
 
-        /// <summary> Gets the quota usage for a search SKU in the given subscription. </summary>
-        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API, command line tools, or the portal. </param>
+        /// <summary> Gets the quota usage for a search sku in the given subscription. </summary>
+        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
         /// <param name="skuName"> The unique SKU name that identifies a billable tier. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -85,8 +99,8 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        /// <summary> Gets the quota usage for a search SKU in the given subscription. </summary>
-        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API, command line tools, or the portal. </param>
+        /// <summary> Gets the quota usage for a search sku in the given subscription. </summary>
+        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
         /// <param name="skuName"> The unique SKU name that identifies a billable tier. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>

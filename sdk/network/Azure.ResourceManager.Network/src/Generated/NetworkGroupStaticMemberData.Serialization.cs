@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkGroupStaticMemberData : IUtf8JsonSerializable, IJsonModel<NetworkGroupStaticMemberData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkGroupStaticMemberData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkGroupStaticMemberData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkGroupStaticMemberData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network
 
         internal static NetworkGroupStaticMemberData DeserializeNetworkGroupStaticMemberData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

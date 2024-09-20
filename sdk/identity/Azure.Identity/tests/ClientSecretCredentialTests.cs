@@ -35,6 +35,10 @@ namespace Azure.Identity.Tests
             {
                 options.Transport = config.Transport;
             }
+            if (config.TokenCachePersistenceOptions != null)
+            {
+                options.TokenCachePersistenceOptions = config.TokenCachePersistenceOptions;
+            }
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new ClientSecretCredential(config.TenantId, ClientId, "secret", options, pipeline, config.MockConfidentialMsalClient));
         }

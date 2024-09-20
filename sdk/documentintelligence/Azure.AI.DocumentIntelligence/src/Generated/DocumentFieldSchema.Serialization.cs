@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence
 {
     public partial class DocumentFieldSchema : IUtf8JsonSerializable, IJsonModel<DocumentFieldSchema>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentFieldSchema>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentFieldSchema>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DocumentFieldSchema>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -41,7 +41,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(Items))
             {
                 writer.WritePropertyName("items"u8);
-                writer.WriteObjectValue<DocumentFieldSchema>(Items, options);
+                writer.WriteObjectValue(Items, options);
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -50,7 +50,7 @@ namespace Azure.AI.DocumentIntelligence
                 foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<DocumentFieldSchema>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -86,7 +86,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal static DocumentFieldSchema DeserializeDocumentFieldSchema(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -96,7 +96,7 @@ namespace Azure.AI.DocumentIntelligence
             string description = default;
             string example = default;
             DocumentFieldSchema items = default;
-            IReadOnlyDictionary<string, DocumentFieldSchema> properties = default;
+            IDictionary<string, DocumentFieldSchema> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,11 +193,11 @@ namespace Azure.AI.DocumentIntelligence
             return DeserializeDocumentFieldSchema(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DocumentFieldSchema>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

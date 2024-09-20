@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Maps.Models
 {
     public partial class MapsKeySpecification : IUtf8JsonSerializable, IJsonModel<MapsKeySpecification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsKeySpecification>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsKeySpecification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MapsKeySpecification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Maps.Models
 
         internal static MapsKeySpecification DeserializeMapsKeySpecification(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

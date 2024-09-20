@@ -36,6 +36,25 @@ namespace Azure.ResourceManager.Sql
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByInstancePoolRequestUri(string subscriptionId, string resourceGroupName, string instancePoolName, bool? expandChildren)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/instancePools/", false);
+            uri.AppendPath(instancePoolName, true);
+            uri.AppendPath("/usages", false);
+            if (expandChildren != null)
+            {
+                uri.AppendQuery("expandChildren", expandChildren.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByInstancePoolRequest(string subscriptionId, string resourceGroupName, string instancePoolName, bool? expandChildren)
         {
             var message = _pipeline.CreateMessage();
@@ -119,6 +138,14 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByInstancePoolNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string instancePoolName, bool? expandChildren)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByInstancePoolNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string instancePoolName, bool? expandChildren)

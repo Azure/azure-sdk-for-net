@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class DefenderForContainersAwsOffering : IUtf8JsonSerializable, IJsonModel<DefenderForContainersAwsOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForContainersAwsOffering>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForContainersAwsOffering>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DefenderForContainersAwsOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(KubernetesService))
             {
                 writer.WritePropertyName("kubernetesService"u8);
-                writer.WriteObjectValue<DefenderForContainersAwsOfferingKubernetesService>(KubernetesService, options);
+                writer.WriteObjectValue(KubernetesService, options);
             }
             if (Optional.IsDefined(KubernetesScubaReader))
             {
                 writer.WritePropertyName("kubernetesScubaReader"u8);
-                writer.WriteObjectValue<DefenderForContainersAwsOfferingKubernetesScubaReader>(KubernetesScubaReader, options);
+                writer.WriteObjectValue(KubernetesScubaReader, options);
             }
             if (Optional.IsDefined(CloudWatchToKinesis))
             {
                 writer.WritePropertyName("cloudWatchToKinesis"u8);
-                writer.WriteObjectValue<DefenderForContainersAwsOfferingCloudWatchToKinesis>(CloudWatchToKinesis, options);
+                writer.WriteObjectValue(CloudWatchToKinesis, options);
             }
             if (Optional.IsDefined(KinesisToS3))
             {
                 writer.WritePropertyName("kinesisToS3"u8);
-                writer.WriteObjectValue<DefenderForContainersAwsOfferingKinesisToS3>(KinesisToS3, options);
+                writer.WriteObjectValue(KinesisToS3, options);
             }
             if (Optional.IsDefined(ContainerVulnerabilityAssessment))
             {
                 writer.WritePropertyName("containerVulnerabilityAssessment"u8);
-                writer.WriteObjectValue<DefenderForContainersAwsOfferingContainerVulnerabilityAssessment>(ContainerVulnerabilityAssessment, options);
+                writer.WriteObjectValue(ContainerVulnerabilityAssessment, options);
             }
             if (Optional.IsDefined(ContainerVulnerabilityAssessmentTask))
             {
                 writer.WritePropertyName("containerVulnerabilityAssessmentTask"u8);
-                writer.WriteObjectValue<DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask>(ContainerVulnerabilityAssessmentTask, options);
+                writer.WriteObjectValue(ContainerVulnerabilityAssessmentTask, options);
             }
             if (Optional.IsDefined(IsContainerVulnerabilityAssessmentEnabled))
             {
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(MdcContainersImageAssessment))
             {
                 writer.WritePropertyName("mdcContainersImageAssessment"u8);
-                writer.WriteObjectValue<DefenderForContainersAwsOfferingMdcContainersImageAssessment>(MdcContainersImageAssessment, options);
+                writer.WriteObjectValue(MdcContainersImageAssessment, options);
             }
             if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
             {
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
-                writer.WriteObjectValue<DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S>(MdcContainersAgentlessDiscoveryK8S, options);
+                writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForContainersAwsOffering DeserializeDefenderForContainersAwsOffering(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

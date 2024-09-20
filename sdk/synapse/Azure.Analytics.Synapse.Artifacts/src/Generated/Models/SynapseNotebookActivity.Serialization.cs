@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
+                writer.WriteObjectValue(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue<ActivityPolicy>(Policy);
+                writer.WriteObjectValue(Policy);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue<ActivityDependency>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -64,18 +64,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue<UserProperty>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("notebook"u8);
-            writer.WriteObjectValue<SynapseNotebookReference>(Notebook);
+            writer.WriteObjectValue(Notebook);
             if (Optional.IsDefined(SparkPool))
             {
                 writer.WritePropertyName("sparkPool"u8);
-                writer.WriteObjectValue<BigDataPoolParametrizationReference>(SparkPool);
+                writer.WriteObjectValue(SparkPool);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -84,7 +84,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<NotebookParameter>(item.Value);
+                    writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -116,7 +116,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
-                writer.WriteObjectValue<SparkConfigurationParametrizationReference>(TargetSparkConfiguration);
+                writer.WriteObjectValue(TargetSparkConfiguration);
             }
             if (Optional.IsCollectionDefined(SparkConfig))
             {
@@ -400,11 +400,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeSynapseNotebookActivity(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SynapseNotebookActivity>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -412,7 +412,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SynapseNotebookActivity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SynapseNotebookActivity>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override SynapseNotebookActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

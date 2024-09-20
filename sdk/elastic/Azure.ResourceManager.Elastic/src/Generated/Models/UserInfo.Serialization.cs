@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Elastic.Models
 {
     public partial class UserInfo : IUtf8JsonSerializable, IJsonModel<UserInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UserInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(CompanyInfo))
             {
                 writer.WritePropertyName("companyInfo"u8);
-                writer.WriteObjectValue<CompanyInfo>(CompanyInfo, options);
+                writer.WriteObjectValue(CompanyInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static UserInfo DeserializeUserInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

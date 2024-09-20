@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence
 {
     public partial class DocumentField : IUtf8JsonSerializable, IJsonModel<DocumentField>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentField>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentField>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DocumentField>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -79,7 +79,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in ValueList)
                 {
-                    writer.WriteObjectValue<DocumentField>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,19 +90,19 @@ namespace Azure.AI.DocumentIntelligence
                 foreach (var item in ValueDictionary)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<DocumentField>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(ValueCurrency))
             {
                 writer.WritePropertyName("valueCurrency"u8);
-                writer.WriteObjectValue<CurrencyValue>(ValueCurrency, options);
+                writer.WriteObjectValue(ValueCurrency, options);
             }
             if (Optional.IsDefined(ValueAddress))
             {
                 writer.WritePropertyName("valueAddress"u8);
-                writer.WriteObjectValue<AddressValue>(ValueAddress, options);
+                writer.WriteObjectValue(ValueAddress, options);
             }
             if (Optional.IsDefined(ValueBoolean))
             {
@@ -130,7 +130,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in BoundingRegions)
                 {
-                    writer.WriteObjectValue<BoundingRegion>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +140,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Spans)
                 {
-                    writer.WriteObjectValue<DocumentSpan>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -181,7 +181,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal static DocumentField DeserializeDocumentField(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -465,11 +465,11 @@ namespace Azure.AI.DocumentIntelligence
             return DeserializeDocumentField(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DocumentField>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

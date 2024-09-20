@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class QueryDataset : IUtf8JsonSerializable, IJsonModel<QueryDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QueryDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue<QueryDatasetConfiguration>(Configuration, options);
+                writer.WriteObjectValue(Configuration, options);
             }
             if (Optional.IsCollectionDefined(Aggregation))
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 foreach (var item in Aggregation)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<QueryAggregation>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -53,14 +53,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Grouping)
                 {
-                    writer.WriteObjectValue<QueryGrouping>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue<QueryFilter>(Filter, options);
+                writer.WriteObjectValue(Filter, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static QueryDataset DeserializeQueryDataset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

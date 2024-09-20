@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Maintenance
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MaintenanceApplyUpdateResource : Azure.ResourceManager.ArmResource
+    public partial class MaintenanceApplyUpdateResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MaintenanceApplyUpdateResource() { }
@@ -33,6 +33,11 @@ namespace Azure.ResourceManager.Maintenance
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string applyUpdateName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -72,7 +77,7 @@ namespace Azure.ResourceManager.Maintenance
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MaintenanceConfigurationResource : Azure.ResourceManager.ArmResource
+    public partial class MaintenanceConfigurationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MaintenanceConfigurationResource() { }
@@ -89,11 +94,18 @@ namespace Azure.ResourceManager.Maintenance
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceConfigurationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceConfigurationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceConfigurationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Maintenance.MaintenanceConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Maintenance.MaintenanceConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceConfigurationResource> Update(Azure.ResourceManager.Maintenance.MaintenanceConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceConfigurationResource>> UpdateAsync(Azure.ResourceManager.Maintenance.MaintenanceConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class MaintenanceExtensions
     {
+        public static Azure.Response<Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult> AcknowledgeScheduledEvent(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceType, string resourceName, string scheduledEventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult>> AcknowledgeScheduledEventAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceType, string resourceName, string scheduledEventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdate(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource>> CreateOrUpdateApplyUpdateAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdateByParent(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -178,7 +190,7 @@ namespace Azure.ResourceManager.Maintenance
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Maintenance.MaintenancePublicConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Maintenance.MaintenancePublicConfigurationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MaintenancePublicConfigurationResource : Azure.ResourceManager.ArmResource
+    public partial class MaintenancePublicConfigurationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MaintenancePublicConfigurationResource() { }
@@ -187,6 +199,11 @@ namespace Azure.ResourceManager.Maintenance
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Maintenance.MaintenancePublicConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maintenance.MaintenancePublicConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Maintenance.MaintenanceConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Maintenance.MaintenanceConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Maintenance.Mocking
@@ -201,6 +218,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
     public partial class MockableMaintenanceResourceGroupResource : Azure.ResourceManager.ArmResource
     {
         protected MockableMaintenanceResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult> AcknowledgeScheduledEvent(string resourceType, string resourceName, string scheduledEventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult>> AcknowledgeScheduledEventAsync(string resourceType, string resourceName, string scheduledEventId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdate(string providerName, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource>> CreateOrUpdateApplyUpdateAsync(string providerName, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdateByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -280,6 +299,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData MaintenanceConfigurationAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceIdentifier maintenanceConfigurationId = null, Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentFilter filter = null) { throw null; }
         public static Azure.ResourceManager.Maintenance.MaintenanceConfigurationData MaintenanceConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string @namespace = null, System.Collections.Generic.IDictionary<string, string> extensionProperties = null, Azure.ResourceManager.Maintenance.Models.MaintenanceScope? maintenanceScope = default(Azure.ResourceManager.Maintenance.Models.MaintenanceScope?), Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationVisibility? visibility = default(Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationVisibility?), Azure.ResourceManager.Maintenance.Models.MaintenancePatchConfiguration installPatches = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), string timeZone = null, string recurEvery = null) { throw null; }
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceUpdate MaintenanceUpdate(Azure.ResourceManager.Maintenance.Models.MaintenanceScope? maintenanceScope = default(Azure.ResourceManager.Maintenance.Models.MaintenanceScope?), Azure.ResourceManager.Maintenance.Models.MaintenanceImpactType? impactType = default(Azure.ResourceManager.Maintenance.Models.MaintenanceImpactType?), Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus? status = default(Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus?), int? impactDurationInSec = default(int?), System.DateTimeOffset? notBefore = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier resourceId = null) { throw null; }
+        public static Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult ScheduledEventApproveResult(string value = null) { throw null; }
     }
     public partial class MaintenanceConfigurationAssignmentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData>
     {
@@ -504,6 +524,16 @@ namespace Azure.ResourceManager.Maintenance.Models
         public string ResourceParentName { get { throw null; } }
         public string ResourceParentType { get { throw null; } }
         public string ResourceType { get { throw null; } }
+    }
+    public partial class ScheduledEventApproveResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult>
+    {
+        internal ScheduledEventApproveResult() { }
+        public string Value { get { throw null; } }
+        Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum VmTagOperator
     {

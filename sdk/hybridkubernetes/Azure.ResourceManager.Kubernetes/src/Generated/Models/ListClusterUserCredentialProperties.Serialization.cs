@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
 {
     public partial class ListClusterUserCredentialProperties : IUtf8JsonSerializable, IJsonModel<ListClusterUserCredentialProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListClusterUserCredentialProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListClusterUserCredentialProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ListClusterUserCredentialProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         internal static ListClusterUserCredentialProperties DeserializeListClusterUserCredentialProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

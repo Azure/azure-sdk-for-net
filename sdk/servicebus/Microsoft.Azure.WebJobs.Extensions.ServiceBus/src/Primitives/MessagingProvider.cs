@@ -24,6 +24,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         internal ConcurrentDictionary<string, ServiceBusReceiver> MessageReceiverCache { get; } = new();
         internal ConcurrentDictionary<string, ServiceBusClient> ClientCache { get; } = new();
         internal ConcurrentDictionary<string, (ServiceBusReceivedMessage Message, ServiceBusMessageActions Actions)> ActionsCache { get; } = new();
+        internal ConcurrentDictionary<string, ServiceBusSessionMessageActions> SessionActionsCache { get; } = new();
 
         /// <summary>
         /// Initializes a new instance of <see cref="MessagingProvider"/>.

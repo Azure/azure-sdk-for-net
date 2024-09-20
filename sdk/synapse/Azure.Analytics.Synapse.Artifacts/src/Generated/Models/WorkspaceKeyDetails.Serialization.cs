@@ -63,11 +63,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeWorkspaceKeyDetails(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<WorkspaceKeyDetails>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, WorkspaceKeyDetails model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<WorkspaceKeyDetails>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override WorkspaceKeyDetails Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

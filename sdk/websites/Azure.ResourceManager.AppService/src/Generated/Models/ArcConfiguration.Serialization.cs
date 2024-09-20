@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -17,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class ArcConfiguration : IUtf8JsonSerializable, IJsonModel<ArcConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArcConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(FrontEndServiceConfiguration))
             {
                 writer.WritePropertyName("frontEndServiceConfiguration"u8);
-                writer.WriteObjectValue<FrontEndConfiguration>(FrontEndServiceConfiguration, options);
+                writer.WriteObjectValue(FrontEndServiceConfiguration, options);
             }
             if (Optional.IsDefined(KubeConfig))
             {
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ArcConfiguration DeserializeArcConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -181,37 +180,34 @@ namespace Azure.ResourceManager.AppService.Models
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactsStorageType), out propertyOverride);
-            if (Optional.IsDefined(ArtifactsStorageType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  artifactsStorageType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArtifactsStorageType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  artifactsStorageType: ");
                     builder.AppendLine($"'{ArtifactsStorageType.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactStorageClassName), out propertyOverride);
-            if (Optional.IsDefined(ArtifactStorageClassName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  artifactStorageClassName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArtifactStorageClassName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  artifactStorageClassName: ");
                     if (ArtifactStorageClassName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -225,15 +221,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactStorageMountPath), out propertyOverride);
-            if (Optional.IsDefined(ArtifactStorageMountPath) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  artifactStorageMountPath: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArtifactStorageMountPath))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  artifactStorageMountPath: ");
                     if (ArtifactStorageMountPath.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -247,15 +244,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactStorageNodeName), out propertyOverride);
-            if (Optional.IsDefined(ArtifactStorageNodeName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  artifactStorageNodeName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArtifactStorageNodeName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  artifactStorageNodeName: ");
                     if (ArtifactStorageNodeName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -269,15 +267,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactStorageAccessMode), out propertyOverride);
-            if (Optional.IsDefined(ArtifactStorageAccessMode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  artifactStorageAccessMode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArtifactStorageAccessMode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  artifactStorageAccessMode: ");
                     if (ArtifactStorageAccessMode.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -290,30 +289,35 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FrontEndServiceConfiguration), out propertyOverride);
-            if (Optional.IsDefined(FrontEndServiceConfiguration) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("FrontEndServiceKind", out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  frontEndServiceConfiguration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine("{");
+                builder.Append("    kind: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(FrontEndServiceConfiguration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  frontEndServiceConfiguration: ");
                     BicepSerializationHelpers.AppendChildObject(builder, FrontEndServiceConfiguration, options, 2, false, "  frontEndServiceConfiguration: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KubeConfig), out propertyOverride);
-            if (Optional.IsDefined(KubeConfig) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  kubeConfig: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KubeConfig))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  kubeConfig: ");
                     if (KubeConfig.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -328,23 +332,6 @@ namespace Azure.ResourceManager.AppService.Models
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "FrontEndServiceKind":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("Kind", item.Value);
-                        bicepOptions.PropertyOverrides.Add(FrontEndServiceConfiguration, propertyDictionary);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<ArcConfiguration>.Write(ModelReaderWriterOptions options)

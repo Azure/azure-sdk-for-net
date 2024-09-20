@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RoutingIdentityInfo"/>. </summary>
-        /// <param name="identityType"></param>
+        /// <param name="identityType"> Routing identity type for topic spaces configuration. </param>
         /// <param name="userAssignedIdentity"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RoutingIdentityInfo(RoutingIdentityType? identityType, string userAssignedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -61,9 +61,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the identity type. </summary>
+        /// <summary> Routing identity type for topic spaces configuration. </summary>
+        [WirePath("type")]
         public RoutingIdentityType? IdentityType { get; set; }
         /// <summary> Gets or sets the user assigned identity. </summary>
+        [WirePath("userAssignedIdentity")]
         public string UserAssignedIdentity { get; set; }
     }
 }

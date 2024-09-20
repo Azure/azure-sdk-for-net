@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class EdgeOrderItemDetails : IUtf8JsonSerializable, IJsonModel<EdgeOrderItemDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderItemDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderItemDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeOrderItemDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("productDetails"u8);
-            writer.WriteObjectValue<ProductDetails>(ProductDetails, options);
+            writer.WriteObjectValue(ProductDetails, options);
             writer.WritePropertyName("orderItemType"u8);
             writer.WriteStringValue(OrderItemType.ToString());
             if (options.Format != "W" && Optional.IsDefined(CurrentStage))
             {
                 writer.WritePropertyName("currentStage"u8);
-                writer.WriteObjectValue<EdgeOrderStageDetails>(CurrentStage, options);
+                writer.WriteObjectValue(CurrentStage, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(OrderItemStageHistory))
             {
@@ -41,24 +41,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in OrderItemStageHistory)
                 {
-                    writer.WriteObjectValue<EdgeOrderStageDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue<OrderItemPreferences>(Preferences, options);
+                writer.WriteObjectValue(Preferences, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ForwardShippingDetails))
             {
                 writer.WritePropertyName("forwardShippingDetails"u8);
-                writer.WriteObjectValue<ForwardShippingDetails>(ForwardShippingDetails, options);
+                writer.WriteObjectValue(ForwardShippingDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
-                writer.WriteObjectValue<ReverseShippingDetails>(ReverseShippingDetails, options);
+                writer.WriteObjectValue(ReverseShippingDetails, options);
             }
             if (Optional.IsCollectionDefined(NotificationEmailList))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (options.Format != "W" && Optional.IsDefined(FirstOrDefaultManagement))
             {
                 writer.WritePropertyName("managementRpDetails"u8);
-                writer.WriteObjectValue<ResourceProviderDetails>(FirstOrDefaultManagement, options);
+                writer.WriteObjectValue(FirstOrDefaultManagement, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ManagementRPDetailsList))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in ManagementRPDetailsList)
                 {
-                    writer.WriteObjectValue<ResourceProviderDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static EdgeOrderItemDetails DeserializeEdgeOrderItemDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ComputeSecurityPostureReference : IUtf8JsonSerializable, IJsonModel<ComputeSecurityPostureReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeSecurityPostureReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeSecurityPostureReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ComputeSecurityPostureReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -26,20 +26,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsCollectionDefined(ExcludeExtensions))
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            if (Optional.IsCollectionDefined(ExcludeExtensionNames))
             {
                 writer.WritePropertyName("excludeExtensions"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExcludeExtensions)
+                foreach (var item in ExcludeExtensionNames)
                 {
-                    writer.WriteObjectValue<VirtualMachineExtensionData>(item, options);
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(IsOverridable))
+            {
+                writer.WritePropertyName("isOverridable"u8);
+                writer.WriteBooleanValue(IsOverridable.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,24 +75,21 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ComputeSecurityPostureReference DeserializeComputeSecurityPostureReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
-            IList<VirtualMachineExtensionData> excludeExtensions = default;
+            IList<string> excludeExtensions = default;
+            bool? isOverridable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
@@ -100,12 +99,21 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<VirtualMachineExtensionData> array = new List<VirtualMachineExtensionData>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(item, options));
+                        array.Add(item.GetString());
                     }
                     excludeExtensions = array;
+                    continue;
+                }
+                if (property.NameEquals("isOverridable"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isOverridable = property.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,7 +122,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ComputeSecurityPostureReference(id, excludeExtensions ?? new ChangeTrackingList<VirtualMachineExtensionData>(), serializedAdditionalRawData);
+            return new ComputeSecurityPostureReference(id, excludeExtensions ?? new ChangeTrackingList<string>(), isOverridable, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeSecurityPostureReference>.Write(ModelReaderWriterOptions options)

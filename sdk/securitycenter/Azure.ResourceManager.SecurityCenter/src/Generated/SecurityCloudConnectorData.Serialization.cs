@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityCloudConnectorData : IUtf8JsonSerializable, IJsonModel<SecurityCloudConnectorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityCloudConnectorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityCloudConnectorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityCloudConnectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(HybridComputeSettings))
             {
                 writer.WritePropertyName("hybridComputeSettings"u8);
-                writer.WriteObjectValue<HybridComputeSettingsProperties>(HybridComputeSettings, options);
+                writer.WriteObjectValue(HybridComputeSettings, options);
             }
             if (Optional.IsDefined(AuthenticationDetails))
             {
                 writer.WritePropertyName("authenticationDetails"u8);
-                writer.WriteObjectValue<AuthenticationDetailsProperties>(AuthenticationDetails, options);
+                writer.WriteObjectValue(AuthenticationDetails, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static SecurityCloudConnectorData DeserializeSecurityCloudConnectorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

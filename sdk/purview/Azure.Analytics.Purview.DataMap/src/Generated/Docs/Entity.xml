@@ -9,8 +9,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo();
-Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(atlasEntityWithExtInfo);
+AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo();
+Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(body);
 ]]></code>
 This sample shows how to call CreateOrUpdateAsync with all parameters.
 <code><![CDATA[
@@ -18,7 +18,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo
+AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
 {
     ReferredEntities =
     {
@@ -96,7 +96,7 @@ AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo
     },
     Entity = default,
 };
-Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(atlasEntityWithExtInfo, businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore, collectionId: "<collectionId>");
+Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(body, businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore, collectionId: "<collectionId>");
 ]]></code></example>
     </member>
     <member name="CreateOrUpdate(AtlasEntityWithExtInfo,BusinessAttributeUpdateBehavior?,string,CancellationToken)">
@@ -107,8 +107,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo();
-Response<EntityMutationResult> response = client.CreateOrUpdate(atlasEntityWithExtInfo);
+AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo();
+Response<EntityMutationResult> response = client.CreateOrUpdate(body);
 ]]></code>
 This sample shows how to call CreateOrUpdate with all parameters.
 <code><![CDATA[
@@ -116,7 +116,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo
+AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
 {
     ReferredEntities =
     {
@@ -194,7 +194,7 @@ AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo
     },
     Entity = default,
 };
-Response<EntityMutationResult> response = client.CreateOrUpdate(atlasEntityWithExtInfo, businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore, collectionId: "<collectionId>");
+Response<EntityMutationResult> response = client.CreateOrUpdate(body, businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore, collectionId: "<collectionId>");
 ]]></code></example>
     </member>
     <member name="CreateOrUpdateAsync(RequestContent,string,string,RequestContext)">
@@ -795,8 +795,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo = new AtlasEntitiesWithExtInfo();
-Response<EntityMutationResult> response = await client.BatchCreateOrUpdateAsync(atlasEntitiesWithExtInfo);
+AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo();
+Response<EntityMutationResult> response = await client.BatchCreateOrUpdateAsync(body);
 ]]></code>
 This sample shows how to call BatchCreateOrUpdateAsync with all parameters.
 <code><![CDATA[
@@ -804,7 +804,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo = new AtlasEntitiesWithExtInfo
+AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo
 {
     ReferredEntities =
     {
@@ -882,7 +882,7 @@ AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo = new AtlasEntitiesWithExtInfo
     },
     Entities = { default },
 };
-Response<EntityMutationResult> response = await client.BatchCreateOrUpdateAsync(atlasEntitiesWithExtInfo, collectionId: "<collectionId>", businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore);
+Response<EntityMutationResult> response = await client.BatchCreateOrUpdateAsync(body, collectionId: "<collectionId>", businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore);
 ]]></code></example>
     </member>
     <member name="BatchCreateOrUpdate(AtlasEntitiesWithExtInfo,string,BusinessAttributeUpdateBehavior?,CancellationToken)">
@@ -893,8 +893,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo = new AtlasEntitiesWithExtInfo();
-Response<EntityMutationResult> response = client.BatchCreateOrUpdate(atlasEntitiesWithExtInfo);
+AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo();
+Response<EntityMutationResult> response = client.BatchCreateOrUpdate(body);
 ]]></code>
 This sample shows how to call BatchCreateOrUpdate with all parameters.
 <code><![CDATA[
@@ -902,7 +902,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo = new AtlasEntitiesWithExtInfo
+AtlasEntitiesWithExtInfo body = new AtlasEntitiesWithExtInfo
 {
     ReferredEntities =
     {
@@ -980,7 +980,7 @@ AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo = new AtlasEntitiesWithExtInfo
     },
     Entities = { default },
 };
-Response<EntityMutationResult> response = client.BatchCreateOrUpdate(atlasEntitiesWithExtInfo, collectionId: "<collectionId>", businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore);
+Response<EntityMutationResult> response = client.BatchCreateOrUpdate(body, collectionId: "<collectionId>", businessAttributeUpdateBehavior: BusinessAttributeUpdateBehavior.Ignore);
 ]]></code></example>
     </member>
     <member name="BatchCreateOrUpdateAsync(RequestContent,string,string,RequestContext)">
@@ -1547,8 +1547,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig();
-Response response = await client.AddClassificationAsync(classificationAssociateConfig);
+ClassificationAssociateConfig body = new ClassificationAssociateConfig();
+Response response = await client.AddClassificationAsync(body);
 ]]></code>
 This sample shows how to call AddClassificationAsync with all parameters.
 <code><![CDATA[
@@ -1556,7 +1556,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig
+ClassificationAssociateConfig body = new ClassificationAssociateConfig
 {
     Classification = new AtlasClassification
     {
@@ -1578,7 +1578,7 @@ ClassificationAssociateConfig classificationAssociateConfig = new Classification
     },
     EntityGuids = { "<entityGuids>" },
 };
-Response response = await client.AddClassificationAsync(classificationAssociateConfig);
+Response response = await client.AddClassificationAsync(body);
 ]]></code></example>
     </member>
     <member name="AddClassification(ClassificationAssociateConfig,CancellationToken)">
@@ -1589,8 +1589,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig();
-Response response = client.AddClassification(classificationAssociateConfig);
+ClassificationAssociateConfig body = new ClassificationAssociateConfig();
+Response response = client.AddClassification(body);
 ]]></code>
 This sample shows how to call AddClassification with all parameters.
 <code><![CDATA[
@@ -1598,7 +1598,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig
+ClassificationAssociateConfig body = new ClassificationAssociateConfig
 {
     Classification = new AtlasClassification
     {
@@ -1620,7 +1620,7 @@ ClassificationAssociateConfig classificationAssociateConfig = new Classification
     },
     EntityGuids = { "<entityGuids>" },
 };
-Response response = client.AddClassification(classificationAssociateConfig);
+Response response = client.AddClassification(body);
 ]]></code></example>
     </member>
     <member name="AddClassificationAsync(RequestContent,RequestContext)">
@@ -3243,8 +3243,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo();
-Response<EntityMutationResult> response = await client.UpdateByUniqueAttributeAsync("<typeName>", atlasEntityWithExtInfo);
+AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo();
+Response<EntityMutationResult> response = await client.UpdateByUniqueAttributeAsync("<typeName>", body);
 ]]></code>
 This sample shows how to call UpdateByUniqueAttributeAsync with all parameters.
 <code><![CDATA[
@@ -3252,7 +3252,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo
+AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
 {
     ReferredEntities =
     {
@@ -3330,7 +3330,7 @@ AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo
     },
     Entity = default,
 };
-Response<EntityMutationResult> response = await client.UpdateByUniqueAttributeAsync("<typeName>", atlasEntityWithExtInfo, attribute: "<attribute>");
+Response<EntityMutationResult> response = await client.UpdateByUniqueAttributeAsync("<typeName>", body, attribute: "<attribute>");
 ]]></code></example>
     </member>
     <member name="UpdateByUniqueAttribute(string,AtlasEntityWithExtInfo,string,CancellationToken)">
@@ -3341,8 +3341,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo();
-Response<EntityMutationResult> response = client.UpdateByUniqueAttribute("<typeName>", atlasEntityWithExtInfo);
+AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo();
+Response<EntityMutationResult> response = client.UpdateByUniqueAttribute("<typeName>", body);
 ]]></code>
 This sample shows how to call UpdateByUniqueAttribute with all parameters.
 <code><![CDATA[
@@ -3350,7 +3350,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo
+AtlasEntityWithExtInfo body = new AtlasEntityWithExtInfo
 {
     ReferredEntities =
     {
@@ -3428,7 +3428,7 @@ AtlasEntityWithExtInfo atlasEntityWithExtInfo = new AtlasEntityWithExtInfo
     },
     Entity = default,
 };
-Response<EntityMutationResult> response = client.UpdateByUniqueAttribute("<typeName>", atlasEntityWithExtInfo, attribute: "<attribute>");
+Response<EntityMutationResult> response = client.UpdateByUniqueAttribute("<typeName>", body, attribute: "<attribute>");
 ]]></code></example>
     </member>
     <member name="UpdateByUniqueAttributeAsync(string,RequestContent,string,RequestContext)">
@@ -4405,8 +4405,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-AtlasEntityHeaders atlasEntityHeaders = new AtlasEntityHeaders();
-Response<IReadOnlyList<string>> response = await client.BatchSetClassificationsAsync(atlasEntityHeaders);
+AtlasEntityHeaders body = new AtlasEntityHeaders();
+Response<IReadOnlyList<string>> response = await client.BatchSetClassificationsAsync(body);
 ]]></code>
 This sample shows how to call BatchSetClassificationsAsync with all parameters.
 <code><![CDATA[
@@ -4414,7 +4414,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-AtlasEntityHeaders atlasEntityHeaders = new AtlasEntityHeaders
+AtlasEntityHeaders body = new AtlasEntityHeaders
 {
     GuidHeaderMap =
     {
@@ -4466,7 +4466,7 @@ AtlasEntityHeaders atlasEntityHeaders = new AtlasEntityHeaders
         }
     },
 };
-Response<IReadOnlyList<string>> response = await client.BatchSetClassificationsAsync(atlasEntityHeaders);
+Response<IReadOnlyList<string>> response = await client.BatchSetClassificationsAsync(body);
 ]]></code></example>
     </member>
     <member name="BatchSetClassifications(AtlasEntityHeaders,CancellationToken)">
@@ -4477,8 +4477,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-AtlasEntityHeaders atlasEntityHeaders = new AtlasEntityHeaders();
-Response<IReadOnlyList<string>> response = client.BatchSetClassifications(atlasEntityHeaders);
+AtlasEntityHeaders body = new AtlasEntityHeaders();
+Response<IReadOnlyList<string>> response = client.BatchSetClassifications(body);
 ]]></code>
 This sample shows how to call BatchSetClassifications with all parameters.
 <code><![CDATA[
@@ -4486,7 +4486,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-AtlasEntityHeaders atlasEntityHeaders = new AtlasEntityHeaders
+AtlasEntityHeaders body = new AtlasEntityHeaders
 {
     GuidHeaderMap =
     {
@@ -4538,7 +4538,7 @@ AtlasEntityHeaders atlasEntityHeaders = new AtlasEntityHeaders
         }
     },
 };
-Response<IReadOnlyList<string>> response = client.BatchSetClassifications(atlasEntityHeaders);
+Response<IReadOnlyList<string>> response = client.BatchSetClassifications(body);
 ]]></code></example>
     </member>
     <member name="BatchSetClassificationsAsync(RequestContent,RequestContext)">
@@ -5709,8 +5709,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
-Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(businessMetadataOptions);
+BusinessMetadataOptions body = new BusinessMetadataOptions(null);
+Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(body);
 ]]></code>
 This sample shows how to call ImportBusinessMetadataAsync with all parameters.
 <code><![CDATA[
@@ -5718,8 +5718,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
-Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(businessMetadataOptions);
+BusinessMetadataOptions body = new BusinessMetadataOptions(null);
+Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(body);
 ]]></code></example>
     </member>
     <member name="ImportBusinessMetadata(BusinessMetadataOptions,CancellationToken)">
@@ -5730,8 +5730,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
-Response<BulkImportResult> response = client.ImportBusinessMetadata(businessMetadataOptions);
+BusinessMetadataOptions body = new BusinessMetadataOptions(null);
+Response<BulkImportResult> response = client.ImportBusinessMetadata(body);
 ]]></code>
 This sample shows how to call ImportBusinessMetadata with all parameters.
 <code><![CDATA[
@@ -5739,11 +5739,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
-Response<BulkImportResult> response = client.ImportBusinessMetadata(businessMetadataOptions);
+BusinessMetadataOptions body = new BusinessMetadataOptions(null);
+Response<BulkImportResult> response = client.ImportBusinessMetadata(body);
 ]]></code></example>
     </member>
-    <member name="ImportBusinessMetadataAsync(RequestContent,RequestContext)">
+    <member name="ImportBusinessMetadataAsync(RequestContent,string,RequestContext)">
       <example>
 This sample shows how to call ImportBusinessMetadataAsync and parse the result.
 <code><![CDATA[
@@ -5753,14 +5753,14 @@ Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
 using RequestContent content = RequestContent.Create(new
 {
-    file = new object(),
+    file = File.OpenRead("<filePath>"),
 });
-Response response = await client.ImportBusinessMetadataAsync(content);
+Response response = await client.ImportBusinessMetadataAsync(content, "multipart/form-data");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call ImportBusinessMetadataAsync with all request content and parse the result.
+This sample shows how to call ImportBusinessMetadataAsync with all parameters and request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -5768,9 +5768,9 @@ Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
 using RequestContent content = RequestContent.Create(new
 {
-    file = new object(),
+    file = File.OpenRead("<filePath>"),
 });
-Response response = await client.ImportBusinessMetadataAsync(content);
+Response response = await client.ImportBusinessMetadataAsync(content, "multipart/form-data");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
@@ -5783,7 +5783,7 @@ Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("pa
 Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("remarks").ToString());
 ]]></code></example>
     </member>
-    <member name="ImportBusinessMetadata(RequestContent,RequestContext)">
+    <member name="ImportBusinessMetadata(RequestContent,string,RequestContext)">
       <example>
 This sample shows how to call ImportBusinessMetadata and parse the result.
 <code><![CDATA[
@@ -5793,14 +5793,14 @@ Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
 using RequestContent content = RequestContent.Create(new
 {
-    file = new object(),
+    file = File.OpenRead("<filePath>"),
 });
-Response response = client.ImportBusinessMetadata(content);
+Response response = client.ImportBusinessMetadata(content, "multipart/form-data");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call ImportBusinessMetadata with all request content and parse the result.
+This sample shows how to call ImportBusinessMetadata with all parameters and request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -5808,9 +5808,9 @@ Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
 using RequestContent content = RequestContent.Create(new
 {
-    file = new object(),
+    file = File.OpenRead("<filePath>"),
 });
-Response response = client.ImportBusinessMetadata(content);
+Response response = client.ImportBusinessMetadata(content, "multipart/form-data");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
@@ -6395,8 +6395,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig();
-Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", moveEntitiesConfig);
+MoveEntitiesConfig body = new MoveEntitiesConfig();
+Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", body);
 ]]></code>
 This sample shows how to call MoveEntitiesToCollectionAsync with all parameters.
 <code><![CDATA[
@@ -6404,11 +6404,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig
+MoveEntitiesConfig body = new MoveEntitiesConfig
 {
     EntityGuids = { "<entityGuids>" },
 };
-Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", moveEntitiesConfig);
+Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", body);
 ]]></code></example>
     </member>
     <member name="MoveEntitiesToCollection(string,MoveEntitiesConfig,CancellationToken)">
@@ -6419,8 +6419,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig();
-Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", moveEntitiesConfig);
+MoveEntitiesConfig body = new MoveEntitiesConfig();
+Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", body);
 ]]></code>
 This sample shows how to call MoveEntitiesToCollection with all parameters.
 <code><![CDATA[
@@ -6428,11 +6428,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig
+MoveEntitiesConfig body = new MoveEntitiesConfig
 {
     EntityGuids = { "<entityGuids>" },
 };
-Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", moveEntitiesConfig);
+Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", body);
 ]]></code></example>
     </member>
     <member name="MoveEntitiesToCollectionAsync(string,RequestContent,RequestContext)">

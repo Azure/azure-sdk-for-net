@@ -62,8 +62,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="customBlockResponseStatusCode"> If the action type is block, customer can override the response status code. </param>
         /// <param name="customBlockResponseBody"> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </param>
         /// <param name="logScrubbing"> To scrub sensitive log fields. </param>
+        /// <param name="jsChallengeCookieExpirationInMins"> Web Application Firewall JavaScript Challenge Cookie Expiration time in minutes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicySettings(WebApplicationFirewallEnabledState? state, WebApplicationFirewallMode? mode, bool? requestBodyCheck, int? requestBodyInspectLimitInKB, bool? requestBodyEnforcement, int? maxRequestBodySizeInKb, bool? fileUploadEnforcement, int? fileUploadLimitInMb, int? customBlockResponseStatusCode, string customBlockResponseBody, PolicySettingsLogScrubbing logScrubbing, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PolicySettings(WebApplicationFirewallEnabledState? state, WebApplicationFirewallMode? mode, bool? requestBodyCheck, int? requestBodyInspectLimitInKB, bool? requestBodyEnforcement, int? maxRequestBodySizeInKb, bool? fileUploadEnforcement, int? fileUploadLimitInMb, int? customBlockResponseStatusCode, string customBlockResponseBody, PolicySettingsLogScrubbing logScrubbing, int? jsChallengeCookieExpirationInMins, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             Mode = mode;
@@ -76,6 +77,7 @@ namespace Azure.ResourceManager.Network.Models
             CustomBlockResponseStatusCode = customBlockResponseStatusCode;
             CustomBlockResponseBody = customBlockResponseBody;
             LogScrubbing = logScrubbing;
+            JsChallengeCookieExpirationInMins = jsChallengeCookieExpirationInMins;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -101,5 +103,7 @@ namespace Azure.ResourceManager.Network.Models
         public string CustomBlockResponseBody { get; set; }
         /// <summary> To scrub sensitive log fields. </summary>
         public PolicySettingsLogScrubbing LogScrubbing { get; set; }
+        /// <summary> Web Application Firewall JavaScript Challenge Cookie Expiration time in minutes. </summary>
+        public int? JsChallengeCookieExpirationInMins { get; set; }
     }
 }

@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
-                writer.WriteObjectValue<LinkedServiceReference>(LinkedService);
+                writer.WriteObjectValue(LinkedService);
             }
             if (Optional.IsDefined(TypeProperties))
             {
                 writer.WritePropertyName("typeProperties"u8);
-                writer.WriteObjectValue<LinkConnectionTargetDatabaseTypeProperties>(TypeProperties);
+                writer.WriteObjectValue(TypeProperties);
             }
             writer.WriteEndObject();
         }
@@ -71,11 +71,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeLinkConnectionTargetDatabase(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<LinkConnectionTargetDatabase>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -83,7 +83,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, LinkConnectionTargetDatabase model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<LinkConnectionTargetDatabase>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override LinkConnectionTargetDatabase Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Synapse.Models
     [PersistableModelProxy(typeof(UnknownSsisObjectMetadata))]
     public partial class SynapseSsisObjectMetadata : IUtf8JsonSerializable, IJsonModel<SynapseSsisObjectMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSsisObjectMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSsisObjectMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseSsisObjectMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseSsisObjectMetadata DeserializeSynapseSsisObjectMetadata(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

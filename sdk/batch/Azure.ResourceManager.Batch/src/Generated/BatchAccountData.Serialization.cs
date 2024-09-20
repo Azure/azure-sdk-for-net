@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch
 {
     public partial class BatchAccountData : IUtf8JsonSerializable, IJsonModel<BatchAccountData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(KeyVaultReference))
             {
                 writer.WritePropertyName("keyVaultReference"u8);
-                writer.WriteObjectValue<BatchKeyVaultReference>(KeyVaultReference, options);
+                writer.WriteObjectValue(KeyVaultReference, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Batch
                 if (NetworkProfile != null)
                 {
                     writer.WritePropertyName("networkProfile"u8);
-                    writer.WriteObjectValue<BatchNetworkProfile>(NetworkProfile, options);
+                    writer.WriteObjectValue(NetworkProfile, options);
                 }
                 else
                 {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteStartArray();
                     foreach (var item in PrivateEndpointConnections)
                     {
-                        writer.WriteObjectValue<BatchPrivateEndpointConnectionData>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -140,12 +140,12 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(AutoStorage))
             {
                 writer.WritePropertyName("autoStorage"u8);
-                writer.WriteObjectValue<BatchAccountAutoStorageConfiguration>(AutoStorage, options);
+                writer.WriteObjectValue(AutoStorage, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<BatchAccountEncryptionConfiguration>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DedicatedCoreQuota))
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteStartArray();
                     foreach (var item in DedicatedCoreQuotaPerVmFamily)
                     {
-                        writer.WriteObjectValue<BatchVmFamilyCoreQuota>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Batch
 
         internal static BatchAccountData DeserializeBatchAccountData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Batch
             }
             ManagedServiceIdentity identity = default;
             AzureLocation? location = default;
-            IDictionary<string, string> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

@@ -12,8 +12,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class DataSourceCredentialEntityLiveTests : MetricsAdvisorLiveTestBase
     {
-        private const string ClientId = "clientId";
-        private const string TenantId = "tenantId";
+        private string TenantId => Mode == RecordedTestMode.Live ? "tenantId" : EmptyGuid;
+        private string ClientId => Mode == RecordedTestMode.Live ? "clientId" : EmptyGuid;
         private const string Endpoint = "https://fakeuri.com/";
         private const string ClientIdSecretName = "clientIdSecretName";
         private const string ClientSecretSecretName = "clientSecretSecretName";
@@ -281,7 +281,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             }
         }
 
-        private static DataSourceCredentialEntity GetDataSourceCredentialEntityTestCase(string credentialTypeName, string credentialName) => credentialTypeName switch
+        private DataSourceCredentialEntity GetDataSourceCredentialEntityTestCase(string credentialTypeName, string credentialName) => credentialTypeName switch
         {
             nameof(DataLakeSharedKeyCredentialEntity) => new DataLakeSharedKeyCredentialEntity(credentialName, "accountKey"),
             nameof(ServicePrincipalCredentialEntity) => new ServicePrincipalCredentialEntity(credentialName, ClientId, "clientSecret", TenantId),

@@ -4,6 +4,7 @@
 using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -11,6 +12,7 @@ namespace Azure.Communication.Sms.Tests
 {
     public class SmsClientLiveTestBase : RecordedTestBase<SmsClientTestEnvironment>
     {
+        private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
         public SmsClientLiveTestBase(bool isAsync) : base(isAsync)
         {
             JsonPathSanitizers.Add("$..from");
@@ -18,6 +20,7 @@ namespace Azure.Communication.Sms.Tests
             JsonPathSanitizers.Add("$..repeatabilityRequestId");
             JsonPathSanitizers.Add("$..repeatabilityFirstSent");
             SanitizedHeaders.Add("x-ms-content-sha256");
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { Value = "https://sanitized.communication.azure.com" });
         }
 
         [OneTimeSetUp]
@@ -71,7 +74,7 @@ namespace Azure.Communication.Sms.Tests
                 #region Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
                 //@@ string endpoint = "<endpoint_url>";
                 //@@ TokenCredential tokenCredential = new DefaultAzureCredential();
-                /*@@*/tokenCredential = new DefaultAzureCredential();
+                /*@@*/tokenCredential = TestEnvironment.Credential;
                 //@@ SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
                 #endregion Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
             }

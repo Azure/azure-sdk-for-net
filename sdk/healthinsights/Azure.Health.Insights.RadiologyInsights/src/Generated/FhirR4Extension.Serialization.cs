@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 {
     public partial class FhirR4Extension : IUtf8JsonSerializable, IJsonModel<FhirR4Extension>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4Extension>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4Extension>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FhirR4Extension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,12 +31,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(ValueQuantity))
             {
                 writer.WritePropertyName("valueQuantity"u8);
-                writer.WriteObjectValue<FhirR4Quantity>(ValueQuantity, options);
+                writer.WriteObjectValue(ValueQuantity, options);
             }
             if (Optional.IsDefined(ValueCodeableConcept))
             {
                 writer.WritePropertyName("valueCodeableConcept"u8);
-                writer.WriteObjectValue<FhirR4CodeableConcept>(ValueCodeableConcept, options);
+                writer.WriteObjectValue(ValueCodeableConcept, options);
             }
             if (Optional.IsDefined(ValueString))
             {
@@ -56,17 +56,17 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(ValueRange))
             {
                 writer.WritePropertyName("valueRange"u8);
-                writer.WriteObjectValue<FhirR4Range>(ValueRange, options);
+                writer.WriteObjectValue(ValueRange, options);
             }
             if (Optional.IsDefined(ValueRatio))
             {
                 writer.WritePropertyName("valueRatio"u8);
-                writer.WriteObjectValue<FhirR4Ratio>(ValueRatio, options);
+                writer.WriteObjectValue(ValueRatio, options);
             }
             if (Optional.IsDefined(ValueSampledData))
             {
                 writer.WritePropertyName("valueSampledData"u8);
-                writer.WriteObjectValue<FhirR4SampledData>(ValueSampledData, options);
+                writer.WriteObjectValue(ValueSampledData, options);
             }
             if (Optional.IsDefined(ValueTime))
             {
@@ -81,12 +81,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(ValuePeriod))
             {
                 writer.WritePropertyName("valuePeriod"u8);
-                writer.WriteObjectValue<FhirR4Period>(ValuePeriod, options);
+                writer.WriteObjectValue(ValuePeriod, options);
             }
             if (Optional.IsDefined(ValueReference))
             {
                 writer.WritePropertyName("valueReference"u8);
-                writer.WriteObjectValue<FhirR4Reference>(ValueReference, options);
+                writer.WriteObjectValue(ValueReference, options);
             }
             if (Optional.IsDefined(Id))
             {
@@ -99,7 +99,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Extension)
                 {
-                    writer.WriteObjectValue<FhirR4Extension>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +135,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         internal static FhirR4Extension DeserializeFhirR4Extension(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -155,7 +155,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             FhirR4Period valuePeriod = default;
             FhirR4Reference valueReference = default;
             string id = default;
-            IReadOnlyList<FhirR4Extension> extension = default;
+            IList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -348,11 +348,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             return DeserializeFhirR4Extension(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<FhirR4Extension>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

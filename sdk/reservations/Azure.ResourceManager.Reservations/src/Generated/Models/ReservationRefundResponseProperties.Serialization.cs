@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ReservationRefundResponseProperties : IUtf8JsonSerializable, IJsonModel<ReservationRefundResponseProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationRefundResponseProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationRefundResponseProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReservationRefundResponseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(BillingRefundAmount))
             {
                 writer.WritePropertyName("billingRefundAmount"u8);
-                writer.WriteObjectValue<PurchasePrice>(BillingRefundAmount, options);
+                writer.WriteObjectValue(BillingRefundAmount, options);
             }
             if (Optional.IsDefined(PricingRefundAmount))
             {
                 writer.WritePropertyName("pricingRefundAmount"u8);
-                writer.WriteObjectValue<PurchasePrice>(PricingRefundAmount, options);
+                writer.WriteObjectValue(PricingRefundAmount, options);
             }
             if (Optional.IsDefined(PolicyResult))
             {
                 writer.WritePropertyName("policyResult"u8);
-                writer.WriteObjectValue<RefundPolicyResult>(PolicyResult, options);
+                writer.WriteObjectValue(PolicyResult, options);
             }
             if (Optional.IsDefined(BillingInformation))
             {
                 writer.WritePropertyName("billingInformation"u8);
-                writer.WriteObjectValue<ReservationRefundBillingInformation>(BillingInformation, options);
+                writer.WriteObjectValue(BillingInformation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static ReservationRefundResponseProperties DeserializeReservationRefundResponseProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

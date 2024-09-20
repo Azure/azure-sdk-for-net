@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     public partial class DeviceUpdatePrivateLinkServiceProxy : IUtf8JsonSerializable, IJsonModel<DeviceUpdatePrivateLinkServiceProxy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceUpdatePrivateLinkServiceProxy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceUpdatePrivateLinkServiceProxy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeviceUpdatePrivateLinkServiceProxy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             if (Optional.IsDefined(RemotePrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("remotePrivateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue<DeviceUpdatePrivateLinkServiceConnectionState>(RemotePrivateLinkServiceConnectionState, options);
+                writer.WriteObjectValue(RemotePrivateLinkServiceConnectionState, options);
             }
             if (Optional.IsDefined(RemotePrivateEndpointConnection))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WriteStartArray();
                 foreach (var item in GroupConnectivityInformation)
                 {
-                    writer.WriteObjectValue<GroupConnectivityInformation>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal static DeviceUpdatePrivateLinkServiceProxy DeserializeDeviceUpdatePrivateLinkServiceProxy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

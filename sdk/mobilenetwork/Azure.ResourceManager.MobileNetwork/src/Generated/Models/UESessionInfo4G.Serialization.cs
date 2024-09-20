@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public partial class UESessionInfo4G : IUtf8JsonSerializable, IJsonModel<UESessionInfo4G>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UESessionInfo4G>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UESessionInfo4G>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UESessionInfo4G>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static UESessionInfo4G DeserializeUESessionInfo4G(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,6 +128,94 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new UESessionInfo4G(ebi, apn, pdnType, ipV4Addr, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Ebi), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ebi: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  ebi: ");
+                builder.AppendLine($"{Ebi}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Apn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  apn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Apn))
+                {
+                    builder.Append("  apn: ");
+                    if (Apn.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Apn}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Apn}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PdnType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pdnType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  pdnType: ");
+                builder.AppendLine($"'{PdnType.ToString()}'");
+            }
+
+            builder.Append("  ueIpAddress:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPV4Addr), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    ipV4Addr: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPV4Addr))
+                {
+                    builder.Append("    ipV4Addr: ");
+                    if (IPV4Addr.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IPV4Addr}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IPV4Addr}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<UESessionInfo4G>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UESessionInfo4G>)this).GetFormatFromOptions(options) : options.Format;
@@ -135,6 +224,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(UESessionInfo4G)} does not support writing '{options.Format}' format.");
             }

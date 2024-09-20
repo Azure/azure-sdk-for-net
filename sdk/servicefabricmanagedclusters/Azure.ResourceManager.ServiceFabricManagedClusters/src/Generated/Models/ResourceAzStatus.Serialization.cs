@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     public partial class ResourceAzStatus : IUtf8JsonSerializable, IJsonModel<ResourceAzStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceAzStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceAzStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceAzStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 writer.WritePropertyName("isZoneResilient"u8);
                 writer.WriteBooleanValue(IsZoneResilient.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Details))
+            {
+                writer.WritePropertyName("details"u8);
+                writer.WriteStringValue(Details);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +78,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ResourceAzStatus DeserializeResourceAzStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,6 +87,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             string resourceName = default;
             ResourceType? resourceType = default;
             bool? isZoneResilient = default;
+            string details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,13 +115,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     isZoneResilient = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("details"u8))
+                {
+                    details = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ResourceAzStatus(resourceName, resourceType, isZoneResilient, serializedAdditionalRawData);
+            return new ResourceAzStatus(resourceName, resourceType, isZoneResilient, details, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceAzStatus>.Write(ModelReaderWriterOptions options)

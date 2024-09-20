@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
 {
     public partial class DistributionPolicy : IUtf8JsonSerializable, IJsonModel<DistributionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DistributionPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DistributionPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DistributionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,7 +44,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(OfferExpiresAfter))
             {
                 writer.WritePropertyName("offerExpiresAfterSeconds"u8);
-                WriteOfferExpiresAfter(writer);
+                WriteOfferExpiresAfter(writer, options);
             }
             if (Optional.IsDefined(Mode))
             {
@@ -83,7 +83,7 @@ namespace Azure.Communication.JobRouter
 
         internal static DistributionPolicy DeserializeDistributionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

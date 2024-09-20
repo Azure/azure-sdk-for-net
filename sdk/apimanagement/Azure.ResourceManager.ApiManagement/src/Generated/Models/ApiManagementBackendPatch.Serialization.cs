@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiManagementBackendPatch : IUtf8JsonSerializable, IJsonModel<ApiManagementBackendPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementBackendPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementBackendPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiManagementBackendPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementBackendPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 throw new FormatException($"The model {nameof(ApiManagementBackendPatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Title))
@@ -46,22 +54,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<BackendProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue<BackendCredentialsContract>(Credentials, options);
+                writer.WriteObjectValue(Credentials, options);
             }
             if (Optional.IsDefined(Proxy))
             {
                 writer.WritePropertyName("proxy"u8);
-                writer.WriteObjectValue<BackendProxyContract>(Proxy, options);
+                writer.WriteObjectValue(Proxy, options);
             }
             if (Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
-                writer.WriteObjectValue<BackendTlsProperties>(Tls, options);
+                writer.WriteObjectValue(Tls, options);
+            }
+            if (Optional.IsDefined(CircuitBreaker))
+            {
+                writer.WritePropertyName("circuitBreaker"u8);
+                writer.WriteObjectValue(CircuitBreaker, options);
             }
             if (Optional.IsDefined(Uri))
             {
@@ -89,7 +102,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ApiManagementBackendPatch IJsonModel<ApiManagementBackendPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -106,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiManagementBackendPatch DeserializeApiManagementBackendPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -119,6 +131,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             BackendCredentialsContract credentials = default;
             BackendProxyContract proxy = default;
             BackendTlsProperties tls = default;
+            BackendCircuitBreaker circuitBreaker = default;
             Uri uri = default;
             BackendProtocol? protocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -189,6 +202,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             tls = BackendTlsProperties.DeserializeBackendTlsProperties(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("circuitBreaker"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            circuitBreaker = BackendCircuitBreaker.DeserializeBackendCircuitBreaker(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("url"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -224,6 +246,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 credentials,
                 proxy,
                 tls,
+                circuitBreaker,
                 uri,
                 protocol,
                 serializedAdditionalRawData);

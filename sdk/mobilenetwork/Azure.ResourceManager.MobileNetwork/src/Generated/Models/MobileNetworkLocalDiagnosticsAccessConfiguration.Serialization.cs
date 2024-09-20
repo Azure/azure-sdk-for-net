@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public partial class MobileNetworkLocalDiagnosticsAccessConfiguration : IUtf8JsonSerializable, IJsonModel<MobileNetworkLocalDiagnosticsAccessConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkLocalDiagnosticsAccessConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkLocalDiagnosticsAccessConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MobileNetworkLocalDiagnosticsAccessConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(HttpsServerCertificate))
             {
                 writer.WritePropertyName("httpsServerCertificate"u8);
-                writer.WriteObjectValue<MobileNetworkHttpsServerCertificate>(HttpsServerCertificate, options);
+                writer.WriteObjectValue(HttpsServerCertificate, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static MobileNetworkLocalDiagnosticsAccessConfiguration DeserializeMobileNetworkLocalDiagnosticsAccessConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,6 +101,48 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new MobileNetworkLocalDiagnosticsAccessConfiguration(authenticationType, httpsServerCertificate, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  authenticationType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  authenticationType: ");
+                builder.AppendLine($"'{AuthenticationType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpsServerCertificate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  httpsServerCertificate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HttpsServerCertificate))
+                {
+                    builder.Append("  httpsServerCertificate: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, HttpsServerCertificate, options, 2, false, "  httpsServerCertificate: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MobileNetworkLocalDiagnosticsAccessConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkLocalDiagnosticsAccessConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -108,6 +151,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MobileNetworkLocalDiagnosticsAccessConfiguration)} does not support writing '{options.Format}' format.");
             }

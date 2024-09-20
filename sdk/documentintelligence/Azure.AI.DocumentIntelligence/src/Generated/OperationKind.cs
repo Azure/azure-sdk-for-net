@@ -25,6 +25,7 @@ namespace Azure.AI.DocumentIntelligence
         private const string DocumentModelBuildValue = "documentModelBuild";
         private const string DocumentModelComposeValue = "documentModelCompose";
         private const string DocumentModelCopyToValue = "documentModelCopyTo";
+        private const string DocumentClassifierCopyToValue = "documentClassifierCopyTo";
         private const string DocumentClassifierBuildValue = "documentClassifierBuild";
 
         /// <summary> Build a new custom document model. </summary>
@@ -36,6 +37,11 @@ namespace Azure.AI.DocumentIntelligence
         /// subscription.
         /// </summary>
         public static OperationKind DocumentModelCopyTo { get; } = new OperationKind(DocumentModelCopyToValue);
+        /// <summary>
+        /// Copy an existing document classifier to potentially a different resource, region, or
+        /// subscription.
+        /// </summary>
+        public static OperationKind DocumentClassifierCopyTo { get; } = new OperationKind(DocumentClassifierCopyToValue);
         /// <summary> Build a new custom classifier model. </summary>
         public static OperationKind DocumentClassifierBuild { get; } = new OperationKind(DocumentClassifierBuildValue);
         /// <summary> Determines if two <see cref="OperationKind"/> values are the same. </summary>
@@ -53,7 +59,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public partial class VaultPropertiesEncryption : IUtf8JsonSerializable, IJsonModel<VaultPropertiesEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultPropertiesEncryption>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultPropertiesEncryption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VaultPropertiesEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue<CmkKeyVaultProperties>(KeyVaultProperties, options);
+                writer.WriteObjectValue(KeyVaultProperties, options);
             }
             if (Optional.IsDefined(KekIdentity))
             {
                 writer.WritePropertyName("kekIdentity"u8);
-                writer.WriteObjectValue<CmkKekIdentity>(KekIdentity, options);
+                writer.WriteObjectValue(KekIdentity, options);
             }
             if (Optional.IsDefined(InfrastructureEncryption))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static VaultPropertiesEncryption DeserializeVaultPropertiesEncryption(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

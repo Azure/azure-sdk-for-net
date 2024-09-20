@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.LabServices
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabPlanData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabPlanData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabPlanResource : Azure.ResourceManager.ArmResource
+    public partial class LabPlanResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabPlanData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabPlanData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected LabPlanResource() { }
@@ -88,10 +88,15 @@ namespace Azure.ResourceManager.LabServices
         public virtual Azure.ResourceManager.LabServices.LabVirtualMachineImageCollection GetLabVirtualMachineImages() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation SaveImage(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SaveImageAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.LabServices.LabPlanData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabPlanData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabPlanData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.LabPlanData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabPlanData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabPlanData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabPlanData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LabServices.LabPlanResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.LabPlanPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LabServices.LabPlanResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.LabPlanPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class LabResource : Azure.ResourceManager.ArmResource
+    public partial class LabResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected LabResource() { }
@@ -115,6 +120,11 @@ namespace Azure.ResourceManager.LabServices
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PublishAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation SyncGroup(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SyncGroupAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.LabServices.LabData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.LabData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LabServices.LabResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.LabPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LabServices.LabResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.LabPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -173,7 +183,7 @@ namespace Azure.ResourceManager.LabServices
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabServicesScheduleResource : Azure.ResourceManager.ArmResource
+    public partial class LabServicesScheduleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected LabServicesScheduleResource() { }
@@ -184,6 +194,11 @@ namespace Azure.ResourceManager.LabServices
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.LabServices.LabServicesScheduleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.LabServicesScheduleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.LabServices.LabServicesScheduleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.LabServicesScheduleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabServicesScheduleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.LabServices.LabServicesScheduleResource> Update(Azure.ResourceManager.LabServices.Models.LabServicesSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.LabServicesScheduleResource>> UpdateAsync(Azure.ResourceManager.LabServices.Models.LabServicesSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -221,7 +236,7 @@ namespace Azure.ResourceManager.LabServices
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabUserData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabUserData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabUserResource : Azure.ResourceManager.ArmResource
+    public partial class LabUserResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabUserData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabUserData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected LabUserResource() { }
@@ -234,6 +249,11 @@ namespace Azure.ResourceManager.LabServices
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.LabUserResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Invite(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.LabUserInviteRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> InviteAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.LabUserInviteRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.LabServices.LabUserData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabUserData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabUserData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.LabUserData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabUserData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabUserData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabUserData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LabServices.LabUserResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.LabUserPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LabServices.LabUserResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.LabUserPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -308,7 +328,7 @@ namespace Azure.ResourceManager.LabServices
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LabVirtualMachineImageResource : Azure.ResourceManager.ArmResource
+    public partial class LabVirtualMachineImageResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected LabVirtualMachineImageResource() { }
@@ -317,10 +337,15 @@ namespace Azure.ResourceManager.LabServices
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labPlanName, string imageName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.LabServices.LabVirtualMachineImageResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.LabVirtualMachineImageResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.LabServices.LabVirtualMachineImageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.LabVirtualMachineImageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineImageData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.LabServices.LabVirtualMachineImageResource> Update(Azure.ResourceManager.LabServices.Models.LabVirtualMachineImagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.LabVirtualMachineImageResource>> UpdateAsync(Azure.ResourceManager.LabServices.Models.LabVirtualMachineImagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class LabVirtualMachineResource : Azure.ResourceManager.ArmResource
+    public partial class LabVirtualMachineResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabVirtualMachineData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected LabVirtualMachineResource() { }
@@ -339,6 +364,11 @@ namespace Azure.ResourceManager.LabServices
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.LabServices.LabVirtualMachineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabVirtualMachineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LabServices.LabVirtualMachineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LabServices.LabVirtualMachineData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LabServices.LabVirtualMachineData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.LabServices.Mocking

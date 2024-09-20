@@ -102,8 +102,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(authorizeCopyRequest, nameof(authorizeCopyRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = authorizeCopyRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AuthorizeModelCopyAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(CopyAuthorization.FromResponse(response), response);
         }
@@ -120,8 +120,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(authorizeCopyRequest, nameof(authorizeCopyRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = authorizeCopyRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AuthorizeModelCopy(content, context);
             return Response.FromValue(CopyAuthorization.FromResponse(response), response);
         }
@@ -588,6 +588,122 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        /// <summary>
+        /// Generates authorization to copy a document classifier to this location with
+        /// specified classifierId and optional description.
+        /// </summary>
+        /// <param name="authorizeCopyRequest"> Authorize copy request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizeCopyRequest"/> is null. </exception>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeClassifierCopyAsync(AuthorizeClassifierCopyContent,CancellationToken)']/*" />
+        public virtual async Task<Response<ClassifierCopyAuthorization>> AuthorizeClassifierCopyAsync(AuthorizeClassifierCopyContent authorizeCopyRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(authorizeCopyRequest, nameof(authorizeCopyRequest));
+
+            using RequestContent content = authorizeCopyRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await AuthorizeClassifierCopyAsync(content, context).ConfigureAwait(false);
+            return Response.FromValue(ClassifierCopyAuthorization.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// Generates authorization to copy a document classifier to this location with
+        /// specified classifierId and optional description.
+        /// </summary>
+        /// <param name="authorizeCopyRequest"> Authorize copy request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizeCopyRequest"/> is null. </exception>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeClassifierCopy(AuthorizeClassifierCopyContent,CancellationToken)']/*" />
+        public virtual Response<ClassifierCopyAuthorization> AuthorizeClassifierCopy(AuthorizeClassifierCopyContent authorizeCopyRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(authorizeCopyRequest, nameof(authorizeCopyRequest));
+
+            using RequestContent content = authorizeCopyRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = AuthorizeClassifierCopy(content, context);
+            return Response.FromValue(ClassifierCopyAuthorization.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Generates authorization to copy a document classifier to this location with
+        /// specified classifierId and optional description.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AuthorizeClassifierCopyAsync(AuthorizeClassifierCopyContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeClassifierCopyAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> AuthorizeClassifierCopyAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.AuthorizeClassifierCopy");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAuthorizeClassifierCopyRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Generates authorization to copy a document classifier to this location with
+        /// specified classifierId and optional description.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AuthorizeClassifierCopy(AuthorizeClassifierCopyContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeClassifierCopy(RequestContent,RequestContext)']/*" />
+        public virtual Response AuthorizeClassifierCopy(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.AuthorizeClassifierCopy");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAuthorizeClassifierCopyRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Gets detailed document classifier information. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1002,8 +1118,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(buildRequest, nameof(buildRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = buildRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await BuildDocumentModelAsync(waitUntil, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelBuildOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildDocumentModel");
         }
@@ -1018,8 +1134,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(buildRequest, nameof(buildRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = buildRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = BuildDocumentModel(waitUntil, content, context);
             return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelBuildOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildDocumentModel");
         }
@@ -1034,8 +1150,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(composeRequest, nameof(composeRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = composeRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await ComposeModelAsync(waitUntil, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelComposeOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.ComposeModel");
         }
@@ -1050,8 +1166,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(composeRequest, nameof(composeRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = composeRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = ComposeModel(waitUntil, content, context);
             return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelComposeOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.ComposeModel");
         }
@@ -1069,8 +1185,8 @@ namespace Azure.AI.DocumentIntelligence
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(copyToRequest, nameof(copyToRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = copyToRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await CopyModelToAsync(waitUntil, modelId, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelCopyToOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyModelTo");
         }
@@ -1088,8 +1204,8 @@ namespace Azure.AI.DocumentIntelligence
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(copyToRequest, nameof(copyToRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = copyToRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = CopyModelTo(waitUntil, modelId, content, context);
             return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelCopyToOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyModelTo");
         }
@@ -1104,8 +1220,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(buildRequest, nameof(buildRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = buildRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await BuildClassifierAsync(waitUntil, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchDocumentClassifierDetailsFromDocumentClassifierBuildOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildClassifier");
         }
@@ -1120,10 +1236,48 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(buildRequest, nameof(buildRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = buildRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = BuildClassifier(waitUntil, content, context);
             return ProtocolOperationHelpers.Convert(response, FetchDocumentClassifierDetailsFromDocumentClassifierBuildOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildClassifier");
+        }
+
+        /// <summary> Copies document classifier to the target resource, region, and classifierId. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="copyToRequest"> Copy to request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="copyToRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='CopyClassifierToAsync(WaitUntil,string,ClassifierCopyAuthorization,CancellationToken)']/*" />
+        public virtual async Task<Operation<DocumentClassifierDetails>> CopyClassifierToAsync(WaitUntil waitUntil, string classifierId, ClassifierCopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+            Argument.AssertNotNull(copyToRequest, nameof(copyToRequest));
+
+            using RequestContent content = copyToRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = await CopyClassifierToAsync(waitUntil, classifierId, content, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, FetchDocumentClassifierDetailsFromDocumentClassifierCopyToOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyClassifierTo");
+        }
+
+        /// <summary> Copies document classifier to the target resource, region, and classifierId. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="copyToRequest"> Copy to request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="copyToRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='CopyClassifierTo(WaitUntil,string,ClassifierCopyAuthorization,CancellationToken)']/*" />
+        public virtual Operation<DocumentClassifierDetails> CopyClassifierTo(WaitUntil waitUntil, string classifierId, ClassifierCopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+            Argument.AssertNotNull(copyToRequest, nameof(copyToRequest));
+
+            using RequestContent content = copyToRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = CopyClassifierTo(waitUntil, classifierId, content, context);
+            return ProtocolOperationHelpers.Convert(response, FetchDocumentClassifierDetailsFromDocumentClassifierCopyToOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyClassifierTo");
         }
 
         internal HttpMessage CreateBuildDocumentModelRequest(RequestContent content, RequestContext context)
@@ -1306,6 +1460,42 @@ namespace Azure.AI.DocumentIntelligence
             return message;
         }
 
+        internal HttpMessage CreateAuthorizeClassifierCopyRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentClassifiers:authorizeCopy", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateCopyClassifierToRequest(string classifierId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendPath(":copyTo", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateGetClassifierRequest(string classifierId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1432,6 +1622,12 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         private DocumentClassifierDetails FetchDocumentClassifierDetailsFromDocumentClassifierBuildOperationDetails(Response response)
+        {
+            var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
+            return DocumentClassifierDetails.DeserializeDocumentClassifierDetails(resultJsonElement);
+        }
+
+        private DocumentClassifierDetails FetchDocumentClassifierDetailsFromDocumentClassifierCopyToOperationDetails(Response response)
         {
             var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
             return DocumentClassifierDetails.DeserializeDocumentClassifierDetails(resultJsonElement);

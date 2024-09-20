@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Peering
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.ConnectionMonitorTestData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.ConnectionMonitorTestData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConnectionMonitorTestResource : Azure.ResourceManager.ArmResource
+    public partial class ConnectionMonitorTestResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.ConnectionMonitorTestData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.ConnectionMonitorTestData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ConnectionMonitorTestResource() { }
@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Peering
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.ConnectionMonitorTestResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.ConnectionMonitorTestResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Peering.ConnectionMonitorTestData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.ConnectionMonitorTestData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.ConnectionMonitorTestData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Peering.ConnectionMonitorTestData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.ConnectionMonitorTestData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.ConnectionMonitorTestData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.ConnectionMonitorTestData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Peering.ConnectionMonitorTestResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Peering.ConnectionMonitorTestData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Peering.ConnectionMonitorTestResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Peering.ConnectionMonitorTestData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -78,7 +83,7 @@ namespace Azure.ResourceManager.Peering
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeerAsnData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeerAsnData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PeerAsnResource : Azure.ResourceManager.ArmResource
+    public partial class PeerAsnResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeerAsnData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeerAsnData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PeerAsnResource() { }
@@ -89,6 +94,11 @@ namespace Azure.ResourceManager.Peering
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeerAsnResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeerAsnResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Peering.PeerAsnData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeerAsnData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeerAsnData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Peering.PeerAsnData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeerAsnData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeerAsnData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeerAsnData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Peering.PeerAsnResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Peering.PeerAsnData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Peering.PeerAsnResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Peering.PeerAsnData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -194,7 +204,7 @@ namespace Azure.ResourceManager.Peering
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringRegisteredAsnData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringRegisteredAsnData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PeeringRegisteredAsnResource : Azure.ResourceManager.ArmResource
+    public partial class PeeringRegisteredAsnResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringRegisteredAsnData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringRegisteredAsnData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PeeringRegisteredAsnResource() { }
@@ -205,6 +215,11 @@ namespace Azure.ResourceManager.Peering
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringRegisteredAsnResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringRegisteredAsnResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Peering.PeeringRegisteredAsnData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringRegisteredAsnData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringRegisteredAsnData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Peering.PeeringRegisteredAsnData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringRegisteredAsnData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringRegisteredAsnData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringRegisteredAsnData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Peering.PeeringRegisteredAsnResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Peering.PeeringRegisteredAsnData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Peering.PeeringRegisteredAsnResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Peering.PeeringRegisteredAsnData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -239,7 +254,7 @@ namespace Azure.ResourceManager.Peering
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringRegisteredPrefixData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringRegisteredPrefixData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PeeringRegisteredPrefixResource : Azure.ResourceManager.ArmResource
+    public partial class PeeringRegisteredPrefixResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringRegisteredPrefixData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringRegisteredPrefixData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PeeringRegisteredPrefixResource() { }
@@ -250,12 +265,17 @@ namespace Azure.ResourceManager.Peering
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Peering.PeeringRegisteredPrefixData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringRegisteredPrefixData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringRegisteredPrefixData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Peering.PeeringRegisteredPrefixData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringRegisteredPrefixData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringRegisteredPrefixData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringRegisteredPrefixData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Peering.PeeringRegisteredPrefixData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Peering.PeeringRegisteredPrefixData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource> Validate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource>> ValidateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PeeringResource : Azure.ResourceManager.ArmResource
+    public partial class PeeringResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PeeringResource() { }
@@ -282,6 +302,11 @@ namespace Azure.ResourceManager.Peering
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Peering.PeeringData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Peering.PeeringData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringResource> Update(Azure.ResourceManager.Peering.Models.PeeringPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringResource>> UpdateAsync(Azure.ResourceManager.Peering.Models.PeeringPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -351,7 +376,7 @@ namespace Azure.ResourceManager.Peering
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringServicePrefixData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringServicePrefixData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PeeringServicePrefixResource : Azure.ResourceManager.ArmResource
+    public partial class PeeringServicePrefixResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringServicePrefixData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringServicePrefixData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PeeringServicePrefixResource() { }
@@ -362,10 +387,15 @@ namespace Azure.ResourceManager.Peering
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringServicePrefixResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringServicePrefixResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Peering.PeeringServicePrefixData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringServicePrefixData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringServicePrefixData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Peering.PeeringServicePrefixData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringServicePrefixData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringServicePrefixData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringServicePrefixData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Peering.PeeringServicePrefixResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Peering.PeeringServicePrefixData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Peering.PeeringServicePrefixResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Peering.PeeringServicePrefixData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PeeringServiceResource : Azure.ResourceManager.ArmResource
+    public partial class PeeringServiceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringServiceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PeeringServiceResource() { }
@@ -388,6 +418,11 @@ namespace Azure.ResourceManager.Peering
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringServiceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringServiceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringServiceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Peering.PeeringServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Peering.PeeringServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Peering.PeeringServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Peering.PeeringServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringServiceResource> Update(Azure.ResourceManager.Peering.Models.PeeringServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringServiceResource>> UpdateAsync(Azure.ResourceManager.Peering.Models.PeeringServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

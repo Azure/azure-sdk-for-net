@@ -52,18 +52,22 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeDataProtection"/>. </summary>
+        /// <param name="backup"> Backup Properties. </param>
         /// <param name="replication"> Replication properties. </param>
         /// <param name="snapshot"> Snapshot properties. </param>
         /// <param name="volumeRelocation"> VolumeRelocation properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeDataProtection(NetAppReplicationObject replication, VolumeSnapshotProperties snapshot, NetAppVolumeRelocationProperties volumeRelocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppVolumeDataProtection(NetAppVolumeBackupConfiguration backup, NetAppReplicationObject replication, VolumeSnapshotProperties snapshot, NetAppVolumeRelocationProperties volumeRelocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Backup = backup;
             Replication = replication;
             Snapshot = snapshot;
             VolumeRelocation = volumeRelocation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Backup Properties. </summary>
+        public NetAppVolumeBackupConfiguration Backup { get; set; }
         /// <summary> Replication properties. </summary>
         public NetAppReplicationObject Replication { get; set; }
         /// <summary> Snapshot properties. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class NetworkFeatureData : IUtf8JsonSerializable, IJsonModel<NetworkFeatureData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFeatureData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFeatureData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkFeatureData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W" && Optional.IsDefined(VirtualNetworkConnection))
             {
                 writer.WritePropertyName("virtualNetworkConnection"u8);
-                writer.WriteObjectValue<AppServiceVirtualNetworkProperties>(VirtualNetworkConnection, options);
+                writer.WriteObjectValue(VirtualNetworkConnection, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(HybridConnections))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in HybridConnections)
                 {
-                    writer.WriteObjectValue<RelayServiceConnectionEntityData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in HybridConnectionsV2)
                 {
-                    writer.WriteObjectValue<HybridConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static NetworkFeatureData DeserializeNetworkFeatureData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -253,15 +253,16 @@ namespace Azure.ResourceManager.AppService
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -275,15 +276,16 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  kind: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  kind: ");
                     if (Kind.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -297,29 +299,31 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
@@ -327,15 +331,16 @@ namespace Azure.ResourceManager.AppService
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualNetworkName), out propertyOverride);
-            if (Optional.IsDefined(VirtualNetworkName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    virtualNetworkName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VirtualNetworkName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    virtualNetworkName: ");
                     if (VirtualNetworkName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -349,31 +354,33 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualNetworkConnection), out propertyOverride);
-            if (Optional.IsDefined(VirtualNetworkConnection) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    virtualNetworkConnection: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VirtualNetworkConnection))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    virtualNetworkConnection: ");
                     BicepSerializationHelpers.AppendChildObject(builder, VirtualNetworkConnection, options, 4, false, "    virtualNetworkConnection: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HybridConnections), out propertyOverride);
-            if (Optional.IsCollectionDefined(HybridConnections) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (HybridConnections.Any() || hasPropertyOverride)
+                builder.Append("    hybridConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(HybridConnections))
                 {
-                    builder.Append("    hybridConnections: ");
-                    if (hasPropertyOverride)
+                    if (HybridConnections.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    hybridConnections: ");
                         builder.AppendLine("[");
                         foreach (var item in HybridConnections)
                         {
@@ -385,17 +392,18 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HybridConnectionsV2), out propertyOverride);
-            if (Optional.IsCollectionDefined(HybridConnectionsV2) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (HybridConnectionsV2.Any() || hasPropertyOverride)
+                builder.Append("    hybridConnectionsV2: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(HybridConnectionsV2))
                 {
-                    builder.Append("    hybridConnectionsV2: ");
-                    if (hasPropertyOverride)
+                    if (HybridConnectionsV2.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    hybridConnectionsV2: ");
                         builder.AppendLine("[");
                         foreach (var item in HybridConnectionsV2)
                         {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     [JsonConverter(typeof(DatasetDataElementConverter))]
     public partial class DatasetDataElement : IUtf8JsonSerializable, IJsonModel<DatasetDataElement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatasetDataElement>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatasetDataElement>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatasetDataElement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DatasetDataElement DeserializeDatasetDataElement(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             public override void Write(Utf8JsonWriter writer, DatasetDataElement model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<DatasetDataElement>(model, new ModelReaderWriterOptions("W"));
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
 
             public override DatasetDataElement Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

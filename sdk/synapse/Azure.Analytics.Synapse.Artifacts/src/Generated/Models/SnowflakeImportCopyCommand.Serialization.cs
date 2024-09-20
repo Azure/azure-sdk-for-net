@@ -135,11 +135,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeSnowflakeImportCopyCommand(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SnowflakeImportCopyCommand>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -147,7 +147,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SnowflakeImportCopyCommand model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SnowflakeImportCopyCommand>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override SnowflakeImportCopyCommand Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

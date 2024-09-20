@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class LongTermRetentionPolicy : IUtf8JsonSerializable, IJsonModel<LongTermRetentionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LongTermRetentionPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LongTermRetentionPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LongTermRetentionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(DailySchedule))
             {
                 writer.WritePropertyName("dailySchedule"u8);
-                writer.WriteObjectValue<DailyRetentionSchedule>(DailySchedule, options);
+                writer.WriteObjectValue(DailySchedule, options);
             }
             if (Optional.IsDefined(WeeklySchedule))
             {
                 writer.WritePropertyName("weeklySchedule"u8);
-                writer.WriteObjectValue<WeeklyRetentionSchedule>(WeeklySchedule, options);
+                writer.WriteObjectValue(WeeklySchedule, options);
             }
             if (Optional.IsDefined(MonthlySchedule))
             {
                 writer.WritePropertyName("monthlySchedule"u8);
-                writer.WriteObjectValue<MonthlyRetentionSchedule>(MonthlySchedule, options);
+                writer.WriteObjectValue(MonthlySchedule, options);
             }
             if (Optional.IsDefined(YearlySchedule))
             {
                 writer.WritePropertyName("yearlySchedule"u8);
-                writer.WriteObjectValue<YearlyRetentionSchedule>(YearlySchedule, options);
+                writer.WriteObjectValue(YearlySchedule, options);
             }
             writer.WritePropertyName("retentionPolicyType"u8);
             writer.WriteStringValue(RetentionPolicyType);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static LongTermRetentionPolicy DeserializeLongTermRetentionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

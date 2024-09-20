@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Maintenance
 {
     public partial class MaintenanceConfigurationData : IUtf8JsonSerializable, IJsonModel<MaintenanceConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MaintenanceConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -92,19 +92,19 @@ namespace Azure.ResourceManager.Maintenance
             if (Optional.IsDefined(InstallPatches))
             {
                 writer.WritePropertyName("installPatches"u8);
-                writer.WriteObjectValue<MaintenancePatchConfiguration>(InstallPatches, options);
+                writer.WriteObjectValue(InstallPatches, options);
             }
             writer.WritePropertyName("maintenanceWindow"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                SerializeStartOn(writer);
+                SerializeStartOn(writer, options);
             }
             if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDateTime"u8);
-                SerializeExpireOn(writer);
+                SerializeExpireOn(writer, options);
             }
             if (Optional.IsDefined(Duration))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Maintenance
 
         internal static MaintenanceConfigurationData DeserializeMaintenanceConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

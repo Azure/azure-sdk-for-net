@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         protected NetworkCloudManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
-            BodyKeySanitizers.Add(new BodyKeySanitizer("fake-password123") { JsonPath = "properties.vmImageRepositoryCredentials.password" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("properties.vmImageRepositoryCredentials.password") { Value = "fake-password123" });
         }
 
         protected NetworkCloudManagementTestBase(bool isAsync)
             : base(isAsync)
         {
-            BodyKeySanitizers.Add(new BodyKeySanitizer("fake-password123") { JsonPath = "properties.vmImageRepositoryCredentials.password" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("properties.vmImageRepositoryCredentials.password") { Value = "fake-password123" });
         }
 
         [SetUp]

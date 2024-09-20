@@ -1,19 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute.Tests.Helpers;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
-    [ClientTestFixture(true, "2021-04-01", "2020-06-01", "2022-11-01", "2023-07-01", "2023-09-01")]
+    [ClientTestFixture(true, "2021-04-01", "2020-06-01", "2022-11-01", "2023-07-01", "2023-09-01", "2024-03-01")]
     public class VirtualMachineManagedIdentityTests : VirtualMachineTestBase
     {
         public VirtualMachineManagedIdentityTests(bool async, string apiVersion)

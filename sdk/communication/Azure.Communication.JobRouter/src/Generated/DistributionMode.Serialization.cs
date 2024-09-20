@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
     [PersistableModelProxy(typeof(UnknownDistributionMode))]
     public partial class DistributionMode : IUtf8JsonSerializable, IJsonModel<DistributionMode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DistributionMode>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DistributionMode>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DistributionMode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.Communication.JobRouter
 
         internal static DistributionMode DeserializeDistributionMode(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -126,11 +126,11 @@ namespace Azure.Communication.JobRouter
             return DeserializeDistributionMode(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DistributionMode>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

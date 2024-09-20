@@ -19,7 +19,6 @@ namespace Azure.Storage.DataMovement
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
             DataTransferOptions transferOptions,
-            QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkpointer,
             DataTransferErrorMode errorHandling,
             ArrayPool<byte> arrayPool,
@@ -28,7 +27,6 @@ namespace Azure.Storage.DataMovement
                   sourceResource,
                   destinationResource,
                   transferOptions,
-                  queueChunkTask,
                   checkpointer,
                   errorHandling,
                   arrayPool,
@@ -44,7 +42,6 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource,
             DataTransferOptions transferOptions,
-            QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkpointer,
             DataTransferErrorMode errorHandling,
             ArrayPool<byte> arrayPool,
@@ -53,7 +50,6 @@ namespace Azure.Storage.DataMovement
                   sourceResource,
                   destinationResource,
                   transferOptions,
-                  queueChunkTask,
                   checkpointer,
                   errorHandling,
                   arrayPool,
@@ -184,7 +180,7 @@ namespace Azure.Storage.DataMovement
                             job: this,
                             partNumber: partNumber,
                             sourceResource: (StorageResourceItem)current,
-                            destinationResource: _destinationResourceContainer.GetStorageResourceReference(sourceName))
+                            destinationResource: _destinationResourceContainer.GetStorageResourceReference(sourceName, default))
                             .ConfigureAwait(false);
                         AppendJobPart(part);
                     }

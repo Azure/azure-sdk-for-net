@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 {
     public partial class RulesEngineAction : IUtf8JsonSerializable, IJsonModel<RulesEngineAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RulesEngineAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RulesEngineAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RulesEngineAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in RequestHeaderActions)
                 {
-                    writer.WriteObjectValue<RulesEngineHeaderAction>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in ResponseHeaderActions)
                 {
-                    writer.WriteObjectValue<RulesEngineHeaderAction>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 if (RouteConfigurationOverride != null)
                 {
                     writer.WritePropertyName("routeConfigurationOverride"u8);
-                    writer.WriteObjectValue<RouteConfiguration>(RouteConfigurationOverride, options);
+                    writer.WriteObjectValue(RouteConfigurationOverride, options);
                 }
                 else
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static RulesEngineAction DeserializeRulesEngineAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

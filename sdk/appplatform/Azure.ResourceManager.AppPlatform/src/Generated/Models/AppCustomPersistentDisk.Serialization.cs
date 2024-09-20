@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppCustomPersistentDisk : IUtf8JsonSerializable, IJsonModel<AppCustomPersistentDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppCustomPersistentDisk>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppCustomPersistentDisk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppCustomPersistentDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppCustomPersistentDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,11 +34,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 throw new FormatException($"The model {nameof(AppCustomPersistentDisk)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(CustomPersistentDiskProperties))
             {
                 writer.WritePropertyName("customPersistentDiskProperties"u8);
-                writer.WriteObjectValue<AppCustomPersistentDiskProperties>(CustomPersistentDiskProperties, options);
+                writer.WriteObjectValue(CustomPersistentDiskProperties, options);
             }
             writer.WritePropertyName("storageId"u8);
             writer.WriteStringValue(StorageId);
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppCustomPersistentDisk IJsonModel<AppCustomPersistentDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -65,7 +72,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppCustomPersistentDisk DeserializeAppCustomPersistentDisk(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

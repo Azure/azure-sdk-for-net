@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class BackupFindRestorableTimeRangeResult : IUtf8JsonSerializable, IJsonModel<BackupFindRestorableTimeRangeResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupFindRestorableTimeRangeResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupFindRestorableTimeRangeResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackupFindRestorableTimeRangeResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<BackupFindRestorableTimeRangeResultProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static BackupFindRestorableTimeRangeResult DeserializeBackupFindRestorableTimeRangeResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

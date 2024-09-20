@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> The resource type that this object applies to. </summary>
+        [WirePath("resourceType")]
         public ResourceType? ResourceType { get; }
         /// <summary> The billing information of the resource. </summary>
+        [WirePath("sku")]
         public BillingInfoSku Sku { get; }
         /// <summary> Describes scaling information of a sku. </summary>
+        [WirePath("capacity")]
         public WebPubSubSkuCapacity Capacity { get; }
     }
 }

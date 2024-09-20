@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningScriptsToExecute : IUtf8JsonSerializable, IJsonModel<MachineLearningScriptsToExecute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningScriptsToExecute>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningScriptsToExecute>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningScriptsToExecute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +30,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(StartupScript))
             {
                 writer.WritePropertyName("startupScript"u8);
-                writer.WriteObjectValue<MachineLearningScriptReference>(StartupScript, options);
+                writer.WriteObjectValue(StartupScript, options);
             }
             if (Optional.IsDefined(CreationScript))
             {
                 writer.WritePropertyName("creationScript"u8);
-                writer.WriteObjectValue<MachineLearningScriptReference>(CreationScript, options);
+                writer.WriteObjectValue(CreationScript, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningScriptsToExecute DeserializeMachineLearningScriptsToExecute(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,6 +108,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningScriptsToExecute(startupScript, creationScript, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartupScript), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startupScript: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartupScript))
+                {
+                    builder.Append("  startupScript: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, StartupScript, options, 2, false, "  startupScript: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreationScript), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  creationScript: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreationScript))
+                {
+                    builder.Append("  creationScript: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CreationScript, options, 2, false, "  creationScript: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MachineLearningScriptsToExecute>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningScriptsToExecute>)this).GetFormatFromOptions(options) : options.Format;
@@ -115,6 +161,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningScriptsToExecute)} does not support writing '{options.Format}' format.");
             }

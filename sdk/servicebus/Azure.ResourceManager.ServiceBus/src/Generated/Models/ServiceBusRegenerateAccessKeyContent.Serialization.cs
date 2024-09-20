@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     public partial class ServiceBusRegenerateAccessKeyContent : IUtf8JsonSerializable, IJsonModel<ServiceBusRegenerateAccessKeyContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusRegenerateAccessKeyContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusRegenerateAccessKeyContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceBusRegenerateAccessKeyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusRegenerateAccessKeyContent DeserializeServiceBusRegenerateAccessKeyContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

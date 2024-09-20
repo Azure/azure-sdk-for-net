@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Dns.Models
 {
     public partial class DnsZonePatch : IUtf8JsonSerializable, IJsonModel<DnsZonePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsZonePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsZonePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DnsZonePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Dns.Models
 
         internal static DnsZonePatch DeserializeDnsZonePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

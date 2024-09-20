@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 {
     public partial class AmlFileSystemHsmSettings : IUtf8JsonSerializable, IJsonModel<AmlFileSystemHsmSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlFileSystemHsmSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlFileSystemHsmSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AmlFileSystemHsmSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,6 +34,16 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 writer.WritePropertyName("importPrefix"u8);
                 writer.WriteStringValue(ImportPrefix);
+            }
+            if (Optional.IsCollectionDefined(ImportPrefixesInitial))
+            {
+                writer.WritePropertyName("importPrefixesInitial"u8);
+                writer.WriteStartArray();
+                foreach (var item in ImportPrefixesInitial)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -67,7 +77,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static AmlFileSystemHsmSettings DeserializeAmlFileSystemHsmSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,6 +86,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             string container = default;
             string loggingContainer = default;
             string importPrefix = default;
+            IList<string> importPrefixesInitial = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,13 +106,27 @@ namespace Azure.ResourceManager.StorageCache.Models
                     importPrefix = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("importPrefixesInitial"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    importPrefixesInitial = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AmlFileSystemHsmSettings(container, loggingContainer, importPrefix, serializedAdditionalRawData);
+            return new AmlFileSystemHsmSettings(container, loggingContainer, importPrefix, importPrefixesInitial ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemHsmSettings>.Write(ModelReaderWriterOptions options)

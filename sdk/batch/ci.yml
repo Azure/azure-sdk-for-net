@@ -8,7 +8,9 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/batch/
+    - sdk/batch/ci.yml
+    - sdk/batch/service.projects
+    - sdk/batch/Azure.Compute.Batch
     exclude:
     - sdk/batch/Azure.ResourceManager.Batch/
 
@@ -21,19 +23,18 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/batch/
+    - sdk/batch/ci.yml
+    - sdk/batch/service.projects
+    - sdk/batch/Azure.Compute.Batch
     exclude:
     - sdk/batch/Azure.ResourceManager.Batch/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: client
     ServiceDirectory: batch
     ArtifactName: packages
     Artifacts:
-    - name: Microsoft.Azure.Batch
-      safeName: MicrosoftAzureBatch
-    - name: Microsoft.Azure.Batch.FileStaging
-      safeName: MicrosoftAzureBatchFileStaging
-    - name: Microsoft.Azure.Batch.Conventions.Files
-      safeName: MicrosoftAzureBatchConventionsFiles
+    - name: Azure.Compute.Batch
+      safeName: AzureComputeBatch

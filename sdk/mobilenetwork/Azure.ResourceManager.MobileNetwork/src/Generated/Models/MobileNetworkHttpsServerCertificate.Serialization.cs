@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public partial class MobileNetworkHttpsServerCertificate : IUtf8JsonSerializable, IJsonModel<MobileNetworkHttpsServerCertificate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkHttpsServerCertificate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkHttpsServerCertificate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MobileNetworkHttpsServerCertificate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (options.Format != "W" && Optional.IsDefined(Provisioning))
             {
                 writer.WritePropertyName("provisioning"u8);
-                writer.WriteObjectValue<MobileNetworkCertificateProvisioning>(Provisioning, options);
+                writer.WriteObjectValue(Provisioning, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static MobileNetworkHttpsServerCertificate DeserializeMobileNetworkHttpsServerCertificate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,6 +101,51 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new MobileNetworkHttpsServerCertificate(certificateUrl, provisioning, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  certificateUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CertificateUri))
+                {
+                    builder.Append("  certificateUrl: ");
+                    builder.AppendLine($"'{CertificateUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Provisioning), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioning: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Provisioning))
+                {
+                    builder.Append("  provisioning: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Provisioning, options, 2, false, "  provisioning: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MobileNetworkHttpsServerCertificate>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkHttpsServerCertificate>)this).GetFormatFromOptions(options) : options.Format;
@@ -108,6 +154,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MobileNetworkHttpsServerCertificate)} does not support writing '{options.Format}' format.");
             }

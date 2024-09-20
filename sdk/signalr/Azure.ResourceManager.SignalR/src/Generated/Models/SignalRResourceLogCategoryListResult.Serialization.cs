@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     internal partial class SignalRResourceLogCategoryListResult : IUtf8JsonSerializable, IJsonModel<SignalRResourceLogCategoryListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRResourceLogCategoryListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRResourceLogCategoryListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SignalRResourceLogCategoryListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue<SignalRResourceLogCategory>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRResourceLogCategoryListResult DeserializeSignalRResourceLogCategoryListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.SignalR.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Categories), out propertyOverride);
-            if (Optional.IsCollectionDefined(Categories) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Categories.Any() || hasPropertyOverride)
+                builder.Append("  categories: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Categories))
                 {
-                    builder.Append("  categories: ");
-                    if (hasPropertyOverride)
+                    if (Categories.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  categories: ");
                         builder.AppendLine("[");
                         foreach (var item in Categories)
                         {

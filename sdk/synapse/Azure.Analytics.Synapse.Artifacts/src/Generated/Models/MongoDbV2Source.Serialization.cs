@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CursorMethods))
             {
                 writer.WritePropertyName("cursorMethods"u8);
-                writer.WriteObjectValue<MongoDbCursorMethodsProperties>(CursorMethods);
+                writer.WriteObjectValue(CursorMethods);
             }
             if (Optional.IsDefined(BatchSize))
             {
@@ -189,11 +189,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeMongoDbV2Source(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MongoDbV2Source>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -201,7 +201,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, MongoDbV2Source model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<MongoDbV2Source>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override MongoDbV2Source Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

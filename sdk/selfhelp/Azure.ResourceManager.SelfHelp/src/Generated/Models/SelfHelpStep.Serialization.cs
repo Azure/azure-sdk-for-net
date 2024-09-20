@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 {
     public partial class SelfHelpStep : IUtf8JsonSerializable, IJsonModel<SelfHelpStep>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelfHelpStep>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelfHelpStep>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SelfHelpStep>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue<StepInput>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AutomatedCheckResults))
             {
                 writer.WritePropertyName("automatedCheckResults"u8);
-                writer.WriteObjectValue<AutomatedCheckResult>(AutomatedCheckResults, options);
+                writer.WriteObjectValue(AutomatedCheckResults, options);
             }
             if (Optional.IsCollectionDefined(Insights))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Insights)
                 {
-                    writer.WriteObjectValue<SelfHelpDiagnosticInsight>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         internal static SelfHelpStep DeserializeSelfHelpStep(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string title = default;
             string description = default;
             string guidance = default;
-            ExecutionStatus? executionStatus = default;
+            TroubleshooterExecutionStatus? executionStatus = default;
             string executionStatusDescription = default;
             SelfHelpType? type = default;
             bool? isLastStep = default;
-            IReadOnlyList<StepInput> inputs = default;
+            IReadOnlyList<TroubleshooterStepInput> inputs = default;
             AutomatedCheckResult automatedCheckResults = default;
             IReadOnlyList<SelfHelpDiagnosticInsight> insights = default;
             ResponseError error = default;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    executionStatus = new ExecutionStatus(property.Value.GetString());
+                    executionStatus = new TroubleshooterExecutionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("executionStatusDescription"u8))
@@ -208,10 +208,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    List<StepInput> array = new List<StepInput>();
+                    List<TroubleshooterStepInput> array = new List<TroubleshooterStepInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StepInput.DeserializeStepInput(item, options));
+                        array.Add(TroubleshooterStepInput.DeserializeTroubleshooterStepInput(item, options));
                     }
                     inputs = array;
                     continue;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 executionStatusDescription,
                 type,
                 isLastStep,
-                inputs ?? new ChangeTrackingList<StepInput>(),
+                inputs ?? new ChangeTrackingList<TroubleshooterStepInput>(),
                 automatedCheckResults,
                 insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(),
                 error,

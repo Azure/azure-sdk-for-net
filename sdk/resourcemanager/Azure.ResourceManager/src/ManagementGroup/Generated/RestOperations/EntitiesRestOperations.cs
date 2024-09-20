@@ -36,6 +36,47 @@ namespace Azure.ResourceManager.ManagementGroups
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string skipToken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/getEntities", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skiptoken", skipToken, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            if (search != null)
+            {
+                uri.AppendQuery("$search", search.Value.ToString(), true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (view != null)
+            {
+                uri.AppendQuery("$view", view.Value.ToString(), true);
+            }
+            if (groupName != null)
+            {
+                uri.AppendQuery("groupName", groupName, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string skipToken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
         {
             var message = _pipeline.CreateMessage();
@@ -171,6 +212,14 @@ namespace Azure.ResourceManager.ManagementGroups
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string skipToken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string skipToken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)

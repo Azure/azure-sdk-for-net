@@ -49,12 +49,12 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobStorageResourceContainerOptions() { }
         public string BlobDirectoryPrefix { get { throw null; } set { } }
         public Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions BlobOptions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobType BlobType { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty<Azure.Storage.Blobs.Models.BlobType?> BlobType { get { throw null; } set { } }
     }
     public partial class BlobStorageResourceOptions
     {
         public BlobStorageResourceOptions() { }
-        public Azure.Storage.DataMovement.DataTransferProperty<Azure.Storage.Blobs.Models.AccessTier?> AccessTier { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
         public Azure.Storage.DataMovement.DataTransferProperty<string> CacheControl { get { throw null; } set { } }
         public Azure.Storage.DataMovement.DataTransferProperty<string> ContentDisposition { get { throw null; } set { } }
         public Azure.Storage.DataMovement.DataTransferProperty<string> ContentEncoding { get { throw null; } set { } }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Chaos.Models
 {
     public partial class ChaosTargetSimpleFilter : IUtf8JsonSerializable, IJsonModel<ChaosTargetSimpleFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosTargetSimpleFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosTargetSimpleFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChaosTargetSimpleFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Chaos.Models
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue<ChaosTargetSimpleFilterParameters>(Parameters, options);
+                writer.WriteObjectValue(Parameters, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FilterType.ToString());
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static ChaosTargetSimpleFilter DeserializeChaosTargetSimpleFilter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

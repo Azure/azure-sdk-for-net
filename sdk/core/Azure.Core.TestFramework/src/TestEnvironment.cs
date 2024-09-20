@@ -207,12 +207,8 @@ namespace Azure.Core.TestFramework
                 else
                 {
                     var clientSecret = GetOptionalVariable("CLIENT_SECRET");
-                    if (string.IsNullOrWhiteSpace(clientSecret))
-                    {
-                        _credential = new DefaultAzureCredential(
-                            new DefaultAzureCredentialOptions { ExcludeManagedIdentityCredential = true });
-                    }
-                    else
+                    var systemAccessToken = GetOptionalVariable("SYSTEM_ACCESSTOKEN");
+                    if (!string.IsNullOrWhiteSpace(clientSecret))
                     {
                         // If the recording is null but we are in Record Mode this means the Credential is being used
                         // outside of a test (for example, in ExtendResourceGroupExpirationAsync method). Attempt to use the env
@@ -232,6 +228,21 @@ namespace Azure.Core.TestFramework
                             ClientId,
                             clientSecret,
                             new ClientSecretCredentialOptions { AuthorityHost = new Uri(AuthorityHostUrl) });
+                    }
+                    else if (!string.IsNullOrWhiteSpace(systemAccessToken))
+                    {
+                        // These variables should only be defined in the Live Test Pipelines so there is no need to record these variables
+                        _credential = new AzurePipelinesCredential(
+                                GetVariable("AZURESUBSCRIPTION_TENANT_ID"),
+                                GetVariable("AZURESUBSCRIPTION_CLIENT_ID"),
+                                GetVariable("AZURESUBSCRIPTION_SERVICE_CONNECTION_ID"),
+                                systemAccessToken,
+                                new AzurePipelinesCredentialOptions { AuthorityHost = new Uri(GetVariable("AZURE_AUTHORITY_HOST")) });
+                    }
+                    else
+                    {
+                        _credential = new DefaultAzureCredential(
+                             new DefaultAzureCredentialOptions { ExcludeManagedIdentityCredential = true });
                     }
                 }
 
@@ -304,19 +315,23 @@ namespace Azure.Core.TestFramework
         private async Task ExtendResourceGroupExpirationAsync()
         {
             string resourceGroup = GetOptionalVariable("RESOURCE_GROUP");
+            string subscription = GetOptionalVariable("SUBSCRIPTION_ID");
+            string resourceManagerUrl = GetOptionalVariable("RESOURCE_MANAGER_URL");
 
-            if (Mode is not (RecordedTestMode.Live or RecordedTestMode.Record) || DisableBootstrapping || string.IsNullOrEmpty(resourceGroup))
+            if (Mode is not (RecordedTestMode.Live or RecordedTestMode.Record)
+                || DisableBootstrapping
+                || string.IsNullOrEmpty(resourceGroup)
+                || string.IsNullOrEmpty(subscription)
+                || string.IsNullOrEmpty(resourceManagerUrl))
             {
                 return;
             }
-
-            string subscription = GetVariable("SUBSCRIPTION_ID");
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(ClientOptions.Default, new BearerTokenAuthenticationPolicy(Credential, "https://management.azure.com/.default"));
 
             // create the GET request for the resource group information
             Request request = pipeline.CreateRequest();
-            Uri uri = new Uri($"{GetVariable("RESOURCE_MANAGER_URL")}/subscriptions/{subscription}/resourcegroups/{resourceGroup}?api-version=2021-04-01");
+            Uri uri = new Uri($"{resourceManagerUrl}/subscriptions/{subscription}/resourcegroups/{resourceGroup}?api-version=2021-04-01");
             request.Uri.Reset(uri);
             request.Method = RequestMethod.Get;
 

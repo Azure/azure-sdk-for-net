@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class MecRole : IUtf8JsonSerializable, IJsonModel<MecRole>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MecRole>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MecRole>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MecRole>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue<AsymmetricEncryptedSecret>(ConnectionString, options);
+                writer.WriteObjectValue(ConnectionString, options);
             }
             if (Optional.IsDefined(ControllerEndpoint))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static MecRole DeserializeMecRole(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

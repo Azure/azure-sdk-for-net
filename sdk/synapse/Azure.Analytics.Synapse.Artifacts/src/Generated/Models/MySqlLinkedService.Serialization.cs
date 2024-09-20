@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
+                writer.WriteObjectValue(ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
+                    writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -59,12 +59,50 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionString"u8);
-            writer.WriteObjectValue<object>(ConnectionString);
+            if (Optional.IsDefined(DriverVersion))
+            {
+                writer.WritePropertyName("driverVersion"u8);
+                writer.WriteObjectValue<object>(DriverVersion);
+            }
+            if (Optional.IsDefined(ConnectionString))
+            {
+                writer.WritePropertyName("connectionString"u8);
+                writer.WriteObjectValue<object>(ConnectionString);
+            }
+            if (Optional.IsDefined(Server))
+            {
+                writer.WritePropertyName("server"u8);
+                writer.WriteObjectValue<object>(Server);
+            }
+            if (Optional.IsDefined(Port))
+            {
+                writer.WritePropertyName("port"u8);
+                writer.WriteObjectValue<object>(Port);
+            }
+            if (Optional.IsDefined(Username))
+            {
+                writer.WritePropertyName("username"u8);
+                writer.WriteObjectValue<object>(Username);
+            }
+            if (Optional.IsDefined(Database))
+            {
+                writer.WritePropertyName("database"u8);
+                writer.WriteObjectValue<object>(Database);
+            }
+            if (Optional.IsDefined(SslMode))
+            {
+                writer.WritePropertyName("sslMode"u8);
+                writer.WriteObjectValue<object>(SslMode);
+            }
+            if (Optional.IsDefined(UseSystemTrustStore))
+            {
+                writer.WritePropertyName("useSystemTrustStore"u8);
+                writer.WriteObjectValue<object>(UseSystemTrustStore);
+            }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue<AzureKeyVaultSecretReference>(Password);
+                writer.WriteObjectValue(Password);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -91,7 +129,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
+            object driverVersion = default;
             object connectionString = default;
+            object server = default;
+            object port = default;
+            object username = default;
+            object database = default;
+            object sslMode = default;
+            object useSystemTrustStore = default;
             AzureKeyVaultSecretReference password = default;
             object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
@@ -161,9 +206,76 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("driverVersion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            driverVersion = property0.Value.GetObject();
+                            continue;
+                        }
                         if (property0.NameEquals("connectionString"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             connectionString = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("server"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            server = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("port"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            port = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("username"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            username = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("database"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            database = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("sslMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sslMode = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("useSystemTrustStore"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useSystemTrustStore = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -197,7 +309,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
+                driverVersion,
                 connectionString,
+                server,
+                port,
+                username,
+                database,
+                sslMode,
+                useSystemTrustStore,
                 password,
                 encryptedCredential);
         }
@@ -210,11 +329,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeMySqlLinkedService(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MySqlLinkedService>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -222,7 +341,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, MySqlLinkedService model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<MySqlLinkedService>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override MySqlLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

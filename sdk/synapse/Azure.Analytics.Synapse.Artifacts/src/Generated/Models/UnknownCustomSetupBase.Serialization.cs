@@ -46,11 +46,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeUnknownCustomSetupBase(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UnknownCustomSetupBase>(this);
+            content.JsonWriter.WriteObjectValue<CustomSetupBase>(this);
             return content;
         }
     }

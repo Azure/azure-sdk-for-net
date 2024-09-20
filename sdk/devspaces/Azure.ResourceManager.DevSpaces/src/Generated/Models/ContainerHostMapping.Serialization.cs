@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
 {
     public partial class ContainerHostMapping : IUtf8JsonSerializable, IJsonModel<ContainerHostMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerHostMapping>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerHostMapping>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerHostMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
 
         internal static ContainerHostMapping DeserializeContainerHostMapping(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

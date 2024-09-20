@@ -3,10 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Azure.Core.Amqp.Shared;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
@@ -34,10 +34,10 @@ namespace Azure.Core.Amqp.Tests
             new double[] { 3.1415926 },
             new decimal(3.1415926),
             new decimal[] { new decimal(3.1415926) },
-            DateTimeOffset.Parse("3/24/21").UtcDateTime,
-            new DateTime[] {DateTimeOffset.Parse("3/24/21").UtcDateTime },
-            DateTimeOffset.Parse("3/24/21"),
-            new DateTimeOffset[] {DateTimeOffset.Parse("3/24/21") },
+            DateTimeOffset.Parse("3/24/21", CultureInfo.InvariantCulture).UtcDateTime,
+            new DateTime[] {DateTimeOffset.Parse("3/24/21", CultureInfo.InvariantCulture).UtcDateTime },
+            DateTimeOffset.Parse("3/24/21", CultureInfo.InvariantCulture),
+            new DateTimeOffset[] {DateTimeOffset.Parse("3/24/21", CultureInfo.InvariantCulture) },
             TimeSpan.FromSeconds(5),
             new TimeSpan[] {TimeSpan.FromSeconds(5)},
             new Uri("http://localHost"),
@@ -52,7 +52,7 @@ namespace Azure.Core.Amqp.Tests
             new Dictionary<string, short> {{ "key", 1 } },
             new Dictionary<string, double> {{ "key", 3.1415926 } },
             new Dictionary<string, decimal> {{ "key", new decimal(3.1415926) } },
-            new Dictionary<string, DateTime> {{ "key", DateTimeOffset.Parse("3/24/21").UtcDateTime } },
+            new Dictionary<string, DateTime> {{ "key", DateTimeOffset.Parse("3/24/21", CultureInfo.InvariantCulture).UtcDateTime } },
             // for some reason dictionaries with DateTimeOffset, Timespan, or Uri values are not supported in AMQP lib
             // new Dictionary<string, DateTimeOffset> {{ "key", DateTimeOffset.Parse("3/24/21") } },
             // new Dictionary<string, TimeSpan> {{ "key", TimeSpan.FromSeconds(5) } },
@@ -68,7 +68,7 @@ namespace Azure.Core.Amqp.Tests
             Enumerable.Repeat(new object[] { long.MaxValue }, 2),
             Enumerable.Repeat(new object[] { 1 }, 2),
             Enumerable.Repeat(new object[] { 3.1415926, true }, 2),
-            Enumerable.Repeat(new object[] { DateTimeOffset.Parse("3/24/21").UtcDateTime, true }, 2),
+            Enumerable.Repeat(new object[] { DateTimeOffset.Parse("3/24/21", CultureInfo.InvariantCulture).UtcDateTime, true }, 2),
             new List<IList<object>> { new List<object> { "first", 1}, new List<object> { "second", 2 } }
         };
 
@@ -212,6 +212,30 @@ namespace Azure.Core.Amqp.Tests
         }
 
         [Test]
+        [TestCase("http://www.server.com/path/stuff/thing.json")]
+        [TestCase("/path/stuff/thing.json")]
+        public void ToAmqpMessageHandlesRelativeAndAbsoluteUris(string uriValue)
+        {
+            var key = "UriProperty";
+            var expectedUri = new Uri(uriValue, UriKind.RelativeOrAbsolute);
+
+            var annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new ReadOnlyMemory<byte>[] { new byte[] { 0x11, 0x22, 0x33 }}));
+            annotatedMessage.ApplicationProperties.Add(key, expectedUri);
+
+            using AmqpMessage message = ToAmqpMessage(annotatedMessage);
+
+            Assert.IsNotNull(message, "The AMQP message should have been created.");
+            Assert.IsNotNull(message.ApplicationProperties, "The AMQP message should have a set of application properties.");
+
+            var containsValue = annotatedMessage.ApplicationProperties.TryGetValue(key, out object value);
+            var uriProperty = value as Uri;
+
+            Assert.IsTrue(containsValue, $"The message properties did not contain the Uri property");
+            Assert.IsNotNull(uriProperty, "The property value was not a Uri.");
+            Assert.AreEqual(expectedUri, uriProperty, "The property value did not match.");
+        }
+
+        [Test]
         public void FromAmqpMessagePopulatesSimpleApplicationProperties()
         {
             var applicationProperties = s_simpleApplicationPropertyValues.ToDictionary(value => $"{ value.GetType().Name }Property", value => value);
@@ -240,6 +264,31 @@ namespace Azure.Core.Amqp.Tests
                 Assert.IsTrue(containsValue, $"The message properties did not contain: [{ property }]");
                 Assert.AreEqual(value, applicationProperties[property], $"The property value did not match for: [{ property }]");
             }
+        }
+
+        [Test]
+        [TestCase("http://www.server.com/path/stuff/thing.json")]
+        [TestCase("/path/stuff/thing.json")]
+        public void FromAmqpMessageHandlesRelativeAndAbsoluteUris(string uriValue)
+        {
+            var key = "UriProperty";
+            var expectedUri = new Uri(uriValue, UriKind.RelativeOrAbsolute);
+            var dataBody = new Data { Value = new byte[] { 0x11, 0x22, 0x33 } };
+
+            using var message = AmqpMessage.Create(dataBody);
+            message.ApplicationProperties.Map.Add(key, new DescribedType((AmqpSymbol)AmqpMessageConstants.Uri, uriValue));
+
+            var annotatedMessage = FromAmqpMessage(message);
+
+            Assert.NotNull(annotatedMessage, "The message should have been created.");
+            Assert.IsTrue(annotatedMessage.ApplicationProperties.Any(), "The message should have a set of application properties.");
+
+            var containsValue = annotatedMessage.ApplicationProperties.TryGetValue(key, out object value);
+            var uriProperty = value as Uri;
+
+            Assert.IsTrue(containsValue, $"The message properties did not contain the Uri property");
+            Assert.IsNotNull(uriProperty, "The property value was not a Uri.");
+            Assert.AreEqual(expectedUri, uriProperty, "The property value did not match.");
         }
 
         [Test]

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class EdgeKubernetesRole : IUtf8JsonSerializable, IJsonModel<EdgeKubernetesRole>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeKubernetesRole>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeKubernetesRole>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeKubernetesRole>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(KubernetesClusterInfo))
             {
                 writer.WritePropertyName("kubernetesClusterInfo"u8);
-                writer.WriteObjectValue<EdgeKubernetesClusterInfo>(KubernetesClusterInfo, options);
+                writer.WriteObjectValue(KubernetesClusterInfo, options);
             }
             if (Optional.IsDefined(KubernetesRoleResources))
             {
                 writer.WritePropertyName("kubernetesRoleResources"u8);
-                writer.WriteObjectValue<EdgeKubernetesRoleResources>(KubernetesRoleResources, options);
+                writer.WriteObjectValue(KubernetesRoleResources, options);
             }
             if (Optional.IsDefined(RoleStatus))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeKubernetesRole DeserializeEdgeKubernetesRole(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

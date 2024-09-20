@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class RolloutStatusBase : IUtf8JsonSerializable, IJsonModel<RolloutStatusBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RolloutStatusBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RolloutStatusBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RolloutStatusBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 foreach (var item in FailedOrSkippedRegions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ExtendedErrorInfo>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static RolloutStatusBase DeserializeRolloutStatusBase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

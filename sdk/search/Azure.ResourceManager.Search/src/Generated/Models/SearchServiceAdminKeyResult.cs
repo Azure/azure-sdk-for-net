@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Response containing the primary and secondary admin API keys for a given search service. </summary>
+    /// <summary> Response containing the primary and secondary admin API keys for a given Azure AI Search service. </summary>
     public partial class SearchServiceAdminKeyResult
     {
         /// <summary>

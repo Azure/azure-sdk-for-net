@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class DefaultRolloutStatus : IUtf8JsonSerializable, IJsonModel<DefaultRolloutStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefaultRolloutStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefaultRolloutStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DefaultRolloutStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 foreach (var item in FailedOrSkippedRegions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ExtendedErrorInfo>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static DefaultRolloutStatus DeserializeDefaultRolloutStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

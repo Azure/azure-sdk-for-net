@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     public partial class ScalarFunctionProperties : IUtf8JsonSerializable, IJsonModel<ScalarFunctionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalarFunctionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalarFunctionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScalarFunctionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -41,19 +41,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue<StreamingJobFunctionInput>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
-                writer.WriteObjectValue<StreamingJobFunctionOutput>(Output, options);
+                writer.WriteObjectValue(Output, options);
             }
             if (Optional.IsDefined(Binding))
             {
                 writer.WritePropertyName("binding"u8);
-                writer.WriteObjectValue<StreamingJobFunctionBinding>(Binding, options);
+                writer.WriteObjectValue(Binding, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static ScalarFunctionProperties DeserializeScalarFunctionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

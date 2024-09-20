@@ -14,7 +14,7 @@ extends:
     CloudConfig:
       Preview:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
-        Location: 'westcentralus'
+        Location: 'westus'
       UsGov:
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
     EnvVars:

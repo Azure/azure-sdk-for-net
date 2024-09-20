@@ -122,7 +122,7 @@ namespace Azure.IoT.TimeSeriesInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<InstancesBatchRequest>(parameters);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }
@@ -201,7 +201,7 @@ namespace Azure.IoT.TimeSeriesInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<InstancesSuggestRequest>(parameters);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }
@@ -284,7 +284,7 @@ namespace Azure.IoT.TimeSeriesInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchInstancesRequest>(parameters);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }

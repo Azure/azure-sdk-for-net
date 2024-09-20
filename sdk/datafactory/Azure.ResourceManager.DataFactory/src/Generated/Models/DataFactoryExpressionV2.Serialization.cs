@@ -10,12 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class DataFactoryExpressionV2 : IUtf8JsonSerializable, IJsonModel<DataFactoryExpressionV2>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryExpressionV2>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryExpressionV2>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataFactoryExpressionV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,10 +37,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(Operator))
+            if (Optional.IsCollectionDefined(Operators))
             {
-                writer.WritePropertyName("operator"u8);
-                writer.WriteStringValue(Operator);
+                writer.WritePropertyName("operators"u8);
+                writer.WriteStartArray();
+                foreach (var item in Operators)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(Operands))
             {
@@ -47,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Operands)
                 {
-                    writer.WriteObjectValue<DataFactoryExpressionV2>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFactoryExpressionV2 DeserializeDataFactoryExpressionV2(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -91,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryExpressionV2Type? type = default;
             string value = default;
-            string @operator = default;
+            IList<DataFactoryElement<string>> operators = default;
             IList<DataFactoryExpressionV2> operands = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -111,9 +122,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operator"u8))
+                if (property.NameEquals("operators"u8))
                 {
-                    @operator = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataFactoryElement<string>> array = new List<DataFactoryElement<string>>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JsonSerializer.Deserialize<DataFactoryElement<string>>(item.GetRawText()));
+                        }
+                    }
+                    operators = array;
                     continue;
                 }
                 if (property.NameEquals("operands"u8))
@@ -136,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataFactoryExpressionV2(type, value, @operator, operands ?? new ChangeTrackingList<DataFactoryExpressionV2>(), serializedAdditionalRawData);
+            return new DataFactoryExpressionV2(type, value, operators ?? new ChangeTrackingList<DataFactoryElement<string>>(), operands ?? new ChangeTrackingList<DataFactoryExpressionV2>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryExpressionV2>.Write(ModelReaderWriterOptions options)

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class MaxSizeRangeCapability : IUtf8JsonSerializable, IJsonModel<MaxSizeRangeCapability>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaxSizeRangeCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaxSizeRangeCapability>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MaxSizeRangeCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(MinValue))
             {
                 writer.WritePropertyName("minValue"u8);
-                writer.WriteObjectValue<MaxSizeCapability>(MinValue, options);
+                writer.WriteObjectValue(MinValue, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MaxValue))
             {
                 writer.WritePropertyName("maxValue"u8);
-                writer.WriteObjectValue<MaxSizeCapability>(MaxValue, options);
+                writer.WriteObjectValue(MaxValue, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ScaleSize))
             {
                 writer.WritePropertyName("scaleSize"u8);
-                writer.WriteObjectValue<MaxSizeCapability>(ScaleSize, options);
+                writer.WriteObjectValue(ScaleSize, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LogSize))
             {
                 writer.WritePropertyName("logSize"u8);
-                writer.WriteObjectValue<LogSizeCapability>(LogSize, options);
+                writer.WriteObjectValue(LogSize, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static MaxSizeRangeCapability DeserializeMaxSizeRangeCapability(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -183,85 +183,91 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinValue), out propertyOverride);
-            if (Optional.IsDefined(MinValue) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  minValue: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinValue))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  minValue: ");
                     BicepSerializationHelpers.AppendChildObject(builder, MinValue, options, 2, false, "  minValue: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxValue), out propertyOverride);
-            if (Optional.IsDefined(MaxValue) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxValue: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxValue))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxValue: ");
                     BicepSerializationHelpers.AppendChildObject(builder, MaxValue, options, 2, false, "  maxValue: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleSize), out propertyOverride);
-            if (Optional.IsDefined(ScaleSize) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  scaleSize: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScaleSize))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  scaleSize: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ScaleSize, options, 2, false, "  scaleSize: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogSize), out propertyOverride);
-            if (Optional.IsDefined(LogSize) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  logSize: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogSize))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  logSize: ");
                     BicepSerializationHelpers.AppendChildObject(builder, LogSize, options, 2, false, "  logSize: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  status: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  status: ");
                     builder.AppendLine($"'{Status.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
-            if (Optional.IsDefined(Reason) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  reason: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Reason))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  reason: ");
                     if (Reason.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

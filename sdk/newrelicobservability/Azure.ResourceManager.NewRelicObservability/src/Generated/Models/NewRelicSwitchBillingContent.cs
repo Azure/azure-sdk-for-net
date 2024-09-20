@@ -77,12 +77,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Azure resource Id. </summary>
+        [WirePath("azureResourceId")]
         public ResourceIdentifier AzureResourceId { get; set; }
         /// <summary> Organization id. </summary>
+        [WirePath("organizationId")]
         public string OrganizationId { get; set; }
         /// <summary> Plan details. </summary>
+        [WirePath("planData")]
         public NewRelicPlanDetails PlanData { get; set; }
         /// <summary> User Email. </summary>
+        [WirePath("userEmail")]
         public string UserEmail { get; }
     }
 }

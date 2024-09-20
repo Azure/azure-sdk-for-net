@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: FrontDoor
 namespace: Azure.ResourceManager.FrontDoor
-require: https://github.com/Azure/azure-rest-api-specs/blob/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/frontdoor/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/2d973fccf9f28681a481e9760fa12b2334216e21/specification/frontdoor/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -97,6 +97,8 @@ rename-mapping:
   TimeseriesDataPoint: FrontDoorTimeSeriesDataPoint
   TimeseriesInfo: FrontDoorTimeSeriesInfo
   TimeseriesType: FrontDoorTimeSeriesType
+  VariableName: FrontDoorWebApplicationFirewallPolicyGroupByVariableName
+  GroupByVariable: FrontDoorWebApplicationFirewallPolicyGroupByVariable
 
 format-by-name-rules:
   'tenantId': 'uuid'

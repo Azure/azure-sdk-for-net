@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetworkFunction
 {
     public partial class AzureTrafficCollectorData : IUtf8JsonSerializable, IJsonModel<AzureTrafficCollectorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureTrafficCollectorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureTrafficCollectorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureTrafficCollectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NetworkFunction
 
         internal static AzureTrafficCollectorData DeserializeAzureTrafficCollectorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

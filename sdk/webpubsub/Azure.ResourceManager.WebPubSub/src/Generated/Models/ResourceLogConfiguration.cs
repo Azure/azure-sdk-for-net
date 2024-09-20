@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Gets or sets the list of category configurations. </summary>
+        [WirePath("categories")]
         public IList<ResourceLogCategory> Categories { get; }
     }
 }

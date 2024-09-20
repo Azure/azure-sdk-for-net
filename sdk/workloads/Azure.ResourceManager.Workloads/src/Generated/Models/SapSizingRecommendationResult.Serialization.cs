@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
     [PersistableModelProxy(typeof(UnknownSapSizingRecommendationResult))]
     public partial class SapSizingRecommendationResult : IUtf8JsonSerializable, IJsonModel<SapSizingRecommendationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapSizingRecommendationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapSizingRecommendationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapSizingRecommendationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SapSizingRecommendationResult DeserializeSapSizingRecommendationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

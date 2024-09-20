@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    /// <summary> Indicates whether auto renewal is turned on or off for a subscription. </summary>
+    /// <summary> Indicates whether auto renewal is turned on or off for a product. </summary>
     public readonly partial struct BillingSubscriptionAutoRenewState : IEquatable<BillingSubscriptionAutoRenewState>
     {
         private readonly string _value;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

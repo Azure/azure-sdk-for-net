@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SecureScoreControlDefinitionItem : IUtf8JsonSerializable, IJsonModel<SecureScoreControlDefinitionItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecureScoreControlDefinitionItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecureScoreControlDefinitionItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecureScoreControlDefinitionItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (options.Format != "W" && Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue<SecureScoreControlDefinitionSource>(Source, options);
+                writer.WriteObjectValue(Source, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AssessmentDefinitions))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecureScoreControlDefinitionItem DeserializeSecureScoreControlDefinitionItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

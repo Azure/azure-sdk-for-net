@@ -68,6 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             string expectedSeverityLevel,
             string expectedMessage,
             string expectedTypeName,
+            IDictionary<string, string> expectedProperties,
             string expectedCloudRole = "[testNamespace]/testName",
             string expectedCloudInstance = "testInstance",
             string expectedApplicationVersion = "testVersion")
@@ -93,6 +94,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             Assert.Equal(expectedTypeName, telemetryExceptionDetails.TypeName);
             Assert.True(telemetryExceptionDetails.ParsedStack.Any());
             Assert.Null(telemetryExceptionDetails.Stack);
+
+            foreach (var prop in expectedProperties)
+            {
+                Assert.Equal(prop.Value, telemetryExceptionData.Properties[prop.Key]);
+            }
         }
 
         public static void AssertActivity_As_DependencyTelemetry(

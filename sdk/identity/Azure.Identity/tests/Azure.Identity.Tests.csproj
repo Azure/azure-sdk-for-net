@@ -16,9 +16,9 @@
     <PackageReference Include="Azure.Storage.Blobs" />
   </ItemGroup>
 <!-- Remove before shipping GA -->
-  <!-- <PropertyGroup>
+  <PropertyGroup>
         <DefineConstants>PREVIEW_FEATURE_FLAG</DefineConstants>
-  </PropertyGroup> -->
+  </PropertyGroup>
 <!-- End remove before shipping GA -->
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class HciClusterPatch : IUtf8JsonSerializable, IJsonModel<HciClusterPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciClusterPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciClusterPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HciClusterPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties"u8);
-                writer.WriteObjectValue<HciClusterDesiredProperties>(DesiredProperties, options);
+                writer.WriteObjectValue(DesiredProperties, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("identity"u8);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static HciClusterPatch DeserializeHciClusterPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

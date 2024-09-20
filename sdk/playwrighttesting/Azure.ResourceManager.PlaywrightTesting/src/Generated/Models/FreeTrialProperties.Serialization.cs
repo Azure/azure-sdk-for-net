@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
     public partial class FreeTrialProperties : IUtf8JsonSerializable, IJsonModel<FreeTrialProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FreeTrialProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FreeTrialProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FreeTrialProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
 
         internal static FreeTrialProperties DeserializeFreeTrialProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RegisteredServers_triggerRollover</description>
+        /// <description>RegisteredServers_TriggerRollover</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RegisteredServers_triggerRollover</description>
+        /// <description>RegisteredServers_TriggerRollover</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

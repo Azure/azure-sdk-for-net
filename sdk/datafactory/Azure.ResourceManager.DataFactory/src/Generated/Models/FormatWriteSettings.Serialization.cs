@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownFormatWriteSettings))]
     public partial class FormatWriteSettings : IUtf8JsonSerializable, IJsonModel<FormatWriteSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FormatWriteSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FormatWriteSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FormatWriteSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FormatWriteSettings DeserializeFormatWriteSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     case "AvroWriteSettings": return AvroWriteSettings.DeserializeAvroWriteSettings(element, options);
                     case "DelimitedTextWriteSettings": return DelimitedTextWriteSettings.DeserializeDelimitedTextWriteSettings(element, options);
+                    case "IcebergWriteSettings": return IcebergWriteSettings.DeserializeIcebergWriteSettings(element, options);
                     case "JsonWriteSettings": return JsonWriteSettings.DeserializeJsonWriteSettings(element, options);
                     case "OrcWriteSettings": return OrcWriteSettings.DeserializeOrcWriteSettings(element, options);
                     case "ParquetWriteSettings": return ParquetWriteSettings.DeserializeParquetWriteSettings(element, options);

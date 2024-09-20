@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class ComponentStateDetails : IUtf8JsonSerializable, IJsonModel<ComponentStateDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComponentStateDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComponentStateDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ComponentStateDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static ComponentStateDetails DeserializeComponentStateDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

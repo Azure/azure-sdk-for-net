@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class DefenderForServersGcpOffering : IUtf8JsonSerializable, IJsonModel<DefenderForServersGcpOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForServersGcpOffering>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForServersGcpOffering>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DefenderForServersGcpOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(DefenderForServers))
             {
                 writer.WritePropertyName("defenderForServers"u8);
-                writer.WriteObjectValue<GcpDefenderForServersInfo>(DefenderForServers, options);
+                writer.WriteObjectValue(DefenderForServers, options);
             }
             if (Optional.IsDefined(ArcAutoProvisioning))
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
-                writer.WriteObjectValue<DefenderForServersGcpOfferingArcAutoProvisioning>(ArcAutoProvisioning, options);
+                writer.WriteObjectValue(ArcAutoProvisioning, options);
             }
             if (Optional.IsDefined(VulnerabilityAssessmentAutoProvisioning))
             {
                 writer.WritePropertyName("vaAutoProvisioning"u8);
-                writer.WriteObjectValue<DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning>(VulnerabilityAssessmentAutoProvisioning, options);
+                writer.WriteObjectValue(VulnerabilityAssessmentAutoProvisioning, options);
             }
             if (Optional.IsDefined(MdeAutoProvisioning))
             {
                 writer.WritePropertyName("mdeAutoProvisioning"u8);
-                writer.WriteObjectValue<DefenderForServersGcpOfferingMdeAutoProvisioning>(MdeAutoProvisioning, options);
+                writer.WriteObjectValue(MdeAutoProvisioning, options);
             }
             if (Optional.IsDefined(SubPlan))
             {
                 writer.WritePropertyName("subPlan"u8);
-                writer.WriteObjectValue<DefenderForServersGcpOfferingSubPlan>(SubPlan, options);
+                writer.WriteObjectValue(SubPlan, options);
             }
             if (Optional.IsDefined(VmScanners))
             {
                 writer.WritePropertyName("vmScanners"u8);
-                writer.WriteObjectValue<DefenderForServersGcpOfferingVmScanners>(VmScanners, options);
+                writer.WriteObjectValue(VmScanners, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForServersGcpOffering DeserializeDefenderForServersGcpOffering(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

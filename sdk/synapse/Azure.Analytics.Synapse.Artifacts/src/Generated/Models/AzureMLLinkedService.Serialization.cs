@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
+                writer.WriteObjectValue(ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
+                    writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("mlEndpoint"u8);
             writer.WriteObjectValue<object>(MlEndpoint);
             writer.WritePropertyName("apiKey"u8);
-            writer.WriteObjectValue<SecretBase>(ApiKey);
+            writer.WriteObjectValue(ApiKey);
             if (Optional.IsDefined(UpdateResourceEndpoint))
             {
                 writer.WritePropertyName("updateResourceEndpoint"u8);
@@ -76,7 +76,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
-                writer.WriteObjectValue<SecretBase>(ServicePrincipalKey);
+                writer.WriteObjectValue(ServicePrincipalKey);
             }
             if (Optional.IsDefined(Tenant))
             {
@@ -283,11 +283,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeAzureMLLinkedService(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AzureMLLinkedService>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -295,7 +295,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, AzureMLLinkedService model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<AzureMLLinkedService>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override AzureMLLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

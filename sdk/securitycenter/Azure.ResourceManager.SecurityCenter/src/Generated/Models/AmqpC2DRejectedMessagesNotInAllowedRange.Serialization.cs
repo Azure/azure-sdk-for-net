@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class AmqpC2DRejectedMessagesNotInAllowedRange : IUtf8JsonSerializable, IJsonModel<AmqpC2DRejectedMessagesNotInAllowedRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmqpC2DRejectedMessagesNotInAllowedRange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmqpC2DRejectedMessagesNotInAllowedRange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AmqpC2DRejectedMessagesNotInAllowedRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AmqpC2DRejectedMessagesNotInAllowedRange DeserializeAmqpC2DRejectedMessagesNotInAllowedRange(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

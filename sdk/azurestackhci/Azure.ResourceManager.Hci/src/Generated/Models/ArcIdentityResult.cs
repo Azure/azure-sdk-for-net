@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Gets the arc application client id. </summary>
+        [WirePath("properties.arcApplicationClientId")]
         public Guid? ArcApplicationClientId { get; }
         /// <summary> Gets the arc application tenant id. </summary>
+        [WirePath("properties.arcApplicationTenantId")]
         public Guid? ArcApplicationTenantId { get; }
         /// <summary> Gets the arc service principal object id. </summary>
+        [WirePath("properties.arcServicePrincipalObjectId")]
         public Guid? ArcServicePrincipalObjectId { get; }
         /// <summary> Gets the arc application object id. </summary>
+        [WirePath("properties.arcApplicationObjectId")]
         public Guid? ArcApplicationObjectId { get; }
     }
 }

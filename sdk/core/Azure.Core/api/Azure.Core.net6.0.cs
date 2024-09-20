@@ -17,7 +17,9 @@ namespace Azure
     }
     public static partial class AzureCoreExtensions
     {
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Serialization.JsonPropertyNames propertyNameFormat, string dateTimeFormat = "o") { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
@@ -138,6 +140,10 @@ namespace Azure
         public override int GetHashCode() { throw null; }
         public abstract Azure.Response GetRawResponse();
         public virtual Azure.Core.RehydrationToken? GetRehydrationToken() { throw null; }
+        public static Azure.Operation Rehydrate(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions? options = null) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Operation> RehydrateAsync(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions? options = null) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Operation<T>> RehydrateAsync<T>(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
+        public static Azure.Operation<T> Rehydrate<T>(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
         public abstract Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
@@ -295,7 +301,9 @@ namespace Azure.Core
         private object _dummy;
         private int _dummyPrimitive;
         public AccessToken(string accessToken, System.DateTimeOffset expiresOn) { throw null; }
+        public AccessToken(string accessToken, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn) { throw null; }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
+        public System.DateTimeOffset? RefreshOn { get { throw null; } }
         public string Token { get { throw null; } }
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -530,7 +538,7 @@ namespace Azure.Core
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public string? Id { get { throw null; } }
+        public string Id { get { throw null; } }
         Azure.Core.RehydrationToken System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         object System.ClientModel.Primitives.IJsonModel<object>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -804,6 +812,7 @@ namespace Azure.Core.Diagnostics
         public const string TraitName = "AzureEventSource";
         public const string TraitValue = "true";
         public AzureEventSourceListener(System.Action<System.Diagnostics.Tracing.EventWrittenEventArgs, string> log, System.Diagnostics.Tracing.EventLevel level) { }
+        public AzureEventSourceListener(System.Action<System.Diagnostics.Tracing.EventWrittenEventArgs> log, System.Diagnostics.Tracing.EventLevel level) { }
         public static Azure.Core.Diagnostics.AzureEventSourceListener CreateConsoleLogger(System.Diagnostics.Tracing.EventLevel level = System.Diagnostics.Tracing.EventLevel.Informational) { throw null; }
         public static Azure.Core.Diagnostics.AzureEventSourceListener CreateTraceLogger(System.Diagnostics.Tracing.EventLevel level = System.Diagnostics.Tracing.EventLevel.Informational) { throw null; }
         protected sealed override void OnEventSourceCreated(System.Diagnostics.Tracing.EventSource eventSource) { }

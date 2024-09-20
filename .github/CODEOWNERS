@@ -31,10 +31,9 @@
 ##################
 # Repository root
 ##################
-
 # Catch all for loose files in the root, which are mostly global configuration and
 # should not be changed without team discussion.
-/*                                                                 @jsquire @pallavit @Azure/azure-sdk-write-net-core
+/*                                                                 @jsquire @Azure/azure-sdk-write-net-core
 
 ################
 # Automation
@@ -44,17 +43,17 @@
 /.github/                                                          @jsquire @ronniegeraghty
 
 # PRLabel: %EngSys
-/sdk/template/                                                     @hallipr @weshaggard @benbp @chunyu3 @lirenhe @jsquire @pallavit
+/sdk/template/                                                     @hallipr @weshaggard @benbp @chunyu3 @lirenhe @jsquire
 
 # Smoke tests
-/common/SmokeTests/                                                @schaabs @tg-msft @jsquire @pallavit
+/common/SmokeTests/                                                @schaabs @tg-msft @jsquire
 
 #########
 # SDK
 #########
 
 # Catch all
-/sdk/                                                              @pallavit @jsquire
+/sdk/                                                              @jsquire
 
 # ######## Core Libraries ########
 
@@ -80,6 +79,12 @@
 
 # ServiceLabel: %AAD
 # ServiceOwners:                                                   @adamedx
+
+# PRLabel: %AI Model Inference
+/sdk/ai/                                                           @trangevi @dargilco @jhakulin @glharper
+
+# ServiceLabel: %AI Model Inference
+# ServiceOwners:                                                   @trangevi @dargilco @jhakulin @glharper
 
 # ServiceLabel: %AKS
 # ServiceOwners:                                                   @Azure/aks-pm
@@ -121,10 +126,10 @@
 # ServiceOwners:                                                   @miaojiang
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/                                             @kinelski @ShivangiReja @jsquire @pallavit
+/sdk/appconfiguration/                                             @jorgerangel-msft @jsquire
 
 # ServiceLabel: %App Configuration
-# AzureSdkOwners:                                                  @kinelski
+# AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @shenmuxiaosen @avanigupta
 
 # ServiceLabel: %App Services
@@ -158,7 +163,7 @@
 # ServiceOwners:                                                   @rpsqrd @edyoung
 
 # PRLabel: %Batch
-/sdk/batch/                                                        @wiboris @dpwatrous
+/sdk/batch/                                                        @wiboris @dpwatrous @wanghoppe @skapur12 @cRui861
 
 # ServiceLabel: %Batch
 # ServiceOwners:                                                   @wiboris @dpwatrous
@@ -175,20 +180,11 @@
 # ServiceLabel: %Bot Service
 # ServiceOwners:                                                   @sgellock
 
-# PRLabel: %CDK
-/sdk/provisioning/                                                 @JoshLove-msft @tg-msft
-
-# ServiceLabel: %CDK
-# AzureSdkOwners:                                                  @JoshLove-msft
-
-# ServiceLabel: %Cloud Shell
-# ServiceOwners:                                                   @maertendMSFT
-
 # PRLabel: %Cognitive - Language
-/sdk/cognitivelanguage/                                            @quentinRobinson @wangyuantao
+/sdk/cognitivelanguage/                                            @quentinRobinson @bidisha-c
 
 # ServiceLabel: %Cognitive - Language
-# ServiceOwners:                                                   @quentinRobinson @wangyuantao
+# ServiceOwners:                                                   @quentinRobinson @bidisha-c
 
 # PRLabel: %Cognitive - Content Safety
 /sdk/contentsafety/                                                @bowgong @mengaims @JieZhou000
@@ -209,16 +205,19 @@
 # ServiceOwners:                                                   @ryogok @TFR258 @tburns10 @areddish @toothache
 
 # PRLabel: %Cognitive - Face
-/sdk/cognitiveservices/Vision.Face/                                @JinyuID @dipidoo @SteveMSFT @msyache @longli0 @ShaoAnLin @lulululululu
+/sdk/cognitiveservices/Vision.Face/                                @dipidoo @longli0 @ShaoAnLin @lulululululu @leareai @Han-msft
+
+# PRLabel: %Cognitive - Face
+/sdk/face/                                                         @dipidoo @longli0 @ShaoAnLin @lulululululu @leareai @Han-msft
 
 # ServiceLabel: %Cognitive - Face
-# ServiceOwners:                                                   @JinyuID @dipidoo @SteveMSFT @msyache @longli0 @ShaoAnLin @lulululululu
+# ServiceOwners:                                                   @dipidoo @longli0 @ShaoAnLin @lulululululu @leareai @Han-msft
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/documentintelligence/                                         @kinelski @pallavit @joseharriaga
+/sdk/documentintelligence/                                         @kinelski @joseharriaga
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/formrecognizer/                                               @kinelski @pallavit @joseharriaga
+/sdk/formrecognizer/                                               @kinelski @joseharriaga
 
 # ServiceLabel: %Cognitive - Form Recognizer
 # AzureSdkOwners:                                                  @kinelski
@@ -256,10 +255,10 @@
 # ServiceOwners:                                                   @bingisbestest @nerajput1607
 
 # PRLabel: %Cognitive - Text Analytics
-/sdk/textanalytics/                                                @quentinRobinson @wangyuantao @joseharriaga
+/sdk/textanalytics/                                                @quentinRobinson @joseharriaga @bidisha-c
 
 # ServiceLabel: %Cognitive - Text Analytics
-# ServiceOwners:                                                   @assafi @quentinRobinson @wangyuantao
+# ServiceOwners:                                                   @quentinRobinson @bidisha-c
 
 # PRLabel: %Cognitive - Translator
 /sdk/translation/                                                  @mikeymcz @cpoulain @joseharriaga
@@ -315,23 +314,23 @@
 # PRLabel: %Communication - Identity
 /sdk/communication/Azure.Communication.Identity/                   @Azure/acs-identity-sdk @AikoBB @maximrytych-ms @mjafferi-msft
 
-# PRLabel: %Communication - Network Traversal
-/sdk/communication/Azure.Communication.NetworkTraversal/           @ajpeacock0 @nathpete-msft
-
 # PRLabel: %Communication - Phone Numbers
-/sdk/communication/Azure.Communication.PhoneNumbers/               @miguhern @whisper6284 @RoyHerrod @danielav7
+/sdk/communication/Azure.Communication.PhoneNumbers/               @miguhern @whisper6284 @danielav7
+
+# PRLabel: %Communication - Programmable Connectivity
+/sdk/communication/Azure.Communication.ProgrammableConnectivity/   @aronhegedusms
 
 # PRLabel: %Communication - Short Codes
 /sdk/communication/Azure.Communication.ShortCodes/                 @guilhermeluizsp @danielav7
 
 # PRLabel: %Communication - SMS
-/sdk/communication/Azure.Communication.Sms/                        @DimaKolomiiets @gfeitosa-msft @phermanov-msft @ilyapaliakou-msft
+/sdk/communication/Azure.Communication.Sms/                        @gfeitosa-msft @phermanov-msft @ilyapaliakou-msft @besh2014
 
 # PRLabel: %Communication - Rooms
 /sdk/communication/Azure.Communication.Rooms/                      @minnieliu @paolamvhz @alexokun @Mrayyan @shwali-msft @allchiang-msft @mikehang-msft
 
 # PRLabel: %Compute
-/sdk/compute/                                                      @sandido @dkulkarni-ms @haagha @madewithsmiles @MS-syh2qs @grizzlytheodore @TravisCragg-MSFT @melina5656
+/sdk/compute/                                                      @sandido @dkulkarni-ms @haagha @MS-syh2qs @grizzlytheodore @TravisCragg-MSFT @melina5656
 
 # ServiceLabel: %Compute
 # ServiceOwners:                                                   @Drewm3 @TravisCragg-MSFT @nikhilpatel909 @sandeepraichura @hilaryw29 @MsGabsta @ushnaarshadkhan
@@ -382,7 +381,7 @@
 # ServiceOwners:                                                   @dkkapur
 
 # PRLabel: %Container Registry
-/sdk/containerregistry/                                            @ShivangiReja @pallavit @annelo-msft @Azure/azsdk-acr
+/sdk/containerregistry/                                            @ShivangiReja @annelo-msft @Azure/azsdk-acr
 
 # ServiceLabel: %Container Registry
 # AzureSdkOwners:                                                  @ShivangiReja
@@ -455,10 +454,10 @@
 # ServiceOwners:                                                   @raedJarrar @jifems
 
 # PRLabel: %DevCenter
-/sdk/devcenter/                                                    @sebrenna @mharlan @chrissmiller @shivangireja
+/sdk/devcenter/                                                    @sebrenna @shivangireja
 
 # ServiceLabel: %DevCenter
-# ServiceOwners:                                                   @sebrenna @mharlan @chrissmiller
+# ServiceOwners:                                                   @sebrenna
 
 # ServiceLabel: %Dev Spaces
 # ServiceOwners:                                                   @yuzorMa @johnsta @greenie-msft
@@ -488,14 +487,14 @@
 # ServiceOwners:                                                   @thang-bit
 
 # PRLabel: %Event Grid
-/sdk/eventgrid/                                                    @Kishp01 @ahamad-MS @jfggdl @JoshLove-msft
+/sdk/eventgrid/                                                    @Kishp01 @ahamad-MS @JoshLove-msft @jsquire @m-redding
 
 # PRLabel: %Event Grid %Functions
 /sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/       @jsquire @JoshLove-msft
 
 # ServiceLabel: %Event Grid
 # AzureSdkOwners:                                                  @JoshLove-msft
-# ServiceOwners:                                                   @Kishp01 @ahamad-MS @jfggdl
+# ServiceOwners:                                                   @Kishp01 @ahamad-MS
 
 # PRLabel: %Event Hubs
 /sdk/eventhub/                                                     @jsquire @m-redding
@@ -516,6 +515,12 @@
 # AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @serkantkaraca @sjkwak
 
+# PRLabel: %Extension - WCF
+/sdk/extension-wcf/                                                @mconnew @subhra231
+
+# ServiceLabel: %Extension - WCF
+# ServiceOwners:                                                   @mconnew @subhra231
+
 # ServiceLabel: %Functions
 # AzureSdkOwners:                                                  @JoshLove-msft
 # ServiceOwners:                                                   @ahmedelnably @fabiocav
@@ -531,6 +536,12 @@
 
 # ServiceLabel: %HDInsight
 # ServiceOwners:                                                   @aim-for-better @idear1203 @deshriva
+
+# PRLabel: %Health Deidentification
+/sdk/healthdataaiservices/                                         @GrahamMThomas
+
+# ServiceLabel: %Health Deidentification
+# ServiceOwners:                                                   @GrahamMThomas
 
 # ServiceLabel: %HPC Cache
 # ServiceOwners:                                                   @romahamu @omzevall
@@ -551,7 +562,7 @@
 # ServiceOwners:                                                   @Azure/azure-iot-cli-triage
 
 # PRLabel: %KeyVault
-/sdk/keyvault/                                                     @heaths @schaabs @Azure/azsdk-keyvault
+/sdk/keyvault/                                                     @heaths @schaabs @JonathanCrd @jsquire @christothes
 
 # ServiceLabel: %KeyVault
 # AzureSdkOwners:                                                  @heaths
@@ -594,10 +605,9 @@
 # ServiceOwners:                                                   @Lighthouse-Azure
 
 # PRLabel: %Maps
-/sdk/maps/                                                         @dubiety @khmic5 @andykao1213
-
+/sdk/maps/                                                         @dubiety @jecmenicanikola
 # ServiceLabel: %Maps
-# ServiceOwners:                                                   @dubiety @khmic5 @andykao1213
+# ServiceOwners:                                                   @dubiety @jecmenicanikola
 
 # ServiceLabel: %MariaDB
 # ServiceOwners:                                                   @ajlam @ambhatna @kummanish
@@ -618,17 +628,17 @@
 # ServiceOwners:                                                   @kpiteira
 
 # PRLabel: %Monitor
-/sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
+/sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @Azure/azure-sdk-write-monitor-data-plane
 
 # PRLabel: %Monitor
-/sdk/monitor/Azure.Monitor.Ingestion/                              @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
+/sdk/monitor/Azure.Monitor.Ingestion/                              @nisha-bhatia @JoshLove-msft @Azure/azure-sdk-write-monitor-data-plane
 
 # ServiceLabel: %Monitor
 # AzureSdkOwners:                                                  @nisha-bhatia
 # ServiceOwners:                                                   @SameergMS @dadunl @AzMonEssential @AzmonAlerts @AzmonActionG @AzmonLogA
 
 # PRLabel: %Monitor - Query
-/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
+/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @Azure/azure-sdk-write-monitor-data-plane
 
 # ServiceLabel: %Monitor - Query
 # AzureSdkOwners:                                                  @nisha-bhatia
@@ -638,22 +648,25 @@
 # ServiceOwners:                                                   @omziv @anatse @raronen @ischrei @danhadari @azmonapplicationinsights
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
+
+# PRLabel: %Monitor - Distro
+/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
 
 # ServiceLabel: %Monitor - Distro
-# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
 
 # PRLabel: %Monitor - Exporter
-/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
 
 # ServiceLabel: %Monitor - Exporter
-# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
 
 # PRLabel: %Monitor - LiveMetrics
-/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar @xiang17
+/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @xiang17
 
 # ServiceLabel: %Monitor - LiveMetrics
-# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar @xiang17
+# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @xiang17
 
 # ServiceLabel: %MySQL
 # ServiceOwners:                                                   @ajlam @ambhatna @kummanish
@@ -663,6 +676,12 @@
 
 # PRLabel: %Mixed Reality
 /sdk/objectanchors/                                                @crtreasu @rgarcia @JoshLove-msft
+
+# PRLabel: %Remote Rendering
+/sdk/remoterendering/                                              @FlorianBorn71 @MichaelZp0 @ChristopherManthei
+
+#ServiceLabel: %Remote Rendering
+#ServiceOwners:                                                    @FlorianBorn71 @MichaelZp0 @ChristopherManthei
 
 # ServiceLabel: %Mixed Reality
 # ServiceOwners:                                                   @crtreasu @rgarcia
@@ -678,9 +697,6 @@
 
 # ServiceLabel: %Network - Bastion
 # ServiceOwners:                                                   @bastionsuppgithub
-
-# ServiceLabel: %Network - CDN
-# ServiceOwners:                                                   @cdnfdsuppgithub
 
 # ServiceLabel: %Network - DDOS Protection
 # ServiceOwners:                                                   @ddossuppgithub
@@ -724,20 +740,14 @@
 # ServiceLabel: %Network - Private Link
 # ServiceOwners:                                                   @privlinksuppgithub
 
-# PRLabel: %Nginx
-/sdk/nginx/                                                        @spencerofwiti @bangbingsyb
-
-# ServiceLabel: %Nginx
-# ServiceOwners:                                                   @spencerofwiti @bangbingsyb
-
 # ServiceLabel: %Notification Hub
 # ServiceOwners:                                                   @tjsomasundaram
 
 # PRLabel: %OpenAI
-/sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash
+/sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash @ralph-msft
 
 # ServiceLabel: %OpenAI
-# ServiceOwners:                                                   @jpalvarezl @trrwilson
+# ServiceOwners:                                                   @jpalvarezl @trrwilson @ralph-msft
 
 # PRLabel: %Image Analysis
 /sdk/vision/Azure.AI.Vision.ImageAnalysis/                         @rhurey @dargilco
@@ -745,10 +755,10 @@
 # ServiceLabel: %Image Analysis
 # ServiceOwners:                                                   @rhurey @dargilco
 
-# PRLabel: %Playwright
+# PRLabel: %Microsoft Playwright Testing
 /sdk/playwrighttesting/                                            @shreyaanand @mjmadhu
 
-# ServiceLabel: %Playwright
+# ServiceLabel: %Microsoft Playwright Testing
 # ServiceOwners:                                                   @shreyaanand @mjmadhu
 
 # ServiceLabel: %Policy
@@ -759,6 +769,12 @@
 
 # ServiceLabel: %PostgreSQL
 # ServiceOwners:                                                   @sunilagarwal @lfittl-msft @sr-msft @niklarin
+
+# PRLabel: %Provisioning
+/sdk/provisioning/                                                 @JoshLove-msft @tg-msft
+
+# ServiceLabel: %Provisioning
+# AzureSdkOwners:                                                  @JoshLove-msft
 
 # PRLabel: %Quantum
 /sdk/quantum/Azure.Quantum.Jobs/                                   @xfield
@@ -774,9 +790,6 @@
 
 # ServiceLabel: %Redis Cache
 # ServiceOwners:                                                   @yegu-ms
-
-# ServiceLabel: %Relay
-# ServiceOwners:                                                   @jfggdl
 
 # ServiceLabel: %Reservations
 # ServiceOwners:                                                   @corquiri
@@ -854,19 +867,19 @@
 # ServiceOwners:                                                   @azureSQLGitHub
 
 # PRLabel: %Storage
-/sdk/storage*/                                                     @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft
+/sdk/storage*/                                                     @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft @jalauzon-msft @nickliu-msft
 
 # PRLabel: %Storage
-/sdk/storage/Azure.Storage.*/                                      @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft
+/sdk/storage/Azure.Storage.*/                                      @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft @jalauzon-msft @nickliu-msft
 
 # PRLabel: %Storage
-/sdk/storage/Microsoft.Azure.WebJobs.*/                            @seanmcc-msft @amnguye @jaschrep-msft @tg-msft @fabiocav @mathewc
+/sdk/storage/Microsoft.Azure.WebJobs.*/                            @seanmcc-msft @amnguye @jaschrep-msft @tg-msft @fabiocav @mathewc @jalauzon-msft @nickliu-msft
 
 # ServiceLabel: %Storage
 # ServiceOwners:                                                   @xgithubtriage
 
 # ServiceLabel: %Storsimple
-# ServiceOwners:                                                   @anoobbacker @ganzee @manuaery @patelkunal
+# ServiceOwners:                                                   @anoobbacker @ganzee @manuaery
 
 # ServiceLabel: %Stream Analytics
 # ServiceOwners:                                                   @atpham256
@@ -884,11 +897,11 @@
 # ServiceOwners:                                                   @wonner @yanjungao718
 
 # PRLabel: %Tables
-/sdk/tables/                                                       @christothes
+/sdk/tables/                                                       @christothes @JonathanCrd
 
 # ServiceLabel: %Tables
-# AzureSdkOwners:                                                  @christothes
-# ServiceOwners:                                                   @sakash279, @sivethe, @ThomasWeiss, @PaulCheng
+# AzureSdkOwners:                                                  @christothes @JonathanCrd
+# ServiceOwners:                                                   @sakash279 @sivethe @ThomasWeiss @PaulCheng
 
 # PRLabel: %TimeSeriesInsights
 /sdk/timeseriesinsights/                                           @yeskarthik @rasidhan @dmdenmsft
@@ -906,7 +919,7 @@
 # ServiceOwners:                                                   @AzureAppServiceCLI @antcp
 
 # PRLabel: %WebPubSub
-/sdk/webpubsub/                                                    @vicancy @JialinXin @pallavit @KrzysztofCwalina
+/sdk/webpubsub/                                                    @vicancy @JialinXin @KrzysztofCwalina
 
 # PRLabel: %WebPubSub
 /sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/       @vicancy
@@ -933,6 +946,24 @@
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
 
+# PRLabel: %ARM
+/sdk/resources/Azure.ResourceManager.*/                            @Azure/arm-sdk-owners
+
+# ServiceLabel: %ARM %Mgmt
+# ServiceOwners:                                                   @Azure/arm-sdk-owners
+
+# PRLabel: %Astronomer
+/sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
+
+# ServiceLabel: %Astronomer %Mgmt
+# ServiceOwners:                                                   @banggaurav
+
+# PRLabel: %Azure Stack Hci
+/sdk/azurestackhci/Azure.ResourceManager.Hci/                      @priyjain358
+
+# ServiceLabel: %Azure Stack Hci %Mgmt
+# ServiceOwners:                                                   @priyjain358
+
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
 
@@ -942,35 +973,123 @@
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
 
+# PRLabel: %Hardware Security Modules
+/sdk/hardwaresecuritymodules/Azure.ResourceManager.*/              @emmeliaAra
+
+# ServiceLabel: %Hardware Security Modules %Mgmt
+# ServiceOwners:                                                   @emmeliaAra
+
+# PRLabel: %DevOps - Infrastructure
+/sdk/devopsinfrastructure/Azure.ResourceManager.*/                 @oolaoluwa
+
+# ServiceLabel: %DevOps - Infrastructure
+# ServiceOwners:                                                   @oolaoluwa
+
+# PRLabel: %Informatica Data Management
+/sdk/informaticadatamanagement/Azure.ResourceManager.*/            @almasak
+
+# ServiceLabel: %Informatica Data Management %Mgmt
+# ServiceOwners:                                                   @almasak
+
 # PRLabel: %Large Instance
 /sdk/azurelargeinstance/Azure.ResourceManager.*/                   @8Gitbrix @archerzz @ArcturusZhang @ArthurMa1978
 
 # ServiceLabel: %Large Instance %Mgmt
 # ServiceOwners:                                                   @8Gitbrix
 
+# PRLabel: %Network - CDN
+/sdk/cdn/Azure.ResourceManager.*/                                  @ptnan7
+
+# ServiceLabel: %Network - CDN %Mgmt
+# ServiceOwners:                                                   @ptnan7
+
+# PRLabel: %Network - Front Door
+/sdk/frontdoor/Azure.ResourceManager.*/                            @ptnan7
+
+# ServiceLabel: %Network - Front Door %Mgmt
+# ServiceOwners:                                                   @ptnan7
+
+# PRLabel: %Network - Mobile
+/sdk/mobilenetwork/Azure.ResourceManager.*/                        @ArthurMa1978
+
+# ServiceLabel: %Network - Mobile %Mgmt
+# ServiceOwners:                                                   @ArthurMa1978
+
+# PRLabel: %Network - Cloud
+/sdk/networkcloud/Azure.ResourceManager.*/                         @Azure/azure-sdk-write-networkcloud
+
+# ServiceLabel: %Network - Cloud %Mgmt
+# ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
+
+# PRLabel: %New Relic
+/sdk/newrelicobservability/Azure.ResourceManager.*/                @dipeshbhakat-microsoft @vipray-ms
+
+# ServiceLabel: %New Relic %Mgmt
+# ServiceOwners:                                                   @dipeshbhakat-microsoft @vipray-ms
+
+# PRLabel: %Nginx
+/sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti
+
+# ServiceLabel: %Nginx %Mgmt
+# ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti
+
+# PRLabel: %Operator Nexus - Network Cloud
+/sdk/networkcloud/Azure.ResourceManager.*/                         @Azure/azure-sdk-write-networkcloud
+
+# ServiceLabel: %Operator Nexus - Network Cloud %Mgmt
+# ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
+
+# PRLabel: %Oracle
+/sdk/oracle/Azure.ResourceManager.*/                               @v-jamcheung @v-rvilathurs @v-eelhomsi
+
+# ServiceLabel: %Oracle %Mgmt
+# ServiceOwners:                                                   @v-jamcheung @v-rvilathurs @v-eelhomsi
+
+# PRLabel: %Quota
+/sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft
+
+# ServiceLabel: %Quota %Mgmt
+# ServiceOwners:                                                   @tejasm-microsoft
+
+# PRLabel: %Recovery Services Backup
+/sdk/recoveryservices-backup/Azure.ResourceManager.*/              @Daya-Patil
+
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
+
+# PRLabel: %Self Help
+/sdk/selfhelp/Azure.ResourceManager.*/                             @siddiavinashmsft @archerzz @ArcturusZhang @ArthurMa1978
+
+# ServiceLabel: %Self Help %Mgmt
+# ServiceOwners:                                                   @siddiavinashmsft
 
 # PRLabel: %Spring App Discovery
 /sdk/springappdiscovery/Azure.ResourceManager.*/                   @sunkun99 @archerzz @ArcturusZhang @ArthurMa1978
 
+
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
 
-# Reviewers to double check any API changes
-/sdk/**/api/                                                       @KrzysztofCwalina @tg-msft
+# PRLabel: %Compute - Fleet
+/sdk/computefleet/                                                 @sahilarora92 @dhruvil009
+
+# ServiceLabel: %Compute - Fleet
+# ServiceOwners:                                                   @sahilarora92 @dhruvil009
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
+/eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
+/.github/workflows/                                                @Azure/azure-sdk-eng
 
 # Add owners for notifications for specific pipelines
-/eng/pipelines/aggregate-reports.yml                               @jsquire @maririos @pallavit
+/eng/pipelines/aggregate-reports.yml                               @jsquire
+/eng/common/pipelines/codeowners-linter.yml                        @jsquire
 /sdk/eventhub/tests.data.yml                                       @serkantkaraca @sjkwak
 /sdk/servicebus/tests.data.yml                                     @shankarsama @EldertGrootenboer
 
 # Add owners for package dependency changes
-/eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @pallavit @m-nash @ArthurMa1978
+/eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @m-nash @ArthurMa1978
 
 # ######## DPG ########
 

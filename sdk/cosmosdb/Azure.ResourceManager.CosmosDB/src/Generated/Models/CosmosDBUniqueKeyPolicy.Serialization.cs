@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal partial class CosmosDBUniqueKeyPolicy : IUtf8JsonSerializable, IJsonModel<CosmosDBUniqueKeyPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBUniqueKeyPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBUniqueKeyPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBUniqueKeyPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in UniqueKeys)
                 {
-                    writer.WriteObjectValue<CosmosDBUniqueKey>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBUniqueKeyPolicy DeserializeCosmosDBUniqueKeyPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UniqueKeys), out propertyOverride);
-            if (Optional.IsCollectionDefined(UniqueKeys) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (UniqueKeys.Any() || hasPropertyOverride)
+                builder.Append("  uniqueKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(UniqueKeys))
                 {
-                    builder.Append("  uniqueKeys: ");
-                    if (hasPropertyOverride)
+                    if (UniqueKeys.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  uniqueKeys: ");
                         builder.AppendLine("[");
                         foreach (var item in UniqueKeys)
                         {

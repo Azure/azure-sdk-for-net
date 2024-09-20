@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class NetworkConfigurationDiagnosticResult : IUtf8JsonSerializable, IJsonModel<NetworkConfigurationDiagnosticResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkConfigurationDiagnosticResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkConfigurationDiagnosticResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkConfigurationDiagnosticResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                writer.WriteObjectValue<NetworkConfigurationDiagnosticProfile>(Profile, options);
+                writer.WriteObjectValue(Profile, options);
             }
             if (Optional.IsDefined(NetworkSecurityGroupResult))
             {
                 writer.WritePropertyName("networkSecurityGroupResult"u8);
-                writer.WriteObjectValue<NetworkSecurityGroupResult>(NetworkSecurityGroupResult, options);
+                writer.WriteObjectValue(NetworkSecurityGroupResult, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static NetworkConfigurationDiagnosticResult DeserializeNetworkConfigurationDiagnosticResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class HybridComputeProductFeature : IUtf8JsonSerializable, IJsonModel<HybridComputeProductFeature>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeProductFeature>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeProductFeature>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HybridComputeProductFeature>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,20 +37,30 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("subscriptionStatus"u8);
                 writer.WriteStringValue(SubscriptionStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingStartOn))
-            {
-                writer.WritePropertyName("billingStartDate"u8);
-                writer.WriteStringValue(BillingStartOn.Value, "O");
-            }
             if (options.Format != "W" && Optional.IsDefined(EnrollmentOn))
             {
                 writer.WritePropertyName("enrollmentDate"u8);
                 writer.WriteStringValue(EnrollmentOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(BillingStartOn))
+            {
+                writer.WritePropertyName("billingStartDate"u8);
+                writer.WriteStringValue(BillingStartOn.Value, "O");
+            }
             if (options.Format != "W" && Optional.IsDefined(DisenrollmentOn))
             {
                 writer.WritePropertyName("disenrollmentDate"u8);
                 writer.WriteStringValue(DisenrollmentOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingEndOn))
+            {
+                writer.WritePropertyName("billingEndDate"u8);
+                writer.WriteStringValue(BillingEndOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                JsonSerializer.Serialize(writer, Error);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,7 +94,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static HybridComputeProductFeature DeserializeHybridComputeProductFeature(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -91,9 +102,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             string name = default;
             LicenseProfileSubscriptionStatus? subscriptionStatus = default;
-            DateTimeOffset? billingStartDate = default;
             DateTimeOffset? enrollmentDate = default;
+            DateTimeOffset? billingStartDate = default;
             DateTimeOffset? disenrollmentDate = default;
+            DateTimeOffset? billingEndDate = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,15 +125,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     subscriptionStatus = new LicenseProfileSubscriptionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("billingStartDate"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    billingStartDate = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
                 if (property.NameEquals("enrollmentDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -128,6 +132,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         continue;
                     }
                     enrollmentDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("billingStartDate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingStartDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("disenrollmentDate"u8))
@@ -139,6 +152,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     disenrollmentDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("billingEndDate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingEndDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("error"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -148,10 +179,144 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeProductFeature(
                 name,
                 subscriptionStatus,
-                billingStartDate,
                 enrollmentDate,
+                billingStartDate,
                 disenrollmentDate,
+                billingEndDate,
+                error,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  subscriptionStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SubscriptionStatus))
+                {
+                    builder.Append("  subscriptionStatus: ");
+                    builder.AppendLine($"'{SubscriptionStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnrollmentOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enrollmentDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnrollmentOn))
+                {
+                    builder.Append("  enrollmentDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(EnrollmentOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BillingStartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  billingStartDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BillingStartOn))
+                {
+                    builder.Append("  billingStartDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(BillingStartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisenrollmentOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  disenrollmentDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisenrollmentOn))
+                {
+                    builder.Append("  disenrollmentDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(DisenrollmentOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BillingEndOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  billingEndDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BillingEndOn))
+                {
+                    builder.Append("  billingEndDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(BillingEndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Error), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  error: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Error))
+                {
+                    builder.Append("  error: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Error, options, 2, false, "  error: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<HybridComputeProductFeature>.Write(ModelReaderWriterOptions options)
@@ -162,6 +327,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HybridComputeProductFeature)} does not support writing '{options.Format}' format.");
             }

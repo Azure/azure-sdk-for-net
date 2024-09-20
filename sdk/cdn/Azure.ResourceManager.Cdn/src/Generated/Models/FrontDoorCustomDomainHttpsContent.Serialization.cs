@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class FrontDoorCustomDomainHttpsContent : IUtf8JsonSerializable, IJsonModel<FrontDoorCustomDomainHttpsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorCustomDomainHttpsContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorCustomDomainHttpsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontDoorCustomDomainHttpsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (Secret != null)
                 {
                     writer.WritePropertyName("secret"u8);
-                    writer.WriteObjectValue<FrontDoorCustomDomainHttpsContentSecret>(Secret, options);
+                    writer.WriteObjectValue(Secret, options);
                 }
                 else
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static FrontDoorCustomDomainHttpsContent DeserializeFrontDoorCustomDomainHttpsContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

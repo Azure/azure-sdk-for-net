@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class AvsPrivateCloudData : IUtf8JsonSerializable, IJsonModel<AvsPrivateCloudData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvsPrivateCloudData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Avs
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<AvsSku>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(ManagementCluster))
             {
                 writer.WritePropertyName("managementCluster"u8);
-                writer.WriteObjectValue<AvsManagementCluster>(ManagementCluster, options);
+                writer.WriteObjectValue(ManagementCluster, options);
             }
             if (Optional.IsDefined(Internet))
             {
@@ -86,19 +86,19 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in IdentitySources)
                 {
-                    writer.WriteObjectValue<SingleSignOnIdentitySource>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
-                writer.WriteObjectValue<PrivateCloudAvailabilityProperties>(Availability, options);
+                writer.WriteObjectValue(Availability, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<CustomerManagedEncryption>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
             {
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(Circuit))
             {
                 writer.WritePropertyName("circuit"u8);
-                writer.WriteObjectValue<ExpressRouteCircuit>(Circuit, options);
+                writer.WriteObjectValue(Circuit, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
-                writer.WriteObjectValue<AvsPrivateCloudEndpoints>(Endpoints, options);
+                writer.WriteObjectValue(Endpoints, options);
             }
             if (Optional.IsDefined(NetworkBlock))
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(SecondaryCircuit))
             {
                 writer.WritePropertyName("secondaryCircuit"u8);
-                writer.WriteObjectValue<ExpressRouteCircuit>(SecondaryCircuit, options);
+                writer.WriteObjectValue(SecondaryCircuit, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NsxPublicIPQuotaRaised))
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Avs
 
         internal static AvsPrivateCloudData DeserializeAvsPrivateCloudData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

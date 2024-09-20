@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 {
     public partial class AcceptedAgeRange : IUtf8JsonSerializable, IJsonModel<AcceptedAgeRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcceptedAgeRange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcceptedAgeRange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AcceptedAgeRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(MinimumAge))
             {
                 writer.WritePropertyName("minimumAge"u8);
-                writer.WriteObjectValue<AcceptedAge>(MinimumAge, options);
+                writer.WriteObjectValue(MinimumAge, options);
             }
             if (Optional.IsDefined(MaximumAge))
             {
                 writer.WritePropertyName("maximumAge"u8);
-                writer.WriteObjectValue<AcceptedAge>(MaximumAge, options);
+                writer.WriteObjectValue(MaximumAge, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         internal static AcceptedAgeRange DeserializeAcceptedAgeRange(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,11 +146,11 @@ namespace Azure.Health.Insights.ClinicalMatching
             return DeserializeAcceptedAgeRange(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AcceptedAgeRange>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

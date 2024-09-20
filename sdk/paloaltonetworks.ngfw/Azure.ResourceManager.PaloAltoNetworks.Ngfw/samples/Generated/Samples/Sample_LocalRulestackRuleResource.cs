@@ -283,7 +283,7 @@ new RulestackTagInfo("keyName","value")
         public async Task GetCounters_LocalRulesGetCountersMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_getCounters_MaximumSet_Gen.json
-            // this example is just showing the usage of "LocalRules_getCounters" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "LocalRules_GetCounters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -312,7 +312,7 @@ new RulestackTagInfo("keyName","value")
         public async Task GetCounters_LocalRulesGetCountersMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_getCounters_MinimumSet_Gen.json
-            // this example is just showing the usage of "LocalRules_getCounters" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "LocalRules_GetCounters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -340,7 +340,7 @@ new RulestackTagInfo("keyName","value")
         public async Task RefreshCounters_LocalRulesRefreshCountersMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_refreshCounters_MaximumSet_Gen.json
-            // this example is just showing the usage of "LocalRules_refreshCounters" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "LocalRules_RefreshCounters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -369,7 +369,7 @@ new RulestackTagInfo("keyName","value")
         public async Task RefreshCounters_LocalRulesRefreshCountersMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_refreshCounters_MinimumSet_Gen.json
-            // this example is just showing the usage of "LocalRules_refreshCounters" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "LocalRules_RefreshCounters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -397,7 +397,7 @@ new RulestackTagInfo("keyName","value")
         public async Task ResetCounters_LocalRulesResetCountersMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_resetCounters_MaximumSet_Gen.json
-            // this example is just showing the usage of "LocalRules_resetCounters" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "LocalRules_ResetCounters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -426,7 +426,7 @@ new RulestackTagInfo("keyName","value")
         public async Task ResetCounters_LocalRulesResetCountersMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRules_resetCounters_MinimumSet_Gen.json
-            // this example is just showing the usage of "LocalRules_resetCounters" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "LocalRules_ResetCounters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

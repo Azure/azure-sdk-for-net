@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SparkConfigurationParametrizationReference : IUtf8JsonSerializable, IJsonModel<SparkConfigurationParametrizationReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SparkConfigurationParametrizationReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SparkConfigurationParametrizationReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SparkConfigurationParametrizationReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SparkConfigurationParametrizationReference DeserializeSparkConfigurationParametrizationReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

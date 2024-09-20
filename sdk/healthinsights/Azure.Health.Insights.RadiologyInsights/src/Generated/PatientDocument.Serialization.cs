@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 {
     public partial class PatientDocument : IUtf8JsonSerializable, IJsonModel<PatientDocument>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PatientDocument>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PatientDocument>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PatientDocument>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -40,10 +40,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsDefined(CreatedDateTime))
+            if (Optional.IsDefined(CreatedAt))
             {
-                writer.WritePropertyName("createdDateTime"u8);
-                writer.WriteStringValue(CreatedDateTime.Value, "O");
+                writer.WritePropertyName("createdAt"u8);
+                writer.WriteStringValue(CreatedAt.Value, "O");
             }
             if (Optional.IsCollectionDefined(Authors))
             {
@@ -51,7 +51,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Authors)
                 {
-                    writer.WriteObjectValue<DocumentAuthor>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -63,10 +63,10 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(AdministrativeMetadata))
             {
                 writer.WritePropertyName("administrativeMetadata"u8);
-                writer.WriteObjectValue<DocumentAdministrativeMetadata>(AdministrativeMetadata, options);
+                writer.WriteObjectValue(AdministrativeMetadata, options);
             }
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue<DocumentContent>(Content, options);
+            writer.WriteObjectValue(Content, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -99,28 +99,28 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         internal static PatientDocument DeserializePatientDocument(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DocumentType type = default;
+            ClinicalDocumentContentType type = default;
             ClinicalDocumentType? clinicalType = default;
             string id = default;
             string language = default;
-            DateTimeOffset? createdDateTime = default;
-            IList<DocumentAuthor> authors = default;
+            DateTimeOffset? createdAt = default;
+            IList<ClinicalDocumentAuthor> authors = default;
             SpecialtyType? specialtyType = default;
             DocumentAdministrativeMetadata administrativeMetadata = default;
-            DocumentContent content = default;
+            ClinicalDocumentContent content = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new DocumentType(property.Value.GetString());
+                    type = new ClinicalDocumentContentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("clinicalType"u8))
@@ -142,13 +142,13 @@ namespace Azure.Health.Insights.RadiologyInsights
                     language = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdDateTime"u8))
+                if (property.NameEquals("createdAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createdDateTime = property.Value.GetDateTimeOffset("O");
+                    createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("authors"u8))
@@ -157,10 +157,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    List<DocumentAuthor> array = new List<DocumentAuthor>();
+                    List<ClinicalDocumentAuthor> array = new List<ClinicalDocumentAuthor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentAuthor.DeserializeDocumentAuthor(item, options));
+                        array.Add(ClinicalDocumentAuthor.DeserializeClinicalDocumentAuthor(item, options));
                     }
                     authors = array;
                     continue;
@@ -185,7 +185,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (property.NameEquals("content"u8))
                 {
-                    content = DocumentContent.DeserializeDocumentContent(property.Value, options);
+                    content = ClinicalDocumentContent.DeserializeClinicalDocumentContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -199,8 +199,8 @@ namespace Azure.Health.Insights.RadiologyInsights
                 clinicalType,
                 id,
                 language,
-                createdDateTime,
-                authors ?? new ChangeTrackingList<DocumentAuthor>(),
+                createdAt,
+                authors ?? new ChangeTrackingList<ClinicalDocumentAuthor>(),
                 specialtyType,
                 administrativeMetadata,
                 content,
@@ -246,11 +246,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             return DeserializePatientDocument(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PatientDocument>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

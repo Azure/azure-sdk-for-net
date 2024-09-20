@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 {
     public partial class HealthcareApisServiceProperties : IUtf8JsonSerializable, IJsonModel<HealthcareApisServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisServiceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisServiceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HealthcareApisServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,29 +37,29 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessPolicies)
                 {
-                    writer.WriteObjectValue<HealthcareApisServiceAccessPolicyEntry>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CosmosDbConfiguration))
             {
                 writer.WritePropertyName("cosmosDbConfiguration"u8);
-                writer.WriteObjectValue<HealthcareApisServiceCosmosDbConfiguration>(CosmosDbConfiguration, options);
+                writer.WriteObjectValue(CosmosDbConfiguration, options);
             }
             if (Optional.IsDefined(AuthenticationConfiguration))
             {
                 writer.WritePropertyName("authenticationConfiguration"u8);
-                writer.WriteObjectValue<HealthcareApisServiceAuthenticationConfiguration>(AuthenticationConfiguration, options);
+                writer.WriteObjectValue(AuthenticationConfiguration, options);
             }
             if (Optional.IsDefined(CorsConfiguration))
             {
                 writer.WritePropertyName("corsConfiguration"u8);
-                writer.WriteObjectValue<HealthcareApisServiceCorsConfiguration>(CorsConfiguration, options);
+                writer.WriteObjectValue(CorsConfiguration, options);
             }
             if (Optional.IsDefined(ExportConfiguration))
             {
                 writer.WritePropertyName("exportConfiguration"u8);
-                writer.WriteObjectValue<ServiceExportConfigurationInfo>(ExportConfiguration, options);
+                writer.WriteObjectValue(ExportConfiguration, options);
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue<HealthcareApisPrivateEndpointConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             if (Optional.IsDefined(AcrConfiguration))
             {
                 writer.WritePropertyName("acrConfiguration"u8);
-                writer.WriteObjectValue<HealthcareApisServiceAcrConfiguration>(AcrConfiguration, options);
+                writer.WriteObjectValue(AcrConfiguration, options);
             }
             if (Optional.IsDefined(ImportConfiguration))
             {
                 writer.WritePropertyName("importConfiguration"u8);
-                writer.WriteObjectValue<HealthcareApisServiceImportConfiguration>(ImportConfiguration, options);
+                writer.WriteObjectValue(ImportConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisServiceProperties DeserializeHealthcareApisServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

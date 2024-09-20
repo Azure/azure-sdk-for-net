@@ -61,7 +61,7 @@ namespace Azure.Communication.Sms.Tests
         [Test]
         public void SmsClientOptions_ThrowsWithInvalidVersion()
         {
-            var invalidServiceVersion = (SmsClientOptions.ServiceVersion)2;
+            var invalidServiceVersion = (SmsClientOptions.ServiceVersion)99;
 
             Assert.Throws<ArgumentOutOfRangeException>(() => new SmsClientOptions(invalidServiceVersion));
         }

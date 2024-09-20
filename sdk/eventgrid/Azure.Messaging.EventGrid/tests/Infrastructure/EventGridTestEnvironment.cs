@@ -8,23 +8,28 @@ namespace Azure.Messaging.EventGrid.Tests
 {
     public class EventGridTestEnvironment : TestEnvironment
     {
-        public string TopicHost => GetRecordedVariable("EVENT_GRID_TOPIC_ENDPOINT");
-        public string TopicKey => GetRecordedVariable("EVENT_GRID_TOPIC_KEY", options => options.IsSecret(SanitizedValue.Base64));
+        public string TopicHost => GetRecordedVariable("EVENTGRID_TOPIC_ENDPOINT");
+        public string TopicKey => GetRecordedVariable("EVENTGRID_TOPIC_KEY", options => options.IsSecret(SanitizedValue.Base64));
 
-        public string DomainHost => GetRecordedVariable("EVENT_GRID_DOMAIN_ENDPOINT");
-        public string DomainKey => GetRecordedVariable("EVENT_GRID_DOMAIN_KEY", options => options.IsSecret(SanitizedValue.Base64));
+        public string DomainHost => GetRecordedVariable("EVENTGRID_DOMAIN_ENDPOINT");
+        public string DomainKey => GetRecordedVariable("EVENTGRID_DOMAIN_KEY", options => options.IsSecret(SanitizedValue.Base64));
 
-        public string CloudEventDomainHost => GetRecordedVariable("EVENT_GRID_CLOUD_EVENT_DOMAIN_ENDPOINT");
-        public string CloudEventDomainKey => GetRecordedVariable("EVENT_GRID_CLOUD_EVENT_DOMAIN_KEY", options => options.IsSecret(SanitizedValue.Base64));
+        public string CloudEventDomainHost => GetRecordedVariable("EVENTGRID_CLOUD_EVENT_DOMAIN_ENDPOINT");
+        public string CloudEventDomainKey => GetRecordedVariable("EVENTGRID_CLOUD_EVENT_DOMAIN_KEY", options => options.IsSecret(SanitizedValue.Base64));
 
-        public string CloudEventTopicHost => GetRecordedVariable("EVENT_GRID_CLOUD_EVENT_TOPIC_ENDPOINT");
-        public string CloudEventTopicKey => GetRecordedVariable("EVENT_GRID_CLOUD_EVENT_TOPIC_KEY", options => options.IsSecret(SanitizedValue.Base64));
+        public string CloudEventTopicHost => GetRecordedVariable("EVENTGRID_CLOUD_EVENT_TOPIC_ENDPOINT");
+        public string CloudEventTopicKey => GetRecordedVariable("EVENTGRID_CLOUD_EVENT_TOPIC_KEY", options => options.IsSecret(SanitizedValue.Base64));
 
-        public string CustomEventTopicHost => GetRecordedVariable("EVENT_GRID_CUSTOM_EVENT_TOPIC_ENDPOINT");
-        public string CustomEventTopicKey => GetRecordedVariable("EVENT_GRID_CUSTOM_EVENT_TOPIC_KEY", options => options.IsSecret(SanitizedValue.Base64));
+        public string CustomEventTopicHost => GetRecordedVariable("EVENTGRID_CUSTOM_EVENT_TOPIC_ENDPOINT");
+        public string CustomEventTopicKey => GetRecordedVariable("EVENTGRID_CUSTOM_EVENT_TOPIC_KEY", options => options.IsSecret(SanitizedValue.Base64));
 
-        public string PartnerNamespaceHost => GetRecordedVariable("EVENT_GRID_PARTNER_NAMESPACE_ENDPOINT");
-        public string PartnerNamespaceKey => GetRecordedVariable("EVENT_GRID_PARTNER_NAMESPACE_KEY", options => options.IsSecret(SanitizedValue.Base64));
-        public string PartnerChannelName => GetRecordedVariable("EVENT_GRID_PARTNER_CHANNEL_NAME");
+        public string PartnerNamespaceHost => GetRecordedVariable("EVENTGRID_PARTNER_NAMESPACE_TOPIC_ENDPOINT");
+        public string PartnerNamespaceKey => GetRecordedVariable("EVENTGRID_PARTNER_NAMESPACE_TOPIC_KEY", options => options.IsSecret(SanitizedValue.Base64));
+        public string PartnerChannelName => GetRecordedVariable("EVENTGRID_PARTNER_CHANNEL_NAME");
+
+        public string NamespaceKey => GetRecordedVariable("EVENTGRID_KEY", options => options.IsSecret(SanitizedValue.Base64));
+        public string NamespaceTopicHost => GetRecordedVariable("EVENTGRID_ENDPOINT");
+        public string NamespaceTopicName => GetRecordedVariable("EVENTGRID_TOPIC_NAME");
+        public string NamespaceSubscriptionName => GetRecordedVariable("EVENTGRID_EVENT_SUBSCRIPTION_NAME");
     }
 }

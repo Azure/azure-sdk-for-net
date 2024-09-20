@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class StreamingEndpointAccessControl : IUtf8JsonSerializable, IJsonModel<StreamingEndpointAccessControl>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingEndpointAccessControl>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingEndpointAccessControl>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StreamingEndpointAccessControl>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Akamai))
             {
                 writer.WritePropertyName("akamai"u8);
-                writer.WriteObjectValue<AkamaiAccessControl>(Akamai, options);
+                writer.WriteObjectValue(Akamai, options);
             }
             if (Optional.IsDefined(IPs))
             {
                 writer.WritePropertyName("ip"u8);
-                writer.WriteObjectValue<IPAccessControl>(IPs, options);
+                writer.WriteObjectValue(IPs, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StreamingEndpointAccessControl DeserializeStreamingEndpointAccessControl(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     public partial class FirewallNetworkProfile : IUtf8JsonSerializable, IJsonModel<FirewallNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallNetworkProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallNetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FirewallNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(VnetConfiguration))
             {
                 writer.WritePropertyName("vnetConfiguration"u8);
-                writer.WriteObjectValue<FirewallVnetConfiguration>(VnetConfiguration, options);
+                writer.WriteObjectValue(VnetConfiguration, options);
             }
             if (Optional.IsDefined(VwanConfiguration))
             {
                 writer.WritePropertyName("vwanConfiguration"u8);
-                writer.WriteObjectValue<FirewallVwanConfiguration>(VwanConfiguration, options);
+                writer.WriteObjectValue(VwanConfiguration, options);
             }
             writer.WritePropertyName("networkType"u8);
             writer.WriteStringValue(NetworkType.ToString());
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStartArray();
             foreach (var item in PublicIPs)
             {
-                writer.WriteObjectValue<IPAddressInfo>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("enableEgressNat"u8);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WriteStartArray();
                 foreach (var item in EgressNatIP)
                 {
-                    writer.WriteObjectValue<IPAddressInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         internal static FirewallNetworkProfile DeserializeFirewallNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -78,7 +78,9 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await _costManagementViewsViewsRestClient.CreateOrUpdateByScopeAsync(Id, viewName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response), response.GetRawResponse()));
+                var uri = _costManagementViewsViewsRestClient.CreateCreateOrUpdateByScopeRequestUri(Id, viewName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,7 +129,9 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = _costManagementViewsViewsRestClient.CreateOrUpdateByScope(Id, viewName, data, cancellationToken);
-                var operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response), response.GetRawResponse()));
+                var uri = _costManagementViewsViewsRestClient.CreateCreateOrUpdateByScopeRequestUri(Id, viewName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

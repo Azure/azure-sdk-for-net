@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Confluent.Models
 {
     public partial class AccessClusterRecord : IUtf8JsonSerializable, IJsonModel<AccessClusterRecord>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessClusterRecord>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessClusterRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AccessClusterRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue<MetadataEntity>(Metadata, options);
+                writer.WriteObjectValue(Metadata, options);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Spec))
             {
                 writer.WritePropertyName("spec"u8);
-                writer.WriteObjectValue<ClusterSpecEntity>(Spec, options);
+                writer.WriteObjectValue(Spec, options);
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<ClusterStatusEntity>(Status, options);
+                writer.WriteObjectValue(Status, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         internal static AccessClusterRecord DeserializeAccessClusterRecord(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Attestation.Models
 {
     public partial class AttestationServiceCreationSpecificParams : IUtf8JsonSerializable, IJsonModel<AttestationServiceCreationSpecificParams>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttestationServiceCreationSpecificParams>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttestationServiceCreationSpecificParams>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AttestationServiceCreationSpecificParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AttestationServiceCreationSpecificParams>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.Attestation.Models
                 throw new FormatException($"The model {nameof(AttestationServiceCreationSpecificParams)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
@@ -34,7 +42,7 @@ namespace Azure.ResourceManager.Attestation.Models
             if (Optional.IsDefined(PolicySigningCertificates))
             {
                 writer.WritePropertyName("policySigningCertificates"u8);
-                writer.WriteObjectValue<JsonWebKeySet>(PolicySigningCertificates, options);
+                writer.WriteObjectValue(PolicySigningCertificates, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.Attestation.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AttestationServiceCreationSpecificParams IJsonModel<AttestationServiceCreationSpecificParams>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +75,7 @@ namespace Azure.ResourceManager.Attestation.Models
 
         internal static AttestationServiceCreationSpecificParams DeserializeAttestationServiceCreationSpecificParams(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

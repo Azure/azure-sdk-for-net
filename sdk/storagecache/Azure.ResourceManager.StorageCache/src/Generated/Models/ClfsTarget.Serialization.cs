@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 {
     internal partial class ClfsTarget : IUtf8JsonSerializable, IJsonModel<ClfsTarget>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClfsTarget>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClfsTarget>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClfsTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static ClfsTarget DeserializeClfsTarget(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

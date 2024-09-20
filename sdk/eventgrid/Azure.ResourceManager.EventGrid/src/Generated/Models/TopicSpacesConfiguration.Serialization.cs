@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class TopicSpacesConfiguration : IUtf8JsonSerializable, IJsonModel<TopicSpacesConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TopicSpacesConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TopicSpacesConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TopicSpacesConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,12 +46,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(RoutingEnrichments))
             {
                 writer.WritePropertyName("routingEnrichments"u8);
-                writer.WriteObjectValue<RoutingEnrichments>(RoutingEnrichments, options);
+                writer.WriteObjectValue(RoutingEnrichments, options);
             }
             if (Optional.IsDefined(ClientAuthentication))
             {
                 writer.WritePropertyName("clientAuthentication"u8);
-                writer.WriteObjectValue<ClientAuthenticationSettings>(ClientAuthentication, options);
+                writer.WriteObjectValue(ClientAuthentication, options);
             }
             if (Optional.IsDefined(MaximumSessionExpiryInHours))
             {
@@ -64,7 +66,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(RoutingIdentityInfo))
             {
                 writer.WritePropertyName("routingIdentityInfo"u8);
-                writer.WriteObjectValue<RoutingIdentityInfo>(RoutingIdentityInfo, options);
+                writer.WriteObjectValue(RoutingIdentityInfo, options);
+            }
+            if (Optional.IsCollectionDefined(CustomDomains))
+            {
+                writer.WritePropertyName("customDomains"u8);
+                writer.WriteStartArray();
+                foreach (var item in CustomDomains)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +110,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static TopicSpacesConfiguration DeserializeTopicSpacesConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -112,6 +124,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             int? maximumSessionExpiryInHours = default;
             int? maximumClientSessionsPerAuthenticationName = default;
             RoutingIdentityInfo routingIdentityInfo = default;
+            IList<CustomDomainConfiguration> customDomains = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,6 +193,20 @@ namespace Azure.ResourceManager.EventGrid.Models
                     routingIdentityInfo = RoutingIdentityInfo.DeserializeRoutingIdentityInfo(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("customDomains"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CustomDomainConfiguration> array = new List<CustomDomainConfiguration>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CustomDomainConfiguration.DeserializeCustomDomainConfiguration(item, options));
+                    }
+                    customDomains = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -195,7 +222,182 @@ namespace Azure.ResourceManager.EventGrid.Models
                 maximumSessionExpiryInHours,
                 maximumClientSessionsPerAuthenticationName,
                 routingIdentityInfo,
+                customDomains ?? new ChangeTrackingList<CustomDomainConfiguration>(),
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("  state: ");
+                    builder.AppendLine($"'{State.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RouteTopicResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  routeTopicResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RouteTopicResourceId))
+                {
+                    builder.Append("  routeTopicResourceId: ");
+                    if (RouteTopicResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RouteTopicResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RouteTopicResourceId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Hostname), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hostname: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Hostname))
+                {
+                    builder.Append("  hostname: ");
+                    if (Hostname.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Hostname}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Hostname}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingEnrichments), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  routingEnrichments: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoutingEnrichments))
+                {
+                    builder.Append("  routingEnrichments: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RoutingEnrichments, options, 2, false, "  routingEnrichments: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientAuthentication), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clientAuthentication: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientAuthentication))
+                {
+                    builder.Append("  clientAuthentication: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ClientAuthentication, options, 2, false, "  clientAuthentication: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumSessionExpiryInHours), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maximumSessionExpiryInHours: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaximumSessionExpiryInHours))
+                {
+                    builder.Append("  maximumSessionExpiryInHours: ");
+                    builder.AppendLine($"{MaximumSessionExpiryInHours.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumClientSessionsPerAuthenticationName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maximumClientSessionsPerAuthenticationName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaximumClientSessionsPerAuthenticationName))
+                {
+                    builder.Append("  maximumClientSessionsPerAuthenticationName: ");
+                    builder.AppendLine($"{MaximumClientSessionsPerAuthenticationName.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingIdentityInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  routingIdentityInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoutingIdentityInfo))
+                {
+                    builder.Append("  routingIdentityInfo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RoutingIdentityInfo, options, 2, false, "  routingIdentityInfo: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomDomains), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customDomains: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CustomDomains))
+                {
+                    if (CustomDomains.Any())
+                    {
+                        builder.Append("  customDomains: ");
+                        builder.AppendLine("[");
+                        foreach (var item in CustomDomains)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  customDomains: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<TopicSpacesConfiguration>.Write(ModelReaderWriterOptions options)
@@ -206,6 +408,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TopicSpacesConfiguration)} does not support writing '{options.Format}' format.");
             }

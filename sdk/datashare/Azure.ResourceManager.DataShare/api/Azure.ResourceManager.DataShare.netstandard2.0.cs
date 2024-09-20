@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataShare
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataShareAccountResource : Azure.ResourceManager.ArmResource
+    public partial class DataShareAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareAccountData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataShareAccountResource() { }
@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.DataShare
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareAccountResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataShare.DataShareAccountResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareAccountResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataShare.DataShareAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.DataShareAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataShare.DataShareAccountResource> Update(Azure.ResourceManager.DataShare.Models.DataShareAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareAccountResource>> UpdateAsync(Azure.ResourceManager.DataShare.Models.DataShareAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -113,7 +118,7 @@ namespace Azure.ResourceManager.DataShare
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareConsumerInvitationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareConsumerInvitationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataShareConsumerInvitationResource : Azure.ResourceManager.ArmResource
+    public partial class DataShareConsumerInvitationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareConsumerInvitationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareConsumerInvitationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataShareConsumerInvitationResource() { }
@@ -122,6 +127,11 @@ namespace Azure.ResourceManager.DataShare
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(Azure.Core.AzureLocation location, System.Guid invitationId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataShare.DataShareConsumerInvitationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareConsumerInvitationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareConsumerInvitationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.DataShareConsumerInvitationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareConsumerInvitationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareConsumerInvitationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareConsumerInvitationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DataShareData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareData>
     {
@@ -202,7 +212,7 @@ namespace Azure.ResourceManager.DataShare
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareInvitationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareInvitationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataShareInvitationResource : Azure.ResourceManager.ArmResource
+    public partial class DataShareInvitationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareInvitationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareInvitationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataShareInvitationResource() { }
@@ -213,10 +223,15 @@ namespace Azure.ResourceManager.DataShare
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataShare.DataShareInvitationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareInvitationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataShare.DataShareInvitationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareInvitationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareInvitationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.DataShareInvitationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareInvitationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareInvitationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareInvitationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.DataShareInvitationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.DataShareInvitationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.DataShareInvitationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.DataShareInvitationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DataShareResource : Azure.ResourceManager.ArmResource
+    public partial class DataShareResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataShareResource() { }
@@ -243,6 +258,11 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.Models.SynchronizationDetails> GetSynchronizationDetailsAsync(Azure.ResourceManager.DataShare.Models.ShareSynchronization shareSynchronization, string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.Models.ShareSynchronization> GetSynchronizations(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.Models.ShareSynchronization> GetSynchronizationsAsync(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataShare.DataShareData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.DataShareData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.DataShareResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.DataShareData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.DataShareResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.DataShareData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -272,7 +292,7 @@ namespace Azure.ResourceManager.DataShare
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataShareSynchronizationSettingResource : Azure.ResourceManager.ArmResource
+    public partial class DataShareSynchronizationSettingResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataShareSynchronizationSettingResource() { }
@@ -283,6 +303,11 @@ namespace Azure.ResourceManager.DataShare
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.Models.DataShareOperationResult>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.DataShareSynchronizationSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -312,7 +337,7 @@ namespace Azure.ResourceManager.DataShare
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareTriggerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareTriggerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataShareTriggerResource : Azure.ResourceManager.ArmResource
+    public partial class DataShareTriggerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareTriggerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareTriggerData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataShareTriggerResource() { }
@@ -323,6 +348,11 @@ namespace Azure.ResourceManager.DataShare
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.Models.DataShareOperationResult>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataShare.DataShareTriggerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareTriggerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataShare.DataShareTriggerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareTriggerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.DataShareTriggerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.DataShareTriggerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareTriggerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareTriggerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.DataShareTriggerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.DataShareTriggerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.DataShareTriggerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.DataShareTriggerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.DataShareTriggerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -360,7 +390,7 @@ namespace Azure.ResourceManager.DataShare
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ProviderShareSubscriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ProviderShareSubscriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProviderShareSubscriptionResource : Azure.ResourceManager.ArmResource
+    public partial class ProviderShareSubscriptionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.ProviderShareSubscriptionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ProviderShareSubscriptionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ProviderShareSubscriptionResource() { }
@@ -375,6 +405,11 @@ namespace Azure.ResourceManager.DataShare
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.ProviderShareSubscriptionResource>> ReinstateAsync(Azure.ResourceManager.DataShare.ProviderShareSubscriptionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.ProviderShareSubscriptionResource> Revoke(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.ProviderShareSubscriptionResource>> RevokeAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataShare.ProviderShareSubscriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.ProviderShareSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.ProviderShareSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.ProviderShareSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ProviderShareSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ProviderShareSubscriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ProviderShareSubscriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ShareDataSetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.ShareDataSetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.ShareDataSetResource>, System.Collections.IEnumerable
     {
@@ -428,7 +463,7 @@ namespace Azure.ResourceManager.DataShare
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ShareDataSetMappingData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ShareDataSetMappingData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ShareDataSetMappingResource : Azure.ResourceManager.ArmResource
+    public partial class ShareDataSetMappingResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.ShareDataSetMappingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ShareDataSetMappingData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ShareDataSetMappingResource() { }
@@ -439,10 +474,15 @@ namespace Azure.ResourceManager.DataShare
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataShare.ShareDataSetMappingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.ShareDataSetMappingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataShare.ShareDataSetMappingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.ShareDataSetMappingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.ShareDataSetMappingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.ShareDataSetMappingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ShareDataSetMappingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ShareDataSetMappingData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ShareDataSetMappingData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.ShareDataSetMappingResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.ShareDataSetMappingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.ShareDataSetMappingResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.ShareDataSetMappingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ShareDataSetResource : Azure.ResourceManager.ArmResource
+    public partial class ShareDataSetResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.ShareDataSetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ShareDataSetData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ShareDataSetResource() { }
@@ -453,6 +493,11 @@ namespace Azure.ResourceManager.DataShare
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataShare.ShareDataSetResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.ShareDataSetResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataShare.ShareDataSetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.ShareDataSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.ShareDataSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.ShareDataSetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ShareDataSetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ShareDataSetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ShareDataSetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.ShareDataSetResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.ShareDataSetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.ShareDataSetResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.ShareDataSetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -497,7 +542,7 @@ namespace Azure.ResourceManager.DataShare
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ShareSubscriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ShareSubscriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ShareSubscriptionResource : Azure.ResourceManager.ArmResource
+    public partial class ShareSubscriptionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.ShareSubscriptionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ShareSubscriptionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ShareSubscriptionResource() { }
@@ -526,6 +571,11 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization> GetSynchronizationsAsync(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization> Synchronize(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.Models.DataShareSynchronizeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization>> SynchronizeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.Models.DataShareSynchronizeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataShare.ShareSubscriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.ShareSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataShare.ShareSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataShare.ShareSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ShareSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ShareSubscriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataShare.ShareSubscriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.ShareSubscriptionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.ShareSubscriptionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.ShareSubscriptionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.ShareSubscriptionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

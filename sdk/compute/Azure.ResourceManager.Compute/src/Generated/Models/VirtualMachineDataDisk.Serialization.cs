@@ -10,12 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineDataDisk : IUtf8JsonSerializable, IJsonModel<VirtualMachineDataDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineDataDisk>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineDataDisk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineDataDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,12 +37,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Vhd))
             {
                 writer.WritePropertyName("vhd"u8);
-                writer.WriteObjectValue<VirtualHardDisk>(Vhd, options);
+                writer.WriteObjectValue(Vhd, options);
             }
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue<VirtualHardDisk>(Image, options);
+                writer.WriteObjectValue(Image, options);
             }
             if (Optional.IsDefined(Caching))
             {
@@ -63,7 +64,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue<VirtualMachineManagedDisk>(ManagedDisk, options);
+                writer.WriteObjectValue(ManagedDisk, options);
+            }
+            if (Optional.IsDefined(SourceResource))
+            {
+                writer.WritePropertyName("sourceResource"u8);
+                JsonSerializer.Serialize(writer, SourceResource);
             }
             if (Optional.IsDefined(ToBeDetached))
             {
@@ -122,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineDataDisk DeserializeVirtualMachineDataDisk(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -137,6 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
             DiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
             VirtualMachineManagedDisk managedDisk = default;
+            WritableSubResource sourceResource = default;
             bool? toBeDetached = default;
             long? diskIOPSReadWrite = default;
             long? diskMBpsReadWrite = default;
@@ -215,6 +222,15 @@ namespace Azure.ResourceManager.Compute.Models
                     managedDisk = VirtualMachineManagedDisk.DeserializeVirtualMachineManagedDisk(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("sourceResource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceResource = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    continue;
+                }
                 if (property.NameEquals("toBeDetached"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -276,6 +292,7 @@ namespace Azure.ResourceManager.Compute.Models
                 createOption,
                 diskSizeGB,
                 managedDisk,
+                sourceResource,
                 toBeDetached,
                 diskIOPSReadWrite,
                 diskMBpsReadWrite,

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 {
     public partial class SolutionsDiagnostic : IUtf8JsonSerializable, IJsonModel<SolutionsDiagnostic>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SolutionsDiagnostic>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SolutionsDiagnostic>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SolutionsDiagnostic>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("replacementKey"u8);
                 writer.WriteStringValue(ReplacementKey);
             }
+            if (Optional.IsDefined(EstimatedCompletionTime))
+            {
+                writer.WritePropertyName("estimatedCompletionTime"u8);
+                writer.WriteStringValue(EstimatedCompletionTime);
+            }
             if (Optional.IsCollectionDefined(RequiredParameters))
             {
                 writer.WritePropertyName("requiredParameters"u8);
@@ -62,7 +67,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Insights)
                 {
-                    writer.WriteObjectValue<SelfHelpDiagnosticInsight>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +103,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         internal static SolutionsDiagnostic DeserializeSolutionsDiagnostic(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -108,8 +113,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             SelfHelpDiagnosticStatus? status = default;
             string statusDetails = default;
             string replacementKey = default;
-            IList<string> requiredParameters = default;
-            IList<SelfHelpDiagnosticInsight> insights = default;
+            string estimatedCompletionTime = default;
+            IReadOnlyList<string> requiredParameters = default;
+            IReadOnlyList<SelfHelpDiagnosticInsight> insights = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,6 +142,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 if (property.NameEquals("replacementKey"u8))
                 {
                     replacementKey = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("estimatedCompletionTime"u8))
+                {
+                    estimatedCompletionTime = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("requiredParameters"u8))
@@ -177,6 +188,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 status,
                 statusDetails,
                 replacementKey,
+                estimatedCompletionTime,
                 requiredParameters ?? new ChangeTrackingList<string>(),
                 insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(),
                 serializedAdditionalRawData);

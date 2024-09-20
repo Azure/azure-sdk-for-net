@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class P2SVpnGatewayData : IUtf8JsonSerializable, IJsonModel<P2SVpnGatewayData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<P2SVpnGatewayData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<P2SVpnGatewayData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<P2SVpnGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in P2SConnectionConfigurations)
                 {
-                    writer.WriteObjectValue<P2SConnectionConfiguration>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(VpnClientConnectionHealth))
             {
                 writer.WritePropertyName("vpnClientConnectionHealth"u8);
-                writer.WriteObjectValue<VpnClientConnectionHealth>(VpnClientConnectionHealth, options);
+                writer.WriteObjectValue(VpnClientConnectionHealth, options);
             }
             if (Optional.IsCollectionDefined(CustomDnsServers))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network
 
         internal static P2SVpnGatewayData DeserializeP2SVpnGatewayData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

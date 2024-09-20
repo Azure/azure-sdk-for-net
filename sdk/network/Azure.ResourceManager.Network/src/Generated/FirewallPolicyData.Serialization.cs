@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class FirewallPolicyData : IUtf8JsonSerializable, IJsonModel<FirewallPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FirewallPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -125,47 +125,47 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ThreatIntelWhitelist))
             {
                 writer.WritePropertyName("threatIntelWhitelist"u8);
-                writer.WriteObjectValue<FirewallPolicyThreatIntelWhitelist>(ThreatIntelWhitelist, options);
+                writer.WriteObjectValue(ThreatIntelWhitelist, options);
             }
             if (Optional.IsDefined(Insights))
             {
                 writer.WritePropertyName("insights"u8);
-                writer.WriteObjectValue<FirewallPolicyInsights>(Insights, options);
+                writer.WriteObjectValue(Insights, options);
             }
             if (Optional.IsDefined(Snat))
             {
                 writer.WritePropertyName("snat"u8);
-                writer.WriteObjectValue<FirewallPolicySnat>(Snat, options);
+                writer.WriteObjectValue(Snat, options);
             }
             if (Optional.IsDefined(Sql))
             {
                 writer.WritePropertyName("sql"u8);
-                writer.WriteObjectValue<FirewallPolicySQL>(Sql, options);
+                writer.WriteObjectValue(Sql, options);
             }
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue<DnsSettings>(DnsSettings, options);
+                writer.WriteObjectValue(DnsSettings, options);
             }
             if (Optional.IsDefined(ExplicitProxy))
             {
                 writer.WritePropertyName("explicitProxy"u8);
-                writer.WriteObjectValue<FirewallPolicyExplicitProxy>(ExplicitProxy, options);
+                writer.WriteObjectValue(ExplicitProxy, options);
             }
             if (Optional.IsDefined(IntrusionDetection))
             {
                 writer.WritePropertyName("intrusionDetection"u8);
-                writer.WriteObjectValue<FirewallPolicyIntrusionDetection>(IntrusionDetection, options);
+                writer.WriteObjectValue(IntrusionDetection, options);
             }
             if (Optional.IsDefined(TransportSecurity))
             {
                 writer.WritePropertyName("transportSecurity"u8);
-                writer.WriteObjectValue<FirewallPolicyTransportSecurity>(TransportSecurity, options);
+                writer.WriteObjectValue(TransportSecurity, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<FirewallPolicySku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
 
         internal static FirewallPolicyData DeserializeFirewallPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

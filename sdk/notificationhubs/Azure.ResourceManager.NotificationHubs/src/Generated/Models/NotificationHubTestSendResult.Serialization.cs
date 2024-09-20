@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 {
     public partial class NotificationHubTestSendResult : IUtf8JsonSerializable, IJsonModel<NotificationHubTestSendResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubTestSendResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubTestSendResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NotificationHubTestSendResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,11 +27,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<NotificationHubSku>(Sku, options);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -67,27 +62,25 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Success))
+            if (options.Format != "W" && Optional.IsDefined(Success))
             {
                 writer.WritePropertyName("success"u8);
                 writer.WriteNumberValue(Success.Value);
             }
-            if (Optional.IsDefined(Failure))
+            if (options.Format != "W" && Optional.IsDefined(Failure))
             {
                 writer.WritePropertyName("failure"u8);
                 writer.WriteNumberValue(Failure.Value);
             }
-            if (Optional.IsDefined(Results))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FailureDescription))
             {
                 writer.WritePropertyName("results"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Results);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Results))
+                writer.WriteStartArray();
+                foreach (var item in FailureDescription)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    writer.WriteObjectValue(item, options);
                 }
-#endif
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -122,13 +115,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubTestSendResult DeserializeNotificationHubTestSendResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            NotificationHubSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -137,20 +129,11 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             SystemData systemData = default;
             int? success = default;
             int? failure = default;
-            BinaryData results = default;
+            IReadOnlyList<NotificationHubPubRegistrationResult> results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -227,7 +210,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                             {
                                 continue;
                             }
-                            results = BinaryData.FromString(property0.Value.GetRawText());
+                            List<NotificationHubPubRegistrationResult> array = new List<NotificationHubPubRegistrationResult>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(NotificationHubPubRegistrationResult.DeserializeNotificationHubPubRegistrationResult(item, options));
+                            }
+                            results = array;
                             continue;
                         }
                     }
@@ -248,8 +236,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 location,
                 success,
                 failure,
-                results,
-                sku,
+                results ?? new ChangeTrackingList<NotificationHubPubRegistrationResult>(),
                 serializedAdditionalRawData);
         }
 

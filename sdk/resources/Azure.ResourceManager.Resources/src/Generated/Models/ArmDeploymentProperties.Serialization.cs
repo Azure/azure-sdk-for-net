@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ArmDeploymentProperties : IUtf8JsonSerializable, IJsonModel<ArmDeploymentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmDeploymentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink"u8);
-                writer.WriteObjectValue<ArmDeploymentTemplateLink>(TemplateLink, options);
+                writer.WriteObjectValue(TemplateLink, options);
             }
             if (Optional.IsDefined(Parameters))
             {
@@ -58,24 +58,24 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(ParametersLink))
             {
                 writer.WritePropertyName("parametersLink"u8);
-                writer.WriteObjectValue<ArmDeploymentParametersLink>(ParametersLink, options);
+                writer.WriteObjectValue(ParametersLink, options);
             }
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToSerialString());
             if (Optional.IsDefined(DebugSetting))
             {
                 writer.WritePropertyName("debugSetting"u8);
-                writer.WriteObjectValue<DebugSetting>(DebugSetting, options);
+                writer.WriteObjectValue(DebugSetting, options);
             }
             if (Optional.IsDefined(ErrorDeployment))
             {
                 writer.WritePropertyName("onErrorDeployment"u8);
-                writer.WriteObjectValue<ErrorDeployment>(ErrorDeployment, options);
+                writer.WriteObjectValue(ErrorDeployment, options);
             }
             if (Optional.IsDefined(ExpressionEvaluation))
             {
                 writer.WritePropertyName("expressionEvaluationOptions"u8);
-                writer.WriteObjectValue<ExpressionEvaluationOptions>(ExpressionEvaluation, options);
+                writer.WriteObjectValue(ExpressionEvaluation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmDeploymentProperties DeserializeArmDeploymentProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

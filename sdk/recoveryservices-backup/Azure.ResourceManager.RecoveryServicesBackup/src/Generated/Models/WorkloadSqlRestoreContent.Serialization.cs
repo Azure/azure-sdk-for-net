@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class WorkloadSqlRestoreContent : IUtf8JsonSerializable, IJsonModel<WorkloadSqlRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadSqlRestoreContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadSqlRestoreContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkloadSqlRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in AlternateDirectoryPaths)
                 {
-                    writer.WriteObjectValue<SqlDataDirectoryMapping>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(TargetInfo))
             {
                 writer.WritePropertyName("targetInfo"u8);
-                writer.WriteObjectValue<TargetRestoreInfo>(TargetInfo, options);
+                writer.WriteObjectValue(TargetInfo, options);
             }
             if (Optional.IsDefined(RecoveryMode))
             {
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(UserAssignedManagedIdentityDetails))
             {
                 writer.WritePropertyName("userAssignedManagedIdentityDetails"u8);
-                writer.WriteObjectValue<UserAssignedManagedIdentityDetails>(UserAssignedManagedIdentityDetails, options);
+                writer.WriteObjectValue(UserAssignedManagedIdentityDetails, options);
             }
             if (Optional.IsDefined(SnapshotRestoreParameters))
             {
                 writer.WritePropertyName("snapshotRestoreParameters"u8);
-                writer.WriteObjectValue<SnapshotRestoreContent>(SnapshotRestoreParameters, options);
+                writer.WriteObjectValue(SnapshotRestoreParameters, options);
             }
             if (Optional.IsDefined(TargetVirtualMachineId))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadSqlRestoreContent DeserializeWorkloadSqlRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

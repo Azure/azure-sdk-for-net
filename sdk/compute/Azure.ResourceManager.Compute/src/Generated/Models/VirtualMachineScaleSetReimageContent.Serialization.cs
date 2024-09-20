@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineScaleSetReimageContent : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetReimageContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetReimageContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetReimageContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineScaleSetReimageContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ForceUpdateOSDiskForEphemeral))
+            {
+                writer.WritePropertyName("forceUpdateOSDiskForEphemeral"u8);
+                writer.WriteBooleanValue(ForceUpdateOSDiskForEphemeral.Value);
+            }
             if (Optional.IsDefined(TempDisk))
             {
                 writer.WritePropertyName("tempDisk"u8);
@@ -49,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue<OSProfileProvisioningData>(OSProfile, options);
+                writer.WriteObjectValue(OSProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,13 +88,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetReimageContent DeserializeVirtualMachineScaleSetReimageContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<string> instanceIds = default;
+            bool? forceUpdateOSDiskForEphemeral = default;
             bool? tempDisk = default;
             string exactVersion = default;
             OSProfileProvisioningData osProfile = default;
@@ -109,6 +115,15 @@ namespace Azure.ResourceManager.Compute.Models
                         array.Add(item.GetString());
                     }
                     instanceIds = array;
+                    continue;
+                }
+                if (property.NameEquals("forceUpdateOSDiskForEphemeral"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    forceUpdateOSDiskForEphemeral = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("tempDisk"u8))
@@ -140,7 +155,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VirtualMachineScaleSetReimageContent(tempDisk, exactVersion, osProfile, serializedAdditionalRawData, instanceIds ?? new ChangeTrackingList<string>());
+            return new VirtualMachineScaleSetReimageContent(
+                tempDisk,
+                exactVersion,
+                osProfile,
+                serializedAdditionalRawData,
+                forceUpdateOSDiskForEphemeral,
+                instanceIds ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetReimageContent>.Write(ModelReaderWriterOptions options)

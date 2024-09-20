@@ -1,5 +1,20 @@
 # Release History
 
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.1 (2024-09-03)
+
+### Bugs Fixed
+Security patch, update to Azure.Core to 1.42.0.
+
 ## 1.1.0 (2024-04-15)
 General Availability version of PSTN dial-out capability feature.
 

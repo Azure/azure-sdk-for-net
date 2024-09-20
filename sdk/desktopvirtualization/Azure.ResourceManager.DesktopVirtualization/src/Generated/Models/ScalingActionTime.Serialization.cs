@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class ScalingActionTime : IUtf8JsonSerializable, IJsonModel<ScalingActionTime>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingActionTime>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingActionTime>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScalingActionTime>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static ScalingActionTime DeserializeScalingActionTime(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -93,6 +94,45 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new ScalingActionTime(hour, minute, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Hour), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hour: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  hour: ");
+                builder.AppendLine($"{Hour}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Minute), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minute: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  minute: ");
+                builder.AppendLine($"{Minute}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ScalingActionTime>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScalingActionTime>)this).GetFormatFromOptions(options) : options.Format;
@@ -101,6 +141,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ScalingActionTime)} does not support writing '{options.Format}' format.");
             }

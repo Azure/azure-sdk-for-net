@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence
 {
     public partial class DocumentModelDetails : IUtf8JsonSerializable, IJsonModel<DocumentModelDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentModelDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentModelDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DocumentModelDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,14 +33,17 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("createdDateTime"u8);
-            writer.WriteStringValue(CreatedOn, "O");
-            if (Optional.IsDefined(ExpiresOn))
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("createdDateTime"u8);
+                writer.WriteStringValue(CreatedOn, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDateTime"u8);
                 writer.WriteStringValue(ExpiresOn.Value, "O");
             }
-            if (Optional.IsDefined(ApiVersion))
+            if (options.Format != "W" && Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
@@ -56,41 +59,56 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(BuildMode))
+            if (options.Format != "W" && Optional.IsDefined(BuildMode))
             {
                 writer.WritePropertyName("buildMode"u8);
                 writer.WriteStringValue(BuildMode.Value.ToString());
             }
-            if (Optional.IsDefined(AzureBlobSource))
+            if (options.Format != "W" && Optional.IsDefined(AzureBlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);
-                writer.WriteObjectValue<AzureBlobContentSource>(AzureBlobSource, options);
+                writer.WriteObjectValue(AzureBlobSource, options);
             }
-            if (Optional.IsDefined(AzureBlobFileListSource))
+            if (options.Format != "W" && Optional.IsDefined(AzureBlobFileListSource))
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
-                writer.WriteObjectValue<AzureBlobFileListContentSource>(AzureBlobFileListSource, options);
+                writer.WriteObjectValue(AzureBlobFileListSource, options);
             }
-            if (Optional.IsCollectionDefined(DocTypes))
+            if (Optional.IsDefined(ClassifierId))
+            {
+                writer.WritePropertyName("classifierId"u8);
+                writer.WriteStringValue(ClassifierId);
+            }
+            if (Optional.IsDefined(Split))
+            {
+                writer.WritePropertyName("split"u8);
+                writer.WriteStringValue(Split.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(DocTypes))
             {
                 writer.WritePropertyName("docTypes"u8);
                 writer.WriteStartObject();
                 foreach (var item in DocTypes)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<DocumentTypeDetails>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Warnings))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Warnings))
             {
                 writer.WritePropertyName("warnings"u8);
                 writer.WriteStartArray();
                 foreach (var item in Warnings)
                 {
-                    writer.WriteObjectValue<DocumentIntelligenceWarning>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(TrainingHours))
+            {
+                writer.WritePropertyName("trainingHours"u8);
+                writer.WriteNumberValue(TrainingHours.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +142,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal static DocumentModelDetails DeserializeDocumentModelDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -139,8 +157,11 @@ namespace Azure.AI.DocumentIntelligence
             DocumentBuildMode? buildMode = default;
             AzureBlobContentSource azureBlobSource = default;
             AzureBlobFileListContentSource azureBlobFileListSource = default;
+            string classifierId = default;
+            SplitMode? split = default;
             IReadOnlyDictionary<string, DocumentTypeDetails> docTypes = default;
             IReadOnlyList<DocumentIntelligenceWarning> warnings = default;
+            float? trainingHours = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,6 +236,20 @@ namespace Azure.AI.DocumentIntelligence
                     azureBlobFileListSource = AzureBlobFileListContentSource.DeserializeAzureBlobFileListContentSource(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("classifierId"u8))
+                {
+                    classifierId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("split"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    split = new SplitMode(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("docTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -243,6 +278,15 @@ namespace Azure.AI.DocumentIntelligence
                     warnings = array;
                     continue;
                 }
+                if (property.NameEquals("trainingHours"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    trainingHours = property.Value.GetSingle();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -259,8 +303,11 @@ namespace Azure.AI.DocumentIntelligence
                 buildMode,
                 azureBlobSource,
                 azureBlobFileListSource,
+                classifierId,
+                split,
                 docTypes ?? new ChangeTrackingDictionary<string, DocumentTypeDetails>(),
                 warnings ?? new ChangeTrackingList<DocumentIntelligenceWarning>(),
+                trainingHours,
                 serializedAdditionalRawData);
         }
 
@@ -303,11 +350,11 @@ namespace Azure.AI.DocumentIntelligence
             return DeserializeDocumentModelDetails(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DocumentModelDetails>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

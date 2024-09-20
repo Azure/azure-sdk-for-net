@@ -37,7 +37,7 @@ namespace Azure.Maps.Routing.Models
 
         /// <summary> Sections of the route that are cars or trains. </summary>
         public static ResponseSectionType CarOrTrain { get; } = new ResponseSectionType(CarOrTrainValue);
-        /// <summary> Sections indicating which countries the route is in. </summary>
+        /// <summary> Sections indicating which countries/regions the route is in. </summary>
         public static ResponseSectionType Country { get; } = new ResponseSectionType(CountryValue);
         /// <summary> Sections of the route that are ferries. </summary>
         public static ResponseSectionType Ferry { get; } = new ResponseSectionType(FerryValue);
@@ -74,7 +74,7 @@ namespace Azure.Maps.Routing.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

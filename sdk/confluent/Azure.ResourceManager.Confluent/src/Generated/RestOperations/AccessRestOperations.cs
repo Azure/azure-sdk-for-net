@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +36,21 @@ namespace Azure.ResourceManager.Confluent
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListUsersRequestUri(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/access/default/listUsers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListUsersRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -56,7 +70,7 @@ namespace Azure.ResourceManager.Confluent
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<AccessListContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -124,6 +138,21 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateListServiceAccountsRequestUri(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/access/default/listServiceAccounts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListServiceAccountsRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -143,7 +172,7 @@ namespace Azure.ResourceManager.Confluent
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<AccessListContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -211,6 +240,21 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateListInvitationsRequestUri(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/access/default/listInvitations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListInvitationsRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -230,7 +274,7 @@ namespace Azure.ResourceManager.Confluent
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<AccessListContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -298,6 +342,21 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateInviteUserRequestUri(string subscriptionId, string resourceGroupName, string organizationName, AccessInvitationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/access/default/createInvitation", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateInviteUserRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessInvitationContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -317,7 +376,7 @@ namespace Azure.ResourceManager.Confluent
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<AccessInvitationContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -385,6 +444,21 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateListEnvironmentsRequestUri(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/access/default/listEnvironments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListEnvironmentsRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -404,7 +478,7 @@ namespace Azure.ResourceManager.Confluent
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<AccessListContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -472,6 +546,21 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateListClustersRequestUri(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/access/default/listClusters", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListClustersRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -491,7 +580,7 @@ namespace Azure.ResourceManager.Confluent
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<AccessListContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -559,6 +648,21 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateListRoleBindingsRequestUri(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/access/default/listRoleBindings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRoleBindingsRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -578,7 +682,7 @@ namespace Azure.ResourceManager.Confluent
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<AccessListContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -646,6 +750,21 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateCreateRoleBindingRequestUri(string subscriptionId, string resourceGroupName, string organizationName, AccessRoleBindingCreateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/access/default/createRoleBinding", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRoleBindingRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessRoleBindingCreateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -665,7 +784,7 @@ namespace Azure.ResourceManager.Confluent
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<AccessRoleBindingCreateContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -731,6 +850,22 @@ namespace Azure.ResourceManager.Confluent
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRoleBindingRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string roleBindingId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/access/default/deleteRoleBinding/", false);
+            uri.AppendPath(roleBindingId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRoleBindingRequest(string subscriptionId, string resourceGroupName, string organizationName, string roleBindingId)
@@ -809,6 +944,21 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateListRoleBindingNameListRequestUri(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/access/default/listRoleBindingNameList", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRoleBindingNameListRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -828,7 +978,7 @@ namespace Azure.ResourceManager.Confluent
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<AccessListContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;

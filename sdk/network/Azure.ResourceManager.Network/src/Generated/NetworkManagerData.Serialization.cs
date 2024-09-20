@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkManagerData : IUtf8JsonSerializable, IJsonModel<NetworkManagerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkManagerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkManagerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkManagerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(NetworkManagerScopes))
             {
                 writer.WritePropertyName("networkManagerScopes"u8);
-                writer.WriteObjectValue<NetworkManagerPropertiesNetworkManagerScopes>(NetworkManagerScopes, options);
+                writer.WriteObjectValue(NetworkManagerScopes, options);
             }
             if (Optional.IsCollectionDefined(NetworkManagerScopeAccesses))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network
 
         internal static NetworkManagerData DeserializeNetworkManagerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

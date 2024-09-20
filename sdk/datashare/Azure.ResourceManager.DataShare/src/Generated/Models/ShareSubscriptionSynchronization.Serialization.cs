@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class ShareSubscriptionSynchronization : IUtf8JsonSerializable, IJsonModel<ShareSubscriptionSynchronization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareSubscriptionSynchronization>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareSubscriptionSynchronization>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ShareSubscriptionSynchronization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static ShareSubscriptionSynchronization DeserializeShareSubscriptionSynchronization(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

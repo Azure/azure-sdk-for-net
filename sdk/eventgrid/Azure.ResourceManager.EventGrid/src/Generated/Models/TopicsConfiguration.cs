@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Properties of the Topics Configuration. </summary>
-    internal partial class TopicsConfiguration
+    public partial class TopicsConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,18 +48,25 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="TopicsConfiguration"/>. </summary>
         public TopicsConfiguration()
         {
+            CustomDomains = new ChangeTrackingList<CustomDomainConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TopicsConfiguration"/>. </summary>
         /// <param name="hostname"> The hostname for the topics configuration. This is a read-only property. </param>
+        /// <param name="customDomains"> List of custom domain configurations for the namespace. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TopicsConfiguration(string hostname, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TopicsConfiguration(string hostname, IList<CustomDomainConfiguration> customDomains, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Hostname = hostname;
+            CustomDomains = customDomains;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The hostname for the topics configuration. This is a read-only property. </summary>
+        [WirePath("hostname")]
         public string Hostname { get; }
+        /// <summary> List of custom domain configurations for the namespace. </summary>
+        [WirePath("customDomains")]
+        public IList<CustomDomainConfiguration> CustomDomains { get; }
     }
 }

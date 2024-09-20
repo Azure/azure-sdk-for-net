@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
 {
     public partial class OperationResponse : IUtf8JsonSerializable, IJsonModel<OperationResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OperationResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
-                writer.WriteObjectValue<OperationDisplay>(Display, options);
+                writer.WriteObjectValue(Display, options);
             }
             if (Optional.IsDefined(Origin))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
 
         internal static OperationResponse DeserializeOperationResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
