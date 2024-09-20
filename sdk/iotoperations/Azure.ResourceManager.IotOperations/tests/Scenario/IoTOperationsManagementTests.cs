@@ -3,13 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.IoTOperations.Models;
-using Azure.Identity;
 using Azure.ResourceManager.IoTOperations;
 
 namespace Azure.ResourceManager.IotOperations.Tests
@@ -22,6 +17,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
         }
 
         [TestCase]
+        [RecordedTest]
         public async Task GetInstanceNameTest()
         {
             // FILL IN CLUSTER VARIABLES HERES

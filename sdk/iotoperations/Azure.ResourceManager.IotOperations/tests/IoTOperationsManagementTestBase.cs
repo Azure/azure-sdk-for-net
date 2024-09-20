@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
     public class IoTOperationsManagementTestBase : ManagementRecordedTestBase<IoTOperationsManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
+        protected SubscriptionResource DefaultSubscription { get; private set; }
 
         protected IoTOperationsManagementTestBase(bool isAsync, RecordedTestMode mode)
             : base(isAsync, mode)
@@ -28,10 +29,10 @@ namespace Azure.ResourceManager.IotOperations.Tests
         }
 
         [SetUp]
-        public Task CreateCommonTestResources()
+        public async Task CreateCommonTestResources()
         {
-            Client = new ArmClient(new DefaultAzureCredential());
-            return Task.CompletedTask;
+            Client = GetArmClient();
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
     }
 }
