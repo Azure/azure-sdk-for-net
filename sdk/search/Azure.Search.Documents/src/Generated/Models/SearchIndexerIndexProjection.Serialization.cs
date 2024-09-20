@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndexerIndexProjections : IUtf8JsonSerializable
+    public partial class SearchIndexerIndexProjection : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static SearchIndexerIndexProjections DeserializeSearchIndexerIndexProjections(JsonElement element)
+        internal static SearchIndexerIndexProjection DeserializeSearchIndexerIndexProjection(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -61,15 +61,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerIndexProjections(selectors, parameters);
+            return new SearchIndexerIndexProjection(selectors, parameters);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SearchIndexerIndexProjections FromResponse(Response response)
+        internal static SearchIndexerIndexProjection FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeSearchIndexerIndexProjections(document.RootElement);
+            return DeserializeSearchIndexerIndexProjection(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

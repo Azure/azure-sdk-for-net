@@ -10,30 +10,30 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class CustomVectorizer : IUtf8JsonSerializable
+    public partial class WebApiVectorizer : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomWebApiParameters))
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("customWebApiParameters"u8);
-                writer.WriteObjectValue(CustomWebApiParameters);
+                writer.WriteObjectValue(Parameters);
             }
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            writer.WriteStringValue(VectorizerName);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 
-        internal static CustomVectorizer DeserializeCustomVectorizer(JsonElement element)
+        internal static WebApiVectorizer DeserializeWebApiVectorizer(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            CustomWebApiParameters customWebApiParameters = default;
+            WebApiVectorizerParameters customWebApiParameters = default;
             string name = default;
             VectorSearchVectorizerKind kind = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    customWebApiParameters = CustomWebApiParameters.DeserializeCustomWebApiParameters(property.Value);
+                    customWebApiParameters = WebApiVectorizerParameters.DeserializeWebApiVectorizerParameters(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -58,15 +58,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomVectorizer(name, kind, customWebApiParameters);
+            return new WebApiVectorizer(name, kind, customWebApiParameters);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new CustomVectorizer FromResponse(Response response)
+        internal static new WebApiVectorizer FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCustomVectorizer(document.RootElement);
+            return DeserializeWebApiVectorizer(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

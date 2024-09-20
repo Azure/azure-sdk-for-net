@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class ScalarQuantizationCompressionConfiguration : IUtf8JsonSerializable
+    public partial class ScalarQuantizationCompression : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(Parameters);
             }
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            writer.WriteStringValue(CompressionName);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(RerankWithOriginalVectors))
@@ -41,10 +41,22 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultOversampling");
                 }
             }
+            if (Optional.IsDefined(TruncationDimension))
+            {
+                if (TruncationDimension != null)
+                {
+                    writer.WritePropertyName("truncationDimension"u8);
+                    writer.WriteNumberValue(TruncationDimension.Value);
+                }
+                else
+                {
+                    writer.WriteNull("truncationDimension");
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScalarQuantizationCompressionConfiguration DeserializeScalarQuantizationCompressionConfiguration(JsonElement element)
+        internal static ScalarQuantizationCompression DeserializeScalarQuantizationCompression(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -55,6 +67,7 @@ namespace Azure.Search.Documents.Indexes.Models
             VectorSearchCompressionKind kind = default;
             bool? rerankWithOriginalVectors = default;
             double? defaultOversampling = default;
+            int? truncationDimension = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scalarQuantizationParameters"u8))
@@ -95,16 +108,32 @@ namespace Azure.Search.Documents.Indexes.Models
                     defaultOversampling = property.Value.GetDouble();
                     continue;
                 }
+                if (property.NameEquals("truncationDimension"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        truncationDimension = null;
+                        continue;
+                    }
+                    truncationDimension = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new ScalarQuantizationCompressionConfiguration(name, kind, rerankWithOriginalVectors, defaultOversampling, scalarQuantizationParameters);
+            return new ScalarQuantizationCompression(
+                name,
+                kind,
+                rerankWithOriginalVectors,
+                defaultOversampling,
+                truncationDimension,
+                scalarQuantizationParameters);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new ScalarQuantizationCompressionConfiguration FromResponse(Response response)
+        internal static new ScalarQuantizationCompression FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeScalarQuantizationCompressionConfiguration(document.RootElement);
+            return DeserializeScalarQuantizationCompression(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

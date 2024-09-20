@@ -11,13 +11,13 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class UnknownVectorSearchCompressionConfiguration : IUtf8JsonSerializable
+    internal partial class UnknownVectorSearchCompression : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            writer.WriteStringValue(CompressionName);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(RerankWithOriginalVectors))
@@ -37,10 +37,22 @@ namespace Azure.Search.Documents.Models
                     writer.WriteNull("defaultOversampling");
                 }
             }
+            if (Optional.IsDefined(TruncationDimension))
+            {
+                if (TruncationDimension != null)
+                {
+                    writer.WritePropertyName("truncationDimension"u8);
+                    writer.WriteNumberValue(TruncationDimension.Value);
+                }
+                else
+                {
+                    writer.WriteNull("truncationDimension");
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownVectorSearchCompressionConfiguration DeserializeUnknownVectorSearchCompressionConfiguration(JsonElement element)
+        internal static UnknownVectorSearchCompression DeserializeUnknownVectorSearchCompression(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -50,6 +62,7 @@ namespace Azure.Search.Documents.Models
             VectorSearchCompressionKind kind = "Unknown";
             bool? rerankWithOriginalVectors = default;
             double? defaultOversampling = default;
+            int? truncationDimension = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -81,23 +94,33 @@ namespace Azure.Search.Documents.Models
                     defaultOversampling = property.Value.GetDouble();
                     continue;
                 }
+                if (property.NameEquals("truncationDimension"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        truncationDimension = null;
+                        continue;
+                    }
+                    truncationDimension = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new UnknownVectorSearchCompressionConfiguration(name, kind, rerankWithOriginalVectors, defaultOversampling);
+            return new UnknownVectorSearchCompression(name, kind, rerankWithOriginalVectors, defaultOversampling, truncationDimension);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new UnknownVectorSearchCompressionConfiguration FromResponse(Response response)
+        internal static new UnknownVectorSearchCompression FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeUnknownVectorSearchCompressionConfiguration(document.RootElement);
+            return DeserializeUnknownVectorSearchCompression(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<VectorSearchCompressionConfiguration>(this);
+            content.JsonWriter.WriteObjectValue<VectorSearchCompression>(this);
             return content;
         }
     }

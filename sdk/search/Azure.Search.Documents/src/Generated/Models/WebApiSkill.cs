@@ -61,9 +61,6 @@ namespace Azure.Search.Documents.Indexes.Models
             AuthIdentity = authIdentity;
             ODataType = oDataType ?? "#Microsoft.Skills.Custom.WebApiSkill";
         }
-
-        /// <summary> The url for the Web API. </summary>
-        public string Uri { get; set; }
         /// <summary> The method for the http request. </summary>
         public string HttpMethod { get; set; }
         /// <summary> The desired timeout for the request. Default is 30 seconds. </summary>

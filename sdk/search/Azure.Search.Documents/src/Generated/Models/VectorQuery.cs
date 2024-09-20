@@ -31,7 +31,8 @@ namespace Azure.Search.Documents.Models
         /// Please note <see cref="VectorThreshold"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchScoreThreshold"/> and <see cref="VectorSimilarityThreshold"/>.
         /// </param>
-        internal VectorQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold)
+        /// <param name="filterOverride"> The OData filter expression to apply to this specific vector query. If no filter expression is defined at the vector level, the expression defined in the top level filter parameter is used instead. </param>
+        internal VectorQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride)
         {
             Kind = kind;
             KNearestNeighborsCount = kNearestNeighborsCount;
@@ -40,6 +41,7 @@ namespace Azure.Search.Documents.Models
             Oversampling = oversampling;
             Weight = weight;
             Threshold = threshold;
+            FilterOverride = filterOverride;
         }
 
         /// <summary> The kind of vector query being performed. </summary>
@@ -58,5 +60,7 @@ namespace Azure.Search.Documents.Models
         /// The available derived classes include <see cref="SearchScoreThreshold"/> and <see cref="VectorSimilarityThreshold"/>.
         /// </summary>
         public VectorThreshold Threshold { get; set; }
+        /// <summary> The OData filter expression to apply to this specific vector query. If no filter expression is defined at the vector level, the expression defined in the top level filter parameter is used instead. </summary>
+        public string FilterOverride { get; set; }
     }
 }

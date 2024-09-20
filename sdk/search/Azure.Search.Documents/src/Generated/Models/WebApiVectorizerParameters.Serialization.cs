@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class CustomWebApiParameters : IUtf8JsonSerializable
+    public partial class WebApiVectorizerParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -70,7 +70,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomWebApiParameters DeserializeCustomWebApiParameters(JsonElement element)
+        internal static WebApiVectorizerParameters DeserializeWebApiVectorizerParameters(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,7 +80,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IDictionary<string, string> httpHeaders = default;
             string httpMethod = default;
             TimeSpan? timeout = default;
-            string authResourceId = default;
+            ResourceIdentifier authResourceId = default;
             SearchIndexerDataIdentity authIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -128,7 +128,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         authResourceId = null;
                         continue;
                     }
-                    authResourceId = property.Value.GetString();
+                    authResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("authIdentity"u8))
@@ -142,7 +142,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomWebApiParameters(
+            return new WebApiVectorizerParameters(
                 uri,
                 httpHeaders ?? new ChangeTrackingDictionary<string, string>(),
                 httpMethod,
@@ -153,10 +153,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CustomWebApiParameters FromResponse(Response response)
+        internal static WebApiVectorizerParameters FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCustomWebApiParameters(document.RootElement);
+            return DeserializeWebApiVectorizerParameters(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

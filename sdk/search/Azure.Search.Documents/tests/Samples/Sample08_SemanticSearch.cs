@@ -12,7 +12,6 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_05_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_05_01_Preview)]
     public partial class SemanticSearch : SearchTestBase
     {
         public SemanticSearch(bool async, SearchClientOptions.ServiceVersion serviceVersion)

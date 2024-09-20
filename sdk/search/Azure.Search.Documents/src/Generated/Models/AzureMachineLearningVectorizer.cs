@@ -13,20 +13,20 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class AzureMachineLearningVectorizer : VectorSearchVectorizer
     {
         /// <summary> Initializes a new instance of <see cref="AzureMachineLearningVectorizer"/>. </summary>
-        /// <param name="name"> The name to associate with this particular vectorization method. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public AzureMachineLearningVectorizer(string name) : base(name)
+        /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorizerName"/> is null. </exception>
+        public AzureMachineLearningVectorizer(string vectorizerName) : base(vectorizerName)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(vectorizerName, nameof(vectorizerName));
 
             Kind = VectorSearchVectorizerKind.AML;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureMachineLearningVectorizer"/>. </summary>
-        /// <param name="name"> The name to associate with this particular vectorization method. </param>
+        /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
         /// <param name="amlParameters"> Specifies the properties of the AML vectorizer. </param>
-        internal AzureMachineLearningVectorizer(string name, VectorSearchVectorizerKind kind, AzureMachineLearningParameters amlParameters) : base(name, kind)
+        internal AzureMachineLearningVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, AzureMachineLearningParameters amlParameters) : base(vectorizerName, kind)
         {
             AMLParameters = amlParameters;
             Kind = kind;

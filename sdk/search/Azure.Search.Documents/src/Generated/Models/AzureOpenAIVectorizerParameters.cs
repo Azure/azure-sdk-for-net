@@ -10,36 +10,36 @@ using System;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the parameters for connecting to the Azure OpenAI resource. </summary>
-    public partial class AzureOpenAIParameters
+    public partial class AzureOpenAIVectorizerParameters
     {
-        /// <summary> Initializes a new instance of <see cref="AzureOpenAIParameters"/>. </summary>
-        public AzureOpenAIParameters()
+        /// <summary> Initializes a new instance of <see cref="AzureOpenAIVectorizerParameters"/>. </summary>
+        public AzureOpenAIVectorizerParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureOpenAIParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOpenAIVectorizerParameters"/>. </summary>
         /// <param name="resourceUri"> The resource URI of the Azure OpenAI resource. </param>
-        /// <param name="deploymentId"> ID of the Azure OpenAI model deployment on the designated resource. </param>
+        /// <param name="deploymentName"> ID of the Azure OpenAI model deployment on the designated resource. </param>
         /// <param name="apiKey"> API key of the designated Azure OpenAI resource. </param>
-        /// <param name="authIdentity">
+        /// <param name="authenticationIdentity">
         /// The user-assigned managed identity used for outbound connections.
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
         /// <param name="modelName"> The name of the embedding model that is deployed at the provided deploymentId path. </param>
-        internal AzureOpenAIParameters(Uri resourceUri, string deploymentId, string apiKey, SearchIndexerDataIdentity authIdentity, AzureOpenAIModelName? modelName)
+        internal AzureOpenAIVectorizerParameters(Uri resourceUri, string deploymentName, string apiKey, SearchIndexerDataIdentity authenticationIdentity, AzureOpenAIModelName? modelName)
         {
             ResourceUri = resourceUri;
-            DeploymentId = deploymentId;
+            DeploymentName = deploymentName;
             ApiKey = apiKey;
-            AuthIdentity = authIdentity;
+            AuthenticationIdentity = authenticationIdentity;
             ModelName = modelName;
         }
 
         /// <summary> The resource URI of the Azure OpenAI resource. </summary>
         public Uri ResourceUri { get; set; }
         /// <summary> ID of the Azure OpenAI model deployment on the designated resource. </summary>
-        public string DeploymentId { get; set; }
+        public string DeploymentName { get; set; }
         /// <summary> API key of the designated Azure OpenAI resource. </summary>
         public string ApiKey { get; set; }
         /// <summary>
@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </summary>
-        public SearchIndexerDataIdentity AuthIdentity { get; set; }
+        public SearchIndexerDataIdentity AuthenticationIdentity { get; set; }
         /// <summary> The name of the embedding model that is deployed at the provided deploymentId path. </summary>
         public AzureOpenAIModelName? ModelName { get; set; }
     }
