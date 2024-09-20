@@ -9,20 +9,20 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.DevOpsInfrastructure.Models;
+using Azure.ResourceManager.Fabric.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
+namespace Azure.ResourceManager.Fabric.Samples
 {
-    public partial class Sample_DevOpsPoolCollection
+    public partial class Sample_FabricCapacityCollection
     {
-        // Pools_Get
+        // Get a capacity
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_PoolsGet()
+        public async Task Get_GetACapacity()
         {
-            // Generated from example definition: 2024-04-04-preview/GetPool.json
-            // this example is just showing the usage of "Pools_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-11-01/FabricCapacities_Get.json
+            // this example is just showing the usage of "FabricCapacities_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -31,32 +31,32 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "a2e95d27-c161-4b61-bda4-11512c14c2c2";
-            string resourceGroupName = "rg";
+            string subscriptionId = "548B7FB7-3B2A-4F46-BB02-66473F1FC22C";
+            string resourceGroupName = "TestRG";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this DevOpsPoolResource
-            DevOpsPoolCollection collection = resourceGroupResource.GetDevOpsPools();
+            // get the collection of this FabricCapacityResource
+            FabricCapacityCollection collection = resourceGroupResource.GetFabricCapacities();
 
             // invoke the operation
-            string poolName = "pool";
-            DevOpsPoolResource result = await collection.GetAsync(poolName);
+            string capacityName = "azsdktest";
+            FabricCapacityResource result = await collection.GetAsync(capacityName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DevOpsPoolData resourceData = result.Data;
+            FabricCapacityData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Pools_Get
+        // Get a capacity
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_PoolsGet()
+        public async Task Exists_GetACapacity()
         {
-            // Generated from example definition: 2024-04-04-preview/GetPool.json
-            // this example is just showing the usage of "Pools_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-11-01/FabricCapacities_Get.json
+            // this example is just showing the usage of "FabricCapacities_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -65,28 +65,28 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "a2e95d27-c161-4b61-bda4-11512c14c2c2";
-            string resourceGroupName = "rg";
+            string subscriptionId = "548B7FB7-3B2A-4F46-BB02-66473F1FC22C";
+            string resourceGroupName = "TestRG";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this DevOpsPoolResource
-            DevOpsPoolCollection collection = resourceGroupResource.GetDevOpsPools();
+            // get the collection of this FabricCapacityResource
+            FabricCapacityCollection collection = resourceGroupResource.GetFabricCapacities();
 
             // invoke the operation
-            string poolName = "pool";
-            bool result = await collection.ExistsAsync(poolName);
+            string capacityName = "azsdktest";
+            bool result = await collection.ExistsAsync(capacityName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Pools_Get
+        // Get a capacity
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_PoolsGet()
+        public async Task GetIfExists_GetACapacity()
         {
-            // Generated from example definition: 2024-04-04-preview/GetPool.json
-            // this example is just showing the usage of "Pools_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-11-01/FabricCapacities_Get.json
+            // this example is just showing the usage of "FabricCapacities_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -95,18 +95,18 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "a2e95d27-c161-4b61-bda4-11512c14c2c2";
-            string resourceGroupName = "rg";
+            string subscriptionId = "548B7FB7-3B2A-4F46-BB02-66473F1FC22C";
+            string resourceGroupName = "TestRG";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this DevOpsPoolResource
-            DevOpsPoolCollection collection = resourceGroupResource.GetDevOpsPools();
+            // get the collection of this FabricCapacityResource
+            FabricCapacityCollection collection = resourceGroupResource.GetFabricCapacities();
 
             // invoke the operation
-            string poolName = "pool";
-            NullableResponse<DevOpsPoolResource> response = await collection.GetIfExistsAsync(poolName);
-            DevOpsPoolResource result = response.HasValue ? response.Value : null;
+            string capacityName = "azsdktest";
+            NullableResponse<FabricCapacityResource> response = await collection.GetIfExistsAsync(capacityName);
+            FabricCapacityResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -116,19 +116,19 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                DevOpsPoolData resourceData = result.Data;
+                FabricCapacityData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
         }
 
-        // Pools_CreateOrUpdate
+        // Create or update a capacity
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_PoolsCreateOrUpdate()
+        public async Task CreateOrUpdate_CreateOrUpdateACapacity()
         {
-            // Generated from example definition: 2024-04-04-preview/CreateOrUpdatePool.json
-            // this example is just showing the usage of "Pools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-11-01/FabricCapacities_CreateOrUpdate.json
+            // this example is just showing the usage of "FabricCapacities_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -137,49 +137,37 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "a2e95d27-c161-4b61-bda4-11512c14c2c2";
-            string resourceGroupName = "rg";
+            string subscriptionId = "548B7FB7-3B2A-4F46-BB02-66473F1FC22C";
+            string resourceGroupName = "TestRG";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this DevOpsPoolResource
-            DevOpsPoolCollection collection = resourceGroupResource.GetDevOpsPools();
+            // get the collection of this FabricCapacityResource
+            FabricCapacityCollection collection = resourceGroupResource.GetFabricCapacities();
 
             // invoke the operation
-            string poolName = "pool";
-            DevOpsPoolData data = new DevOpsPoolData(new AzureLocation("eastus"))
+            string capacityName = "azsdktest";
+            FabricCapacityData data = new FabricCapacityData(new AzureLocation("westcentralus"), new FabricCapacityProperties(new FabricCapacityAdministration(new string[]
             {
-                Properties = new DevOpsPoolProperties(10, new DevOpsAzureOrganizationProfile(new DevOpsOrganization[]
-            {
-new DevOpsOrganization(new Uri("https://mseng.visualstudio.com"))
-            }), new DevOpsStatelessAgentProfile(), new DevOpsVmssFabricProfile(new DevOpsAzureSku("Standard_D4ads_v5"), new DevOpsPoolVmImage[]
-            {
-new DevOpsPoolVmImage()
-{
-ResourceId = "/MicrosoftWindowsServer/WindowsServer/2019-Datacenter/latest",
-}
-            }), "/subscriptions/222e81d0-cf38-4dab-baa5-289bf16baaa4/resourceGroups/rg-1es-devcenter/providers/Microsoft.DevCenter/projects/1ES")
-                {
-                    ProvisioningState = DevOpsInfrastructureProvisioningState.Succeeded,
-                },
-            };
-            ArmOperation<DevOpsPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
-            DevOpsPoolResource result = lro.Value;
+"azsdktest@microsoft.com","azsdktest2@microsoft.com"
+            })), new FabricSku("F2", FabricSkuTier.Fabric));
+            ArmOperation<FabricCapacityResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, capacityName, data);
+            FabricCapacityResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DevOpsPoolData resourceData = result.Data;
+            FabricCapacityData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Pools_ListByResourceGroup
+        // List capacities by resource group
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_PoolsListByResourceGroup()
+        public async Task GetAll_ListCapacitiesByResourceGroup()
         {
-            // Generated from example definition: 2024-04-04-preview/ListPoolsBySubscriptionAndResourceGroup.json
-            // this example is just showing the usage of "Pool_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-11-01/FabricCapacities_ListByResourceGroup.json
+            // this example is just showing the usage of "FabricCapacity_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -188,20 +176,20 @@ ResourceId = "/MicrosoftWindowsServer/WindowsServer/2019-Datacenter/latest",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "a2e95d27-c161-4b61-bda4-11512c14c2c2";
-            string resourceGroupName = "rg";
+            string subscriptionId = "548B7FB7-3B2A-4F46-BB02-66473F1FC22C";
+            string resourceGroupName = "TestRG";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this DevOpsPoolResource
-            DevOpsPoolCollection collection = resourceGroupResource.GetDevOpsPools();
+            // get the collection of this FabricCapacityResource
+            FabricCapacityCollection collection = resourceGroupResource.GetFabricCapacities();
 
             // invoke the operation and iterate over the result
-            await foreach (DevOpsPoolResource item in collection.GetAllAsync())
+            await foreach (FabricCapacityResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                DevOpsPoolData resourceData = item.Data;
+                FabricCapacityData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
