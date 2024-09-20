@@ -38,11 +38,11 @@ public class BasicCommunicationTests(bool async)
             param location string = 'global'
 
             resource comm 'Microsoft.Communication/communicationServices@2023-03-31' = {
-                name: take('comm-${uniqueString(resourceGroup().id)}', 63)
-                location: location
-                properties: {
-                    dataLocation: 'unitedstates'
-                }
+              name: take('comm-${uniqueString(resourceGroup().id)}', 63)
+              location: location
+              properties: {
+                dataLocation: 'unitedstates'
+              }
             }
             """)
         .Lint()

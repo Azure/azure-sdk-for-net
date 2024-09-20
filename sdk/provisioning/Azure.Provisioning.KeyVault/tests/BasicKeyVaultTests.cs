@@ -105,43 +105,43 @@ public class BasicKeyVaultTests(bool async)
             var tenantId = subscription().tenantId
 
             resource kv 'Microsoft.KeyVault/vaults@2019-09-01' = {
-                name: take('kv-${uniqueString(resourceGroup().id)}', 24)
-                location: location
-                properties: {
-                    tenantId: tenantId
-                    sku: {
-                        family: 'A'
-                        name: skuName
-                    }
-                    accessPolicies: [
-                        {
-                            tenantId: tenantId
-                            objectId: objectId
-                            permissions: {
-                                keys: [
-                                    'list'
-                                ]
-                                secrets: [
-                                    'list'
-                                ]
-                            }
-                        }
-                    ]
-                    enableSoftDelete: true
-                    softDeleteRetentionInDays: 90
-                    networkAcls: {
-                        bypass: 'AzureServices'
-                        defaultAction: 'Allow'
-                    }
+              name: take('kv-${uniqueString(resourceGroup().id)}', 24)
+              location: location
+              properties: {
+                tenantId: tenantId
+                sku: {
+                  family: 'A'
+                  name: skuName
                 }
+                accessPolicies: [
+                  {
+                    tenantId: tenantId
+                    objectId: objectId
+                    permissions: {
+                      keys: [
+                        'list'
+                      ]
+                      secrets: [
+                        'list'
+                      ]
+                    }
+                  }
+                ]
+                enableSoftDelete: true
+                softDeleteRetentionInDays: 90
+                networkAcls: {
+                  bypass: 'AzureServices'
+                  defaultAction: 'Allow'
+                }
+              }
             }
 
             resource secret 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
-                name: 'myDarkNecessities'
-                properties: {
-                    value: secretValue
-                }
-                parent: kv
+              name: 'myDarkNecessities'
+              properties: {
+                value: secretValue
+              }
+              parent: kv
             }
 
             output name string = kv.name
