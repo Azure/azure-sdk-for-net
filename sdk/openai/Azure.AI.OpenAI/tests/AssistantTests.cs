@@ -188,11 +188,11 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
 
         Print(" >>> Beginning call ... ");
 
-        ThreadCreationOptions thrdOpt = new()
+        ThreadCreationOptions thirdOpt = new()
         {
             InitialMessages = { new(MessageRole.User, ["What should I wear outside right now?"]), },
         };
-        AsyncCollectionResult<StreamingUpdate> asyncResults = client.CreateThreadAndRunStreamingAsync(assistant, thrdOpt);
+        AsyncCollectionResult<StreamingUpdate> asyncResults = client.CreateThreadAndRunStreamingAsync(assistant, thirdOpt);
 
         Print(" >>> Starting enumeration ...");
 

@@ -72,8 +72,8 @@ internal class TestConfig
         // In order to populate each property of the Config object, the search order is as follows:
         // 1. Getting the specific config for the name in the JSON config file
         // 2. Getting the value from the default config
-        // 3. (Not in playback) Getting the value from the AZURE_OPENAI_<NAME>_<PROEPRTYNAME> environment variable
-        // 4. (Not in playback) Getting the value from the AZURE_OPENAI_<PROEPRTYNAME> environment variable
+        // 3. (Not in playback) Getting the value from the AZURE_OPENAI_<NAME>_<PROPERTY_NAME> environment variable
+        // 4. (Not in playback) Getting the value from the AZURE_OPENAI_<PROPERTY_NAME> environment variable
         // It will fall through each one if the value is null
 
         return new FlattenedConfig(

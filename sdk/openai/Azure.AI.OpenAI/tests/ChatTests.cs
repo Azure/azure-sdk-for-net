@@ -159,7 +159,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
     }
 
     [RecordedTest]
-    [Ignore("Delay behavior not emulated by recordings, and needs to be run manually with some time in between iterations due to service throttling behaviour")]
+    [Ignore("Delay behavior not emulated by recordings, and needs to be run manually with some time in between iterations due to service throttling behavior")]
     [TestCase("x-ms-retry-after-ms", "1000", 1000)]
     [TestCase("retry-after-ms", "1400", 1400)]
     [TestCase("Retry-After", "1", 1000)]

@@ -240,7 +240,7 @@ public partial class ChatTests
             Assert.That(parsedArgs.LocationName, Is.Not.Null.Or.Empty);
             Assert.That(parsedArgs.Date, Is.Not.Null.Or.Empty);
 
-            // TODO FIXME: There isn't a clear or obvious way to pass the assitant function message back to the service, and the constructors that allow
+            // TODO FIXME: There isn't a clear or obvious way to pass the assistant function message back to the service, and the constructors that allow
             //             us manual control are internal. So let's use JSON.
             var converted = ModelReaderWriter.Read<ChatFunctionCall>(BinaryData.FromString(JsonSerializer.Serialize(new { name = functionName, arguments = functionArgs.ToString() })));
             messages.Add(new AssistantChatMessage(converted));

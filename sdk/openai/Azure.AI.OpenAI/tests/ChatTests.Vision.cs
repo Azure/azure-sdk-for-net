@@ -126,7 +126,7 @@ namespace Azure.AI.OpenAI.Tests
                 ValidateUpdate(update, content, ref foundPromptFilter, ref foundResponseFilter);
             }
 
-            // TOOD FIXME: gpt-4o models seem to return inconsistent prompt filters to skip this for now
+            // TODO FIXME: gpt-4o models seem to return inconsistent prompt filters to skip this for now
             //Assert.That(foundPromptFilter, Is.True);
 
             Assert.That(content, Has.Length.GreaterThan(0));
