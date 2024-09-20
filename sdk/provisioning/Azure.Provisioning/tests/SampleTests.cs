@@ -44,21 +44,21 @@ internal class SampleTests(bool async)
             param location string = resourceGroup().location
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: location
-                sku: {
-                    name: 'Standard_LRS'
-                }
-                properties: {
-                    allowBlobPublicAccess: false
-                    isHnsEnabled: true
-                }
+              name: take('storage${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: 'Standard_LRS'
+              }
+              properties: {
+                allowBlobPublicAccess: false
+                isHnsEnabled: true
+              }
             }
 
             resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
-                name: 'default'
-                parent: storage
+              name: 'default'
+              parent: storage
             }
 
             output blobs_endpoint string = storage.properties.primaryEndpoints.blob
@@ -181,84 +181,84 @@ internal class SampleTests(bool async)
             param location string = resourceGroup().location
 
             resource mi 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-                name: take('mi-${uniqueString(resourceGroup().id)}', 128)
-                location: location
-                tags: tags
+              name: take('mi-${uniqueString(resourceGroup().id)}', 128)
+              location: location
+              tags: tags
             }
 
             resource acr 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
-                name: take('acr${uniqueString(resourceGroup().id)}', 50)
-                location: location
-                sku: {
-                    name: 'Basic'
+              name: take('acr${uniqueString(resourceGroup().id)}', 50)
+              location: location
+              sku: {
+                name: 'Basic'
+              }
+              identity: {
+                type: 'SystemAssigned, UserAssigned'
+                userAssignedIdentities: {
+                  '${mi.id}': { }
                 }
-                identity: {
-                    type: 'SystemAssigned, UserAssigned'
-                    userAssignedIdentities: {
-                        '${mi.id}': { }
-                    }
-                }
-                tags: tags
+              }
+              tags: tags
             }
 
             resource acr_mi_AcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-                name: guid(acr.id, mi.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d'))
-                properties: {
-                    principalId: mi.properties.principalId
-                    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d')
-                    principalType: 'ServicePrincipal'
-                }
-                scope: acr
+              name: guid(acr.id, mi.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d'))
+              properties: {
+                principalId: mi.properties.principalId
+                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d')
+                principalType: 'ServicePrincipal'
+              }
+              scope: acr
             }
 
             resource law 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
-                name: take('law-${uniqueString(resourceGroup().id)}', 63)
-                location: location
-                properties: {
-                    sku: {
-                        name: 'PerGB2018'
-                    }
+              name: take('law-${uniqueString(resourceGroup().id)}', 63)
+              location: location
+              properties: {
+                sku: {
+                  name: 'PerGB2018'
                 }
-                tags: tags
+              }
+              tags: tags
             }
 
             resource cae 'Microsoft.App/managedEnvironments@2023-05-01' = {
-                name: take('cae${uniqueString(resourceGroup().id)}', 24)
-                location: location
-                properties: {
-                    appLogsConfiguration: {
-                        destination: 'log-analytics'
-                        logAnalyticsConfiguration: {
-                            customerId: law.properties.customerId
-                            sharedKey: law.listKeys().primarySharedKey
-                        }
-                    }
-                    workloadProfiles: [
-                        {
-                            name: 'consumption'
-                            workloadProfileType: 'Consumption'
-                        }
-                    ]
+              name: take('cae${uniqueString(resourceGroup().id)}', 24)
+              location: location
+              properties: {
+                appLogsConfiguration: {
+                  destination: 'log-analytics'
+                  logAnalyticsConfiguration: {
+                    customerId: law.properties.customerId
+                    sharedKey: law.listKeys().primarySharedKey
+                  }
                 }
-                tags: tags
+                workloadProfiles: [
+                  {
+                    name: 'consumption'
+                    workloadProfileType: 'Consumption'
+                  }
+                ]
+              }
+              tags: tags
             }
 
             resource cae_mi_Contributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-                name: guid(cae.id, mi.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c'))
-                properties: {
-                    principalId: mi.properties.principalId
-                    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')
-                    principalType: 'ServicePrincipal'
-                }
-                scope: cae
+              name: guid(cae.id, mi.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c'))
+              properties: {
+                principalId: mi.properties.principalId
+                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')
+                principalType: 'ServicePrincipal'
+              }
+              scope: cae
             }
 
             resource aspireDashboard 'Microsoft.App/managedEnvironments/dotNetComponents@2024-02-02-preview' = {
-                name: 'aspire-dashboard'
-                parent: cae
-                properties: {
-                    componentType: 'AspireDashboard'
-                }
+              name: 'aspire-dashboard'
+              parent: cae
+              properties: {
+                componentType: 'AspireDashboard'
+              }
             }
 
             output MANAGED_IDENTITY_CLIENT_ID string = mi.properties.clientId
@@ -310,8 +310,8 @@ internal class SampleTests(bool async)
             param location string = deployment().location
 
             resource rg-test 'Microsoft.Resources/resourceGroups@2024-03-01' = {
-                name: take('rg-test-${uniqueString(deployment().id)}', 90)
-                location: location
+              name: take('rg-test-${uniqueString(deployment().id)}', 90)
+              location: location
             }
             """)
         .Lint()

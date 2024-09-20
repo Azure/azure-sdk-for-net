@@ -61,31 +61,31 @@ public class BasicServiceBusTests(bool async)
 
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
-            
+
             resource sb 'Microsoft.ServiceBus/namespaces@2021-11-01' = {
-                name: take('sb-${uniqueString(resourceGroup().id)}', 50)
-                location: location
-                sku: {
-                    name: 'Standard'
-                }
+              name: take('sb-${uniqueString(resourceGroup().id)}', 50)
+              location: location
+              sku: {
+                name: 'Standard'
+              }
             }
 
             resource queue 'Microsoft.ServiceBus/namespaces/queues@2021-11-01' = {
-                name: queueName
-                properties: {
-                    autoDeleteOnIdle: 'P10675199DT2H48M5.4775807S'
-                    deadLetteringOnMessageExpiration: false
-                    defaultMessageTimeToLive: 'P10675199DT2H48M5.4775807S'
-                    duplicateDetectionHistoryTimeWindow: 'PT10M'
-                    enableExpress: false
-                    enablePartitioning: false
-                    lockDuration: 'PT5M'
-                    maxDeliveryCount: 10
-                    maxSizeInMegabytes: 1024
-                    requiresDuplicateDetection: false
-                    requiresSession: false
-                }
-                parent: sb
+              name: queueName
+              properties: {
+                autoDeleteOnIdle: 'P10675199DT2H48M5.4775807S'
+                deadLetteringOnMessageExpiration: false
+                defaultMessageTimeToLive: 'P10675199DT2H48M5.4775807S'
+                duplicateDetectionHistoryTimeWindow: 'PT10M'
+                enableExpress: false
+                enablePartitioning: false
+                lockDuration: 'PT5M'
+                maxDeliveryCount: 10
+                maxSizeInMegabytes: 1024
+                requiresDuplicateDetection: false
+                requiresSession: false
+              }
+              parent: sb
             }
             """)
         .Lint()

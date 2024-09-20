@@ -7,9 +7,10 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Storage.Common;
-using static Azure.Storage.DataMovement.ChannelProcessing;
 
 namespace Azure.Storage.DataMovement;
+
+internal delegate Task ProcessAsync<T>(T item, CancellationToken cancellationToken);
 
 internal interface IProcessor<TItem> : IDisposable
 {
@@ -19,8 +20,6 @@ internal interface IProcessor<TItem> : IDisposable
 
 internal static class ChannelProcessing
 {
-    public delegate Task ProcessAsync<T>(T item, CancellationToken cancellationToken);
-
     public static IProcessor<T> NewProcessor<T>(int parallelism)
     {
         Argument.AssertInRange(parallelism, 1, int.MaxValue, nameof(parallelism));
