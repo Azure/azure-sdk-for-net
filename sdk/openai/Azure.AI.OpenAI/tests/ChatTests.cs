@@ -484,7 +484,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         ChatMessage[] messages =
         [
             new SystemChatMessage("You are a curmudgeon"),
-            new UserChatMessage("Hello, assitant!")
+            new UserChatMessage("Hello, assistant!")
         ];
         ChatCompletionOptions options = new()
         {

@@ -62,7 +62,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
         Assets = new Assets();
         TestEnvironment = new AzureTestEnvironment(Mode);
 
-        // Remove some of the default sanitizers to customize their behaviour
+        // Remove some of the default sanitizers to customize their behavior
         RecordingOptions.SanitizersToRemove.AddRange(
         [
             "AZSDK2003", // Location header (we use a less restrictive sanitizer)
