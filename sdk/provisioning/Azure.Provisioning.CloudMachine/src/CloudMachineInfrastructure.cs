@@ -32,15 +32,15 @@ public class CloudMachineInfrastructure : Infrastructure
     /// </summary>
     public BicepParameter PrincipalIdParameter => new BicepParameter("principalId", typeof(string));
 
-    /// <summary>
-    /// The common principalType parameter.
-    /// </summary>
-    public BicepParameter PrincipalTypeParameter => new BicepParameter("principalType", typeof(string));
+    ///// <summary>
+    ///// The common principalType parameter.
+    ///// </summary>
+    //public BicepParameter PrincipalTypeParameter => new BicepParameter("principalType", typeof(string));
 
-    /// <summary>
-    /// The common principalName parameter.
-    /// </summary>
-    public BicepParameter PrincipalNameParameter => new BicepParameter("principalName", typeof(string));
+    ///// <summary>
+    ///// The common principalName parameter.
+    ///// </summary>
+    //public BicepParameter PrincipalNameParameter => new BicepParameter("principalName", typeof(string));
 
     public CloudMachineInfrastructure(string name = "cm") : base(name!)
     {
@@ -177,8 +177,8 @@ public class CloudMachineInfrastructure : Infrastructure
         });
 
         Add(PrincipalIdParameter);
-        Add(PrincipalTypeParameter);
-        Add(PrincipalNameParameter);
+        //Add(PrincipalTypeParameter);
+        //Add(PrincipalNameParameter);
 
         Add(_identity);
         Add(_storage);

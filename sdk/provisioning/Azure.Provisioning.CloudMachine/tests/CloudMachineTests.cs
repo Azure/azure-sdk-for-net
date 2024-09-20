@@ -3,15 +3,20 @@
 
 #nullable enable
 
+using System;
 using NUnit.Framework;
 
 namespace Azure.CloudMachine.Tests;
 
 public class CloudMachineTests
 {
-    [TestCase("test")]
-    public void NotNull(object? value)
+    [TestCase]
+    public void Configure()
     {
-        Assert.AreEqual("test1", "test1");
+        _ = CloudMachineClient.Configure(["--init"]);
+
+        CloudMachineClient cm = new();
+
+        Console.WriteLine(cm.Id);
     }
 }
