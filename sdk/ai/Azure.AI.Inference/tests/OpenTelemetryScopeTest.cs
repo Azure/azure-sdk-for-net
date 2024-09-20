@@ -3,18 +3,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Inference.Telemetry;
 using Azure.AI.Inference.Tests.Utilities;
 using Azure.Core.Sse;
-using Microsoft.Identity.Client;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace Azure.AI.Inference.Tests
 {
@@ -53,8 +50,7 @@ namespace Azure.AI.Inference.Tests
         {
             // No activity means telemetry should be switched off.
             using var scope = new OpenTelemetryScope(requestOptions, endpoint);
-            Assert.False(scope.IsEnabled);
-            Assert.False(scope.AreMetricsOn);
+            Assert.IsNull(Activity.Current);
         }
 
         [Test, Sequential]
@@ -75,24 +71,68 @@ namespace Azure.AI.Inference.Tests
         {
             Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableSwitchName, env);
             using var listener = new ValidatingActivityListener();
+            using var metricsListener = new ValidatingMeterListener();
+            SingleRecordedResponse response = null;
             using (var scope = new OpenTelemetryScope(requestOptions, endpoint))
             {
-                Assert.AreEqual(scope.IsEnabled, hasActivity);
-                Assert.False(scope.AreMetricsOn);
+                if (hasActivity)
+                {
+                    AssertActivityEnabled(Activity.Current, requestOptions);
+                }
+                else
+                {
+                    Assert.IsNull(Activity.Current);
+                }
+                ChatCompletions completions = GetChatCompletions(requestOptions.Model);
+                response = new(completions, false);
+                scope.RecordResponse(completions);
             }
+            if (!hasActivity)
+            {
+                listener.VaidateTelemetryIsOff();
+                metricsListener.VaidateMetricsAreOff();
+            }
+            else
+            {
+                listener.ValidateStartActivity(requestOptions, endpoint, false);
+                listener.ValidateResponseEvents(response, false);
+                metricsListener.VaidateDuration(requestOptions.Model, endpoint);
+                metricsListener.ValidateTags(requestOptions.Model, endpoint, true);
+            }
+        }
+
+        [Test]
+        public void TestNonStandardServerPort()
+        {
+            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableTraceContents, "1");
+            using var listener = new ValidatingActivityListener();
+            using var metricsListener = new ValidatingMeterListener();
+            SingleRecordedResponse response = null;
+            var ep = new Uri("https://int.api.azureml-test.ms:9999");
+            using (var scope = new OpenTelemetryScope(requestOptions, ep))
+            {
+                AssertActivityEnabled(Activity.Current, requestOptions);
+                ChatCompletions completions = GetChatCompletions(requestOptions.Model);
+                response = new(completions, true);
+                scope.RecordResponse(completions);
+            }
+            listener.ValidateStartActivity(requestOptions, ep, true);
+            listener.ValidateResponseEvents(response, true);
+            metricsListener.VaidateDuration(requestOptions.Model, ep);
+            metricsListener.ValidateTags(requestOptions.Model, ep, true);
         }
 
         [Test]
         public void TestStartActivity()
         {
             Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableSwitchName, "1");
+            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableTraceContents, "1");
             using var listener = new ValidatingActivityListener();
             using (var scope = new OpenTelemetryScope(requestOptions, endpoint))
             {
-                Assert.True(scope.IsEnabled);
-                Assert.False(scope.AreMetricsOn);
+                AssertActivityEnabled(Activity.Current, requestOptions);
             }
-            listener.ValidateStartActivity(requestOptions, endpoint);
+            listener.ValidateStartActivity(requestOptions, endpoint, true);
         }
 
         [Test, Sequential]
@@ -112,13 +152,12 @@ namespace Azure.AI.Inference.Tests
                 {
                     using (var scope = new OpenTelemetryScope(requestOptions, endpoint))
                     {
-                        Assert.True(scope.IsEnabled);
-                        Assert.True(scope.AreMetricsOn);
+                        AssertActivityEnabled(Activity.Current, requestOptions);
                         scope.RecordResponse(completions);
                     }
                     requestOptions.Model = modelNameReturned;
-                    actListener.ValidateStartActivity(requestOptions, endpoint);
-                    actListener.ValidateResponseEvents(response);
+                    actListener.ValidateStartActivity(requestOptions, endpoint, traceContent);
+                    actListener.ValidateResponseEvents(response, traceContent);
                     meterListener.ValidateTags(modelNameReturned, endpoint, true);
                     meterListener.VaidateDuration(modelNameReturned, endpoint);
                 }
@@ -130,19 +169,19 @@ namespace Azure.AI.Inference.Tests
             [Values(null, "My error description")] string errMessage
             )
         {
+            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableTraceContents, "1");
             using (var actListener = new ValidatingActivityListener())
             {
                 using (var meterListener = new ValidatingMeterListener())
                 {
                     using (var scope = new OpenTelemetryScope(requestOptions, endpoint))
                     {
-                        Assert.True(scope.IsEnabled);
-                        Assert.True(scope.AreMetricsOn);
+                        AssertActivityEnabled(Activity.Current, requestOptions);
                         var ex = new Exception(errMessage);
                         scope.RecordError(ex);
                     }
                 }
-                actListener.ValidateStartActivity(requestOptions, endpoint);
+                actListener.ValidateStartActivity(requestOptions, endpoint, true);
                 actListener.ValidateErrorTag(
                     "System.Exception",
                     errMessage ?? "Exception of type 'System.Exception' was thrown.");
@@ -168,8 +207,7 @@ namespace Azure.AI.Inference.Tests
                 {
                     using (var scope = new OpenTelemetryScope(requestOptions, endpoint))
                     {
-                        Assert.True(scope.IsEnabled);
-                        Assert.True(scope.AreMetricsOn);
+                        AssertActivityEnabled(Activity.Current, requestOptions);
                         foreach (StreamingChatCompletionsUpdate update in updates)
                         {
                             resp.Update(update);
@@ -177,8 +215,8 @@ namespace Azure.AI.Inference.Tests
                         }
                         scope.RecordStreamingResponse();
                     }
-                    actListener.ValidateStartActivity(requestOptions, endpoint);
-                    actListener.ValidateResponseEvents(resp);
+                    actListener.ValidateStartActivity(requestOptions, endpoint, traceContent);
+                    actListener.ValidateResponseEvents(resp, traceContent);
                     meterListener.ValidateTags("gpt-3000", endpoint, false);
                     meterListener.VaidateDuration("gpt-3000", endpoint);
                 }
@@ -188,6 +226,7 @@ namespace Azure.AI.Inference.Tests
         [Test]
         public async Task TestMockSSEStream()
         {
+            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableTraceContents, "1");
             Stream stream = new MemoryStream();
             using var tokenSource = new CancellationTokenSource();
             CancellationToken ct = tokenSource.Token;
@@ -210,8 +249,8 @@ namespace Azure.AI.Inference.Tests
                 });
             tokenSource.Cancel();
             await task;
-            actListener.ValidateStartActivity(requestOptions, endpoint);
-            actListener.ValidateResponseEvents(resp);
+            actListener.ValidateStartActivity(requestOptions, endpoint, true);
+            actListener.ValidateResponseEvents(resp, true);
             actListener.ValidateErrorTag(typeof(TaskCanceledException).ToString(), "A task was canceled.");
             meterListener.VaidateDuration(requestOptions.Model, endpoint);
         }
@@ -228,8 +267,7 @@ namespace Azure.AI.Inference.Tests
                 {
                     using (var scope = new OpenTelemetryScope(requestOptions, endpoint))
                     {
-                        Assert.False(scope.IsEnabled);
-                        Assert.True(scope.AreMetricsOn);
+                        Assert.IsNull(Activity.Current);
                         switch (rtype)
                         {
                             case RunType.Basic:
@@ -237,10 +275,10 @@ namespace Azure.AI.Inference.Tests
                                 scope.RecordResponse(completions);
                                 break;
                             case RunType.Streaming:
-                                scope.RecordStreamingResponse();
                                 scope.UpdateStreamResponse(GetFuncPart("first", "func1", "{\"arg1\": 42}"));
                                 scope.UpdateStreamResponse(GetFuncPart(" second", "func2", "{\"arg1\": 42,"));
                                 scope.UpdateStreamResponse(GetFuncPart(" third", "func2", "\"arg2\": 43}"));
+                                scope.RecordStreamingResponse();
                                 break;
                             case RunType.Error:
                                 var ex = new Exception("Mock");
@@ -253,6 +291,44 @@ namespace Azure.AI.Inference.Tests
                 }
             }
         }
+
+        [Test]
+        public void TestTracesOffMetricsOn(
+            [Values(RunType.Basic, RunType.Streaming, RunType.Error)] RunType rtype
+            )
+        {
+            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableSwitchName, "1");
+            using (var meterListener = new ValidatingMeterListener())
+            {
+                using (var scope = new OpenTelemetryScope(requestOptions, endpoint))
+                {
+                    Assert.IsNull(Activity.Current);
+                    switch (rtype)
+                    {
+                        case RunType.Basic:
+                            ChatCompletions completions = GetChatCompletions("gpt-3000");
+                            scope.RecordResponse(completions);
+                            break;
+                        case RunType.Streaming:
+                            scope.UpdateStreamResponse(GetFuncPart("first", "func1", "{\"arg1\": 42}"));
+                            scope.UpdateStreamResponse(GetFuncPart(" second", "func2", "{\"arg1\": 42,"));
+                            scope.UpdateStreamResponse(GetFuncPart(" third", "func2", "\"arg2\": 43}"));
+                            scope.RecordStreamingResponse();
+                            break;
+                        case RunType.Error:
+                            var ex = new Exception("Mock");
+                            scope.RecordError(ex);
+                            break;
+                    }
+                }
+                meterListener.VaidateDuration("gpt-3000", endpoint);
+                if (rtype != RunType.Error)
+                {
+                    meterListener.ValidateTags("gpt-3000", endpoint, rtype == RunType.Basic);
+                }
+            }
+        }
+
         #region Helpers
         private static StreamingChatCompletionsUpdate GetFuncPart(string content, string functionName, string argsUpdate)
         {
@@ -314,6 +390,12 @@ namespace Azure.AI.Inference.Tests
                  usage: usage,
                  choices: choices,
                  serializedAdditionalRawData: new Dictionary<string, BinaryData>());
+        }
+
+        private void AssertActivityEnabled(Activity activity, ChatCompletionsOptions requestOptions)
+        {
+            Assert.IsNotNull(activity);
+            Assert.AreEqual(activity.DisplayName, $"Complete_{requestOptions.Model}");
         }
         #endregion
     }

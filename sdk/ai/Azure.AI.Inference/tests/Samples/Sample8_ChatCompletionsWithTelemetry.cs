@@ -48,7 +48,7 @@ namespace Azure.AI.Inference.Tests.Samples
             #endregion
             #region Snippet:Azure_AI_Inference_TelemetrySyncScenario_providers
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                .AddSource(OpenTelemetryConstants.ActivityName)
+                .AddSource(OpenTelemetryConstants.ActivitySourceName)
                 .ConfigureResource(r => r.AddService("MyServiceName"))
                 .AddConsoleExporter()
                 .AddAzureMonitorTraceExporter(options =>
@@ -58,7 +58,7 @@ namespace Azure.AI.Inference.Tests.Samples
                 .Build();
 
             using var meterProvider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(OpenTelemetryConstants.ActivityName)
+                .AddMeter(OpenTelemetryConstants.ActivitySourceName)
                 .AddConsoleExporter()
                 .AddAzureMonitorMetricExporter(options =>
                 {

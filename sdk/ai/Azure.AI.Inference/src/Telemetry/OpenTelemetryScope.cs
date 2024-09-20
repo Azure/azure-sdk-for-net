@@ -18,12 +18,12 @@ namespace Azure.AI.Inference.Telemetry
         /// On the ApplicationInsights events are logged to traces table.
         /// The tags are not logged, but are shown in the console.
         /// </summary>
-        private static readonly ActivitySource s_chatSource = new ActivitySource(ActivityName);
+        private static readonly ActivitySource s_chatSource = new ActivitySource(ActivitySourceName);
         /// <summary>
         /// Add histograms to log metrics.
         /// On the ApplicationInsights metrics are logged to customMetrics table.
         /// </summary>
-        private static readonly Meter s_meter = new Meter(ActivityName);
+        private static readonly Meter s_meter = new Meter(ActivitySourceName);
         private static readonly Histogram<double> s_duration = s_meter.CreateHistogram<double>(
             GenAiClientOperationDurationMetricName, "s", "Measures GenAI operation duration.");
         private static readonly Histogram<long> s_tokens = s_meter.CreateHistogram<long>(
@@ -34,6 +34,7 @@ namespace Azure.AI.Inference.Telemetry
         private readonly TagList m_commonTags;
         private readonly string m_caller;
         private readonly bool m_traceContent;
+        private readonly bool m_enableTelemetry;
         private readonly DiagnosticListener m_source = null;
         private readonly StreamingRecordedResponse m_recordedStreamingResponse;
 
@@ -54,27 +55,13 @@ namespace Azure.AI.Inference.Telemetry
                 return ((ChatRequestToolMessage)message).Content;
             if (message.GetType() == typeof(ChatRequestUserMessage))
                 return ((ChatRequestUserMessage)message).Content;
-            throw new NotSupportedException("The message type is not supported");
+            return "";
         }
 
         public static bool GetSwithVariableVal(string name)
         {
             string enable = Environment.GetEnvironmentVariable(name);
             return enable != null && (enable.Equals("true", StringComparison.OrdinalIgnoreCase) || enable.Equals("1"));
-        }
-
-        /// <summary>
-        /// Get the activity, if the telemetry is enabled. If there is no listeners for
-        /// Activity source, null will be returned.
-        /// </summary>
-        /// <param name="name">The activity name.</param>
-        /// <returns>Activity or null.</returns>
-        private static Activity GetActivityMaybe(string name)
-        {
-            Activity act = null;
-            if (GetSwithVariableVal(EnvironmentVariableSwitchName))
-                act = s_chatSource.CreateActivity(name, ActivityKind.Client);
-            return act;
         }
 
         /// <summary>
@@ -85,19 +72,9 @@ namespace Azure.AI.Inference.Telemetry
         /// <param name="value">Nullable value to be set.</param>
         private void SetTagMaybe<T>(string name, T? value) where T: struct
         {
-            if (value.HasValue && m_activity != null)
-                m_activity.SetTag(name, value.Value);
+            if (value.HasValue)
+                m_activity?.SetTag(name, value.Value);
         }
-
-        /// <summary>
-        /// Return true if the activity for OpenTelemetry exists.
-        /// </summary>
-        public bool IsEnabled { get => m_activity != null; }
-
-        /// <summary>
-        /// Return true if the metrics are enabled.
-        /// </summary>
-        public bool AreMetricsOn { get => s_duration.Enabled && s_tokens.Enabled; }
 
         /// <summary>
         /// Create the instance of OpenTelemetryScope. This constructor logs request
@@ -108,32 +85,35 @@ namespace Azure.AI.Inference.Telemetry
         /// <param name="caller">The calling method.</param>
         public OpenTelemetryScope(ChatCompletionsOptions requestOptions, Uri endpoint, string caller=null)
         {
+            m_enableTelemetry = GetSwithVariableVal(EnvironmentVariableSwitchName);
+            if (!m_enableTelemetry)
+                return;
             m_traceContent = GetSwithVariableVal(EnvironmentVariableTraceContents);
             m_recordedStreamingResponse = new(m_traceContent);
             var model = requestOptions.Model ?? "chat";
             var activityName = $"Complete_{model}";
-            m_activity = GetActivityMaybe(activityName);
+            m_activity = s_chatSource.CreateActivity(activityName, ActivityKind.Client);
             m_caller = caller;
             if (!string.IsNullOrEmpty(caller))
             {
                 m_source = new("Azure.AI.Inference");
                 m_source.Write($"{m_caller}.Start", activityName);
             }
-            if (m_activity == null)
-                return;
-            m_activity.Start();
+            m_activity?.Start();
             // Record the request to telemetry;
             m_commonTags = new TagList{
                 { GenAiSystemKey, GenAiSystemValue},
                 { GenAiResponseModelKey, requestOptions.Model},
                 { ServerAddressKey, endpoint.Host },
-                { ServerPortKey, endpoint.Port },
-                { GenAiOperationNameKey, "Complete"}
+                { GenAiOperationNameKey, "chat"}
             };
+            // Only record port if it is different from 443
+            if (endpoint.Port != 443)
+                m_commonTags.Add(ServerPortKey, endpoint.Port);
             // Set tags for reporting them to console.
             foreach (KeyValuePair<string, object> kv in m_commonTags)
             {
-                m_activity.SetTag(kv.Key, kv.Value);
+                m_activity?.SetTag(kv.Key, kv.Value);
             }
             SetTagMaybe(GenAiRequestMaxTokensKey, requestOptions.MaxTokens);
             SetTagMaybe(GenAiRequestTemperatureKey, requestOptions.Temperature);
@@ -143,20 +123,23 @@ namespace Azure.AI.Inference.Telemetry
                     GenAiRequestTopPKey,
                     JsonSerializer.Deserialize<double?>(requestOptions.AdditionalProperties["top_p"]));
             }
-            // Log all messages as the events.
-            foreach (ChatRequestMessage message in requestOptions.Messages)
+            if (m_traceContent)
             {
-                TagList requestTags = new() {
+                // Log all messages as the events.
+                foreach (ChatRequestMessage message in requestOptions.Messages)
+                {
+                    TagList requestTags = new() {
                     { GenAiSystemKey, GenAiSystemValue},
                     { GenAiEventContent, GetContent(message)}
                 };
-                m_activity.AddEvent(
-                    new ActivityEvent(
-                        $"gen_ai.{message.Role}.message",
-                        DateTimeOffset.Now,
-                        new ActivityTagsCollection(requestTags)
-                    )
-                );
+                    m_activity?.AddEvent(
+                        new ActivityEvent(
+                            $"gen_ai.{message.Role}.message",
+                            DateTimeOffset.Now,
+                            new ActivityTagsCollection(requestTags)
+                        )
+                    );
+                }
             }
             m_duration = Stopwatch.StartNew();
         }
@@ -168,7 +151,7 @@ namespace Azure.AI.Inference.Telemetry
 
         public void UpdateStreamResponse<T>(T item)
         {
-            if (typeof(T) != typeof(StreamingChatCompletionsUpdate))
+            if (!m_enableTelemetry || item is not StreamingChatCompletionsUpdate)
                 return;
             StreamingChatCompletionsUpdate castedItem = item as StreamingChatCompletionsUpdate;
             m_recordedStreamingResponse.Update(castedItem);
@@ -185,7 +168,7 @@ namespace Azure.AI.Inference.Telemetry
         /// <param name="e">Exception thrown by completion call.</param>
         public void RecordError(Exception e)
         {
-            if (m_activity == null)
+            if (!m_enableTelemetry)
                 return;
             if (!string.IsNullOrEmpty(m_caller))
                 m_source.Write(m_caller + ".Exception", e);
@@ -195,8 +178,8 @@ namespace Azure.AI.Inference.Telemetry
             {
                 errorType = requestFailed.Status.ToString();
             }
-            m_activity.SetTag(ErrorTypeKey, errorType);
-            m_activity.SetStatus(ActivityStatusCode.Error, e?.Message ?? errorType);
+            m_activity?.SetTag(ErrorTypeKey, errorType);
+            m_activity?.SetStatus(ActivityStatusCode.Error, e?.Message ?? errorType);
         }
 
         /// <summary>
@@ -205,11 +188,11 @@ namespace Azure.AI.Inference.Telemetry
         /// <param name="recordedResponse"></param>
         private void RecordResponseInternal(AbstractRecordedResponse recordedResponse)
         {
-            if (m_activity == null || recordedResponse.IsEmpty)
+            if (!m_enableTelemetry || recordedResponse.IsEmpty)
                 return;
             TagList tags = m_commonTags;
             // Find index of model tag.
-            object objOldModel = m_activity.GetTagItem(GenAiResponseModelKey);
+            object objOldModel = m_activity?.GetTagItem(GenAiResponseModelKey);
             if (objOldModel != null)
             {
                 tags.Remove(new KeyValuePair<string, object> (GenAiResponseModelKey, objOldModel));
@@ -218,45 +201,48 @@ namespace Azure.AI.Inference.Telemetry
             // Record duration metric
             s_duration.Record(m_duration.Elapsed.TotalSeconds, tags);
             // Record input tokens
-            if (recordedResponse.PromptTokens != AbstractRecordedResponse.NOT_SET)
+            if (recordedResponse.PromptTokens.HasValue)
             {
                 TagList input_tags = tags;
                 input_tags.Add(GenAiUsageInputTokensKey, "input");
-                s_tokens.Record(recordedResponse.PromptTokens, input_tags);
-                m_activity.SetTag(GenAiUsageInputTokensKey, recordedResponse.PromptTokens);
+                s_tokens.Record(recordedResponse.PromptTokens.Value, input_tags);
+                m_activity?.SetTag(GenAiUsageInputTokensKey, recordedResponse.PromptTokens);
             }
             // Record output tokens
-            if (recordedResponse.CompletionTokens != AbstractRecordedResponse.NOT_SET)
+            if (recordedResponse.CompletionTokens.HasValue)
             {
                 TagList output_tags = tags;
                 output_tags.Add(GenAiUsageOutputTokensKey, "output");
-                s_tokens.Record(recordedResponse.CompletionTokens, output_tags);
-                m_activity.SetTag(GenAiUsageOutputTokensKey, recordedResponse.CompletionTokens);
+                s_tokens.Record(recordedResponse.CompletionTokens.Value, output_tags);
+                m_activity?.SetTag(GenAiUsageOutputTokensKey, recordedResponse.CompletionTokens);
             }
 
             // Record the event for each response
             string[] choices = recordedResponse.GetSerializedCompletions();
-            foreach (string choice in choices)
+            if (m_traceContent)
             {
-                TagList completionTags = new()
+                foreach (string choice in choices)
+                {
+                    TagList completionTags = new()
                 {
                     { GenAiSystemKey, GenAiSystemValue},
                     { GenAiEventContent, JsonSerializer.Serialize(choice) }
                 };
-                m_activity.AddEvent(new ActivityEvent(
-                        GenAiChoice,
-                        DateTimeOffset.Now,
-                        new ActivityTagsCollection(completionTags)
-                ));
+                    m_activity?.AddEvent(new ActivityEvent(
+                            GenAiChoice,
+                            default,
+                            new ActivityTagsCollection(completionTags)
+                    ));
+                }
             }
             // Set activity tags
             if (!string.IsNullOrEmpty(recordedResponse.FinishReason))
             {
-                m_activity.SetTag(GenAiResponseFinishReasonKey, recordedResponse.FinishReason);
+                m_activity?.SetTag(GenAiResponseFinishReasonKey, recordedResponse.FinishReason);
             }
-            m_activity.SetTag(GenAiResponseModelKey, recordedResponse.Model);
-            m_activity.SetTag(GenAiResponseIdKey, recordedResponse.Id);
-            m_activity.SetStatus(ActivityStatusCode.Ok);
+            m_activity?.SetTag(GenAiResponseModelKey, recordedResponse.Model);
+            m_activity?.SetTag(GenAiResponseIdKey, recordedResponse.Id);
+            m_activity?.SetStatus(ActivityStatusCode.Ok);
         }
 
         public void Dispose()

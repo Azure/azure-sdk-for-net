@@ -4,10 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.Metrics;
-using System.Net;
-using System.Reflection;
 using Azure.AI.Inference.Telemetry;
 using NUnit.Framework;
 
@@ -28,9 +25,10 @@ namespace Azure.AI.Inference.Tests.Utilities
             {
                 InstrumentPublished = (i, l) =>
                 {
-                    if (i.Meter.Name == OpenTelemetryConstants.ActivityName)
+                    if (i.Meter.Name == OpenTelemetryConstants.ActivitySourceName)
                     {
                         l.EnableMeasurementEvents(i);
+                        m_instruments.TryAdd(i.Meter.Name, i);
                     }
                 }
             };
@@ -82,13 +80,15 @@ namespace Azure.AI.Inference.Tests.Utilities
         /// <returns></returns>
         private static Dictionary<string, object> GetDefaultTags(string model, Uri endpoint)
         {
-            return new Dictionary<string, object>{
+             var standardTags = new Dictionary<string, object>{
                 { GenAiSystemKey, GenAiSystemValue},
                 { GenAiResponseModelKey, model},
                 { ServerAddressKey, endpoint.Host },
-                { ServerPortKey, endpoint.Port },
-                { GenAiOperationNameKey, "Complete"}
+                { GenAiOperationNameKey, "chat"}
             };
+            if (endpoint.Port != 443)
+                standardTags.Add(ServerPortKey, endpoint.Port);
+            return standardTags;
         }
         /// <summary>
         /// Validate Tag usage metrics.
@@ -135,7 +135,7 @@ namespace Azure.AI.Inference.Tests.Utilities
         {
             if (metricsPresent)
             {
-                Assert.That(m_measurementTags.ContainsKey(metricsName));
+                Assert.That(m_measurementTags.ContainsKey(metricsName), $"{metricsName} is absent in metrics tags.");
             }
             else
             {
@@ -179,7 +179,6 @@ namespace Azure.AI.Inference.Tests.Utilities
 
         public void VaidateMetricsAreOff()
         {
-            Assert.That(m_instruments.IsEmpty);
             Assert.That(m_measurements.IsEmpty);
             Assert.That(m_measurementTags.IsEmpty);
         }

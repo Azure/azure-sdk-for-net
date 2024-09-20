@@ -33,7 +33,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             m_activityListener = new ActivityListener()
             {
                 ActivityStopped = ActivityStopped,
-                ShouldListenTo = s => s.Name == OpenTelemetryConstants.ActivityName,
+                ShouldListenTo = s => s.Name == OpenTelemetryConstants.ActivitySourceName,
                 Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded
             };
             ActivitySource.AddActivityListener(m_activityListener);
@@ -44,7 +44,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             m_activityListener.Dispose();
         }
 
-        public void ValidateStartActivity(ChatCompletionsOptions requestOptions, Uri endpoint)
+        public void ValidateStartActivity(ChatCompletionsOptions requestOptions, Uri endpoint, bool traceEvents)
         {
             Activity activity = m_listeners.Single();
             Assert.NotNull(activity);
@@ -52,8 +52,11 @@ namespace Azure.AI.Inference.Tests.Utilities
             ValidateTag(activity, GenAiSystemKey, GenAiSystemValue);
             ValidateTag(activity, GenAiResponseModelKey, requestOptions.Model);
             ValidateTag(activity, ServerAddressKey, endpoint.Host);
-            ValidateTag(activity, ServerPortKey, endpoint.Port);
-            ValidateTag(activity, GenAiOperationNameKey, "Complete");
+            if (endpoint.Port != 443)
+                ValidateTag(activity, ServerPortKey, endpoint.Port);
+            else
+                Assert.IsNull(activity.GetTagItem(ServerPortKey));
+            ValidateTag(activity, GenAiOperationNameKey, "chat");
             ValidateTag(activity, GenAiRequestMaxTokensKey, requestOptions.MaxTokens);
             ValidateFloatTag(activity, GenAiRequestTemperatureKey, requestOptions.Temperature);
             if (requestOptions.AdditionalProperties.TryGetValue("top_p", out BinaryData topP))
@@ -61,7 +64,13 @@ namespace Azure.AI.Inference.Tests.Utilities
                 ValidateFloatTag(activity, GenAiRequestTopPKey, JsonSerializer.Deserialize<float?>(topP));
             }
             // Validate events
-            ValidateChatMessageEvents(activity, requestOptions.Messages);
+            if (traceEvents)
+                ValidateChatMessageEvents(activity, requestOptions.Messages);
+            else
+                foreach (ChatRequestMessage message in requestOptions.Messages)
+                {
+                    ValidateNoEventsWithName($"gen_ai.{message.Role}.message");
+                }
         }
 
         /// <summary>
@@ -74,16 +83,12 @@ namespace Azure.AI.Inference.Tests.Utilities
             return value.Replace("\\u0022", "\"").Replace("\\\\n", "\\n").Replace("\\\\u", "\\u").Trim('\"');
         }
 
-        public void ValidateResponseEvents(AbstractRecordedResponse response)
+        public void ValidateResponseEvents(AbstractRecordedResponse response, bool traceEvents)
         {
             Activity activity = m_listeners.Single();
             if (response.IsEmpty)
             {
-                // Check that we do not have the actual completion events.
-                foreach (ActivityEvent evt in activity.Events)
-                {
-                    Assert.That(evt.Name != GenAiChoice);
-                }
+                ValidateNoEventsWithName(GenAiChoice);
                 return;
             }
             ValidateTag(activity, GenAiResponseIdKey, response.Id);
@@ -92,21 +97,38 @@ namespace Azure.AI.Inference.Tests.Utilities
             ValidateIntTag(activity, GenAiUsageOutputTokensKey, response.CompletionTokens);
             ValidateIntTag(activity, GenAiUsageInputTokensKey, response.PromptTokens);
             var validChoices = new HashSet<string>();
-            foreach (string v in response.GetSerializedCompletions())
+            if (traceEvents)
             {
-                validChoices.Add(CleanString(v));
+                foreach (string v in response.GetSerializedCompletions())
+                {
+                    validChoices.Add(CleanString(v));
+                }
+                foreach (ActivityEvent evt in activity.Events)
+                {
+                    if (evt.Name != GenAiChoice)
+                        continue;
+                    Assert.AreEqual(2, evt.Tags.Count());
+                    Assert.AreEqual(GenAiSystemKey, evt.Tags.ElementAt(0).Key);
+                    Assert.AreEqual(GenAiSystemValue, evt.Tags.ElementAt(0).Value);
+                    Assert.AreEqual(GenAiEventContent, evt.Tags.ElementAt(1).Key);
+                    Assert.That(validChoices.Contains(CleanString(evt.Tags.ElementAt(1).Value.ToString())));
+                }
             }
-            foreach (ActivityEvent evt in activity.Events)
+            else
             {
-                if (evt.Name != GenAiChoice)
-                    continue;
-                Assert.AreEqual(2, evt.Tags.Count());
-                Assert.AreEqual(GenAiSystemKey, evt.Tags.ElementAt(0).Key);
-                Assert.AreEqual(GenAiSystemValue, evt.Tags.ElementAt(0).Value);
-                Assert.AreEqual(GenAiEventContent, evt.Tags.ElementAt(1).Key);
-                Assert.That(validChoices.Contains(CleanString(evt.Tags.ElementAt(1).Value.ToString())));
+                ValidateNoEventsWithName(GenAiChoice);
             }
             Assert.AreEqual(ActivityStatusCode.Ok, activity.Status);
+        }
+
+        private void ValidateNoEventsWithName(string name)
+        {
+            Activity activity = m_listeners.Single();
+            // Check that we do not have the actual completion events.
+            foreach (ActivityEvent evt in activity.Events)
+            {
+                Assert.That(evt.Name != name);
+            }
         }
 
         public void ValidateErrorTag(
@@ -183,9 +205,9 @@ namespace Azure.AI.Inference.Tests.Utilities
             }
         }
 
-        private static void ValidateIntTag(Activity activity, string key, int value)
+        private static void ValidateIntTag(Activity activity, string key, long? value)
         {
-            if (value == AbstractRecordedResponse.NOT_SET)
+            if (!value.HasValue)
             {
                 Assert.IsNull(activity.GetTagItem(key));
             }

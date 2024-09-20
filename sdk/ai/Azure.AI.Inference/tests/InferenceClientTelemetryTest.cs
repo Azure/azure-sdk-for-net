@@ -87,14 +87,14 @@ namespace Azure.AI.Inference.Tests
             if (recordedResponse is StreamingRecordedResponse)
             {
                 m_requestStreamingOptions.Model = recordedResponse.Model;
-                actListener.ValidateStartActivity(m_requestStreamingOptions, endpoint);
+                actListener.ValidateStartActivity(m_requestStreamingOptions, endpoint, traceContent);
             }
             else
             {
                 m_requestOptions.Model = recordedResponse.Model;
-                actListener.ValidateStartActivity(m_requestOptions, endpoint);
+                actListener.ValidateStartActivity(m_requestOptions, endpoint, traceContent);
             }
-            actListener.ValidateResponseEvents(recordedResponse);
+            actListener.ValidateResponseEvents(recordedResponse, traceContent);
             // TODO: When we will support usage tags on streaming
             // always set them and check.
             meterListener.ValidateTags(recordedResponse.Model, endpoint,

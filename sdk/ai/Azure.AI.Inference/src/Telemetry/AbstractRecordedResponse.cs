@@ -5,14 +5,14 @@
 
 namespace Azure.AI.Inference.Telemetry
 {
+#nullable enable
     internal abstract class AbstractRecordedResponse
     {
-        public const int NOT_SET = -1;
-        public string Model { get; protected set; } = "";
-        public string Id { get; protected set; } = "";
+        public string? Model { get; protected set; } = null;
+        public string? Id { get; protected set; } = null;
         public string FinishReason { get; protected set; } = "";
-        public int CompletionTokens { get; protected set; } = NOT_SET;
-        public int PromptTokens { get; protected set; } = NOT_SET;
+        public long? CompletionTokens { get; protected set; } = null;
+        public long? PromptTokens { get; protected set; } = null;
         public bool IsEmpty { get; protected set; } = true;
 
         

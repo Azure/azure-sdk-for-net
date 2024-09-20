@@ -63,8 +63,8 @@ namespace Azure.AI.Inference.Tests
             Assert.AreEqual(resp.Model, "gpt-100o");
             Assert.AreEqual(resp.Id, withUsage?"4":"3");
 
-            Assert.AreEqual(resp.CompletionTokens, withUsage ? 7 : StreamingRecordedResponse.NOT_SET);
-            Assert.AreEqual(resp.PromptTokens, withUsage ? 3 : StreamingRecordedResponse.NOT_SET);
+            Assert.AreEqual(resp.CompletionTokens, withUsage ? 7 : null);
+            Assert.AreEqual(resp.PromptTokens, withUsage ? 3 : null);
 
             string[] strSerialized = resp.GetSerializedCompletions();
             Assert.AreEqual(strSerialized.Length, 1);

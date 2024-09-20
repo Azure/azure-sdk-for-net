@@ -29,7 +29,7 @@ namespace Azure.AI.Inference.Telemetry
         public const string GenAiResponseModelKey = "gen_ai.response.model";
 
         public const string GenAiSystemKey = "gen_ai.system";
-        public const string GenAiSystemValue = "openai";
+        public const string GenAiSystemValue = "az.ai.inference";
 
         public const string GenAiTokenTypeKey = "gen_ai.token.type";
 
