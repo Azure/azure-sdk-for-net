@@ -6,4 +6,4 @@ matrix:
     blobSingleUpload:
       testScenario: blobsingleupload
       image: Dockerfile
-      imageBuildDir: "../../.."
+      imageBuildDir: "../../../.."
