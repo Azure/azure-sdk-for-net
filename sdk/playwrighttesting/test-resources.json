@@ -5,7 +5,22 @@
         "baseName": {
             "type": "string",
             "defaultValue": "[resourceGroup().name]",
-            "metadata": {}
+            "metadata": {
+                "description": "The base resource name."
+            }
+        },
+        "tenantId": {
+            "type": "string",
+            "defaultValue": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "metadata": {
+                "description": "The tenant ID to which the application and resources belong."
+            }
+        },
+        "testApplicationOid": {
+            "type": "string",
+            "metadata": {
+                "description": "The client OID to grant access to test resources."
+            }
         },
         "location": {
             "type": "string",

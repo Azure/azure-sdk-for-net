@@ -5,4 +5,4 @@ extends:
   parameters:
     ServiceDirectory: playwrighttesting
     SupportedClouds: 'Public'
-    Location: 'eastus'
+    Location: 'westus3'
