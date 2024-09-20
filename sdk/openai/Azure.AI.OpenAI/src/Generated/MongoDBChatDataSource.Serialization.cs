@@ -10,21 +10,21 @@ using System.Text.Json;
 
 namespace Azure.AI.OpenAI.Chat
 {
-    public partial class AzureMachineLearningIndexChatDataSource : IJsonModel<AzureMachineLearningIndexChatDataSource>
+    public partial class MongoDBChatDataSource : IJsonModel<MongoDBChatDataSource>
     {
-        void IJsonModel<AzureMachineLearningIndexChatDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoDBChatDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningIndexChatDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBChatDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatDataSource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBChatDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (SerializedAdditionalRawData?.ContainsKey("parameters") != true)
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue<InternalAzureMachineLearningIndexChatDataSourceParameters>(InternalParameters, options);
+                writer.WriteObjectValue<InternalMongoDBChatDataSourceParameters>(InternalParameters, options);
             }
             if (SerializedAdditionalRawData?.ContainsKey("type") != true)
             {
@@ -53,19 +53,19 @@ namespace Azure.AI.OpenAI.Chat
             writer.WriteEndObject();
         }
 
-        AzureMachineLearningIndexChatDataSource IJsonModel<AzureMachineLearningIndexChatDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MongoDBChatDataSource IJsonModel<MongoDBChatDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningIndexChatDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBChatDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatDataSource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBChatDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureMachineLearningIndexChatDataSource(document.RootElement, options);
+            return DeserializeMongoDBChatDataSource(document.RootElement, options);
         }
 
-        internal static AzureMachineLearningIndexChatDataSource DeserializeAzureMachineLearningIndexChatDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MongoDBChatDataSource DeserializeMongoDBChatDataSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -73,7 +73,7 @@ namespace Azure.AI.OpenAI.Chat
             {
                 return null;
             }
-            InternalAzureMachineLearningIndexChatDataSourceParameters parameters = default;
+            InternalMongoDBChatDataSourceParameters parameters = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -81,7 +81,7 @@ namespace Azure.AI.OpenAI.Chat
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = InternalAzureMachineLearningIndexChatDataSourceParameters.DeserializeInternalAzureMachineLearningIndexChatDataSourceParameters(property.Value, options);
+                    parameters = InternalMongoDBChatDataSourceParameters.DeserializeInternalMongoDBChatDataSourceParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -96,46 +96,46 @@ namespace Azure.AI.OpenAI.Chat
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AzureMachineLearningIndexChatDataSource(type, serializedAdditionalRawData, parameters);
+            return new MongoDBChatDataSource(type, serializedAdditionalRawData, parameters);
         }
 
-        BinaryData IPersistableModel<AzureMachineLearningIndexChatDataSource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MongoDBChatDataSource>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningIndexChatDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBChatDataSource>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatDataSource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBChatDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AzureMachineLearningIndexChatDataSource IPersistableModel<AzureMachineLearningIndexChatDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MongoDBChatDataSource IPersistableModel<MongoDBChatDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningIndexChatDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBChatDataSource>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAzureMachineLearningIndexChatDataSource(document.RootElement, options);
+                        return DeserializeMongoDBChatDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatDataSource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBChatDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AzureMachineLearningIndexChatDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoDBChatDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The result to deserialize the model from. </param>
-        internal static new AzureMachineLearningIndexChatDataSource FromResponse(PipelineResponse response)
+        internal static new MongoDBChatDataSource FromResponse(PipelineResponse response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAzureMachineLearningIndexChatDataSource(document.RootElement);
+            return DeserializeMongoDBChatDataSource(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="BinaryContent"/>. </summary>

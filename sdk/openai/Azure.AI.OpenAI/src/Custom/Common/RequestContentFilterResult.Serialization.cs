@@ -6,9 +6,9 @@ using System.Text.Json;
 
 namespace Azure.AI.OpenAI;
 
-public partial class ContentFilterResultForPrompt
+public partial class RequestContentFilterResult
 {
-    internal static ContentFilterResultForPrompt DeserializeContentFilterResultForPrompt(JsonElement element, ModelReaderWriterOptions options = null)
+    internal static RequestContentFilterResult DeserializeContentFilterResultForPrompt(JsonElement element, ModelReaderWriterOptions options = null)
     {
         options ??= ModelSerializationExtensions.WireOptions;
 
@@ -48,6 +48,6 @@ public partial class ContentFilterResultForPrompt
             }
         }
         serializedAdditionalRawData = rawDataDictionary;
-        return new ContentFilterResultForPrompt(promptIndex, contentFilterResults, serializedAdditionalRawData);
+        return new RequestContentFilterResult(promptIndex, contentFilterResults, serializedAdditionalRawData);
     }
 }

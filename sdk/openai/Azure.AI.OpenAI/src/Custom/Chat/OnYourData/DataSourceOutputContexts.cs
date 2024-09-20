@@ -12,11 +12,11 @@ namespace Azure.AI.OpenAI.Chat;
 /// <para>
 /// This value is provided as a bitmask flag. For example, to request <c>intent</c> and <c>all_retrieved_documents</c>
 /// contexts, use the bitwise OR operator by assigning
-/// <c><see cref="DataSourceOutputContextFlags.Intent"/> | <see cref="DataSourceOutputContextFlags.AllRetrievedDocuments"/></c>.
+/// <c><see cref="DataSourceOutputContexts.Intent"/> | <see cref="DataSourceOutputContexts.AllRetrievedDocuments"/></c>.
 /// </para>
 /// </remarks>
 [Flags]
-public enum DataSourceOutputContextFlags : int
+public enum DataSourceOutputContexts : int
 {
     Intent = 1 << 0,
     Citations = 1 << 1,

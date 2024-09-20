@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI.Chat;
 
-[CodeGenModel("AzureCosmosDBChatDataSourceParameters")]
-internal partial class InternalAzureCosmosDBChatDataSourceParameters
+[CodeGenModel("MongoDBChatDataSourceParameters")]
+internal partial class InternalMongoDBChatDataSourceParameters
 {
     [CodeGenMember("IncludeContexts")]
     private IList<string> _internalIncludeContexts = new ChangeTrackingList<string>();
@@ -23,23 +23,10 @@ internal partial class InternalAzureCosmosDBChatDataSourceParameters
         }
     }
 
-    /// <summary>
-    /// The authentication options to use with the Azure CosmosDB data source.
-    /// </summary>
+    /// <summary> The index field mappings. This is required for MongoDB data sources. </summary>
     /// <remarks>
-    /// Azure CosmosDB data sources support any of the following options:
+    /// Supported field mappings for MongoDB data sources include:
     /// <list type="bullet">
-    /// <item><see cref="DataSourceAuthentication.FromConnectionString(string)"/></item>
-    /// </list>
-    /// </remarks>
-    [CodeGenMember("Authentication")]
-    public DataSourceAuthentication Authentication { get; set; }
-
-    /// <summary> Gets the index field mappings. </summary>
-    /// <remarks>
-    /// Supported field mappings for Elasticsearch data sources include:
-    /// <list type="bullet">
-    /// <item><see cref="DataSourceFieldMappings.VectorFieldNames"/> -- Required</item>
     /// <item><see cref="DataSourceFieldMappings.ContentFieldNames"/> -- Required</item>
     /// <item><see cref="DataSourceFieldMappings.ContentFieldSeparator"/></item>
     /// <item><see cref="DataSourceFieldMappings.TitleFieldName"/></item>
@@ -51,15 +38,27 @@ internal partial class InternalAzureCosmosDBChatDataSourceParameters
     public DataSourceFieldMappings FieldMappings { get; set; }
 
     /// <summary>
+    /// The authentication options to use with the MongoDB data source.
+    /// </summary>
+    /// <remarks>
+    /// MongoDB data sources support any of the following options:
+    /// <list type="bullet">
+    /// <item><see cref="DataSourceAuthentication.FromUsernameAndPassword(string,string)"/></item>
+    /// </list>
+    /// </remarks>
+    [CodeGenMember("Authentication")]
+    public DataSourceAuthentication Authentication { get; set; }
+
+    /// <summary>
     /// The vectorization dependency used for embeddings.
     /// </summary>
     /// <remarks>
-    /// Supported vectorization dependencies for Azure CosmosDB data sources include:
+    /// Supported vectorization dependencies for Azure Search data sources include:
     /// <list type="bullet">
     /// <item><see cref="DataSourceVectorizer.FromEndpoint(Uri, DataSourceAuthentication)"/></item>
     /// <item><see cref="DataSourceVectorizer.FromDeploymentName(string)"/></item>
     /// </list>
     /// </remarks>
     [CodeGenMember("EmbeddingDependency")]
-    public DataSourceVectorizer VectorizationSource { get; set; }
+    public DataSourceVectorizer EmbeddingDependency { get; set; }
 }

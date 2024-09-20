@@ -4,7 +4,7 @@
 namespace Azure.AI.OpenAI;
 
 [CodeGenModel("AzureContentFilterResultForPrompt")]
-public partial class ContentFilterResultForPrompt
+public partial class RequestContentFilterResult
 {
     internal int? PromptIndex { get; }
     /// <summary> Gets the content filter results. </summary>

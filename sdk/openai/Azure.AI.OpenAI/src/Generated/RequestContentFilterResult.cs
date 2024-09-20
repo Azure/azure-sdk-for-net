@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI
 {
     /// <summary> A content filter result associated with a single input prompt item into a generative AI system. </summary>
-    public partial class ContentFilterResultForPrompt
+    public partial class RequestContentFilterResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -41,16 +41,16 @@ namespace Azure.AI.OpenAI
         /// </para>
         /// </summary>
         internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
-        /// <summary> Initializes a new instance of <see cref="ContentFilterResultForPrompt"/>. </summary>
-        internal ContentFilterResultForPrompt()
+        /// <summary> Initializes a new instance of <see cref="RequestContentFilterResult"/>. </summary>
+        internal RequestContentFilterResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentFilterResultForPrompt"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestContentFilterResult"/>. </summary>
         /// <param name="promptIndex"> The index of the input prompt associated with the accompanying content filter result categories. </param>
         /// <param name="internalResults"> The content filter category details for the result. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContentFilterResultForPrompt(int? promptIndex, InternalAzureContentFilterResultForPromptContentFilterResults internalResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RequestContentFilterResult(int? promptIndex, InternalAzureContentFilterResultForPromptContentFilterResults internalResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PromptIndex = promptIndex;
             InternalResults = internalResults;

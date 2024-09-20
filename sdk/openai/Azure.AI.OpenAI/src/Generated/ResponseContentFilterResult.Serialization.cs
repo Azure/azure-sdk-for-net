@@ -10,14 +10,14 @@ using System.Text.Json;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ContentFilterResultForResponse : IJsonModel<ContentFilterResultForResponse>
+    public partial class ResponseContentFilterResult : IJsonModel<ResponseContentFilterResult>
     {
-        void IJsonModel<ContentFilterResultForResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ResponseContentFilterResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContentFilterResultForResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResponseContentFilterResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentFilterResultForResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ResponseContentFilterResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -88,19 +88,19 @@ namespace Azure.AI.OpenAI
             writer.WriteEndObject();
         }
 
-        ContentFilterResultForResponse IJsonModel<ContentFilterResultForResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ResponseContentFilterResult IJsonModel<ResponseContentFilterResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContentFilterResultForResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResponseContentFilterResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentFilterResultForResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ResponseContentFilterResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContentFilterResultForResponse(document.RootElement, options);
+            return DeserializeResponseContentFilterResult(document.RootElement, options);
         }
 
-        internal static ContentFilterResultForResponse DeserializeContentFilterResultForResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ResponseContentFilterResult DeserializeResponseContentFilterResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -209,7 +209,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContentFilterResultForResponse(
+            return new ResponseContentFilterResult(
                 sexual,
                 hate,
                 violence,
@@ -222,43 +222,43 @@ namespace Azure.AI.OpenAI
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ContentFilterResultForResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ResponseContentFilterResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContentFilterResultForResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResponseContentFilterResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContentFilterResultForResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResponseContentFilterResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ContentFilterResultForResponse IPersistableModel<ContentFilterResultForResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ResponseContentFilterResult IPersistableModel<ResponseContentFilterResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContentFilterResultForResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResponseContentFilterResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeContentFilterResultForResponse(document.RootElement, options);
+                        return DeserializeResponseContentFilterResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentFilterResultForResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResponseContentFilterResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ContentFilterResultForResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResponseContentFilterResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The result to deserialize the model from. </param>
-        internal static ContentFilterResultForResponse FromResponse(PipelineResponse response)
+        internal static ResponseContentFilterResult FromResponse(PipelineResponse response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeContentFilterResultForResponse(document.RootElement);
+            return DeserializeResponseContentFilterResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="BinaryContent"/>. </summary>
