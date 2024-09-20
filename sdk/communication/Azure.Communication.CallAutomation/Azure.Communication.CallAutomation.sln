@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.CallAutomation", "src\Azure.Communication.CallAutomation.csproj", "{A718F07B-E176-4804-AC98-3FB8C4705297}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.CallAutomation.Tests", "tests\Azure.Communication.CallAutomation.Tests.csproj", "{BC2C3FAC-046C-45CF-AB9C-A8F6B38472EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A718F07B-E176-4804-AC98-3FB8C4705297}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A718F07B-E176-4804-AC98-3FB8C4705297}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A718F07B-E176-4804-AC98-3FB8C4705297}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A718F07B-E176-4804-AC98-3FB8C4705297}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC2C3FAC-046C-45CF-AB9C-A8F6B38472EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC2C3FAC-046C-45CF-AB9C-A8F6B38472EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC2C3FAC-046C-45CF-AB9C-A8F6B38472EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC2C3FAC-046C-45CF-AB9C-A8F6B38472EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ED740C32-FA0D-46F4-967D-959CB67EDE88}
+	EndGlobalSection
+EndGlobal
