@@ -3,6 +3,8 @@
 ## 12.20.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added GenerateUserDelegationSasUri() for DataLakePathClient, DataLakeFileSystemClient, and DataLakeDirectoryClient
+- Deprecated Read()/ReadAsync() in favor of ReadStreaming()/ReadStreamingAsync() and ReadContent()/ReadContentAsync() for DataLake #45418
 
 ### Breaking Changes
 

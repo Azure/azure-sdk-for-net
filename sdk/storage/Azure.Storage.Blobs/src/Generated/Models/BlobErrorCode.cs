@@ -135,6 +135,7 @@ namespace Azure.Storage.Blobs.Models
         private const string AuthorizationPermissionMismatchValue = "AuthorizationPermissionMismatch";
         private const string AuthorizationServiceMismatchValue = "AuthorizationServiceMismatch";
         private const string AuthorizationResourceTypeMismatchValue = "AuthorizationResourceTypeMismatch";
+        private const string BlobAccessTierNotSupportedForAccountTypeValue = "BlobAccessTierNotSupportedForAccountType";
 
         /// <summary> AccountAlreadyExists. </summary>
         public static BlobErrorCode AccountAlreadyExists { get; } = new BlobErrorCode(AccountAlreadyExistsValue);
@@ -362,6 +363,8 @@ namespace Azure.Storage.Blobs.Models
         public static BlobErrorCode AuthorizationServiceMismatch { get; } = new BlobErrorCode(AuthorizationServiceMismatchValue);
         /// <summary> AuthorizationResourceTypeMismatch. </summary>
         public static BlobErrorCode AuthorizationResourceTypeMismatch { get; } = new BlobErrorCode(AuthorizationResourceTypeMismatchValue);
+        /// <summary> BlobAccessTierNotSupportedForAccountType. </summary>
+        public static BlobErrorCode BlobAccessTierNotSupportedForAccountType { get; } = new BlobErrorCode(BlobAccessTierNotSupportedForAccountTypeValue);
         /// <summary> Determines if two <see cref="BlobErrorCode"/> values are the same. </summary>
         public static bool operator ==(BlobErrorCode left, BlobErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobErrorCode"/> values are not the same. </summary>
