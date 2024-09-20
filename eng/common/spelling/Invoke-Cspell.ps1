@@ -170,10 +170,11 @@ try {
   npm ci | Write-Host
 
   # Use the mutated configuration file when calling cspell
-  $command = "npx --no cspell $JobType --config $CSpellConfigPath --no-must-find-files --root $SpellCheckRoot --relative"
+  $command = "npm exec cspell $JobType --config $CSpellConfigPath --no-must-find-files --root $SpellCheckRoot --relative"
   Write-Host $command
-  $cspellOutput = npx  `
+  $cspellOutput = npm exec  `
     --no `
+    -- `
     cspell `
     $JobType `
     --config $CSpellConfigPath `
