@@ -563,6 +563,7 @@ namespace Azure.Storage.Files.Shares.Models
         public ShareAccessTier(string value) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareAccessTier Cool { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareAccessTier Hot { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.ShareAccessTier Premium { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareAccessTier TransactionOptimized { get { throw null; } }
         public bool Equals(Azure.Storage.Files.Shares.Models.ShareAccessTier other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -756,6 +757,7 @@ namespace Azure.Storage.Files.Shares.Models
         public Azure.Storage.Files.Shares.Models.PermissionCopyMode? FilePermissionCopyMode { get { throw null; } set { } }
         public bool? IgnoreReadOnly { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.FilePermissionFormat? PermissionFormat { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.FileSmbProperties SmbProperties { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.CopyableFileSmbProperties SmbPropertiesToCopy { get { throw null; } set { } }
     }

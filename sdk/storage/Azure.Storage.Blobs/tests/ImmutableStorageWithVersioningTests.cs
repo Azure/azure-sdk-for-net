@@ -588,7 +588,7 @@ namespace Azure.Storage.Blobs.Test
                 Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
                 Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
 
-                // Asser that the blob snapshot has an immuability policy.
+                // Assert that the blob snapshot has an immuability policy.
                 propertiesResponse = await snapshotClient.GetPropertiesAsync();
                 Assert.IsNotNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
                 Assert.IsNotNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
