@@ -52,13 +52,13 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
 
     public AzureTestEnvironment TestEnvironment { get; }
 
-    protected AoaiTestBase(bool isAsync) : this(isAsync, null)
+    protected AoaiTestBase(bool isAsync) : this(isAsync, null, null)
     { }
 
-    protected AoaiTestBase(bool isAsync, RecordedTestMode? mode = null)
-        : base(isAsync, mode)
+    protected AoaiTestBase(bool isAsync, RecordedTestMode? mode = null, bool? automaticRecord = null)
+        : base(isAsync, mode, automaticRecord)
     {
-        TestConfig = new TestConfig(Mode);
+        TestConfig = new TestConfig(() => Mode);
         Assets = new Assets();
         TestEnvironment = new AzureTestEnvironment(Mode);
 
@@ -235,6 +235,10 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
     /// <inheritdoc />
     protected override RecordedTestMode GetDefaultRecordedTestMode()
         => AzureTestEnvironment.DefaultRecordMode;
+
+    /// <inheritdoc />
+    protected override bool GetDefaultAutomaticRecordEnabled()
+        => !IsRunningInCI && AzureTestEnvironment.DefaultAutomaticRecordEnabled;
 
     /// <inheritdoc />
     protected override ProxyServiceOptions CreateProxyServiceOptions()
@@ -709,7 +713,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
         using Stream stream = response.Content.ToStream();
         Assert.That(stream, Is.Not.Null);
 
-        TModel? model = JsonHelpers.Deserialize<TModel>(stream, options ?? JsonOptions.OpenAIJsonOptions);
+        TModel? model = JsonSerializer.Deserialize<TModel>(stream, options ?? JsonOptions.OpenAIJsonOptions);
         Assert.That(model, Is.Not.Null);
         return model!;
     }

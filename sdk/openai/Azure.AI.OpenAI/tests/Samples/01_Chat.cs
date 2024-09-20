@@ -276,7 +276,9 @@ public partial class AzureOpenAISamples
                 functionArgumentBuildersByIndex[indexToIdPair.Key].ToString()));
         }
 
-        conversationMessages.Add(new AssistantChatMessage(toolCalls, contentBuilder.ToString()));
+        var assistantChatMessage = new AssistantChatMessage(toolCalls);
+        assistantChatMessage.Content.Add(ChatMessageContentPart.CreateTextPart(contentBuilder.ToString()));
+        conversationMessages.Add(assistantChatMessage);
 
         // Placeholder: each tool call must be resolved, like in the non-streaming case
         string GetToolCallOutput(ChatToolCall toolCall) => null;
