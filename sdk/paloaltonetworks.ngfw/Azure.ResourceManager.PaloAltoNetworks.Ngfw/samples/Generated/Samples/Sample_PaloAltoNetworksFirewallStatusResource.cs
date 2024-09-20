@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this PaloAltoNetworksFirewallStatusResource created on azure
             // for more information of creating PaloAltoNetworksFirewallStatusResource, please refer to the document of PaloAltoNetworksFirewallStatusResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string firewallName = "firewall1";
             ResourceIdentifier paloAltoNetworksFirewallStatusResourceId = PaloAltoNetworksFirewallStatusResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this PaloAltoNetworksFirewallStatusResource created on azure
             // for more information of creating PaloAltoNetworksFirewallStatusResource, please refer to the document of PaloAltoNetworksFirewallStatusResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string firewallName = "firewall1";
             ResourceIdentifier paloAltoNetworksFirewallStatusResourceId = PaloAltoNetworksFirewallStatusResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);

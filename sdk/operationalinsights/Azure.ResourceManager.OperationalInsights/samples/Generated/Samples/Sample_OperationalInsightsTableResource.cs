@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsTableResource created on azure
             // for more information of creating OperationalInsightsTableResource, please refer to the document of OperationalInsightsTableResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "oiautorest6685";
             string workspaceName = "oiautorest6685";
             string tableName = "AzureNetworkFlow";
@@ -80,7 +80,7 @@ ColumnType = OperationalInsightsColumnType.Guid,
 
             // this example assumes you already have this OperationalInsightsTableResource created on azure
             // for more information of creating OperationalInsightsTableResource, please refer to the document of OperationalInsightsTableResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "oiautorest6685";
             string workspaceName = "oiautorest6685";
             string tableName = "table1_SRCH";
@@ -112,7 +112,7 @@ ColumnType = OperationalInsightsColumnType.Guid,
 
             // this example assumes you already have this OperationalInsightsTableResource created on azure
             // for more information of creating OperationalInsightsTableResource, please refer to the document of OperationalInsightsTableResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "oiautorest6685";
             string workspaceName = "oiautorest6685";
             string tableName = "table1_CL";
@@ -140,7 +140,7 @@ ColumnType = OperationalInsightsColumnType.Guid,
 
             // this example assumes you already have this OperationalInsightsTableResource created on azure
             // for more information of creating OperationalInsightsTableResource, please refer to the document of OperationalInsightsTableResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "oiautorest6685";
             string workspaceName = "oiautorest6685";
             string tableName = "table1_CL";
@@ -168,7 +168,7 @@ ColumnType = OperationalInsightsColumnType.Guid,
 
             // this example assumes you already have this OperationalInsightsTableResource created on azure
             // for more information of creating OperationalInsightsTableResource, please refer to the document of OperationalInsightsTableResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "oiautorest6685";
             string workspaceName = "oiautorest6685";
             string tableName = "table1_SRCH";

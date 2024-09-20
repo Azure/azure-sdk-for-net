@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this NetworkCloudL3NetworkResource created on azure
             // for more information of creating NetworkCloudL3NetworkResource, please refer to the document of NetworkCloudL3NetworkResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string l3NetworkName = "l3NetworkName";
             ResourceIdentifier networkCloudL3NetworkResourceId = NetworkCloudL3NetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3NetworkName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this NetworkCloudL3NetworkResource created on azure
             // for more information of creating NetworkCloudL3NetworkResource, please refer to the document of NetworkCloudL3NetworkResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string l3NetworkName = "l3NetworkName";
             ResourceIdentifier networkCloudL3NetworkResourceId = NetworkCloudL3NetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3NetworkName);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this NetworkCloudL3NetworkResource created on azure
             // for more information of creating NetworkCloudL3NetworkResource, please refer to the document of NetworkCloudL3NetworkResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string l3NetworkName = "l3NetworkName";
             ResourceIdentifier networkCloudL3NetworkResourceId = NetworkCloudL3NetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3NetworkName);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PostgreSql.Samples
 
             // this example assumes you already have this PostgreSqlServerSecurityAlertPolicyResource created on azure
             // for more information of creating PostgreSqlServerSecurityAlertPolicyResource, please refer to the document of PostgreSqlServerSecurityAlertPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "securityalert-4799";
             string serverName = "securityalert-6440";
             PostgreSqlSecurityAlertPolicyName securityAlertPolicyName = PostgreSqlSecurityAlertPolicyName.Default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.Samples
 
             // this example assumes you already have this PostgreSqlServerSecurityAlertPolicyResource created on azure
             // for more information of creating PostgreSqlServerSecurityAlertPolicyResource, please refer to the document of PostgreSqlServerSecurityAlertPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "securityalert-4799";
             string serverName = "securityalert-6440";
             PostgreSqlSecurityAlertPolicyName securityAlertPolicyName = PostgreSqlSecurityAlertPolicyName.Default;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PostgreSql.Samples
 
             // this example assumes you already have this PostgreSqlServerSecurityAlertPolicyResource created on azure
             // for more information of creating PostgreSqlServerSecurityAlertPolicyResource, please refer to the document of PostgreSqlServerSecurityAlertPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "securityalert-4799";
             string serverName = "securityalert-6440";
             PostgreSqlSecurityAlertPolicyName securityAlertPolicyName = PostgreSqlSecurityAlertPolicyName.Default;

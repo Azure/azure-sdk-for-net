@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlMigrationResource created on azure
             // for more information of creating PostgreSqlMigrationResource, please refer to the document of PostgreSqlMigrationResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string targetDbServerName = "testtarget";
             string migrationName = "testmigration";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlMigrationResource created on azure
             // for more information of creating PostgreSqlMigrationResource, please refer to the document of PostgreSqlMigrationResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string targetDbServerName = "testtarget";
             string migrationName = "testmigration";
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlMigrationResource created on azure
             // for more information of creating PostgreSqlMigrationResource, please refer to the document of PostgreSqlMigrationResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string targetDbServerName = "testtarget";
             string migrationName = "testmigration";
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlMigrationResource created on azure
             // for more information of creating PostgreSqlMigrationResource, please refer to the document of PostgreSqlMigrationResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string targetDbServerName = "testtarget";
             string migrationName = "testmigration";

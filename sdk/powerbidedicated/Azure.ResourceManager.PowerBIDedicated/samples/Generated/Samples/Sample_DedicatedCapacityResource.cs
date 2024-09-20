@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
 
             // this example assumes you already have this DedicatedCapacityResource created on azure
             // for more information of creating DedicatedCapacityResource, please refer to the document of DedicatedCapacityResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string dedicatedCapacityName = "azsdktest";
             ResourceIdentifier dedicatedCapacityResourceId = DedicatedCapacityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dedicatedCapacityName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
 
             // this example assumes you already have this DedicatedCapacityResource created on azure
             // for more information of creating DedicatedCapacityResource, please refer to the document of DedicatedCapacityResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string dedicatedCapacityName = "azsdktest";
             ResourceIdentifier dedicatedCapacityResourceId = DedicatedCapacityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dedicatedCapacityName);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
 
             // this example assumes you already have this DedicatedCapacityResource created on azure
             // for more information of creating DedicatedCapacityResource, please refer to the document of DedicatedCapacityResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string dedicatedCapacityName = "azsdktest";
             ResourceIdentifier dedicatedCapacityResourceId = DedicatedCapacityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dedicatedCapacityName);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
 
             // this example assumes you already have this DedicatedCapacityResource created on azure
             // for more information of creating DedicatedCapacityResource, please refer to the document of DedicatedCapacityResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string dedicatedCapacityName = "azsdktest";
             ResourceIdentifier dedicatedCapacityResourceId = DedicatedCapacityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dedicatedCapacityName);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
 
             // this example assumes you already have this DedicatedCapacityResource created on azure
             // for more information of creating DedicatedCapacityResource, please refer to the document of DedicatedCapacityResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string dedicatedCapacityName = "azsdktest";
             ResourceIdentifier dedicatedCapacityResourceId = DedicatedCapacityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dedicatedCapacityName);
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
 
             // this example assumes you already have this DedicatedCapacityResource created on azure
             // for more information of creating DedicatedCapacityResource, please refer to the document of DedicatedCapacityResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string dedicatedCapacityName = "azsdktest";
             ResourceIdentifier dedicatedCapacityResourceId = DedicatedCapacityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dedicatedCapacityName);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
 
             // this example assumes you already have this DedicatedCapacityResource created on azure
             // for more information of creating DedicatedCapacityResource, please refer to the document of DedicatedCapacityResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string dedicatedCapacityName = "azsdktest";
             ResourceIdentifier dedicatedCapacityResourceId = DedicatedCapacityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, dedicatedCapacityName);
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

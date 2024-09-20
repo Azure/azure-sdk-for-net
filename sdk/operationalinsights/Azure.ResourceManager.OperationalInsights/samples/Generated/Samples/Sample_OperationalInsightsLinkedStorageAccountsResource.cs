@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsLinkedStorageAccountsResource created on azure
             // for more information of creating OperationalInsightsLinkedStorageAccountsResource, please refer to the document of OperationalInsightsLinkedStorageAccountsResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mms-eus";
             string workspaceName = "testLinkStorageAccountsWS";
             OperationalInsightsDataSourceType dataSourceType = OperationalInsightsDataSourceType.CustomLogs;
@@ -70,7 +70,7 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-00000000000/resou
 
             // this example assumes you already have this OperationalInsightsLinkedStorageAccountsResource created on azure
             // for more information of creating OperationalInsightsLinkedStorageAccountsResource, please refer to the document of OperationalInsightsLinkedStorageAccountsResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mms-eus";
             string workspaceName = "testLinkStorageAccountsWS";
             OperationalInsightsDataSourceType dataSourceType = OperationalInsightsDataSourceType.CustomLogs;
@@ -98,7 +98,7 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-00000000000/resou
 
             // this example assumes you already have this OperationalInsightsLinkedStorageAccountsResource created on azure
             // for more information of creating OperationalInsightsLinkedStorageAccountsResource, please refer to the document of OperationalInsightsLinkedStorageAccountsResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mms-eus";
             string workspaceName = "testLinkStorageAccountsWS";
             OperationalInsightsDataSourceType dataSourceType = OperationalInsightsDataSourceType.CustomLogs;

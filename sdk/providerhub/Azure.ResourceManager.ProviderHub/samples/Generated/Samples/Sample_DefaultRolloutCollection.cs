@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // this example assumes you already have this ProviderRegistrationResource created on azure
             // for more information of creating ProviderRegistrationResource, please refer to the document of ProviderRegistrationResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             ResourceIdentifier providerRegistrationResourceId = ProviderRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace);
             ProviderRegistrationResource providerRegistration = client.GetProviderRegistrationResource(providerRegistrationResourceId);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // this example assumes you already have this ProviderRegistrationResource created on azure
             // for more information of creating ProviderRegistrationResource, please refer to the document of ProviderRegistrationResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             ResourceIdentifier providerRegistrationResourceId = ProviderRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace);
             ProviderRegistrationResource providerRegistration = client.GetProviderRegistrationResource(providerRegistrationResourceId);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // this example assumes you already have this ProviderRegistrationResource created on azure
             // for more information of creating ProviderRegistrationResource, please refer to the document of ProviderRegistrationResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             ResourceIdentifier providerRegistrationResourceId = ProviderRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace);
             ProviderRegistrationResource providerRegistration = client.GetProviderRegistrationResource(providerRegistrationResourceId);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // this example assumes you already have this ProviderRegistrationResource created on azure
             // for more information of creating ProviderRegistrationResource, please refer to the document of ProviderRegistrationResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             ResourceIdentifier providerRegistrationResourceId = ProviderRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace);
             ProviderRegistrationResource providerRegistration = client.GetProviderRegistrationResource(providerRegistrationResourceId);
@@ -192,7 +192,7 @@ new AzureLocation("eastus2euap")
 
             // this example assumes you already have this ProviderRegistrationResource created on azure
             // for more information of creating ProviderRegistrationResource, please refer to the document of ProviderRegistrationResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             ResourceIdentifier providerRegistrationResourceId = ProviderRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace);
             ProviderRegistrationResource providerRegistration = client.GetProviderRegistrationResource(providerRegistrationResourceId);

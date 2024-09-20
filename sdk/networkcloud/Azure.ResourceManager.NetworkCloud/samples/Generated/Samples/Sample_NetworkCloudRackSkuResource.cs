@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this NetworkCloudRackSkuResource created on azure
             // for more information of creating NetworkCloudRackSkuResource, please refer to the document of NetworkCloudRackSkuResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string rackSkuName = "rackSkuName";
             ResourceIdentifier networkCloudRackSkuResourceId = NetworkCloudRackSkuResource.CreateResourceIdentifier(subscriptionId, rackSkuName);
             NetworkCloudRackSkuResource networkCloudRackSku = client.GetNetworkCloudRackSkuResource(networkCloudRackSkuResourceId);

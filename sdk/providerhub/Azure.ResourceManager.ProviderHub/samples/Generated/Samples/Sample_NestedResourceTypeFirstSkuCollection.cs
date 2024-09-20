@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // this example assumes you already have this ResourceTypeRegistrationResource created on azure
             // for more information of creating ResourceTypeRegistrationResource, please refer to the document of ResourceTypeRegistrationResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             string resourceType = "testResourceType";
             ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // this example assumes you already have this ResourceTypeRegistrationResource created on azure
             // for more information of creating ResourceTypeRegistrationResource, please refer to the document of ResourceTypeRegistrationResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             string resourceType = "testResourceType";
             ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // this example assumes you already have this ResourceTypeRegistrationResource created on azure
             // for more information of creating ResourceTypeRegistrationResource, please refer to the document of ResourceTypeRegistrationResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             string resourceType = "testResourceType";
             ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // this example assumes you already have this ResourceTypeRegistrationResource created on azure
             // for more information of creating ResourceTypeRegistrationResource, please refer to the document of ResourceTypeRegistrationResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             string resourceType = "testResourceType";
             ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);
@@ -198,7 +198,7 @@ new ResourceTypeSkuCost("xxx")
 
             // this example assumes you already have this ResourceTypeRegistrationResource created on azure
             // for more information of creating ResourceTypeRegistrationResource, please refer to the document of ResourceTypeRegistrationResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             string resourceType = "testResourceType";
             ResourceIdentifier resourceTypeRegistrationResourceId = ResourceTypeRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, resourceType);

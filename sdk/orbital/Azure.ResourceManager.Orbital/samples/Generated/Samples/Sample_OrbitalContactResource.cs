@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Orbital.Samples
 
             // this example assumes you already have this OrbitalContactResource created on azure
             // for more information of creating OrbitalContactResource, please refer to the document of OrbitalContactResource
-            string subscriptionId = "c1be1141-a7c9-4aac-9608-3c2e2f1152c3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "contoso-Rgp";
             string spacecraftName = "CONTOSO_SAT";
             string contactName = "contact1";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Orbital.Samples
 
             // this example assumes you already have this OrbitalContactResource created on azure
             // for more information of creating OrbitalContactResource, please refer to the document of OrbitalContactResource
-            string subscriptionId = "c1be1141-a7c9-4aac-9608-3c2e2f1152c3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "contoso-Rgp";
             string spacecraftName = "CONTOSO_SAT";
             string contactName = "contact1";
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Orbital.Samples
 
             // this example assumes you already have this OrbitalContactResource created on azure
             // for more information of creating OrbitalContactResource, please refer to the document of OrbitalContactResource
-            string subscriptionId = "c1be1141-a7c9-4aac-9608-3c2e2f1152c3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "contoso-Rgp";
             string spacecraftName = "CONTOSO_SAT";
             string contactName = "contact1";

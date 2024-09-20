@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // this example assumes you already have this DefaultRolloutResource created on azure
             // for more information of creating DefaultRolloutResource, please refer to the document of DefaultRolloutResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             string rolloutName = "2020week10";
             ResourceIdentifier defaultRolloutResourceId = DefaultRolloutResource.CreateResourceIdentifier(subscriptionId, providerNamespace, rolloutName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // this example assumes you already have this DefaultRolloutResource created on azure
             // for more information of creating DefaultRolloutResource, please refer to the document of DefaultRolloutResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             string rolloutName = "2020week10";
             ResourceIdentifier defaultRolloutResourceId = DefaultRolloutResource.CreateResourceIdentifier(subscriptionId, providerNamespace, rolloutName);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // this example assumes you already have this DefaultRolloutResource created on azure
             // for more information of creating DefaultRolloutResource, please refer to the document of DefaultRolloutResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             string rolloutName = "2020week10";
             ResourceIdentifier defaultRolloutResourceId = DefaultRolloutResource.CreateResourceIdentifier(subscriptionId, providerNamespace, rolloutName);
@@ -141,7 +141,7 @@ new AzureLocation("eastus2euap")
 
             // this example assumes you already have this DefaultRolloutResource created on azure
             // for more information of creating DefaultRolloutResource, please refer to the document of DefaultRolloutResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             string rolloutName = "2020week10";
             ResourceIdentifier defaultRolloutResourceId = DefaultRolloutResource.CreateResourceIdentifier(subscriptionId, providerNamespace, rolloutName);

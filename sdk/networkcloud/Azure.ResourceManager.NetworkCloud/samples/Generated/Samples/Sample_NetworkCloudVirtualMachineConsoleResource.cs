@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this NetworkCloudVirtualMachineConsoleResource created on azure
             // for more information of creating NetworkCloudVirtualMachineConsoleResource, please refer to the document of NetworkCloudVirtualMachineConsoleResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string virtualMachineName = "virtualMachineName";
             string consoleName = "default";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this NetworkCloudVirtualMachineConsoleResource created on azure
             // for more information of creating NetworkCloudVirtualMachineConsoleResource, please refer to the document of NetworkCloudVirtualMachineConsoleResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string virtualMachineName = "virtualMachineName";
             string consoleName = "default";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this NetworkCloudVirtualMachineConsoleResource created on azure
             // for more information of creating NetworkCloudVirtualMachineConsoleResource, please refer to the document of NetworkCloudVirtualMachineConsoleResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string virtualMachineName = "virtualMachineName";
             string consoleName = "default";

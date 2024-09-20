@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkFunction.Samples
 
             // this example assumes you already have this CollectorPolicyResource created on azure
             // for more information of creating CollectorPolicyResource, please refer to the document of CollectorPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string azureTrafficCollectorName = "atc";
             string collectorPolicyName = "cp1";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkFunction.Samples
 
             // this example assumes you already have this CollectorPolicyResource created on azure
             // for more information of creating CollectorPolicyResource, please refer to the document of CollectorPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string azureTrafficCollectorName = "atc";
             string collectorPolicyName = "cp1";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetworkFunction.Samples
 
             // this example assumes you already have this CollectorPolicyResource created on azure
             // for more information of creating CollectorPolicyResource, please refer to the document of CollectorPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string azureTrafficCollectorName = "atc";
             string collectorPolicyName = "cp1";

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this PaloAltoNetworksFirewallResource created on azure
             // for more information of creating PaloAltoNetworksFirewallResource, please refer to the document of PaloAltoNetworksFirewallResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string firewallName = "firewall1";
             ResourceIdentifier paloAltoNetworksFirewallResourceId = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this PaloAltoNetworksFirewallResource created on azure
             // for more information of creating PaloAltoNetworksFirewallResource, please refer to the document of PaloAltoNetworksFirewallResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string firewallName = "firewall1";
             ResourceIdentifier paloAltoNetworksFirewallResourceId = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this PaloAltoNetworksFirewallResource created on azure
             // for more information of creating PaloAltoNetworksFirewallResource, please refer to the document of PaloAltoNetworksFirewallResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string firewallName = "firewall1";
             ResourceIdentifier paloAltoNetworksFirewallResourceId = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
@@ -313,7 +313,7 @@ Address = "20.22.32.136",
 
             // this example assumes you already have this PaloAltoNetworksFirewallResource created on azure
             // for more information of creating PaloAltoNetworksFirewallResource, please refer to the document of PaloAltoNetworksFirewallResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string firewallName = "firewall1";
             ResourceIdentifier paloAltoNetworksFirewallResourceId = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
@@ -345,7 +345,7 @@ Address = "20.22.32.136",
 
             // this example assumes you already have this PaloAltoNetworksFirewallResource created on azure
             // for more information of creating PaloAltoNetworksFirewallResource, please refer to the document of PaloAltoNetworksFirewallResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string firewallName = "firewall1";
             ResourceIdentifier paloAltoNetworksFirewallResourceId = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
@@ -372,7 +372,7 @@ Address = "20.22.32.136",
 
             // this example assumes you already have this PaloAltoNetworksFirewallResource created on azure
             // for more information of creating PaloAltoNetworksFirewallResource, please refer to the document of PaloAltoNetworksFirewallResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string firewallName = "firewall1";
             ResourceIdentifier paloAltoNetworksFirewallResourceId = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
@@ -399,7 +399,7 @@ Address = "20.22.32.136",
 
             // this example assumes you already have this PaloAltoNetworksFirewallResource created on azure
             // for more information of creating PaloAltoNetworksFirewallResource, please refer to the document of PaloAltoNetworksFirewallResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string firewallName = "firewall1";
             ResourceIdentifier paloAltoNetworksFirewallResourceId = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
@@ -426,7 +426,7 @@ Address = "20.22.32.136",
 
             // this example assumes you already have this PaloAltoNetworksFirewallResource created on azure
             // for more information of creating PaloAltoNetworksFirewallResource, please refer to the document of PaloAltoNetworksFirewallResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string firewallName = "firewall1";
             ResourceIdentifier paloAltoNetworksFirewallResourceId = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
@@ -453,7 +453,7 @@ Address = "20.22.32.136",
 
             // this example assumes you already have this PaloAltoNetworksFirewallResource created on azure
             // for more information of creating PaloAltoNetworksFirewallResource, please refer to the document of PaloAltoNetworksFirewallResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string firewallName = "firewall1";
             ResourceIdentifier paloAltoNetworksFirewallResourceId = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
@@ -480,7 +480,7 @@ Address = "20.22.32.136",
 
             // this example assumes you already have this PaloAltoNetworksFirewallResource created on azure
             // for more information of creating PaloAltoNetworksFirewallResource, please refer to the document of PaloAltoNetworksFirewallResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string firewallName = "firewall1";
             ResourceIdentifier paloAltoNetworksFirewallResourceId = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
@@ -507,7 +507,7 @@ Address = "20.22.32.136",
 
             // this example assumes you already have this PaloAltoNetworksFirewallResource created on azure
             // for more information of creating PaloAltoNetworksFirewallResource, please refer to the document of PaloAltoNetworksFirewallResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string firewallName = "firewall1";
             ResourceIdentifier paloAltoNetworksFirewallResourceId = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
@@ -535,7 +535,7 @@ Address = "20.22.32.136",
 
             // this example assumes you already have this PaloAltoNetworksFirewallResource created on azure
             // for more information of creating PaloAltoNetworksFirewallResource, please refer to the document of PaloAltoNetworksFirewallResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string firewallName = "firewall1";
             ResourceIdentifier paloAltoNetworksFirewallResourceId = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
@@ -562,7 +562,7 @@ Address = "20.22.32.136",
 
             // this example assumes you already have this PaloAltoNetworksFirewallResource created on azure
             // for more information of creating PaloAltoNetworksFirewallResource, please refer to the document of PaloAltoNetworksFirewallResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string firewallName = "firewall1";
             ResourceIdentifier paloAltoNetworksFirewallResourceId = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);
@@ -699,7 +699,7 @@ Address = "20.22.32.136",
 
             // this example assumes you already have this PaloAltoNetworksFirewallResource created on azure
             // for more information of creating PaloAltoNetworksFirewallResource, please refer to the document of PaloAltoNetworksFirewallResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string firewallName = "firewall1";
             ResourceIdentifier paloAltoNetworksFirewallResourceId = PaloAltoNetworksFirewallResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallName);

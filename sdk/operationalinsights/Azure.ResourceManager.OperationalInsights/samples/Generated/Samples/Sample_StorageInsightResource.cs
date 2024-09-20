@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this StorageInsightResource created on azure
             // for more information of creating StorageInsightResource, please refer to the document of StorageInsightResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OIAutoRest5123";
             string workspaceName = "aztest5048";
             string storageInsightName = "AzTestSI1110";
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this StorageInsightResource created on azure
             // for more information of creating StorageInsightResource, please refer to the document of StorageInsightResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OIAutoRest5123";
             string workspaceName = "aztest5048";
             string storageInsightName = "AzTestSI1110";
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this StorageInsightResource created on azure
             // for more information of creating StorageInsightResource, please refer to the document of StorageInsightResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OIAutoRest5123";
             string workspaceName = "aztest5048";
             string storageInsightName = "AzTestSI1110";
