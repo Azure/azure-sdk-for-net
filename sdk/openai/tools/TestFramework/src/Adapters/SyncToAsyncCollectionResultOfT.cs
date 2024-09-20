@@ -2,19 +2,19 @@
 // Licensed under the MIT License.
 
 using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Runtime.ExceptionServices;
+using OpenAI.TestFramework.Utils;
 
 namespace OpenAI.TestFramework.Adapters;
 
 /// <summary>
-/// An adapter to make a <see cref="CollectionResult"/> look and work like a <see cref="AsyncCollectionResult"/>. This
-/// simplifies writing test cases.
+/// An adapter to make a <see cref="CollectionResult{T}"/> look and work like a <see cref="AsyncCollectionResult{T}"/>. This
+/// simplifies writing test cases
 /// </summary>
 /// <typeparam name="T">The type of the items the enumerator returns</typeparam>
-public class SyncToAsyncCollectionResult : AsyncCollectionResult
+public class SyncToAsyncCollectionResult<T> : AsyncCollectionResult<T>
 {
-    private CollectionResult? _syncCollection;
+    private CollectionResult<T>? _syncCollection;
     private Exception? _ex;
 
     /// <summary>
@@ -22,7 +22,7 @@ public class SyncToAsyncCollectionResult : AsyncCollectionResult
     /// </summary>
     /// <param name="syncCollection">The synchronous collection to wrap</param>
     /// <exception cref="ArgumentNullException">If the collection was null</exception>
-    public SyncToAsyncCollectionResult(CollectionResult syncCollection)
+    public SyncToAsyncCollectionResult(CollectionResult<T> syncCollection)
     {
         _syncCollection = syncCollection ?? throw new ArgumentNullException(nameof(syncCollection));
     }
@@ -57,5 +57,17 @@ public class SyncToAsyncCollectionResult : AsyncCollectionResult
         }
 
         return new SyncToAsyncEnumerable<ClientResult>(_syncCollection!.GetRawPages());
+    }
+
+    /// <inheritdoc />
+    protected override IAsyncEnumerable<T> GetValuesFromPageAsync(ClientResult page)
+    {
+        if (_ex != null)
+        {
+            ExceptionDispatchInfo.Capture(_ex).Throw();
+        }
+
+        var items = NonPublic.FromMethod<CollectionResult<T>, ClientResult, IEnumerable<T>>("GetValuesFromPage")(_syncCollection!, page);
+        return new SyncToAsyncEnumerable<T>(items);
     }
 }

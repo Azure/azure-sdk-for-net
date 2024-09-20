@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Reflection;
@@ -190,6 +191,10 @@ public class AsyncToSyncInterceptor : IInterceptor
         {
             return typeof(CollectionResult<>).MakeGenericType(genericTypes);
         }
+        else if (typeof(AsyncCollectionResult).IsAssignableFrom(asyncReturnType))
+        {
+            return typeof(CollectionResult);
+        }
         else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(IAsyncEnumerable<>), out genericTypes))
         {
             return typeof(IEnumerable<>).MakeGenericType(genericTypes);
@@ -233,6 +238,12 @@ public class AsyncToSyncInterceptor : IInterceptor
         {
             return Activator.CreateInstance(
                 typeof(SyncToAsyncCollectionResult<>).MakeGenericType(genericTypes),
+                result);
+        }
+        else if (typeof(AsyncCollectionResult).IsAssignableFrom(asyncReturnType))
+        {
+            return Activator.CreateInstance(
+                typeof(SyncToAsyncCollectionResult),
                 result);
         }
         else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(IAsyncEnumerable<>), out genericTypes))
@@ -283,6 +294,12 @@ public class AsyncToSyncInterceptor : IInterceptor
         {
             return Activator.CreateInstance(
                 typeof(SyncToAsyncCollectionResult<>).MakeGenericType(genericTypes),
+                ex);
+        }
+        else if (typeof(AsyncCollectionResult).IsAssignableFrom(asyncReturnType))
+        {
+            return Activator.CreateInstance(
+                typeof(SyncToAsyncCollectionResult),
                 ex);
         }
         else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(IAsyncEnumerable<>), out genericTypes))
