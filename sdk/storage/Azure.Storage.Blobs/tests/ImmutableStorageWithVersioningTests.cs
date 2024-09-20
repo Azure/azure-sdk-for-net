@@ -18,6 +18,7 @@ using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -558,6 +559,83 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task SetDeleteImmutibilityPolicyAsync_Snapshot()
+        {
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(_containerClient);
+
+            Response<BlobSnapshotInfo> createSnapshotResponse = await blob.CreateSnapshotAsync();
+            BlobBaseClient snapshotClient = blob.WithSnapshot(createSnapshotResponse.Value.Snapshot);
+            try
+            {
+                BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+                {
+                    ExpiresOn = Recording.UtcNow.AddSeconds(5),
+                    PolicyMode = BlobImmutabilityPolicyMode.Unlocked
+                };
+
+                // Act
+                await snapshotClient.SetImmutabilityPolicyAsync(immutabilityPolicy);
+
+                Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+                Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+                Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+
+                propertiesResponse = await snapshotClient.GetPropertiesAsync();
+                Assert.IsNotNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+                Assert.IsNotNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+
+                await snapshotClient.DeleteImmutabilityPolicyAsync();
+
+                // Assert
+                propertiesResponse = await snapshotClient.GetPropertiesAsync();
+                Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+                Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+            }
+            finally
+            {
+                await snapshotClient.DeleteAsync();
+            }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task SetDeleteImmutibilityPolicyAsync_BloVersion()
+        {
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(_containerClient);
+
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
+            BlobBaseClient versionClient = blob.WithVersion(setMetadataResponse.Value.VersionId);
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiresOn = Recording.UtcNow.AddSeconds(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
+            };
+
+            // Act
+            await versionClient.SetImmutabilityPolicyAsync(immutabilityPolicy);
+
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+
+            propertiesResponse = await versionClient.GetPropertiesAsync();
+            Assert.IsNotNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
+            Assert.IsNotNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
+
+            await versionClient.DeleteImmutabilityPolicyAsync();
+
+            // Assert
+            propertiesResponse = await versionClient.GetPropertiesAsync();
             Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.ExpiresOn);
             Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicy.PolicyMode);
         }

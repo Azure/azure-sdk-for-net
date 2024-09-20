@@ -42,7 +42,7 @@ namespace Azure.Storage.Blobs.Tests
                 additionalParameters: additionalParameters
                 )
         {
-            RecordingServiceVersion = StorageVersionExtensions.MaxVersion;
+            RecordingServiceVersion = StorageVersionExtensions.LatestVersion;
             LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion };
         }
     }
