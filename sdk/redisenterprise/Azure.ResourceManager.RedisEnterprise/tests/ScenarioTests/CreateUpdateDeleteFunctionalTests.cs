@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
     public class CreateUpdateDeleteFunctionalTests : RedisEnterpriseManagementTestBase
     {
         public CreateUpdateDeleteFunctionalTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync /*,RecordedTestMode.Record*/)
         {
         }
 
