@@ -21,12 +21,22 @@ public partial class CloudMachineClient
     public CloudMachineClient(DefaultAzureCredential? credential = default, IConfiguration? configuration = default)
     {
         if (credential != default)
+        {
             Credential = credential;
+        }
+
+        string? cmid;
         if (configuration == default)
-            configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-        string? cmid = configuration["CloudMachine:ID"];
-        if (cmid == null)
+        {
+            cmid = Azd.ReadOrCreateCmid();
+        }
+        else
+        {
+            cmid = configuration["CloudMachine:ID"];
+            if (cmid == null)
             throw new Exception("CloudMachine:ID configuration value missing");
+        }
+
         Id = cmid!;
     }
 

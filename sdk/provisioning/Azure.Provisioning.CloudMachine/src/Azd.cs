@@ -80,7 +80,7 @@ internal static class Azd
         """);
     }
 
-    private static string ReadOrCreateCmid()
+    internal static string ReadOrCreateCmid()
     {
         string appsettings = Path.Combine(".", "appsettings.json");
 
