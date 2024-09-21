@@ -778,7 +778,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateSetImmutabilityPolicyRequest(int? timeout, DateTimeOffset? ifUnmodifiedSince, DateTimeOffset? immutabilityPolicyExpiry, BlobImmutabilityPolicyMode? immutabilityPolicyMode)
+        internal HttpMessage CreateSetImmutabilityPolicyRequest(int? timeout, DateTimeOffset? ifUnmodifiedSince, DateTimeOffset? immutabilityPolicyExpiry, BlobImmutabilityPolicyMode? immutabilityPolicyMode, string snapshot, string versionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -789,6 +789,14 @@ namespace Azure.Storage.Blobs
             if (timeout != null)
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (snapshot != null)
+            {
+                uri.AppendQuery("snapshot", snapshot, true);
+            }
+            if (versionId != null)
+            {
+                uri.AppendQuery("versionid", versionId, true);
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
@@ -813,10 +821,12 @@ namespace Azure.Storage.Blobs
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
         /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
+        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
+        /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlobSetImmutabilityPolicyHeaders>> SetImmutabilityPolicyAsync(int? timeout = null, DateTimeOffset? ifUnmodifiedSince = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobSetImmutabilityPolicyHeaders>> SetImmutabilityPolicyAsync(int? timeout = null, DateTimeOffset? ifUnmodifiedSince = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, string snapshot = null, string versionId = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetImmutabilityPolicyRequest(timeout, ifUnmodifiedSince, immutabilityPolicyExpiry, immutabilityPolicyMode);
+            using var message = CreateSetImmutabilityPolicyRequest(timeout, ifUnmodifiedSince, immutabilityPolicyExpiry, immutabilityPolicyMode, snapshot, versionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobSetImmutabilityPolicyHeaders(message.Response);
             switch (message.Response.Status)
@@ -833,10 +843,12 @@ namespace Azure.Storage.Blobs
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="immutabilityPolicyExpiry"> Specifies the date time when the blobs immutability policy is set to expire. </param>
         /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
+        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
+        /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlobSetImmutabilityPolicyHeaders> SetImmutabilityPolicy(int? timeout = null, DateTimeOffset? ifUnmodifiedSince = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobSetImmutabilityPolicyHeaders> SetImmutabilityPolicy(int? timeout = null, DateTimeOffset? ifUnmodifiedSince = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, string snapshot = null, string versionId = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetImmutabilityPolicyRequest(timeout, ifUnmodifiedSince, immutabilityPolicyExpiry, immutabilityPolicyMode);
+            using var message = CreateSetImmutabilityPolicyRequest(timeout, ifUnmodifiedSince, immutabilityPolicyExpiry, immutabilityPolicyMode, snapshot, versionId);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobSetImmutabilityPolicyHeaders(message.Response);
             switch (message.Response.Status)
@@ -848,7 +860,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateDeleteImmutabilityPolicyRequest(int? timeout)
+        internal HttpMessage CreateDeleteImmutabilityPolicyRequest(int? timeout, string snapshot, string versionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -860,6 +872,14 @@ namespace Azure.Storage.Blobs
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
+            if (snapshot != null)
+            {
+                uri.AppendQuery("snapshot", snapshot, true);
+            }
+            if (versionId != null)
+            {
+                uri.AppendQuery("versionid", versionId, true);
+            }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
@@ -868,10 +888,12 @@ namespace Azure.Storage.Blobs
 
         /// <summary> The Delete Immutability Policy operation deletes the immutability policy on the blob. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
+        /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlobDeleteImmutabilityPolicyHeaders>> DeleteImmutabilityPolicyAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobDeleteImmutabilityPolicyHeaders>> DeleteImmutabilityPolicyAsync(int? timeout = null, string snapshot = null, string versionId = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteImmutabilityPolicyRequest(timeout);
+            using var message = CreateDeleteImmutabilityPolicyRequest(timeout, snapshot, versionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobDeleteImmutabilityPolicyHeaders(message.Response);
             switch (message.Response.Status)
@@ -885,10 +907,12 @@ namespace Azure.Storage.Blobs
 
         /// <summary> The Delete Immutability Policy operation deletes the immutability policy on the blob. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
+        /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlobDeleteImmutabilityPolicyHeaders> DeleteImmutabilityPolicy(int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobDeleteImmutabilityPolicyHeaders> DeleteImmutabilityPolicy(int? timeout = null, string snapshot = null, string versionId = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteImmutabilityPolicyRequest(timeout);
+            using var message = CreateDeleteImmutabilityPolicyRequest(timeout, snapshot, versionId);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobDeleteImmutabilityPolicyHeaders(message.Response);
             switch (message.Response.Status)
@@ -900,7 +924,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateSetLegalHoldRequest(bool legalHold, int? timeout)
+        internal HttpMessage CreateSetLegalHoldRequest(bool legalHold, int? timeout, string snapshot, string versionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -912,6 +936,14 @@ namespace Azure.Storage.Blobs
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
+            if (snapshot != null)
+            {
+                uri.AppendQuery("snapshot", snapshot, true);
+            }
+            if (versionId != null)
+            {
+                uri.AppendQuery("versionid", versionId, true);
+            }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("x-ms-legal-hold", legalHold);
@@ -922,10 +954,12 @@ namespace Azure.Storage.Blobs
         /// <summary> The Set Legal Hold operation sets a legal hold on the blob. </summary>
         /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
+        /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlobSetLegalHoldHeaders>> SetLegalHoldAsync(bool legalHold, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobSetLegalHoldHeaders>> SetLegalHoldAsync(bool legalHold, int? timeout = null, string snapshot = null, string versionId = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetLegalHoldRequest(legalHold, timeout);
+            using var message = CreateSetLegalHoldRequest(legalHold, timeout, snapshot, versionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobSetLegalHoldHeaders(message.Response);
             switch (message.Response.Status)
@@ -940,10 +974,12 @@ namespace Azure.Storage.Blobs
         /// <summary> The Set Legal Hold operation sets a legal hold on the blob. </summary>
         /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
+        /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlobSetLegalHoldHeaders> SetLegalHold(bool legalHold, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobSetLegalHoldHeaders> SetLegalHold(bool legalHold, int? timeout = null, string snapshot = null, string versionId = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetLegalHoldRequest(legalHold, timeout);
+            using var message = CreateSetLegalHoldRequest(legalHold, timeout, snapshot, versionId);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobSetLegalHoldHeaders(message.Response);
             switch (message.Response.Status)
