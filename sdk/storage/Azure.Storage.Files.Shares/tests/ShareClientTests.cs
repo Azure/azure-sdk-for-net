@@ -389,6 +389,30 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task CreateAsync_AccessTier_Premium()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                AccessTier = ShareAccessTier.Premium
+            };
+
+            // Act
+            await share.CreateAsync(options);
+
+            // Assert
+            Response<ShareProperties> propertiesResponse = await share.GetPropertiesAsync();
+            Assert.AreEqual(ShareAccessTier.Premium.ToString(), propertiesResponse.Value.AccessTier);
+
+            // Cleanup
+            await share.DeleteAsync();
+        }
+
+        [RecordedTest]
         public async Task CreateAsync_Error()
         {
             // Arrange
@@ -1796,6 +1820,27 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual("pending-from-transactionOptimized", response.Value.AccessTierTransitionState);
             Assert.AreEqual(5, response.Value.QuotaInGB);
             Assert.IsNotNull(response.Value.AccessTierChangeTime);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetPropertiesAsync_AccessTier_Premium()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync(SharesClientBuilder.GetServiceClient_PremiumFile());
+            ShareClient share = test.Share;
+
+            ShareSetPropertiesOptions options = new ShareSetPropertiesOptions
+            {
+                AccessTier = ShareAccessTier.Premium
+            };
+
+            // Act
+            await share.SetPropertiesAsync(options);
+
+            // Assert
+            Response<ShareProperties> response = await share.GetPropertiesAsync();
+            Assert.AreEqual(ShareAccessTier.Premium.ToString(), response.Value.AccessTier);
         }
 
         [RecordedTest]

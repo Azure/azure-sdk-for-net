@@ -22,11 +22,11 @@ namespace Azure.Storage.Files.Shares
         /// <summary> Indicates the version of the File service used to execute the request. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
         /// <summary> Returns the current share quota in GB. </summary>
-        public int? Quota => _response.Headers.TryGetValue("x-ms-share-quota", out int? value) ? value : null;
+        public long? Quota => _response.Headers.TryGetValue("x-ms-share-quota", out long? value) ? value : null;
         /// <summary> Returns the current share provisioned ipos. </summary>
-        public int? ProvisionedIops => _response.Headers.TryGetValue("x-ms-share-provisioned-iops", out int? value) ? value : null;
+        public long? ProvisionedIops => _response.Headers.TryGetValue("x-ms-share-provisioned-iops", out long? value) ? value : null;
         /// <summary> Returns the current share provisioned bandwidth in megabits per second. </summary>
-        public int? ProvisionedBandwidthMibps => _response.Headers.TryGetValue("x-ms-share-provisioned-bandwidth-mibps", out int? value) ? value : null;
+        public long? ProvisionedBandwidthMibps => _response.Headers.TryGetValue("x-ms-share-provisioned-bandwidth-mibps", out long? value) ? value : null;
         /// <summary> Return the calculated burst IOPS of the share. </summary>
         public long? IncludedBurstIops => _response.Headers.TryGetValue("x-ms-share-included-burst-iops", out long? value) ? value : null;
         /// <summary> Returned the calculated maximum burst credits. This is not the current burst credit level, but the maximum burst credits the share can have. </summary>

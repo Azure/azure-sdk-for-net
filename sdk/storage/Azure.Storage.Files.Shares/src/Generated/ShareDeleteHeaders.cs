@@ -20,7 +20,7 @@ namespace Azure.Storage.Files.Shares
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
         /// <summary> The "live share" portion of the data that the customer will be billed for in the soft-deleted capacity (logical storage size). </summary>
         public long? XMsShareUsageBytes => _response.Headers.TryGetValue("x-ms-share-usage-bytes", out long? value) ? value : null;
-        /// <summary> The snapshotted share portion of the data that the customer will be billed for in the soft-deleted capacity (this is the delta, or "physical storage size"). </summary>
+        /// <summary> The snapshot share portion of the data that the customer will be billed for in the soft-deleted capacity (this is the delta, or "physical storage size"). </summary>
         public long? XMsShareSnapshotUsageBytes => _response.Headers.TryGetValue("x-ms-share-snapshot-usage-bytes", out long? value) ? value : null;
     }
 }

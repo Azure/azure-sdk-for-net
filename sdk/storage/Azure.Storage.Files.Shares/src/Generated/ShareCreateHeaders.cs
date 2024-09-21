@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary> Indicates the version of the File service used to execute the request. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
         /// <summary> Returns the current share quota in GB. </summary>
-        public int? Quota => _response.Headers.TryGetValue("x-ms-share-quota", out int? value) ? value : null;
+        public long? Quota => _response.Headers.TryGetValue("x-ms-share-quota", out long? value) ? value : null;
         /// <summary> The provisioned IOPS of the share. If this is not specified, compute the recommended IOPS of the share using the formula for a share in this media tier (SSD/HDD as appropriate). </summary>
         public long? ShareProvisionedIops => _response.Headers.TryGetValue("x-ms-share-provisioned-iops", out long? value) ? value : null;
         /// <summary> The provisioned throughput of the share. If this is not specified, compute the recommended throughput of the share using the formula for a share in this media tier (SSD/HDD as appropriate). </summary>
