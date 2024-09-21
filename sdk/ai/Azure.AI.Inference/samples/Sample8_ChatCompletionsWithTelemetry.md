@@ -42,11 +42,12 @@ var model = System.Environment.GetEnvironmentVariable("MODEL_NAME");
 var appInsightsConn = System.Environment.GetEnvironmentVariable("APP_INSIGHTS_CONNECTION_STR");
 ```
 
-In this example we will take these values from the environment variables. To get the telemetry, we will need to listen for [Activity](https://learn.microsoft.com/dotnet/api/system.diagnostics.activity) and [Meter](https://learn.microsoft.com/dotnet/api/system.diagnostics.metrics.meter)  defined by the constant `OpenTelemetryConstants.ActivityName` from the `Azure.AI.Inference.Telemetry` namespace. To allow telemetry collection we will create the listeners, which will listen to Azure.AI.Inference activity and meters. In the code below we will create `tracerProvider`, which will listen to activity and `meterProvider`, listening to meter. We will add console exporters to both providers with the line `AddConsoleExporter()` and monitor exporter for Application Insights export: `AddAzureMonitorMetricExporter`. 
+In this example we will take these values from the environment variables. To get the telemetry, we will need to listen to [ActivitySource](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#enriching-generic-http-activities-with-azure-request-identifiers) named `Azure.AI.Inference.ChatCompletionsClient`. To allow telemetry collection we will create the listeners `tracerProvider`, which will listen to activity and `meterProvider`, listening to meter. We will add console exporters to both providers with the line `AddConsoleExporter()` and monitor exporter for Application Insights export: `AddAzureMonitorMetricExporter`. 
 
 ```C# Snippet:Azure_AI_Inference_TelemetrySyncScenario_providers
+const string ACTIVITY = "Azure.AI.Inference.ChatCompletionsClient";
 using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-    .AddSource(OpenTelemetryConstants.ActivityName)
+    .AddSource(ACTIVITY)
     .ConfigureResource(r => r.AddService("MyServiceName"))
     .AddConsoleExporter()
     .AddAzureMonitorTraceExporter(options =>
@@ -56,7 +57,8 @@ using var tracerProvider = Sdk.CreateTracerProviderBuilder()
     .Build();
 
 using var meterProvider = Sdk.CreateMeterProviderBuilder()
-    .AddMeter(OpenTelemetryConstants.ActivityName)
+    .AddMeter(ACTIVITY)
+    .ConfigureResource(r => r.AddService("MyServiceName"))
     .AddConsoleExporter()
     .AddAzureMonitorMetricExporter(options =>
     {

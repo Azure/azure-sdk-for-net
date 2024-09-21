@@ -142,8 +142,6 @@ namespace Azure.AI.Inference
 
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            //using DiagnosticScope scope = ClientDiagnostics.CreateScope("ChatCompletionsClient.CompleteStreaming");
-            //scope.Start();
 
             OpenTelemetryScope otel = new(chatCompletionsOptions, _endpoint, "ChatCompletionsClient.CompleteStreaming");
             Response baseResponse = null;

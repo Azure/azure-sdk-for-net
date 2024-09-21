@@ -40,6 +40,7 @@ namespace Azure.AI.Inference.Tests.Samples
             var model = System.Environment.GetEnvironmentVariable("MODEL_NAME");
             var appInsightsConn = System.Environment.GetEnvironmentVariable("APP_INSIGHTS_CONNECTION_STR");
 #else
+
             var endpoint = new Uri(TestEnvironment.GithubEndpoint);
             var credential = new AzureKeyCredential(TestEnvironment.GithubToken);
             var model = "gpt-4o";
@@ -47,8 +48,9 @@ namespace Azure.AI.Inference.Tests.Samples
 #endif
             #endregion
             #region Snippet:Azure_AI_Inference_TelemetrySyncScenario_providers
+            const string ACTIVITY = "Azure.AI.Inference.ChatCompletionsClient";
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                .AddSource(OpenTelemetryConstants.ClientName)
+                .AddSource(ACTIVITY)
                 .ConfigureResource(r => r.AddService("MyServiceName"))
                 .AddConsoleExporter()
                 .AddAzureMonitorTraceExporter(options =>
@@ -58,7 +60,8 @@ namespace Azure.AI.Inference.Tests.Samples
                 .Build();
 
             using var meterProvider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(OpenTelemetryConstants.ClientName)
+                .AddMeter(ACTIVITY)
+                .ConfigureResource(r => r.AddService("MyServiceName"))
                 .AddConsoleExporter()
                 .AddAzureMonitorMetricExporter(options =>
                 {
@@ -108,9 +111,8 @@ namespace Azure.AI.Inference.Tests.Samples
             var model = "mistral-small";
             var appInsightsConn = TestEnvironment.TestApplicationInsights;
 #endif
-            const string ACTIVITY = "Azure.AI.Inference.ChatCompletionsClient";
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                .AddSource(ACTIVITY)
+                .AddSource(OpenTelemetryConstants.ClientName)
                 .ConfigureResource(r => r.AddService("MyServiceName"))
                 .AddConsoleExporter()
                 .AddAzureMonitorTraceExporter(options =>
@@ -120,7 +122,8 @@ namespace Azure.AI.Inference.Tests.Samples
                 .Build();
 
             using var meterProvider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(ACTIVITY)
+                .AddMeter(OpenTelemetryConstants.ClientName)
+                .ConfigureResource(r => r.AddService("MyServiceName"))
                 .AddConsoleExporter()
                 .AddAzureMonitorMetricExporter(options =>
                 {
@@ -177,9 +180,8 @@ namespace Azure.AI.Inference.Tests.Samples
             var model = "gpt-4o";
             var appInsightsConn = TestEnvironment.TestApplicationInsights;
 #endif
-            const string ACTIVITY = "Azure.AI.Inference.ChatCompletionsClient";
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                .AddSource(ACTIVITY)
+                .AddSource(OpenTelemetryConstants.ClientName)
                 .ConfigureResource(r => r.AddService("MyServiceName"))
                 .AddConsoleExporter()
                 .AddAzureMonitorTraceExporter(options =>
@@ -189,7 +191,8 @@ namespace Azure.AI.Inference.Tests.Samples
                 .Build();
 
             using var meterProvider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(ACTIVITY)
+                .AddMeter(OpenTelemetryConstants.ClientName)
+                .ConfigureResource(r => r.AddService("MyServiceName"))
                 .AddConsoleExporter()
                 .AddAzureMonitorMetricExporter(options =>
                 {
@@ -237,9 +240,8 @@ namespace Azure.AI.Inference.Tests.Samples
             var model = "mistral-small";
             var appInsightsConn = TestEnvironment.TestApplicationInsights;
 #endif
-            const string ACTIVITY = "Azure.AI.Inference.ChatCompletionsClient";
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                .AddSource(ACTIVITY)
+                .AddSource(OpenTelemetryConstants.ClientName)
                 .ConfigureResource(r => r.AddService("MyServiceName"))
                 .AddConsoleExporter()
                 .AddAzureMonitorTraceExporter(options =>
@@ -249,7 +251,8 @@ namespace Azure.AI.Inference.Tests.Samples
                 .Build();
 
             using var meterProvider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(ACTIVITY)
+                .AddMeter(OpenTelemetryConstants.ClientName)
+                .ConfigureResource(r => r.AddService("MyServiceName"))
                 .AddConsoleExporter()
                 .AddAzureMonitorMetricExporter(options =>
                 {

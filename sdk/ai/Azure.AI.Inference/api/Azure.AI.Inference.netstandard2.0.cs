@@ -523,16 +523,6 @@ namespace Azure.AI.Inference
         public int ToolCallIndex { get { throw null; } }
     }
 }
-namespace Azure.AI.Inference.Telemetry
-{
-    public partial class OpenTelemetryConstants
-    {
-        public const string ActivityName = "Azure.AI.Inference.ChatCompletionsClient";
-        public const string EnvironmentVariableSwitchName = "OPENAI_EXPERIMENTAL_ENABLE_OPEN_TELEMETRY";
-        public const string EnvironmentVariableTraceContents = "AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED";
-        public OpenTelemetryConstants() { }
-    }
-}
 namespace Microsoft.Extensions.Azure
 {
     public static partial class AIInferenceClientBuilderExtensions

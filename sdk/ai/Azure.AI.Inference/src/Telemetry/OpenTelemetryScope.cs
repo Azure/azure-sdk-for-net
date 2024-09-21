@@ -135,7 +135,7 @@ namespace Azure.AI.Inference.Telemetry
                     m_activity?.AddEvent(
                         new ActivityEvent(
                             $"gen_ai.{message.Role}.message",
-                            DateTimeOffset.Now,
+                            default,
                             new ActivityTagsCollection(requestTags)
                         )
                     );

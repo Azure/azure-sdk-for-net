@@ -3,7 +3,7 @@
 
 namespace Azure.AI.Inference.Telemetry
 {
-    public class OpenTelemetryConstants
+    internal class OpenTelemetryConstants
     {
         public const string ClientName = "Azure.AI.Inference.ChatCompletionsClient";
         public const string AppContextSwitch = "OpenAI.Experimental.EnableOpenTelemetry";
