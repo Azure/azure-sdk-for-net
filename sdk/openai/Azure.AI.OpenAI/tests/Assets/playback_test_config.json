@@ -7,8 +7,6 @@
     "subscription_id": "Sanitized"
   },
   "assistant": {
-    "endpoint": "https://Sanitized.openai.azure.com/",
-    "key": "Sanitized",
     "deployment": "gpt-4o-mini"
   },
   "audio": {
