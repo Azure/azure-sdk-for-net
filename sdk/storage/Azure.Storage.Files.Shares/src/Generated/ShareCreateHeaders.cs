@@ -21,5 +21,13 @@ namespace Azure.Storage.Files.Shares
         public DateTimeOffset? LastModified => _response.Headers.TryGetValue("Last-Modified", out DateTimeOffset? value) ? value : null;
         /// <summary> Indicates the version of the File service used to execute the request. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
+        /// <summary> Returns the current share quota in GB. </summary>
+        public long? Quota => _response.Headers.TryGetValue("x-ms-share-quota", out long? value) ? value : null;
+        /// <summary> The provisioned IOPS of the share. If this is not specified, compute the recommended IOPS of the share using the formula for a share in this media tier (SSD/HDD as appropriate). </summary>
+        public long? ShareProvisionedIops => _response.Headers.TryGetValue("x-ms-share-provisioned-iops", out long? value) ? value : null;
+        /// <summary> The provisioned throughput of the share. If this is not specified, compute the recommended throughput of the share using the formula for a share in this media tier (SSD/HDD as appropriate). </summary>
+        public long? ShareProvisionedBandwidthMibps => _response.Headers.TryGetValue("x-ms-share-provisioned-bandwidth-mibps", out long? value) ? value : null;
+        /// <summary> ShareIncludedBurstIops. </summary>
+        public long? ShareIncludedBurstIops => _response.Headers.TryGetValue("x-ms-share-included-burst-iops", out long? value) ? value : null;
     }
 }
