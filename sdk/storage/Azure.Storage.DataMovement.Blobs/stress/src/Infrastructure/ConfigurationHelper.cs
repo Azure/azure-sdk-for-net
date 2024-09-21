@@ -20,7 +20,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             long maxMemory = DataMovementBlobStressConstants.MB * 100,
             CancellationToken cancellationToken = default)
         {
-            Stream stream;
+            Stream stream =default;
             if (size < maxMemory)
             {
                 var data = TestHelper.GetRandomBuffer(size);
@@ -65,14 +65,20 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             {
                 throw new ArgumentException("prefixPath cannot be null or empty", nameof(prefixPath));
             }
+            fileName ??= Randomize("file-");
 
             // Create new source file
+            Console.Out.WriteLine($"Creating Stream..");
             using Stream originalStream = await CreateLimitedMemoryStream(fileSize, cancellationToken: cancellationToken);
+            Console.Out.WriteLine($"Stream Created..");
+            Console.Out.WriteLine($"Creating Local File.. {prefixPath} + {fileName}");
             string localSourceFile = Path.Combine(prefixPath, fileName);
             // create a new file and copy contents of stream into it, and then close the FileStream
             // so the StagedUploadAsync call is not prevented from reading using its FileStream.
+            Console.Out.Write($"Creating File: {localSourceFile}..");
             using (FileStream fileStream = File.Create(localSourceFile))
             {
+                Console.Out.WriteLine("Copying Stream to File..");
                 await originalStream.CopyToAsync(
                     fileStream,
                     bufferSize,

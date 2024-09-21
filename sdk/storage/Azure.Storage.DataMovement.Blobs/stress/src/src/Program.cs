@@ -26,20 +26,17 @@ public class Program
     ///
     /// <param name="args">The command line inputs.</param>
     ///
-    public static async Task Main(string[] args)
+    public static async Task Main()
     {
         // Parse command line arguments
-        await CommandLine.Parser.Default.ParseArguments<Options>(args).WithParsedAsync(RunOptions).ConfigureAwait(false);
+        await RunAllScenarios().ConfigureAwait(false);
     }
 
     /// <summary>
     ///   Starts a background task for each test and role that needs to be run in this process, and waits for all
     ///   test runs to completed before finishing the run.
     /// </summary>
-    ///
-    /// <param name="opts">The parsed command line inputs.</param>
-    ///
-    private static async Task RunOptions(Options opts)
+    private static async Task RunAllScenarios()
     {
         // See if there are environment variables available to use in the .env file
         var environment = new Dictionary<string, string>();
@@ -48,6 +45,9 @@ public class Program
 
         environment.TryGetValue(DataMovementBlobStressConstants.EnvironmentVariables.ApplicationInsightsKey, out var appInsightsKey);
         environment.TryGetValue(DataMovementBlobStressConstants.EnvironmentVariables.StorageBlobEndpoint, out var blobEndpoint);
+        Console.Out.WriteLine($"Finished reading environment file\n" +
+            $"ApplicationInsightsKey: {appInsightsKey}\n" +
+            $"Blob Endpoint: {blobEndpoint}\n");
 
         // Check values
 
@@ -55,6 +55,7 @@ public class Program
         // test scenario runs are run in parallel.
 
         TokenCredential tokenCredential = new DefaultAzureCredential();
+        Console.Out.WriteLine($"Retrieved Token Credential");
 
         using var cancellationSource = new CancellationTokenSource();
         var runDuration = TimeSpan.FromHours(1);
@@ -63,25 +64,17 @@ public class Program
         var metrics = new Metrics(appInsightsKey);
 
         using var azureEventListener = new AzureEventSourceListener((args, level) => metrics.Client.TrackTrace($"EventWritten: {args.ToString()} Level: {level}."), EventLevel.Warning);
+        Console.Out.WriteLine($"Started up Source Listener");
 
         try
         {
-            var testScenario = StringToTestScenario(opts.Test);
-            var testScenarioName = testScenario.ToString();
-            metrics.Client.Context.GlobalProperties["TestName"] = testScenarioName;
+            metrics.Client.Context.GlobalProperties["TestName"] = "UploadSingleBlockBlob";
+            string guid = Guid.NewGuid().ToString();
 
             metrics.Client.TrackEvent("Starting a test run.");
+            Console.Out.WriteLine($"Starting test run...");
 
-            TestScenarioBase testScenarioInstance = null;
-
-            switch (testScenario)
-            {
-                case TestScenarioName.UploadSingleBlockBlobTest:
-                    testScenarioInstance = new BlobSingleUploadScenario(new Uri(blobEndpoint), tokenCredential, metrics, opts.Role);
-                    break;
-                default:
-                    throw new ArgumentException("Invalid test scenario, cannot perform test run.");
-            }
+            TestScenarioBase testScenarioInstance = new BlobSingleUploadScenario(new Uri(blobEndpoint), tokenCredential, metrics, guid);
 
             var testRun = testScenarioInstance.RunTestAsync(cancellationSource.Token);
 
@@ -92,6 +85,7 @@ public class Program
             }
 
             metrics.Client.TrackEvent("Test run is ending.");
+            Console.Out.WriteLine("Test run is ending.");
         }
         catch (TaskCanceledException)
         {
@@ -107,6 +101,7 @@ public class Program
         catch (Exception ex)
         {
             metrics.Client.TrackException(ex);
+            Console.Out.WriteLine($"Exception: {ex.StackTrace}");
         }
         finally
         {
