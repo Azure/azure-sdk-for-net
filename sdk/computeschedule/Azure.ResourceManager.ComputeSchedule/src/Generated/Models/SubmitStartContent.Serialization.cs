@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            Schedule schedule = default;
-            ExecutionParameters executionParameters = default;
-            Resources resources = default;
+            UserRequestSchedule schedule = default;
+            ScheduledActionExecutionParameterDetail executionParameters = default;
+            UserRequestResources resources = default;
             string correlationid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 if (property.NameEquals("schedule"u8))
                 {
-                    schedule = Schedule.DeserializeSchedule(property.Value, options);
+                    schedule = UserRequestSchedule.DeserializeUserRequestSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("executionParameters"u8))
                 {
-                    executionParameters = ExecutionParameters.DeserializeExecutionParameters(property.Value, options);
+                    executionParameters = ScheduledActionExecutionParameterDetail.DeserializeScheduledActionExecutionParameterDetail(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resources"u8))
                 {
-                    resources = Resources.DeserializeResources(property.Value, options);
+                    resources = UserRequestResources.DeserializeUserRequestResources(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("correlationid"u8))

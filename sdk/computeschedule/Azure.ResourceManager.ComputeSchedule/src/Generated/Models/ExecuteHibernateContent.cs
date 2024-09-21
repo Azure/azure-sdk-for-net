@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resources"> The resources for the request. </param>
         /// <param name="correlationid"> Correlationid item. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="executionParameters"/>, <paramref name="resources"/> or <paramref name="correlationid"/> is null. </exception>
-        public ExecuteHibernateContent(ExecutionParameters executionParameters, Resources resources, string correlationid)
+        public ExecuteHibernateContent(ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources, string correlationid)
         {
             Argument.AssertNotNull(executionParameters, nameof(executionParameters));
             Argument.AssertNotNull(resources, nameof(resources));
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resources"> The resources for the request. </param>
         /// <param name="correlationid"> Correlationid item. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExecuteHibernateContent(ExecutionParameters executionParameters, Resources resources, string correlationid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExecuteHibernateContent(ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources, string correlationid, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExecutionParameters = executionParameters;
             Resources = resources;
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> The execution parameters for the request. </summary>
-        public ExecutionParameters ExecutionParameters { get; }
+        public ScheduledActionExecutionParameterDetail ExecutionParameters { get; }
         /// <summary> The resources for the request. </summary>
-        internal Resources Resources { get; }
+        internal UserRequestResources Resources { get; }
         /// <summary> The resource ids used for the request. </summary>
         public IList<ResourceIdentifier> ResourcesIds
         {

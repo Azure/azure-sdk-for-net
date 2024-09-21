@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> The retry policy for the user request. </summary>
-    public partial class RetryPolicy
+    /// <summary> Extra details needed to run the user's request. </summary>
+    public partial class ScheduledActionExecutionParameterDetail
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RetryPolicy"/>. </summary>
-        public RetryPolicy()
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionExecutionParameterDetail"/>. </summary>
+        public ScheduledActionExecutionParameterDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RetryPolicy"/>. </summary>
-        /// <param name="retryCount"> Retry count for user request. </param>
-        /// <param name="retryWindowInMinutes"> Retry window in minutes for user request. </param>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionExecutionParameterDetail"/>. </summary>
+        /// <param name="optimizationPreference"> Details that could optimize the user's request. </param>
+        /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RetryPolicy(int? retryCount, int? retryWindowInMinutes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScheduledActionExecutionParameterDetail(ScheduledActionOptimizationPreference? optimizationPreference, UserRequestRetryPolicy retryPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            RetryCount = retryCount;
-            RetryWindowInMinutes = retryWindowInMinutes;
+            OptimizationPreference = optimizationPreference;
+            RetryPolicy = retryPolicy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Retry count for user request. </summary>
-        public int? RetryCount { get; set; }
-        /// <summary> Retry window in minutes for user request. </summary>
-        public int? RetryWindowInMinutes { get; set; }
+        /// <summary> Details that could optimize the user's request. </summary>
+        public ScheduledActionOptimizationPreference? OptimizationPreference { get; set; }
+        /// <summary> Retry policy the user can pass. </summary>
+        public UserRequestRetryPolicy RetryPolicy { get; set; }
     }
 }

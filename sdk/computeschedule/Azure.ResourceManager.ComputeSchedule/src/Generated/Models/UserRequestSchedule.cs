@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The schedule details for the user request. </summary>
-    public partial class Schedule
+    public partial class UserRequestSchedule
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Schedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserRequestSchedule"/>. </summary>
         /// <param name="deadLine"> The deadline for the operation. </param>
         /// <param name="timeZone"> The timezone for the operation. </param>
         /// <param name="deadlineType"> The deadlinetype of the operation, this can either be InitiateAt or CompleteBy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZone"/> is null. </exception>
-        public Schedule(DateTimeOffset deadLine, string timeZone, DeadlineType deadlineType)
+        public UserRequestSchedule(DateTimeOffset deadLine, string timeZone, ScheduledActionDeadlineType deadlineType)
         {
             Argument.AssertNotNull(timeZone, nameof(timeZone));
 
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             DeadlineType = deadlineType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Schedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserRequestSchedule"/>. </summary>
         /// <param name="deadLine"> The deadline for the operation. </param>
         /// <param name="timeZone"> The timezone for the operation. </param>
         /// <param name="deadlineType"> The deadlinetype of the operation, this can either be InitiateAt or CompleteBy. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Schedule(DateTimeOffset deadLine, string timeZone, DeadlineType deadlineType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UserRequestSchedule(DateTimeOffset deadLine, string timeZone, ScheduledActionDeadlineType deadlineType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeadLine = deadLine;
             TimeZone = timeZone;
@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Schedule"/> for deserialization. </summary>
-        internal Schedule()
+        /// <summary> Initializes a new instance of <see cref="UserRequestSchedule"/> for deserialization. </summary>
+        internal UserRequestSchedule()
         {
         }
 
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> The timezone for the operation. </summary>
         public string TimeZone { get; }
         /// <summary> The deadlinetype of the operation, this can either be InitiateAt or CompleteBy. </summary>
-        public DeadlineType DeadlineType { get; }
+        public ScheduledActionDeadlineType DeadlineType { get; }
     }
 }

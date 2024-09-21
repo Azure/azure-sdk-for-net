@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    public partial class CancelOperationsResponse : IUtf8JsonSerializable, IJsonModel<CancelOperationsResponse>
+    public partial class CancelOperationsResult : IUtf8JsonSerializable, IJsonModel<CancelOperationsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CancelOperationsResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CancelOperationsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CancelOperationsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CancelOperationsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CancelOperationsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CancelOperationsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CancelOperationsResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CancelOperationsResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WriteEndObject();
         }
 
-        CancelOperationsResponse IJsonModel<CancelOperationsResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CancelOperationsResult IJsonModel<CancelOperationsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CancelOperationsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CancelOperationsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CancelOperationsResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CancelOperationsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCancelOperationsResponse(document.RootElement, options);
+            return DeserializeCancelOperationsResult(document.RootElement, options);
         }
 
-        internal static CancelOperationsResponse DeserializeCancelOperationsResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CancelOperationsResult DeserializeCancelOperationsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            IReadOnlyList<ResourceOperation> results = default;
+            IReadOnlyList<ResourceOperationResult> results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
                 {
-                    List<ResourceOperation> array = new List<ResourceOperation>();
+                    List<ResourceOperationResult> array = new List<ResourceOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceOperation.DeserializeResourceOperation(item, options));
+                        array.Add(ResourceOperationResult.DeserializeResourceOperationResult(item, options));
                     }
                     results = array;
                     continue;
@@ -92,38 +92,38 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CancelOperationsResponse(results, serializedAdditionalRawData);
+            return new CancelOperationsResult(results, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CancelOperationsResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CancelOperationsResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CancelOperationsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CancelOperationsResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CancelOperationsResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CancelOperationsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CancelOperationsResponse IPersistableModel<CancelOperationsResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CancelOperationsResult IPersistableModel<CancelOperationsResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CancelOperationsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CancelOperationsResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCancelOperationsResponse(document.RootElement, options);
+                        return DeserializeCancelOperationsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CancelOperationsResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CancelOperationsResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CancelOperationsResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CancelOperationsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

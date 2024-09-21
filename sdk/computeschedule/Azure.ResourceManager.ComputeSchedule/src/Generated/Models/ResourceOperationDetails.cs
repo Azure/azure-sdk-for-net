@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="deadlineType"> Type of deadline of the operation. </param>
         /// <param name="state"> Current state of the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/>, <paramref name="resourceId"/> or <paramref name="subscriptionId"/> is null. </exception>
-        internal ResourceOperationDetails(string operationId, ResourceIdentifier resourceId, ResourceOperationType opType, string subscriptionId, DateTimeOffset deadline, DeadlineType deadlineType, OperationState state)
+        internal ResourceOperationDetails(string operationId, ResourceIdentifier resourceId, ResourceOperationType opType, string subscriptionId, DateTimeOffset deadline, ScheduledActionDeadlineType deadlineType, ScheduledActionOperationState state)
         {
             Argument.AssertNotNull(operationId, nameof(operationId));
             Argument.AssertNotNull(resourceId, nameof(resourceId));
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceOperationDetails(string operationId, ResourceIdentifier resourceId, ResourceOperationType opType, string subscriptionId, DateTimeOffset deadline, DeadlineType deadlineType, OperationState state, string timeZone, ResourceOperationError resourceOperationError, DateTimeOffset? completedOn, RetryPolicy retryPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceOperationDetails(string operationId, ResourceIdentifier resourceId, ResourceOperationType opType, string subscriptionId, DateTimeOffset deadline, ScheduledActionDeadlineType deadlineType, ScheduledActionOperationState state, string timeZone, ResourceOperationError resourceOperationError, DateTimeOffset? completedOn, UserRequestRetryPolicy retryPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationId = operationId;
             ResourceId = resourceId;
@@ -115,9 +115,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Deadline for the operation. </summary>
         public DateTimeOffset Deadline { get; }
         /// <summary> Type of deadline of the operation. </summary>
-        public DeadlineType DeadlineType { get; }
+        public ScheduledActionDeadlineType DeadlineType { get; }
         /// <summary> Current state of the operation. </summary>
-        public OperationState State { get; }
+        public ScheduledActionOperationState State { get; }
         /// <summary> Timezone for the operation. </summary>
         public string TimeZone { get; }
         /// <summary> Operation level errors if they exist. </summary>
@@ -125,6 +125,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Time the operation was complete if errors are null. </summary>
         public DateTimeOffset? CompletedOn { get; }
         /// <summary> Retry policy the user can pass. </summary>
-        public RetryPolicy RetryPolicy { get; }
+        public UserRequestRetryPolicy RetryPolicy { get; }
     }
 }

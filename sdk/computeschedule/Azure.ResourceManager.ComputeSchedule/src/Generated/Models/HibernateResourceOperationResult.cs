@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The response from a Hibernate request. </summary>
-    public partial class HibernateResourceOperationResponse
+    public partial class HibernateResourceOperationResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HibernateResourceOperationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HibernateResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="hibernateResourceOperationResponseType"> The type of resources used in the Hibernate request eg virtual machines. </param>
         /// <param name="location"> The location of the Hibernate request eg westus. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> or <paramref name="hibernateResourceOperationResponseType"/> is null. </exception>
-        internal HibernateResourceOperationResponse(string description, string hibernateResourceOperationResponseType, AzureLocation location)
+        internal HibernateResourceOperationResult(string description, string hibernateResourceOperationResponseType, AzureLocation location)
         {
             Argument.AssertNotNull(description, nameof(description));
             Argument.AssertNotNull(hibernateResourceOperationResponseType, nameof(hibernateResourceOperationResponseType));
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             Description = description;
             HibernateResourceOperationResponseType = hibernateResourceOperationResponseType;
             Location = location;
-            Results = new ChangeTrackingList<ResourceOperation>();
+            Results = new ChangeTrackingList<ResourceOperationResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HibernateResourceOperationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HibernateResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="hibernateResourceOperationResponseType"> The type of resources used in the Hibernate request eg virtual machines. </param>
         /// <param name="location"> The location of the Hibernate request eg westus. </param>
         /// <param name="results"> The results from the Hibernate request if no errors exist. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HibernateResourceOperationResponse(string description, string hibernateResourceOperationResponseType, AzureLocation location, IReadOnlyList<ResourceOperation> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HibernateResourceOperationResult(string description, string hibernateResourceOperationResponseType, AzureLocation location, IReadOnlyList<ResourceOperationResult> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             HibernateResourceOperationResponseType = hibernateResourceOperationResponseType;
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HibernateResourceOperationResponse"/> for deserialization. </summary>
-        internal HibernateResourceOperationResponse()
+        /// <summary> Initializes a new instance of <see cref="HibernateResourceOperationResult"/> for deserialization. </summary>
+        internal HibernateResourceOperationResult()
         {
         }
 
@@ -89,6 +89,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> The location of the Hibernate request eg westus. </summary>
         public AzureLocation Location { get; }
         /// <summary> The results from the Hibernate request if no errors exist. </summary>
-        public IReadOnlyList<ResourceOperation> Results { get; }
+        public IReadOnlyList<ResourceOperationResult> Results { get; }
     }
 }

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    public partial class ExecutionParameters : IUtf8JsonSerializable, IJsonModel<ExecutionParameters>
+    public partial class ScheduledActionExecutionParameterDetail : IUtf8JsonSerializable, IJsonModel<ScheduledActionExecutionParameterDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecutionParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledActionExecutionParameterDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ExecutionParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScheduledActionExecutionParameterDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecutionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionExecutionParameterDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecutionParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionExecutionParameterDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WriteEndObject();
         }
 
-        ExecutionParameters IJsonModel<ExecutionParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ScheduledActionExecutionParameterDetail IJsonModel<ScheduledActionExecutionParameterDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecutionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionExecutionParameterDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecutionParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionExecutionParameterDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExecutionParameters(document.RootElement, options);
+            return DeserializeScheduledActionExecutionParameterDetail(document.RootElement, options);
         }
 
-        internal static ExecutionParameters DeserializeExecutionParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ScheduledActionExecutionParameterDetail DeserializeScheduledActionExecutionParameterDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            OptimizationPreference? optimizationPreference = default;
-            RetryPolicy retryPolicy = default;
+            ScheduledActionOptimizationPreference? optimizationPreference = default;
+            UserRequestRetryPolicy retryPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    optimizationPreference = new OptimizationPreference(property.Value.GetString());
+                    optimizationPreference = new ScheduledActionOptimizationPreference(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("retryPolicy"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    retryPolicy = RetryPolicy.DeserializeRetryPolicy(property.Value, options);
+                    retryPolicy = UserRequestRetryPolicy.DeserializeUserRequestRetryPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,38 +104,38 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ExecutionParameters(optimizationPreference, retryPolicy, serializedAdditionalRawData);
+            return new ScheduledActionExecutionParameterDetail(optimizationPreference, retryPolicy, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ExecutionParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ScheduledActionExecutionParameterDetail>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecutionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionExecutionParameterDetail>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExecutionParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionExecutionParameterDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ExecutionParameters IPersistableModel<ExecutionParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ScheduledActionExecutionParameterDetail IPersistableModel<ScheduledActionExecutionParameterDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecutionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionExecutionParameterDetail>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeExecutionParameters(document.RootElement, options);
+                        return DeserializeScheduledActionExecutionParameterDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExecutionParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionExecutionParameterDetail)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ExecutionParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScheduledActionExecutionParameterDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

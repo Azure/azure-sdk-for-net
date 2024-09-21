@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    public partial class GetOperationErrorsResponse : IUtf8JsonSerializable, IJsonModel<GetOperationErrorsResponse>
+    public partial class GetOperationErrorsResult : IUtf8JsonSerializable, IJsonModel<GetOperationErrorsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetOperationErrorsResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetOperationErrorsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<GetOperationErrorsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GetOperationErrorsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetOperationErrorsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetOperationErrorsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetOperationErrorsResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GetOperationErrorsResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WriteEndObject();
         }
 
-        GetOperationErrorsResponse IJsonModel<GetOperationErrorsResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        GetOperationErrorsResult IJsonModel<GetOperationErrorsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetOperationErrorsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetOperationErrorsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetOperationErrorsResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GetOperationErrorsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGetOperationErrorsResponse(document.RootElement, options);
+            return DeserializeGetOperationErrorsResult(document.RootElement, options);
         }
 
-        internal static GetOperationErrorsResponse DeserializeGetOperationErrorsResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static GetOperationErrorsResult DeserializeGetOperationErrorsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -92,38 +92,38 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GetOperationErrorsResponse(results, serializedAdditionalRawData);
+            return new GetOperationErrorsResult(results, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<GetOperationErrorsResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<GetOperationErrorsResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetOperationErrorsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetOperationErrorsResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GetOperationErrorsResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetOperationErrorsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GetOperationErrorsResponse IPersistableModel<GetOperationErrorsResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        GetOperationErrorsResult IPersistableModel<GetOperationErrorsResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetOperationErrorsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetOperationErrorsResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeGetOperationErrorsResponse(document.RootElement, options);
+                        return DeserializeGetOperationErrorsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetOperationErrorsResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetOperationErrorsResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<GetOperationErrorsResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GetOperationErrorsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

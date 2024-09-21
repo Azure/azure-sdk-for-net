@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    public partial class RetryPolicy : IUtf8JsonSerializable, IJsonModel<RetryPolicy>
+    public partial class UserRequestRetryPolicy : IUtf8JsonSerializable, IJsonModel<UserRequestRetryPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RetryPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserRequestRetryPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RetryPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UserRequestRetryPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserRequestRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RetryPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UserRequestRetryPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WriteEndObject();
         }
 
-        RetryPolicy IJsonModel<RetryPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        UserRequestRetryPolicy IJsonModel<UserRequestRetryPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserRequestRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RetryPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UserRequestRetryPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRetryPolicy(document.RootElement, options);
+            return DeserializeUserRequestRetryPolicy(document.RootElement, options);
         }
 
-        internal static RetryPolicy DeserializeRetryPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UserRequestRetryPolicy DeserializeUserRequestRetryPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,38 +104,38 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RetryPolicy(retryCount, retryWindowInMinutes, serializedAdditionalRawData);
+            return new UserRequestRetryPolicy(retryCount, retryWindowInMinutes, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RetryPolicy>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<UserRequestRetryPolicy>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserRequestRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RetryPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserRequestRetryPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RetryPolicy IPersistableModel<RetryPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        UserRequestRetryPolicy IPersistableModel<UserRequestRetryPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserRequestRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRetryPolicy(document.RootElement, options);
+                        return DeserializeUserRequestRetryPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RetryPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserRequestRetryPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RetryPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UserRequestRetryPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

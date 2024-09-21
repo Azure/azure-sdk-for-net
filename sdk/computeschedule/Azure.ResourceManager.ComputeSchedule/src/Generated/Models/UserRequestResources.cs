@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> High level response from an operation on a resource. </summary>
-    public partial class ResourceOperation
+    /// <summary> The resources needed for the user request. </summary>
+    public partial class UserRequestResources
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,33 +47,31 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceOperation"/>. </summary>
-        internal ResourceOperation()
+        /// <summary> Initializes a new instance of <see cref="UserRequestResources"/>. </summary>
+        /// <param name="ids"> The resource ids used for the request. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ids"/> is null. </exception>
+        public UserRequestResources(IEnumerable<ResourceIdentifier> ids)
         {
+            Argument.AssertNotNull(ids, nameof(ids));
+
+            Ids = ids.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceOperation"/>. </summary>
-        /// <param name="resourceId"> Unique identifier for the resource involved in the operation, eg ArmId. </param>
-        /// <param name="errorCode"> Resource level error code if it exists. </param>
-        /// <param name="errorDetails"> Resource level error details if they exist. </param>
-        /// <param name="operation"> Details of the operation performed on a resource. </param>
+        /// <summary> Initializes a new instance of <see cref="UserRequestResources"/>. </summary>
+        /// <param name="ids"> The resource ids used for the request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceOperation(ResourceIdentifier resourceId, string errorCode, string errorDetails, ResourceOperationDetails operation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UserRequestResources(IList<ResourceIdentifier> ids, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ResourceId = resourceId;
-            ErrorCode = errorCode;
-            ErrorDetails = errorDetails;
-            Operation = operation;
+            Ids = ids;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Unique identifier for the resource involved in the operation, eg ArmId. </summary>
-        public ResourceIdentifier ResourceId { get; }
-        /// <summary> Resource level error code if it exists. </summary>
-        public string ErrorCode { get; }
-        /// <summary> Resource level error details if they exist. </summary>
-        public string ErrorDetails { get; }
-        /// <summary> Details of the operation performed on a resource. </summary>
-        public ResourceOperationDetails Operation { get; }
+        /// <summary> Initializes a new instance of <see cref="UserRequestResources"/> for deserialization. </summary>
+        internal UserRequestResources()
+        {
+        }
+
+        /// <summary> The resource ids used for the request. </summary>
+        public IList<ResourceIdentifier> Ids { get; }
     }
 }

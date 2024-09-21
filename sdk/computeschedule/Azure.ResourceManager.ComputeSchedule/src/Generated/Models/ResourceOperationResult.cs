@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> This is the response from a get operations errors request. </summary>
-    public partial class GetOperationErrorsResponse
+    /// <summary> High level response from an operation on a resource. </summary>
+    public partial class ResourceOperationResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +46,33 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GetOperationErrorsResponse"/>. </summary>
-        /// <param name="results"> An array of operationids and their corresponding errors if any. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
-        internal GetOperationErrorsResponse(IEnumerable<OperationErrorsResult> results)
+        /// <summary> Initializes a new instance of <see cref="ResourceOperationResult"/>. </summary>
+        internal ResourceOperationResult()
         {
-            Argument.AssertNotNull(results, nameof(results));
-
-            Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetOperationErrorsResponse"/>. </summary>
-        /// <param name="results"> An array of operationids and their corresponding errors if any. </param>
+        /// <summary> Initializes a new instance of <see cref="ResourceOperationResult"/>. </summary>
+        /// <param name="resourceId"> Unique identifier for the resource involved in the operation, eg ArmId. </param>
+        /// <param name="errorCode"> Resource level error code if it exists. </param>
+        /// <param name="errorDetails"> Resource level error details if they exist. </param>
+        /// <param name="operation"> Details of the operation performed on a resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetOperationErrorsResponse(IReadOnlyList<OperationErrorsResult> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceOperationResult(ResourceIdentifier resourceId, string errorCode, string errorDetails, ResourceOperationDetails operation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Results = results;
+            ResourceId = resourceId;
+            ErrorCode = errorCode;
+            ErrorDetails = errorDetails;
+            Operation = operation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetOperationErrorsResponse"/> for deserialization. </summary>
-        internal GetOperationErrorsResponse()
-        {
-        }
-
-        /// <summary> An array of operationids and their corresponding errors if any. </summary>
-        public IReadOnlyList<OperationErrorsResult> Results { get; }
+        /// <summary> Unique identifier for the resource involved in the operation, eg ArmId. </summary>
+        public ResourceIdentifier ResourceId { get; }
+        /// <summary> Resource level error code if it exists. </summary>
+        public string ErrorCode { get; }
+        /// <summary> Resource level error details if they exist. </summary>
+        public string ErrorDetails { get; }
+        /// <summary> Details of the operation performed on a resource. </summary>
+        public ResourceOperationDetails Operation { get; }
     }
 }

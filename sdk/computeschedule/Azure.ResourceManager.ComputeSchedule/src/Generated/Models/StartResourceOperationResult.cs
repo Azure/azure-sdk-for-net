@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The response from a start request. </summary>
-    public partial class StartResourceOperationResponse
+    public partial class StartResourceOperationResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StartResourceOperationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="startResourceOperationResponseType"> The type of resources used in the start request eg virtual machines. </param>
         /// <param name="location"> The location of the start request eg westus. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> or <paramref name="startResourceOperationResponseType"/> is null. </exception>
-        internal StartResourceOperationResponse(string description, string startResourceOperationResponseType, AzureLocation location)
+        internal StartResourceOperationResult(string description, string startResourceOperationResponseType, AzureLocation location)
         {
             Argument.AssertNotNull(description, nameof(description));
             Argument.AssertNotNull(startResourceOperationResponseType, nameof(startResourceOperationResponseType));
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             Description = description;
             StartResourceOperationResponseType = startResourceOperationResponseType;
             Location = location;
-            Results = new ChangeTrackingList<ResourceOperation>();
+            Results = new ChangeTrackingList<ResourceOperationResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StartResourceOperationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="startResourceOperationResponseType"> The type of resources used in the start request eg virtual machines. </param>
         /// <param name="location"> The location of the start request eg westus. </param>
         /// <param name="results"> The results from the start request if no errors exist. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StartResourceOperationResponse(string description, string startResourceOperationResponseType, AzureLocation location, IReadOnlyList<ResourceOperation> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StartResourceOperationResult(string description, string startResourceOperationResponseType, AzureLocation location, IReadOnlyList<ResourceOperationResult> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             StartResourceOperationResponseType = startResourceOperationResponseType;
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StartResourceOperationResponse"/> for deserialization. </summary>
-        internal StartResourceOperationResponse()
+        /// <summary> Initializes a new instance of <see cref="StartResourceOperationResult"/> for deserialization. </summary>
+        internal StartResourceOperationResult()
         {
         }
 
@@ -89,6 +89,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> The location of the start request eg westus. </summary>
         public AzureLocation Location { get; }
         /// <summary> The results from the start request if no errors exist. </summary>
-        public IReadOnlyList<ResourceOperation> Results { get; }
+        public IReadOnlyList<ResourceOperationResult> Results { get; }
     }
 }

@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> Extra details needed to run the user's request. </summary>
-    public partial class ExecutionParameters
+    /// <summary> This is the response from a get operations status request. </summary>
+    public partial class GetOperationStatusResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +46,31 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ExecutionParameters"/>. </summary>
-        public ExecutionParameters()
+        /// <summary> Initializes a new instance of <see cref="GetOperationStatusResult"/>. </summary>
+        /// <param name="results"> An array of resource operations based on their operation ids. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
+        internal GetOperationStatusResult(IEnumerable<ResourceOperationResult> results)
         {
+            Argument.AssertNotNull(results, nameof(results));
+
+            Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExecutionParameters"/>. </summary>
-        /// <param name="optimizationPreference"> Details that could optimize the user's request. </param>
-        /// <param name="retryPolicy"> Retry policy the user can pass. </param>
+        /// <summary> Initializes a new instance of <see cref="GetOperationStatusResult"/>. </summary>
+        /// <param name="results"> An array of resource operations based on their operation ids. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExecutionParameters(OptimizationPreference? optimizationPreference, RetryPolicy retryPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetOperationStatusResult(IReadOnlyList<ResourceOperationResult> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            OptimizationPreference = optimizationPreference;
-            RetryPolicy = retryPolicy;
+            Results = results;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Details that could optimize the user's request. </summary>
-        public OptimizationPreference? OptimizationPreference { get; set; }
-        /// <summary> Retry policy the user can pass. </summary>
-        public RetryPolicy RetryPolicy { get; set; }
+        /// <summary> Initializes a new instance of <see cref="GetOperationStatusResult"/> for deserialization. </summary>
+        internal GetOperationStatusResult()
+        {
+        }
+
+        /// <summary> An array of resource operations based on their operation ids. </summary>
+        public IReadOnlyList<ResourceOperationResult> Results { get; }
     }
 }

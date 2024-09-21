@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    public partial class ResourceOperation : IUtf8JsonSerializable, IJsonModel<ResourceOperation>
+    public partial class ResourceOperationResult : IUtf8JsonSerializable, IJsonModel<ResourceOperationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceOperation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceOperationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ResourceOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ResourceOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceOperation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceOperation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceOperationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,19 +64,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WriteEndObject();
         }
 
-        ResourceOperation IJsonModel<ResourceOperation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ResourceOperationResult IJsonModel<ResourceOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceOperation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceOperation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceOperationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceOperation(document.RootElement, options);
+            return DeserializeResourceOperationResult(document.RootElement, options);
         }
 
-        internal static ResourceOperation DeserializeResourceOperation(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ResourceOperationResult DeserializeResourceOperationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -126,38 +126,38 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ResourceOperation(resourceId, errorCode, errorDetails, operation, serializedAdditionalRawData);
+            return new ResourceOperationResult(resourceId, errorCode, errorDetails, operation, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ResourceOperation>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ResourceOperationResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceOperation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceOperationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceOperation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceOperationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ResourceOperation IPersistableModel<ResourceOperation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ResourceOperationResult IPersistableModel<ResourceOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceOperation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceOperationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeResourceOperation(document.RootElement, options);
+                        return DeserializeResourceOperationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceOperation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceOperationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ResourceOperation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResourceOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

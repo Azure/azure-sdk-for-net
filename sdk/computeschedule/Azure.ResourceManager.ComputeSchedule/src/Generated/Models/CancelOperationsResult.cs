@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> This is the response from a cancel operations request. </summary>
-    public partial class CancelOperationsResponse
+    public partial class CancelOperationsResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +46,31 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CancelOperationsResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelOperationsResult"/>. </summary>
         /// <param name="results"> An array of resource operations that were successfully cancelled. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
-        internal CancelOperationsResponse(IEnumerable<ResourceOperation> results)
+        internal CancelOperationsResult(IEnumerable<ResourceOperationResult> results)
         {
             Argument.AssertNotNull(results, nameof(results));
 
             Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CancelOperationsResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelOperationsResult"/>. </summary>
         /// <param name="results"> An array of resource operations that were successfully cancelled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CancelOperationsResponse(IReadOnlyList<ResourceOperation> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CancelOperationsResult(IReadOnlyList<ResourceOperationResult> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Results = results;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CancelOperationsResponse"/> for deserialization. </summary>
-        internal CancelOperationsResponse()
+        /// <summary> Initializes a new instance of <see cref="CancelOperationsResult"/> for deserialization. </summary>
+        internal CancelOperationsResult()
         {
         }
 
         /// <summary> An array of resource operations that were successfully cancelled. </summary>
-        public IReadOnlyList<ResourceOperation> Results { get; }
+        public IReadOnlyList<ResourceOperationResult> Results { get; }
     }
 }

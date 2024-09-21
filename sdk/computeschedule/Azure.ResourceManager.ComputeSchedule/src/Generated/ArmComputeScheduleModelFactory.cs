@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmComputeScheduleModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.CancelOperationsResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CancelOperationsResult"/>. </summary>
         /// <param name="results"> An array of resource operations that were successfully cancelled. </param>
-        /// <returns> A new <see cref="Models.CancelOperationsResponse"/> instance for mocking. </returns>
-        public static CancelOperationsResponse CancelOperationsResponse(IEnumerable<ResourceOperation> results = null)
+        /// <returns> A new <see cref="Models.CancelOperationsResult"/> instance for mocking. </returns>
+        public static CancelOperationsResult CancelOperationsResult(IEnumerable<ResourceOperationResult> results = null)
         {
-            results ??= new List<ResourceOperation>();
+            results ??= new List<ResourceOperationResult>();
 
-            return new CancelOperationsResponse(results?.ToList(), serializedAdditionalRawData: null);
+            return new CancelOperationsResult(results?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceOperationResult"/>. </summary>
         /// <param name="resourceId"> Unique identifier for the resource involved in the operation, eg ArmId. </param>
         /// <param name="errorCode"> Resource level error code if it exists. </param>
         /// <param name="errorDetails"> Resource level error details if they exist. </param>
         /// <param name="operation"> Details of the operation performed on a resource. </param>
-        /// <returns> A new <see cref="Models.ResourceOperation"/> instance for mocking. </returns>
-        public static ResourceOperation ResourceOperation(ResourceIdentifier resourceId = null, string errorCode = null, string errorDetails = null, ResourceOperationDetails operation = null)
+        /// <returns> A new <see cref="Models.ResourceOperationResult"/> instance for mocking. </returns>
+        public static ResourceOperationResult ResourceOperationResult(ResourceIdentifier resourceId = null, string errorCode = null, string errorDetails = null, ResourceOperationDetails operation = null)
         {
-            return new ResourceOperation(resourceId, errorCode, errorDetails, operation, serializedAdditionalRawData: null);
+            return new ResourceOperationResult(resourceId, errorCode, errorDetails, operation, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceOperationDetails"/>. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.ResourceOperationDetails"/> instance for mocking. </returns>
-        public static ResourceOperationDetails ResourceOperationDetails(string operationId = null, ResourceIdentifier resourceId = null, ResourceOperationType opType = default, string subscriptionId = null, DateTimeOffset deadline = default, DeadlineType deadlineType = default, OperationState state = default, string timeZone = null, ResourceOperationError resourceOperationError = null, DateTimeOffset? completedOn = null, RetryPolicy retryPolicy = null)
+        public static ResourceOperationDetails ResourceOperationDetails(string operationId = null, ResourceIdentifier resourceId = null, ResourceOperationType opType = default, string subscriptionId = null, DateTimeOffset deadline = default, ScheduledActionDeadlineType deadlineType = default, ScheduledActionOperationState state = default, string timeZone = null, ResourceOperationError resourceOperationError = null, DateTimeOffset? completedOn = null, UserRequestRetryPolicy retryPolicy = null)
         {
             return new ResourceOperationDetails(
                 operationId,
@@ -75,53 +75,53 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             return new ResourceOperationError(errorCode, errorDetails, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeallocateResourceOperationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeallocateResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="deallocateResourceOperationResponseType"> The type of resources used in the deallocate request eg virtual machines. </param>
         /// <param name="location"> The location of the deallocate request eg westus. </param>
         /// <param name="results"> The results from the deallocate request if no errors exist. </param>
-        /// <returns> A new <see cref="Models.DeallocateResourceOperationResponse"/> instance for mocking. </returns>
-        public static DeallocateResourceOperationResponse DeallocateResourceOperationResponse(string description = null, string deallocateResourceOperationResponseType = null, AzureLocation location = default, IEnumerable<ResourceOperation> results = null)
+        /// <returns> A new <see cref="Models.DeallocateResourceOperationResult"/> instance for mocking. </returns>
+        public static DeallocateResourceOperationResult DeallocateResourceOperationResult(string description = null, string deallocateResourceOperationResponseType = null, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = null)
         {
-            results ??= new List<ResourceOperation>();
+            results ??= new List<ResourceOperationResult>();
 
-            return new DeallocateResourceOperationResponse(description, deallocateResourceOperationResponseType, location, results?.ToList(), serializedAdditionalRawData: null);
+            return new DeallocateResourceOperationResult(description, deallocateResourceOperationResponseType, location, results?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HibernateResourceOperationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HibernateResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="hibernateResourceOperationResponseType"> The type of resources used in the Hibernate request eg virtual machines. </param>
         /// <param name="location"> The location of the Hibernate request eg westus. </param>
         /// <param name="results"> The results from the Hibernate request if no errors exist. </param>
-        /// <returns> A new <see cref="Models.HibernateResourceOperationResponse"/> instance for mocking. </returns>
-        public static HibernateResourceOperationResponse HibernateResourceOperationResponse(string description = null, string hibernateResourceOperationResponseType = null, AzureLocation location = default, IEnumerable<ResourceOperation> results = null)
+        /// <returns> A new <see cref="Models.HibernateResourceOperationResult"/> instance for mocking. </returns>
+        public static HibernateResourceOperationResult HibernateResourceOperationResult(string description = null, string hibernateResourceOperationResponseType = null, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = null)
         {
-            results ??= new List<ResourceOperation>();
+            results ??= new List<ResourceOperationResult>();
 
-            return new HibernateResourceOperationResponse(description, hibernateResourceOperationResponseType, location, results?.ToList(), serializedAdditionalRawData: null);
+            return new HibernateResourceOperationResult(description, hibernateResourceOperationResponseType, location, results?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.StartResourceOperationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StartResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="startResourceOperationResponseType"> The type of resources used in the start request eg virtual machines. </param>
         /// <param name="location"> The location of the start request eg westus. </param>
         /// <param name="results"> The results from the start request if no errors exist. </param>
-        /// <returns> A new <see cref="Models.StartResourceOperationResponse"/> instance for mocking. </returns>
-        public static StartResourceOperationResponse StartResourceOperationResponse(string description = null, string startResourceOperationResponseType = null, AzureLocation location = default, IEnumerable<ResourceOperation> results = null)
+        /// <returns> A new <see cref="Models.StartResourceOperationResult"/> instance for mocking. </returns>
+        public static StartResourceOperationResult StartResourceOperationResult(string description = null, string startResourceOperationResponseType = null, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = null)
         {
-            results ??= new List<ResourceOperation>();
+            results ??= new List<ResourceOperationResult>();
 
-            return new StartResourceOperationResponse(description, startResourceOperationResponseType, location, results?.ToList(), serializedAdditionalRawData: null);
+            return new StartResourceOperationResult(description, startResourceOperationResponseType, location, results?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GetOperationErrorsResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetOperationErrorsResult"/>. </summary>
         /// <param name="results"> An array of operationids and their corresponding errors if any. </param>
-        /// <returns> A new <see cref="Models.GetOperationErrorsResponse"/> instance for mocking. </returns>
-        public static GetOperationErrorsResponse GetOperationErrorsResponse(IEnumerable<OperationErrorsResult> results = null)
+        /// <returns> A new <see cref="Models.GetOperationErrorsResult"/> instance for mocking. </returns>
+        public static GetOperationErrorsResult GetOperationErrorsResult(IEnumerable<OperationErrorsResult> results = null)
         {
             results ??= new List<OperationErrorsResult>();
 
-            return new GetOperationErrorsResponse(results?.ToList(), serializedAdditionalRawData: null);
+            return new GetOperationErrorsResult(results?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationErrorsResult"/>. </summary>
@@ -159,14 +159,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             return new OperationErrorDetails(errorCode, errorDetails, timeStamp, crpOperationId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GetOperationStatusResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetOperationStatusResult"/>. </summary>
         /// <param name="results"> An array of resource operations based on their operation ids. </param>
-        /// <returns> A new <see cref="Models.GetOperationStatusResponse"/> instance for mocking. </returns>
-        public static GetOperationStatusResponse GetOperationStatusResponse(IEnumerable<ResourceOperation> results = null)
+        /// <returns> A new <see cref="Models.GetOperationStatusResult"/> instance for mocking. </returns>
+        public static GetOperationStatusResult GetOperationStatusResult(IEnumerable<ResourceOperationResult> results = null)
         {
-            results ??= new List<ResourceOperation>();
+            results ??= new List<ResourceOperationResult>();
 
-            return new GetOperationStatusResponse(results?.ToList(), serializedAdditionalRawData: null);
+            return new GetOperationStatusResult(results?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

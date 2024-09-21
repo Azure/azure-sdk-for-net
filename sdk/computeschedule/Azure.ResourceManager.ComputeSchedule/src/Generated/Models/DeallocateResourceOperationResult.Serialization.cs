@@ -13,23 +13,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    public partial class StartResourceOperationResponse : IUtf8JsonSerializable, IJsonModel<StartResourceOperationResponse>
+    public partial class DeallocateResourceOperationResult : IUtf8JsonSerializable, IJsonModel<DeallocateResourceOperationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StartResourceOperationResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeallocateResourceOperationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<StartResourceOperationResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeallocateResourceOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StartResourceOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeallocateResourceOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StartResourceOperationResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeallocateResourceOperationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(StartResourceOperationResponseType);
+            writer.WriteStringValue(DeallocateResourceOperationResponseType);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Results))
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WriteEndObject();
         }
 
-        StartResourceOperationResponse IJsonModel<StartResourceOperationResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeallocateResourceOperationResult IJsonModel<DeallocateResourceOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StartResourceOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeallocateResourceOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StartResourceOperationResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeallocateResourceOperationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStartResourceOperationResponse(document.RootElement, options);
+            return DeserializeDeallocateResourceOperationResult(document.RootElement, options);
         }
 
-        internal static StartResourceOperationResponse DeserializeStartResourceOperationResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DeallocateResourceOperationResult DeserializeDeallocateResourceOperationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             string description = default;
             string type = default;
             AzureLocation location = default;
-            IReadOnlyList<ResourceOperation> results = default;
+            IReadOnlyList<ResourceOperationResult> results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    List<ResourceOperation> array = new List<ResourceOperation>();
+                    List<ResourceOperationResult> array = new List<ResourceOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceOperation.DeserializeResourceOperation(item, options));
+                        array.Add(ResourceOperationResult.DeserializeResourceOperationResult(item, options));
                     }
                     results = array;
                     continue;
@@ -123,38 +123,38 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StartResourceOperationResponse(description, type, location, results ?? new ChangeTrackingList<ResourceOperation>(), serializedAdditionalRawData);
+            return new DeallocateResourceOperationResult(description, type, location, results ?? new ChangeTrackingList<ResourceOperationResult>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<StartResourceOperationResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeallocateResourceOperationResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StartResourceOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeallocateResourceOperationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StartResourceOperationResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeallocateResourceOperationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        StartResourceOperationResponse IPersistableModel<StartResourceOperationResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DeallocateResourceOperationResult IPersistableModel<DeallocateResourceOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StartResourceOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeallocateResourceOperationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeStartResourceOperationResponse(document.RootElement, options);
+                        return DeserializeDeallocateResourceOperationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StartResourceOperationResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeallocateResourceOperationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<StartResourceOperationResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeallocateResourceOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

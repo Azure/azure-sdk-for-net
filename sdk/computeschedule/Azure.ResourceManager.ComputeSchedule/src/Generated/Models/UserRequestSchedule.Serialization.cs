@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    public partial class Schedule : IUtf8JsonSerializable, IJsonModel<Schedule>
+    public partial class UserRequestSchedule : IUtf8JsonSerializable, IJsonModel<UserRequestSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Schedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserRequestSchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Schedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UserRequestSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Schedule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserRequestSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Schedule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UserRequestSchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,19 +50,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WriteEndObject();
         }
 
-        Schedule IJsonModel<Schedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        UserRequestSchedule IJsonModel<UserRequestSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Schedule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserRequestSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Schedule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UserRequestSchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSchedule(document.RootElement, options);
+            return DeserializeUserRequestSchedule(document.RootElement, options);
         }
 
-        internal static Schedule DeserializeSchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UserRequestSchedule DeserializeUserRequestSchedule(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             DateTimeOffset deadLine = default;
             string timeZone = default;
-            DeadlineType deadlineType = default;
+            ScheduledActionDeadlineType deadlineType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (property.NameEquals("deadlineType"u8))
                 {
-                    deadlineType = new DeadlineType(property.Value.GetString());
+                    deadlineType = new ScheduledActionDeadlineType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -98,38 +98,38 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Schedule(deadLine, timeZone, deadlineType, serializedAdditionalRawData);
+            return new UserRequestSchedule(deadLine, timeZone, deadlineType, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Schedule>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<UserRequestSchedule>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Schedule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserRequestSchedule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Schedule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserRequestSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Schedule IPersistableModel<Schedule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        UserRequestSchedule IPersistableModel<UserRequestSchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Schedule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserRequestSchedule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSchedule(document.RootElement, options);
+                        return DeserializeUserRequestSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Schedule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserRequestSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Schedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UserRequestSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The response from a deallocate request. </summary>
-    public partial class DeallocateResourceOperationResponse
+    public partial class DeallocateResourceOperationResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DeallocateResourceOperationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeallocateResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="deallocateResourceOperationResponseType"> The type of resources used in the deallocate request eg virtual machines. </param>
         /// <param name="location"> The location of the deallocate request eg westus. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> or <paramref name="deallocateResourceOperationResponseType"/> is null. </exception>
-        internal DeallocateResourceOperationResponse(string description, string deallocateResourceOperationResponseType, AzureLocation location)
+        internal DeallocateResourceOperationResult(string description, string deallocateResourceOperationResponseType, AzureLocation location)
         {
             Argument.AssertNotNull(description, nameof(description));
             Argument.AssertNotNull(deallocateResourceOperationResponseType, nameof(deallocateResourceOperationResponseType));
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             Description = description;
             DeallocateResourceOperationResponseType = deallocateResourceOperationResponseType;
             Location = location;
-            Results = new ChangeTrackingList<ResourceOperation>();
+            Results = new ChangeTrackingList<ResourceOperationResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeallocateResourceOperationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeallocateResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="deallocateResourceOperationResponseType"> The type of resources used in the deallocate request eg virtual machines. </param>
         /// <param name="location"> The location of the deallocate request eg westus. </param>
         /// <param name="results"> The results from the deallocate request if no errors exist. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeallocateResourceOperationResponse(string description, string deallocateResourceOperationResponseType, AzureLocation location, IReadOnlyList<ResourceOperation> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeallocateResourceOperationResult(string description, string deallocateResourceOperationResponseType, AzureLocation location, IReadOnlyList<ResourceOperationResult> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             DeallocateResourceOperationResponseType = deallocateResourceOperationResponseType;
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeallocateResourceOperationResponse"/> for deserialization. </summary>
-        internal DeallocateResourceOperationResponse()
+        /// <summary> Initializes a new instance of <see cref="DeallocateResourceOperationResult"/> for deserialization. </summary>
+        internal DeallocateResourceOperationResult()
         {
         }
 
@@ -89,6 +89,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> The location of the deallocate request eg westus. </summary>
         public AzureLocation Location { get; }
         /// <summary> The results from the deallocate request if no errors exist. </summary>
-        public IReadOnlyList<ResourceOperation> Results { get; }
+        public IReadOnlyList<ResourceOperationResult> Results { get; }
     }
 }

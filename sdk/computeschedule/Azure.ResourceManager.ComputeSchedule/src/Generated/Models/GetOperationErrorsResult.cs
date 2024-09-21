@@ -8,12 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> The resources needed for the user request. </summary>
-    public partial class Resources
+    /// <summary> This is the response from a get operations errors request. </summary>
+    public partial class GetOperationErrorsResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,31 +46,31 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Resources"/>. </summary>
-        /// <param name="ids"> The resource ids used for the request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ids"/> is null. </exception>
-        public Resources(IEnumerable<ResourceIdentifier> ids)
+        /// <summary> Initializes a new instance of <see cref="GetOperationErrorsResult"/>. </summary>
+        /// <param name="results"> An array of operationids and their corresponding errors if any. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
+        internal GetOperationErrorsResult(IEnumerable<OperationErrorsResult> results)
         {
-            Argument.AssertNotNull(ids, nameof(ids));
+            Argument.AssertNotNull(results, nameof(results));
 
-            Ids = ids.ToList();
+            Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Resources"/>. </summary>
-        /// <param name="ids"> The resource ids used for the request. </param>
+        /// <summary> Initializes a new instance of <see cref="GetOperationErrorsResult"/>. </summary>
+        /// <param name="results"> An array of operationids and their corresponding errors if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Resources(IList<ResourceIdentifier> ids, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetOperationErrorsResult(IReadOnlyList<OperationErrorsResult> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Ids = ids;
+            Results = results;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Resources"/> for deserialization. </summary>
-        internal Resources()
+        /// <summary> Initializes a new instance of <see cref="GetOperationErrorsResult"/> for deserialization. </summary>
+        internal GetOperationErrorsResult()
         {
         }
 
-        /// <summary> The resource ids used for the request. </summary>
-        public IList<ResourceIdentifier> Ids { get; }
+        /// <summary> An array of operationids and their corresponding errors if any. </summary>
+        public IReadOnlyList<OperationErrorsResult> Results { get; }
     }
 }

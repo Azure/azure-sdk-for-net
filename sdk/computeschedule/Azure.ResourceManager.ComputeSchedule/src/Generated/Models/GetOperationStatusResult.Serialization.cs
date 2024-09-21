@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    public partial class GetOperationStatusResponse : IUtf8JsonSerializable, IJsonModel<GetOperationStatusResponse>
+    public partial class GetOperationStatusResult : IUtf8JsonSerializable, IJsonModel<GetOperationStatusResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetOperationStatusResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetOperationStatusResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<GetOperationStatusResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GetOperationStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetOperationStatusResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetOperationStatusResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GetOperationStatusResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WriteEndObject();
         }
 
-        GetOperationStatusResponse IJsonModel<GetOperationStatusResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        GetOperationStatusResult IJsonModel<GetOperationStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetOperationStatusResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetOperationStatusResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GetOperationStatusResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGetOperationStatusResponse(document.RootElement, options);
+            return DeserializeGetOperationStatusResult(document.RootElement, options);
         }
 
-        internal static GetOperationStatusResponse DeserializeGetOperationStatusResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static GetOperationStatusResult DeserializeGetOperationStatusResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            IReadOnlyList<ResourceOperation> results = default;
+            IReadOnlyList<ResourceOperationResult> results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
                 {
-                    List<ResourceOperation> array = new List<ResourceOperation>();
+                    List<ResourceOperationResult> array = new List<ResourceOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceOperation.DeserializeResourceOperation(item, options));
+                        array.Add(ResourceOperationResult.DeserializeResourceOperationResult(item, options));
                     }
                     results = array;
                     continue;
@@ -92,38 +92,38 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GetOperationStatusResponse(results, serializedAdditionalRawData);
+            return new GetOperationStatusResult(results, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<GetOperationStatusResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<GetOperationStatusResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetOperationStatusResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GetOperationStatusResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetOperationStatusResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GetOperationStatusResponse IPersistableModel<GetOperationStatusResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        GetOperationStatusResult IPersistableModel<GetOperationStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetOperationStatusResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeGetOperationStatusResponse(document.RootElement, options);
+                        return DeserializeGetOperationStatusResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetOperationStatusResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetOperationStatusResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<GetOperationStatusResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GetOperationStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

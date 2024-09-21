@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CancelOperationsResponse>> VirtualMachinesCancelOperationsAsync(string subscriptionId, string locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<CancelOperationsResult>> VirtualMachinesCancelOperationsAsync(string subscriptionId, string locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 case 200:
                     {
-                        CancelOperationsResponse value = default;
+                        CancelOperationsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CancelOperationsResponse.DeserializeCancelOperationsResponse(document.RootElement);
+                        value = CancelOperationsResult.DeserializeCancelOperationsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CancelOperationsResponse> VirtualMachinesCancelOperations(string subscriptionId, string locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
+        public Response<CancelOperationsResult> VirtualMachinesCancelOperations(string subscriptionId, string locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 case 200:
                     {
-                        CancelOperationsResponse value = default;
+                        CancelOperationsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CancelOperationsResponse.DeserializeCancelOperationsResponse(document.RootElement);
+                        value = CancelOperationsResult.DeserializeCancelOperationsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeallocateResourceOperationResponse>> VirtualMachinesExecuteDeallocateAsync(string subscriptionId, string locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DeallocateResourceOperationResult>> VirtualMachinesExecuteDeallocateAsync(string subscriptionId, string locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
@@ -185,9 +185,9 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 case 200:
                     {
-                        DeallocateResourceOperationResponse value = default;
+                        DeallocateResourceOperationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeallocateResourceOperationResponse.DeserializeDeallocateResourceOperationResponse(document.RootElement);
+                        value = DeallocateResourceOperationResult.DeserializeDeallocateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeallocateResourceOperationResponse> VirtualMachinesExecuteDeallocate(string subscriptionId, string locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
+        public Response<DeallocateResourceOperationResult> VirtualMachinesExecuteDeallocate(string subscriptionId, string locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
@@ -214,9 +214,9 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 case 200:
                     {
-                        DeallocateResourceOperationResponse value = default;
+                        DeallocateResourceOperationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeallocateResourceOperationResponse.DeserializeDeallocateResourceOperationResponse(document.RootElement);
+                        value = DeallocateResourceOperationResult.DeserializeDeallocateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HibernateResourceOperationResponse>> VirtualMachinesExecuteHibernateAsync(string subscriptionId, string locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<HibernateResourceOperationResult>> VirtualMachinesExecuteHibernateAsync(string subscriptionId, string locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
@@ -279,9 +279,9 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 case 200:
                     {
-                        HibernateResourceOperationResponse value = default;
+                        HibernateResourceOperationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HibernateResourceOperationResponse.DeserializeHibernateResourceOperationResponse(document.RootElement);
+                        value = HibernateResourceOperationResult.DeserializeHibernateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HibernateResourceOperationResponse> VirtualMachinesExecuteHibernate(string subscriptionId, string locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
+        public Response<HibernateResourceOperationResult> VirtualMachinesExecuteHibernate(string subscriptionId, string locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
@@ -308,9 +308,9 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 case 200:
                     {
-                        HibernateResourceOperationResponse value = default;
+                        HibernateResourceOperationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HibernateResourceOperationResponse.DeserializeHibernateResourceOperationResponse(document.RootElement);
+                        value = HibernateResourceOperationResult.DeserializeHibernateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StartResourceOperationResponse>> VirtualMachinesExecuteStartAsync(string subscriptionId, string locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<StartResourceOperationResult>> VirtualMachinesExecuteStartAsync(string subscriptionId, string locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
@@ -373,9 +373,9 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 case 200:
                     {
-                        StartResourceOperationResponse value = default;
+                        StartResourceOperationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StartResourceOperationResponse.DeserializeStartResourceOperationResponse(document.RootElement);
+                        value = StartResourceOperationResult.DeserializeStartResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StartResourceOperationResponse> VirtualMachinesExecuteStart(string subscriptionId, string locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
+        public Response<StartResourceOperationResult> VirtualMachinesExecuteStart(string subscriptionId, string locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
@@ -402,9 +402,9 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 case 200:
                     {
-                        StartResourceOperationResponse value = default;
+                        StartResourceOperationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StartResourceOperationResponse.DeserializeStartResourceOperationResponse(document.RootElement);
+                        value = StartResourceOperationResult.DeserializeStartResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GetOperationErrorsResponse>> VirtualMachinesGetOperationErrorsAsync(string subscriptionId, string locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<GetOperationErrorsResult>> VirtualMachinesGetOperationErrorsAsync(string subscriptionId, string locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
@@ -467,9 +467,9 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 case 200:
                     {
-                        GetOperationErrorsResponse value = default;
+                        GetOperationErrorsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GetOperationErrorsResponse.DeserializeGetOperationErrorsResponse(document.RootElement);
+                        value = GetOperationErrorsResult.DeserializeGetOperationErrorsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GetOperationErrorsResponse> VirtualMachinesGetOperationErrors(string subscriptionId, string locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
+        public Response<GetOperationErrorsResult> VirtualMachinesGetOperationErrors(string subscriptionId, string locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
@@ -496,9 +496,9 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 case 200:
                     {
-                        GetOperationErrorsResponse value = default;
+                        GetOperationErrorsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GetOperationErrorsResponse.DeserializeGetOperationErrorsResponse(document.RootElement);
+                        value = GetOperationErrorsResult.DeserializeGetOperationErrorsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GetOperationStatusResponse>> VirtualMachinesGetOperationStatusAsync(string subscriptionId, string locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<GetOperationStatusResult>> VirtualMachinesGetOperationStatusAsync(string subscriptionId, string locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
@@ -561,9 +561,9 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 case 200:
                     {
-                        GetOperationStatusResponse value = default;
+                        GetOperationStatusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GetOperationStatusResponse.DeserializeGetOperationStatusResponse(document.RootElement);
+                        value = GetOperationStatusResult.DeserializeGetOperationStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GetOperationStatusResponse> VirtualMachinesGetOperationStatus(string subscriptionId, string locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
+        public Response<GetOperationStatusResult> VirtualMachinesGetOperationStatus(string subscriptionId, string locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
@@ -590,9 +590,9 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 case 200:
                     {
-                        GetOperationStatusResponse value = default;
+                        GetOperationStatusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GetOperationStatusResponse.DeserializeGetOperationStatusResponse(document.RootElement);
+                        value = GetOperationStatusResult.DeserializeGetOperationStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeallocateResourceOperationResponse>> VirtualMachinesSubmitDeallocateAsync(string subscriptionId, string locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DeallocateResourceOperationResult>> VirtualMachinesSubmitDeallocateAsync(string subscriptionId, string locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
@@ -655,9 +655,9 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 case 200:
                     {
-                        DeallocateResourceOperationResponse value = default;
+                        DeallocateResourceOperationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeallocateResourceOperationResponse.DeserializeDeallocateResourceOperationResponse(document.RootElement);
+                        value = DeallocateResourceOperationResult.DeserializeDeallocateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeallocateResourceOperationResponse> VirtualMachinesSubmitDeallocate(string subscriptionId, string locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
+        public Response<DeallocateResourceOperationResult> VirtualMachinesSubmitDeallocate(string subscriptionId, string locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
@@ -684,9 +684,9 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 case 200:
                     {
-                        DeallocateResourceOperationResponse value = default;
+                        DeallocateResourceOperationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeallocateResourceOperationResponse.DeserializeDeallocateResourceOperationResponse(document.RootElement);
+                        value = DeallocateResourceOperationResult.DeserializeDeallocateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HibernateResourceOperationResponse>> VirtualMachinesSubmitHibernateAsync(string subscriptionId, string locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<HibernateResourceOperationResult>> VirtualMachinesSubmitHibernateAsync(string subscriptionId, string locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
@@ -749,9 +749,9 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 case 200:
                     {
-                        HibernateResourceOperationResponse value = default;
+                        HibernateResourceOperationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HibernateResourceOperationResponse.DeserializeHibernateResourceOperationResponse(document.RootElement);
+                        value = HibernateResourceOperationResult.DeserializeHibernateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HibernateResourceOperationResponse> VirtualMachinesSubmitHibernate(string subscriptionId, string locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
+        public Response<HibernateResourceOperationResult> VirtualMachinesSubmitHibernate(string subscriptionId, string locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
@@ -778,9 +778,9 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 case 200:
                     {
-                        HibernateResourceOperationResponse value = default;
+                        HibernateResourceOperationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HibernateResourceOperationResponse.DeserializeHibernateResourceOperationResponse(document.RootElement);
+                        value = HibernateResourceOperationResult.DeserializeHibernateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StartResourceOperationResponse>> VirtualMachinesSubmitStartAsync(string subscriptionId, string locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<StartResourceOperationResult>> VirtualMachinesSubmitStartAsync(string subscriptionId, string locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
@@ -843,9 +843,9 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 case 200:
                     {
-                        StartResourceOperationResponse value = default;
+                        StartResourceOperationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StartResourceOperationResponse.DeserializeStartResourceOperationResponse(document.RootElement);
+                        value = StartResourceOperationResult.DeserializeStartResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StartResourceOperationResponse> VirtualMachinesSubmitStart(string subscriptionId, string locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
+        public Response<StartResourceOperationResult> VirtualMachinesSubmitStart(string subscriptionId, string locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
@@ -872,9 +872,9 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 case 200:
                     {
-                        StartResourceOperationResponse value = default;
+                        StartResourceOperationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StartResourceOperationResponse.DeserializeStartResourceOperationResponse(document.RootElement);
+                        value = StartResourceOperationResult.DeserializeStartResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

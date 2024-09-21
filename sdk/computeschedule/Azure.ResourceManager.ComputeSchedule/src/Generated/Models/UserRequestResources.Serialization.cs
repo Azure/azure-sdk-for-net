@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    public partial class Resources : IUtf8JsonSerializable, IJsonModel<Resources>
+    public partial class UserRequestResources : IUtf8JsonSerializable, IJsonModel<UserRequestResources>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Resources>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserRequestResources>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Resources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UserRequestResources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Resources>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserRequestResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Resources)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UserRequestResources)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WriteEndObject();
         }
 
-        Resources IJsonModel<Resources>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        UserRequestResources IJsonModel<UserRequestResources>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Resources>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserRequestResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Resources)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UserRequestResources)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResources(document.RootElement, options);
+            return DeserializeUserRequestResources(document.RootElement, options);
         }
 
-        internal static Resources DeserializeResources(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UserRequestResources DeserializeUserRequestResources(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,38 +104,38 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Resources(ids, serializedAdditionalRawData);
+            return new UserRequestResources(ids, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Resources>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<UserRequestResources>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Resources>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserRequestResources>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Resources)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserRequestResources)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Resources IPersistableModel<Resources>.Create(BinaryData data, ModelReaderWriterOptions options)
+        UserRequestResources IPersistableModel<UserRequestResources>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Resources>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserRequestResources>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeResources(document.RootElement, options);
+                        return DeserializeUserRequestResources(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Resources)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserRequestResources)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Resources>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UserRequestResources>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

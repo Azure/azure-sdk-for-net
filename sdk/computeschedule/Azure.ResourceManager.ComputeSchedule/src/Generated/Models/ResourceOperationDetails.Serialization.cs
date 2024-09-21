@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             ResourceOperationType opType = default;
             string subscriptionId = default;
             DateTimeOffset deadline = default;
-            DeadlineType deadlineType = default;
-            OperationState state = default;
+            ScheduledActionDeadlineType deadlineType = default;
+            ScheduledActionOperationState state = default;
             string timeZone = default;
             ResourceOperationError resourceOperationError = default;
             DateTimeOffset? completedAt = default;
-            RetryPolicy retryPolicy = default;
+            UserRequestRetryPolicy retryPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,12 +140,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (property.NameEquals("deadlineType"u8))
                 {
-                    deadlineType = new DeadlineType(property.Value.GetString());
+                    deadlineType = new ScheduledActionDeadlineType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"u8))
                 {
-                    state = new OperationState(property.Value.GetString());
+                    state = new ScheduledActionOperationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("timeZone"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    retryPolicy = RetryPolicy.DeserializeRetryPolicy(property.Value, options);
+                    retryPolicy = UserRequestRetryPolicy.DeserializeUserRequestRetryPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

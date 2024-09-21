@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> This is the response from a get operations status request. </summary>
-    public partial class GetOperationStatusResponse
+    /// <summary> The retry policy for the user request. </summary>
+    public partial class UserRequestRetryPolicy
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +45,25 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GetOperationStatusResponse"/>. </summary>
-        /// <param name="results"> An array of resource operations based on their operation ids. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
-        internal GetOperationStatusResponse(IEnumerable<ResourceOperation> results)
+        /// <summary> Initializes a new instance of <see cref="UserRequestRetryPolicy"/>. </summary>
+        public UserRequestRetryPolicy()
         {
-            Argument.AssertNotNull(results, nameof(results));
-
-            Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetOperationStatusResponse"/>. </summary>
-        /// <param name="results"> An array of resource operations based on their operation ids. </param>
+        /// <summary> Initializes a new instance of <see cref="UserRequestRetryPolicy"/>. </summary>
+        /// <param name="retryCount"> Retry count for user request. </param>
+        /// <param name="retryWindowInMinutes"> Retry window in minutes for user request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetOperationStatusResponse(IReadOnlyList<ResourceOperation> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UserRequestRetryPolicy(int? retryCount, int? retryWindowInMinutes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Results = results;
+            RetryCount = retryCount;
+            RetryWindowInMinutes = retryWindowInMinutes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetOperationStatusResponse"/> for deserialization. </summary>
-        internal GetOperationStatusResponse()
-        {
-        }
-
-        /// <summary> An array of resource operations based on their operation ids. </summary>
-        public IReadOnlyList<ResourceOperation> Results { get; }
+        /// <summary> Retry count for user request. </summary>
+        public int? RetryCount { get; set; }
+        /// <summary> Retry window in minutes for user request. </summary>
+        public int? RetryWindowInMinutes { get; set; }
     }
 }

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    public partial class HibernateResourceOperationResponse : IUtf8JsonSerializable, IJsonModel<HibernateResourceOperationResponse>
+    public partial class HibernateResourceOperationResult : IUtf8JsonSerializable, IJsonModel<HibernateResourceOperationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HibernateResourceOperationResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HibernateResourceOperationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HibernateResourceOperationResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HibernateResourceOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HibernateResourceOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HibernateResourceOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HibernateResourceOperationResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HibernateResourceOperationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WriteEndObject();
         }
 
-        HibernateResourceOperationResponse IJsonModel<HibernateResourceOperationResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HibernateResourceOperationResult IJsonModel<HibernateResourceOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HibernateResourceOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HibernateResourceOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HibernateResourceOperationResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HibernateResourceOperationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHibernateResourceOperationResponse(document.RootElement, options);
+            return DeserializeHibernateResourceOperationResult(document.RootElement, options);
         }
 
-        internal static HibernateResourceOperationResponse DeserializeHibernateResourceOperationResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HibernateResourceOperationResult DeserializeHibernateResourceOperationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             string description = default;
             string type = default;
             AzureLocation location = default;
-            IReadOnlyList<ResourceOperation> results = default;
+            IReadOnlyList<ResourceOperationResult> results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    List<ResourceOperation> array = new List<ResourceOperation>();
+                    List<ResourceOperationResult> array = new List<ResourceOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceOperation.DeserializeResourceOperation(item, options));
+                        array.Add(ResourceOperationResult.DeserializeResourceOperationResult(item, options));
                     }
                     results = array;
                     continue;
@@ -123,38 +123,38 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HibernateResourceOperationResponse(description, type, location, results ?? new ChangeTrackingList<ResourceOperation>(), serializedAdditionalRawData);
+            return new HibernateResourceOperationResult(description, type, location, results ?? new ChangeTrackingList<ResourceOperationResult>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<HibernateResourceOperationResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HibernateResourceOperationResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HibernateResourceOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HibernateResourceOperationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HibernateResourceOperationResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HibernateResourceOperationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HibernateResourceOperationResponse IPersistableModel<HibernateResourceOperationResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HibernateResourceOperationResult IPersistableModel<HibernateResourceOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HibernateResourceOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HibernateResourceOperationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeHibernateResourceOperationResponse(document.RootElement, options);
+                        return DeserializeHibernateResourceOperationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HibernateResourceOperationResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HibernateResourceOperationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HibernateResourceOperationResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HibernateResourceOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
