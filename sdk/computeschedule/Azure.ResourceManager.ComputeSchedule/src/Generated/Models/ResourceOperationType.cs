@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> Type of operation performed on the resources. </summary>
+    /// <summary> The kind of operation types that can be performed on resources using ScheduledActions. </summary>
     public readonly partial struct ResourceOperationType : IEquatable<ResourceOperationType>
     {
         private readonly string _value;

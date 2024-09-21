@@ -15,14 +15,17 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmComputeScheduleModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.CancelOperationsResult"/>. </summary>
-        /// <param name="results"> An array of resource operations that were successfully cancelled. </param>
-        /// <returns> A new <see cref="Models.CancelOperationsResult"/> instance for mocking. </returns>
-        public static CancelOperationsResult CancelOperationsResult(IEnumerable<ResourceOperationResult> results = null)
+        /// <summary> Initializes a new instance of <see cref="Models.DeallocateResourceOperationResult"/>. </summary>
+        /// <param name="description"> The description of the operation response. </param>
+        /// <param name="resourceType"> The type of resources used in the deallocate request eg virtual machines. </param>
+        /// <param name="location"> The location of the deallocate request eg westus. </param>
+        /// <param name="results"> The results from the deallocate request if no errors exist. </param>
+        /// <returns> A new <see cref="Models.DeallocateResourceOperationResult"/> instance for mocking. </returns>
+        public static DeallocateResourceOperationResult DeallocateResourceOperationResult(string description = null, string resourceType = null, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = null)
         {
             results ??= new List<ResourceOperationResult>();
 
-            return new CancelOperationsResult(results?.ToList(), serializedAdditionalRawData: null);
+            return new DeallocateResourceOperationResult(description, resourceType, location, results?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceOperationResult"/>. </summary>
@@ -75,19 +78,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             return new ResourceOperationError(errorCode, errorDetails, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeallocateResourceOperationResult"/>. </summary>
-        /// <param name="description"> The description of the operation response. </param>
-        /// <param name="resourceType"> The type of resources used in the deallocate request eg virtual machines. </param>
-        /// <param name="location"> The location of the deallocate request eg westus. </param>
-        /// <param name="results"> The results from the deallocate request if no errors exist. </param>
-        /// <returns> A new <see cref="Models.DeallocateResourceOperationResult"/> instance for mocking. </returns>
-        public static DeallocateResourceOperationResult DeallocateResourceOperationResult(string description = null, string resourceType = null, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = null)
-        {
-            results ??= new List<ResourceOperationResult>();
-
-            return new DeallocateResourceOperationResult(description, resourceType, location, results?.ToList(), serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.HibernateResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="resourceType"> The type of resources used in the Hibernate request eg virtual machines. </param>
@@ -112,6 +102,26 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             results ??= new List<ResourceOperationResult>();
 
             return new StartResourceOperationResult(description, resourceType, location, results?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GetOperationStatusResult"/>. </summary>
+        /// <param name="results"> An array of resource operations based on their operation ids. </param>
+        /// <returns> A new <see cref="Models.GetOperationStatusResult"/> instance for mocking. </returns>
+        public static GetOperationStatusResult GetOperationStatusResult(IEnumerable<ResourceOperationResult> results = null)
+        {
+            results ??= new List<ResourceOperationResult>();
+
+            return new GetOperationStatusResult(results?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CancelOperationsResult"/>. </summary>
+        /// <param name="results"> An array of resource operations that were successfully cancelled. </param>
+        /// <returns> A new <see cref="Models.CancelOperationsResult"/> instance for mocking. </returns>
+        public static CancelOperationsResult CancelOperationsResult(IEnumerable<ResourceOperationResult> results = null)
+        {
+            results ??= new List<ResourceOperationResult>();
+
+            return new CancelOperationsResult(results?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GetOperationErrorsResult"/>. </summary>
@@ -157,16 +167,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public static OperationErrorDetails OperationErrorDetails(string errorCode = null, DateTimeOffset errorDetails = default, DateTimeOffset timeStamp = default, string crpOperationId = null)
         {
             return new OperationErrorDetails(errorCode, errorDetails, timeStamp, crpOperationId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GetOperationStatusResult"/>. </summary>
-        /// <param name="results"> An array of resource operations based on their operation ids. </param>
-        /// <returns> A new <see cref="Models.GetOperationStatusResult"/> instance for mocking. </returns>
-        public static GetOperationStatusResult GetOperationStatusResult(IEnumerable<ResourceOperationResult> results = null)
-        {
-            results ??= new List<ResourceOperationResult>();
-
-            return new GetOperationStatusResult(results?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }
