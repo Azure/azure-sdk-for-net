@@ -394,5 +394,3 @@
 
 - Initial preview of the Azure.Search client library enabling you to query
   and update documents in search indexes.
-
-[net-guidelines-collection-properties]: https://docs.microsoft.com/dotnet/standard/design-guidelines/guidelines-for-collections#collection-properties-and-return-values
