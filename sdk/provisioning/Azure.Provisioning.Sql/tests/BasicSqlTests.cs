@@ -69,22 +69,22 @@ public class BasicSqlTests(bool async)
             param location string = resourceGroup().location
 
             resource sql 'Microsoft.Sql/servers@2021-11-01' = {
-                name: take('sql-${uniqueString(resourceGroup().id)}', 63)
-                location: location
-                properties: {
-                    administratorLogin: adminLogin
-                    administratorLoginPassword: adminPass
-                }
+              name: take('sql-${uniqueString(resourceGroup().id)}', 63)
+              location: location
+              properties: {
+                administratorLogin: adminLogin
+                administratorLoginPassword: adminPass
+              }
             }
 
             resource db 'Microsoft.Sql/servers/databases@2021-11-01' = {
-                name: dbName
-                location: location
-                sku: {
-                    name: 'Standard'
-                    tier: 'Standard'
-                }
-                parent: sql
+              name: dbName
+              location: location
+              sku: {
+                name: 'Standard'
+                tier: 'Standard'
+              }
+              parent: sql
             }
             """)
         .Lint()

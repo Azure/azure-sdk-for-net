@@ -1,15 +1,23 @@
 # Release History
 
-## 12.20.0-beta.2 (Unreleased)
+## 12.21.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed \[BUG\] Fixed Equality failures due to implicit cast on QueueErrorCode #44213
 
 ### Other Changes
+
+## 12.20.0 (2024-09-18)
+
+### Features Added
+- Includes all features from 12.20.0-beta.1.
+- Removed Queue Permissions enum from 12.20.0-beta.1.
+
+### Bugs Fixed
+- Fixed \[BUG\] Fixed Equality failures due to implicit cast on QueueErrorCode #44213
 
 ## 12.20.0-beta.1 (2024-08-06)
 

@@ -15,6 +15,9 @@ class PackageProps
     [boolean]$IsNewSdk
     [string]$ArtifactName
     [string]$ReleaseStatus
+    # was this package purely included because other packages included it as an AdditionalValidationPackage?
+    [boolean]$IncludedForValidation
+    # does this package include other packages that we should trigger validation for?
     [string[]]$AdditionalValidationPackages
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory)
@@ -38,6 +41,7 @@ class PackageProps
         $this.Version = $version
         $this.DirectoryPath = $directoryPath
         $this.ServiceDirectory = $serviceDirectory
+        $this.IncludedForValidation = $false
 
         if (Test-Path (Join-Path $directoryPath "README.md"))
         {
@@ -143,13 +147,14 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         $key = $addition.Replace($RepoRoot, "").TrimStart('\/')
 
         if ($lookup[$key]) {
+            $lookup[$key].IncludedForValidation = $true
             $packagesWithChanges += $lookup[$key]
         }
     }
 
     if ($AdditionalValidationPackagesFromPackageSetFn -and (Test-Path "Function:$AdditionalValidationPackagesFromPackageSetFn"))
     {
-        $packagesWithChanges += &$AdditionalValidationPackagesFromPackageSetFn $packagesWithChanges $diff
+        $packagesWithChanges += &$AdditionalValidationPackagesFromPackageSetFn $packagesWithChanges $diff $allPackageProperties
     }
 
     return $packagesWithChanges
