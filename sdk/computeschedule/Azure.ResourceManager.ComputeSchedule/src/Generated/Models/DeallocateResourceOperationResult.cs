@@ -48,30 +48,30 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Initializes a new instance of <see cref="DeallocateResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
-        /// <param name="deallocateResourceOperationResponseType"> The type of resources used in the deallocate request eg virtual machines. </param>
+        /// <param name="resourceType"> The type of resources used in the deallocate request eg virtual machines. </param>
         /// <param name="location"> The location of the deallocate request eg westus. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="description"/> or <paramref name="deallocateResourceOperationResponseType"/> is null. </exception>
-        internal DeallocateResourceOperationResult(string description, string deallocateResourceOperationResponseType, AzureLocation location)
+        /// <exception cref="ArgumentNullException"> <paramref name="description"/> or <paramref name="resourceType"/> is null. </exception>
+        internal DeallocateResourceOperationResult(string description, string resourceType, AzureLocation location)
         {
             Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(deallocateResourceOperationResponseType, nameof(deallocateResourceOperationResponseType));
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
 
             Description = description;
-            DeallocateResourceOperationResponseType = deallocateResourceOperationResponseType;
+            ResourceType = resourceType;
             Location = location;
             Results = new ChangeTrackingList<ResourceOperationResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeallocateResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
-        /// <param name="deallocateResourceOperationResponseType"> The type of resources used in the deallocate request eg virtual machines. </param>
+        /// <param name="resourceType"> The type of resources used in the deallocate request eg virtual machines. </param>
         /// <param name="location"> The location of the deallocate request eg westus. </param>
         /// <param name="results"> The results from the deallocate request if no errors exist. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeallocateResourceOperationResult(string description, string deallocateResourceOperationResponseType, AzureLocation location, IReadOnlyList<ResourceOperationResult> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeallocateResourceOperationResult(string description, string resourceType, AzureLocation location, IReadOnlyList<ResourceOperationResult> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
-            DeallocateResourceOperationResponseType = deallocateResourceOperationResponseType;
+            ResourceType = resourceType;
             Location = location;
             Results = results;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> The description of the operation response. </summary>
         public string Description { get; }
         /// <summary> The type of resources used in the deallocate request eg virtual machines. </summary>
-        public string DeallocateResourceOperationResponseType { get; }
+        public string ResourceType { get; }
         /// <summary> The location of the deallocate request eg westus. </summary>
         public AzureLocation Location { get; }
         /// <summary> The results from the deallocate request if no errors exist. </summary>

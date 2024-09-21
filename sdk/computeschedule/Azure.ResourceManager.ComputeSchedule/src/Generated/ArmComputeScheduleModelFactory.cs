@@ -77,41 +77,41 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.DeallocateResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
-        /// <param name="deallocateResourceOperationResponseType"> The type of resources used in the deallocate request eg virtual machines. </param>
+        /// <param name="resourceType"> The type of resources used in the deallocate request eg virtual machines. </param>
         /// <param name="location"> The location of the deallocate request eg westus. </param>
         /// <param name="results"> The results from the deallocate request if no errors exist. </param>
         /// <returns> A new <see cref="Models.DeallocateResourceOperationResult"/> instance for mocking. </returns>
-        public static DeallocateResourceOperationResult DeallocateResourceOperationResult(string description = null, string deallocateResourceOperationResponseType = null, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = null)
+        public static DeallocateResourceOperationResult DeallocateResourceOperationResult(string description = null, string resourceType = null, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = null)
         {
             results ??= new List<ResourceOperationResult>();
 
-            return new DeallocateResourceOperationResult(description, deallocateResourceOperationResponseType, location, results?.ToList(), serializedAdditionalRawData: null);
+            return new DeallocateResourceOperationResult(description, resourceType, location, results?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HibernateResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
-        /// <param name="hibernateResourceOperationResponseType"> The type of resources used in the Hibernate request eg virtual machines. </param>
+        /// <param name="resourceType"> The type of resources used in the Hibernate request eg virtual machines. </param>
         /// <param name="location"> The location of the Hibernate request eg westus. </param>
         /// <param name="results"> The results from the Hibernate request if no errors exist. </param>
         /// <returns> A new <see cref="Models.HibernateResourceOperationResult"/> instance for mocking. </returns>
-        public static HibernateResourceOperationResult HibernateResourceOperationResult(string description = null, string hibernateResourceOperationResponseType = null, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = null)
+        public static HibernateResourceOperationResult HibernateResourceOperationResult(string description = null, string resourceType = null, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = null)
         {
             results ??= new List<ResourceOperationResult>();
 
-            return new HibernateResourceOperationResult(description, hibernateResourceOperationResponseType, location, results?.ToList(), serializedAdditionalRawData: null);
+            return new HibernateResourceOperationResult(description, resourceType, location, results?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StartResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
-        /// <param name="startResourceOperationResponseType"> The type of resources used in the start request eg virtual machines. </param>
+        /// <param name="resourceType"> The type of resources used in the start request eg virtual machines. </param>
         /// <param name="location"> The location of the start request eg westus. </param>
         /// <param name="results"> The results from the start request if no errors exist. </param>
         /// <returns> A new <see cref="Models.StartResourceOperationResult"/> instance for mocking. </returns>
-        public static StartResourceOperationResult StartResourceOperationResult(string description = null, string startResourceOperationResponseType = null, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = null)
+        public static StartResourceOperationResult StartResourceOperationResult(string description = null, string resourceType = null, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = null)
         {
             results ??= new List<ResourceOperationResult>();
 
-            return new StartResourceOperationResult(description, startResourceOperationResponseType, location, results?.ToList(), serializedAdditionalRawData: null);
+            return new StartResourceOperationResult(description, resourceType, location, results?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GetOperationErrorsResult"/>. </summary>

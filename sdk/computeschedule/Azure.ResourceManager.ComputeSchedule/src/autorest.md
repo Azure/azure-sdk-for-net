@@ -44,10 +44,12 @@ rename-mapping:
   CancelOperationsResponse: CancelOperationsResult
   DeadlineType: ScheduledActionDeadlineType
   DeallocateResourceOperationResponse: DeallocateResourceOperationResult
+  DeallocateResourceOperationResponse.type: ResourceType
   ExecutionParameters: ScheduledActionExecutionParameterDetail
   GetOperationErrorsResponse: GetOperationErrorsResult
   GetOperationStatusResponse: GetOperationStatusResult
   HibernateResourceOperationResponse: HibernateResourceOperationResult
+  HibernateResourceOperationResponse.type: ResourceType
   OperationState: ScheduledActionOperationState
   OptimizationPreference: ScheduledActionOptimizationPreference
   ResourceOperation: ResourceOperationResult
@@ -55,6 +57,7 @@ rename-mapping:
   RetryPolicy: UserRequestRetryPolicy
   Schedule: UserRequestSchedule
   StartResourceOperationResponse: StartResourceOperationResult
+  StartResourceOperationResponse.type: ResourceType
 
 acronym-mapping:
   CPU: Cpu
@@ -80,3 +83,4 @@ acronym-mapping:
   Etag: ETag|etag
 
 ```
+

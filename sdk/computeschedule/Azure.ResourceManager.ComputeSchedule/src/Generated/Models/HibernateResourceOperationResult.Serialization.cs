@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(HibernateResourceOperationResponseType);
+            writer.WriteStringValue(ResourceType);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Results))
