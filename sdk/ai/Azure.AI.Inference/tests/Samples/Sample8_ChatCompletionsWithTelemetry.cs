@@ -57,6 +57,7 @@ namespace Azure.AI.Inference.Tests.Samples
                 {
                     options.ConnectionString = appInsightsConn;
                 })
+                .AddOtlpExporter()
                 .Build();
 
             using var meterProvider = Sdk.CreateMeterProviderBuilder()
@@ -67,6 +68,7 @@ namespace Azure.AI.Inference.Tests.Samples
                 {
                     options.ConnectionString = appInsightsConn;
                 })
+                .AddOtlpExporter()
                 .Build();
             #endregion
             // Set up the parameters.
@@ -119,6 +121,7 @@ namespace Azure.AI.Inference.Tests.Samples
                 {
                     options.ConnectionString = appInsightsConn;
                 })
+                .AddOtlpExporter()
                 .Build();
 
             using var meterProvider = Sdk.CreateMeterProviderBuilder()
@@ -129,6 +132,7 @@ namespace Azure.AI.Inference.Tests.Samples
                 {
                     options.ConnectionString = appInsightsConn;
                 })
+                .AddOtlpExporter()
                 .Build();
 
             // Set up the parameters.
@@ -188,6 +192,7 @@ namespace Azure.AI.Inference.Tests.Samples
                 {
                     options.ConnectionString = appInsightsConn;
                 })
+                .AddOtlpExporter()
                 .Build();
 
             using var meterProvider = Sdk.CreateMeterProviderBuilder()
@@ -198,6 +203,7 @@ namespace Azure.AI.Inference.Tests.Samples
                 {
                     options.ConnectionString = appInsightsConn;
                 })
+                .AddOtlpExporter()
                 .Build();
 
             // Set up the parameters.
@@ -248,6 +254,7 @@ namespace Azure.AI.Inference.Tests.Samples
                 {
                     options.ConnectionString = appInsightsConn;
                 })
+                .AddOtlpExporter()
                 .Build();
 
             using var meterProvider = Sdk.CreateMeterProviderBuilder()
@@ -258,6 +265,7 @@ namespace Azure.AI.Inference.Tests.Samples
                 {
                     options.ConnectionString = appInsightsConn;
                 })
+                .AddOtlpExporter()
                 .Build();
 
             // Set up the parameters.

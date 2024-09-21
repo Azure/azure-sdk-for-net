@@ -15,6 +15,7 @@ Now we will need to add the dependencies for OpenTelemetry.
 ```dotnetcli
 dotnet add package OpenTelemetry
 dotnet add package OpenTelemetry.Exporter.Console
+dotnet add package OpenTelemetry.Exporter.OpenTelemetryProtocol
 dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore --prerelease
 ```
 
@@ -34,6 +35,7 @@ using Azure.Monitor.OpenTelemetry.Exporter;
 using OpenTelemetry.Metrics;
 ```
 
+In this exmple, we will log metrics and events to console, to Azure Monitor using Application Insights and will use the Open Telemetry protocal to log data into Aspire Dashboard see the [installation instructions](https://learn.microsoft.com/dotnet/aspire/fundamentals/dashboard/standalone?tabs=bash). Data ingestion into Aspire Dashboard does not require Azue account.
 Now we will define the `endpoint`, `credential` and `model`. To log metrics and events to [Application Insights](https://learn.microsoft.com/azure/azure-monitor/app/app-insights-overview) we will need to get the connection string. Please open the Azure portal, create the Application Insights resource you wish to use for storing the telemetry. After that open the main page and find the "Connection String". It generally will have the format similar to "InstrumentationKey=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx;IngestionEndpoint=https://region-x.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/;ApplicationId=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx". In our code we will use the connection string from environment variable.
 ```C# Snippet:Azure_AI_Inference_TelemetrySyncScenario_variables
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("MODEL_ENDPOINT"));
@@ -54,6 +56,7 @@ using var tracerProvider = Sdk.CreateTracerProviderBuilder()
     {
         options.ConnectionString = appInsightsConn;
     })
+    .AddOtlpExporter()
     .Build();
 
 using var meterProvider = Sdk.CreateMeterProviderBuilder()
@@ -64,6 +67,7 @@ using var meterProvider = Sdk.CreateMeterProviderBuilder()
     {
         options.ConnectionString = appInsightsConn;
     })
+    .AddOtlpExporter()
     .Build();
 ```
 
@@ -119,19 +123,5 @@ dotnet run
 
 The Console will show all the exported telemetry along with the response from LLM.
 
-## Getting the telemetry from Application Insights
-After we have run the application, we can list all the metrics and events on the Application Insights. On the top panel of Application Insights resource please select "Logs".
-To get the metrics run the query.
-```
-customMetrics
-| sort by timestamp desc 
-| take 10
-```
-
-To get the logged events, run the query against `traces` table.
-```
-traces
-| sort by timestamp desc 
-| take 10
-```
-
+## Next steps
+After we have run the application, we can list all the metrics and events on the Application Insights. Please refer to the [documentation](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable?tabs=aspnetcore). The events will be written to the table `traces`, metrics can be fount in `customMetrics`.
