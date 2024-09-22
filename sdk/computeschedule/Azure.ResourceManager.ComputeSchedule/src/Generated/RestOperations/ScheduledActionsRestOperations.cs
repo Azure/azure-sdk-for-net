@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <summary> Initializes a new instance of ScheduledActionsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public ScheduledActionsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
@@ -36,571 +36,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateVirtualMachinesCancelOperationsRequestUri(string subscriptionId, string locationparameter, CancelOperationsContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
-            uri.AppendPath("/virtualMachinesCancelOperations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateVirtualMachinesCancelOperationsRequest(string subscriptionId, string locationparameter, CancelOperationsContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
-            uri.AppendPath("/virtualMachinesCancelOperations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> virtualMachinesCancelOperations: cancelOperations for a virtual machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CancelOperationsResponse>> VirtualMachinesCancelOperationsAsync(string subscriptionId, string locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateVirtualMachinesCancelOperationsRequest(subscriptionId, locationparameter, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CancelOperationsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CancelOperationsResponse.DeserializeCancelOperationsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> virtualMachinesCancelOperations: cancelOperations for a virtual machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CancelOperationsResponse> VirtualMachinesCancelOperations(string subscriptionId, string locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateVirtualMachinesCancelOperationsRequest(subscriptionId, locationparameter, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CancelOperationsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CancelOperationsResponse.DeserializeCancelOperationsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateVirtualMachinesExecuteDeallocateRequestUri(string subscriptionId, string locationparameter, ExecuteDeallocateContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
-            uri.AppendPath("/virtualMachinesExecuteDeallocate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateVirtualMachinesExecuteDeallocateRequest(string subscriptionId, string locationparameter, ExecuteDeallocateContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
-            uri.AppendPath("/virtualMachinesExecuteDeallocate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> virtualMachinesExecuteDeallocate: executeDeallocate for a virtual machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeallocateResourceOperationResponse>> VirtualMachinesExecuteDeallocateAsync(string subscriptionId, string locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateVirtualMachinesExecuteDeallocateRequest(subscriptionId, locationparameter, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeallocateResourceOperationResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeallocateResourceOperationResponse.DeserializeDeallocateResourceOperationResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> virtualMachinesExecuteDeallocate: executeDeallocate for a virtual machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeallocateResourceOperationResponse> VirtualMachinesExecuteDeallocate(string subscriptionId, string locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateVirtualMachinesExecuteDeallocateRequest(subscriptionId, locationparameter, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeallocateResourceOperationResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeallocateResourceOperationResponse.DeserializeDeallocateResourceOperationResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateVirtualMachinesExecuteHibernateRequestUri(string subscriptionId, string locationparameter, ExecuteHibernateContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
-            uri.AppendPath("/virtualMachinesExecuteHibernate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateVirtualMachinesExecuteHibernateRequest(string subscriptionId, string locationparameter, ExecuteHibernateContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
-            uri.AppendPath("/virtualMachinesExecuteHibernate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> virtualMachinesExecuteHibernate: executeHibernate for a virtual machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HibernateResourceOperationResponse>> VirtualMachinesExecuteHibernateAsync(string subscriptionId, string locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateVirtualMachinesExecuteHibernateRequest(subscriptionId, locationparameter, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        HibernateResourceOperationResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HibernateResourceOperationResponse.DeserializeHibernateResourceOperationResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> virtualMachinesExecuteHibernate: executeHibernate for a virtual machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HibernateResourceOperationResponse> VirtualMachinesExecuteHibernate(string subscriptionId, string locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateVirtualMachinesExecuteHibernateRequest(subscriptionId, locationparameter, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        HibernateResourceOperationResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HibernateResourceOperationResponse.DeserializeHibernateResourceOperationResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateVirtualMachinesExecuteStartRequestUri(string subscriptionId, string locationparameter, ExecuteStartContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
-            uri.AppendPath("/virtualMachinesExecuteStart", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateVirtualMachinesExecuteStartRequest(string subscriptionId, string locationparameter, ExecuteStartContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
-            uri.AppendPath("/virtualMachinesExecuteStart", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> virtualMachinesExecuteStart: executeStart for a virtual machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StartResourceOperationResponse>> VirtualMachinesExecuteStartAsync(string subscriptionId, string locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateVirtualMachinesExecuteStartRequest(subscriptionId, locationparameter, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        StartResourceOperationResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StartResourceOperationResponse.DeserializeStartResourceOperationResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> virtualMachinesExecuteStart: executeStart for a virtual machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StartResourceOperationResponse> VirtualMachinesExecuteStart(string subscriptionId, string locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateVirtualMachinesExecuteStartRequest(subscriptionId, locationparameter, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        StartResourceOperationResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StartResourceOperationResponse.DeserializeStartResourceOperationResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateVirtualMachinesGetOperationErrorsRequestUri(string subscriptionId, string locationparameter, GetOperationErrorsContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
-            uri.AppendPath("/virtualMachinesGetOperationErrors", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateVirtualMachinesGetOperationErrorsRequest(string subscriptionId, string locationparameter, GetOperationErrorsContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
-            uri.AppendPath("/virtualMachinesGetOperationErrors", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> virtualMachinesGetOperationErrors: getOperationErrors associated with an operation on a virtual machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GetOperationErrorsResponse>> VirtualMachinesGetOperationErrorsAsync(string subscriptionId, string locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateVirtualMachinesGetOperationErrorsRequest(subscriptionId, locationparameter, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GetOperationErrorsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GetOperationErrorsResponse.DeserializeGetOperationErrorsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> virtualMachinesGetOperationErrors: getOperationErrors associated with an operation on a virtual machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GetOperationErrorsResponse> VirtualMachinesGetOperationErrors(string subscriptionId, string locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateVirtualMachinesGetOperationErrorsRequest(subscriptionId, locationparameter, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GetOperationErrorsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GetOperationErrorsResponse.DeserializeGetOperationErrorsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateVirtualMachinesGetOperationStatusRequestUri(string subscriptionId, string locationparameter, GetOperationStatusContent content)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
-            uri.AppendPath("/virtualMachinesGetOperationStatus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateVirtualMachinesGetOperationStatusRequest(string subscriptionId, string locationparameter, GetOperationStatusContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
-            uri.AppendPath(locationparameter, true);
-            uri.AppendPath("/virtualMachinesGetOperationStatus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> virtualMachinesGetOperationStatus: getOperationStatus for a virtual machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GetOperationStatusResponse>> VirtualMachinesGetOperationStatusAsync(string subscriptionId, string locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateVirtualMachinesGetOperationStatusRequest(subscriptionId, locationparameter, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GetOperationStatusResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GetOperationStatusResponse.DeserializeGetOperationStatusResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> virtualMachinesGetOperationStatus: getOperationStatus for a virtual machine. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="locationparameter"> The location name. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GetOperationStatusResponse> VirtualMachinesGetOperationStatus(string subscriptionId, string locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateVirtualMachinesGetOperationStatusRequest(subscriptionId, locationparameter, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GetOperationStatusResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GetOperationStatusResponse.DeserializeGetOperationStatusResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateVirtualMachinesSubmitDeallocateRequestUri(string subscriptionId, string locationparameter, SubmitDeallocateContent content)
+        internal RequestUriBuilder CreateSubmitVirtualMachineDeallocateRequestUri(string subscriptionId, string locationparameter, SubmitDeallocateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -613,7 +49,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             return uri;
         }
 
-        internal HttpMessage CreateVirtualMachinesSubmitDeallocateRequest(string subscriptionId, string locationparameter, SubmitDeallocateContent content)
+        internal HttpMessage CreateSubmitVirtualMachineDeallocateRequest(string subscriptionId, string locationparameter, SubmitDeallocateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -643,21 +79,21 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeallocateResourceOperationResponse>> VirtualMachinesSubmitDeallocateAsync(string subscriptionId, string locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DeallocateResourceOperationResult>> SubmitVirtualMachineDeallocateAsync(string subscriptionId, string locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVirtualMachinesSubmitDeallocateRequest(subscriptionId, locationparameter, content);
+            using var message = CreateSubmitVirtualMachineDeallocateRequest(subscriptionId, locationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DeallocateResourceOperationResponse value = default;
+                        DeallocateResourceOperationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeallocateResourceOperationResponse.DeserializeDeallocateResourceOperationResponse(document.RootElement);
+                        value = DeallocateResourceOperationResult.DeserializeDeallocateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -672,21 +108,21 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeallocateResourceOperationResponse> VirtualMachinesSubmitDeallocate(string subscriptionId, string locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
+        public Response<DeallocateResourceOperationResult> SubmitVirtualMachineDeallocate(string subscriptionId, string locationparameter, SubmitDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVirtualMachinesSubmitDeallocateRequest(subscriptionId, locationparameter, content);
+            using var message = CreateSubmitVirtualMachineDeallocateRequest(subscriptionId, locationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DeallocateResourceOperationResponse value = default;
+                        DeallocateResourceOperationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeallocateResourceOperationResponse.DeserializeDeallocateResourceOperationResponse(document.RootElement);
+                        value = DeallocateResourceOperationResult.DeserializeDeallocateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -694,7 +130,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateVirtualMachinesSubmitHibernateRequestUri(string subscriptionId, string locationparameter, SubmitHibernateContent content)
+        internal RequestUriBuilder CreateSubmitVirtualMachineHibernateRequestUri(string subscriptionId, string locationparameter, SubmitHibernateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -707,7 +143,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             return uri;
         }
 
-        internal HttpMessage CreateVirtualMachinesSubmitHibernateRequest(string subscriptionId, string locationparameter, SubmitHibernateContent content)
+        internal HttpMessage CreateSubmitVirtualMachineHibernateRequest(string subscriptionId, string locationparameter, SubmitHibernateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -737,21 +173,21 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HibernateResourceOperationResponse>> VirtualMachinesSubmitHibernateAsync(string subscriptionId, string locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<HibernateResourceOperationResult>> SubmitVirtualMachineHibernateAsync(string subscriptionId, string locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVirtualMachinesSubmitHibernateRequest(subscriptionId, locationparameter, content);
+            using var message = CreateSubmitVirtualMachineHibernateRequest(subscriptionId, locationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        HibernateResourceOperationResponse value = default;
+                        HibernateResourceOperationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HibernateResourceOperationResponse.DeserializeHibernateResourceOperationResponse(document.RootElement);
+                        value = HibernateResourceOperationResult.DeserializeHibernateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -766,21 +202,21 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HibernateResourceOperationResponse> VirtualMachinesSubmitHibernate(string subscriptionId, string locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
+        public Response<HibernateResourceOperationResult> SubmitVirtualMachineHibernate(string subscriptionId, string locationparameter, SubmitHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVirtualMachinesSubmitHibernateRequest(subscriptionId, locationparameter, content);
+            using var message = CreateSubmitVirtualMachineHibernateRequest(subscriptionId, locationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        HibernateResourceOperationResponse value = default;
+                        HibernateResourceOperationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HibernateResourceOperationResponse.DeserializeHibernateResourceOperationResponse(document.RootElement);
+                        value = HibernateResourceOperationResult.DeserializeHibernateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -788,7 +224,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        internal RequestUriBuilder CreateVirtualMachinesSubmitStartRequestUri(string subscriptionId, string locationparameter, SubmitStartContent content)
+        internal RequestUriBuilder CreateSubmitVirtualMachineStartRequestUri(string subscriptionId, string locationparameter, SubmitStartContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -801,7 +237,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             return uri;
         }
 
-        internal HttpMessage CreateVirtualMachinesSubmitStartRequest(string subscriptionId, string locationparameter, SubmitStartContent content)
+        internal HttpMessage CreateSubmitVirtualMachineStartRequest(string subscriptionId, string locationparameter, SubmitStartContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -831,21 +267,21 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StartResourceOperationResponse>> VirtualMachinesSubmitStartAsync(string subscriptionId, string locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<StartResourceOperationResult>> SubmitVirtualMachineStartAsync(string subscriptionId, string locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVirtualMachinesSubmitStartRequest(subscriptionId, locationparameter, content);
+            using var message = CreateSubmitVirtualMachineStartRequest(subscriptionId, locationparameter, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        StartResourceOperationResponse value = default;
+                        StartResourceOperationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StartResourceOperationResponse.DeserializeStartResourceOperationResponse(document.RootElement);
+                        value = StartResourceOperationResult.DeserializeStartResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -860,21 +296,585 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StartResourceOperationResponse> VirtualMachinesSubmitStart(string subscriptionId, string locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
+        public Response<StartResourceOperationResult> SubmitVirtualMachineStart(string subscriptionId, string locationparameter, SubmitStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateVirtualMachinesSubmitStartRequest(subscriptionId, locationparameter, content);
+            using var message = CreateSubmitVirtualMachineStartRequest(subscriptionId, locationparameter, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        StartResourceOperationResponse value = default;
+                        StartResourceOperationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StartResourceOperationResponse.DeserializeStartResourceOperationResponse(document.RootElement);
+                        value = StartResourceOperationResult.DeserializeStartResourceOperationResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateExecuteVirtualMachineDeallocateRequestUri(string subscriptionId, string locationparameter, ExecuteDeallocateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
+            uri.AppendPath(locationparameter, true);
+            uri.AppendPath("/virtualMachinesExecuteDeallocate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateExecuteVirtualMachineDeallocateRequest(string subscriptionId, string locationparameter, ExecuteDeallocateContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
+            uri.AppendPath(locationparameter, true);
+            uri.AppendPath("/virtualMachinesExecuteDeallocate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> virtualMachinesExecuteDeallocate: executeDeallocate for a virtual machine. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DeallocateResourceOperationResult>> ExecuteVirtualMachineDeallocateAsync(string subscriptionId, string locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateExecuteVirtualMachineDeallocateRequest(subscriptionId, locationparameter, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeallocateResourceOperationResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DeallocateResourceOperationResult.DeserializeDeallocateResourceOperationResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> virtualMachinesExecuteDeallocate: executeDeallocate for a virtual machine. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DeallocateResourceOperationResult> ExecuteVirtualMachineDeallocate(string subscriptionId, string locationparameter, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateExecuteVirtualMachineDeallocateRequest(subscriptionId, locationparameter, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeallocateResourceOperationResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DeallocateResourceOperationResult.DeserializeDeallocateResourceOperationResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateExecuteVirtualMachineHibernateRequestUri(string subscriptionId, string locationparameter, ExecuteHibernateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
+            uri.AppendPath(locationparameter, true);
+            uri.AppendPath("/virtualMachinesExecuteHibernate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateExecuteVirtualMachineHibernateRequest(string subscriptionId, string locationparameter, ExecuteHibernateContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
+            uri.AppendPath(locationparameter, true);
+            uri.AppendPath("/virtualMachinesExecuteHibernate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> virtualMachinesExecuteHibernate: executeHibernate for a virtual machine. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<HibernateResourceOperationResult>> ExecuteVirtualMachineHibernateAsync(string subscriptionId, string locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateExecuteVirtualMachineHibernateRequest(subscriptionId, locationparameter, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        HibernateResourceOperationResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = HibernateResourceOperationResult.DeserializeHibernateResourceOperationResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> virtualMachinesExecuteHibernate: executeHibernate for a virtual machine. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<HibernateResourceOperationResult> ExecuteVirtualMachineHibernate(string subscriptionId, string locationparameter, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateExecuteVirtualMachineHibernateRequest(subscriptionId, locationparameter, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        HibernateResourceOperationResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = HibernateResourceOperationResult.DeserializeHibernateResourceOperationResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateExecuteVirtualMachineStartRequestUri(string subscriptionId, string locationparameter, ExecuteStartContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
+            uri.AppendPath(locationparameter, true);
+            uri.AppendPath("/virtualMachinesExecuteStart", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateExecuteVirtualMachineStartRequest(string subscriptionId, string locationparameter, ExecuteStartContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
+            uri.AppendPath(locationparameter, true);
+            uri.AppendPath("/virtualMachinesExecuteStart", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> virtualMachinesExecuteStart: executeStart for a virtual machine. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<StartResourceOperationResult>> ExecuteVirtualMachineStartAsync(string subscriptionId, string locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateExecuteVirtualMachineStartRequest(subscriptionId, locationparameter, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StartResourceOperationResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = StartResourceOperationResult.DeserializeStartResourceOperationResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> virtualMachinesExecuteStart: executeStart for a virtual machine. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<StartResourceOperationResult> ExecuteVirtualMachineStart(string subscriptionId, string locationparameter, ExecuteStartContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateExecuteVirtualMachineStartRequest(subscriptionId, locationparameter, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StartResourceOperationResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = StartResourceOperationResult.DeserializeStartResourceOperationResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetVirtualMachineOperationStatusRequestUri(string subscriptionId, string locationparameter, GetOperationStatusContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
+            uri.AppendPath(locationparameter, true);
+            uri.AppendPath("/virtualMachinesGetOperationStatus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetVirtualMachineOperationStatusRequest(string subscriptionId, string locationparameter, GetOperationStatusContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
+            uri.AppendPath(locationparameter, true);
+            uri.AppendPath("/virtualMachinesGetOperationStatus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> virtualMachinesGetOperationStatus: getOperationStatus for a virtual machine. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<GetOperationStatusResult>> GetVirtualMachineOperationStatusAsync(string subscriptionId, string locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateGetVirtualMachineOperationStatusRequest(subscriptionId, locationparameter, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GetOperationStatusResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = GetOperationStatusResult.DeserializeGetOperationStatusResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> virtualMachinesGetOperationStatus: getOperationStatus for a virtual machine. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<GetOperationStatusResult> GetVirtualMachineOperationStatus(string subscriptionId, string locationparameter, GetOperationStatusContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateGetVirtualMachineOperationStatusRequest(subscriptionId, locationparameter, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GetOperationStatusResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = GetOperationStatusResult.DeserializeGetOperationStatusResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCancelVirtualMachineOperationsRequestUri(string subscriptionId, string locationparameter, CancelOperationsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
+            uri.AppendPath(locationparameter, true);
+            uri.AppendPath("/virtualMachinesCancelOperations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCancelVirtualMachineOperationsRequest(string subscriptionId, string locationparameter, CancelOperationsContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
+            uri.AppendPath(locationparameter, true);
+            uri.AppendPath("/virtualMachinesCancelOperations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> virtualMachinesCancelOperations: cancelOperations for a virtual machine. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<CancelOperationsResult>> CancelVirtualMachineOperationsAsync(string subscriptionId, string locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCancelVirtualMachineOperationsRequest(subscriptionId, locationparameter, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CancelOperationsResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = CancelOperationsResult.DeserializeCancelOperationsResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> virtualMachinesCancelOperations: cancelOperations for a virtual machine. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<CancelOperationsResult> CancelVirtualMachineOperations(string subscriptionId, string locationparameter, CancelOperationsContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCancelVirtualMachineOperationsRequest(subscriptionId, locationparameter, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CancelOperationsResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = CancelOperationsResult.DeserializeCancelOperationsResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetVirtualMachineOperationErrorsRequestUri(string subscriptionId, string locationparameter, GetOperationErrorsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
+            uri.AppendPath(locationparameter, true);
+            uri.AppendPath("/virtualMachinesGetOperationErrors", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetVirtualMachineOperationErrorsRequest(string subscriptionId, string locationparameter, GetOperationErrorsContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
+            uri.AppendPath(locationparameter, true);
+            uri.AppendPath("/virtualMachinesGetOperationErrors", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> virtualMachinesGetOperationErrors: getOperationErrors associated with an operation on a virtual machine. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<GetOperationErrorsResult>> GetVirtualMachineOperationErrorsAsync(string subscriptionId, string locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateGetVirtualMachineOperationErrorsRequest(subscriptionId, locationparameter, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GetOperationErrorsResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = GetOperationErrorsResult.DeserializeGetOperationErrorsResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> virtualMachinesGetOperationErrors: getOperationErrors associated with an operation on a virtual machine. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<GetOperationErrorsResult> GetVirtualMachineOperationErrors(string subscriptionId, string locationparameter, GetOperationErrorsContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateGetVirtualMachineOperationErrorsRequest(subscriptionId, locationparameter, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GetOperationErrorsResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = GetOperationErrorsResult.DeserializeGetOperationErrorsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

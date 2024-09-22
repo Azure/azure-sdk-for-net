@@ -11,7 +11,7 @@ namespace Azure.Storage.DataMovement;
 
 internal class JobBuilder
 {
-    internal readonly ArrayPool<byte> _arrayPool;
+    private readonly ArrayPool<byte> _arrayPool;
 
     /// <summary>
     /// Defines the error handling method to follow when an error is seen. Defaults to
@@ -19,9 +19,15 @@ internal class JobBuilder
     ///
     /// See <see cref="DataTransferErrorMode"/>.
     /// </summary>
-    internal readonly DataTransferErrorMode _errorHandling;
+    private readonly DataTransferErrorMode _errorHandling;
 
-    internal ClientDiagnostics ClientDiagnostics { get; }
+    private ClientDiagnostics ClientDiagnostics { get; }
+
+    /// <summary>
+    /// Mocking constructor.
+    /// </summary>
+    protected JobBuilder()
+    { }
 
     internal JobBuilder(
         ArrayPool<byte> arrayPool,

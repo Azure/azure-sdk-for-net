@@ -1,14 +1,10 @@
 # Release History
 
-## 16.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 16.3.1 (2024-09-19)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed `ImageReference` constructor null reference exception.
 
 ## 16.3.0 (2024-07-01)
 

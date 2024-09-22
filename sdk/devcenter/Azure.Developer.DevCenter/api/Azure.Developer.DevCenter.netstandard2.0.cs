@@ -240,7 +240,7 @@ namespace Azure.Developer.DevCenter.Models
     }
     public partial class DevBoxHardwareProfile : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxHardwareProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxHardwareProfile>
     {
-        internal DevBoxHardwareProfile() { }
+        public DevBoxHardwareProfile() { }
         public int? MemoryGB { get { throw null; } }
         public Azure.Developer.DevCenter.Models.SkuName? SkuName { get { throw null; } }
         public int? VCPUs { get { throw null; } }
@@ -252,7 +252,7 @@ namespace Azure.Developer.DevCenter.Models
     }
     public partial class DevBoxImageReference : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxImageReference>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxImageReference>
     {
-        internal DevBoxImageReference() { }
+        public DevBoxImageReference() { }
         public string Name { get { throw null; } }
         public string OperatingSystem { get { throw null; } }
         public string OSBuildNumber { get { throw null; } }
@@ -354,8 +354,8 @@ namespace Azure.Developer.DevCenter.Models
     }
     public partial class DevBoxStorageProfile : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxStorageProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxStorageProfile>
     {
-        internal DevBoxStorageProfile() { }
-        public Azure.Developer.DevCenter.Models.OSDisk OSDisk { get { throw null; } }
+        public DevBoxStorageProfile() { }
+        public Azure.Developer.DevCenter.Models.OSDisk OSDisk { get { throw null; } set { } }
         Azure.Developer.DevCenter.Models.DevBoxStorageProfile System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxStorageProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxStorageProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Developer.DevCenter.Models.DevBoxStorageProfile System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxStorageProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -576,7 +576,7 @@ namespace Azure.Developer.DevCenter.Models
     }
     public partial class OSDisk : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.OSDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.OSDisk>
     {
-        internal OSDisk() { }
+        public OSDisk() { }
         public int? DiskSizeGB { get { throw null; } }
         Azure.Developer.DevCenter.Models.OSDisk System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.OSDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.OSDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

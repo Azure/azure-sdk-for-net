@@ -16,7 +16,7 @@ using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
-using OperationState = Azure.ResourceManager.ComputeSchedule.Models.OperationState;
+using OperationState = Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionOperationState;
 
 namespace Azure.ResourceManager.ComputeSchedule.Tests
 {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         }
 
         #region Polling operation to get status of operations
-        protected Polly.Retry.AsyncRetryPolicy<GetOperationStatusResponse> PollOperationStatus(int vmCount)
+        protected Polly.Retry.AsyncRetryPolicy<GetOperationStatusResult> PollOperationStatus(int vmCount)
         {
             int retryCount = 7;
             var maxDelay = TimeSpan.FromSeconds(20);
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             IEnumerable<TimeSpan> delay = Backoff.ExponentialBackoff(initialDelay: Recording.Mode != RecordedTestMode.Playback ? TimeSpan.FromSeconds(5) : TimeSpan.FromMilliseconds(10), retryCount: retryCount).Select(s => TimeSpan.FromTicks(Math.Min(s.Ticks, maxDelay.Ticks)));
 
             return Policy
-                .HandleResult<GetOperationStatusResponse>(r => ShouldRetryPolling(r, vmCount).GetAwaiter().GetResult())
+                .HandleResult<GetOperationStatusResult>(r => ShouldRetryPolling(r, vmCount).GetAwaiter().GetResult())
                 .WaitAndRetryAsync(delay);
         }
 
@@ -196,14 +196,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         private Dictionary<string, OperationState> _completedOperations = new();
 #pragma warning restore IDE0044 // Add readonly modifier
 
-        private Task<bool> ShouldRetryPolling(GetOperationStatusResponse response, int totalVmsCount)
+        private Task<bool> ShouldRetryPolling(GetOperationStatusResult response, int totalVmsCount)
         {
             var shouldRetry = true;
             _completedOperations.Clear();
 
-            IReadOnlyList<ResourceOperation> responseResults = response.Results;
+            IReadOnlyList<ResourceOperationResult> responseResults = response.Results;
 
-            foreach (ResourceOperation item in responseResults)
+            foreach (ResourceOperationResult item in responseResults)
             {
                 if (item.ErrorCode != null)
                 {
@@ -228,15 +228,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
 
         #region SA Operations
 
-        protected static async Task<StartResourceOperationResponse> TestSubmitStartAsync(string location, SubmitStartContent submitStartRequest, string subid, ArmClient client)
+        protected static async Task<StartResourceOperationResult> TestSubmitStartAsync(string location, SubmitStartContent submitStartRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             SubmitStartContent content = submitStartRequest;
-            StartResourceOperationResponse result;
+            StartResourceOperationResult result;
 
             try
             {
-                result = await subscriptionResource.VirtualMachinesSubmitStartScheduledActionAsync(location, content);
+                result = await subscriptionResource.SubmitVirtualMachineStartAsync(location, content);
             }
             catch (Exception ex)
             {
@@ -246,15 +246,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<DeallocateResourceOperationResponse> TestSubmitDeallocateAsync(string location, SubmitDeallocateContent submitStartRequest, string subid, ArmClient client)
+        protected static async Task<DeallocateResourceOperationResult> TestSubmitDeallocateAsync(string location, SubmitDeallocateContent submitStartRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             SubmitDeallocateContent content = submitStartRequest;
-            DeallocateResourceOperationResponse result;
+            DeallocateResourceOperationResult result;
 
             try
             {
-                result = await subscriptionResource.VirtualMachinesSubmitDeallocateScheduledActionAsync(location, content);
+                result = await subscriptionResource.SubmitVirtualMachineDeallocateAsync(location, content);
             }
             catch (Exception ex)
             {
@@ -264,15 +264,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<HibernateResourceOperationResponse> TestSubmitHibernateAsync(string location, SubmitHibernateContent submitStartRequest, string subid, ArmClient client)
+        protected static async Task<HibernateResourceOperationResult> TestSubmitHibernateAsync(string location, SubmitHibernateContent submitStartRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             SubmitHibernateContent content = submitStartRequest;
-            HibernateResourceOperationResponse result;
+            HibernateResourceOperationResult result;
 
             try
             {
-                result = await subscriptionResource.VirtualMachinesSubmitHibernateScheduledActionAsync(location, content);
+                result = await subscriptionResource.SubmitVirtualMachineHibernateAsync(location, content);
             }
             catch (Exception ex)
             {
@@ -282,14 +282,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<StartResourceOperationResponse> TestExecuteStartAsync(string location, ExecuteStartContent executeStartRequest, string subid, ArmClient client)
+        protected static async Task<StartResourceOperationResult> TestExecuteStartAsync(string location, ExecuteStartContent executeStartRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             ExecuteStartContent content = executeStartRequest;
-            StartResourceOperationResponse result;
+            StartResourceOperationResult result;
             try
             {
-                result = await subscriptionResource.VirtualMachinesExecuteStartScheduledActionAsync(location, content);
+                result = await subscriptionResource.ExecuteVirtualMachineStartAsync(location, content);
             }
             catch (Exception ex)
             {
@@ -300,15 +300,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<DeallocateResourceOperationResponse> TestExecuteDeallocateAsync(string location, ExecuteDeallocateContent executeDeallocateRequest, string subid, ArmClient client)
+        protected static async Task<DeallocateResourceOperationResult> TestExecuteDeallocateAsync(string location, ExecuteDeallocateContent executeDeallocateRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             ExecuteDeallocateContent content = executeDeallocateRequest;
 
-            DeallocateResourceOperationResponse result;
+            DeallocateResourceOperationResult result;
             try
             {
-                result = await subscriptionResource.VirtualMachinesExecuteDeallocateScheduledActionAsync(location, content);
+                result = await subscriptionResource.ExecuteVirtualMachineDeallocateAsync(location, content);
             }
             catch (Exception ex)
             {
@@ -319,15 +319,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<HibernateResourceOperationResponse> TestExecuteHibernateAsync(string location, ExecuteHibernateContent executeHibernateRequest, string subid, ArmClient client)
+        protected static async Task<HibernateResourceOperationResult> TestExecuteHibernateAsync(string location, ExecuteHibernateContent executeHibernateRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             ExecuteHibernateContent content = executeHibernateRequest;
-            HibernateResourceOperationResponse result;
+            HibernateResourceOperationResult result;
 
             try
             {
-                result = await subscriptionResource.VirtualMachinesExecuteHibernateScheduledActionAsync(location, content);
+                result = await subscriptionResource.ExecuteVirtualMachineHibernateAsync(location, content);
             }
             catch (Exception ex)
             {
@@ -337,15 +337,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<GetOperationStatusResponse> TestGetOpsStatusAsync(string location, GetOperationStatusContent getOpsStatusRequest, string subid, ArmClient client)
+        protected static async Task<GetOperationStatusResult> TestGetOpsStatusAsync(string location, GetOperationStatusContent getOpsStatusRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             GetOperationStatusContent content = getOpsStatusRequest;
-            GetOperationStatusResponse result;
+            GetOperationStatusResult result;
 
             try
             {
-                result = await subscriptionResource.VirtualMachinesGetOperationStatusScheduledActionAsync(location, content);
+                result = await subscriptionResource.GetVirtualMachineOperationStatusAsync(location, content);
             }
             catch (Exception ex)
             {
@@ -356,15 +356,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<CancelOperationsResponse> TestCancelOpsAsync(string location, CancelOperationsContent cancelOpsRequest, string subid, ArmClient client)
+        protected static async Task<CancelOperationsResult> TestCancelOpsAsync(string location, CancelOperationsContent cancelOpsRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             CancelOperationsContent content = cancelOpsRequest;
-            CancelOperationsResponse result;
+            CancelOperationsResult result;
 
             try
             {
-                result = await subscriptionResource.VirtualMachinesCancelOperationsScheduledActionAsync(location, content);
+                result = await subscriptionResource.CancelVirtualMachineOperationsAsync(location, content);
             }
             catch (Exception ex)
             {
@@ -374,15 +374,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        protected static async Task<GetOperationErrorsResponse> TestGetOperationErrorsAsync(string location, GetOperationErrorsContent getOperationErrorsRequest, string subid, ArmClient client)
+        protected static async Task<GetOperationErrorsResult> TestGetOperationErrorsAsync(string location, GetOperationErrorsContent getOperationErrorsRequest, string subid, ArmClient client)
         {
             SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
             GetOperationErrorsContent content = getOperationErrorsRequest;
-            GetOperationErrorsResponse result;
+            GetOperationErrorsResult result;
 
             try
             {
-                result = await subscriptionResource.VirtualMachinesGetOperationErrorsScheduledActionAsync(location, content);
+                result = await subscriptionResource.GetVirtualMachineOperationErrorsAsync(location, content);
             }
             catch (Exception ex)
             {

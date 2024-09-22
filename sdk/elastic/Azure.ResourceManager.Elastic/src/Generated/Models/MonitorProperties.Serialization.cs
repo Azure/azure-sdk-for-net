@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -46,6 +46,36 @@ namespace Azure.ResourceManager.Elastic.Models
                 writer.WritePropertyName("userInfo"u8);
                 writer.WriteObjectValue(UserInfo, options);
             }
+            if (Optional.IsDefined(PlanDetails))
+            {
+                writer.WritePropertyName("planDetails"u8);
+                writer.WriteObjectValue(PlanDetails, options);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (Optional.IsDefined(SubscriptionState))
+            {
+                writer.WritePropertyName("subscriptionState"u8);
+                writer.WriteStringValue(SubscriptionState);
+            }
+            if (Optional.IsDefined(SaaSAzureSubscriptionStatus))
+            {
+                writer.WritePropertyName("saaSAzureSubscriptionStatus"u8);
+                writer.WriteStringValue(SaaSAzureSubscriptionStatus);
+            }
+            if (Optional.IsDefined(SourceCampaignName))
+            {
+                writer.WritePropertyName("sourceCampaignName"u8);
+                writer.WriteStringValue(SourceCampaignName);
+            }
+            if (Optional.IsDefined(SourceCampaignId))
+            {
+                writer.WritePropertyName("sourceCampaignId"u8);
+                writer.WriteStringValue(SourceCampaignId);
+            }
             if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
             {
                 writer.WritePropertyName("liftrResourceCategory"u8);
@@ -55,6 +85,11 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 writer.WritePropertyName("liftrResourcePreference"u8);
                 writer.WriteNumberValue(LiftrResourcePreference.Value);
+            }
+            if (Optional.IsDefined(GenerateApiKey))
+            {
+                writer.WritePropertyName("generateApiKey"u8);
+                writer.WriteBooleanValue(GenerateApiKey.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,8 +133,15 @@ namespace Azure.ResourceManager.Elastic.Models
             MonitoringStatus? monitoringStatus = default;
             ElasticProperties elasticProperties = default;
             UserInfo userInfo = default;
+            PlanDetails planDetails = default;
+            string version = default;
+            string subscriptionState = default;
+            string saaSAzureSubscriptionStatus = default;
+            string sourceCampaignName = default;
+            string sourceCampaignId = default;
             LiftrResourceCategory? liftrResourceCategory = default;
             int? liftrResourcePreference = default;
+            bool? generateApiKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,6 +182,40 @@ namespace Azure.ResourceManager.Elastic.Models
                     userInfo = UserInfo.DeserializeUserInfo(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("planDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    planDetails = PlanDetails.DeserializePlanDetails(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("version"u8))
+                {
+                    version = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("subscriptionState"u8))
+                {
+                    subscriptionState = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("saaSAzureSubscriptionStatus"u8))
+                {
+                    saaSAzureSubscriptionStatus = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sourceCampaignName"u8))
+                {
+                    sourceCampaignName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sourceCampaignId"u8))
+                {
+                    sourceCampaignId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("liftrResourceCategory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -158,6 +234,15 @@ namespace Azure.ResourceManager.Elastic.Models
                     liftrResourcePreference = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("generateApiKey"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    generateApiKey = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -169,8 +254,15 @@ namespace Azure.ResourceManager.Elastic.Models
                 monitoringStatus,
                 elasticProperties,
                 userInfo,
+                planDetails,
+                version,
+                subscriptionState,
+                saaSAzureSubscriptionStatus,
+                sourceCampaignName,
+                sourceCampaignId,
                 liftrResourceCategory,
                 liftrResourcePreference,
+                generateApiKey,
                 serializedAdditionalRawData);
         }
 

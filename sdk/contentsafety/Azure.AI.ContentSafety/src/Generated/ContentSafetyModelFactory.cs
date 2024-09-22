@@ -97,15 +97,6 @@ namespace Azure.AI.ContentSafety
             return new ImageCategoriesAnalysis(category, severity, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.TextBlocklist"/>. </summary>
-        /// <param name="name"> Text blocklist name. </param>
-        /// <param name="description"> Text blocklist description. </param>
-        /// <returns> A new <see cref="ContentSafety.TextBlocklist"/> instance for mocking. </returns>
-        public static TextBlocklist TextBlocklist(string name = null, string description = null)
-        {
-            return new TextBlocklist(name, description, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="ContentSafety.TextBlocklistItem"/>. </summary>
         /// <param name="blocklistItemId"> The service will generate a BlocklistItemId, which will be a UUID. </param>
         /// <param name="description"> BlocklistItem description. </param>
@@ -124,6 +115,15 @@ namespace Azure.AI.ContentSafety
             blocklistItems ??= new List<TextBlocklistItem>();
 
             return new AddOrUpdateTextBlocklistItemsResult(blocklistItems?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentSafety.TextBlocklist"/>. </summary>
+        /// <param name="name"> Text blocklist name. </param>
+        /// <param name="description"> Text blocklist description. </param>
+        /// <returns> A new <see cref="ContentSafety.TextBlocklist"/> instance for mocking. </returns>
+        public static TextBlocklist TextBlocklist(string name = null, string description = null)
+        {
+            return new TextBlocklist(name, description, serializedAdditionalRawData: null);
         }
     }
 }
