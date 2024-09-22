@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "blueprint/resource-manager" -AutoRestVersion "v2"

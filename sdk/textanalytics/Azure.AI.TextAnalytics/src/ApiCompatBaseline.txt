@@ -1,6 +1,0 @@
-# Baselining these until the next GA. These are not really a compat issue we need to worry about because the properties were already readonly but we made the entire type readonly now which is where the attributes came from
-CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.IsReadOnlyAttribute' exists on 'Azure.AI.TextAnalytics.TextAnalyticsError.ErrorCode.get()' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.IsReadOnlyAttribute' exists on 'Azure.AI.TextAnalytics.TextAnalyticsError.Message.get()' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.IsReadOnlyAttribute' exists on 'Azure.AI.TextAnalytics.TextAnalyticsError.Target.get()' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.IsReadOnlyAttribute' exists on 'Azure.AI.TextAnalytics.TextAnalyticsWarning.Message.get()' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.Runtime.CompilerServices.IsReadOnlyAttribute' exists on 'Azure.AI.TextAnalytics.TextAnalyticsWarning.WarningCode.get()' in the contract but not the implementation.

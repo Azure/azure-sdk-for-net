@@ -1,8 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <Version>1.0.0</Version>
-    <PackageId>Azure.ResourceManager.CosmosDBForPostgreSql</PackageId>
-    <Description>Azure Resource Manager client SDK for Azure resource provider CosmosDBForPostgreSql.</Description>
-    <PackageTags>azure;management;arm;resource manager;cosmosdbforpostgresql</PackageTags>
-  </PropertyGroup>
-</Project>

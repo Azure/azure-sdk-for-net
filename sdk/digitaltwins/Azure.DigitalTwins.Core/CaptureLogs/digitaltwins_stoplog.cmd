@@ -1,2 +1,0 @@
-logman stop DigitalTwinsTrace
-logman delete DigitalTwinsTrace

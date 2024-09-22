@@ -1,7 +1,0 @@
-*.config.json
-!*common.config.json
-!*common.test.assets.config.json
-*.etl
-test-resources.json*
-package.json
-package-lock.json

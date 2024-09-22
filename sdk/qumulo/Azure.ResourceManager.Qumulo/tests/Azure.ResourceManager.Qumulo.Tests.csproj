@@ -1,8 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\src\Azure.ResourceManager.Qumulo.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SessionRecords\" />
-  </ItemGroup>
-</Project>

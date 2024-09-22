@@ -1,8 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\src\Azure.ResourceManager.FluidRelay.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SessionRecords\FluidRelayServerCRUDTests\" />
-  </ItemGroup>
-</Project>

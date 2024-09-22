@@ -1,1 +1,0 @@
-<Playlist Version="1.0"><Add Test="BatchAI.Tests.CreateJobTests.TestJobCreationAndDeletion" /><Add Test="BatchAI.Tests.CreateClusterTests.TestClusterCreationAndDeletion" /></Playlist>

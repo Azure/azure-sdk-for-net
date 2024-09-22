@@ -1,9 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\src\Azure.ResourceManager.Batch.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Storage"/>
-  </ItemGroup>
-</Project>
