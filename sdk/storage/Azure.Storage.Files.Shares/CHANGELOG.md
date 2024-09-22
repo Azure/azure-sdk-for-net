@@ -1,16 +1,13 @@
 # Release History
 
-## 12.20.0-beta.2 (Unreleased)
+## 12.20.0 (2024-09-17)
 
 ### Features Added
-
-### Breaking Changes
+- Includes all features from 12.20.0-beta.1.
 
 ### Bugs Fixed
 - Fixed \[BUG\] Method overload ShareFileClient.OpenReadAsync()/OpenRead() to correctly handle the allowBlobModifications flag #45516
 - Fixed \[BUG\] Fixed Equality failures due to implicit cast on ShareErrorCode #44213
-
-### Other Changes
 
 ## 12.20.0-beta.1 (2024-08-06)
 

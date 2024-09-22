@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Automation.Models
 
         void IJsonModel<AgentRegistrationRegenerateKeyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AgentRegistrationRegenerateKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AgentRegistrationRegenerateKeyContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -43,7 +51,6 @@ namespace Azure.ResourceManager.Automation.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AgentRegistrationRegenerateKeyContent IJsonModel<AgentRegistrationRegenerateKeyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

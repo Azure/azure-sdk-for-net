@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Xml.Schema;
 using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry
@@ -30,19 +31,30 @@ namespace Azure.Data.SchemaRegistry
 
         /// <summary> Initializes a new instance of <see cref="SchemaFormat"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <remarks>
+        /// If using a schema format that is unsupported by this client, upgrade to a
+        /// version that supports the schema format.
+        /// </remarks>
         public SchemaFormat(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
+            ContentType = _value == CustomValue ? CustomContentType : $"application/json; serialization={value}";
+        }
+
+        private SchemaFormat(string value, string contentType)
+        {
+            _value = value;
+            ContentType = contentType;
         }
 
         /// <summary> Avro Serialization schema type. </summary>
-        public static SchemaFormat Avro { get; } = new SchemaFormat(AvroValue);
+        public static SchemaFormat Avro { get; } = new SchemaFormat(AvroValue, AvroContentType);
 
         /// <summary> JSON Serialization schema type. </summary>
-        public static SchemaFormat Json { get; } = new SchemaFormat(JsonValue);
+        public static SchemaFormat Json { get; } = new SchemaFormat(JsonValue, JsonContentType);
 
         /// <summary> Custom Serialization schema type. </summary>
-        public static SchemaFormat Custom { get; } = new SchemaFormat(CustomValue);
+        public static SchemaFormat Custom { get; } = new SchemaFormat(CustomValue, CustomContentType);
 
         ///// <summary> Protobuf Serialization schema type. </summary>
         //public static SchemaFormat Protobuf { get; } = new SchemaFormat(ProtobufValue);
@@ -66,20 +78,7 @@ namespace Azure.Data.SchemaRegistry
         /// <inheritdoc />
         public override string ToString() => _value;
 
-        internal ContentType ToContentType()
-        {
-            switch (_value)
-            {
-                case AvroValue:
-                    return new ContentType(AvroContentType);
-                case JsonValue:
-                    return new ContentType(JsonContentType);
-                //case ProtobufValue:
-                //    return new ContentType(ProtobufContentType);
-                default:
-                    return new ContentType(CustomContentType);
-            }
-        }
+        internal string ContentType { get; }
 
         internal static SchemaFormat FromContentType(string contentTypeValue)
         {
