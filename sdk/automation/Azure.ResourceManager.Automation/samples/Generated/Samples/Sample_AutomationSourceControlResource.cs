@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationSourceControlResource created on azure
             // for more information of creating AutomationSourceControlResource, please refer to the document of AutomationSourceControlResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "sampleAccount9";
             string sourceControlName = "sampleSourceControl";
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationSourceControlResource created on azure
             // for more information of creating AutomationSourceControlResource, please refer to the document of AutomationSourceControlResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "sampleAccount9";
             string sourceControlName = "sampleSourceControl";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationSourceControlResource created on azure
             // for more information of creating AutomationSourceControlResource, please refer to the document of AutomationSourceControlResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "sampleAccount9";
             string sourceControlName = "sampleSourceControl";
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationSourceControlResource created on azure
             // for more information of creating AutomationSourceControlResource, please refer to the document of AutomationSourceControlResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string sourceControlName = "MySourceControl";
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationSourceControlResource created on azure
             // for more information of creating AutomationSourceControlResource, please refer to the document of AutomationSourceControlResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string sourceControlName = "MySourceControl";
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationSourceControlResource created on azure
             // for more information of creating AutomationSourceControlResource, please refer to the document of AutomationSourceControlResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string sourceControlName = "MySourceControl";
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationSourceControlResource created on azure
             // for more information of creating AutomationSourceControlResource, please refer to the document of AutomationSourceControlResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string sourceControlName = "MySourceControl";
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationSourceControlResource created on azure
             // for more information of creating AutomationSourceControlResource, please refer to the document of AutomationSourceControlResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string sourceControlName = "MySourceControl";

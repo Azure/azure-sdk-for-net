@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this DscConfigurationResource created on azure
             // for more information of creating DscConfigurationResource, please refer to the document of DscConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string configurationName = "TemplateBasic";
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this DscConfigurationResource created on azure
             // for more information of creating DscConfigurationResource, please refer to the document of DscConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string configurationName = "TemplateBasic";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this DscConfigurationResource created on azure
             // for more information of creating DscConfigurationResource, please refer to the document of DscConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount18";
             string configurationName = "SetupServer";
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this DscConfigurationResource created on azure
             // for more information of creating DscConfigurationResource, please refer to the document of DscConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string configurationName = "ConfigName";

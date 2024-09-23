@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotChannelResource created on azure
             // for more information of creating BotChannelResource, please refer to the document of BotChannelResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OneResourceGroupName";
             string resourceName = "samplebotname";
             BotChannelName channelName = BotChannelName.AlexaChannel;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotChannelResource created on azure
             // for more information of creating BotChannelResource, please refer to the document of BotChannelResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OneResourceGroupName";
             string resourceName = "samplebotname";
             BotChannelName channelName = BotChannelName.EmailChannel;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotChannelResource created on azure
             // for more information of creating BotChannelResource, please refer to the document of BotChannelResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OneResourceGroupName";
             string resourceName = "samplebotname";
             BotChannelName channelName = BotChannelName.DirectLineSpeechChannel;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotChannelResource created on azure
             // for more information of creating BotChannelResource, please refer to the document of BotChannelResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OneResourceGroupName";
             string resourceName = "samplebotname";
             BotChannelName channelName = BotChannelName.LineChannel;
@@ -201,7 +201,7 @@ ChannelAccessToken = "channelAccessToken",
 
             // this example assumes you already have this BotChannelResource created on azure
             // for more information of creating BotChannelResource, please refer to the document of BotChannelResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OneResourceGroupName";
             string resourceName = "samplebotname";
             BotChannelName channelName = BotChannelName.EmailChannel;
@@ -229,7 +229,7 @@ ChannelAccessToken = "channelAccessToken",
 
             // this example assumes you already have this BotChannelResource created on azure
             // for more information of creating BotChannelResource, please refer to the document of BotChannelResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OneResourceGroupName";
             string resourceName = "samplebotname";
             BotChannelName channelName = BotChannelName.DirectLineSpeechChannel;
@@ -257,7 +257,7 @@ ChannelAccessToken = "channelAccessToken",
 
             // this example assumes you already have this BotChannelResource created on azure
             // for more information of creating BotChannelResource, please refer to the document of BotChannelResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OneResourceGroupName";
             string resourceName = "samplebotname";
             BotChannelName channelName = BotChannelName.AlexaChannel;
@@ -289,7 +289,7 @@ ChannelAccessToken = "channelAccessToken",
 
             // this example assumes you already have this BotChannelResource created on azure
             // for more information of creating BotChannelResource, please refer to the document of BotChannelResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OneResourceGroupName";
             string resourceName = "samplebotname";
             BotChannelName channelName = BotChannelName.EmailChannel;
@@ -321,7 +321,7 @@ ChannelAccessToken = "channelAccessToken",
 
             // this example assumes you already have this BotChannelResource created on azure
             // for more information of creating BotChannelResource, please refer to the document of BotChannelResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OneResourceGroupName";
             string resourceName = "samplebotname";
             BotChannelName channelName = BotChannelName.DirectLineSpeechChannel;
@@ -353,7 +353,7 @@ ChannelAccessToken = "channelAccessToken",
 
             // this example assumes you already have this BotChannelResource created on azure
             // for more information of creating BotChannelResource, please refer to the document of BotChannelResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OneResourceGroupName";
             string resourceName = "samplebotname";
             BotChannelName channelName = BotChannelName.LineChannel;
@@ -385,7 +385,7 @@ ChannelAccessToken = "channelAccessToken",
 
             // this example assumes you already have this BotChannelResource created on azure
             // for more information of creating BotChannelResource, please refer to the document of BotChannelResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OneResourceGroupName";
             string resourceName = "samplebotname";
             BotChannelName channelName = BotChannelName.EmailChannel;

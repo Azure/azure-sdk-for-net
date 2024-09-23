@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.LargeInstance.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "f0f4887f-d13c-4943-a8ba-d7da28d2a3fd";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.LargeInstance.Samples
 
             // this example assumes you already have this LargeInstanceResource created on azure
             // for more information of creating LargeInstanceResource, please refer to the document of LargeInstanceResource
-            string subscriptionId = "f0f4887f-d13c-4943-a8ba-d7da28d2a3fd";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string azureLargeInstanceName = "myAzureLargeInstance";
             ResourceIdentifier largeInstanceResourceId = LargeInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, azureLargeInstanceName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.LargeInstance.Samples
 
             // this example assumes you already have this LargeInstanceResource created on azure
             // for more information of creating LargeInstanceResource, please refer to the document of LargeInstanceResource
-            string subscriptionId = "f0f4887f-d13c-4943-a8ba-d7da28d2a3fd";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string azureLargeInstanceName = "myALInstance";
             ResourceIdentifier largeInstanceResourceId = LargeInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, azureLargeInstanceName);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.LargeInstance.Samples
 
             // this example assumes you already have this LargeInstanceResource created on azure
             // for more information of creating LargeInstanceResource, please refer to the document of LargeInstanceResource
-            string subscriptionId = "f0f4887f-d13c-4943-a8ba-d7da28d2a3fd";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string azureLargeInstanceName = "myALInstance";
             ResourceIdentifier largeInstanceResourceId = LargeInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, azureLargeInstanceName);

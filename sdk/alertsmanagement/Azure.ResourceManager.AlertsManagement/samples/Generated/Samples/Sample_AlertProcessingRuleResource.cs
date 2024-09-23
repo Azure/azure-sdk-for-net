@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AlertsManagement.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1e3ff1c0-771a-4119-a03b-be82a51e232d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AlertsManagement.Samples
 
             // this example assumes you already have this AlertProcessingRuleResource created on azure
             // for more information of creating AlertProcessingRuleResource, please refer to the document of AlertProcessingRuleResource
-            string subscriptionId = "1e3ff1c0-771a-4119-a03b-be82a51e232d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "alertscorrelationrg";
             string alertProcessingRuleName = "DailySuppression";
             ResourceIdentifier alertProcessingRuleResourceId = AlertProcessingRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, alertProcessingRuleName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AlertsManagement.Samples
 
             // this example assumes you already have this AlertProcessingRuleResource created on azure
             // for more information of creating AlertProcessingRuleResource, please refer to the document of AlertProcessingRuleResource
-            string subscriptionId = "1e3ff1c0-771a-4119-a03b-be82a51e232d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "alertscorrelationrg";
             string alertProcessingRuleName = "DailySuppression";
             ResourceIdentifier alertProcessingRuleResourceId = AlertProcessingRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, alertProcessingRuleName);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AlertsManagement.Samples
 
             // this example assumes you already have this AlertProcessingRuleResource created on azure
             // for more information of creating AlertProcessingRuleResource, please refer to the document of AlertProcessingRuleResource
-            string subscriptionId = "1e3ff1c0-771a-4119-a03b-be82a51e232d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "alertscorrelationrg";
             string alertProcessingRuleName = "WeeklySuppression";
             ResourceIdentifier alertProcessingRuleResourceId = AlertProcessingRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, alertProcessingRuleName);

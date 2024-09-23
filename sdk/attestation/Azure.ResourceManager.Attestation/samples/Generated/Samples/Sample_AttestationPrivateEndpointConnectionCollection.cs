@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Attestation.Samples
 
             // this example assumes you already have this AttestationProviderResource created on azure
             // for more information of creating AttestationProviderResource, please refer to the document of AttestationProviderResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string providerName = "sto2527";
             ResourceIdentifier attestationProviderResourceId = AttestationProviderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, providerName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Attestation.Samples
 
             // this example assumes you already have this AttestationProviderResource created on azure
             // for more information of creating AttestationProviderResource, please refer to the document of AttestationProviderResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string providerName = "sto2527";
             ResourceIdentifier attestationProviderResourceId = AttestationProviderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, providerName);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Attestation.Samples
 
             // this example assumes you already have this AttestationProviderResource created on azure
             // for more information of creating AttestationProviderResource, please refer to the document of AttestationProviderResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string providerName = "sto2527";
             ResourceIdentifier attestationProviderResourceId = AttestationProviderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, providerName);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Attestation.Samples
 
             // this example assumes you already have this AttestationProviderResource created on azure
             // for more information of creating AttestationProviderResource, please refer to the document of AttestationProviderResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string providerName = "sto2527";
             ResourceIdentifier attestationProviderResourceId = AttestationProviderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, providerName);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Attestation.Samples
 
             // this example assumes you already have this AttestationProviderResource created on azure
             // for more information of creating AttestationProviderResource, please refer to the document of AttestationProviderResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res7687";
             string providerName = "sto9699";
             ResourceIdentifier attestationProviderResourceId = AttestationProviderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, providerName);

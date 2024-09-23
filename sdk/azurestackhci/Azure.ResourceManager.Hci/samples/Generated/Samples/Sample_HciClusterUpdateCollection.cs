@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // this example assumes you already have this HciClusterResource created on azure
             // for more information of creating HciClusterResource, please refer to the document of HciClusterResource
-            string subscriptionId = "b8d594e5-51f3-4c11-9c54-a7771b81c712";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string clusterName = "testcluster";
             ResourceIdentifier hciClusterResourceId = HciClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // this example assumes you already have this HciClusterResource created on azure
             // for more information of creating HciClusterResource, please refer to the document of HciClusterResource
-            string subscriptionId = "b8d594e5-51f3-4c11-9c54-a7771b81c712";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string clusterName = "testcluster";
             ResourceIdentifier hciClusterResourceId = HciClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -129,7 +129,7 @@ PackageName = "update package name",
 
             // this example assumes you already have this HciClusterResource created on azure
             // for more information of creating HciClusterResource, please refer to the document of HciClusterResource
-            string subscriptionId = "b8d594e5-51f3-4c11-9c54-a7771b81c712";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string clusterName = "testcluster";
             ResourceIdentifier hciClusterResourceId = HciClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -164,7 +164,7 @@ PackageName = "update package name",
 
             // this example assumes you already have this HciClusterResource created on azure
             // for more information of creating HciClusterResource, please refer to the document of HciClusterResource
-            string subscriptionId = "b8d594e5-51f3-4c11-9c54-a7771b81c712";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string clusterName = "testcluster";
             ResourceIdentifier hciClusterResourceId = HciClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -195,7 +195,7 @@ PackageName = "update package name",
 
             // this example assumes you already have this HciClusterResource created on azure
             // for more information of creating HciClusterResource, please refer to the document of HciClusterResource
-            string subscriptionId = "b8d594e5-51f3-4c11-9c54-a7771b81c712";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string clusterName = "testcluster";
             ResourceIdentifier hciClusterResourceId = HciClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);

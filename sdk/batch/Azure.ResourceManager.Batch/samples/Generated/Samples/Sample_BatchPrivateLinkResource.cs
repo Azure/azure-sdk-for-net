@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchPrivateLinkResource created on azure
             // for more information of creating BatchPrivateLinkResource, please refer to the document of BatchPrivateLinkResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string privateLinkResourceName = "batchAccount";

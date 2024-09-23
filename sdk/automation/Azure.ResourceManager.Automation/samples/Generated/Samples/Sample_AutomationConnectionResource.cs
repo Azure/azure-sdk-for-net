@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationConnectionResource created on azure
             // for more information of creating AutomationConnectionResource, please refer to the document of AutomationConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount28";
             string connectionName = "myConnection";
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationConnectionResource created on azure
             // for more information of creating AutomationConnectionResource, please refer to the document of AutomationConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount28";
             string connectionName = "myConnection";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationConnectionResource created on azure
             // for more information of creating AutomationConnectionResource, please refer to the document of AutomationConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount28";
             string connectionName = "myConnection";

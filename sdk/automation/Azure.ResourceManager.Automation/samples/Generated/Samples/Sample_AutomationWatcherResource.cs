@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationWatcherResource created on azure
             // for more information of creating AutomationWatcherResource, please refer to the document of AutomationWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "MyTestAutomationAccount";
             string watcherName = "MyTestWatcher";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationWatcherResource created on azure
             // for more information of creating AutomationWatcherResource, please refer to the document of AutomationWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "MyTestAutomationAccount";
             string watcherName = "MyTestWatcher";
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationWatcherResource created on azure
             // for more information of creating AutomationWatcherResource, please refer to the document of AutomationWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "MyTestAutomationAccount";
             string watcherName = "MyTestWatcher";
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationWatcherResource created on azure
             // for more information of creating AutomationWatcherResource, please refer to the document of AutomationWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "MyTestAutomationAccount";
             string watcherName = "MyTestWatcher";
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationWatcherResource created on azure
             // for more information of creating AutomationWatcherResource, please refer to the document of AutomationWatcherResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "MyTestAutomationAccount";
             string watcherName = "MyTestWatcher";

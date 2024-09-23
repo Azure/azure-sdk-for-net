@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountModuleResource created on azure
             // for more information of creating AutomationAccountModuleResource, please refer to the document of AutomationAccountModuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string moduleName = "OmsCompositeResources";
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountModuleResource created on azure
             // for more information of creating AutomationAccountModuleResource, please refer to the document of AutomationAccountModuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string moduleName = "OmsCompositeResources";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountModuleResource created on azure
             // for more information of creating AutomationAccountModuleResource, please refer to the document of AutomationAccountModuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string moduleName = "OmsCompositeResources";
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountModuleResource created on azure
             // for more information of creating AutomationAccountModuleResource, please refer to the document of AutomationAccountModuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string moduleName = "OmsCompositeResources";
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountModuleResource created on azure
             // for more information of creating AutomationAccountModuleResource, please refer to the document of AutomationAccountModuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "MyAutomationAccount";
             string moduleName = "MyModule";
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountModuleResource created on azure
             // for more information of creating AutomationAccountModuleResource, please refer to the document of AutomationAccountModuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "MyAutomationAccount";
             string moduleName = "MyModule";
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountModuleResource created on azure
             // for more information of creating AutomationAccountModuleResource, please refer to the document of AutomationAccountModuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "MyAutomationAccount";
             string moduleName = "MyModule";

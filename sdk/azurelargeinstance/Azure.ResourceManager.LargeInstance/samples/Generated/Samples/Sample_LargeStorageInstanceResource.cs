@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.LargeInstance.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "f0f4887f-d13c-4943-a8ba-d7da28d2a3fd";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.LargeInstance.Samples
 
             // this example assumes you already have this LargeStorageInstanceResource created on azure
             // for more information of creating LargeStorageInstanceResource, please refer to the document of LargeStorageInstanceResource
-            string subscriptionId = "f0f4887f-d13c-4943-a8ba-d7da28d2a3fd";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string azureLargeStorageInstanceName = "myAzureLargeStorageInstance";
             ResourceIdentifier largeStorageInstanceResourceId = LargeStorageInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, azureLargeStorageInstanceName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.LargeInstance.Samples
 
             // this example assumes you already have this LargeStorageInstanceResource created on azure
             // for more information of creating LargeStorageInstanceResource, please refer to the document of LargeStorageInstanceResource
-            string subscriptionId = "f0f4887f-d13c-4943-a8ba-d7da28d2a3fd";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string azureLargeStorageInstanceName = "myALSInstance";
             ResourceIdentifier largeStorageInstanceResourceId = LargeStorageInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, azureLargeStorageInstanceName);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.LargeInstance.Samples
 
             // this example assumes you already have this LargeStorageInstanceResource created on azure
             // for more information of creating LargeStorageInstanceResource, please refer to the document of LargeStorageInstanceResource
-            string subscriptionId = "f0f4887f-d13c-4943-a8ba-d7da28d2a3fd";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string azureLargeStorageInstanceName = "myALSInstance";
             ResourceIdentifier largeStorageInstanceResourceId = LargeStorageInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, azureLargeStorageInstanceName);

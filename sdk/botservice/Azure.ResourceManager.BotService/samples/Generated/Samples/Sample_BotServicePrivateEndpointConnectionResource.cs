@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotServicePrivateEndpointConnectionResource created on azure
             // for more information of creating BotServicePrivateEndpointConnectionResource, please refer to the document of BotServicePrivateEndpointConnectionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string resourceName = "sto2527";
             string privateEndpointConnectionName = "{privateEndpointConnectionName}";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotServicePrivateEndpointConnectionResource created on azure
             // for more information of creating BotServicePrivateEndpointConnectionResource, please refer to the document of BotServicePrivateEndpointConnectionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res7687";
             string resourceName = "sto9699";
             string privateEndpointConnectionName = "{privateEndpointConnectionName}";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotServicePrivateEndpointConnectionResource created on azure
             // for more information of creating BotServicePrivateEndpointConnectionResource, please refer to the document of BotServicePrivateEndpointConnectionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string resourceName = "sto2527";
             string privateEndpointConnectionName = "{privateEndpointConnectionName}";

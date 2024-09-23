@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotResource created on azure
             // for more information of creating BotResource, please refer to the document of BotResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OneResourceGroupName";
             string resourceName = "samplebotname";
             ResourceIdentifier botResourceId = BotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotResource created on azure
             // for more information of creating BotResource, please refer to the document of BotResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OneResourceGroupName";
             string resourceName = "samplebotname";
             ResourceIdentifier botResourceId = BotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotResource created on azure
             // for more information of creating BotResource, please refer to the document of BotResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OneResourceGroupName";
             string resourceName = "samplebotname";
             ResourceIdentifier botResourceId = BotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotResource created on azure
             // for more information of creating BotResource, please refer to the document of BotResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OneResourceGroupName";
             string resourceName = "samplebotname";
             ResourceIdentifier botResourceId = BotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotResource created on azure
             // for more information of creating BotResource, please refer to the document of BotResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OneResourceGroupName";
             string resourceName = "samplebotname";
             ResourceIdentifier botResourceId = BotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotResource created on azure
             // for more information of creating BotResource, please refer to the document of BotResource
-            string subscriptionId = "subscription-id";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OneResourceGroupName";
             string resourceName = "samplebotname";
             ResourceIdentifier botResourceId = BotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.BotService.Samples
 
             // this example assumes you already have this BotResource created on azure
             // for more information of creating BotResource, please refer to the document of BotResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string resourceName = "sto2527";
             ResourceIdentifier botResourceId = BotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // this example assumes you already have this HciClusterUpdateRunResource created on azure
             // for more information of creating HciClusterUpdateRunResource, please refer to the document of HciClusterUpdateRunResource
-            string subscriptionId = "b8d594e5-51f3-4c11-9c54-a7771b81c712";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string clusterName = "testcluster";
             string updateName = "Microsoft4.2203.2.32";
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // this example assumes you already have this HciClusterUpdateRunResource created on azure
             // for more information of creating HciClusterUpdateRunResource, please refer to the document of HciClusterUpdateRunResource
-            string subscriptionId = "b8d594e5-51f3-4c11-9c54-a7771b81c712";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string clusterName = "testcluster";
             string updateName = "Microsoft4.2203.2.32";
@@ -119,7 +119,7 @@ Steps =
 
             // this example assumes you already have this HciClusterUpdateRunResource created on azure
             // for more information of creating HciClusterUpdateRunResource, please refer to the document of HciClusterUpdateRunResource
-            string subscriptionId = "b8d594e5-51f3-4c11-9c54-a7771b81c712";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string clusterName = "testcluster";
             string updateName = "Microsoft4.2203.2.32";

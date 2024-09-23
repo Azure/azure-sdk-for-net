@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountPython2PackageResource created on azure
             // for more information of creating AutomationAccountPython2PackageResource, please refer to the document of AutomationAccountPython2PackageResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string packageName = "OmsCompositeResources";
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountPython2PackageResource created on azure
             // for more information of creating AutomationAccountPython2PackageResource, please refer to the document of AutomationAccountPython2PackageResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string packageName = "OmsCompositeResources";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountPython2PackageResource created on azure
             // for more information of creating AutomationAccountPython2PackageResource, please refer to the document of AutomationAccountPython2PackageResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "MyAutomationAccount";
             string packageName = "MyPython2Package";

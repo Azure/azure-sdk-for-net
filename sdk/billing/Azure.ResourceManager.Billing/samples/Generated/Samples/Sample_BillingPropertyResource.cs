@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Billing.Samples
 
             // this example assumes you already have this BillingPropertyResource created on azure
             // for more information of creating BillingPropertyResource, please refer to the document of BillingPropertyResource
-            string subscriptionId = "11111111-1111-1111-1111-111111111111";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier billingPropertyResourceId = BillingPropertyResource.CreateResourceIdentifier(subscriptionId);
             BillingPropertyResource billingProperty = client.GetBillingPropertyResource(billingPropertyResourceId);
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Billing.Samples
 
             // this example assumes you already have this BillingPropertyResource created on azure
             // for more information of creating BillingPropertyResource, please refer to the document of BillingPropertyResource
-            string subscriptionId = "11111111-1111-1111-1111-111111111111";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier billingPropertyResourceId = BillingPropertyResource.CreateResourceIdentifier(subscriptionId);
             BillingPropertyResource billingProperty = client.GetBillingPropertyResource(billingPropertyResourceId);
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Billing.Samples
 
             // this example assumes you already have this BillingPropertyResource created on azure
             // for more information of creating BillingPropertyResource, please refer to the document of BillingPropertyResource
-            string subscriptionId = "11111111-1111-1111-1111-111111111111";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier billingPropertyResourceId = BillingPropertyResource.CreateResourceIdentifier(subscriptionId);
             BillingPropertyResource billingProperty = client.GetBillingPropertyResource(billingPropertyResourceId);
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Billing.Samples
 
             // this example assumes you already have this BillingPropertyResource created on azure
             // for more information of creating BillingPropertyResource, please refer to the document of BillingPropertyResource
-            string subscriptionId = "11111111-1111-1111-1111-111111111111";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier billingPropertyResourceId = BillingPropertyResource.CreateResourceIdentifier(subscriptionId);
             BillingPropertyResource billingProperty = client.GetBillingPropertyResource(billingPropertyResourceId);
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Billing.Samples
 
             // this example assumes you already have this BillingPropertyResource created on azure
             // for more information of creating BillingPropertyResource, please refer to the document of BillingPropertyResource
-            string subscriptionId = "11111111-1111-1111-1111-111111111111";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier billingPropertyResourceId = BillingPropertyResource.CreateResourceIdentifier(subscriptionId);
             BillingPropertyResource billingProperty = client.GetBillingPropertyResource(billingPropertyResourceId);
 

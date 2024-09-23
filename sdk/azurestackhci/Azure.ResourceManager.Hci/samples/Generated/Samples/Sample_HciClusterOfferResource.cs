@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // this example assumes you already have this HciClusterOfferResource created on azure
             // for more information of creating HciClusterOfferResource, please refer to the document of HciClusterOfferResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string clusterName = "myCluster";
             string publisherName = "publisher1";

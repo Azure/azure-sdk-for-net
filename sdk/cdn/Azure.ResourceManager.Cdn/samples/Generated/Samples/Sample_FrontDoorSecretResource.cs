@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this FrontDoorSecretResource created on azure
             // for more information of creating FrontDoorSecretResource, please refer to the document of FrontDoorSecretResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string secretName = "secret1";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this FrontDoorSecretResource created on azure
             // for more information of creating FrontDoorSecretResource, please refer to the document of FrontDoorSecretResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string secretName = "secret1";
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this FrontDoorSecretResource created on azure
             // for more information of creating FrontDoorSecretResource, please refer to the document of FrontDoorSecretResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string secretName = "secret1";

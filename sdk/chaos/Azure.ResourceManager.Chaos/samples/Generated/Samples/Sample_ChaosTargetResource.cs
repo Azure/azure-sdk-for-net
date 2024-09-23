@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Chaos.Samples
 
             // this example assumes you already have this ChaosTargetResource created on azure
             // for more information of creating ChaosTargetResource, please refer to the document of ChaosTargetResource
-            string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleRG";
             string parentProviderNamespace = "Microsoft.Compute";
             string parentResourceType = "virtualMachines";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Chaos.Samples
 
             // this example assumes you already have this ChaosTargetResource created on azure
             // for more information of creating ChaosTargetResource, please refer to the document of ChaosTargetResource
-            string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleRG";
             string parentProviderNamespace = "Microsoft.Compute";
             string parentResourceType = "virtualMachines";
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Chaos.Samples
 
             // this example assumes you already have this ChaosTargetResource created on azure
             // for more information of creating ChaosTargetResource, please refer to the document of ChaosTargetResource
-            string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleRG";
             string parentProviderNamespace = "Microsoft.Compute";
             string parentResourceType = "virtualMachines";

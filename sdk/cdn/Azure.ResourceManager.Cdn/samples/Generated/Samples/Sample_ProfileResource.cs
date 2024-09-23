@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this ProfileResource created on azure
             // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string profileName = "profile1";
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this ProfileResource created on azure
             // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this ProfileResource created on azure
             // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this ProfileResource created on azure
             // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this ProfileResource created on azure
             // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -191,7 +191,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
 
             // this example assumes you already have this ProfileResource created on azure
             // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -226,7 +226,7 @@ LogRankingMetric.ClientRequestCount
 
             // this example assumes you already have this ProfileResource created on azure
             // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -253,7 +253,7 @@ LogRankingMetric.ClientRequestCount
 
             // this example assumes you already have this ProfileResource created on azure
             // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -280,7 +280,7 @@ LogRankingMetric.ClientRequestCount
 
             // this example assumes you already have this ProfileResource created on azure
             // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -315,7 +315,7 @@ WafRankingType.RuleId
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -347,7 +347,7 @@ WafRankingType.RuleId
 
             // this example assumes you already have this ProfileResource created on azure
             // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -378,7 +378,7 @@ WafRankingType.RuleId
 
             // this example assumes you already have this ProfileResource created on azure
             // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -417,7 +417,7 @@ WafRankingType.RuleId
 
             // this example assumes you already have this ProfileResource created on azure
             // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -444,7 +444,7 @@ WafRankingType.RuleId
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -475,7 +475,7 @@ WafRankingType.RuleId
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -509,7 +509,7 @@ WafRankingType.RuleId
 
             // this example assumes you already have this ProfileResource created on azure
             // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -536,7 +536,7 @@ WafRankingType.RuleId
 
             // this example assumes you already have this ProfileResource created on azure
             // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -563,7 +563,7 @@ WafRankingType.RuleId
 
             // this example assumes you already have this ProfileResource created on azure
             // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
@@ -590,7 +590,7 @@ WafRankingType.RuleId
 
             // this example assumes you already have this ProfileResource created on azure
             // for more information of creating ProfileResource, please refer to the document of ProfileResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);

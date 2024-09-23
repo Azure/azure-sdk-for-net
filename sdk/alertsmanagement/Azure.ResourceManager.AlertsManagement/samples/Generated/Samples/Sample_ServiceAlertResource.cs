@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AlertsManagement.Samples
 
             // this example assumes you already have this ServiceAlertResource created on azure
             // for more information of creating ServiceAlertResource, please refer to the document of ServiceAlertResource
-            string subscriptionId = "9e261de7-c804-4b9d-9ebf-6f50fe350a9a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             Guid alertId = Guid.Parse("66114d64-d9d9-478b-95c9-b789d6502100");
             ResourceIdentifier serviceAlertResourceId = ServiceAlertResource.CreateResourceIdentifier(subscriptionId, alertId);
             ServiceAlertResource serviceAlert = client.GetServiceAlertResource(serviceAlertResourceId);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AlertsManagement.Samples
 
             // this example assumes you already have this ServiceAlertResource created on azure
             // for more information of creating ServiceAlertResource, please refer to the document of ServiceAlertResource
-            string subscriptionId = "9e261de7-c804-4b9d-9ebf-6f50fe350a9a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             Guid alertId = Guid.Parse("66114d64-d9d9-478b-95c9-b789d6502100");
             ResourceIdentifier serviceAlertResourceId = ServiceAlertResource.CreateResourceIdentifier(subscriptionId, alertId);
             ServiceAlertResource serviceAlert = client.GetServiceAlertResource(serviceAlertResourceId);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AlertsManagement.Samples
 
             // this example assumes you already have this ServiceAlertResource created on azure
             // for more information of creating ServiceAlertResource, please refer to the document of ServiceAlertResource
-            string subscriptionId = "9e261de7-c804-4b9d-9ebf-6f50fe350a9a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             Guid alertId = Guid.Parse("66114d64-d9d9-478b-95c9-b789d6502100");
             ResourceIdentifier serviceAlertResourceId = ServiceAlertResource.CreateResourceIdentifier(subscriptionId, alertId);
             ServiceAlertResource serviceAlert = client.GetServiceAlertResource(serviceAlertResourceId);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AlertsManagement.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1e3ff1c0-771a-4119-a03b-be82a51e232d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

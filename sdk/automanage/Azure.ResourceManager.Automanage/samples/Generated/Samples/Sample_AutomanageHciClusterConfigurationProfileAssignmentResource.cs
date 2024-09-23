@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automanage.Samples
 
             // this example assumes you already have this AutomanageHciClusterConfigurationProfileAssignmentResource created on azure
             // for more information of creating AutomanageHciClusterConfigurationProfileAssignmentResource, please refer to the document of AutomanageHciClusterConfigurationProfileAssignmentResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string clusterName = "myClusterName";
             string configurationProfileAssignmentName = "default";
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Automanage.Samples
 
             // this example assumes you already have this AutomanageHciClusterConfigurationProfileAssignmentResource created on azure
             // for more information of creating AutomanageHciClusterConfigurationProfileAssignmentResource, please refer to the document of AutomanageHciClusterConfigurationProfileAssignmentResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string clusterName = "myClusterName";
             string configurationProfileAssignmentName = "default";
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Automanage.Samples
 
             // this example assumes you already have this AutomanageHciClusterConfigurationProfileAssignmentResource created on azure
             // for more information of creating AutomanageHciClusterConfigurationProfileAssignmentResource, please refer to the document of AutomanageHciClusterConfigurationProfileAssignmentResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string clusterName = "myClusterName";
             string configurationProfileAssignmentName = "default";

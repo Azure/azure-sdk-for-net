@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this DscNodeResource created on azure
             // for more information of creating DscNodeResource, please refer to the document of DscNodeResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount9";
             string nodeId = "e1243a76-a9bd-432f-bde3-ad8f317ee786";
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this DscNodeResource created on azure
             // for more information of creating DscNodeResource, please refer to the document of DscNodeResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string nodeId = "nodeId";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this DscNodeResource created on azure
             // for more information of creating DscNodeResource, please refer to the document of DscNodeResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string nodeId = "nodeId";
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this DscNodeResource created on azure
             // for more information of creating DscNodeResource, please refer to the document of DscNodeResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string nodeId = "nodeId";
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this DscNodeResource created on azure
             // for more information of creating DscNodeResource, please refer to the document of DscNodeResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string nodeId = "nodeId";
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this DscNodeResource created on azure
             // for more information of creating DscNodeResource, please refer to the document of DscNodeResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string nodeId = "nodeId";
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this DscNodeResource created on azure
             // for more information of creating DscNodeResource, please refer to the document of DscNodeResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string nodeId = "nodeId";

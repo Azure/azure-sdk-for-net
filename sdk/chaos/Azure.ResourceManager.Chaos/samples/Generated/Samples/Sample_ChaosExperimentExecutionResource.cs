@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Chaos.Samples
 
             // this example assumes you already have this ChaosExperimentExecutionResource created on azure
             // for more information of creating ChaosExperimentExecutionResource, please refer to the document of ChaosExperimentExecutionResource
-            string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleRG";
             string experimentName = "exampleExperiment";
             string executionId = "f24500ad-744e-4a26-864b-b76199eac333";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Chaos.Samples
 
             // this example assumes you already have this ChaosExperimentExecutionResource created on azure
             // for more information of creating ChaosExperimentExecutionResource, please refer to the document of ChaosExperimentExecutionResource
-            string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleRG";
             string experimentName = "exampleExperiment";
             string executionId = "f24500ad-744e-4a26-864b-b76199eac333";

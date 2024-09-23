@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this FrontDoorCustomDomainResource created on azure
             // for more information of creating FrontDoorCustomDomainResource, please refer to the document of FrontDoorCustomDomainResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string customDomainName = "domain1";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this FrontDoorCustomDomainResource created on azure
             // for more information of creating FrontDoorCustomDomainResource, please refer to the document of FrontDoorCustomDomainResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string customDomainName = "domain1";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this FrontDoorCustomDomainResource created on azure
             // for more information of creating FrontDoorCustomDomainResource, please refer to the document of FrontDoorCustomDomainResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string customDomainName = "domain1";
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             // this example assumes you already have this FrontDoorCustomDomainResource created on azure
             // for more information of creating FrontDoorCustomDomainResource, please refer to the document of FrontDoorCustomDomainResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RG";
             string profileName = "profile1";
             string customDomainName = "domain1";
