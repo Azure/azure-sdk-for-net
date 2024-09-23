@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlDatabaseSecurityAlertPolicyResource created on azure
             // for more information of creating SqlDatabaseSecurityAlertPolicyResource, please refer to the document of SqlDatabaseSecurityAlertPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "securityalert-6852";
             string serverName = "securityalert-2080";
             string databaseName = "testdb";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlDatabaseSecurityAlertPolicyResource created on azure
             // for more information of creating SqlDatabaseSecurityAlertPolicyResource, please refer to the document of SqlDatabaseSecurityAlertPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "securityalert-4799";
             string serverName = "securityalert-6440";
             string databaseName = "testdb";
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlDatabaseSecurityAlertPolicyResource created on azure
             // for more information of creating SqlDatabaseSecurityAlertPolicyResource, please refer to the document of SqlDatabaseSecurityAlertPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "securityalert-4799";
             string serverName = "securityalert-6440";
             string databaseName = "testdb";

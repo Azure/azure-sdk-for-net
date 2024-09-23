@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this CustomEntityStoreAssignmentResource created on azure
             // for more information of creating CustomEntityStoreAssignmentResource, please refer to the document of CustomEntityStoreAssignmentResource
-            string subscriptionId = "e5d1b86c-3051-44d5-8802-aa65d45a279b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestResourceGroup";
             string customEntityStoreAssignmentName = "33e7cc6e-a139-4723-a0e5-76993aee0771";
             ResourceIdentifier customEntityStoreAssignmentResourceId = CustomEntityStoreAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customEntityStoreAssignmentName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this CustomEntityStoreAssignmentResource created on azure
             // for more information of creating CustomEntityStoreAssignmentResource, please refer to the document of CustomEntityStoreAssignmentResource
-            string subscriptionId = "e5d1b86c-3051-44d5-8802-aa65d45a279b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestResourceGroup";
             string customEntityStoreAssignmentName = "33e7cc6e-a139-4723-a0e5-76993aee0771";
             ResourceIdentifier customEntityStoreAssignmentResourceId = CustomEntityStoreAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customEntityStoreAssignmentName);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this CustomEntityStoreAssignmentResource created on azure
             // for more information of creating CustomEntityStoreAssignmentResource, please refer to the document of CustomEntityStoreAssignmentResource
-            string subscriptionId = "e5d1b86c-3051-44d5-8802-aa65d45a279b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestResourceGroup";
             string customEntityStoreAssignmentName = "33e7cc6e-a139-4723-a0e5-76993aee0771";
             ResourceIdentifier customEntityStoreAssignmentResourceId = CustomEntityStoreAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customEntityStoreAssignmentName);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "e5d1b86c-3051-44d5-8802-aa65d45a279b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StoragePrivateEndpointConnectionResource created on azure
             // for more information of creating StoragePrivateEndpointConnectionResource, please refer to the document of StoragePrivateEndpointConnectionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             string privateEndpointConnectionName = "{privateEndpointConnectionName}";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StoragePrivateEndpointConnectionResource created on azure
             // for more information of creating StoragePrivateEndpointConnectionResource, please refer to the document of StoragePrivateEndpointConnectionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res7687";
             string accountName = "sto9699";
             string privateEndpointConnectionName = "{privateEndpointConnectionName}";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this StoragePrivateEndpointConnectionResource created on azure
             // for more information of creating StoragePrivateEndpointConnectionResource, please refer to the document of StoragePrivateEndpointConnectionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             string privateEndpointConnectionName = "{privateEndpointConnectionName}";

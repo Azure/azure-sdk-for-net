@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlAgentConfigurationResource created on azure
             // for more information of creating SqlAgentConfigurationResource, please refer to the document of SqlAgentConfigurationResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-7398";
             string managedInstanceName = "sqlcrudtest-4645";
             ResourceIdentifier sqlAgentConfigurationResourceId = SqlAgentConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlAgentConfigurationResource created on azure
             // for more information of creating SqlAgentConfigurationResource, please refer to the document of SqlAgentConfigurationResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-7398";
             string managedInstanceName = "sqlcrudtest-4645";
             ResourceIdentifier sqlAgentConfigurationResourceId = SqlAgentConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);

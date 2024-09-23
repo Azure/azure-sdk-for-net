@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this IotSecuritySolutionResource created on azure
             // for more information of creating IotSecuritySolutionResource, please refer to the document of IotSecuritySolutionResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyGroup";
             string solutionName = "default";
             ResourceIdentifier iotSecuritySolutionResourceId = IotSecuritySolutionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, solutionName);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this IotSecuritySolutionResource created on azure
             // for more information of creating IotSecuritySolutionResource, please refer to the document of IotSecuritySolutionResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRg";
             string solutionName = "default";
             ResourceIdentifier iotSecuritySolutionResourceId = IotSecuritySolutionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, solutionName);
@@ -173,7 +173,7 @@ new RecommendationConfigurationProperties(IotSecurityRecommendationType.IotOpenP
 
             // this example assumes you already have this IotSecuritySolutionResource created on azure
             // for more information of creating IotSecuritySolutionResource, please refer to the document of IotSecuritySolutionResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyGroup";
             string solutionName = "default";
             ResourceIdentifier iotSecuritySolutionResourceId = IotSecuritySolutionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, solutionName);

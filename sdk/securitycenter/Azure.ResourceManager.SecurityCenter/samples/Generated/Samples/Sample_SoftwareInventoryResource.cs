@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "e5d1b86c-3051-44d5-8802-aa65d45a279b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SoftwareInventoryResource created on azure
             // for more information of creating SoftwareInventoryResource, please refer to the document of SoftwareInventoryResource
-            string subscriptionId = "e5d1b86c-3051-44d5-8802-aa65d45a279b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "EITAN-TESTS";
             string resourceNamespace = "Microsoft.Compute";
             string resourceType = "virtualMachines";

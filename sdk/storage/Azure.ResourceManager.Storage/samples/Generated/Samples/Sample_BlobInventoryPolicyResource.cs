@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobInventoryPolicyResource created on azure
             // for more information of creating BlobInventoryPolicyResource, please refer to the document of BlobInventoryPolicyResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res7687";
             string accountName = "sto9699";
             BlobInventoryPolicyName blobInventoryPolicyName = BlobInventoryPolicyName.Default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobInventoryPolicyResource created on azure
             // for more information of creating BlobInventoryPolicyResource, please refer to the document of BlobInventoryPolicyResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res7687";
             string accountName = "sto9699";
             BlobInventoryPolicyName blobInventoryPolicyName = BlobInventoryPolicyName.Default;
@@ -124,7 +124,7 @@ CreationTimeLastNDays = 1000,
 
             // this example assumes you already have this BlobInventoryPolicyResource created on azure
             // for more information of creating BlobInventoryPolicyResource, please refer to the document of BlobInventoryPolicyResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res7687";
             string accountName = "sto9699";
             BlobInventoryPolicyName blobInventoryPolicyName = BlobInventoryPolicyName.Default;
@@ -190,7 +190,7 @@ IncludeDeleted = true,
 
             // this example assumes you already have this BlobInventoryPolicyResource created on azure
             // for more information of creating BlobInventoryPolicyResource, please refer to the document of BlobInventoryPolicyResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res7687";
             string accountName = "sto9699";
             BlobInventoryPolicyName blobInventoryPolicyName = BlobInventoryPolicyName.Default;
@@ -256,7 +256,7 @@ IncludeDeleted = true,
 
             // this example assumes you already have this BlobInventoryPolicyResource created on azure
             // for more information of creating BlobInventoryPolicyResource, please refer to the document of BlobInventoryPolicyResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string accountName = "sto2527";
             BlobInventoryPolicyName blobInventoryPolicyName = BlobInventoryPolicyName.Default;

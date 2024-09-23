@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Search.Samples
 
             // this example assumes you already have this SearchPrivateEndpointConnectionResource created on azure
             // for more information of creating SearchPrivateEndpointConnectionResource, please refer to the document of SearchPrivateEndpointConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string searchServiceName = "mysearchservice";
             string privateEndpointConnectionName = "testEndpoint.50bf4fbe-d7c1-4b48-a642-4f5892642546";
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Search.Samples
 
             // this example assumes you already have this SearchPrivateEndpointConnectionResource created on azure
             // for more information of creating SearchPrivateEndpointConnectionResource, please refer to the document of SearchPrivateEndpointConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string searchServiceName = "mysearchservice";
             string privateEndpointConnectionName = "testEndpoint.50bf4fbe-d7c1-4b48-a642-4f5892642546";
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Search.Samples
 
             // this example assumes you already have this SearchPrivateEndpointConnectionResource created on azure
             // for more information of creating SearchPrivateEndpointConnectionResource, please refer to the document of SearchPrivateEndpointConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string searchServiceName = "mysearchservice";
             string privateEndpointConnectionName = "testEndpoint.50bf4fbe-d7c1-4b48-a642-4f5892642546";

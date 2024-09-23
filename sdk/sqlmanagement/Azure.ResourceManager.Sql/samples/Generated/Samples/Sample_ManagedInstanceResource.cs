@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceResource created on azure
             // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000001";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testtdecert";
             string managedInstanceName = "testtdecert";
             ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceResource created on azure
             // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string managedInstanceName = "managedInstance-1";
             ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceResource created on azure
             // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string managedInstanceName = "testcl";
             ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "20D7082A-0FC7-4468-82BD-542694D5042B";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "20D7082A-0FC7-4468-82BD-542694D5042B";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceResource created on azure
             // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "20d7082a-0fc7-4468-82bd-542694d5042b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string managedInstanceName = "testinstance";
             ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceResource created on azure
             // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "20d7082a-0fc7-4468-82bd-542694d5042b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string managedInstanceName = "testinstance";
             ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceResource created on azure
             // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "20D7082A-0FC7-4468-82BD-542694D5042B";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string managedInstanceName = "testinstance";
             ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceResource created on azure
             // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "20D7082A-0FC7-4468-82BD-542694D5042B";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string managedInstanceName = "testinstance";
             ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceResource created on azure
             // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "20D7082A-0FC7-4468-82BD-542694D5042B";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string managedInstanceName = "testinstance";
             ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceResource created on azure
             // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "20D7082A-0FC7-4468-82BD-542694D5042B";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string managedInstanceName = "testinstance";
             ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceResource created on azure
             // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string managedInstanceName = "instanceName";
             ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceResource created on azure
             // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "20d7082a-0fc7-4468-82bd-542694d5042b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-7398";
             string managedInstanceName = "testinstance";
             ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceResource created on azure
             // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "startrg";
             string managedInstanceName = "mitostart";
             ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceResource created on azure
             // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "stoprg";
             string managedInstanceName = "mitostop";
             ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceResource created on azure
             // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-7398";
             string managedInstanceName = "sqlcrudtest-4645";
             ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceResource created on azure
             // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-7398";
             string managedInstanceName = "sqlcrudtest-4645";
             ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedInstanceResource created on azure
             // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-7398";
             string managedInstanceName = "sqlcrudtest-4645";
             ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);

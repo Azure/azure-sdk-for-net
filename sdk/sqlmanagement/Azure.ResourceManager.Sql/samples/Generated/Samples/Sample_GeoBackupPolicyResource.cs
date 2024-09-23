@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this GeoBackupPolicyResource created on azure
             // for more information of creating GeoBackupPolicyResource, please refer to the document of GeoBackupPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-4799";
             string serverName = "sqlcrudtest-5961";
             string databaseName = "testdw";
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this GeoBackupPolicyResource created on azure
             // for more information of creating GeoBackupPolicyResource, please refer to the document of GeoBackupPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-4799";
             string serverName = "sqlcrudtest-5961";
             string databaseName = "testdw";

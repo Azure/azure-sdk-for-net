@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobContainerResource created on azure
             // for more information of creating BlobContainerResource, please refer to the document of BlobContainerResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             string containerName = "container6185";
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobContainerResource created on azure
             // for more information of creating BlobContainerResource, please refer to the document of BlobContainerResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9871";
             string accountName = "sto6217";
             string containerName = "container1634";
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobContainerResource created on azure
             // for more information of creating BlobContainerResource, please refer to the document of BlobContainerResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9871";
             string accountName = "sto6217";
             string containerName = "container1634";
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobContainerResource created on azure
             // for more information of creating BlobContainerResource, please refer to the document of BlobContainerResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4079";
             string accountName = "sto4506";
             string containerName = "container9689";
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobContainerResource created on azure
             // for more information of creating BlobContainerResource, please refer to the document of BlobContainerResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4303";
             string accountName = "sto7280";
             string containerName = "container8723";
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobContainerResource created on azure
             // for more information of creating BlobContainerResource, please refer to the document of BlobContainerResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4303";
             string accountName = "sto7280";
             string containerName = "container8723";
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobContainerResource created on azure
             // for more information of creating BlobContainerResource, please refer to the document of BlobContainerResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4303";
             string accountName = "sto7280";
             string containerName = "container8723";
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobContainerResource created on azure
             // for more information of creating BlobContainerResource, please refer to the document of BlobContainerResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             string containerName = "container6185";
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobContainerResource created on azure
             // for more information of creating BlobContainerResource, please refer to the document of BlobContainerResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             string containerName = "container6185";
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this BlobContainerResource created on azure
             // for more information of creating BlobContainerResource, please refer to the document of BlobContainerResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res1782";
             string accountName = "sto7069";
             string containerName = "container6397";

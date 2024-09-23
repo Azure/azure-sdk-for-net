@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this ImmutabilityPolicyResource created on azure
             // for more information of creating ImmutabilityPolicyResource, please refer to the document of ImmutabilityPolicyResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res1782";
             string accountName = "sto7069";
             string containerName = "container6397";
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this ImmutabilityPolicyResource created on azure
             // for more information of creating ImmutabilityPolicyResource, please refer to the document of ImmutabilityPolicyResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res1782";
             string accountName = "sto7069";
             string containerName = "container6397";
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this ImmutabilityPolicyResource created on azure
             // for more information of creating ImmutabilityPolicyResource, please refer to the document of ImmutabilityPolicyResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res5221";
             string accountName = "sto9177";
             string containerName = "container3489";
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this ImmutabilityPolicyResource created on azure
             // for more information of creating ImmutabilityPolicyResource, please refer to the document of ImmutabilityPolicyResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res1581";
             string accountName = "sto9621";
             string containerName = "container4910";
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this ImmutabilityPolicyResource created on azure
             // for more information of creating ImmutabilityPolicyResource, please refer to the document of ImmutabilityPolicyResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res2702";
             string accountName = "sto5009";
             string containerName = "container1631";
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this ImmutabilityPolicyResource created on azure
             // for more information of creating ImmutabilityPolicyResource, please refer to the document of ImmutabilityPolicyResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6238";
             string accountName = "sto232";
             string containerName = "container5023";

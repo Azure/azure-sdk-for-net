@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerAutomaticTuningResource created on azure
             // for more information of creating SqlServerAutomaticTuningResource, please refer to the document of SqlServerAutomaticTuningResource
-            string subscriptionId = "c3aa9078-0000-0000-0000-e36f151182d7";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-sql-onebox";
             string serverName = "testsvr11";
             ResourceIdentifier sqlServerAutomaticTuningResourceId = SqlServerAutomaticTuningResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerAutomaticTuningResource created on azure
             // for more information of creating SqlServerAutomaticTuningResource, please refer to the document of SqlServerAutomaticTuningResource
-            string subscriptionId = "c3aa9078-0000-0000-0000-e36f151182d7";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-sql-onebox";
             string serverName = "testsvr11";
             ResourceIdentifier sqlServerAutomaticTuningResourceId = SqlServerAutomaticTuningResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -111,7 +111,7 @@ DesiredState = AutomaticTuningOptionModeDesired.Default,
 
             // this example assumes you already have this SqlServerAutomaticTuningResource created on azure
             // for more information of creating SqlServerAutomaticTuningResource, please refer to the document of SqlServerAutomaticTuningResource
-            string subscriptionId = "c3aa9078-0000-0000-0000-e36f151182d7";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-sql-onebox";
             string serverName = "testsvr11";
             ResourceIdentifier sqlServerAutomaticTuningResourceId = SqlServerAutomaticTuningResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);

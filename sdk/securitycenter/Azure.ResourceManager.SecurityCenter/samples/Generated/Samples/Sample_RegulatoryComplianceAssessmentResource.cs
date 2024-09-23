@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this RegulatoryComplianceAssessmentResource created on azure
             // for more information of creating RegulatoryComplianceAssessmentResource, please refer to the document of RegulatoryComplianceAssessmentResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string regulatoryComplianceStandardName = "PCI-DSS-3.2";
             string regulatoryComplianceControlName = "1.1";
             string regulatoryComplianceAssessmentName = "968548cb-02b3-8cd2-11f8-0cf64ab1a347";

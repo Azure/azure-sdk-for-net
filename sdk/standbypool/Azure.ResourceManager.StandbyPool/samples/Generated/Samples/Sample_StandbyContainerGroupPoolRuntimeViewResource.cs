@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
 
             // this example assumes you already have this StandbyContainerGroupPoolRuntimeViewResource created on azure
             // for more information of creating StandbyContainerGroupPoolRuntimeViewResource, please refer to the document of StandbyContainerGroupPoolRuntimeViewResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000009";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgstandbypool";
             string standbyContainerGroupPoolName = "pool";
             string runtimeView = "latest";

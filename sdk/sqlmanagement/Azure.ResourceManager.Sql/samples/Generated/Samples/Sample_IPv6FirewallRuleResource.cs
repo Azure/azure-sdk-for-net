@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this IPv6FirewallRuleResource created on azure
             // for more information of creating IPv6FirewallRuleResource, please refer to the document of IPv6FirewallRuleResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewallrulecrudtest-12";
             string serverName = "firewallrulecrudtest-6285";
             string firewallRuleName = "firewallrulecrudtest-2304";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this IPv6FirewallRuleResource created on azure
             // for more information of creating IPv6FirewallRuleResource, please refer to the document of IPv6FirewallRuleResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewallrulecrudtest-12";
             string serverName = "firewallrulecrudtest-6285";
             string firewallRuleName = "firewallrulecrudtest-5370";
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this IPv6FirewallRuleResource created on azure
             // for more information of creating IPv6FirewallRuleResource, please refer to the document of IPv6FirewallRuleResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewallrulecrudtest-12";
             string serverName = "firewallrulecrudtest-6285";
             string firewallRuleName = "firewallrulecrudtest-3927";
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this IPv6FirewallRuleResource created on azure
             // for more information of creating IPv6FirewallRuleResource, please refer to the document of IPv6FirewallRuleResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewallrulecrudtest-9886";
             string serverName = "firewallrulecrudtest-2368";
             string firewallRuleName = "firewallrulecrudtest-7011";

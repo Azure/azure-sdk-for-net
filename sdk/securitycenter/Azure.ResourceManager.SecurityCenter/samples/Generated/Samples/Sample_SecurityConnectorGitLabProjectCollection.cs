@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityConnectorGitLabGroupResource created on azure
             // for more information of creating SecurityConnectorGitLabGroupResource, please refer to the document of SecurityConnectorGitLabGroupResource
-            string subscriptionId = "0806e1cd-cfda-4ff8-b99c-2b0af42cffd3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRg";
             string securityConnectorName = "mySecurityConnectorName";
             string groupFQName = "myGitLabGroup$mySubGroup";
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityConnectorGitLabGroupResource created on azure
             // for more information of creating SecurityConnectorGitLabGroupResource, please refer to the document of SecurityConnectorGitLabGroupResource
-            string subscriptionId = "0806e1cd-cfda-4ff8-b99c-2b0af42cffd3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRg";
             string securityConnectorName = "mySecurityConnectorName";
             string groupFQName = "myGitLabGroup$mySubGroup";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityConnectorGitLabGroupResource created on azure
             // for more information of creating SecurityConnectorGitLabGroupResource, please refer to the document of SecurityConnectorGitLabGroupResource
-            string subscriptionId = "0806e1cd-cfda-4ff8-b99c-2b0af42cffd3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRg";
             string securityConnectorName = "mySecurityConnectorName";
             string groupFQName = "myGitLabGroup$mySubGroup";
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityConnectorGitLabGroupResource created on azure
             // for more information of creating SecurityConnectorGitLabGroupResource, please refer to the document of SecurityConnectorGitLabGroupResource
-            string subscriptionId = "0806e1cd-cfda-4ff8-b99c-2b0af42cffd3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRg";
             string securityConnectorName = "mySecurityConnectorName";
             string groupFQName = "myGitLabGroup$mySubGroup";

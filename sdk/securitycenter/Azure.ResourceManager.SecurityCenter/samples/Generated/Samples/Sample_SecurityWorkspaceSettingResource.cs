@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityWorkspaceSettingResource created on azure
             // for more information of creating SecurityWorkspaceSettingResource, please refer to the document of SecurityWorkspaceSettingResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string workspaceSettingName = "default";
             ResourceIdentifier securityWorkspaceSettingResourceId = SecurityWorkspaceSettingResource.CreateResourceIdentifier(subscriptionId, workspaceSettingName);
             SecurityWorkspaceSettingResource securityWorkspaceSetting = client.GetSecurityWorkspaceSettingResource(securityWorkspaceSettingResourceId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityWorkspaceSettingResource created on azure
             // for more information of creating SecurityWorkspaceSettingResource, please refer to the document of SecurityWorkspaceSettingResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string workspaceSettingName = "default";
             ResourceIdentifier securityWorkspaceSettingResourceId = SecurityWorkspaceSettingResource.CreateResourceIdentifier(subscriptionId, workspaceSettingName);
             SecurityWorkspaceSettingResource securityWorkspaceSetting = client.GetSecurityWorkspaceSettingResource(securityWorkspaceSettingResourceId);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecurityWorkspaceSettingResource created on azure
             // for more information of creating SecurityWorkspaceSettingResource, please refer to the document of SecurityWorkspaceSettingResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string workspaceSettingName = "default";
             ResourceIdentifier securityWorkspaceSettingResourceId = SecurityWorkspaceSettingResource.CreateResourceIdentifier(subscriptionId, workspaceSettingName);
             SecurityWorkspaceSettingResource securityWorkspaceSetting = client.GetSecurityWorkspaceSettingResource(securityWorkspaceSettingResourceId);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecureScoreResource created on azure
             // for more information of creating SecureScoreResource, please refer to the document of SecureScoreResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string secureScoreName = "ascScore";
             ResourceIdentifier secureScoreResourceId = SecureScoreResource.CreateResourceIdentifier(subscriptionId, secureScoreName);
             SecureScoreResource secureScore = client.GetSecureScoreResource(secureScoreResourceId);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecureScoreResource created on azure
             // for more information of creating SecureScoreResource, please refer to the document of SecureScoreResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string secureScoreName = "ascScore";
             ResourceIdentifier secureScoreResourceId = SecureScoreResource.CreateResourceIdentifier(subscriptionId, secureScoreName);
             SecureScoreResource secureScore = client.GetSecureScoreResource(secureScoreResourceId);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SecureScoreResource created on azure
             // for more information of creating SecureScoreResource, please refer to the document of SecureScoreResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string secureScoreName = "ascScore";
             ResourceIdentifier secureScoreResourceId = SecureScoreResource.CreateResourceIdentifier(subscriptionId, secureScoreName);
             SecureScoreResource secureScore = client.GetSecureScoreResource(secureScoreResourceId);

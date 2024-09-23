@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlDatabaseBlobAuditingPolicyResource created on azure
             // for more information of creating SqlDatabaseBlobAuditingPolicyResource, please refer to the document of SqlDatabaseBlobAuditingPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "blobauditingtest-6852";
             string serverName = "blobauditingtest-2080";
             string databaseName = "testdb";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlDatabaseBlobAuditingPolicyResource created on azure
             // for more information of creating SqlDatabaseBlobAuditingPolicyResource, please refer to the document of SqlDatabaseBlobAuditingPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "blobauditingtest-4799";
             string serverName = "blobauditingtest-6440";
             string databaseName = "testdb";
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlDatabaseBlobAuditingPolicyResource created on azure
             // for more information of creating SqlDatabaseBlobAuditingPolicyResource, please refer to the document of SqlDatabaseBlobAuditingPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "blobauditingtest-4799";
             string serverName = "blobauditingtest-6440";
             string databaseName = "testdb";
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlDatabaseBlobAuditingPolicyResource created on azure
             // for more information of creating SqlDatabaseBlobAuditingPolicyResource, please refer to the document of SqlDatabaseBlobAuditingPolicyResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "blobauditingtest-4799";
             string serverName = "blobauditingtest-6440";
             string databaseName = "testdb";

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this QueueServiceResource created on azure
             // for more information of creating QueueServiceResource, please refer to the document of QueueServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             ResourceIdentifier queueServiceResourceId = QueueServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this QueueServiceResource created on azure
             // for more information of creating QueueServiceResource, please refer to the document of QueueServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             ResourceIdentifier queueServiceResourceId = QueueServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this QueueServiceResource created on azure
             // for more information of creating QueueServiceResource, please refer to the document of QueueServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             ResourceIdentifier queueServiceResourceId = QueueServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this QueueServiceResource created on azure
             // for more information of creating QueueServiceResource, please refer to the document of QueueServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             ResourceIdentifier queueServiceResourceId = QueueServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this QueueServiceResource created on azure
             // for more information of creating QueueServiceResource, please refer to the document of QueueServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res3376";
             string accountName = "sto328";
             ResourceIdentifier queueServiceResourceId = QueueServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // this example assumes you already have this QueueServiceResource created on azure
             // for more information of creating QueueServiceResource, please refer to the document of QueueServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res9290";
             string accountName = "sto328";
             ResourceIdentifier queueServiceResourceId = QueueServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);

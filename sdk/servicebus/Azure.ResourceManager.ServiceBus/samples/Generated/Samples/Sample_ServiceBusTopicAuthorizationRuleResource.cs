@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusTopicAuthorizationRuleResource created on azure
             // for more information of creating ServiceBusTopicAuthorizationRuleResource, please refer to the document of ServiceBusTopicAuthorizationRuleResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-6261";
             string topicName = "sdk-Topics-1984";
@@ -71,7 +71,7 @@ ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
 
             // this example assumes you already have this ServiceBusTopicAuthorizationRuleResource created on azure
             // for more information of creating ServiceBusTopicAuthorizationRuleResource, please refer to the document of ServiceBusTopicAuthorizationRuleResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-6261";
             string topicName = "sdk-Topics-1984";
@@ -104,7 +104,7 @@ ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
 
             // this example assumes you already have this ServiceBusTopicAuthorizationRuleResource created on azure
             // for more information of creating ServiceBusTopicAuthorizationRuleResource, please refer to the document of ServiceBusTopicAuthorizationRuleResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-6261";
             string topicName = "sdk-Topics-1984";
@@ -133,7 +133,7 @@ ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
 
             // this example assumes you already have this ServiceBusTopicAuthorizationRuleResource created on azure
             // for more information of creating ServiceBusTopicAuthorizationRuleResource, please refer to the document of ServiceBusTopicAuthorizationRuleResource
-            string subscriptionId = "e2f361f0-3b27-4503-a9cc-21cfba380093";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-ServiceBus-WestUS";
             string namespaceName = "sdk-Namespace8408";
             string topicName = "sdk-Topics2075";
@@ -162,7 +162,7 @@ ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
 
             // this example assumes you already have this ServiceBusTopicAuthorizationRuleResource created on azure
             // for more information of creating ServiceBusTopicAuthorizationRuleResource, please refer to the document of ServiceBusTopicAuthorizationRuleResource
-            string subscriptionId = "e2f361f0-3b27-4503-a9cc-21cfba380093";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-ServiceBus-WestUS";
             string namespaceName = "sdk-Namespace8408";
             string topicName = "sdk-Topics2075";

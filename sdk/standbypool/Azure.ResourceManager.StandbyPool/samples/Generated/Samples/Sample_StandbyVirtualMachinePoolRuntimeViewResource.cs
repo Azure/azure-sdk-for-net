@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
 
             // this example assumes you already have this StandbyVirtualMachinePoolRuntimeViewResource created on azure
             // for more information of creating StandbyVirtualMachinePoolRuntimeViewResource, please refer to the document of StandbyVirtualMachinePoolRuntimeViewResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000009";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgstandbypool";
             string standbyVirtualMachinePoolName = "pool";
             string runtimeView = "latest";

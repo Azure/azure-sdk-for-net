@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedServerDnsAliasResource created on azure
             // for more information of creating ManagedServerDnsAliasResource, please refer to the document of ManagedServerDnsAliasResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default";
             string managedInstanceName = "dns-mi";
             string dnsAliasName = "dns-alias-mi";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedServerDnsAliasResource created on azure
             // for more information of creating ManagedServerDnsAliasResource, please refer to the document of ManagedServerDnsAliasResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default";
             string managedInstanceName = "dns-mi";
             string dnsAliasName = "dns-alias-mi";
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedServerDnsAliasResource created on azure
             // for more information of creating ManagedServerDnsAliasResource, please refer to the document of ManagedServerDnsAliasResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default";
             string managedInstanceName = "dns-mi";
             string dnsAliasName = "dns-alias-mi";
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedServerDnsAliasResource created on azure
             // for more information of creating ManagedServerDnsAliasResource, please refer to the document of ManagedServerDnsAliasResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default";
             string managedInstanceName = "new-mi";
             string dnsAliasName = "dns-alias-mi";

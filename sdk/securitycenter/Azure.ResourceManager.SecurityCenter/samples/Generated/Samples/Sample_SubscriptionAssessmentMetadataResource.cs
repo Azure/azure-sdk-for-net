@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SubscriptionAssessmentMetadataResource created on azure
             // for more information of creating SubscriptionAssessmentMetadataResource, please refer to the document of SubscriptionAssessmentMetadataResource
-            string subscriptionId = "0980887d-03d6-408c-9566-532f3456804e";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string assessmentMetadataName = "21300918-b2e3-0346-785f-c77ff57d243b";
             ResourceIdentifier subscriptionAssessmentMetadataResourceId = SubscriptionAssessmentMetadataResource.CreateResourceIdentifier(subscriptionId, assessmentMetadataName);
             SubscriptionAssessmentMetadataResource subscriptionAssessmentMetadata = client.GetSubscriptionAssessmentMetadataResource(subscriptionAssessmentMetadataResourceId);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // this example assumes you already have this SubscriptionAssessmentMetadataResource created on azure
             // for more information of creating SubscriptionAssessmentMetadataResource, please refer to the document of SubscriptionAssessmentMetadataResource
-            string subscriptionId = "0980887d-03d6-408c-9566-532f3456804e";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string assessmentMetadataName = "ca039e75-a276-4175-aebc-bcd41e4b14b7";
             ResourceIdentifier subscriptionAssessmentMetadataResourceId = SubscriptionAssessmentMetadataResource.CreateResourceIdentifier(subscriptionId, assessmentMetadataName);
             SubscriptionAssessmentMetadataResource subscriptionAssessmentMetadata = client.GetSubscriptionAssessmentMetadataResource(subscriptionAssessmentMetadataResourceId);
@@ -109,7 +109,7 @@ SecurityThreat.DataExfiltration,SecurityThreat.DataSpillage,SecurityThreat.Malic
 
             // this example assumes you already have this SubscriptionAssessmentMetadataResource created on azure
             // for more information of creating SubscriptionAssessmentMetadataResource, please refer to the document of SubscriptionAssessmentMetadataResource
-            string subscriptionId = "0980887d-03d6-408c-9566-532f3456804e";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string assessmentMetadataName = "ca039e75-a276-4175-aebc-bcd41e4b14b7";
             ResourceIdentifier subscriptionAssessmentMetadataResourceId = SubscriptionAssessmentMetadataResource.CreateResourceIdentifier(subscriptionId, assessmentMetadataName);
             SubscriptionAssessmentMetadataResource subscriptionAssessmentMetadata = client.GetSubscriptionAssessmentMetadataResource(subscriptionAssessmentMetadataResourceId);

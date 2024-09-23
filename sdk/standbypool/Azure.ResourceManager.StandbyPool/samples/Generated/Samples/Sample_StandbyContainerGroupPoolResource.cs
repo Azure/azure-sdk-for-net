@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
 
             // this example assumes you already have this StandbyContainerGroupPoolResource created on azure
             // for more information of creating StandbyContainerGroupPoolResource, please refer to the document of StandbyContainerGroupPoolResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000009";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgstandbypool";
             string standbyContainerGroupPoolName = "pool";
             ResourceIdentifier standbyContainerGroupPoolResourceId = StandbyContainerGroupPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, standbyContainerGroupPoolName);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
 
             // this example assumes you already have this StandbyContainerGroupPoolResource created on azure
             // for more information of creating StandbyContainerGroupPoolResource, please refer to the document of StandbyContainerGroupPoolResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000009";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgstandbypool";
             string standbyContainerGroupPoolName = "pool";
             ResourceIdentifier standbyContainerGroupPoolResourceId = StandbyContainerGroupPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, standbyContainerGroupPoolName);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
 
             // this example assumes you already have this StandbyContainerGroupPoolResource created on azure
             // for more information of creating StandbyContainerGroupPoolResource, please refer to the document of StandbyContainerGroupPoolResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000009";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgstandbypool";
             string standbyContainerGroupPoolName = "pool";
             ResourceIdentifier standbyContainerGroupPoolResourceId = StandbyContainerGroupPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, standbyContainerGroupPoolName);
@@ -147,7 +147,7 @@ Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000009
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000009";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

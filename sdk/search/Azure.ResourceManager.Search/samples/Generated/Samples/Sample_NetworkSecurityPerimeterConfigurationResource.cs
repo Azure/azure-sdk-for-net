@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Search.Samples
 
             // this example assumes you already have this NetworkSecurityPerimeterConfigurationResource created on azure
             // for more information of creating NetworkSecurityPerimeterConfigurationResource, please refer to the document of NetworkSecurityPerimeterConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string searchServiceName = "mysearchservice";
             string nspConfigName = "00000001-2222-3333-4444-111144444444.assoc1";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Search.Samples
 
             // this example assumes you already have this NetworkSecurityPerimeterConfigurationResource created on azure
             // for more information of creating NetworkSecurityPerimeterConfigurationResource, please refer to the document of NetworkSecurityPerimeterConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string searchServiceName = "mysearchservice";
             string nspConfigName = "00000001-2222-3333-4444-111144444444.assoc1";

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string managedInstanceName = "serverName";
             string databaseName = "myDatabase";
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string managedInstanceName = "serverName";
             string databaseName = "myDatabase";
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-7398";
             string managedInstanceName = "sqlcrudtest-4645";
             string databaseName = "database_1";
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-7398";
             string managedInstanceName = "sqlcrudtest-4645";
             string databaseName = "database_1";
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-7398";
             string managedInstanceName = "sqlcrudtest-4645";
             string databaseName = "database_1";
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sqlcrudtest-7398";
             string managedInstanceName = "sqlcrudtest-4645";
             string databaseName = "database_1";
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string managedInstanceName = "testcl";
             string databaseName = "database1";
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string managedInstanceName = "testcl";
             string databaseName = "database1";
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string managedInstanceName = "myManagedInstanceName";
             string databaseName = "myDatabase";
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string managedInstanceName = "myManagedInstanceName";
             string databaseName = "myDatabase";
@@ -414,7 +414,7 @@ Column = "Column3",
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string managedInstanceName = "myManagedInstanceName";
             string databaseName = "myDatabase";
@@ -449,7 +449,7 @@ Column = "Column3",
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string managedInstanceName = "myManagedInstanceName";
             string databaseName = "myDatabase";
@@ -502,7 +502,7 @@ Column = "Column3",
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Test1";
             string managedInstanceName = "managedInstance";
             string databaseName = "managedDatabase";
@@ -534,7 +534,7 @@ Column = "Column3",
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string managedInstanceName = "managedInstance";
             string databaseName = "testdb";
@@ -562,7 +562,7 @@ Column = "Column3",
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string managedInstanceName = "managedInstance";
             string databaseName = "testdb";
@@ -602,7 +602,7 @@ Column = "Column3",
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string managedInstanceName = "managedInstance";
             string databaseName = "testdb";
@@ -642,7 +642,7 @@ Column = "Column3",
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string managedInstanceName = "testInstanceSrc";
             string databaseName = "testDatabase";
@@ -671,7 +671,7 @@ Column = "Column3",
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string managedInstanceName = "testInstanceSrc";
             string databaseName = "testDatabase";
@@ -700,7 +700,7 @@ Column = "Column3",
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string managedInstanceName = "myManagedInstanceName";
             string databaseName = "myDatabase";
@@ -729,7 +729,7 @@ Column = "Column3",
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string managedInstanceName = "testInstanceSrc";
             string databaseName = "testDatabase";
@@ -761,7 +761,7 @@ Column = "Column3",
 
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string managedInstanceName = "testInstanceSrc";
             string databaseName = "testDatabase";

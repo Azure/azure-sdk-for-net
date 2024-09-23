@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-WestUS";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -909,7 +909,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -955,7 +955,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -1001,7 +1001,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -1048,7 +1048,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -1090,7 +1090,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -1130,7 +1130,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -1170,7 +1170,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -1217,7 +1217,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -1277,7 +1277,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -1323,7 +1323,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -1363,7 +1363,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -1400,7 +1400,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -1447,7 +1447,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -1487,7 +1487,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -1540,7 +1540,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default-SQL-SouthEastAsia";
             string serverName = "testsvr";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);

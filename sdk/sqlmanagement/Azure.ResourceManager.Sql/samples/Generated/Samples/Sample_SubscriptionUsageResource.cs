@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SubscriptionUsageResource created on azure
             // for more information of creating SubscriptionUsageResource, please refer to the document of SubscriptionUsageResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation locationName = new AzureLocation("WestUS");
             string usageName = "ServerQuota";
             ResourceIdentifier subscriptionUsageResourceId = SubscriptionUsageResource.CreateResourceIdentifier(subscriptionId, locationName, usageName);
