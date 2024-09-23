@@ -84,6 +84,29 @@ namespace Azure.Security.KeyVault
         protected override bool AuthorizeRequestOnChallenge(HttpMessage message)
             => AuthorizeRequestOnChallengeAsyncInternal(message, false).EnsureCompleted();
 
+        /// <summary>
+        /// Gets the claims parameter from the challenge response.
+        /// If there are no claims, returns null.
+        /// </summary>
+        /// <param name="error">The error message from the service.</param>
+        /// <param name="response">The response from the service which contains the headers.</param>
+        /// <returns>A string with the decoded claims if present, otherwise null</returns>
+        internal static string getDecodedClaimsParameter(string error, Response response)
+        {
+            // According to docs https://learn.microsoft.com/en-us/entra/identity-platform/claims-challenge?tabs=dotnet#claims-challenge-header-format,
+            // the error message must be "insufficient_claims" when a claims challenge should be generated.
+            if (error == "insufficient_claims")
+            {
+                return AuthorizationChallengeParser.GetChallengeParameterFromResponse(response, "Bearer", "claims") switch
+                {
+                    { Length: 0 } => null,
+                    string enc => System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(enc))
+                };
+            }
+
+            return null;
+        }
+
         private async ValueTask<bool> AuthorizeRequestOnChallengeAsyncInternal(HttpMessage message, bool async)
         {
             if (message.Request.Content == null && message.TryGetProperty(KeyVaultStashedContentKey, out var content))
@@ -95,16 +118,8 @@ namespace Azure.Security.KeyVault
             string scope = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "resource");
 
             string error = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "error");
-            string claims = null;
 
-            if (error == "insufficient_claims")
-            {
-                claims = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "claims") switch
-                {
-                    { Length: 0 } => null,
-                    string enc => System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(enc))
-                };
-            }
+            string claims = getDecodedClaimsParameter(error, message.Response);
 
             if (scope != null)
             {
