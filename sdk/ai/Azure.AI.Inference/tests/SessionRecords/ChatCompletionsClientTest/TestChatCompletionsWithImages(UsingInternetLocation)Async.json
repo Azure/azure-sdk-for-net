@@ -1,0 +1,150 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://openai-sdk-test-automation-account-sweden-central.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-05-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "Sanitized",
+        "Authorization": "Sanitized",
+        "Content-Length": "259",
+        "Content-Type": "application/json",
+        "traceparent": "00-c49938169da17245bb85a8eedb21f22f-34923aecf6e61702-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240920.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "content": "You are a helpful assistant that helps describe images.",
+            "role": "system"
+          },
+          {
+            "content": [
+              {
+                "text": "describe this image",
+                "type": "text"
+              },
+              {
+                "image_url": {
+                  "url": "Sanitized",
+                  "detail": "low"
+                },
+                "type": "image_url"
+              }
+            ],
+            "role": "user"
+          }
+        ],
+        "max_tokens": 2048
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "1",
+        "apim-request-id": "7d455e2c-18f5-4af4-9784-1299a2a22e6e",
+        "azureml-model-session": "d065-20240921204026",
+        "Content-Length": "1267",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 23 Sep 2024 20:54:05 GMT",
+        "request-id": "7d455e2c-18f5-4af4-9784-1299a2a22e6e",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "1319",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-rai-invoked": "true",
+        "x-ms-region": "Sweden Central",
+        "x-ratelimit-remaining-requests": "9",
+        "x-ratelimit-remaining-tokens": "736",
+        "X-Request-ID": "8186192e-8c9f-41df-a9ef-da5b78fcf4f3"
+      },
+      "ResponseBody": {
+        "choices": [
+          {
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            },
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "The image shows three colorful juggling balls resting on a wooden surface. Each ball is divided into segments of blue, red, yellow, and green. The balls have a soft, rounded shape and are arranged close together. The wooden surface has a natural grain pattern.",
+              "role": "assistant"
+            }
+          }
+        ],
+        "created": 1727124845,
+        "id": "chatcmpl-AAkMHT7mpVbsqruSTJxgJM0YEZiGh",
+        "model": "gpt-4o-2024-08-06",
+        "object": "chat.completion",
+        "prompt_filter_results": [
+          {
+            "prompt_index": 0,
+            "content_filter_result": {
+              "jailbreak": {
+                "filtered": false,
+                "detected": false
+              },
+              "custom_blocklists": {
+                "filtered": false,
+                "details": []
+              }
+            }
+          },
+          {
+            "prompt_index": 1,
+            "content_filter_result": {
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "custom_blocklists": {
+                "filtered": false,
+                "details": []
+              }
+            }
+          }
+        ],
+        "system_fingerprint": "fp_67802d9a6d",
+        "usage": {
+          "completion_tokens": 52,
+          "prompt_tokens": 90,
+          "total_tokens": 142
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AOAI_CHAT_COMPLETIONS_ENDPOINT": "https://openai-sdk-test-automation-account-sweden-central.openai.azure.com/openai/deployments/gpt-4o",
+    "AOAI_CHAT_COMPLETIONS_KEY": "Sanitized",
+    "RandomSeed": "1163053747"
+  }
+}

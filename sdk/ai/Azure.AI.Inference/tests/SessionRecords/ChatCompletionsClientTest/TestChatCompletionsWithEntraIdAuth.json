@@ -1,0 +1,115 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://openai-sdk-test-automation-account-sweden-central.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-05-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "130",
+        "Content-Type": "application/json",
+        "traceparent": "00-e53b6e4950813b8eecd9663e7c1567f5-456ffcb2b17b0a7c-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240920.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "content": "You are a helpful assistant.",
+            "role": "system"
+          },
+          {
+            "content": "How many feet are in a mile?",
+            "role": "user"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "adc20ee5-da51-443f-949c-214428f6223e",
+        "azureml-model-session": "d060-20240921145718",
+        "Content-Length": "842",
+        "Content-Type": "application/json",
+        "Date": "Mon, 23 Sep 2024 20:53:52 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-rai-invoked": "true",
+        "x-ms-region": "Sweden Central",
+        "x-ratelimit-remaining-requests": "7",
+        "x-ratelimit-remaining-tokens": "2888",
+        "X-Request-ID": "bb074d4a-359b-414a-a9f8-a8cddffbd312"
+      },
+      "ResponseBody": {
+        "choices": [
+          {
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            },
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "There are 5,280 feet in a mile.",
+              "role": "assistant"
+            }
+          }
+        ],
+        "created": 1727124832,
+        "id": "chatcmpl-AAkM4nXxFN6JFMtVCgjaBDXpA0E54",
+        "model": "gpt-4o-2024-08-06",
+        "object": "chat.completion",
+        "prompt_filter_results": [
+          {
+            "prompt_index": 0,
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            }
+          }
+        ],
+        "system_fingerprint": "fp_67802d9a6d",
+        "usage": {
+          "completion_tokens": 11,
+          "prompt_tokens": 25,
+          "total_tokens": 36
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AOAI_CHAT_COMPLETIONS_ENDPOINT": "https://openai-sdk-test-automation-account-sweden-central.openai.azure.com/openai/deployments/gpt-4o",
+    "RandomSeed": "1486000024"
+  }
+}

@@ -1,0 +1,264 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://int.api.azureml-test.ms/nexus/chat/completions?api-version=2024-05-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "760",
+        "Content-Type": "application/json",
+        "traceparent": "00-1962c62a443be98ff82beb244fc588e1-caef54a9bea594bb-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240920.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "content": "You are a helpful assistant.",
+            "role": "system"
+          },
+          {
+            "content": "What should I wear in Honolulu in 3 days?",
+            "role": "user"
+          }
+        ],
+        "max_tokens": 512,
+        "model": "gpt-4o",
+        "tools": [
+          {
+            "type": "function",
+            "function": {
+              "name": "get_future_temperature",
+              "description": "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "locationName": {
+                    "type": "string",
+                    "description": "the name or brief description of a location for weather information"
+                  },
+                  "daysInAdvance": {
+                    "type": "integer",
+                    "description": "the number of days in the future for which to retrieve weather information"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "tool_choice": {
+          "type": "function",
+          "function": {
+            "name": "get_future_temperature"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "bbf38a28-5f1c-403a-9359-b6da6e6b493e",
+        "azureml-model-session": "d092-20240921195754",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Mon, 23 Sep 2024 20:53:39 GMT",
+        "request-context": "appId=",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "Vary": "Accept-Encoding",
+        "x-aml-cluster": "int-02",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "356",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-rai-invoked": "true",
+        "x-ms-region": "East US",
+        "x-ratelimit-remaining-requests": "27",
+        "x-ratelimit-remaining-tokens": "28404",
+        "X-Request-ID": "44fd588d-8686-4170-b4ff-7198fcda105e",
+        "x-request-time": "0.437"
+      },
+      "ResponseBody": {
+        "choices": [
+          {
+            "content_filter_results": {},
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": null,
+              "role": "assistant",
+              "tool_calls": [
+                {
+                  "function": {
+                    "arguments": "{\"locationName\":\"Honolulu\",\"daysInAdvance\":3}",
+                    "name": "get_future_temperature"
+                  },
+                  "id": "call_n3tZI7mGBJceNyR0Qa86Iutc",
+                  "type": "function"
+                }
+              ]
+            }
+          }
+        ],
+        "created": 1727124819,
+        "id": "chatcmpl-AAkLrCwGu3601V4tgdnZ1vbzGjwSQ",
+        "model": "gpt-4o-2024-05-13",
+        "object": "chat.completion",
+        "prompt_filter_results": [
+          {
+            "prompt_index": 0,
+            "content_filter_results": {}
+          }
+        ],
+        "system_fingerprint": "fp_67802d9a6d",
+        "usage": {
+          "completion_tokens": 13,
+          "prompt_tokens": 119,
+          "total_tokens": 132
+        }
+      }
+    },
+    {
+      "RequestUri": "https://int.api.azureml-test.ms/nexus/chat/completions?api-version=2024-05-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "995",
+        "Content-Type": "application/json",
+        "traceparent": "00-dae59ac41fbd657d4048f650e4c65da7-1e935de617cd3f81-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240920.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "content": "You are a helpful assistant.",
+            "role": "system"
+          },
+          {
+            "content": "What should I wear in Honolulu in 3 days?",
+            "role": "user"
+          },
+          {
+            "tool_calls": [
+              {
+                "id": "call_n3tZI7mGBJceNyR0Qa86Iutc",
+                "type": "function",
+                "function": {
+                  "name": "get_future_temperature",
+                  "arguments": "{\"locationName\":\"Honolulu\",\"daysInAdvance\":3}"
+                }
+              }
+            ],
+            "role": "assistant"
+          },
+          {
+            "content": "31 celsius",
+            "tool_call_id": "call_n3tZI7mGBJceNyR0Qa86Iutc",
+            "role": "tool"
+          }
+        ],
+        "max_tokens": 512,
+        "model": "gpt-4o",
+        "tools": [
+          {
+            "type": "function",
+            "function": {
+              "name": "get_future_temperature",
+              "description": "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "locationName": {
+                    "type": "string",
+                    "description": "the name or brief description of a location for weather information"
+                  },
+                  "daysInAdvance": {
+                    "type": "integer",
+                    "description": "the number of days in the future for which to retrieve weather information"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a9f54b08-83b0-49d2-8541-be943b0366e7",
+        "azureml-model-session": "d081-20240922065846",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Mon, 23 Sep 2024 20:53:41 GMT",
+        "request-context": "appId=",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "Vary": "Accept-Encoding",
+        "x-aml-cluster": "int-02",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "1455",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-rai-invoked": "true",
+        "x-ms-region": "East US",
+        "x-ratelimit-remaining-requests": "26",
+        "x-ratelimit-remaining-tokens": "27870",
+        "X-Request-ID": "a3d34100-cee5-45ed-993f-736f9849a33f",
+        "x-request-time": "1.548"
+      },
+      "ResponseBody": {
+        "choices": [
+          {
+            "content_filter_results": {
+              "hate": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "self_harm": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "sexual": {
+                "filtered": false,
+                "severity": "safe"
+              },
+              "violence": {
+                "filtered": false,
+                "severity": "safe"
+              }
+            },
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+              "content": "In 3 days, the temperature in Honolulu is expected to be around 31°C (88°F). Here are some suggestions on what to wear:\n\n1. **Lightweight Clothing**: Opt for light, breathable fabrics like cotton or linen to stay cool.\n2. **Shorts and T-Shirts**: Comfortable, casual attire like shorts and t-shirts would be ideal.\n3. **Sun Protection**: Wear a hat, sunglasses, and consider bringing a lightweight long-sleeve shirt for sun protection.\n4. **Swimwear**: If you plan to hit the beach, don't forget your swimsuit.\n5. **Comfortable Footwear**: Lightweight sandals or flip-flops are great for walking around.\n\nEnjoy your time in Honolulu!",
+              "role": "assistant"
+            }
+          }
+        ],
+        "created": 1727124819,
+        "id": "chatcmpl-AAkLrS3m686L4Vx32jqVYDuZ9RAON",
+        "model": "gpt-4o-2024-05-13",
+        "object": "chat.completion",
+        "prompt_filter_results": [
+          {
+            "prompt_index": 0,
+            "content_filter_results": {}
+          }
+        ],
+        "system_fingerprint": "fp_67802d9a6d",
+        "usage": {
+          "completion_tokens": 151,
+          "prompt_tokens": 144,
+          "total_tokens": 295
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZUREAI_GITHUB_TOKEN": "Sanitized",
+    "AZUREAI_GITHUB_URL": "https://int.api.azureml-test.ms/nexus",
+    "RandomSeed": "975885503"
+  }
+}

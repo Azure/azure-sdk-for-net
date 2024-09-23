@@ -14,13 +14,6 @@ namespace Azure.AI.Inference
     public partial class ChatRequestAssistantMessage : ChatRequestMessage
     {
         /// <summary> Initializes a new instance of <see cref="ChatRequestAssistantMessage"/>. </summary>
-        public ChatRequestAssistantMessage()
-        {
-            Role = ChatRole.Assistant;
-            ToolCalls = new ChangeTrackingList<ChatCompletionsToolCall>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ChatRequestAssistantMessage"/>. </summary>
         /// <param name="role"> The chat role associated with this message. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="content"> The content of the message. </param>
@@ -36,10 +29,5 @@ namespace Azure.AI.Inference
 
         /// <summary> The content of the message. </summary>
         public string Content { get; set; }
-        /// <summary>
-        /// The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat
-        /// completions request to resolve as configured.
-        /// </summary>
-        public IList<ChatCompletionsToolCall> ToolCalls { get; }
     }
 }

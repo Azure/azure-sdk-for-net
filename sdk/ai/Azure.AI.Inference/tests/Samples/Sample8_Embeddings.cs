@@ -128,8 +128,8 @@ namespace Azure.AI.Inference.Tests.Samples
             {
                 Assert.AreEqual(response.Value.Data[i].Index, i);
                 Assert.That(response.Value.Data[i].Embedding, Is.Not.Null.Or.Empty);
-                var embedding = response.Value.Data[i].Embedding.ToObjectFromJson<List<float>>();
-                Assert.That(embedding.Count, Is.GreaterThan(0));
+                var embedding = response.Value.Data[i].Embedding.ToObjectFromJson<string>();
+                Assert.That(embedding, Is.Not.Null.Or.Empty);
             }
         }
     }

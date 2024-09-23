@@ -64,22 +64,20 @@ namespace Azure.AI.Inference.Tests.Samples
             };
 
             Response<ChatCompletions> response = client.Complete(requestOptions);
-            System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+            System.Console.WriteLine(response.Value.Content);
 
-            ChatResponseMessage responseMessage = response.Value.Choices[0].Message;
-            ChatCompletionsToolCall functionToolCall = responseMessage.ToolCalls[0] as ChatCompletionsToolCall;
+            ChatCompletionsToolCall functionToolCall = response.Value.ToolCalls[0];
 #if !SNIPPET
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
             Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
             Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
-            ChatChoice choice = response.Value.Choices[0];
-            Assert.That(responseMessage.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(responseMessage.Content, Is.Null.Or.Empty);
-            Assert.That(responseMessage.ToolCalls, Is.Not.Null.Or.Empty);
-            Assert.That(responseMessage.ToolCalls.Count, Is.EqualTo(1));
+            ChatCompletions result = response.Value;
+            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.ToolCalls));
+            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            Assert.That(result.ToolCalls, Is.Not.Null.Or.Empty);
+            Assert.That(result.ToolCalls.Count, Is.EqualTo(1));
             Assert.That(functionToolCall, Is.Not.Null);
             Assert.That(functionToolCall.Name, Is.EqualTo(futureTemperatureFunction.Name));
             Assert.That(functionToolCall.Arguments, Is.Not.Null.Or.Empty);
@@ -102,7 +100,7 @@ namespace Azure.AI.Inference.Tests.Samples
             }
 
             // Add the tool call message just received back from the assistant
-            followupOptions.Messages.Add(new ChatRequestAssistantMessage(responseMessage));
+            followupOptions.Messages.Add(new ChatRequestAssistantMessage(response.Value));
 
             // And also the tool message that resolves the tool call
             followupOptions.Messages.Add(new ChatRequestToolMessage(
@@ -110,16 +108,14 @@ namespace Azure.AI.Inference.Tests.Samples
                 content: "31 celsius"));
 
             Response<ChatCompletions> followupResponse = client.Complete(followupOptions);
-            System.Console.WriteLine(followupResponse.Value.Choices[0].Message.Content);
+            System.Console.WriteLine(followupResponse.Value.Content);
             #endregion
 
             Assert.That(followupResponse, Is.Not.Null);
             Assert.That(followupResponse.Value, Is.Not.Null);
-            Assert.That(followupResponse.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(followupResponse.Value.Choices[0], Is.Not.Null);
-            Assert.That(followupResponse.Value.Choices[0].Message, Is.Not.Null);
-            Assert.That(followupResponse.Value.Choices[0].Message.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(followupResponse.Value.Choices[0].Message.Content, Is.Not.Null.Or.Empty);
+            Assert.That(followupResponse.Value.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(followupResponse.Value.Content, Is.Not.Null.Or.Empty);
+            Assert.That(followupResponse.Value.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
         }
 
         [Test]
@@ -173,22 +169,20 @@ namespace Azure.AI.Inference.Tests.Samples
             };
 
             Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
-            System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+            System.Console.WriteLine(response.Value.Content);
 
-            ChatResponseMessage responseMessage = response.Value.Choices[0].Message;
-            ChatCompletionsToolCall functionToolCall = responseMessage.ToolCalls[0] as ChatCompletionsToolCall;
+            ChatCompletionsToolCall functionToolCall = response.Value.ToolCalls[0];
 #if !SNIPPET
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
             Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
             Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
-            ChatChoice choice = response.Value.Choices[0];
-            Assert.That(responseMessage.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(responseMessage.Content, Is.Null.Or.Empty);
-            Assert.That(responseMessage.ToolCalls, Is.Not.Null.Or.Empty);
-            Assert.That(responseMessage.ToolCalls.Count, Is.EqualTo(1));
+            ChatCompletions result = response.Value;
+            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.ToolCalls));
+            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+            Assert.That(result.ToolCalls, Is.Not.Null.Or.Empty);
+            Assert.That(result.ToolCalls.Count, Is.EqualTo(1));
             Assert.That(functionToolCall, Is.Not.Null);
             Assert.That(functionToolCall.Name, Is.EqualTo(futureTemperatureFunction.Name));
             Assert.That(functionToolCall.Arguments, Is.Not.Null.Or.Empty);
@@ -211,7 +205,7 @@ namespace Azure.AI.Inference.Tests.Samples
             }
 
             // Add the tool call message just received back from the assistant
-            followupOptions.Messages.Add(new ChatRequestAssistantMessage(responseMessage));
+            followupOptions.Messages.Add(new ChatRequestAssistantMessage(response.Value));
 
             // And also the tool message that resolves the tool call
             followupOptions.Messages.Add(new ChatRequestToolMessage(
@@ -219,16 +213,14 @@ namespace Azure.AI.Inference.Tests.Samples
                 content: "31 celsius"));
 
             Response<ChatCompletions> followupResponse = await client.CompleteAsync(followupOptions);
-            System.Console.WriteLine(followupResponse.Value.Choices[0].Message.Content);
+            System.Console.WriteLine(followupResponse.Value.Content);
             #endregion
 
             Assert.That(followupResponse, Is.Not.Null);
             Assert.That(followupResponse.Value, Is.Not.Null);
-            Assert.That(followupResponse.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(followupResponse.Value.Choices[0], Is.Not.Null);
-            Assert.That(followupResponse.Value.Choices[0].Message, Is.Not.Null);
-            Assert.That(followupResponse.Value.Choices[0].Message.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(followupResponse.Value.Choices[0].Message.Content, Is.Not.Null.Or.Empty);
+            Assert.That(followupResponse.Value.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(followupResponse.Value.Content, Is.Not.Null.Or.Empty);
+            Assert.That(followupResponse.Value.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
         }
     }
 }

@@ -67,33 +67,6 @@ namespace Azure.AI.Inference
             return new ChatCompletionsNamedToolChoice(type, function, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletions"/>. </summary>
-        /// <param name="id"> A unique identifier associated with this chat completions response. </param>
-        /// <param name="created">
-        /// The first timestamp associated with generation activity for this completions response,
-        /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
-        /// </param>
-        /// <param name="model"> The model used for the chat completion. </param>
-        /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
-        /// <param name="choices">
-        /// The collection of completions choices associated with this completions response.
-        /// Generally, `n` choices are generated per provided prompt with a default value of 1.
-        /// Token limits and other settings may limit the number of choices generated.
-        /// </param>
-        /// <returns> A new <see cref="Inference.ChatCompletions"/> instance for mocking. </returns>
-        public static ChatCompletions ChatCompletions(string id = null, DateTimeOffset created = default, string model = null, CompletionsUsage usage = null, IEnumerable<ChatChoice> choices = null)
-        {
-            choices ??= new List<ChatChoice>();
-
-            return new ChatCompletions(
-                id,
-                created,
-                model,
-                usage,
-                choices?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Inference.CompletionsUsage"/>. </summary>
         /// <param name="completionTokens"> The number of tokens generated across all completions emissions. </param>
         /// <param name="promptTokens"> The number of tokens in the provided prompts for the completions request. </param>

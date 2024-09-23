@@ -1,0 +1,67 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com/chat/completions?api-version=2024-05-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "161",
+        "Content-Type": "application/json",
+        "traceparent": "00-1c8c3641d1a118cd5d210740293cc214-e59725f00f1d43da-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240920.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "content": "You are a helpful assistant.",
+            "role": "system"
+          },
+          {
+            "content": "How many feet are in a mile?",
+            "role": "user"
+          }
+        ],
+        "max_tokens": 512,
+        "stream": true
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "azureml-model-group": "offer-mistral-bundled-paygo",
+        "azureml-model-session": "dep-eus-mis-bundle-240905033003",
+        "Content-Type": "text/event-stream; charset=utf-8",
+        "Date": "Mon, 23 Sep 2024 20:53:52 GMT",
+        "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-rai-invoked": "true",
+        "X-Request-ID": "681a7871-14e6-4b11-9875-2aaca9659552"
+      },
+      "ResponseBody": [
+        "data: {\"choices\":[{\"delta\":{\"content\":\"\",\"role\":\"assistant\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727124833,\"id\":\"7d6fce7ce0d54261adbc8619c3330ec7\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"There\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727124833,\"id\":\"7d6fce7ce0d54261adbc8619c3330ec7\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" are\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727124833,\"id\":\"7d6fce7ce0d54261adbc8619c3330ec7\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" \"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727124833,\"id\":\"7d6fce7ce0d54261adbc8619c3330ec7\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"5\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727124833,\"id\":\"7d6fce7ce0d54261adbc8619c3330ec7\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\",\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727124833,\"id\":\"7d6fce7ce0d54261adbc8619c3330ec7\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"2\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727124833,\"id\":\"7d6fce7ce0d54261adbc8619c3330ec7\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"8\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727124833,\"id\":\"7d6fce7ce0d54261adbc8619c3330ec7\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"0\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727124833,\"id\":\"7d6fce7ce0d54261adbc8619c3330ec7\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" feet\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727124833,\"id\":\"7d6fce7ce0d54261adbc8619c3330ec7\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" in\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727124833,\"id\":\"7d6fce7ce0d54261adbc8619c3330ec7\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" a\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727124833,\"id\":\"7d6fce7ce0d54261adbc8619c3330ec7\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\" mile\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727124833,\"id\":\"7d6fce7ce0d54261adbc8619c3330ec7\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\".\"},\"finish_reason\":null,\"index\":0,\"logprobs\":null}],\"created\":1727124833,\"id\":\"7d6fce7ce0d54261adbc8619c3330ec7\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\"}\n\n",
+        "data: {\"choices\":[{\"delta\":{\"content\":\"\"},\"finish_reason\":\"stop\",\"index\":0,\"logprobs\":null}],\"created\":1727124833,\"id\":\"7d6fce7ce0d54261adbc8619c3330ec7\",\"model\":\"mistral-small\",\"object\":\"chat.completion.chunk\",\"usage\":{\"completion_tokens\":13,\"prompt_tokens\":19,\"total_tokens\":32}}\n\n",
+        "data: [DONE]\n\n"
+      ]
+    }
+  ],
+  "Variables": {
+    "AZUREAI_MISTRAL_SMALL_KEY": "Sanitized",
+    "AZUREAI_MISTRAL_SMALL_URL": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com",
+    "RandomSeed": "783421389"
+  }
+}

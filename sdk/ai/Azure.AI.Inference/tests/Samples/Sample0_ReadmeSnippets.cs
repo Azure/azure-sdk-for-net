@@ -80,7 +80,7 @@ namespace Azure.AI.Inference.Tests.Samples
             requestOptions = ModelReaderWriter.Read<ChatCompletionsOptions>(messages);
 
             Response<ChatCompletions> response = client.Complete(requestOptions);
-            System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+            System.Console.WriteLine(response.Value.Content);
             #endregion
         }
 

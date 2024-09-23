@@ -43,7 +43,7 @@ namespace Azure.AI.Inference.Tests
             UsingBinaryData,
         }
 
-        public ChatCompletionsClientTest(bool isAsync) : base(isAsync)
+        public ChatCompletionsClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             JsonPathSanitizers.Add("$.messages[*].content[*].image_url.url");
         }
@@ -71,15 +71,12 @@ namespace Azure.AI.Inference.Tests
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
-            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
-            ChatChoice choice = response.Value.Choices[0];
-            Assert.That(choice.Index, Is.EqualTo(0));
-            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
+            ChatCompletions result = response.Value;
+            Assert.That(result.Id, Is.Not.Null.Or.Empty);
+            Assert.That(result.Created, Is.Not.Null.Or.Empty);
+            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(result.Content, Is.Not.Null.Or.Empty);
         }
 
         [RecordedTest]
@@ -120,15 +117,12 @@ namespace Azure.AI.Inference.Tests
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
-            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
-            ChatChoice choice = response.Value.Choices[0];
-            Assert.That(choice.Index, Is.EqualTo(0));
-            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
+            ChatCompletions result = response.Value;
+            Assert.That(result.Id, Is.Not.Null.Or.Empty);
+            Assert.That(result.Created, Is.Not.Null.Or.Empty);
+            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(result.Content, Is.Not.Null.Or.Empty);
         }
 
         [RecordedTest]
@@ -254,15 +248,12 @@ namespace Azure.AI.Inference.Tests
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
-            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
-            ChatChoice choice = response.Value.Choices[0];
-            Assert.That(choice.Index, Is.EqualTo(0));
-            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
+            ChatCompletions result = response.Value;
+            Assert.That(result.Id, Is.Not.Null.Or.Empty);
+            Assert.That(result.Created, Is.Not.Null.Or.Empty);
+            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(result.Content, Is.Not.Null.Or.Empty);
             */
         }
 
@@ -366,37 +357,35 @@ namespace Azure.AI.Inference.Tests
             }
 
             Assert.That(response, Is.Not.Null);
-
-            Assert.That(response.Value, Is.Not.Null);
-            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
-
-            ChatChoice choice = response.Value.Choices[0];
+            Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
+            ChatCompletions result = response.Value;
+            Assert.That(result.Id, Is.Not.Null.Or.Empty);
+            Assert.That(result.Created, Is.Not.Null.Or.Empty);
 
             if (toolChoiceType == ToolChoiceTestType.UseNonePresetToolChoice)
             {
-                Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-                Assert.That(choice.Message.ToolCalls, Is.Null.Or.Empty);
+                Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+                Assert.That(result.ToolCalls, Is.Null.Or.Empty);
                 // We finish the test here as there's no further exercise for 'none' beyond ensuring we didn't do what we
                 // weren't meant to
                 return;
             }
             else if (toolChoiceType == ToolChoiceTestType.UseAutoPresetToolChoice || toolChoiceType == ToolChoiceTestType.DoNotSpecifyToolChoice)
             {
-                Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.ToolCalls));
+                Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.ToolCalls));
                 // and continue the test
             }
             else
             {
-                Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+                Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
                 // and continue the test, as we will have tool_calls
             }
 
-            ChatResponseMessage message = choice.Message;
-            Assert.That(message.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(message.Content, Is.Null.Or.Empty);
-            Assert.That(message.ToolCalls, Is.Not.Null.Or.Empty);
-            Assert.That(message.ToolCalls.Count, Is.EqualTo(1));
-            ChatCompletionsToolCall functionToolCall = message.ToolCalls[0] as ChatCompletionsToolCall;
+            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(result.Content, Is.Null.Or.Empty);
+            Assert.That(result.ToolCalls, Is.Not.Null.Or.Empty);
+            Assert.That(result.ToolCalls.Count, Is.EqualTo(1));
+            ChatCompletionsToolCall functionToolCall = result.ToolCalls[0] as ChatCompletionsToolCall;
             Assert.That(functionToolCall, Is.Not.Null);
             Assert.That(functionToolCall.Name, Is.EqualTo(futureTemperatureFunction.Name));
             Assert.That(functionToolCall.Arguments, Is.Not.Null.Or.Empty);
@@ -424,7 +413,7 @@ namespace Azure.AI.Inference.Tests
             }
 
             // Add the tool call message just received back from the assistant
-            followupOptions.Messages.Add(new ChatRequestAssistantMessage(choice.Message));
+            followupOptions.Messages.Add(new ChatRequestAssistantMessage(result));
 
             // And also the tool message that resolves the tool call
             followupOptions.Messages.Add(new ChatRequestToolMessage(
@@ -445,11 +434,8 @@ namespace Azure.AI.Inference.Tests
 
             Assert.That(followupResponse, Is.Not.Null);
             Assert.That(followupResponse.Value, Is.Not.Null);
-            Assert.That(followupResponse.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(followupResponse.Value.Choices[0], Is.Not.Null);
-            Assert.That(followupResponse.Value.Choices[0].Message, Is.Not.Null);
-            Assert.That(followupResponse.Value.Choices[0].Message.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(followupResponse.Value.Choices[0].Message.Content, Is.Not.Null.Or.Empty);
+            Assert.That(followupResponse.Value.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(followupResponse.Value.Content, Is.Not.Null.Or.Empty);
         }
 
         [RecordedTest]
@@ -507,16 +493,12 @@ namespace Azure.AI.Inference.Tests
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
-            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
-            ChatChoice choice = response.Value.Choices[0];
-            Assert.That(choice.Index, Is.EqualTo(0));
-
-            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
+            ChatCompletions result = response.Value;
+            Assert.That(result.Id, Is.Not.Null.Or.Empty);
+            Assert.That(result.Created, Is.Not.Null.Or.Empty);
+            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(result.Content, Is.Not.Null.Or.Empty);
         }
 
         [RecordedTest]
@@ -546,15 +528,12 @@ namespace Azure.AI.Inference.Tests
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
-            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
-            ChatChoice choice = response.Value.Choices[0];
-            Assert.That(choice.Index, Is.EqualTo(0));
-            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
-            Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
-            Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
+            ChatCompletions result = response.Value;
+            Assert.That(result.Id, Is.Not.Null.Or.Empty);
+            Assert.That(result.Created, Is.Not.Null.Or.Empty);
+            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(result.Content, Is.Not.Null.Or.Empty);
 
             string userAgent = null;
             captureRequestPayloadPolicy._requestHeaders.TryGetValue("User-Agent", out userAgent);
