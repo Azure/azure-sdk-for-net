@@ -1,4 +1,4 @@
-# Microsoft Playwright Testing preview
+# Microsoft Azure Playwright Testing client library for .NET
 
 Microsoft Playwright Testing is a fully managed service that uses the cloud to enable you to run Playwright tests with much higher parallelization across different operating system-browser combinations simultaneously. This means faster test runs with broader scenario coverage, which helps speed up delivery of features without sacrificing quality. The service also enables you to publish test results and related artifacts to the service and view them in the service portal enabling faster and easier troubleshooting. With Microsoft Playwright Testing service, you can release features faster and more confidently.
 
@@ -11,6 +11,10 @@ Install the client library for .NET with [NuGet](https://www.nuget.org/):
 ```dotnetcli
 dotnet add package Azure.Developer.MicrosoftPlaywrightTesting --prerelease
 ```
+
+### Authenticate the client
+
+To learn more about options for Microsoft Entra Id authentication, refer to [Azure.Identity credentials](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#credentials). You can also refer to [our samples]<!--(https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.NUnit/samples/Sample1_CustomisingServiceParameters.md)--> on how to configurate different Azure Identity credentials.
 
 ### Prerequisites
 
@@ -25,6 +29,20 @@ dotnet add package Azure.Developer.MicrosoftPlaywrightTesting --prerelease
 - [Documentation](https://aka.ms/mpt/docs) 
 - [Pricing](https://aka.ms/mpt/pricing)
 - [Share feedback](https://aka.ms/mpt/feedback)
+
+## Key concepts
+
+Key concepts of the Microsoft Playwright Testing NUnit SDK for .NET can be found [here](https://aka.ms/mpt/what-is-mpt)
+
+## Examples
+
+Code samples for using this SDK can be found in the following locations
+- [.NET Microsoft Playwright Testing NUnit Library Code Samples](https://aka.ms/mpt/sample)
+
+## Troubleshooting
+
+-   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
+-   Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
 
 ## Next steps
 
