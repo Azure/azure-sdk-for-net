@@ -8,8 +8,6 @@
 - New product SKUs added.
 - Database has new properties: redisVersion, deferUpgrade and accessKeysAuthentication. 
 
-### Other Changes
-
 ## 1.1.0 (2024-02-20)
 
 ### Features Added
