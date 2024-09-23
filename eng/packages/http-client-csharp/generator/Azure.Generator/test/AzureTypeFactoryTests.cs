@@ -27,10 +27,6 @@ namespace Azure.Generator.Tests
 
             var actual = AzureClientPlugin.Instance.TypeFactory.CreateCSharpType(input);
 
-            var model = new ModelProvider(null!);
-
-            Assert.AreEqual(10, model.Properties);
-
             Assert.IsNotNull(actual);
             Assert.IsTrue(actual?.IsFrameworkType);
             Assert.AreEqual(typeof(Guid), actual?.FrameworkType);
