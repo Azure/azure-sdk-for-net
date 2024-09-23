@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-07-01-preview</description>
+        /// <description>2024-06-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-07-01-preview</description>
+        /// <description>2024-06-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

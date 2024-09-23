@@ -54,6 +54,27 @@ namespace Azure.Provisioning.WebPubSub
         None = 0,
         ManagedIdentity = 1,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WebPubSubBuiltInRole : System.IEquatable<Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WebPubSubBuiltInRole(string value) { throw null; }
+        public static Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole WebPubSubContributor { get { throw null; } }
+        public static Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole WebPubSubServiceOwner { get { throw null; } }
+        public static Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole WebPubSubServiceReader { get { throw null; } }
+        public bool Equals(Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static string GetBuiltInRoleName(Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole value) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole left, Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole right) { throw null; }
+        public static implicit operator Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole (string value) { throw null; }
+        public static bool operator !=(Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole left, Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class WebPubSubEventHandler : Azure.Provisioning.Primitives.ProvisioningConstruct
     {
         public WebPubSubEventHandler() : base (default(Azure.Provisioning.ProvisioningContext)) { }
@@ -179,6 +200,8 @@ namespace Azure.Provisioning.WebPubSub
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } }
+        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         public static Azure.Provisioning.WebPubSub.WebPubSubService FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.WebPubSub.WebPubSubKeys GetKeys() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
