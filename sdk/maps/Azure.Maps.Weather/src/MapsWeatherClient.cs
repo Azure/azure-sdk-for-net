@@ -130,7 +130,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Get hourly forecast options to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<HourlyForecastResult>> GetHourlyWeatherForecastAsync(GetHourlyWeatherForecastOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -159,7 +158,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response<HourlyForecastResult> GetHourlyWeatherForecast(GetHourlyWeatherForecastOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -188,7 +186,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<MinuteForecastResult>> GetMinuteWeatherForecastAsync(GetMinuteWeatherForecastOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -217,7 +214,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response<MinuteForecastResult> GetMinuteWeatherForecast(GetMinuteWeatherForecastOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -246,7 +242,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<QuarterDayForecastResult>> GetQuarterDayWeatherForecastAsync(GetQuarterDayWeatherForecastOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -275,7 +270,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response<QuarterDayForecastResult> GetQuarterDayWeatherForecast(GetQuarterDayWeatherForecastOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -304,7 +298,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<CurrentConditionsResult>> GetCurrentWeatherConditionsAsync(GetCurrentWeatherConditionsOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -333,7 +326,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response<CurrentConditionsResult> GetCurrentWeatherConditions(GetCurrentWeatherConditionsOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -362,7 +354,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<DailyForecastResult>> GetDailyWeatherForecastAsync(GetDailyWeatherForecastOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -391,7 +382,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response<DailyForecastResult> GetDailyWeatherForecast(GetDailyWeatherForecastOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -436,7 +426,6 @@ namespace Azure.Maps.Weather
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<WeatherAlongRouteResult>> GetWeatherAlongRouteAsync(WeatherAlongRouteQuery query, WeatherLanguage language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(query, nameof(query));
@@ -448,9 +437,9 @@ namespace Azure.Maps.Weather
                 string queryString = "";
                 foreach (WeatherAlongRouteWaypoint waypoint in query.Waypoints) {
                     if (waypoint.Heading == null) {
-                        queryString += $"{waypoint.Coordinates.Latitude},{waypoint.Coordinates.Longitude},{waypoint.ETA}:";
+                        queryString += $"{waypoint.Coordinates.Latitude},{waypoint.Coordinates.Longitude},{waypoint.EtaInMinutes}:";
                     } else {
-                        queryString += $"{waypoint.Coordinates.Latitude},{waypoint.Coordinates.Longitude},{waypoint.Heading},{waypoint.ETA}:";
+                        queryString += $"{waypoint.Coordinates.Latitude},{waypoint.Coordinates.Longitude},{waypoint.Heading},{waypoint.EtaInMinutes}:";
                     }
                 }
                 queryString = queryString.Substring(0, queryString.Length - 1);
@@ -469,11 +458,12 @@ namespace Azure.Maps.Weather
         /// <param name="query">
         /// Coordinates through which the route is calculated, separated by colon (:) and entered in chronological order. A minimum of two waypoints is required. A single API call may contain up to 60 waypoints.
         /// A waypoint indicates location, ETA, and optional heading: latitude,longitude,ETA,heading, where
-        ///   * `Latitude` - Latitude coordinate in decimal degrees.
-        ///   * `Longitude` - Longitude coordinate in decimal degrees.
-        ///   * `ETA (estimated time of arrival)` - The number of minutes from the present time that it will take for the vehicle to reach the waypoint. Allowed range is from 0.0 to 120.0 minutes.
-        ///   * `Heading` - An optional value indicating the vehicle heading as it passes the waypoint. Expressed in clockwise degrees relative to true north. This is issued to calculate sun glare as a driving hazard. Allowed range is from 0.0 to 360.0 degrees. If not provided, a heading will automatically be derived based on the position of neighboring waypoints.
-        ///
+        /// <list>
+        ///   <item><c>Latitude</c> - Latitude coordinate in decimal degrees.</item>
+        ///   <item><c>Longitude</c> - Longitude coordinate in decimal degrees.</item>
+        ///   <item><c>ETA (estimated time of arrival)</c> - The number of minutes from the present time that it will take for the vehicle to reach the waypoint. Allowed range is from 0.0 to 120.0 minutes.</item>
+        ///   <item><c>Heading</c> - An optional value indicating the vehicle heading as it passes the waypoint. Expressed in clockwise degrees relative to true north. This is issued to calculate sun glare as a driving hazard. Allowed range is from 0.0 to 360.0 degrees. If not provided, a heading will automatically be derived based on the position of neighboring waypoints.</item>
+        ///</list>
         /// It is recommended to stay within, or close to, the distance that can be traveled within 120-mins or shortly after. This way a more accurate assessment can be provided for the trip and prevent isolated events not being captured between waypoints.  Information can and should be updated along the route (especially for trips greater than 2 hours) to continuously pull new waypoints moving forward, but also to ensure that forecast information for content such as precipitation type and intensity is accurate as storms develop and dissipate over time.
         /// </param>
         /// <param name="language">
@@ -484,7 +474,6 @@ namespace Azure.Maps.Weather
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response<WeatherAlongRouteResult> GetWeatherAlongRoute(WeatherAlongRouteQuery query, WeatherLanguage language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(query, nameof(query));
@@ -496,9 +485,9 @@ namespace Azure.Maps.Weather
                 string queryString = "";
                 foreach (WeatherAlongRouteWaypoint waypoint in query.Waypoints) {
                     if (waypoint.Heading == null) {
-                        queryString += $"{waypoint.Coordinates.Latitude},{waypoint.Coordinates.Longitude},{waypoint.ETA}:";
+                        queryString += $"{waypoint.Coordinates.Latitude},{waypoint.Coordinates.Longitude},{waypoint.EtaInMinutes}:";
                     } else {
-                        queryString += $"{waypoint.Coordinates.Latitude},{waypoint.Coordinates.Longitude},{waypoint.Heading},{waypoint.ETA}:";
+                        queryString += $"{waypoint.Coordinates.Latitude},{waypoint.Coordinates.Longitude},{waypoint.Heading},{waypoint.EtaInMinutes}:";
                     }
                 }
                 queryString = queryString.Substring(0, queryString.Length - 1);
@@ -517,7 +506,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<SevereWeatherAlertsResult>> GetSevereWeatherAlertsAsync(GetSevereWeatherAlertsOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -546,7 +534,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response<SevereWeatherAlertsResult> GetSevereWeatherAlerts(GetSevereWeatherAlertsOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -575,7 +562,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<DailyIndicesResult>> GetDailyIndicesAsync(GetDailyIndicesOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -604,7 +590,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response<DailyIndicesResult> GetDailyIndices(GetDailyIndicesOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -632,7 +617,6 @@ namespace Azure.Maps.Weather
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<ActiveStormResult>> GetTropicalStormActiveAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsWeatherClient.GetTropicalStormActive");
@@ -653,7 +637,6 @@ namespace Azure.Maps.Weather
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response<ActiveStormResult> GetTropicalStormActive(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsWeatherClient.GetTropicalStormActive");
@@ -675,7 +658,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<StormSearchResult>> GetTropicalStormSearchAsync(GetTropicalStormSearchOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsWeatherClient.GetTropicalStormSearch");
@@ -697,7 +679,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response<StormSearchResult> GetTropicalStormSearch(GetTropicalStormSearchOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsWeatherClient.GetTropicalStormSearch");
@@ -719,7 +700,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<StormForecastResult>> GetTropicalStormForecastAsync(GetTropicalStormForecastOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.BasinId, nameof(options.BasinId));
@@ -743,7 +723,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response<StormForecastResult> GetTropicalStormForecast(GetTropicalStormForecastOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.BasinId, nameof(options.BasinId));
@@ -767,7 +746,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<StormLocationsResult>> GetTropicalStormLocationsAsync(GetTropicalStormLocationsOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.BasinId, nameof(options.BasinId));
@@ -791,7 +769,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response<StormLocationsResult> GetTropicalStormLocations(GetTropicalStormLocationsOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.BasinId, nameof(options.BasinId));
@@ -815,7 +792,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<AirQualityResult>> GetCurrentAirQualityAsync(GetCurrentAirQualityOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -844,7 +820,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response<AirQualityResult> GetCurrentAirQuality(GetCurrentAirQualityOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -873,7 +848,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<DailyAirQualityForecastResult>> GetAirQualityDailyForecastsAsync(GetAirQualityDailyForecastsOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -902,7 +876,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response<DailyAirQualityForecastResult> GetAirQualityDailyForecasts(GetAirQualityDailyForecastsOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -931,7 +904,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<AirQualityResult>> GetAirQualityHourlyForecastsAsync(GetAirQualityHourlyForecastsOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -960,7 +932,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response<AirQualityResult> GetAirQualityHourlyForecasts(GetAirQualityHourlyForecastsOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -989,7 +960,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<DailyHistoricalActualsResult>> GetDailyHistoricalActualsAsync(GetDailyHistoricalActualsOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -1018,7 +988,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response<DailyHistoricalActualsResult> GetDailyHistoricalActuals(GetDailyHistoricalActualsOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -1047,7 +1016,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<DailyHistoricalRecordsResult>> GetDailyHistoricalRecordsAsync(GetDailyHistoricalRecordsOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -1076,7 +1044,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response<DailyHistoricalRecordsResult> GetDailyHistoricalRecords(GetDailyHistoricalRecordsOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -1105,7 +1072,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<DailyHistoricalNormalsResult>> GetDailyHistoricalNormalsAsync(GetDailyHistoricalNormalsOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));
@@ -1134,7 +1100,6 @@ namespace Azure.Maps.Weather
         /// <param name="options"> Additional options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response<DailyHistoricalNormalsResult> GetDailyHistoricalNormals(GetDailyHistoricalNormalsOptions options, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNull(options.Coordinates, nameof(options.Coordinates));

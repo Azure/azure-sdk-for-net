@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.Maps.Weather.Models
 {
-    public partial class GeoJsonMultiLineString
+    internal partial class GeoJsonMultiLineString
     {
         internal static GeoJsonMultiLineString DeserializeGeoJsonMultiLineString(JsonElement element)
         {

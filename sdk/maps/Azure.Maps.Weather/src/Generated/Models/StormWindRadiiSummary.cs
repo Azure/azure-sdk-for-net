@@ -25,8 +25,7 @@ namespace Azure.Maps.Weather.Models
         /// <param name="radiusSectorData"> Contains the information needed to plot wind radius quadrants. Bearing 0–90 = NE quadrant; 90–180 = SE quadrant; 180–270 = SW quadrant; 270–360 = NW quadrant. </param>
         /// <param name="radiiGeometry">
         /// GeoJSON object. Displayed when radiiGeometry=true in request. Describes the outline of the wind radius quadrants.
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
+        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
         /// </param>
         internal StormWindRadiiSummary(string timestamp, WeatherValue windSpeed, IReadOnlyList<RadiusSector> radiusSectorData, GeoJsonGeometry radiiGeometry)
         {
@@ -44,8 +43,7 @@ namespace Azure.Maps.Weather.Models
         public IReadOnlyList<RadiusSector> RadiusSectorData { get; }
         /// <summary>
         /// GeoJSON object. Displayed when radiiGeometry=true in request. Describes the outline of the wind radius quadrants.
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
+        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
         /// </summary>
         public GeoJsonGeometry RadiiGeometry { get; }
     }

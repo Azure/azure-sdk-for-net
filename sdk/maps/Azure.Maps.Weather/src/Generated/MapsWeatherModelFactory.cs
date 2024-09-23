@@ -922,8 +922,7 @@ namespace Azure.Maps.Weather.Models
         /// <param name="endStatus"> Storm status at the end of the window. </param>
         /// <param name="geometry">
         /// Displayed when windowGeometry=true in request. GeoJSON object containing coordinates describing the window of movement during the specified timeframe.
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.GeoJsonLineString"/>, <see cref="Models.GeoJsonMultiLineString"/>, <see cref="Models.GeoJsonMultiPoint"/>, <see cref="Models.GeoJsonMultiPolygon"/>, <see cref="Models.GeoJsonPoint"/> and <see cref="Models.GeoJsonPolygon"/>.
+        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
         /// </param>
         /// <returns> A new <see cref="Models.WeatherWindow"/> instance for mocking. </returns>
         public static WeatherWindow WeatherWindow(LatLongPair topLeft = null, LatLongPair bottomRight = null, DateTimeOffset? beginTimestamp = null, DateTimeOffset? endTimestamp = null, string beginStatus = null, string endStatus = null, GeoJsonGeometry geometry = null)
@@ -944,8 +943,7 @@ namespace Azure.Maps.Weather.Models
         /// <param name="radiusSectorData"> Contains the information needed to plot wind radius quadrants. Bearing 0–90 = NE quadrant; 90–180 = SE quadrant; 180–270 = SW quadrant; 270–360 = NW quadrant. </param>
         /// <param name="radiiGeometry">
         /// GeoJSON object. Displayed when radiiGeometry=true in request. Describes the outline of the wind radius quadrants.
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.GeoJsonLineString"/>, <see cref="Models.GeoJsonMultiLineString"/>, <see cref="Models.GeoJsonMultiPoint"/>, <see cref="Models.GeoJsonMultiPolygon"/>, <see cref="Models.GeoJsonPoint"/> and <see cref="Models.GeoJsonPolygon"/>.
+        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
         /// </param>
         /// <returns> A new <see cref="Models.StormWindRadiiSummary"/> instance for mocking. </returns>
         public static StormWindRadiiSummary StormWindRadiiSummary(string timestamp = null, WeatherValue windSpeed = null, IEnumerable<RadiusSector> radiusSectorData = null, GeoJsonGeometry radiiGeometry = null)
@@ -1198,81 +1196,6 @@ namespace Azure.Maps.Weather.Models
         public static DailyHistoricalNormals DailyHistoricalNormals(DateTimeOffset? timestamp = null, WeatherValueMaxMinAvg temperature = null, DegreeDaySummary degreeDaySummary = null, WeatherValue precipitation = null)
         {
             return new DailyHistoricalNormals(timestamp, temperature, degreeDaySummary, precipitation);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GeoJsonPoint"/>. </summary>
-        /// <param name="coordinates"> A `Position` is an array of numbers with two or more elements. The first two elements are _longitude_ and _latitude_, precisely in that order. _Altitude/Elevation_ is an optional third element. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.1) for details. </param>
-        /// <returns> A new <see cref="Models.GeoJsonPoint"/> instance for mocking. </returns>
-        public static GeoJsonPoint GeoJsonPoint(IEnumerable<double> coordinates = null)
-        {
-            coordinates ??= new List<double>();
-
-            return new GeoJsonPoint(GeoJsonObjectType.GeoJsonPoint, coordinates?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GeoJsonMultiPoint"/>. </summary>
-        /// <param name="coordinates"> Coordinates for the `GeoJson MultiPoint` geometry. </param>
-        /// <returns> A new <see cref="Models.GeoJsonMultiPoint"/> instance for mocking. </returns>
-        public static GeoJsonMultiPoint GeoJsonMultiPoint(IEnumerable<IList<double>> coordinates = null)
-        {
-            coordinates ??= new List<IList<double>>();
-
-            return new GeoJsonMultiPoint(GeoJsonObjectType.GeoJsonMultiPoint, coordinates?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GeoJsonLineString"/>. </summary>
-        /// <param name="coordinates"> Coordinates for the `GeoJson LineString` geometry. </param>
-        /// <returns> A new <see cref="Models.GeoJsonLineString"/> instance for mocking. </returns>
-        public static GeoJsonLineString GeoJsonLineString(IEnumerable<IList<double>> coordinates = null)
-        {
-            coordinates ??= new List<IList<double>>();
-
-            return new GeoJsonLineString(GeoJsonObjectType.GeoJsonLineString, coordinates?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GeoJsonMultiLineString"/>. </summary>
-        /// <param name="coordinates"> Coordinates for the `GeoJson MultiLineString` geometry. </param>
-        /// <returns> A new <see cref="Models.GeoJsonMultiLineString"/> instance for mocking. </returns>
-        public static GeoJsonMultiLineString GeoJsonMultiLineString(IEnumerable<IList<IList<double>>> coordinates = null)
-        {
-            coordinates ??= new List<IList<IList<double>>>();
-
-            return new GeoJsonMultiLineString(GeoJsonObjectType.GeoJsonMultiLineString, coordinates?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GeoJsonPolygon"/>. </summary>
-        /// <param name="coordinates"> Coordinates for the `GeoJson Polygon` geometry type. </param>
-        /// <returns> A new <see cref="Models.GeoJsonPolygon"/> instance for mocking. </returns>
-        public static GeoJsonPolygon GeoJsonPolygon(IEnumerable<IList<IList<double>>> coordinates = null)
-        {
-            coordinates ??= new List<IList<IList<double>>>();
-
-            return new GeoJsonPolygon(GeoJsonObjectType.GeoJsonPolygon, coordinates?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GeoJsonMultiPolygon"/>. </summary>
-        /// <param name="coordinates"> Contains a list of valid `GeoJSON Polygon` objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </param>
-        /// <returns> A new <see cref="Models.GeoJsonMultiPolygon"/> instance for mocking. </returns>
-        public static GeoJsonMultiPolygon GeoJsonMultiPolygon(IEnumerable<IList<IList<IList<double>>>> coordinates = null)
-        {
-            coordinates ??= new List<IList<IList<IList<double>>>>();
-
-            return new GeoJsonMultiPolygon(GeoJsonObjectType.GeoJsonMultiPolygon, coordinates?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GeoJsonFeature"/>. </summary>
-        /// <param name="geometry">
-        /// A valid `GeoJSON` geometry object. The type must be one of the seven valid GeoJSON geometry types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon and GeometryCollection. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1) for details.
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.GeoJsonLineString"/>, <see cref="Models.GeoJsonMultiLineString"/>, <see cref="Models.GeoJsonMultiPoint"/>, <see cref="Models.GeoJsonMultiPolygon"/>, <see cref="Models.GeoJsonPoint"/> and <see cref="Models.GeoJsonPolygon"/>.
-        /// </param>
-        /// <param name="properties"> Properties can contain any additional metadata about the `Feature`. Value can be any JSON object or a JSON null value. </param>
-        /// <param name="id"> Identifier for the feature. </param>
-        /// <param name="featureType"> The type of the feature. The value depends on the data model the current feature is part of. Some data models may have an empty value. </param>
-        /// <returns> A new <see cref="Models.GeoJsonFeature"/> instance for mocking. </returns>
-        public static GeoJsonFeature GeoJsonFeature(GeoJsonGeometry geometry = null, object properties = null, string id = null, string featureType = null)
-        {
-            return new GeoJsonFeature(GeoJsonObjectType.GeoJsonFeature, geometry, properties, id, featureType);
         }
     }
 }

@@ -469,37 +469,9 @@ namespace Azure.Maps.Weather.Models
         public System.DateTimeOffset? StartTime { get { throw null; } }
         public string Threshold { get { throw null; } }
     }
-    public partial class GeoJsonFeature : Azure.Maps.Weather.Models.GeoJsonObject
-    {
-        internal GeoJsonFeature() { }
-        public string FeatureType { get { throw null; } }
-        public Azure.Maps.Weather.Models.GeoJsonGeometry Geometry { get { throw null; } }
-        public string Id { get { throw null; } }
-        public object Properties { get { throw null; } }
-    }
     public partial class GeoJsonGeometry : Azure.Maps.Weather.Models.GeoJsonObject
     {
         public GeoJsonGeometry() { }
-    }
-    public partial class GeoJsonLineString : Azure.Maps.Weather.Models.GeoJsonGeometry
-    {
-        internal GeoJsonLineString() { }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<double>> Coordinates { get { throw null; } }
-    }
-    public partial class GeoJsonMultiLineString : Azure.Maps.Weather.Models.GeoJsonGeometry
-    {
-        internal GeoJsonMultiLineString() { }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> Coordinates { get { throw null; } }
-    }
-    public partial class GeoJsonMultiPoint : Azure.Maps.Weather.Models.GeoJsonGeometry
-    {
-        internal GeoJsonMultiPoint() { }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<double>> Coordinates { get { throw null; } }
-    }
-    public partial class GeoJsonMultiPolygon : Azure.Maps.Weather.Models.GeoJsonGeometry
-    {
-        internal GeoJsonMultiPolygon() { }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>>> Coordinates { get { throw null; } }
     }
     public abstract partial class GeoJsonObject
     {
@@ -516,16 +488,6 @@ namespace Azure.Maps.Weather.Models
         GeoJsonGeometryCollection = 6,
         GeoJsonFeature = 7,
         GeoJsonFeatureCollection = 8,
-    }
-    public partial class GeoJsonPoint : Azure.Maps.Weather.Models.GeoJsonGeometry
-    {
-        internal GeoJsonPoint() { }
-        public System.Collections.Generic.IReadOnlyList<double> Coordinates { get { throw null; } }
-    }
-    public partial class GeoJsonPolygon : Azure.Maps.Weather.Models.GeoJsonGeometry
-    {
-        internal GeoJsonPolygon() { }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> Coordinates { get { throw null; } }
     }
     public partial class HazardDetail
     {
@@ -762,13 +724,6 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.DailyIndicesResult DailyIndicesResult(System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.DailyIndex> results = null) { throw null; }
         public static Azure.Maps.Weather.Models.DegreeDaySummary DegreeDaySummary(Azure.Maps.Weather.Models.WeatherValue heating = null, Azure.Maps.Weather.Models.WeatherValue cooling = null) { throw null; }
         public static Azure.Maps.Weather.Models.ForecastInterval ForecastInterval(System.DateTimeOffset? startTime = default(System.DateTimeOffset?), int? minute = default(int?), double? decibelRelativeToZ = default(double?), string shortDescription = null, string threshold = null, Azure.Maps.Weather.Models.ColorValue color = null, Azure.Maps.Weather.Models.ColorValue simplifiedColor = null, Azure.Maps.Weather.Models.PrecipitationType? precipitationType = default(Azure.Maps.Weather.Models.PrecipitationType?), Azure.Maps.Weather.Models.IconCode? iconCode = default(Azure.Maps.Weather.Models.IconCode?), int? cloudCover = default(int?)) { throw null; }
-        public static Azure.Maps.Weather.Models.GeoJsonFeature GeoJsonFeature(Azure.Maps.Weather.Models.GeoJsonGeometry geometry = null, object properties = null, string id = null, string featureType = null) { throw null; }
-        public static Azure.Maps.Weather.Models.GeoJsonLineString GeoJsonLineString(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<double>> coordinates = null) { throw null; }
-        public static Azure.Maps.Weather.Models.GeoJsonMultiLineString GeoJsonMultiLineString(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> coordinates = null) { throw null; }
-        public static Azure.Maps.Weather.Models.GeoJsonMultiPoint GeoJsonMultiPoint(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<double>> coordinates = null) { throw null; }
-        public static Azure.Maps.Weather.Models.GeoJsonMultiPolygon GeoJsonMultiPolygon(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>>> coordinates = null) { throw null; }
-        public static Azure.Maps.Weather.Models.GeoJsonPoint GeoJsonPoint(System.Collections.Generic.IEnumerable<double> coordinates = null) { throw null; }
-        public static Azure.Maps.Weather.Models.GeoJsonPolygon GeoJsonPolygon(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>> coordinates = null) { throw null; }
         public static Azure.Maps.Weather.Models.HazardDetail HazardDetail(Azure.Maps.Weather.Models.HazardIndex? hazardIndex = default(Azure.Maps.Weather.Models.HazardIndex?), string hazardCode = null, string shortDescription = null) { throw null; }
         public static Azure.Maps.Weather.Models.HourlyForecast HourlyForecast(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), Azure.Maps.Weather.Models.IconCode? iconCode = default(Azure.Maps.Weather.Models.IconCode?), string iconPhrase = null, bool? hasPrecipitation = default(bool?), bool? isDaylight = default(bool?), Azure.Maps.Weather.Models.WeatherValue temperature = null, Azure.Maps.Weather.Models.WeatherValue realFeelTemperature = null, Azure.Maps.Weather.Models.WeatherValue wetBulbTemperature = null, Azure.Maps.Weather.Models.WeatherValue dewPoint = null, Azure.Maps.Weather.Models.WindDetails wind = null, Azure.Maps.Weather.Models.WindDetails windGust = null, int? relativeHumidity = default(int?), Azure.Maps.Weather.Models.WeatherValue visibility = null, Azure.Maps.Weather.Models.WeatherValue cloudCeiling = null, int? uvIndex = default(int?), string uvIndexDescription = null, int? precipitationProbability = default(int?), int? rainProbability = default(int?), int? snowProbability = default(int?), int? iceProbability = default(int?), Azure.Maps.Weather.Models.WeatherValue totalLiquid = null, Azure.Maps.Weather.Models.WeatherValue rain = null, Azure.Maps.Weather.Models.WeatherValue snow = null, Azure.Maps.Weather.Models.WeatherValue ice = null, int? cloudCover = default(int?)) { throw null; }
         public static Azure.Maps.Weather.Models.HourlyForecastResult HourlyForecastResult(System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.HourlyForecast> forecasts = null) { throw null; }
@@ -1127,7 +1082,7 @@ namespace Azure.Maps.Weather.Models
     {
         public WeatherAlongRouteWaypoint() { }
         public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } set { } }
-        public double ETA { get { throw null; } set { } }
+        public double EtaInMinutes { get { throw null; } set { } }
         public double? Heading { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

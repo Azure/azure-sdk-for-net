@@ -10,7 +10,7 @@ using Azure.Maps.Common;
 
 namespace Azure.Maps.Weather.Models
 {
-    public partial class GeoJsonFeature
+    internal partial class GeoJsonFeature
     {
         internal static GeoJsonFeature DeserializeGeoJsonFeature(JsonElement element)
         {

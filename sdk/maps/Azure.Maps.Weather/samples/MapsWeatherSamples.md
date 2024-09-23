@@ -1,6 +1,3 @@
-using Azure.Maps.Weather;
-
-
 ## Examples
 
 

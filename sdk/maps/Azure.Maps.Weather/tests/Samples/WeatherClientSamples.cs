@@ -1,18 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using System;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.Maps.Models;
-using Azure.ResourceManager.Maps;
-using Azure.ResourceManager;
-using NUnit.Framework;
-using Azure.Maps.Weather.Models.Options;
-using Azure.Maps.Weather.Models;
-using Azure.Maps.Weather;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Core.GeoJson;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Maps;
+using Azure.ResourceManager.Maps.Models;
+using Azure.Maps.Weather;
+using Azure.Maps.Weather.Models;
+using Azure.Maps.Weather.Models.Options;
 
 namespace Azure.Maps.Weather.Tests.Samples
 {
@@ -447,13 +447,13 @@ namespace Azure.Maps.Weather.Tests.Samples
                     new WeatherAlongRouteWaypoint()
                     {
                         Coordinates = new GeoPosition(121.525694, 25.033075),
-                        ETA = 0,
+                        EtaInMinutes = 0,
                         Heading = 0
                     },
                     new WeatherAlongRouteWaypoint()
                     {
                         Coordinates = new GeoPosition(121.5640089, 25.0338053),
-                        ETA = 2,
+                        EtaInMinutes = 2,
                         Heading = 0
                     }
                 }

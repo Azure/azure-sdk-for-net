@@ -287,13 +287,13 @@ namespace Azure.Maps.Weather.Tests
                     new WeatherAlongRouteWaypoint()
                     {
                         Coordinates = new GeoPosition(121.525694, 25.033075),
-                        ETA = 0,
+                        EtaInMinutes = 0,
                         Heading = 0
                     },
                     new WeatherAlongRouteWaypoint()
                     {
                         Coordinates = new GeoPosition(121.5640089, 25.0338053),
-                        ETA = 2,
+                        EtaInMinutes = 2,
                         Heading = 0
                     }
                 }
