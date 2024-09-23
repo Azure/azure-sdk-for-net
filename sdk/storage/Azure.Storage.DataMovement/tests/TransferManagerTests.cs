@@ -67,7 +67,7 @@ public class TransferManagerTests
         StepProcessor<TransferJobInternal> jobsProcessor = new();
         StepProcessor<JobPartInternal> partsProcessor = new();
         StepProcessor<Func<Task>> chunksProcessor = new();
-        Mock<JobBuilder> jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
         Mock<TransferCheckpointer> checkpointer = new();
 
         var resources = Enumerable.Range(0, items).Select(_ =>
@@ -84,7 +84,7 @@ public class TransferManagerTests
             jobsProcessor,
             partsProcessor,
             chunksProcessor,
-            jobBuilder.Object,
+            jobBuilder,
             checkpointer.Object,
             default);
 
@@ -175,7 +175,7 @@ public class TransferManagerTests
         StepProcessor<TransferJobInternal> jobsProcessor = new();
         StepProcessor<JobPartInternal> partsProcessor = new();
         StepProcessor<Func<Task>> chunksProcessor = new();
-        Mock<JobBuilder> jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
         Mock<TransferCheckpointer> checkpointer = new();
 
         var resources = Enumerable.Range(1, numJobs).Select(i =>
@@ -190,7 +190,7 @@ public class TransferManagerTests
             jobsProcessor,
             partsProcessor,
             chunksProcessor,
-            jobBuilder.Object,
+            jobBuilder,
             checkpointer.Object,
             default);
 
@@ -256,12 +256,11 @@ public class TransferManagerTests
         }
     }
 
-    // TODO: should be more granular testing job build failures
     [TestCase(true, false)]
     [TestCase(false, true)]
     public async Task ItemTransferFailAtQueue(
         bool failBuildJob,
-        bool failAddJobToCheckpointer)
+        bool failCheckpointer)
     {
         Uri srcUri = new("file:///foo/bar");
         Uri dstUri = new("https://example.com/fizz/buzz");
@@ -269,14 +268,68 @@ public class TransferManagerTests
         StepProcessor<TransferJobInternal> jobsProcessor = new();
         StepProcessor<JobPartInternal> partsProcessor = new();
         StepProcessor<Func<Task>> chunksProcessor = new();
-        JobBuilder jobBuilder = failBuildJob
-            ? new Mock<JobBuilder>(MockBehavior.Strict).Object
-            : new JobBuilder(ArrayPool<byte>.Shared, default, new(ClientOptions.Default));
-        Mock<TransferCheckpointer> checkpointer = new(failAddJobToCheckpointer ? MockBehavior.Strict : MockBehavior.Loose);
+        Mock<JobBuilder> jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default))
+        {
+            CallBase = true,
+        };
+        Mock<TransferCheckpointer> checkpointer = new();
         Mock<StorageResourceItem> srcResource = new(MockBehavior.Strict);
         Mock<StorageResourceItem> dstResource = new(MockBehavior.Strict);
 
         (srcResource, dstResource).BasicSetup(srcUri, dstUri);
+
+        Exception expectedException = new();
+        if (failBuildJob)
+        {
+            jobBuilder.Setup(b => b.BuildJobAsync(It.IsAny<StorageResource>(), It.IsAny<StorageResource>(),
+                It.IsAny<DataTransferOptions>(), It.IsAny<TransferCheckpointer>(), It.IsAny<string>(),
+                It.IsAny<bool>(), It.IsAny<CancellationToken>())
+            ).Throws(expectedException);
+        }
+        if (failCheckpointer)
+        {
+            checkpointer.Setup(c => c.AddNewJobAsync(It.IsAny<string>(), It.IsAny<StorageResource>(),
+                It.IsAny<StorageResource>(), It.IsAny<CancellationToken>())
+            ).Throws(expectedException);
+        }
+
+        await using TransferManager transferManager = new(
+            jobsProcessor,
+            partsProcessor,
+            chunksProcessor,
+            jobBuilder.Object,
+            checkpointer.Object,
+            default);
+
+        DataTransfer transfer = null;
+
+        Assert.That(async () => transfer = await transferManager.StartTransferAsync(
+            srcResource.Object,
+            dstResource.Object), Throws.Exception.EqualTo(expectedException));
+
+        Assert.That(transfer, Is.Null);
+
+        // TODO determine if checkpointer still has the job tracked even though it failed to queue (it shouldn't)
+        //      need checkpointer API refactor for this
+    }
+
+    [Test]
+    public async Task ItemTransferFailAtJobProcess()
+    {
+        Uri srcUri = new("file:///foo/bar");
+        Uri dstUri = new("https://example.com/fizz/buzz");
+
+        StepProcessor<TransferJobInternal> jobsProcessor = new();
+        StepProcessor<JobPartInternal> partsProcessor = new();
+        StepProcessor<Func<Task>> chunksProcessor = new();
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new(ClientOptions.Default));
+        Mock<TransferCheckpointer> checkpointer = new(MockBehavior.Loose);
+        Mock<StorageResourceItem> srcResource = new(MockBehavior.Strict);
+        Mock<StorageResourceItem> dstResource = new(MockBehavior.Strict);
+
+        // basic need to get through construction
+        srcResource.SetupGet(r => r.Uri).Returns(srcUri);
+        dstResource.SetupGet(r => r.Uri).Returns(dstUri);
 
         await using TransferManager transferManager = new(
             jobsProcessor,
@@ -286,13 +339,17 @@ public class TransferManagerTests
             checkpointer.Object,
             default);
 
-        DataTransfer transfer;
+        // inject failure now, after initial queue finished
+        Exception expectedException = new();
+        checkpointer.Setup(c => c.WriteToJobPlanFileAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<byte[]>(),
+            It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>())
+        ).Throws(expectedException);
 
-        Assert.That(async () => transfer = await transferManager.StartTransferAsync(
-            srcResource.Object,
-            dstResource.Object), Throws.InstanceOf<MockException>());
-
-        // TODO determine if checkpointer still has the job tracked even though it failed to queue
+        DataTransfer transfer = await transferManager.StartTransferAsync(srcResource.Object, dstResource.Object);
+        Assert.That(await jobsProcessor.TryStepAsync(), Is.True);
+        Assert.That(partsProcessor.ItemsInQueue, Is.Zero);
+        // TODO determine if some sort of fail status in present in `transfer` (currently not)
+        // TODO determine if checkpointer still has the job tracked even though it failed to queue (it shouldn't)
     }
 }
 
