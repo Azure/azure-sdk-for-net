@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this DiskImageResource created on azure
             // for more information of creating DiskImageResource, please refer to the document of DiskImageResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string imageName = "myImage";
             ResourceIdentifier diskImageResourceId = DiskImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, imageName);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this DiskImageResource created on azure
             // for more information of creating DiskImageResource, please refer to the document of DiskImageResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string imageName = "aaaaaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier diskImageResourceId = DiskImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, imageName);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this DiskImageResource created on azure
             // for more information of creating DiskImageResource, please refer to the document of DiskImageResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string imageName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier diskImageResourceId = DiskImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, imageName);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this DiskImageResource created on azure
             // for more information of creating DiskImageResource, please refer to the document of DiskImageResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string imageName = "myImage";
             ResourceIdentifier diskImageResourceId = DiskImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, imageName);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CommitmentPlanAccountAssociationResource created on azure
             // for more information of creating CommitmentPlanAccountAssociationResource, please refer to the document of CommitmentPlanAccountAssociationResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string commitmentPlanName = "commitmentPlanName";
             string commitmentPlanAssociationName = "commitmentPlanAssociationName";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CommitmentPlanAccountAssociationResource created on azure
             // for more information of creating CommitmentPlanAccountAssociationResource, please refer to the document of CommitmentPlanAccountAssociationResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string commitmentPlanName = "commitmentPlanName";
             string commitmentPlanAssociationName = "commitmentPlanAssociationName";
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CommitmentPlanAccountAssociationResource created on azure
             // for more information of creating CommitmentPlanAccountAssociationResource, please refer to the document of CommitmentPlanAccountAssociationResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string commitmentPlanName = "commitmentPlanName";
             string commitmentPlanAssociationName = "commitmentPlanAssociationName";

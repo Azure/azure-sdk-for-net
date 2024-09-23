@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this CapacityReservationGroupResource created on azure
             // for more information of creating CapacityReservationGroupResource, please refer to the document of CapacityReservationGroupResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string capacityReservationGroupName = "aaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier capacityReservationGroupResourceId = CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this CapacityReservationGroupResource created on azure
             // for more information of creating CapacityReservationGroupResource, please refer to the document of CapacityReservationGroupResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string capacityReservationGroupName = "aaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier capacityReservationGroupResourceId = CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this CapacityReservationGroupResource created on azure
             // for more information of creating CapacityReservationGroupResource, please refer to the document of CapacityReservationGroupResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string capacityReservationGroupName = "a";
             ResourceIdentifier capacityReservationGroupResourceId = CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this CapacityReservationGroupResource created on azure
             // for more information of creating CapacityReservationGroupResource, please refer to the document of CapacityReservationGroupResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string capacityReservationGroupName = "aaaaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier capacityReservationGroupResourceId = CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this CapacityReservationGroupResource created on azure
             // for more information of creating CapacityReservationGroupResource, please refer to the document of CapacityReservationGroupResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string capacityReservationGroupName = "myCapacityReservationGroup";
             ResourceIdentifier capacityReservationGroupResourceId = CapacityReservationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityReservationGroupName);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this DedicatedHostResource created on azure
             // for more information of creating DedicatedHostResource, please refer to the document of DedicatedHostResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string hostGroupName = "aaaaaaaaa";
             string hostName = "aaaaaaaaaaaaaaaaaaaaa";
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this DedicatedHostResource created on azure
             // for more information of creating DedicatedHostResource, please refer to the document of DedicatedHostResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string hostGroupName = "aa";
             string hostName = "aaaaaaaaaaaaaaaaaaaaaaaaaa";
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this DedicatedHostResource created on azure
             // for more information of creating DedicatedHostResource, please refer to the document of DedicatedHostResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string hostGroupName = "aaaaaaaaa";
             string hostName = "aaaaaaaaaaaaaaaaaaaaa";
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this DedicatedHostResource created on azure
             // for more information of creating DedicatedHostResource, please refer to the document of DedicatedHostResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string hostGroupName = "aaaaaa";
             string hostName = "aaaaaaaaaaaaaaa";
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this DedicatedHostResource created on azure
             // for more information of creating DedicatedHostResource, please refer to the document of DedicatedHostResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string hostGroupName = "aaaaaaaaaaaaaaa";
             string hostName = "aaaaa";
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this DedicatedHostResource created on azure
             // for more information of creating DedicatedHostResource, please refer to the document of DedicatedHostResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string hostGroupName = "myDedicatedHostGroup";
             string hostName = "myHost";
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this DedicatedHostResource created on azure
             // for more information of creating DedicatedHostResource, please refer to the document of DedicatedHostResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string hostGroupName = "myDedicatedHostGroup";
             string hostName = "myHost";
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this DedicatedHostResource created on azure
             // for more information of creating DedicatedHostResource, please refer to the document of DedicatedHostResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string hostGroupName = "myDedicatedHostGroup";
             string hostName = "myHost";
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this DedicatedHostResource created on azure
             // for more information of creating DedicatedHostResource, please refer to the document of DedicatedHostResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string hostGroupName = "myDedicatedHostGroup";
             string hostName = "myHost";

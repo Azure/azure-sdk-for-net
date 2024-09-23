@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CognitiveServicesAccountResource created on azure
             // for more information of creating CognitiveServicesAccountResource, please refer to the document of CognitiveServicesAccountResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string accountName = "accountName";
             ResourceIdentifier cognitiveServicesAccountResourceId = CognitiveServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CognitiveServicesAccountResource created on azure
             // for more information of creating CognitiveServicesAccountResource, please refer to the document of CognitiveServicesAccountResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string accountName = "accountName";
             ResourceIdentifier cognitiveServicesAccountResourceId = CognitiveServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CognitiveServicesAccountResource created on azure
             // for more information of creating CognitiveServicesAccountResource, please refer to the document of CognitiveServicesAccountResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string accountName = "accountName";
             ResourceIdentifier cognitiveServicesAccountResourceId = CognitiveServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CognitiveServicesAccountResource created on azure
             // for more information of creating CognitiveServicesAccountResource, please refer to the document of CognitiveServicesAccountResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string accountName = "accountName";
             ResourceIdentifier cognitiveServicesAccountResourceId = CognitiveServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CognitiveServicesAccountResource created on azure
             // for more information of creating CognitiveServicesAccountResource, please refer to the document of CognitiveServicesAccountResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string accountName = "accountName";
             ResourceIdentifier cognitiveServicesAccountResourceId = CognitiveServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);

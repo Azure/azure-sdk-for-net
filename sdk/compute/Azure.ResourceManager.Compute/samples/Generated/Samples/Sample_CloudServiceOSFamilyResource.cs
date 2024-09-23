@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this CloudServiceOSFamilyResource created on azure
             // for more information of creating CloudServiceOSFamilyResource, please refer to the document of CloudServiceOSFamilyResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("westus2");
             string osFamilyName = "3";
             ResourceIdentifier cloudServiceOSFamilyResourceId = CloudServiceOSFamilyResource.CreateResourceIdentifier(subscriptionId, location, osFamilyName);

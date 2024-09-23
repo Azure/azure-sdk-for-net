@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this SharedGalleryImageResource created on azure
             // for more information of creating SharedGalleryImageResource, please refer to the document of SharedGalleryImageResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("myLocation");
             string galleryUniqueName = "galleryUniqueName";
             string galleryImageName = "myGalleryImageName";

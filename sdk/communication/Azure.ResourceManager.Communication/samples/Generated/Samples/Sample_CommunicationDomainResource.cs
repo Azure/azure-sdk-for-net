@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // this example assumes you already have this CommunicationDomainResource created on azure
             // for more information of creating CommunicationDomainResource, please refer to the document of CommunicationDomainResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string emailServiceName = "MyEmailServiceResource";
             string domainName = "mydomain.com";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // this example assumes you already have this CommunicationDomainResource created on azure
             // for more information of creating CommunicationDomainResource, please refer to the document of CommunicationDomainResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string emailServiceName = "MyEmailServiceResource";
             string domainName = "mydomain.com";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // this example assumes you already have this CommunicationDomainResource created on azure
             // for more information of creating CommunicationDomainResource, please refer to the document of CommunicationDomainResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string emailServiceName = "MyEmailServiceResource";
             string domainName = "mydomain.com";
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // this example assumes you already have this CommunicationDomainResource created on azure
             // for more information of creating CommunicationDomainResource, please refer to the document of CommunicationDomainResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string emailServiceName = "MyEmailServiceResource";
             string domainName = "mydomain.com";
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // this example assumes you already have this CommunicationDomainResource created on azure
             // for more information of creating CommunicationDomainResource, please refer to the document of CommunicationDomainResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string emailServiceName = "MyEmailServiceResource";
             string domainName = "mydomain.com";

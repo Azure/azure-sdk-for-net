@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Samples
 
             // this example assumes you already have this AvailabilitySetResource created on azure
             // for more information of creating AvailabilitySetResource, please refer to the document of AvailabilitySetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string availabilitySetName = "aaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
@@ -86,7 +86,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
 
             // this example assumes you already have this AvailabilitySetResource created on azure
             // for more information of creating AvailabilitySetResource, please refer to the document of AvailabilitySetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string availabilitySetName = "aaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
@@ -118,7 +118,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
 
             // this example assumes you already have this AvailabilitySetResource created on azure
             // for more information of creating AvailabilitySetResource, please refer to the document of AvailabilitySetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string availabilitySetName = "aaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
@@ -145,7 +145,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
 
             // this example assumes you already have this AvailabilitySetResource created on azure
             // for more information of creating AvailabilitySetResource, please refer to the document of AvailabilitySetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string availabilitySetName = "aaaaaaaaaaa";
             ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
@@ -172,7 +172,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
 
             // this example assumes you already have this AvailabilitySetResource created on azure
             // for more information of creating AvailabilitySetResource, please refer to the document of AvailabilitySetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string availabilitySetName = "aaaaaaaaaaaa";
             ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
@@ -203,7 +203,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
 
             // this example assumes you already have this AvailabilitySetResource created on azure
             // for more information of creating AvailabilitySetResource, please refer to the document of AvailabilitySetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string availabilitySetName = "aaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
@@ -234,7 +234,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -267,7 +267,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
 
             // this example assumes you already have this AvailabilitySetResource created on azure
             // for more information of creating AvailabilitySetResource, please refer to the document of AvailabilitySetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string availabilitySetName = "aaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
@@ -297,7 +297,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
 
             // this example assumes you already have this AvailabilitySetResource created on azure
             // for more information of creating AvailabilitySetResource, please refer to the document of AvailabilitySetResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgcompute";
             string availabilitySetName = "aa";
             ResourceIdentifier availabilitySetResourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // this example assumes you already have this CommunicationServiceResource created on azure
             // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string communicationServiceName = "MyCommunicationResource";
             ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // this example assumes you already have this CommunicationServiceResource created on azure
             // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string communicationServiceName = "MyCommunicationResource";
             ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // this example assumes you already have this CommunicationServiceResource created on azure
             // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string communicationServiceName = "MyCommunicationResource";
             ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // this example assumes you already have this CommunicationServiceResource created on azure
             // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string communicationServiceName = "MyCommunicationResource";
             ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // this example assumes you already have this CommunicationServiceResource created on azure
             // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string communicationServiceName = "MyCommunicationResource";
             ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // this example assumes you already have this CommunicationServiceResource created on azure
             // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string communicationServiceName = "MyCommunicationResource";
             ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // this example assumes you already have this CommunicationServiceResource created on azure
             // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string communicationServiceName = "MyCommunicationResource";
             ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // this example assumes you already have this CommunicationServiceResource created on azure
             // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string communicationServiceName = "MyCommunicationResource";
             ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // this example assumes you already have this CommunicationServiceResource created on azure
             // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string communicationServiceName = "MyCommunicationResource";
             ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             // this example assumes you already have this CommunicationServiceResource created on azure
             // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string communicationServiceName = "MyCommunicationResource";
             ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
