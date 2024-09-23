@@ -56,6 +56,7 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
             ServiceVersion.V2024_05_01_Preview => "2024-05-01-preview",
             ServiceVersion.V2024_06_01 => "2024-06-01",
             ServiceVersion.V2024_07_01_Preview => "2024-07-01-preview",
+            ServiceVersion.V2024_08_01_Preview => "2024-08-01-preview",
             _ => throw new NotSupportedException()
         };
         RetryPolicy = new RetryWithDelaysPolicy();
@@ -69,6 +70,7 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
         V2024_05_01_Preview = 8,
         V2024_06_01 = 9,
         V2024_07_01_Preview = 10,
+        V2024_08_01_Preview = 11,
     }
 
     internal class RetryWithDelaysPolicy : ClientRetryPolicy
@@ -99,5 +101,5 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
         }
     }
 
-    private const ServiceVersion LatestVersion = ServiceVersion.V2024_07_01_Preview;
+    private const ServiceVersion LatestVersion = ServiceVersion.V2024_08_01_Preview;
 }

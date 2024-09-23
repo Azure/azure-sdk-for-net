@@ -8,10 +8,12 @@ namespace Azure.AI.OpenAI.Chat;
 [CodeGenModel("AzureChatDataSourceConnectionStringAuthenticationOptions")] internal partial class InternalAzureChatDataSourceConnectionStringAuthenticationOptions { }
 [CodeGenModel("AzureChatDataSourceDeploymentNameVectorizationSource")] internal partial class InternalAzureChatDataSourceDeploymentNameVectorizationSource { }
 [CodeGenModel("AzureChatDataSourceEncodedApiKeyAuthenticationOptions")] internal partial class InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions { }
+[CodeGenModel("AzureChatDataSourceIntegratedVectorizationSource")] internal partial class InternalAzureChatDataSourceIntegratedVectorizationSource { }
 [CodeGenModel("AzureChatDataSourceKeyAndKeyIdAuthenticationOptions")] internal partial class InternalAzureChatDataSourceKeyAndKeyIdAuthenticationOptions { }
 [CodeGenModel("AzureChatDataSourceModelIdVectorizationSource")] internal partial class InternalAzureChatDataSourceModelIdVectorizationSource { }
 [CodeGenModel("AzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions")] internal partial class InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions { }
 [CodeGenModel("AzureChatDataSourceUserAssignedManagedIdentityAuthenticationOptions")] internal partial class InternalAzureChatDataSourceUserAssignedManagedIdentityAuthenticationOptions { }
+[CodeGenModel("AzureChatDataSourceUsernameAndPasswordAuthenticationOptions")] internal partial class InternalAzureChatDataSourceUsernameAndPasswordAuthenticationOptions { }
 [CodeGenModel("AzureSearchChatDataSourceParametersIncludeContext")] internal readonly partial struct InternalAzureSearchChatDataSourceParametersIncludeContext { }
 [CodeGenModel("UnknownAzureChatDataSource")] internal partial class InternalUnknownAzureChatDataSource { }
 [CodeGenModel("UnknownAzureChatDataSourceAuthenticationOptions")] internal partial class InternalUnknownAzureChatDataSourceAuthenticationOptions { }

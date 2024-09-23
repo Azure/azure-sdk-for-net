@@ -46,6 +46,11 @@ namespace Azure.AI.OpenAI.Chat
                 writer.WritePropertyName("chunk_id"u8);
                 writer.WriteStringValue(ChunkId);
             }
+            if (SerializedAdditionalRawData?.ContainsKey("rerank_score") != true && Optional.IsDefined(RerankScore))
+            {
+                writer.WritePropertyName("rerank_score"u8);
+                writer.WriteNumberValue(RerankScore.Value);
+            }
             if (SerializedAdditionalRawData?.ContainsKey("search_queries") != true)
             {
                 writer.WritePropertyName("search_queries"u8);
@@ -65,11 +70,6 @@ namespace Azure.AI.OpenAI.Chat
             {
                 writer.WritePropertyName("original_search_score"u8);
                 writer.WriteNumberValue(OriginalSearchScore.Value);
-            }
-            if (SerializedAdditionalRawData?.ContainsKey("rerank_score") != true && Optional.IsDefined(RerankScore))
-            {
-                writer.WritePropertyName("rerank_score"u8);
-                writer.WriteNumberValue(RerankScore.Value);
             }
             if (SerializedAdditionalRawData?.ContainsKey("filter_reason") != true && Optional.IsDefined(FilterReason))
             {
@@ -123,10 +123,10 @@ namespace Azure.AI.OpenAI.Chat
             string url = default;
             string filepath = default;
             string chunkId = default;
+            double? rerankScore = default;
             IReadOnlyList<string> searchQueries = default;
             int dataSourceIndex = default;
             double? originalSearchScore = default;
-            double? rerankScore = default;
             AzureChatRetrievedDocumentFilterReason? filterReason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -157,6 +157,15 @@ namespace Azure.AI.OpenAI.Chat
                     chunkId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("rerank_score"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rerankScore = property.Value.GetDouble();
+                    continue;
+                }
                 if (property.NameEquals("search_queries"u8))
                 {
                     List<string> array = new List<string>();
@@ -181,15 +190,6 @@ namespace Azure.AI.OpenAI.Chat
                     originalSearchScore = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("rerank_score"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rerankScore = property.Value.GetDouble();
-                    continue;
-                }
                 if (property.NameEquals("filter_reason"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -212,10 +212,10 @@ namespace Azure.AI.OpenAI.Chat
                 url,
                 filepath,
                 chunkId,
+                rerankScore,
                 searchQueries,
                 dataSourceIndex,
                 originalSearchScore,
-                rerankScore,
                 filterReason,
                 serializedAdditionalRawData);
         }

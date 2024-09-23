@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.AI.OpenAI.Chat;
+using Azure.AI.OpenAI.Images;
 using OpenAI.Chat;
 using OpenAI.TestFramework;
 
@@ -72,14 +74,14 @@ namespace Azure.AI.OpenAI.Tests
             {
                 ToolChoice = toolChoice switch
                 {
-                    ToolChoiceTestType.None => ChatToolChoice.None,
-                    ToolChoiceTestType.Auto => ChatToolChoice.Auto,
-                    ToolChoiceTestType.Tool => new ChatToolChoice(TOOL_TEMPERATURE),
-                    ToolChoiceTestType.Required => ChatToolChoice.Required,
+                    ToolChoiceTestType.None => ChatToolChoice.CreateNoneChoice(),
+                    ToolChoiceTestType.Auto => ChatToolChoice.CreateAutoChoice(),
+                    ToolChoiceTestType.Tool => ChatToolChoice.CreateFunctionChoice(TOOL_TEMPERATURE.FunctionName),
+                    ToolChoiceTestType.Required => ChatToolChoice.CreateRequiredChoice(),
                     _ => throw new NotImplementedException(),
                 },
                 Tools = { TOOL_TEMPERATURE },
-                MaxTokens = 512,
+                MaxOutputTokenCount = 512,
             };
 
             ClientResult<ChatCompletion> response = await client.CompleteChatAsync(messages, requestOptions);
@@ -89,7 +91,7 @@ namespace Azure.AI.OpenAI.Tests
             Assert.IsNotNull(completion);
             Assert.That(completion.Id, Is.Not.Null.Or.Empty);
 
-            ContentFilterResultForPrompt filter = completion.GetContentFilterResultForPrompt();
+            RequestContentFilterResult filter = completion.GetRequestContentFilterResult();
             Assert.IsNotNull(filter);
             Assert.That(filter.SelfHarm, Is.Not.Null);
             Assert.That(filter.SelfHarm.Filtered, Is.False);
@@ -147,20 +149,20 @@ namespace Azure.AI.OpenAI.Tests
             requestOptions = new()
             {
                 Tools = { TOOL_TEMPERATURE },
-                MaxTokens = requestOptions.MaxTokens
+                MaxOutputTokenCount = requestOptions.MaxOutputTokenCount
             };
 
             completion = await client.CompleteChatAsync(messages, requestOptions);
             Assert.That(completion, Is.Not.Null);
             Assert.That(completion.FinishReason, Is.EqualTo(ChatFinishReason.Stop));
 
-            ContentFilterResultForPrompt promptFilter = completion.GetContentFilterResultForPrompt();
+            RequestContentFilterResult promptFilter = completion.GetRequestContentFilterResult();
             Assert.That(promptFilter, Is.Not.Null);
             Assert.That(promptFilter.Hate, Is.Not.Null);
             Assert.That(promptFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
             Assert.That(promptFilter.Hate.Filtered, Is.False);
 
-            ContentFilterResultForResponse responseFilter = completion.GetContentFilterResultForResponse();
+            ResponseContentFilterResult responseFilter = completion.GetResponseContentFilterResult();
             Assert.That(responseFilter, Is.Not.Null);
             Assert.That(responseFilter.Hate, Is.Not.Null);
             Assert.That(responseFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
@@ -176,7 +178,7 @@ namespace Azure.AI.OpenAI.Tests
         [TestCase(ToolChoiceTestType.None)]
         [TestCase(ToolChoiceTestType.Auto)]
         [TestCase(ToolChoiceTestType.Tool)]
-        [TestCase(ToolChoiceTestType.Required, Ignore = "This seems to be considered invalid")]
+        [TestCase(ToolChoiceTestType.Required)]
         public async Task SimpleToolWorksStreaming(ToolChoiceTestType toolChoice)
         {
             StringBuilder content = new();
@@ -197,14 +199,14 @@ namespace Azure.AI.OpenAI.Tests
             {
                 ToolChoice = toolChoice switch
                 {
-                    ToolChoiceTestType.None => ChatToolChoice.None,
-                    ToolChoiceTestType.Auto => ChatToolChoice.Auto,
-                    ToolChoiceTestType.Tool => new ChatToolChoice(TOOL_TEMPERATURE),
-                    ToolChoiceTestType.Required => ChatToolChoice.Required,
+                    ToolChoiceTestType.None => ChatToolChoice.CreateNoneChoice(),
+                    ToolChoiceTestType.Auto => ChatToolChoice.CreateAutoChoice(),
+                    ToolChoiceTestType.Tool => ChatToolChoice.CreateFunctionChoice(TOOL_TEMPERATURE.FunctionName),
+                    ToolChoiceTestType.Required => ChatToolChoice.CreateRequiredChoice(),
                     _ => throw new NotImplementedException(),
                 },
                 Tools = { TOOL_TEMPERATURE },
-                MaxTokens = 512,
+                MaxOutputTokenCount = 512,
             };
 
             Action<StreamingChatCompletionUpdate> validateUpdate = (update) =>
@@ -237,7 +239,7 @@ namespace Azure.AI.OpenAI.Tests
                     content.Append(part.Text);
                 }
 
-                var promptFilter = update.GetContentFilterResultForPrompt();
+                var promptFilter = update.GetRequestContentFilterResult();
                 if (!foundPromptFilter && promptFilter?.Hate != null)
                 {
                     Assert.That(promptFilter.Hate.Filtered, Is.False);
@@ -245,7 +247,7 @@ namespace Azure.AI.OpenAI.Tests
                     foundPromptFilter = true;
                 }
 
-                var responseFilter = update.GetContentFilterResultForResponse();
+                var responseFilter = update.GetResponseContentFilterResult();
                 if (!foundResponseFilter && responseFilter?.Hate != null)
                 {
                     Assert.That(responseFilter.Hate.Filtered, Is.False);
@@ -296,7 +298,7 @@ namespace Azure.AI.OpenAI.Tests
                 requestOptions = new()
                 {
                     Tools = { TOOL_TEMPERATURE },
-                    MaxTokens = requestOptions.MaxTokens
+                    MaxOutputTokenCount = requestOptions.MaxOutputTokenCount
                 };
 
                 content.Clear();
