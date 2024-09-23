@@ -12,6 +12,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_09_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_09_01_Preview)]
     public partial class SemanticSearch : SearchTestBase
     {
         public SemanticSearch(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -20,7 +21,6 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
-        [PlaybackOnly("The availability of Semantic Search is limited to specific regions, as indicated in the list provided here: https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search. Due to this limitation, the deployment of resources for weekly test pipeline for setting the \"semanticSearch\": \"free\" fails in the UsGov and China cloud regions.")]
         public async Task SemanticSearchTest()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
