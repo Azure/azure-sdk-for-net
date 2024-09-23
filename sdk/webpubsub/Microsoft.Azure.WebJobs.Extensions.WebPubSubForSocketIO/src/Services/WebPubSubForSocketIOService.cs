@@ -5,7 +5,10 @@ using Azure;
 using Azure.Core;
 using Azure.Messaging.WebPubSub;
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Text;
+using System.Web;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
 {
@@ -34,9 +37,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
         }
 
         // For tests.
-        public WebPubSubForSocketIOService(WebPubSubServiceClient client)
+        public WebPubSubForSocketIOService(WebPubSubServiceClient client, bool useConnectionString = false)
         {
             _client = client;
+            _useConnectionStrings = useConnectionString;
         }
 
         public WebPubSubServiceClient Client => _client;
@@ -52,8 +56,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
             else
             {
                 // For managed identity, the service can handle it.
-                var url = _client.GetClientAccessUri();
-                return new SocketIONegotiationResult(url);
+                // TODO: Currently, there's a bug in `GetClientAccessUri` and we need to get url by ourselves.
+                var url = _client.GetClientAccessUri(userId: userId);
+                var token = HttpUtility.ParseQueryString(url.Query)["access_token"];
+                // The `aud` in token is correct, we use it as the endpoint.
+                var endpoint = new JwtSecurityTokenHandler().ReadJwtToken(token).Claims.First(c => c.Type == "aud").Value.TrimEnd('/'); // Must have
+                return new SocketIONegotiationResult(new Uri($"{endpoint}?access_token={token}"));
             }
         }
 
