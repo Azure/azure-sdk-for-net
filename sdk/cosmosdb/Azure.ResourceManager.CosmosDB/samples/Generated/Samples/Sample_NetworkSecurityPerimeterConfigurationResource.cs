@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this NetworkSecurityPerimeterConfigurationResource created on azure
             // for more information of creating NetworkSecurityPerimeterConfigurationResource, please refer to the document of NetworkSecurityPerimeterConfigurationResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4410";
             string accountName = "cosmosTest";
             string networkSecurityPerimeterConfigurationName = "dbedb4e0-40e6-4145-81f3-f1314c150774.resourceAssociation1";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this NetworkSecurityPerimeterConfigurationResource created on azure
             // for more information of creating NetworkSecurityPerimeterConfigurationResource, please refer to the document of NetworkSecurityPerimeterConfigurationResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res4410";
             string accountName = "sto8607";
             string networkSecurityPerimeterConfigurationName = "dbedb4e0-40e6-4145-81f3-f1314c150774.resourceAssociation1";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
 
             // this example assumes you already have this DeviceProvisioningServicesPrivateEndpointConnectionResource created on azure
             // for more information of creating DeviceProvisioningServicesPrivateEndpointConnectionResource, please refer to the document of DeviceProvisioningServicesPrivateEndpointConnectionResource
-            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "myFirstProvisioningService";
             string privateEndpointConnectionName = "myPrivateEndpointConnection";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
 
             // this example assumes you already have this DeviceProvisioningServicesPrivateEndpointConnectionResource created on azure
             // for more information of creating DeviceProvisioningServicesPrivateEndpointConnectionResource, please refer to the document of DeviceProvisioningServicesPrivateEndpointConnectionResource
-            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "myFirstProvisioningService";
             string privateEndpointConnectionName = "myPrivateEndpointConnection";
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
 
             // this example assumes you already have this DeviceProvisioningServicesPrivateEndpointConnectionResource created on azure
             // for more information of creating DeviceProvisioningServicesPrivateEndpointConnectionResource, please refer to the document of DeviceProvisioningServicesPrivateEndpointConnectionResource
-            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "myFirstProvisioningService";
             string privateEndpointConnectionName = "myPrivateEndpointConnection";

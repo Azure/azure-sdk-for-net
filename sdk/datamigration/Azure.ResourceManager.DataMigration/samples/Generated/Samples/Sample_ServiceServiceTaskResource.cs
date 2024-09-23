@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this ServiceServiceTaskResource created on azure
             // for more information of creating ServiceServiceTaskResource, please refer to the document of ServiceServiceTaskResource
-            string subscriptionId = "fc04246f-04c5-437e-ac5e-206a19e7193f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupName = "DmsSdkRg";
             string serviceName = "DmsSdkService";
             string taskName = "DmsSdkTask";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this ServiceServiceTaskResource created on azure
             // for more information of creating ServiceServiceTaskResource, please refer to the document of ServiceServiceTaskResource
-            string subscriptionId = "fc04246f-04c5-437e-ac5e-206a19e7193f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupName = "DmsSdkRg";
             string serviceName = "DmsSdkService";
             string taskName = "DmsSdkTask";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this ServiceServiceTaskResource created on azure
             // for more information of creating ServiceServiceTaskResource, please refer to the document of ServiceServiceTaskResource
-            string subscriptionId = "fc04246f-04c5-437e-ac5e-206a19e7193f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupName = "DmsSdkRg";
             string serviceName = "DmsSdkService";
             string taskName = "DmsSdkTask";
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this ServiceServiceTaskResource created on azure
             // for more information of creating ServiceServiceTaskResource, please refer to the document of ServiceServiceTaskResource
-            string subscriptionId = "fc04246f-04c5-437e-ac5e-206a19e7193f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupName = "DmsSdkRg";
             string serviceName = "DmsSdkService";
             string taskName = "DmsSdkTask";

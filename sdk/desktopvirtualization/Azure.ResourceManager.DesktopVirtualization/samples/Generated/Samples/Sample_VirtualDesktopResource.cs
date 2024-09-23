@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this VirtualDesktopResource created on azure
             // for more information of creating VirtualDesktopResource, please refer to the document of VirtualDesktopResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string applicationGroupName = "applicationGroup1";
             string desktopName = "SessionDesktop";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this VirtualDesktopResource created on azure
             // for more information of creating VirtualDesktopResource, please refer to the document of VirtualDesktopResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string applicationGroupName = "applicationGroup1";
             string desktopName = "SessionDesktop";

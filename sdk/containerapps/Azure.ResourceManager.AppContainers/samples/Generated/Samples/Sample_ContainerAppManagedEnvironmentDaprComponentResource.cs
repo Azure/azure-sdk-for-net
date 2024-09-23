@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppManagedEnvironmentDaprComponentResource created on azure
             // for more information of creating ContainerAppManagedEnvironmentDaprComponentResource, please refer to the document of ContainerAppManagedEnvironmentDaprComponentResource
-            string subscriptionId = "8efdecc5-919e-44eb-b179-915dca89ebf9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string environmentName = "myenvironment";
             string componentName = "reddog";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppManagedEnvironmentDaprComponentResource created on azure
             // for more information of creating ContainerAppManagedEnvironmentDaprComponentResource, please refer to the document of ContainerAppManagedEnvironmentDaprComponentResource
-            string subscriptionId = "8efdecc5-919e-44eb-b179-915dca89ebf9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string environmentName = "myenvironment";
             string componentName = "reddog";
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppManagedEnvironmentDaprComponentResource created on azure
             // for more information of creating ContainerAppManagedEnvironmentDaprComponentResource, please refer to the document of ContainerAppManagedEnvironmentDaprComponentResource
-            string subscriptionId = "8efdecc5-919e-44eb-b179-915dca89ebf9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string environmentName = "myenvironment";
             string componentName = "reddog";
@@ -159,7 +159,7 @@ SecretRef = "masterkey",
 
             // this example assumes you already have this ContainerAppManagedEnvironmentDaprComponentResource created on azure
             // for more information of creating ContainerAppManagedEnvironmentDaprComponentResource, please refer to the document of ContainerAppManagedEnvironmentDaprComponentResource
-            string subscriptionId = "8efdecc5-919e-44eb-b179-915dca89ebf9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string environmentName = "myenvironment";
             string componentName = "reddog";
@@ -231,7 +231,7 @@ SecretRef = "masterkey",
 
             // this example assumes you already have this ContainerAppManagedEnvironmentDaprComponentResource created on azure
             // for more information of creating ContainerAppManagedEnvironmentDaprComponentResource, please refer to the document of ContainerAppManagedEnvironmentDaprComponentResource
-            string subscriptionId = "8efdecc5-919e-44eb-b179-915dca89ebf9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string environmentName = "myenvironment";
             string componentName = "reddog";
@@ -259,7 +259,7 @@ SecretRef = "masterkey",
 
             // this example assumes you already have this ContainerAppManagedEnvironmentDaprComponentResource created on azure
             // for more information of creating ContainerAppManagedEnvironmentDaprComponentResource, please refer to the document of ContainerAppManagedEnvironmentDaprComponentResource
-            string subscriptionId = "8efdecc5-919e-44eb-b179-915dca89ebf9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string environmentName = "myenvironment";
             string componentName = "reddog";

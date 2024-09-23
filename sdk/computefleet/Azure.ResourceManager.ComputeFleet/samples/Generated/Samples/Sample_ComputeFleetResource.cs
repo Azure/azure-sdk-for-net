@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
 
             // this example assumes you already have this ComputeFleetResource created on azure
             // for more information of creating ComputeFleetResource, please refer to the document of ComputeFleetResource
-            string subscriptionId = "1DC2F28C-A625-4B0E-9748-9885A3C9E9EB";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgazurefleet";
             string fleetName = "testFleet";
             ResourceIdentifier computeFleetResourceId = ComputeFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ComputeFleet.Samples
 
             // this example assumes you already have this ComputeFleetResource created on azure
             // for more information of creating ComputeFleetResource, please refer to the document of ComputeFleetResource
-            string subscriptionId = "1DC2F28C-A625-4B0E-9748-9885A3C9E9EB";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgazurefleet";
             string fleetName = "testFleet";
             ResourceIdentifier computeFleetResourceId = ComputeFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
@@ -479,7 +479,7 @@ IsAutomaticUpgradeEnabled = true,
 
             // this example assumes you already have this ComputeFleetResource created on azure
             // for more information of creating ComputeFleetResource, please refer to the document of ComputeFleetResource
-            string subscriptionId = "1DC2F28C-A625-4B0E-9748-9885A3C9E9EB";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgazurefleet";
             string fleetName = "testFleet";
             ResourceIdentifier computeFleetResourceId = ComputeFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
@@ -506,7 +506,7 @@ IsAutomaticUpgradeEnabled = true,
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1DC2F28C-A625-4B0E-9748-9885A3C9E9EB";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -538,7 +538,7 @@ IsAutomaticUpgradeEnabled = true,
 
             // this example assumes you already have this ComputeFleetResource created on azure
             // for more information of creating ComputeFleetResource, please refer to the document of ComputeFleetResource
-            string subscriptionId = "1DC2F28C-A625-4B0E-9748-9885A3C9E9EB";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgazurefleet";
             string name = "myFleet";
             ResourceIdentifier computeFleetResourceId = ComputeFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);

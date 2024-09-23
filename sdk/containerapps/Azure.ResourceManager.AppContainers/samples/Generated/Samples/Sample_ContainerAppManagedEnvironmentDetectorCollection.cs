@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppManagedEnvironmentResource created on azure
             // for more information of creating ContainerAppManagedEnvironmentResource, please refer to the document of ContainerAppManagedEnvironmentResource
-            string subscriptionId = "f07f3711-b45e-40fe-a941-4e6d93f851e6";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mikono-workerapp-test-rg";
             string environmentName = "mikonokubeenv";
             ResourceIdentifier containerAppManagedEnvironmentResourceId = ContainerAppManagedEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppManagedEnvironmentResource created on azure
             // for more information of creating ContainerAppManagedEnvironmentResource, please refer to the document of ContainerAppManagedEnvironmentResource
-            string subscriptionId = "f07f3711-b45e-40fe-a941-4e6d93f851e6";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mikono-workerapp-test-rg";
             string environmentName = "mikonokubeenv";
             ResourceIdentifier containerAppManagedEnvironmentResourceId = ContainerAppManagedEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppManagedEnvironmentResource created on azure
             // for more information of creating ContainerAppManagedEnvironmentResource, please refer to the document of ContainerAppManagedEnvironmentResource
-            string subscriptionId = "f07f3711-b45e-40fe-a941-4e6d93f851e6";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mikono-workerapp-test-rg";
             string environmentName = "mikonokubeenv";
             ResourceIdentifier containerAppManagedEnvironmentResourceId = ContainerAppManagedEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppManagedEnvironmentResource created on azure
             // for more information of creating ContainerAppManagedEnvironmentResource, please refer to the document of ContainerAppManagedEnvironmentResource
-            string subscriptionId = "f07f3711-b45e-40fe-a941-4e6d93f851e6";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mikono-workerapp-test-rg";
             string environmentName = "mikonokubeenv";
             ResourceIdentifier containerAppManagedEnvironmentResourceId = ContainerAppManagedEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName);

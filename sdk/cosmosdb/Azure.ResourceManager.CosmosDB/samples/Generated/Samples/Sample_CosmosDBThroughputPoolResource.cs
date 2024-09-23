@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBThroughputPoolResource created on azure
             // for more information of creating CosmosDBThroughputPoolResource, please refer to the document of CosmosDBThroughputPoolResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string throughputPoolName = "tp1";
             ResourceIdentifier cosmosDBThroughputPoolResourceId = CosmosDBThroughputPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, throughputPoolName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBThroughputPoolResource created on azure
             // for more information of creating CosmosDBThroughputPoolResource, please refer to the document of CosmosDBThroughputPoolResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string throughputPoolName = "tp1";
             ResourceIdentifier cosmosDBThroughputPoolResourceId = CosmosDBThroughputPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, throughputPoolName);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBThroughputPoolResource created on azure
             // for more information of creating CosmosDBThroughputPoolResource, please refer to the document of CosmosDBThroughputPoolResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string throughputPoolName = "tp1";
             ResourceIdentifier cosmosDBThroughputPoolResourceId = CosmosDBThroughputPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, throughputPoolName);

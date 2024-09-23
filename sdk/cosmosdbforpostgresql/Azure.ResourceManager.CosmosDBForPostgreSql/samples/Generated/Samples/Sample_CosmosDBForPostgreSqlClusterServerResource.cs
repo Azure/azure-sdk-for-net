@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
             // this example assumes you already have this CosmosDBForPostgreSqlClusterServerResource created on azure
             // for more information of creating CosmosDBForPostgreSqlClusterServerResource, please refer to the document of CosmosDBForPostgreSqlClusterServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string clusterName = "testcluster1";
             string serverName = "testcluster1-c";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
             // this example assumes you already have this CosmosDBForPostgreSqlClusterServerResource created on azure
             // for more information of creating CosmosDBForPostgreSqlClusterServerResource, please refer to the document of CosmosDBForPostgreSqlClusterServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestResourceGroup";
             string clusterName = "testcluster";
             string serverName = "testserver";

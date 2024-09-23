@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this RestorableCosmosDBAccountResource created on azure
             // for more information of creating RestorableCosmosDBAccountResource, please refer to the document of RestorableCosmosDBAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("West US");
             Guid instanceId = Guid.Parse("d9b26648-2f53-4541-b3d8-3044f4f9810d");
             ResourceIdentifier restorableCosmosDBAccountResourceId = RestorableCosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, location, instanceId);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this RestorableCosmosDBAccountResource created on azure
             // for more information of creating RestorableCosmosDBAccountResource, please refer to the document of RestorableCosmosDBAccountResource
-            string subscriptionId = "2296c272-5d55-40d9-bc05-4d56dc2d7588";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("WestUS");
             Guid instanceId = Guid.Parse("d9b26648-2f53-4541-b3d8-3044f4f9810d");
             ResourceIdentifier restorableCosmosDBAccountResourceId = RestorableCosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, location, instanceId);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this RestorableCosmosDBAccountResource created on azure
             // for more information of creating RestorableCosmosDBAccountResource, please refer to the document of RestorableCosmosDBAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("WestUS");
             Guid instanceId = Guid.Parse("98a570f2-63db-4117-91f0-366327b7b353");
             ResourceIdentifier restorableCosmosDBAccountResourceId = RestorableCosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, location, instanceId);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this RestorableCosmosDBAccountResource created on azure
             // for more information of creating RestorableCosmosDBAccountResource, please refer to the document of RestorableCosmosDBAccountResource
-            string subscriptionId = "2296c272-5d55-40d9-bc05-4d56dc2d7588";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("WestUS");
             Guid instanceId = Guid.Parse("d9b26648-2f53-4541-b3d8-3044f4f9810d");
             ResourceIdentifier restorableCosmosDBAccountResourceId = RestorableCosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, location, instanceId);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this RestorableCosmosDBAccountResource created on azure
             // for more information of creating RestorableCosmosDBAccountResource, please refer to the document of RestorableCosmosDBAccountResource
-            string subscriptionId = "2296c272-5d55-40d9-bc05-4d56dc2d7588";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("WestUS");
             Guid instanceId = Guid.Parse("d9b26648-2f53-4541-b3d8-3044f4f9810d");
             ResourceIdentifier restorableCosmosDBAccountResourceId = RestorableCosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, location, instanceId);
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this RestorableCosmosDBAccountResource created on azure
             // for more information of creating RestorableCosmosDBAccountResource, please refer to the document of RestorableCosmosDBAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("WestUS");
             Guid instanceId = Guid.Parse("98a570f2-63db-4117-91f0-366327b7b353");
             ResourceIdentifier restorableCosmosDBAccountResourceId = RestorableCosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, location, instanceId);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this RestorableCosmosDBAccountResource created on azure
             // for more information of creating RestorableCosmosDBAccountResource, please refer to the document of RestorableCosmosDBAccountResource
-            string subscriptionId = "2296c272-5d55-40d9-bc05-4d56dc2d7588";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("WestUS");
             Guid instanceId = Guid.Parse("d9b26648-2f53-4541-b3d8-3044f4f9810d");
             ResourceIdentifier restorableCosmosDBAccountResourceId = RestorableCosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, location, instanceId);
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this RestorableCosmosDBAccountResource created on azure
             // for more information of creating RestorableCosmosDBAccountResource, please refer to the document of RestorableCosmosDBAccountResource
-            string subscriptionId = "2296c272-5d55-40d9-bc05-4d56dc2d7588";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("WestUS");
             Guid instanceId = Guid.Parse("d9b26648-2f53-4541-b3d8-3044f4f9810d");
             ResourceIdentifier restorableCosmosDBAccountResourceId = RestorableCosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, location, instanceId);
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this RestorableCosmosDBAccountResource created on azure
             // for more information of creating RestorableCosmosDBAccountResource, please refer to the document of RestorableCosmosDBAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("WestUS");
             Guid instanceId = Guid.Parse("98a570f2-63db-4117-91f0-366327b7b353");
             ResourceIdentifier restorableCosmosDBAccountResourceId = RestorableCosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, location, instanceId);
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this RestorableCosmosDBAccountResource created on azure
             // for more information of creating RestorableCosmosDBAccountResource, please refer to the document of RestorableCosmosDBAccountResource
-            string subscriptionId = "2296c272-5d55-40d9-bc05-4d56dc2d7588";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("WestUS");
             Guid instanceId = Guid.Parse("d9b26648-2f53-4541-b3d8-3044f4f9810d");
             ResourceIdentifier restorableCosmosDBAccountResourceId = RestorableCosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, location, instanceId);
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this RestorableCosmosDBAccountResource created on azure
             // for more information of creating RestorableCosmosDBAccountResource, please refer to the document of RestorableCosmosDBAccountResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("WestUS");
             Guid instanceId = Guid.Parse("98a570f2-63db-4117-91f0-366327b7b353");
             ResourceIdentifier restorableCosmosDBAccountResourceId = RestorableCosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, location, instanceId);
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this RestorableCosmosDBAccountResource created on azure
             // for more information of creating RestorableCosmosDBAccountResource, please refer to the document of RestorableCosmosDBAccountResource
-            string subscriptionId = "2296c272-5d55-40d9-bc05-4d56dc2d7588";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("WestUS");
             Guid instanceId = Guid.Parse("d9b26648-2f53-4541-b3d8-3044f4f9810d");
             ResourceIdentifier restorableCosmosDBAccountResourceId = RestorableCosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, location, instanceId);

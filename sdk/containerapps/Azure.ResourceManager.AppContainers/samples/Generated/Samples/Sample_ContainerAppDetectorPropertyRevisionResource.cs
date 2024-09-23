@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppDetectorPropertyRevisionResource created on azure
             // for more information of creating ContainerAppDetectorPropertyRevisionResource, please refer to the document of ContainerAppDetectorPropertyRevisionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string containerAppName = "testcontainerApp0";
             string revisionName = "testcontainerApp0-pjxhsye";

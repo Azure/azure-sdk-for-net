@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBPrivateEndpointConnectionResource created on azure
             // for more information of creating CosmosDBPrivateEndpointConnectionResource, please refer to the document of CosmosDBPrivateEndpointConnectionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string privateEndpointConnectionName = "privateEndpointConnectionName";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBPrivateEndpointConnectionResource created on azure
             // for more information of creating CosmosDBPrivateEndpointConnectionResource, please refer to the document of CosmosDBPrivateEndpointConnectionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string privateEndpointConnectionName = "privateEndpointConnectionName";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBPrivateEndpointConnectionResource created on azure
             // for more information of creating CosmosDBPrivateEndpointConnectionResource, please refer to the document of CosmosDBPrivateEndpointConnectionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string privateEndpointConnectionName = "privateEndpointConnectionName";

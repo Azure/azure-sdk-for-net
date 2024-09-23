@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this DataMigrationServiceResource created on azure
             // for more information of creating DataMigrationServiceResource, please refer to the document of DataMigrationServiceResource
-            string subscriptionId = "fc04246f-04c5-437e-ac5e-206a19e7193f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupName = "DmsSdkRg";
             string serviceName = "DmsSdkService";
             ResourceIdentifier dataMigrationServiceResourceId = DataMigrationServiceResource.CreateResourceIdentifier(subscriptionId, groupName, serviceName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this DataMigrationServiceResource created on azure
             // for more information of creating DataMigrationServiceResource, please refer to the document of DataMigrationServiceResource
-            string subscriptionId = "fc04246f-04c5-437e-ac5e-206a19e7193f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupName = "DmsSdkRg";
             string serviceName = "DmsSdkService";
             ResourceIdentifier dataMigrationServiceResourceId = DataMigrationServiceResource.CreateResourceIdentifier(subscriptionId, groupName, serviceName);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this DataMigrationServiceResource created on azure
             // for more information of creating DataMigrationServiceResource, please refer to the document of DataMigrationServiceResource
-            string subscriptionId = "fc04246f-04c5-437e-ac5e-206a19e7193f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupName = "DmsSdkRg";
             string serviceName = "DmsSdkService";
             ResourceIdentifier dataMigrationServiceResourceId = DataMigrationServiceResource.CreateResourceIdentifier(subscriptionId, groupName, serviceName);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this DataMigrationServiceResource created on azure
             // for more information of creating DataMigrationServiceResource, please refer to the document of DataMigrationServiceResource
-            string subscriptionId = "fc04246f-04c5-437e-ac5e-206a19e7193f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupName = "DmsSdkRg";
             string serviceName = "DmsSdkService";
             ResourceIdentifier dataMigrationServiceResourceId = DataMigrationServiceResource.CreateResourceIdentifier(subscriptionId, groupName, serviceName);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // this example assumes you already have this DataMigrationServiceResource created on azure
             // for more information of creating DataMigrationServiceResource, please refer to the document of DataMigrationServiceResource
-            string subscriptionId = "fc04246f-04c5-437e-ac5e-206a19e7193f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupName = "DmsSdkRg";
             string serviceName = "DmsSdkService";
             ResourceIdentifier dataMigrationServiceResourceId = DataMigrationServiceResource.CreateResourceIdentifier(subscriptionId, groupName, serviceName);

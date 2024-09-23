@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppJobExecutionResource created on azure
             // for more information of creating ContainerAppJobExecutionResource, please refer to the document of ContainerAppJobExecutionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string jobName = "testcontainerappsjob0";
             string jobExecutionName = "jobExecution1";
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppJobExecutionResource created on azure
             // for more information of creating ContainerAppJobExecutionResource, please refer to the document of ContainerAppJobExecutionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string jobName = "testcontainerappsjob0";
             string jobExecutionName = "jobExecution1";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "d27c3573-f76e-4b26-b871-0ccd2203d08c";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

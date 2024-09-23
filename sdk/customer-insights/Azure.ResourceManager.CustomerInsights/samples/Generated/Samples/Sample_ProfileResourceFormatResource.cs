@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
 
             // this example assumes you already have this ProfileResourceFormatResource created on azure
             // for more information of creating ProfileResourceFormatResource, please refer to the document of ProfileResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             string profileName = "TestProfileType396";
@@ -105,7 +105,7 @@ new StrongId(new string[]
 
             // this example assumes you already have this ProfileResourceFormatResource created on azure
             // for more information of creating ProfileResourceFormatResource, please refer to the document of ProfileResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             string profileName = "TestProfileType396";
@@ -137,7 +137,7 @@ new StrongId(new string[]
 
             // this example assumes you already have this ProfileResourceFormatResource created on azure
             // for more information of creating ProfileResourceFormatResource, please refer to the document of ProfileResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             string profileName = "TestProfileType396";
@@ -165,7 +165,7 @@ new StrongId(new string[]
 
             // this example assumes you already have this ProfileResourceFormatResource created on azure
             // for more information of creating ProfileResourceFormatResource, please refer to the document of ProfileResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             string profileName = "TestProfileType396";

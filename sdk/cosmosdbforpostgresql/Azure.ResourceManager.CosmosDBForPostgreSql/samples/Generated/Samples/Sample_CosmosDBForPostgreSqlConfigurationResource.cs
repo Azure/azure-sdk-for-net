@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
             // this example assumes you already have this CosmosDBForPostgreSqlConfigurationResource created on azure
             // for more information of creating CosmosDBForPostgreSqlConfigurationResource, please refer to the document of CosmosDBForPostgreSqlConfigurationResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestResourceGroup";
             string clusterName = "testcluster";
             string configurationName = "client_encoding";

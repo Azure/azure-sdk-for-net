@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBSqlDatabaseResource created on azure
             // for more information of creating CosmosDBSqlDatabaseResource, please refer to the document of CosmosDBSqlDatabaseResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string accountName = "accountName";
             string databaseName = "databaseName";
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBSqlDatabaseResource created on azure
             // for more information of creating CosmosDBSqlDatabaseResource, please refer to the document of CosmosDBSqlDatabaseResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string accountName = "accountName";
             string databaseName = "databaseName";
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBSqlDatabaseResource created on azure
             // for more information of creating CosmosDBSqlDatabaseResource, please refer to the document of CosmosDBSqlDatabaseResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string accountName = "accountName";
             string databaseName = "databaseName";
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBSqlDatabaseResource created on azure
             // for more information of creating CosmosDBSqlDatabaseResource, please refer to the document of CosmosDBSqlDatabaseResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string accountName = "accountName";
             string databaseName = "databaseName";
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBSqlDatabaseResource created on azure
             // for more information of creating CosmosDBSqlDatabaseResource, please refer to the document of CosmosDBSqlDatabaseResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string accountName = "accountName";
             string databaseName = "databaseName";

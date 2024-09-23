@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryPrivateEndpointConnectionResource created on azure
             // for more information of creating DataFactoryPrivateEndpointConnectionResource, please refer to the document of DataFactoryPrivateEndpointConnectionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string privateEndpointConnectionName = "connection";
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryPrivateEndpointConnectionResource created on azure
             // for more information of creating DataFactoryPrivateEndpointConnectionResource, please refer to the document of DataFactoryPrivateEndpointConnectionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string privateEndpointConnectionName = "connection";
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryPrivateEndpointConnectionResource created on azure
             // for more information of creating DataFactoryPrivateEndpointConnectionResource, please refer to the document of DataFactoryPrivateEndpointConnectionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string privateEndpointConnectionName = "connection";

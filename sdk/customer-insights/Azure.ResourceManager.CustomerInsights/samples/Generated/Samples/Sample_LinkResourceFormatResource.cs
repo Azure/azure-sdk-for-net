@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
 
             // this example assumes you already have this LinkResourceFormatResource created on azure
             // for more information of creating LinkResourceFormatResource, please refer to the document of LinkResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             string linkName = "linkTest4806";
@@ -89,7 +89,7 @@ new ParticipantPropertyReference("testInteraction1949","ProfileId")
 
             // this example assumes you already have this LinkResourceFormatResource created on azure
             // for more information of creating LinkResourceFormatResource, please refer to the document of LinkResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             string linkName = "linkTest4806";
@@ -121,7 +121,7 @@ new ParticipantPropertyReference("testInteraction1949","ProfileId")
 
             // this example assumes you already have this LinkResourceFormatResource created on azure
             // for more information of creating LinkResourceFormatResource, please refer to the document of LinkResourceFormatResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             string linkName = "linkTest4806";

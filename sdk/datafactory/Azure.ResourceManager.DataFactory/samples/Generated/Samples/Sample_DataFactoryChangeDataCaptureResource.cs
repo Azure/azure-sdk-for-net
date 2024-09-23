@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryChangeDataCaptureResource created on azure
             // for more information of creating DataFactoryChangeDataCaptureResource, please refer to the document of DataFactoryChangeDataCaptureResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string changeDataCaptureName = "exampleChangeDataCapture";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryChangeDataCaptureResource created on azure
             // for more information of creating DataFactoryChangeDataCaptureResource, please refer to the document of DataFactoryChangeDataCaptureResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string changeDataCaptureName = "exampleChangeDataCapture";
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryChangeDataCaptureResource created on azure
             // for more information of creating DataFactoryChangeDataCaptureResource, please refer to the document of DataFactoryChangeDataCaptureResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string changeDataCaptureName = "exampleChangeDataCapture";
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryChangeDataCaptureResource created on azure
             // for more information of creating DataFactoryChangeDataCaptureResource, please refer to the document of DataFactoryChangeDataCaptureResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string changeDataCaptureName = "exampleChangeDataCapture";
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryChangeDataCaptureResource created on azure
             // for more information of creating DataFactoryChangeDataCaptureResource, please refer to the document of DataFactoryChangeDataCaptureResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string changeDataCaptureName = "exampleChangeDataCapture";

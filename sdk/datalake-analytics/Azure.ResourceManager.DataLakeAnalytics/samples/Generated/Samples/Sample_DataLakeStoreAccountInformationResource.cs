@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
 
             // this example assumes you already have this DataLakeStoreAccountInformationResource created on azure
             // for more information of creating DataLakeStoreAccountInformationResource, please refer to the document of DataLakeStoreAccountInformationResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "contosorg";
             string accountName = "contosoadla";
             string dataLakeStoreAccountName = "test_adls_account";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
 
             // this example assumes you already have this DataLakeStoreAccountInformationResource created on azure
             // for more information of creating DataLakeStoreAccountInformationResource, please refer to the document of DataLakeStoreAccountInformationResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1669ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "contosorg";
             string accountName = "contosoadla";
             string dataLakeStoreAccountName = "test_adls_account";
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
 
             // this example assumes you already have this DataLakeStoreAccountInformationResource created on azure
             // for more information of creating DataLakeStoreAccountInformationResource, please refer to the document of DataLakeStoreAccountInformationResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "contosorg";
             string accountName = "contosoadla";
             string dataLakeStoreAccountName = "test_adls_account";

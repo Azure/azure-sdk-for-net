@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
 
             // this example assumes you already have this HubResource created on azure
             // for more information of creating HubResource, please refer to the document of HubResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             ResourceIdentifier hubResourceId = HubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName);
@@ -108,7 +108,7 @@ new StrongId(new string[]
 
             // this example assumes you already have this HubResource created on azure
             // for more information of creating HubResource, please refer to the document of HubResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             ResourceIdentifier hubResourceId = HubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName);
@@ -143,7 +143,7 @@ new StrongId(new string[]
 
             // this example assumes you already have this HubResource created on azure
             // for more information of creating HubResource, please refer to the document of HubResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             ResourceIdentifier hubResourceId = HubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName);
@@ -174,7 +174,7 @@ new StrongId(new string[]
 
             // this example assumes you already have this HubResource created on azure
             // for more information of creating HubResource, please refer to the document of HubResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             ResourceIdentifier hubResourceId = HubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName);
@@ -217,7 +217,7 @@ new StrongId(new string[]
 
             // this example assumes you already have this HubResource created on azure
             // for more information of creating HubResource, please refer to the document of HubResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestHubRG";
             string hubName = "sdkTestHub";
             ResourceIdentifier hubResourceId = HubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName);

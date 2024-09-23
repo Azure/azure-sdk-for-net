@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this SessionHostResource created on azure
             // for more information of creating SessionHostResource, please refer to the document of SessionHostResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string hostPoolName = "hostPool1";
             string sessionHostName = "sessionHost1.microsoft.com";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this SessionHostResource created on azure
             // for more information of creating SessionHostResource, please refer to the document of SessionHostResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string hostPoolName = "hostPool1";
             string sessionHostName = "sessionHost1.microsoft.com";
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this SessionHostResource created on azure
             // for more information of creating SessionHostResource, please refer to the document of SessionHostResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string hostPoolName = "hostPool1";
             string sessionHostName = "sessionHost1.microsoft.com";

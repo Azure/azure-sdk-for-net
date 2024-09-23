@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this WorkspacePrivateEndpointConnectionResource created on azure
             // for more information of creating WorkspacePrivateEndpointConnectionResource, please refer to the document of WorkspacePrivateEndpointConnectionResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string workspaceName = "workspace1";
             string privateEndpointConnectionName = "workspace1.377103f1-5179-4bdf-8556-4cdd3207cc5b";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this WorkspacePrivateEndpointConnectionResource created on azure
             // for more information of creating WorkspacePrivateEndpointConnectionResource, please refer to the document of WorkspacePrivateEndpointConnectionResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string workspaceName = "workspace1";
             string privateEndpointConnectionName = "workspace1.377103f1-5179-4bdf-8556-4cdd3207cc5b";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // this example assumes you already have this WorkspacePrivateEndpointConnectionResource created on azure
             // for more information of creating WorkspacePrivateEndpointConnectionResource, please refer to the document of WorkspacePrivateEndpointConnectionResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string workspaceName = "workspace1";
             string privateEndpointConnectionName = "workspace1.377103f1-5179-4bdf-8556-4cdd3207cc5b";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // this example assumes you already have this DataShareResource created on azure
             // for more information of creating DataShareResource, please refer to the document of DataShareResource
-            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "Account1";
             string shareName = "Share1";
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // this example assumes you already have this DataShareResource created on azure
             // for more information of creating DataShareResource, please refer to the document of DataShareResource
-            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "Account1";
             string shareName = "Share1";
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // this example assumes you already have this DataShareResource created on azure
             // for more information of creating DataShareResource, please refer to the document of DataShareResource
-            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "Account1";
             string shareName = "Share1";
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // this example assumes you already have this DataShareResource created on azure
             // for more information of creating DataShareResource, please refer to the document of DataShareResource
-            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "Account1";
             string shareName = "Share1";
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // this example assumes you already have this DataShareResource created on azure
             // for more information of creating DataShareResource, please refer to the document of DataShareResource
-            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "Account1";
             string shareName = "Share1";

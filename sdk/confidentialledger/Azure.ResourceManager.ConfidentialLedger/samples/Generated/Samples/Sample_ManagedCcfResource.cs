@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
 
             // this example assumes you already have this ManagedCcfResource created on azure
             // for more information of creating ManagedCcfResource, please refer to the document of ManagedCcfResource
-            string subscriptionId = "0000000-0000-0000-0000-000000000001";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "DummyResourceGroupName";
             string appName = "DummyMccfAppName";
             ResourceIdentifier managedCcfResourceId = ManagedCcfResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, appName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
 
             // this example assumes you already have this ManagedCcfResource created on azure
             // for more information of creating ManagedCcfResource, please refer to the document of ManagedCcfResource
-            string subscriptionId = "0000000-0000-0000-0000-000000000001";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "DummyResourceGroupName";
             string appName = "DummyMccfAppName";
             ResourceIdentifier managedCcfResourceId = ManagedCcfResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, appName);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
 
             // this example assumes you already have this ManagedCcfResource created on azure
             // for more information of creating ManagedCcfResource, please refer to the document of ManagedCcfResource
-            string subscriptionId = "0000000-0000-0000-0000-000000000001";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "DummyResourceGroupName";
             string appName = "DummyMccfAppName";
             ResourceIdentifier managedCcfResourceId = ManagedCcfResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, appName);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "0000000-0000-0000-0000-000000000001";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
 
             // this example assumes you already have this ManagedCcfResource created on azure
             // for more information of creating ManagedCcfResource, please refer to the document of ManagedCcfResource
-            string subscriptionId = "0000000-0000-0000-0000-000000000001";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "DummyResourceGroupName";
             string appName = "DummyMccfAppName";
             ResourceIdentifier managedCcfResourceId = ManagedCcfResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, appName);
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
 
             // this example assumes you already have this ManagedCcfResource created on azure
             // for more information of creating ManagedCcfResource, please refer to the document of ManagedCcfResource
-            string subscriptionId = "0000000-0000-0000-0000-000000000001";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "DummyResourceGroupName";
             string appName = "DummyMccfAppName";
             ResourceIdentifier managedCcfResourceId = ManagedCcfResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, appName);

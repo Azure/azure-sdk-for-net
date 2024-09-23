@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBSqlRoleDefinitionResource created on azure
             // for more information of creating CosmosDBSqlRoleDefinitionResource, please refer to the document of CosmosDBSqlRoleDefinitionResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             string roleDefinitionId = "myRoleDefinitionId";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBSqlRoleDefinitionResource created on azure
             // for more information of creating CosmosDBSqlRoleDefinitionResource, please refer to the document of CosmosDBSqlRoleDefinitionResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             string roleDefinitionId = "myRoleDefinitionId";
@@ -117,7 +117,7 @@ NotDataActions =
 
             // this example assumes you already have this CosmosDBSqlRoleDefinitionResource created on azure
             // for more information of creating CosmosDBSqlRoleDefinitionResource, please refer to the document of CosmosDBSqlRoleDefinitionResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             string roleDefinitionId = "myRoleDefinitionId";

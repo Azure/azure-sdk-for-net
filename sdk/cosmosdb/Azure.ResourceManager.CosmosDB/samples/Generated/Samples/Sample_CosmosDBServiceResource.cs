@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBServiceResource created on azure
             // for more information of creating CosmosDBServiceResource, please refer to the document of CosmosDBServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string serviceName = "DataTransfer";
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBServiceResource created on azure
             // for more information of creating CosmosDBServiceResource, please refer to the document of CosmosDBServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string serviceName = "GraphAPICompute";
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBServiceResource created on azure
             // for more information of creating CosmosDBServiceResource, please refer to the document of CosmosDBServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string serviceName = "MaterializedViewsBuilder";
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBServiceResource created on azure
             // for more information of creating CosmosDBServiceResource, please refer to the document of CosmosDBServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string serviceName = "SqlDedicatedGateway";
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBServiceResource created on azure
             // for more information of creating CosmosDBServiceResource, please refer to the document of CosmosDBServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string serviceName = "DataTransfer";
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBServiceResource created on azure
             // for more information of creating CosmosDBServiceResource, please refer to the document of CosmosDBServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string serviceName = "GraphAPICompute";
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBServiceResource created on azure
             // for more information of creating CosmosDBServiceResource, please refer to the document of CosmosDBServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string serviceName = "MaterializedViewsBuilder";
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBServiceResource created on azure
             // for more information of creating CosmosDBServiceResource, please refer to the document of CosmosDBServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string serviceName = "SqlDedicatedGateway";
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBServiceResource created on azure
             // for more information of creating CosmosDBServiceResource, please refer to the document of CosmosDBServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string serviceName = "DataTransfer";
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBServiceResource created on azure
             // for more information of creating CosmosDBServiceResource, please refer to the document of CosmosDBServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string serviceName = "GraphAPICompute";
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBServiceResource created on azure
             // for more information of creating CosmosDBServiceResource, please refer to the document of CosmosDBServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string serviceName = "MaterializedViewsBuilder";
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBServiceResource created on azure
             // for more information of creating CosmosDBServiceResource, please refer to the document of CosmosDBServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string serviceName = "SqlDedicatedGateway";

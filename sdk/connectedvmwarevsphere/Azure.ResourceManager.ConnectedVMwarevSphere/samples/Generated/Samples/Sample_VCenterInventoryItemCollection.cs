@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 
             // this example assumes you already have this VMwareVCenterResource created on azure
             // for more information of creating VMwareVCenterResource, please refer to the document of VMwareVCenterResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string vcenterName = "ContosoVCenter";
             ResourceIdentifier vMwareVCenterResourceId = VMwareVCenterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vcenterName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 
             // this example assumes you already have this VMwareVCenterResource created on azure
             // for more information of creating VMwareVCenterResource, please refer to the document of VMwareVCenterResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string vcenterName = "ContosoVCenter";
             ResourceIdentifier vMwareVCenterResourceId = VMwareVCenterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vcenterName);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 
             // this example assumes you already have this VMwareVCenterResource created on azure
             // for more information of creating VMwareVCenterResource, please refer to the document of VMwareVCenterResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string vcenterName = "ContosoVCenter";
             ResourceIdentifier vMwareVCenterResourceId = VMwareVCenterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vcenterName);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 
             // this example assumes you already have this VMwareVCenterResource created on azure
             // for more information of creating VMwareVCenterResource, please refer to the document of VMwareVCenterResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string vcenterName = "ContosoVCenter";
             ResourceIdentifier vMwareVCenterResourceId = VMwareVCenterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vcenterName);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 
             // this example assumes you already have this VMwareVCenterResource created on azure
             // for more information of creating VMwareVCenterResource, please refer to the document of VMwareVCenterResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string vcenterName = "ContosoVCenter";
             ResourceIdentifier vMwareVCenterResourceId = VMwareVCenterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vcenterName);

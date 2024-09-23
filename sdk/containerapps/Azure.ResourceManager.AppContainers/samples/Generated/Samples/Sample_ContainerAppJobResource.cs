@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppJobResource created on azure
             // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string jobName = "testcontainerappsjob0";
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppJobResource created on azure
             // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string jobName = "testworkercontainerappsjob0";
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppJobResource created on azure
             // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string jobName = "testcontainerappsjob0";
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -217,7 +217,7 @@ Name = "testcontainerappsjob0",
 
             // this example assumes you already have this ContainerAppJobResource created on azure
             // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string jobName = "testcontainerappsjob0";
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -282,7 +282,7 @@ Memory = "1Gi",
 
             // this example assumes you already have this ContainerAppJobResource created on azure
             // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string jobName = "testcontainerappsjob0";
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -310,7 +310,7 @@ Memory = "1Gi",
 
             // this example assumes you already have this ContainerAppJobResource created on azure
             // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string jobName = "testcontainerappsjob0";
             ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);

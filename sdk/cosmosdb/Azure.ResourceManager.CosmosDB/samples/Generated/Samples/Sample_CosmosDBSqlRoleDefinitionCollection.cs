@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBAccountResource created on azure
             // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBAccountResource created on azure
             // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBAccountResource created on azure
             // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CosmosDBAccountResource created on azure
             // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -197,7 +197,7 @@ NotDataActions =
 
             // this example assumes you already have this CosmosDBAccountResource created on azure
             // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);

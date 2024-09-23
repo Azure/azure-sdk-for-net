@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
 
             // this example assumes you already have this DataBoxEdgeStorageAccountResource created on azure
             // for more information of creating DataBoxEdgeStorageAccountResource, please refer to the document of DataBoxEdgeStorageAccountResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "GroupForEdgeAutomation";
             string deviceName = "testedgedevice";
             string storageAccountName = "blobstorageaccount1";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
 
             // this example assumes you already have this DataBoxEdgeStorageAccountResource created on azure
             // for more information of creating DataBoxEdgeStorageAccountResource, please refer to the document of DataBoxEdgeStorageAccountResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "GroupForEdgeAutomation";
             string deviceName = "testedgedevice";
             string storageAccountName = "blobstorageaccount1";
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
 
             // this example assumes you already have this DataBoxEdgeStorageAccountResource created on azure
             // for more information of creating DataBoxEdgeStorageAccountResource, please refer to the document of DataBoxEdgeStorageAccountResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "GroupForEdgeAutomation";
             string deviceName = "testedgedevice";
             string storageAccountName = "storageaccount1";

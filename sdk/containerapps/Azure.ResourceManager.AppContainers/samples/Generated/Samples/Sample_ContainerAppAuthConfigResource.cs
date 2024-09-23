@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppAuthConfigResource created on azure
             // for more information of creating ContainerAppAuthConfigResource, please refer to the document of ContainerAppAuthConfigResource
-            string subscriptionId = "651f8027-33e8-4ec4-97b4-f6e9f3dc8744";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "workerapps-rg-xj";
             string containerAppName = "testcanadacentral";
             string authConfigName = "current";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppAuthConfigResource created on azure
             // for more information of creating ContainerAppAuthConfigResource, please refer to the document of ContainerAppAuthConfigResource
-            string subscriptionId = "651f8027-33e8-4ec4-97b4-f6e9f3dc8744";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "workerapps-rg-xj";
             string containerAppName = "testcanadacentral";
             string authConfigName = "current";
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppAuthConfigResource created on azure
             // for more information of creating ContainerAppAuthConfigResource, please refer to the document of ContainerAppAuthConfigResource
-            string subscriptionId = "651f8027-33e8-4ec4-97b4-f6e9f3dc8744";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "workerapps-rg-xj";
             string containerAppName = "testcanadacentral";
             string authConfigName = "current";

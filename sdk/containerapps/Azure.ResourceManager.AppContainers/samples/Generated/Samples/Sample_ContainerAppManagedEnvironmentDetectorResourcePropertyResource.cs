@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 
             // this example assumes you already have this ContainerAppManagedEnvironmentDetectorResourcePropertyResource created on azure
             // for more information of creating ContainerAppManagedEnvironmentDetectorResourcePropertyResource, please refer to the document of ContainerAppManagedEnvironmentDetectorResourcePropertyResource
-            string subscriptionId = "8efdecc5-919e-44eb-b179-915dca89ebf9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string environmentName = "jlaw-demo1";
             ResourceIdentifier containerAppManagedEnvironmentDetectorResourcePropertyResourceId = ContainerAppManagedEnvironmentDetectorResourcePropertyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName);

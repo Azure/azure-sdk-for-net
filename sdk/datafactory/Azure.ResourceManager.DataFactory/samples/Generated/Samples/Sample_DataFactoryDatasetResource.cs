@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryDatasetResource created on azure
             // for more information of creating DataFactoryDatasetResource, please refer to the document of DataFactoryDatasetResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string datasetName = "exampleDataset";
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryDatasetResource created on azure
             // for more information of creating DataFactoryDatasetResource, please refer to the document of DataFactoryDatasetResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string datasetName = "exampleDataset";
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryDatasetResource created on azure
             // for more information of creating DataFactoryDatasetResource, please refer to the document of DataFactoryDatasetResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string datasetName = "exampleDataset";
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryDatasetResource created on azure
             // for more information of creating DataFactoryDatasetResource, please refer to the document of DataFactoryDatasetResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string datasetName = "exampleDataset";

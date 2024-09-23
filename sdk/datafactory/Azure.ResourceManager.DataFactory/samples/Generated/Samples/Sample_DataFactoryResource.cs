@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
@@ -337,7 +337,7 @@ FeatureType = "Feature",
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
@@ -377,7 +377,7 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
@@ -405,7 +405,7 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
@@ -433,7 +433,7 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
@@ -465,7 +465,7 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
@@ -503,7 +503,7 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
@@ -543,7 +543,7 @@ new RunQueryFilter(RunQueryFilterOperand.TriggerName,RunQueryFilterOperator.Equa
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
@@ -591,7 +591,7 @@ new RunQueryFilter(RunQueryFilterOperand.TriggerName,RunQueryFilterOperator.Equa
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
@@ -621,7 +621,7 @@ new RunQueryFilter(RunQueryFilterOperand.TriggerName,RunQueryFilterOperator.Equa
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
@@ -744,7 +744,7 @@ RowLimit = 222,
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
@@ -775,7 +775,7 @@ RowLimit = 222,
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
@@ -812,7 +812,7 @@ RowLimit = 222,
 
             // this example assumes you already have this DataFactoryResource created on azure
             // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
