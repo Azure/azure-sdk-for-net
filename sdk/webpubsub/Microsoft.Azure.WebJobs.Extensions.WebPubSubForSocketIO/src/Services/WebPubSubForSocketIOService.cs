@@ -37,10 +37,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
         }
 
         // For tests.
-        public WebPubSubForSocketIOService(WebPubSubServiceClient client, bool useConnectionString = false)
+        public WebPubSubForSocketIOService(WebPubSubServiceClient client)
         {
             _client = client;
-            _useConnectionStrings = useConnectionString;
         }
 
         public WebPubSubServiceClient Client => _client;
