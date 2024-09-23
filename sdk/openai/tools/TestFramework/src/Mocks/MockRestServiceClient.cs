@@ -88,10 +88,8 @@ public class MockRestServiceClient<TData> : IDisposable
                 .ConfigureAwait(false);
 
             var response = result.GetRawResponse();
-            var entry = response.Content.ToObjectFromJson<MockRestService<TData>.Entry>();
-            var entryData = entry == null ? default : entry.data;
             return ClientResult.FromOptionalValue(
-                entryData,
+                response.Content.ToObjectFromJson<MockRestService<TData>.Entry>().data,
                 response);
         }
         catch (ClientResultException ex)
@@ -120,10 +118,8 @@ public class MockRestServiceClient<TData> : IDisposable
         {
             ClientResult result = SendSyncOrAsync(false, HttpMethod.Get, id, default, token).GetAwaiter().GetResult();
             var response = result.GetRawResponse();
-            var entry = response.Content.ToObjectFromJson<MockRestService<TData>.Entry>();
-            var entryData = entry == null ? default : entry.data;
             return ClientResult.FromOptionalValue(
-                entryData,
+                response.Content.ToObjectFromJson<MockRestService<TData>.Entry>().data,
                 response);
         }
         catch (ClientResultException ex)
@@ -267,7 +263,7 @@ public class MockRestServiceClient<TData> : IDisposable
             if (message.Response.Content?.ToMemory().Length > 0)
             {
                 var error = message.Response.Content.ToObjectFromJson<MockRestService<TData>.Error>();
-                throw new ClientResultException($"Error {error?.error}: {error?.message}", message.Response);
+                throw new ClientResultException($"Error {error.error}: {error.message}", message.Response);
             }
 
             throw new ClientResultException(message.Response);

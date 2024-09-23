@@ -29,7 +29,11 @@ public class JsonConfig : IConfiguration
         DictionaryKeyPolicy = JsonOptions.SnakeCaseLower,
         WriteIndented = true,
         AllowTrailingCommas = true,
+#if NETFRAMEWORK
+        IgnoreNullValues = true,
+#else
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+#endif
     };
 
     /// <inheritdoc />
