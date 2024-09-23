@@ -6,7 +6,7 @@
     </Description>
     <AssemblyTitle>Azure.AI.OpenAI Client Library</AssemblyTitle>
     <VersionPrefix>2.0.0</VersionPrefix>
-    <VersionSuffix>beta.5</VersionSuffix>
+    <VersionSuffix>beta.6</VersionSuffix>
     <PackageTags>Microsoft Azure OpenAI</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
