@@ -4,6 +4,7 @@
 #nullable enable
 
 using System;
+using Azure.Provisioning.CloudMachine;
 using NUnit.Framework;
 
 namespace Azure.CloudMachine.Tests;
@@ -13,7 +14,7 @@ public class CloudMachineTests
     [TestCase]
     public void Configure()
     {
-        _ = CloudMachineClient.Configure(["--init"], (cmi) =>
+        bool initializing = CloudMachineInfrastructure.Configure(["--init"], (cmi) =>
         {
         });
 
