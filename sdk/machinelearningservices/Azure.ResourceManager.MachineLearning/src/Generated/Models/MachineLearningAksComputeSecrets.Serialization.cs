@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -130,6 +131,102 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningAksComputeSecrets(computeType, serializedAdditionalRawData, userKubeConfig, adminKubeConfig, imagePullSecretName);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserKubeConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userKubeConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserKubeConfig))
+                {
+                    builder.Append("  userKubeConfig: ");
+                    if (UserKubeConfig.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserKubeConfig}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserKubeConfig}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdminKubeConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  adminKubeConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdminKubeConfig))
+                {
+                    builder.Append("  adminKubeConfig: ");
+                    if (AdminKubeConfig.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdminKubeConfig}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdminKubeConfig}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImagePullSecretName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  imagePullSecretName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ImagePullSecretName))
+                {
+                    builder.Append("  imagePullSecretName: ");
+                    if (ImagePullSecretName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ImagePullSecretName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ImagePullSecretName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputeType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  computeType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  computeType: ");
+                builder.AppendLine($"'{ComputeType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MachineLearningAksComputeSecrets>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAksComputeSecrets>)this).GetFormatFromOptions(options) : options.Format;
@@ -138,6 +235,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningAksComputeSecrets)} does not support writing '{options.Format}' format.");
             }

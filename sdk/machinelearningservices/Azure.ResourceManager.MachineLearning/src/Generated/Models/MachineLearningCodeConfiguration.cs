@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> ARM resource ID of the code asset. </summary>
+        [WirePath("codeId")]
         public ResourceIdentifier CodeId { get; set; }
         /// <summary> [Required] The script to execute on startup. eg. "score.py". </summary>
+        [WirePath("scoringScript")]
         public string ScoringScript { get; set; }
     }
 }

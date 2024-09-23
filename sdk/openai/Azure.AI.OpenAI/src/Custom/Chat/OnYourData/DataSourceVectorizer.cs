@@ -23,4 +23,6 @@ public abstract partial class DataSourceVectorizer
         => new InternalAzureChatDataSourceDeploymentNameVectorizationSource(deploymentName);
     public static DataSourceVectorizer FromModelId(string modelId)
         => new InternalAzureChatDataSourceModelIdVectorizationSource(modelId);
+    public static DataSourceVectorizer FromIntegratedResource()
+        => new InternalAzureChatDataSourceIntegratedVectorizationSource();
 }

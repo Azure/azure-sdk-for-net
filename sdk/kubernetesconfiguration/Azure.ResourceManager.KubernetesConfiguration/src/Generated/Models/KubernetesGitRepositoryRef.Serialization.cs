@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -169,6 +170,113 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             return new KubernetesGitRepositoryRef(branch, tag, semver, commit, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Branch), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  branch: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Branch))
+                {
+                    builder.Append("  branch: ");
+                    if (Branch.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Branch}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Branch}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Tag))
+                {
+                    builder.Append("  tag: ");
+                    if (Tag.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Tag}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Tag}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Semver), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  semver: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Semver))
+                {
+                    builder.Append("  semver: ");
+                    if (Semver.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Semver}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Semver}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Commit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  commit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Commit))
+                {
+                    builder.Append("  commit: ");
+                    if (Commit.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Commit}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Commit}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<KubernetesGitRepositoryRef>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepositoryRef>)this).GetFormatFromOptions(options) : options.Format;
@@ -177,6 +285,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KubernetesGitRepositoryRef)} does not support writing '{options.Format}' format.");
             }

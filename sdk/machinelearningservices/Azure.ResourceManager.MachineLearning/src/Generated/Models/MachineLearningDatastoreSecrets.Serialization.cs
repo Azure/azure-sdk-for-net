@@ -7,6 +7,8 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -72,13 +74,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     case "AccountKey": return MachineLearningAccountKeyDatastoreSecrets.DeserializeMachineLearningAccountKeyDatastoreSecrets(element, options);
                     case "Certificate": return MachineLearningCertificateDatastoreSecrets.DeserializeMachineLearningCertificateDatastoreSecrets(element, options);
-                    case "KerberosKeytab": return KerberosKeytabSecrets.DeserializeKerberosKeytabSecrets(element, options);
-                    case "KerberosPassword": return KerberosPasswordSecrets.DeserializeKerberosPasswordSecrets(element, options);
                     case "Sas": return MachineLearningSasDatastoreSecrets.DeserializeMachineLearningSasDatastoreSecrets(element, options);
                     case "ServicePrincipal": return MachineLearningServicePrincipalDatastoreSecrets.DeserializeMachineLearningServicePrincipalDatastoreSecrets(element, options);
                 }
             }
             return UnknownDatastoreSecrets.DeserializeUnknownDatastoreSecrets(element, options);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretsType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  secretsType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  secretsType: ");
+                builder.AppendLine($"'{SecretsType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningDatastoreSecrets>.Write(ModelReaderWriterOptions options)
@@ -89,6 +116,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningDatastoreSecrets)} does not support writing '{options.Format}' format.");
             }

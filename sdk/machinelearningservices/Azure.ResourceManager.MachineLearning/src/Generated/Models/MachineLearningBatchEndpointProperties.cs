@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningBatchEndpointProperties"/>. </summary>
-        /// <param name="authMode"> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </param>
         /// <param name="description"> Description of the inference endpoint. </param>
+        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
+        /// <param name="scoringUri"> Endpoint URI. </param>
+        /// <param name="swaggerUri"> Endpoint Swagger URI. </param>
+        /// <param name="authMode"> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </param>
         /// <param name="keys">
         /// EndpointAuthKeys to set initially on an Endpoint.
         /// This property will always be returned as null. AuthKey values must be retrieved using the ListKeys API.
         /// </param>
-        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
-        /// <param name="scoringUri"> Endpoint URI. </param>
-        /// <param name="swaggerUri"> Endpoint Swagger URI. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="defaults"> Default values for Batch Endpoint. </param>
         /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
-        internal MachineLearningBatchEndpointProperties(MachineLearningEndpointAuthMode authMode, string description, MachineLearningEndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, IDictionary<string, BinaryData> serializedAdditionalRawData, BatchEndpointDefaults defaults, MachineLearningEndpointProvisioningState? provisioningState) : base(authMode, description, keys, properties, scoringUri, swaggerUri, serializedAdditionalRawData)
+        internal MachineLearningBatchEndpointProperties(string description, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, MachineLearningEndpointAuthMode authMode, MachineLearningEndpointAuthKeys keys, IDictionary<string, BinaryData> serializedAdditionalRawData, BatchEndpointDefaults defaults, MachineLearningEndpointProvisioningState? provisioningState) : base(description, properties, scoringUri, swaggerUri, authMode, keys, serializedAdditionalRawData)
         {
             Defaults = defaults;
             ProvisioningState = provisioningState;
@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Name of the deployment that will be default for the endpoint.
         /// This deployment will end up getting 100% traffic when the endpoint scoring URL is invoked.
         /// </summary>
+        [WirePath("defaults.deploymentName")]
         public string DefaultsDeploymentName
         {
             get => Defaults is null ? default : Defaults.DeploymentName;
@@ -61,6 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Provisioning state for the endpoint. </summary>
+        [WirePath("provisioningState")]
         public MachineLearningEndpointProvisioningState? ProvisioningState { get; }
     }
 }

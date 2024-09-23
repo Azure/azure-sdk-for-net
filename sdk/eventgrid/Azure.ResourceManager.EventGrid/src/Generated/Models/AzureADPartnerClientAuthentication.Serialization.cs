@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -126,6 +127,74 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new AzureADPartnerClientAuthentication(clientAuthenticationType, serializedAdditionalRawData, azureActiveDirectoryTenantId, azureActiveDirectoryApplicationIdOrUri);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientAuthenticationType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clientAuthenticationType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  clientAuthenticationType: ");
+                builder.AppendLine($"'{ClientAuthenticationType.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureActiveDirectoryTenantId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    azureActiveDirectoryTenantId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureActiveDirectoryTenantId))
+                {
+                    builder.Append("    azureActiveDirectoryTenantId: ");
+                    if (AzureActiveDirectoryTenantId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AzureActiveDirectoryTenantId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AzureActiveDirectoryTenantId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureActiveDirectoryApplicationIdOrUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    azureActiveDirectoryApplicationIdOrUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureActiveDirectoryApplicationIdOrUri))
+                {
+                    builder.Append("    azureActiveDirectoryApplicationIdOrUri: ");
+                    builder.AppendLine($"'{AzureActiveDirectoryApplicationIdOrUri.AbsoluteUri}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AzureADPartnerClientAuthentication>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureADPartnerClientAuthentication>)this).GetFormatFromOptions(options) : options.Format;
@@ -134,6 +203,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AzureADPartnerClientAuthentication)} does not support writing '{options.Format}' format.");
             }

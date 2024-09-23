@@ -738,11 +738,16 @@ namespace Azure.Storage.Files.Shares.Models
         public bool Equals(Azure.Storage.Files.Shares.Models.ShareErrorCode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        public bool Equals(string value) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Storage.Files.Shares.Models.ShareErrorCode left, Azure.Storage.Files.Shares.Models.ShareErrorCode right) { throw null; }
+        public static bool operator ==(Azure.Storage.Files.Shares.Models.ShareErrorCode code, string value) { throw null; }
+        public static bool operator ==(string value, Azure.Storage.Files.Shares.Models.ShareErrorCode code) { throw null; }
         public static implicit operator Azure.Storage.Files.Shares.Models.ShareErrorCode (string value) { throw null; }
         public static bool operator !=(Azure.Storage.Files.Shares.Models.ShareErrorCode left, Azure.Storage.Files.Shares.Models.ShareErrorCode right) { throw null; }
+        public static bool operator !=(Azure.Storage.Files.Shares.Models.ShareErrorCode code, string value) { throw null; }
+        public static bool operator !=(string value, Azure.Storage.Files.Shares.Models.ShareErrorCode code) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ShareFileCopyInfo

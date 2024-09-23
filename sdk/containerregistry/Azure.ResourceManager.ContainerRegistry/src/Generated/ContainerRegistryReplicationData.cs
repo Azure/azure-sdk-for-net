@@ -84,12 +84,16 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> The provisioning state of the replication at the time the operation was called. </summary>
+        [WirePath("properties.provisioningState")]
         public ContainerRegistryProvisioningState? ProvisioningState { get; }
         /// <summary> The status of the replication at the time the operation was called. </summary>
+        [WirePath("properties.status")]
         public ContainerRegistryResourceStatus Status { get; }
         /// <summary> Specifies whether the replication's regional endpoint is enabled. Requests will not be routed to a replication whose regional endpoint is disabled, however its data will continue to be synced with other replications. </summary>
+        [WirePath("properties.regionEndpointEnabled")]
         public bool? IsRegionEndpointEnabled { get; set; }
         /// <summary> Whether or not zone redundancy is enabled for this container registry replication. </summary>
+        [WirePath("properties.zoneRedundancy")]
         public ContainerRegistryZoneRedundancy? ZoneRedundancy { get; set; }
     }
 }

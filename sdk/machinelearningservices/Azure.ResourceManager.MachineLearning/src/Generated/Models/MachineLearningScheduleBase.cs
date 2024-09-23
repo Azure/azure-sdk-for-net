@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> A system assigned id for the schedule. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> The current deployment state of schedule. </summary>
+        [WirePath("provisioningStatus")]
         public MachineLearningScheduleProvisioningState? ProvisioningStatus { get; set; }
         /// <summary> Is the schedule enabled or disabled?. </summary>
+        [WirePath("status")]
         public MachineLearningScheduleStatus? Status { get; set; }
     }
 }

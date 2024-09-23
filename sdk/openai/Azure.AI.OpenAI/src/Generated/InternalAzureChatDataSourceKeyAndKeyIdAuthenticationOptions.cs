@@ -14,7 +14,7 @@ namespace Azure.AI.OpenAI.Chat
         /// <param name="key"></param>
         /// <param name="keyId"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="keyId"/> is null. </exception>
-        internal InternalAzureChatDataSourceKeyAndKeyIdAuthenticationOptions(string key, string keyId)
+        public InternalAzureChatDataSourceKeyAndKeyIdAuthenticationOptions(string key, string keyId)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(keyId, nameof(keyId));
@@ -25,7 +25,7 @@ namespace Azure.AI.OpenAI.Chat
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceKeyAndKeyIdAuthenticationOptions"/>. </summary>
-        /// <param name="type"></param>
+        /// <param name="type"> Discriminator. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="key"></param>
         /// <param name="keyId"></param>

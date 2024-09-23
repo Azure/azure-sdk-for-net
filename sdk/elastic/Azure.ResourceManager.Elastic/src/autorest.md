@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Elastic
 namespace: Azure.ResourceManager.Elastic
-# default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/7d5d1db0c45d6fe0934c97b6a6f9bb34112d42d1/specification/elastic/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/14ac81f2a50ae8dbf5b0fc78c13f809b49ee4375/specification/elastic/resource-manager/readme.md
+#package-2024-06-15-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -52,5 +52,11 @@ acronym-mapping:
 
 rename-mapping:
   MonitoredResource: MonitoredResourceContent
-
+  ElasticTrafficFilter.type: ElasticTrafficFilterType
+  Type: ElasticModelType
+  Operation: ElasticModelOperation
+  Status: ElasticModelStatus
+  SubscriptionList: ElasticModelSubscriptionList
+  UserEmailId: ElasticModelUserEmailId
+ 
 ```

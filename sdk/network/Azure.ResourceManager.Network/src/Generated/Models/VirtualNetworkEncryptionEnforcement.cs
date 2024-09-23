@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> If the encrypted VNet allows VM that does not support encryption. </summary>
+    /// <summary> If the encrypted VNet allows VM that does not support encryption. This field is for future support, AllowUnencrypted is the only supported value at general availability. </summary>
     public readonly partial struct VirtualNetworkEncryptionEnforcement : IEquatable<VirtualNetworkEncryptionEnforcement>
     {
         private readonly string _value;

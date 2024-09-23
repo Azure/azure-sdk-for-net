@@ -21,21 +21,34 @@ namespace Azure.AI.OpenAI.Chat
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("endpoint"u8);
-            writer.WriteStringValue(Endpoint.AbsoluteUri);
-            writer.WritePropertyName("authentication"u8);
-            writer.WriteObjectValue<DataSourceAuthentication>(Authentication, options);
-            if (Optional.IsDefined(Dimensions))
+            if (SerializedAdditionalRawData?.ContainsKey("endpoint") != true)
+            {
+                writer.WritePropertyName("endpoint"u8);
+                writer.WriteStringValue(Endpoint.AbsoluteUri);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("authentication") != true)
+            {
+                writer.WritePropertyName("authentication"u8);
+                writer.WriteObjectValue<DataSourceAuthentication>(Authentication, options);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("dimensions") != true && Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteNumberValue(Dimensions.Value);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (SerializedAdditionalRawData?.ContainsKey("type") != true)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
+            }
+            if (SerializedAdditionalRawData != null)
+            {
+                foreach (var item in SerializedAdditionalRawData)
                 {
+                    if (ModelSerializationExtensions.IsSentinelValue(item.Value))
+                    {
+                        continue;
+                    }
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
@@ -104,6 +117,7 @@ namespace Azure.AI.OpenAI.Chat
                 }
                 if (options.Format != "W")
                 {
+                    rawDataDictionary ??= new Dictionary<string, BinaryData>();
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }

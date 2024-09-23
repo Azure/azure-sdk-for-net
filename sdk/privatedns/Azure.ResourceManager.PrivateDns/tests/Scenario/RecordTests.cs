@@ -29,6 +29,12 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             _privateDns = await CreatePrivateZone(resourceGroup, $"{Recording.GenerateAssetName("sample")}.com");
         }
 
+        [TearDown]
+        public async Task TearDown()
+        {
+            await _privateDns.DeleteAsync(WaitUntil.Completed);
+        }
+
         [RecordedTest]
         public async Task AaaaRecordOperationTest()
         {

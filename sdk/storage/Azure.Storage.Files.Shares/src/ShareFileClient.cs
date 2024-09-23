@@ -2718,11 +2718,14 @@ namespace Azure.Storage.Files.Shares
             long position = 0,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
-                => OpenRead(
-                    position,
-                    bufferSize,
-                    allowfileModifications ? new ShareFileRequestConditions() : null,
-                    cancellationToken);
+                => OpenReadInteral(
+                    position: position,
+                    bufferSize: bufferSize,
+                    conditions: allowfileModifications ? new ShareFileRequestConditions() : null,
+                    allowModifications: allowfileModifications,
+                    transferValidationOverride: default,
+                    async: false,
+                    cancellationToken: cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Opens a stream for reading from the file.  The stream will only download
@@ -2808,11 +2811,14 @@ namespace Azure.Storage.Files.Shares
             long position = 0,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
-                => await OpenReadAsync(
-                    position,
-                    bufferSize,
-                    allowfileModifications ? new ShareFileRequestConditions() : null,
-                    cancellationToken).ConfigureAwait(false);
+                => await OpenReadInteral(
+                    position: position,
+                    bufferSize: bufferSize,
+                    conditions: allowfileModifications ? new ShareFileRequestConditions() : null,
+                    allowModifications: allowfileModifications,
+                    transferValidationOverride: default,
+                    async: true,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Opens a stream for reading from the file.  The stream will only download
