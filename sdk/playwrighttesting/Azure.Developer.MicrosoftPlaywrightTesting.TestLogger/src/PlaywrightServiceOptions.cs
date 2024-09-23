@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using Azure.Core;
 using Azure.Identity;
 
-namespace Azure.Developer.MicrosoftPlaywrightTesting;
+namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
 /// <summary>
 /// Options for the Playwright service.

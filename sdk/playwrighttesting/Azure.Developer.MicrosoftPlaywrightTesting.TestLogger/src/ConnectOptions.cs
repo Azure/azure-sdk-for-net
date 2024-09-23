@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Developer.MicrosoftPlaywrightTesting;
+namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
 /// <summary>
 /// Represents the connect options for a generic type.

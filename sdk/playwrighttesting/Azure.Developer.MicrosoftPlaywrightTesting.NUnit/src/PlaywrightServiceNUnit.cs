@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Threading;
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
 

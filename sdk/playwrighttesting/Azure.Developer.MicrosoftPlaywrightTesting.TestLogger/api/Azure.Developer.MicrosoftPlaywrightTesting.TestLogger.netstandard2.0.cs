@@ -1,4 +1,4 @@
-namespace Azure.Developer.MicrosoftPlaywrightTesting
+namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger
 {
     public partial class ConnectOptions<T> where T : class, new()
     {
@@ -8,14 +8,14 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting
     }
     public partial class PlaywrightService
     {
-        public PlaywrightService(Azure.Developer.MicrosoftPlaywrightTesting.PlaywrightServiceOptions playwrightServiceOptions, Azure.Core.TokenCredential? credential = null) { }
+        public PlaywrightService(Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.PlaywrightServiceOptions playwrightServiceOptions, Azure.Core.TokenCredential? credential = null) { }
         public PlaywrightService(System.Runtime.InteropServices.OSPlatform? os = default(System.Runtime.InteropServices.OSPlatform?), string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = default(bool?), Azure.Core.TokenCredential? credential = null) { }
         public System.Threading.Timer? RotationTimer { get { throw null; } set { } }
         public string ServiceAuth { get { throw null; } set { } }
         public static string? ServiceEndpoint { get { throw null; } }
         public bool UseCloudHostedBrowsers { get { throw null; } set { } }
         public void Cleanup() { }
-        public System.Threading.Tasks.Task<Azure.Developer.MicrosoftPlaywrightTesting.ConnectOptions<T>> GetConnectOptionsAsync<T>(System.Runtime.InteropServices.OSPlatform? os = default(System.Runtime.InteropServices.OSPlatform?), string? runId = null, string? exposeNetwork = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, new() { throw null; }
+        public System.Threading.Tasks.Task<Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.ConnectOptions<T>> GetConnectOptionsAsync<T>(System.Runtime.InteropServices.OSPlatform? os = default(System.Runtime.InteropServices.OSPlatform?), string? runId = null, string? exposeNetwork = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, new() { throw null; }
         public System.Threading.Tasks.Task InitializeAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PlaywrightServiceOptions

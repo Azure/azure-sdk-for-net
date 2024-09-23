@@ -3,7 +3,7 @@
 
 using System.Linq;
 
-namespace Azure.Developer.MicrosoftPlaywrightTesting.Tests;
+namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests;
 
 public class TestUtils
 {

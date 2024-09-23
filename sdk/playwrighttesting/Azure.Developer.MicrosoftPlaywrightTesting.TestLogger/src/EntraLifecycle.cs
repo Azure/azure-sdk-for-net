@@ -8,7 +8,7 @@ using Azure.Core;
 using Azure.Identity;
 using Microsoft.IdentityModel.JsonWebTokens;
 
-namespace Azure.Developer.MicrosoftPlaywrightTesting;
+namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
 internal class EntraLifecycle
 {

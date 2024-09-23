@@ -9,7 +9,7 @@ Microsoft Playwright Testing is a fully managed service that uses the cloud to e
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Developer.MicrosoftPlaywrightTesting --prerelease
+dotnet add package Azure.Developer.MicrosoftPlaywrightTesting.TestLogger --prerelease
 ```
 
 ### Authenticate the client
@@ -63,4 +63,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc].
 For more information see the [Code of Conduct FAQ][coc_faq] or contact
 [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting/README.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.TestLogger/README.png)

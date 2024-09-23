@@ -3,7 +3,7 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.Developer.MicrosoftPlaywrightTesting.Tests;
+namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests;
 
 public class PlaywrightServiceTestEnvironment : TestEnvironment
 {

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Developer.MicrosoftPlaywrightTesting;
+namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
 /// <summary>
 /// Contains environment variable names used by the Playwright service.

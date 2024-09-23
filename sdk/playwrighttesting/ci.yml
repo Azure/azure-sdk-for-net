@@ -34,8 +34,8 @@ extends:
     Artifacts:
     - name: Azure.Developer.MicrosoftPlaywrightTesting.NUnit
       safeName: AzureDeveloperMicrosoftPlaywrightTestingNUnit
-    - name: Azure.Developer.MicrosoftPlaywrightTesting
-      safeName: AzureDeveloperMicrosoftPlaywrightTesting
+    - name: Azure.Developer.MicrosoftPlaywrightTesting.TestLogger
+      safeName: AzureDeveloperMicrosoftPlaywrightTesting.TestLogger
 
 
 

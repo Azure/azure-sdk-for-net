@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Developer.MicrosoftPlaywrightTesting;
+namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
 /// <summary>
 /// Sets up and manages the Playwright service.

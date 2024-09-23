@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using Azure.Identity;
-using Azure.Developer.MicrosoftPlaywrightTesting;
 using System;
 using System.Runtime.InteropServices;
 
-namespace Azure.Developer.MicrosoftPlaywrightTesting.Tests;
+namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Self)]

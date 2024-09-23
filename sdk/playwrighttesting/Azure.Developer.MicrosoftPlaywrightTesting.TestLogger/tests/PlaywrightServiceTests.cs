@@ -13,7 +13,7 @@ using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
 
-namespace Azure.Developer.MicrosoftPlaywrightTesting.Tests;
+namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Self)]
