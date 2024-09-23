@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Integrated decryption for CSE v2.1
 
 ### Other Changes
 
