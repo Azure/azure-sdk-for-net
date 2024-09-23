@@ -26,6 +26,10 @@ dotnet add package Azure.Developer.MicrosoftPlaywrightTesting.NUnit --prerelease
 - An [Azure subscription](https://azure.microsoft.com/free/dotnet/)
 - Your Azure account must be assigned the [Owner](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#owner), [Contributor](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#contributor), or one of the [classic administrator roles](https://learn.microsoft.com/azure/role-based-access-control/rbac-and-directory-admin-roles#classic-subscription-administrator-roles).
 
+### Authenticate the client
+
+To learn more about options for Microsoft Entra Id authentication, refer to [Azure.Identity credentials](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#credentials). You can also refer to [our samples]<!--(https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.NUnit/samples/Sample1_CustomisingServiceParameters.md)--> on how to configurate different Azure Identity credentials.
+
 #### Create a Workspace
 
 1. Sign in to the [Playwright portal](https://aka.ms/mpt/portal) with your Azure account.
@@ -71,10 +75,6 @@ public class PlaywrightServiceSetup : PlaywrightServiceNUnit {};
 ### Set up environment
 
 Ensure that the `PLAYWRIGHT_SERVICE_URL` that you obtained in previous step is available in your environment.
-
-### Authenticate the client
-
-To learn more about options for Microsoft Entra Id authentication, refer to [Azure.Identity credentials](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#credentials). You can also refer to [our samples]<!--(https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.NUnit/samples/Sample1_CustomisingServiceParameters.md)--> on how to configurate different Azure Identity credentials.
 
 ### Run the tests
 
