@@ -36,7 +36,7 @@ namespace Azure
             Assert.AreEqual(isCaeEnabled, context.IsCaeEnabled);
             Assert.AreEqual(isProofOfPossessionEnabled, context.IsProofOfPossessionEnabled);
             Assert.AreEqual(proofOfPossessionNonce, context.ProofOfPossessionNonce);
-            Assert.AreEqual(new HttpMethod(request.Method.ToString()), context.ResourceRequestMethod);
+            Assert.AreEqual(request.Method.ToString(), context.ResourceRequestMethod);
             Assert.AreEqual(request.Uri.ToUri(), context.ResourceRequestUri);
         }
     }
