@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "f34b22a3-2202-4fb1-b040-1332bd928c84";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationServiceEnvironmentResource created on azure
             // for more information of creating IntegrationServiceEnvironmentResource, please refer to the document of IntegrationServiceEnvironmentResource
-            string subscriptionId = "f34b22a3-2202-4fb1-b040-1332bd928c84";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroup = "testResourceGroup";
             string integrationServiceEnvironmentName = "testIntegrationServiceEnvironment";
             ResourceIdentifier integrationServiceEnvironmentResourceId = IntegrationServiceEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroup, integrationServiceEnvironmentName);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationServiceEnvironmentResource created on azure
             // for more information of creating IntegrationServiceEnvironmentResource, please refer to the document of IntegrationServiceEnvironmentResource
-            string subscriptionId = "f34b22a3-2202-4fb1-b040-1332bd928c84";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroup = "testResourceGroup";
             string integrationServiceEnvironmentName = "testIntegrationServiceEnvironment";
             ResourceIdentifier integrationServiceEnvironmentResourceId = IntegrationServiceEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroup, integrationServiceEnvironmentName);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationServiceEnvironmentResource created on azure
             // for more information of creating IntegrationServiceEnvironmentResource, please refer to the document of IntegrationServiceEnvironmentResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroup = "testResourceGroup";
             string integrationServiceEnvironmentName = "testIntegrationServiceEnvironment";
             ResourceIdentifier integrationServiceEnvironmentResourceId = IntegrationServiceEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroup, integrationServiceEnvironmentName);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationServiceEnvironmentResource created on azure
             // for more information of creating IntegrationServiceEnvironmentResource, please refer to the document of IntegrationServiceEnvironmentResource
-            string subscriptionId = "f34b22a3-2202-4fb1-b040-1332bd928c84";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroup = "testResourceGroup";
             string integrationServiceEnvironmentName = "testIntegrationServiceEnvironment";
             ResourceIdentifier integrationServiceEnvironmentResourceId = IntegrationServiceEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroup, integrationServiceEnvironmentName);
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationServiceEnvironmentResource created on azure
             // for more information of creating IntegrationServiceEnvironmentResource, please refer to the document of IntegrationServiceEnvironmentResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroup = "testResourceGroup";
             string integrationServiceEnvironmentName = "testIntegrationServiceEnvironment";
             ResourceIdentifier integrationServiceEnvironmentResourceId = IntegrationServiceEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroup, integrationServiceEnvironmentName);
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationServiceEnvironmentResource created on azure
             // for more information of creating IntegrationServiceEnvironmentResource, please refer to the document of IntegrationServiceEnvironmentResource
-            string subscriptionId = "f34b22a3-2202-4fb1-b040-1332bd928c84";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroup = "testResourceGroup";
             string integrationServiceEnvironmentName = "testIntegrationServiceEnvironment";
             ResourceIdentifier integrationServiceEnvironmentResourceId = IntegrationServiceEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroup, integrationServiceEnvironmentName);

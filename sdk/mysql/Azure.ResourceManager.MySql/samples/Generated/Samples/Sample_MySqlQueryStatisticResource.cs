@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MySql.Samples
 
             // this example assumes you already have this MySqlQueryStatisticResource created on azure
             // for more information of creating MySqlQueryStatisticResource, please refer to the document of MySqlQueryStatisticResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroupName";
             string serverName = "testServerName";
             string queryStatisticId = "66-636923268000000000-636923277000000000-avg-duration";

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this ActivityLogAlertResource created on azure
             // for more information of creating ActivityLogAlertResource, please refer to the document of ActivityLogAlertResource
-            string subscriptionId = "187f412d-1758-44d9-b052-169e2564721d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string activityLogAlertName = "SampleActivityLogAlertRule";
             ResourceIdentifier activityLogAlertResourceId = ActivityLogAlertResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, activityLogAlertName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this ActivityLogAlertResource created on azure
             // for more information of creating ActivityLogAlertResource, please refer to the document of ActivityLogAlertResource
-            string subscriptionId = "187f412d-1758-44d9-b052-169e2564721d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string activityLogAlertName = "SampleActivityLogAlertRule";
             ResourceIdentifier activityLogAlertResourceId = ActivityLogAlertResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, activityLogAlertName);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this ActivityLogAlertResource created on azure
             // for more information of creating ActivityLogAlertResource, please refer to the document of ActivityLogAlertResource
-            string subscriptionId = "187f412d-1758-44d9-b052-169e2564721d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string activityLogAlertName = "SampleActivityLogAlertRule";
             ResourceIdentifier activityLogAlertResourceId = ActivityLogAlertResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, activityLogAlertName);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "187f412d-1758-44d9-b052-169e2564721d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

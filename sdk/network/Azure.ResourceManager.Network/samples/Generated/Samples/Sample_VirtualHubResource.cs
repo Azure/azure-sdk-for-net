@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualHubResource created on azure
             // for more information of creating VirtualHubResource, please refer to the document of VirtualHubResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub1";
             ResourceIdentifier virtualHubResourceId = VirtualHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualHubResource created on azure
             // for more information of creating VirtualHubResource, please refer to the document of VirtualHubResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub2";
             ResourceIdentifier virtualHubResourceId = VirtualHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualHubResource created on azure
             // for more information of creating VirtualHubResource, please refer to the document of VirtualHubResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub1";
             ResourceIdentifier virtualHubResourceId = VirtualHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualHubResource created on azure
             // for more information of creating VirtualHubResource, please refer to the document of VirtualHubResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub1";
             ResourceIdentifier virtualHubResourceId = VirtualHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName);
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualHubResource created on azure
             // for more information of creating VirtualHubResource, please refer to the document of VirtualHubResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub1";
             ResourceIdentifier virtualHubResourceId = VirtualHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName);
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualHubResource created on azure
             // for more information of creating VirtualHubResource, please refer to the document of VirtualHubResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub1";
             ResourceIdentifier virtualHubResourceId = VirtualHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName);
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualHubResource created on azure
             // for more information of creating VirtualHubResource, please refer to the document of VirtualHubResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub1";
             ResourceIdentifier virtualHubResourceId = VirtualHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName);
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualHubResource created on azure
             // for more information of creating VirtualHubResource, please refer to the document of VirtualHubResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub1";
             ResourceIdentifier virtualHubResourceId = VirtualHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName);

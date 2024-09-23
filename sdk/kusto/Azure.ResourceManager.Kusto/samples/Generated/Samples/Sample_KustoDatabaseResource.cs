@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Kusto.Samples
 
             // this example assumes you already have this KustoDatabaseResource created on azure
             // for more information of creating KustoDatabaseResource, please refer to the document of KustoDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster";
             string databaseName = "KustoDatabase8";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Kusto.Samples
 
             // this example assumes you already have this KustoDatabaseResource created on azure
             // for more information of creating KustoDatabaseResource, please refer to the document of KustoDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster";
             string databaseName = "KustoDatabase9";
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Kusto.Samples
 
             // this example assumes you already have this KustoDatabaseResource created on azure
             // for more information of creating KustoDatabaseResource, please refer to the document of KustoDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster";
             string databaseName = "KustoDatabase8";
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Kusto.Samples
 
             // this example assumes you already have this KustoDatabaseResource created on azure
             // for more information of creating KustoDatabaseResource, please refer to the document of KustoDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster";
             string databaseName = "KustoDatabase8";
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Kusto.Samples
 
             // this example assumes you already have this KustoDatabaseResource created on azure
             // for more information of creating KustoDatabaseResource, please refer to the document of KustoDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster";
             string databaseName = "KustoDatabase8";
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Kusto.Samples
 
             // this example assumes you already have this KustoDatabaseResource created on azure
             // for more information of creating KustoDatabaseResource, please refer to the document of KustoDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster";
             string databaseName = "KustoDatabase8";
@@ -244,7 +244,7 @@ AppId = "some_guid_app_id",
 
             // this example assumes you already have this KustoDatabaseResource created on azure
             // for more information of creating KustoDatabaseResource, please refer to the document of KustoDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster";
             string databaseName = "KustoDatabase8";
@@ -297,7 +297,7 @@ AppId = "some_guid_app_id",
 
             // this example assumes you already have this KustoDatabaseResource created on azure
             // for more information of creating KustoDatabaseResource, please refer to the document of KustoDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster";
             string databaseName = "database";
@@ -362,7 +362,7 @@ AppId = "some_guid_app_id",
 
             // this example assumes you already have this KustoDatabaseResource created on azure
             // for more information of creating KustoDatabaseResource, please refer to the document of KustoDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster";
             string databaseName = "Kustodatabase8";
@@ -391,7 +391,7 @@ AppId = "some_guid_app_id",
 
             // this example assumes you already have this KustoDatabaseResource created on azure
             // for more information of creating KustoDatabaseResource, please refer to the document of KustoDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster";
             string databaseName = "db";
@@ -420,7 +420,7 @@ AppId = "some_guid_app_id",
 
             // this example assumes you already have this KustoDatabaseResource created on azure
             // for more information of creating KustoDatabaseResource, please refer to the document of KustoDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster";
             string databaseName = "KustoDatabase8";
@@ -467,7 +467,7 @@ AppId = "some_guid_app_id",
 
             // this example assumes you already have this KustoDatabaseResource created on azure
             // for more information of creating KustoDatabaseResource, please refer to the document of KustoDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster";
             string databaseName = "KustoDatabase8";
@@ -510,7 +510,7 @@ AppId = "some_guid_app_id",
 
             // this example assumes you already have this KustoDatabaseResource created on azure
             // for more information of creating KustoDatabaseResource, please refer to the document of KustoDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster";
             string databaseName = "KustoDatabase8";

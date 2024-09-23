@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this CloudServiceSwapResource created on azure
             // for more information of creating CloudServiceSwapResource, please refer to the document of CloudServiceSwapResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupName = "rg1";
             string resourceName = "testCloudService";
             ResourceIdentifier cloudServiceSwapResourceId = CloudServiceSwapResource.CreateResourceIdentifier(subscriptionId, groupName, resourceName);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this CloudServiceSwapResource created on azure
             // for more information of creating CloudServiceSwapResource, please refer to the document of CloudServiceSwapResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groupName = "rg1";
             string resourceName = "testCloudService";
             ResourceIdentifier cloudServiceSwapResourceId = CloudServiceSwapResource.CreateResourceIdentifier(subscriptionId, groupName, resourceName);

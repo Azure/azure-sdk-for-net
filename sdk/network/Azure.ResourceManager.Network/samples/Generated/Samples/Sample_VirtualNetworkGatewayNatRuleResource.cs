@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayNatRuleResource created on azure
             // for more information of creating VirtualNetworkGatewayNatRuleResource, please refer to the document of VirtualNetworkGatewayNatRuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayName = "gateway1";
             string natRuleName = "natRule1";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayNatRuleResource created on azure
             // for more information of creating VirtualNetworkGatewayNatRuleResource, please refer to the document of VirtualNetworkGatewayNatRuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayName = "gateway1";
             string natRuleName = "natRule1";
@@ -117,7 +117,7 @@ PortRange = "300-400",
 
             // this example assumes you already have this VirtualNetworkGatewayNatRuleResource created on azure
             // for more information of creating VirtualNetworkGatewayNatRuleResource, please refer to the document of VirtualNetworkGatewayNatRuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayName = "gateway1";
             string natRuleName = "natRule1";

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricIPCommunityResource created on azure
             // for more information of creating NetworkFabricIPCommunityResource, please refer to the document of NetworkFabricIPCommunityResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string ipCommunityName = "example-ipcommunity";
             ResourceIdentifier networkFabricIPCommunityResourceId = NetworkFabricIPCommunityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipCommunityName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricIPCommunityResource created on azure
             // for more information of creating NetworkFabricIPCommunityResource, please refer to the document of NetworkFabricIPCommunityResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string ipCommunityName = "example-ipcommunity";
             ResourceIdentifier networkFabricIPCommunityResourceId = NetworkFabricIPCommunityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipCommunityName);
@@ -110,7 +110,7 @@ WellKnownCommunity.Internet
 
             // this example assumes you already have this NetworkFabricIPCommunityResource created on azure
             // for more information of creating NetworkFabricIPCommunityResource, please refer to the document of NetworkFabricIPCommunityResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string ipCommunityName = "example-ipcommunity";
             ResourceIdentifier networkFabricIPCommunityResourceId = NetworkFabricIPCommunityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipCommunityName);
@@ -137,7 +137,7 @@ WellKnownCommunity.Internet
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

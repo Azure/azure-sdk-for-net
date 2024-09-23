@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkPrivateEndpointConnectionResource created on azure
             // for more information of creating NetworkPrivateEndpointConnectionResource, please refer to the document of NetworkPrivateEndpointConnectionResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "testPls";
             string peConnectionName = "testPlePeConnection";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkPrivateEndpointConnectionResource created on azure
             // for more information of creating NetworkPrivateEndpointConnectionResource, please refer to the document of NetworkPrivateEndpointConnectionResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "testPls";
             string peConnectionName = "testPlePeConnection";
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkPrivateEndpointConnectionResource created on azure
             // for more information of creating NetworkPrivateEndpointConnectionResource, please refer to the document of NetworkPrivateEndpointConnectionResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "testPls";
             string peConnectionName = "testPlePeConnection";

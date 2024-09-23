@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ApplicationGatewayWafDynamicManifestResource created on azure
             // for more information of creating ApplicationGatewayWafDynamicManifestResource, please refer to the document of ApplicationGatewayWafDynamicManifestResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("westus");
             ResourceIdentifier applicationGatewayWafDynamicManifestResourceId = ApplicationGatewayWafDynamicManifestResource.CreateResourceIdentifier(subscriptionId, location);
             ApplicationGatewayWafDynamicManifestResource applicationGatewayWafDynamicManifest = client.GetApplicationGatewayWafDynamicManifestResource(applicationGatewayWafDynamicManifestResourceId);

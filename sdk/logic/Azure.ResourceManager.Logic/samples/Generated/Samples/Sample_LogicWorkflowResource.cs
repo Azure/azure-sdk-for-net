@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this LogicWorkflowResource created on azure
             // for more information of creating LogicWorkflowResource, please refer to the document of LogicWorkflowResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             string workflowName = "test-workflow";
             ResourceIdentifier logicWorkflowResourceId = LogicWorkflowResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workflowName);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this LogicWorkflowResource created on azure
             // for more information of creating LogicWorkflowResource, please refer to the document of LogicWorkflowResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             string workflowName = "test-workflow";
             ResourceIdentifier logicWorkflowResourceId = LogicWorkflowResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workflowName);
@@ -204,7 +204,7 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             // this example assumes you already have this LogicWorkflowResource created on azure
             // for more information of creating LogicWorkflowResource, please refer to the document of LogicWorkflowResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             string workflowName = "test-workflow";
             ResourceIdentifier logicWorkflowResourceId = LogicWorkflowResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workflowName);
@@ -231,7 +231,7 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             // this example assumes you already have this LogicWorkflowResource created on azure
             // for more information of creating LogicWorkflowResource, please refer to the document of LogicWorkflowResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             string workflowName = "test-workflow";
             ResourceIdentifier logicWorkflowResourceId = LogicWorkflowResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workflowName);
@@ -258,7 +258,7 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             // this example assumes you already have this LogicWorkflowResource created on azure
             // for more information of creating LogicWorkflowResource, please refer to the document of LogicWorkflowResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             string workflowName = "test-workflow";
             ResourceIdentifier logicWorkflowResourceId = LogicWorkflowResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workflowName);
@@ -285,7 +285,7 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             // this example assumes you already have this LogicWorkflowResource created on azure
             // for more information of creating LogicWorkflowResource, please refer to the document of LogicWorkflowResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             string workflowName = "test-workflow";
             ResourceIdentifier logicWorkflowResourceId = LogicWorkflowResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workflowName);
@@ -316,7 +316,7 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             // this example assumes you already have this LogicWorkflowResource created on azure
             // for more information of creating LogicWorkflowResource, please refer to the document of LogicWorkflowResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string workflowName = "testWorkflow";
             ResourceIdentifier logicWorkflowResourceId = LogicWorkflowResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workflowName);
@@ -348,7 +348,7 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             // this example assumes you already have this LogicWorkflowResource created on azure
             // for more information of creating LogicWorkflowResource, please refer to the document of LogicWorkflowResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string workflowName = "testWorkflowName";
             ResourceIdentifier logicWorkflowResourceId = LogicWorkflowResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workflowName);
@@ -375,7 +375,7 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             // this example assumes you already have this LogicWorkflowResource created on azure
             // for more information of creating LogicWorkflowResource, please refer to the document of LogicWorkflowResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string workflowName = "testWorkflow";
             ResourceIdentifier logicWorkflowResourceId = LogicWorkflowResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workflowName);
@@ -406,7 +406,7 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             // this example assumes you already have this LogicWorkflowResource created on azure
             // for more information of creating LogicWorkflowResource, please refer to the document of LogicWorkflowResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string workflowName = "testWorkflowName";
             ResourceIdentifier logicWorkflowResourceId = LogicWorkflowResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workflowName);
@@ -437,7 +437,7 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             // this example assumes you already have this LogicWorkflowResource created on azure
             // for more information of creating LogicWorkflowResource, please refer to the document of LogicWorkflowResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             string workflowName = "test-workflow";
             ResourceIdentifier logicWorkflowResourceId = LogicWorkflowResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workflowName);
@@ -491,7 +491,7 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

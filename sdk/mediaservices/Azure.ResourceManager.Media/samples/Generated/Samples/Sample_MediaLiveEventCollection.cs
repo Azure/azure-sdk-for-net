@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Samples
 
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
-            string subscriptionId = "0a6ec948-5a62-437d-b9df-934dc7c1b722";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mediaresources";
             string accountName = "slitestmedia10";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Samples
 
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
-            string subscriptionId = "0a6ec948-5a62-437d-b9df-934dc7c1b722";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mediaresources";
             string accountName = "slitestmedia10";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Media.Samples
 
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
-            string subscriptionId = "0a6ec948-5a62-437d-b9df-934dc7c1b722";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mediaresources";
             string accountName = "slitestmedia10";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Media.Samples
 
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
-            string subscriptionId = "0a6ec948-5a62-437d-b9df-934dc7c1b722";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mediaresources";
             string accountName = "slitestmedia10";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Media.Samples
 
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
-            string subscriptionId = "0a6ec948-5a62-437d-b9df-934dc7c1b722";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mediaresources";
             string accountName = "slitestmedia10";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);

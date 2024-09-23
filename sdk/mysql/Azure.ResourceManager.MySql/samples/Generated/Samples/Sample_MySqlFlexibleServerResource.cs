@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
             // this example assumes you already have this MySqlFlexibleServerResource created on azure
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "mysqltestserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
             // this example assumes you already have this MySqlFlexibleServerResource created on azure
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "mysqltestserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
             // this example assumes you already have this MySqlFlexibleServerResource created on azure
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "mysqltestserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -135,7 +135,7 @@ Value = "8",
 
             // this example assumes you already have this MySqlFlexibleServerResource created on azure
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "mysqltestserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -181,7 +181,7 @@ Value = "8",
 
             // this example assumes you already have this MySqlFlexibleServerResource created on azure
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "mysqltestserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -223,7 +223,7 @@ Value = "8",
 
             // this example assumes you already have this MySqlFlexibleServerResource created on azure
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "mysqltestserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -273,7 +273,7 @@ Value = "8",
 
             // this example assumes you already have this MySqlFlexibleServerResource created on azure
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -300,7 +300,7 @@ Value = "8",
 
             // this example assumes you already have this MySqlFlexibleServerResource created on azure
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "mysqltestserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -331,7 +331,7 @@ Value = "8",
 
             // this example assumes you already have this MySqlFlexibleServerResource created on azure
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "mysqltestserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -362,7 +362,7 @@ Value = "8",
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -394,7 +394,7 @@ Value = "8",
 
             // this example assumes you already have this MySqlFlexibleServerResource created on azure
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -421,7 +421,7 @@ Value = "8",
 
             // this example assumes you already have this MySqlFlexibleServerResource created on azure
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -452,7 +452,7 @@ Value = "8",
 
             // this example assumes you already have this MySqlFlexibleServerResource created on azure
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -484,7 +484,7 @@ Value = "8",
 
             // this example assumes you already have this MySqlFlexibleServerResource created on azure
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -511,7 +511,7 @@ Value = "8",
 
             // this example assumes you already have this MySqlFlexibleServerResource created on azure
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -538,7 +538,7 @@ Value = "8",
 
             // this example assumes you already have this MySqlFlexibleServerResource created on azure
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -569,7 +569,7 @@ Value = "8",
 
             // this example assumes you already have this MySqlFlexibleServerResource created on azure
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "mysqltestserver";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -601,7 +601,7 @@ Value = "8",
 
             // this example assumes you already have this MySqlFlexibleServerResource created on azure
             // for more information of creating MySqlFlexibleServerResource, please refer to the document of MySqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "mysqltestsvc1";
             ResourceIdentifier mySqlFlexibleServerResourceId = MySqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);

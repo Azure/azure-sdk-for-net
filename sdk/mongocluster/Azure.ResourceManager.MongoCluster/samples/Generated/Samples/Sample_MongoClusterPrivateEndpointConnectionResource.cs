@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
 
             // this example assumes you already have this MongoClusterPrivateEndpointConnectionResource created on azure
             // for more information of creating MongoClusterPrivateEndpointConnectionResource, please refer to the document of MongoClusterPrivateEndpointConnectionResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string mongoClusterName = "myMongoCluster";
             string privateEndpointConnectionName = "pecTest.5d393f64-ef64-46d0-9959-308321c44ac0";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
 
             // this example assumes you already have this MongoClusterPrivateEndpointConnectionResource created on azure
             // for more information of creating MongoClusterPrivateEndpointConnectionResource, please refer to the document of MongoClusterPrivateEndpointConnectionResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string mongoClusterName = "myMongoCluster";
             string privateEndpointConnectionName = "pecTest";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
 
             // this example assumes you already have this MongoClusterPrivateEndpointConnectionResource created on azure
             // for more information of creating MongoClusterPrivateEndpointConnectionResource, please refer to the document of MongoClusterPrivateEndpointConnectionResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string mongoClusterName = "myMongoCluster";
             string privateEndpointConnectionName = "pecTest.5d393f64-ef64-46d0-9959-308321c44ac0";

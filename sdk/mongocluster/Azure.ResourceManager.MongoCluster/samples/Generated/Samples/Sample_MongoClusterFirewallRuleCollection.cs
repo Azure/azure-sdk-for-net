@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
 
             // this example assumes you already have this MongoClusterResource created on azure
             // for more information of creating MongoClusterResource, please refer to the document of MongoClusterResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string mongoClusterName = "myMongoCluster";
             ResourceIdentifier mongoClusterResourceId = MongoClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, mongoClusterName);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
 
             // this example assumes you already have this MongoClusterResource created on azure
             // for more information of creating MongoClusterResource, please refer to the document of MongoClusterResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string mongoClusterName = "myMongoCluster";
             ResourceIdentifier mongoClusterResourceId = MongoClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, mongoClusterName);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
 
             // this example assumes you already have this MongoClusterResource created on azure
             // for more information of creating MongoClusterResource, please refer to the document of MongoClusterResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string mongoClusterName = "myMongoCluster";
             ResourceIdentifier mongoClusterResourceId = MongoClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, mongoClusterName);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
 
             // this example assumes you already have this MongoClusterResource created on azure
             // for more information of creating MongoClusterResource, please refer to the document of MongoClusterResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string mongoClusterName = "myMongoCluster";
             ResourceIdentifier mongoClusterResourceId = MongoClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, mongoClusterName);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
 
             // this example assumes you already have this MongoClusterResource created on azure
             // for more information of creating MongoClusterResource, please refer to the document of MongoClusterResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string mongoClusterName = "myMongoCluster";
             ResourceIdentifier mongoClusterResourceId = MongoClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, mongoClusterName);

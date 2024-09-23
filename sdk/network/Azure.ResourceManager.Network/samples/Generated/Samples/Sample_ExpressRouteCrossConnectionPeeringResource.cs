@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteCrossConnectionPeeringResource created on azure
             // for more information of creating ExpressRouteCrossConnectionPeeringResource, please refer to the document of ExpressRouteCrossConnectionPeeringResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "CrossConnection-SiliconValley";
             string crossConnectionName = "<circuitServiceKey>";
             string peeringName = "AzurePrivatePeering";
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteCrossConnectionPeeringResource created on azure
             // for more information of creating ExpressRouteCrossConnectionPeeringResource, please refer to the document of ExpressRouteCrossConnectionPeeringResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "CrossConnection-SiliconValley";
             string crossConnectionName = "<circuitServiceKey>";
             string peeringName = "AzurePrivatePeering";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteCrossConnectionPeeringResource created on azure
             // for more information of creating ExpressRouteCrossConnectionPeeringResource, please refer to the document of ExpressRouteCrossConnectionPeeringResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "CrossConnection-SiliconValley";
             string crossConnectionName = "<circuitServiceKey>";
             string peeringName = "AzurePrivatePeering";
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteCrossConnectionPeeringResource created on azure
             // for more information of creating ExpressRouteCrossConnectionPeeringResource, please refer to the document of ExpressRouteCrossConnectionPeeringResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "CrossConnection-SiliconValley";
             string crossConnectionName = "<circuitServiceKey>";
             string peeringName = "AzurePrivatePeering";
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteCrossConnectionPeeringResource created on azure
             // for more information of creating ExpressRouteCrossConnectionPeeringResource, please refer to the document of ExpressRouteCrossConnectionPeeringResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "CrossConnection-SiliconValley";
             string crossConnectionName = "<circuitServiceKey>";
             string peeringName = "AzurePrivatePeering";
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteCrossConnectionPeeringResource created on azure
             // for more information of creating ExpressRouteCrossConnectionPeeringResource, please refer to the document of ExpressRouteCrossConnectionPeeringResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "CrossConnection-SiliconValley";
             string crossConnectionName = "<circuitServiceKey>";
             string peeringName = "AzurePrivatePeering";

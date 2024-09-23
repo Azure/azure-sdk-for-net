@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Kusto.Samples
 
             // this example assumes you already have this KustoAttachedDatabaseConfigurationResource created on azure
             // for more information of creating KustoAttachedDatabaseConfigurationResource, please refer to the document of KustoAttachedDatabaseConfigurationResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster2";
             string attachedDatabaseConfigurationName = "attachedDatabaseConfigurationsTest";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Kusto.Samples
 
             // this example assumes you already have this KustoAttachedDatabaseConfigurationResource created on azure
             // for more information of creating KustoAttachedDatabaseConfigurationResource, please refer to the document of KustoAttachedDatabaseConfigurationResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster2";
             string attachedDatabaseConfigurationName = "attachedDatabaseConfigurationsTest";
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Kusto.Samples
 
             // this example assumes you already have this KustoAttachedDatabaseConfigurationResource created on azure
             // for more information of creating KustoAttachedDatabaseConfigurationResource, please refer to the document of KustoAttachedDatabaseConfigurationResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster";
             string attachedDatabaseConfigurationName = "attachedDatabaseConfigurationsTest";

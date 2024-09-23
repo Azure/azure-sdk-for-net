@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.LabServices.Samples
 
             // this example assumes you already have this LabResource created on azure
             // for more information of creating LabResource, please refer to the document of LabResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string labName = "testlab";
             ResourceIdentifier labResourceId = LabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.LabServices.Samples
 
             // this example assumes you already have this LabResource created on azure
             // for more information of creating LabResource, please refer to the document of LabResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string labName = "testlab";
             ResourceIdentifier labResourceId = LabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.LabServices.Samples
 
             // this example assumes you already have this LabResource created on azure
             // for more information of creating LabResource, please refer to the document of LabResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string labName = "testlab";
             ResourceIdentifier labResourceId = LabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.LabServices.Samples
 
             // this example assumes you already have this LabResource created on azure
             // for more information of creating LabResource, please refer to the document of LabResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string labName = "testlab";
             ResourceIdentifier labResourceId = LabResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this LocalNetworkGatewayResource created on azure
             // for more information of creating LocalNetworkGatewayResource, please refer to the document of LocalNetworkGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string localNetworkGatewayName = "localgw";
             ResourceIdentifier localNetworkGatewayResourceId = LocalNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localNetworkGatewayName);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this LocalNetworkGatewayResource created on azure
             // for more information of creating LocalNetworkGatewayResource, please refer to the document of LocalNetworkGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string localNetworkGatewayName = "localgw";
             ResourceIdentifier localNetworkGatewayResourceId = LocalNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localNetworkGatewayName);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this LocalNetworkGatewayResource created on azure
             // for more information of creating LocalNetworkGatewayResource, please refer to the document of LocalNetworkGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string localNetworkGatewayName = "lgw";
             ResourceIdentifier localNetworkGatewayResourceId = LocalNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localNetworkGatewayName);

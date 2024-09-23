@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
@@ -122,7 +122,7 @@ new StaticRouteProperties("3FFE:FFFF:0:CD30::ac/127",new string[]
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
@@ -157,7 +157,7 @@ new StaticRouteProperties("3FFE:FFFF:0:CD30::ac/127",new string[]
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
@@ -188,7 +188,7 @@ new StaticRouteProperties("3FFE:FFFF:0:CD30::ac/127",new string[]
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);
@@ -231,7 +231,7 @@ new StaticRouteProperties("3FFE:FFFF:0:CD30::ac/127",new string[]
 
             // this example assumes you already have this NetworkFabricResource created on azure
             // for more information of creating NetworkFabricResource, please refer to the document of NetworkFabricResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkFabricName = "example-fabric";
             ResourceIdentifier networkFabricResourceId = NetworkFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricName);

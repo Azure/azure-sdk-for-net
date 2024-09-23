@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this AzureWebCategoryResource created on azure
             // for more information of creating AzureWebCategoryResource, please refer to the document of AzureWebCategoryResource
-            string subscriptionId = "4de8428a-4a92-4cea-90ff-b47128b8cab8";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string name = "Arts";
             ResourceIdentifier azureWebCategoryResourceId = AzureWebCategoryResource.CreateResourceIdentifier(subscriptionId, name);
             AzureWebCategoryResource azureWebCategory = client.GetAzureWebCategoryResource(azureWebCategoryResourceId);

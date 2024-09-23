@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningRegistryResource created on azure
             // for more information of creating MachineLearningRegistryResource, please refer to the document of MachineLearningRegistryResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string registryName = "testregistry";
             ResourceIdentifier machineLearningRegistryResourceId = MachineLearningRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningRegistryResource created on azure
             // for more information of creating MachineLearningRegistryResource, please refer to the document of MachineLearningRegistryResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string registryName = "testregistry";
             ResourceIdentifier machineLearningRegistryResourceId = MachineLearningRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningRegistryResource created on azure
             // for more information of creating MachineLearningRegistryResource, please refer to the document of MachineLearningRegistryResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string registryName = "testregistry";
             ResourceIdentifier machineLearningRegistryResourceId = MachineLearningRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningRegistryResource created on azure
             // for more information of creating MachineLearningRegistryResource, please refer to the document of MachineLearningRegistryResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string registryName = "testregistry";
             ResourceIdentifier machineLearningRegistryResourceId = MachineLearningRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningRegistryResource created on azure
             // for more information of creating MachineLearningRegistryResource, please refer to the document of MachineLearningRegistryResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string registryName = "testregistry";
             ResourceIdentifier machineLearningRegistryResourceId = MachineLearningRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Samples
 
             // this example assumes you already have this KubernetesFluxConfigurationResource created on azure
             // for more information of creating KubernetesFluxConfigurationResource, please refer to the document of KubernetesFluxConfigurationResource
-            string subscriptionId = "subId1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Samples
 
             // this example assumes you already have this KubernetesFluxConfigurationResource created on azure
             // for more information of creating KubernetesFluxConfigurationResource, please refer to the document of KubernetesFluxConfigurationResource
-            string subscriptionId = "subId1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
@@ -124,7 +124,7 @@ SyncIntervalInSeconds = 300,
 
             // this example assumes you already have this KubernetesFluxConfigurationResource created on azure
             // for more information of creating KubernetesFluxConfigurationResource, please refer to the document of KubernetesFluxConfigurationResource
-            string subscriptionId = "subId1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this NetAppBackupVaultResource created on azure
             // for more information of creating NetAppBackupVaultResource, please refer to the document of NetAppBackupVaultResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string backupVaultName = "backupVault1";
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this NetAppBackupVaultResource created on azure
             // for more information of creating NetAppBackupVaultResource, please refer to the document of NetAppBackupVaultResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string backupVaultName = "backupVault1";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this NetAppBackupVaultResource created on azure
             // for more information of creating NetAppBackupVaultResource, please refer to the document of NetAppBackupVaultResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string backupVaultName = "backupVault1";
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this NetAppBackupVaultResource created on azure
             // for more information of creating NetAppBackupVaultResource, please refer to the document of NetAppBackupVaultResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string backupVaultName = "backupVault1";
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this NetAppBackupVaultResource created on azure
             // for more information of creating NetAppBackupVaultResource, please refer to the document of NetAppBackupVaultResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string backupVaultName = "backupVault1";

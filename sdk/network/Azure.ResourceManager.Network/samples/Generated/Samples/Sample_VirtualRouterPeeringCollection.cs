@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualRouterResource created on azure
             // for more information of creating VirtualRouterResource, please refer to the document of VirtualRouterResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualRouterName = "virtualRouter";
             ResourceIdentifier virtualRouterResourceId = VirtualRouterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualRouterName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualRouterResource created on azure
             // for more information of creating VirtualRouterResource, please refer to the document of VirtualRouterResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualRouterName = "virtualRouter";
             ResourceIdentifier virtualRouterResourceId = VirtualRouterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualRouterName);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualRouterResource created on azure
             // for more information of creating VirtualRouterResource, please refer to the document of VirtualRouterResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualRouterName = "virtualRouter";
             ResourceIdentifier virtualRouterResourceId = VirtualRouterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualRouterName);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualRouterResource created on azure
             // for more information of creating VirtualRouterResource, please refer to the document of VirtualRouterResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualRouterName = "virtualRouter";
             ResourceIdentifier virtualRouterResourceId = VirtualRouterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualRouterName);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualRouterResource created on azure
             // for more information of creating VirtualRouterResource, please refer to the document of VirtualRouterResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualRouterName = "virtualRouter";
             ResourceIdentifier virtualRouterResourceId = VirtualRouterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualRouterName);

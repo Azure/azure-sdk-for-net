@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Samples
 
             // this example assumes you already have this KubernetesClusterExtensionResource created on azure
             // for more information of creating KubernetesClusterExtensionResource, please refer to the document of KubernetesClusterExtensionResource
-            string subscriptionId = "subId1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Samples
 
             // this example assumes you already have this KubernetesClusterExtensionResource created on azure
             // for more information of creating KubernetesClusterExtensionResource, please refer to the document of KubernetesClusterExtensionResource
-            string subscriptionId = "subId1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Samples
 
             // this example assumes you already have this KubernetesClusterExtensionResource created on azure
             // for more information of creating KubernetesClusterExtensionResource, please refer to the document of KubernetesClusterExtensionResource
-            string subscriptionId = "subId1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Samples
 
             // this example assumes you already have this KubernetesClusterExtensionResource created on azure
             // for more information of creating KubernetesClusterExtensionResource, please refer to the document of KubernetesClusterExtensionResource
-            string subscriptionId = "subId1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string clusterRp = "Microsoft.Kubernetes";
             string clusterResourceName = "connectedClusters";

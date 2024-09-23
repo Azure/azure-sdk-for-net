@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this IPAllocationResource created on azure
             // for more information of creating IPAllocationResource, please refer to the document of IPAllocationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string ipAllocationName = "test-ipallocation";
             ResourceIdentifier ipAllocationResourceId = IPAllocationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipAllocationName);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this IPAllocationResource created on azure
             // for more information of creating IPAllocationResource, please refer to the document of IPAllocationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string ipAllocationName = "test-ipallocation";
             ResourceIdentifier ipAllocationResourceId = IPAllocationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipAllocationName);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this IPAllocationResource created on azure
             // for more information of creating IPAllocationResource, please refer to the document of IPAllocationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string ipAllocationName = "test-ipallocation";
             ResourceIdentifier ipAllocationResourceId = IPAllocationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipAllocationName);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

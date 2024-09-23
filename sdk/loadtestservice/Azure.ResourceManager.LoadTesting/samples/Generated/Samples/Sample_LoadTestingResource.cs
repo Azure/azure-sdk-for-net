@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.LoadTesting.Samples
 
             // this example assumes you already have this LoadTestingResource created on azure
             // for more information of creating LoadTestingResource, please refer to the document of LoadTestingResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "default-azureloadtest-japaneast";
             string loadTestName = "sampleloadtest";
             ResourceIdentifier loadTestingResourceId = LoadTestingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, loadTestName);

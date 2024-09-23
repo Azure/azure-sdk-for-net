@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this LogicWorkflowVersionResource created on azure
             // for more information of creating LogicWorkflowVersionResource, please refer to the document of LogicWorkflowVersionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             string workflowName = "test-workflow";
             string versionId = "08586676824806722526";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this LogicWorkflowVersionResource created on azure
             // for more information of creating LogicWorkflowVersionResource, please refer to the document of LogicWorkflowVersionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string workflowName = "testWorkflowName";
             string versionId = "testWorkflowVersionId";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Maps.Samples
 
             // this example assumes you already have this MapsAccountResource created on azure
             // for more information of creating MapsAccountResource, please refer to the document of MapsAccountResource
-            string subscriptionId = "21a9967a-e8a9-4656-a70b-96ff1c4d05a0";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string accountName = "myMapsAccount";
             ResourceIdentifier mapsAccountResourceId = MapsAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Maps.Samples
 
             // this example assumes you already have this MapsAccountResource created on azure
             // for more information of creating MapsAccountResource, please refer to the document of MapsAccountResource
-            string subscriptionId = "21a9967a-e8a9-4656-a70b-96ff1c4d05a0";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string accountName = "myMapsAccount";
             ResourceIdentifier mapsAccountResourceId = MapsAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Maps.Samples
 
             // this example assumes you already have this MapsAccountResource created on azure
             // for more information of creating MapsAccountResource, please refer to the document of MapsAccountResource
-            string subscriptionId = "21a9967a-e8a9-4656-a70b-96ff1c4d05a0";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string accountName = "myMapsAccount";
             ResourceIdentifier mapsAccountResourceId = MapsAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Maps.Samples
 
             // this example assumes you already have this MapsAccountResource created on azure
             // for more information of creating MapsAccountResource, please refer to the document of MapsAccountResource
-            string subscriptionId = "21a9967a-e8a9-4656-a70b-96ff1c4d05a0";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string accountName = "myMapsAccount";
             ResourceIdentifier mapsAccountResourceId = MapsAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Maps.Samples
 
             // this example assumes you already have this MapsAccountResource created on azure
             // for more information of creating MapsAccountResource, please refer to the document of MapsAccountResource
-            string subscriptionId = "21a9967a-e8a9-4656-a70b-96ff1c4d05a0";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string accountName = "myMapsAccount";
             ResourceIdentifier mapsAccountResourceId = MapsAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);

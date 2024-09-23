@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningJobResource created on azure
             // for more information of creating MachineLearningJobResource, please refer to the document of MachineLearningJobResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string id = "http://subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs/my-favorite-aml-job";
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningJobResource created on azure
             // for more information of creating MachineLearningJobResource, please refer to the document of MachineLearningJobResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string id = "string";
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningJobResource created on azure
             // for more information of creating MachineLearningJobResource, please refer to the document of MachineLearningJobResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string id = "string";
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningJobResource created on azure
             // for more information of creating MachineLearningJobResource, please refer to the document of MachineLearningJobResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string id = "string";
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningJobResource created on azure
             // for more information of creating MachineLearningJobResource, please refer to the document of MachineLearningJobResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string id = "string";
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // this example assumes you already have this MachineLearningJobResource created on azure
             // for more information of creating MachineLearningJobResource, please refer to the document of MachineLearningJobResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string id = "string";
@@ -293,7 +293,7 @@ Properties =
 
             // this example assumes you already have this MachineLearningJobResource created on azure
             // for more information of creating MachineLearningJobResource, please refer to the document of MachineLearningJobResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string id = "string";
@@ -396,7 +396,7 @@ Properties =
 
             // this example assumes you already have this MachineLearningJobResource created on azure
             // for more information of creating MachineLearningJobResource, please refer to the document of MachineLearningJobResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string id = "string";
@@ -476,7 +476,7 @@ Properties =
 
             // this example assumes you already have this MachineLearningJobResource created on azure
             // for more information of creating MachineLearningJobResource, please refer to the document of MachineLearningJobResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string id = "string";
@@ -575,7 +575,7 @@ Properties =
 
             // this example assumes you already have this MachineLearningJobResource created on azure
             // for more information of creating MachineLearningJobResource, please refer to the document of MachineLearningJobResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string workspaceName = "my-aml-workspace";
             string id = "string";

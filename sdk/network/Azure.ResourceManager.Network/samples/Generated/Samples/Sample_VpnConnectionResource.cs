@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VpnConnectionResource created on azure
             // for more information of creating VpnConnectionResource, please refer to the document of VpnConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             string connectionName = "vpnConnection1";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VpnConnectionResource created on azure
             // for more information of creating VpnConnectionResource, please refer to the document of VpnConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             string connectionName = "vpnConnection1";
@@ -142,7 +142,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
 
             // this example assumes you already have this VpnConnectionResource created on azure
             // for more information of creating VpnConnectionResource, please refer to the document of VpnConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             string connectionName = "vpnConnection1";
@@ -170,7 +170,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
 
             // this example assumes you already have this VpnConnectionResource created on azure
             // for more information of creating VpnConnectionResource, please refer to the document of VpnConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             string vpnConnectionName = "vpnConnection1";
@@ -207,7 +207,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
 
             // this example assumes you already have this VpnConnectionResource created on azure
             // for more information of creating VpnConnectionResource, please refer to the document of VpnConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             string vpnConnectionName = "vpnConnection1";
@@ -243,7 +243,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
 
             // this example assumes you already have this VpnConnectionResource created on azure
             // for more information of creating VpnConnectionResource, please refer to the document of VpnConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "gateway1";
             string vpnConnectionName = "vpnConnection1";

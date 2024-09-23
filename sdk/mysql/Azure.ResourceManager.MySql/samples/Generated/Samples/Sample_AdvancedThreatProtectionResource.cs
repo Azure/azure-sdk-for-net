@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
             // this example assumes you already have this AdvancedThreatProtectionResource created on azure
             // for more information of creating AdvancedThreatProtectionResource, please refer to the document of AdvancedThreatProtectionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "threatprotection-6852";
             string serverName = "threatprotection-2080";
             AdvancedThreatProtectionName advancedThreatProtectionName = AdvancedThreatProtectionName.Default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
             // this example assumes you already have this AdvancedThreatProtectionResource created on azure
             // for more information of creating AdvancedThreatProtectionResource, please refer to the document of AdvancedThreatProtectionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "threatprotection-4799";
             string serverName = "threatprotection-6440";
             AdvancedThreatProtectionName advancedThreatProtectionName = AdvancedThreatProtectionName.Default;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
             // this example assumes you already have this AdvancedThreatProtectionResource created on azure
             // for more information of creating AdvancedThreatProtectionResource, please refer to the document of AdvancedThreatProtectionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "threatprotection-4799";
             string serverName = "threatprotection-6440";
             AdvancedThreatProtectionName advancedThreatProtectionName = AdvancedThreatProtectionName.Default;

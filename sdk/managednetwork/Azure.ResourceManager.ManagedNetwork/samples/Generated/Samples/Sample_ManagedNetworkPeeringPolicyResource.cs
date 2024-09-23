@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
 
             // this example assumes you already have this ManagedNetworkPeeringPolicyResource created on azure
             // for more information of creating ManagedNetworkPeeringPolicyResource, please refer to the document of ManagedNetworkPeeringPolicyResource
-            string subscriptionId = "subscriptionA";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string managedNetworkName = "myManagedNetwork";
             string managedNetworkPeeringPolicyName = "myHubAndSpoke";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
 
             // this example assumes you already have this ManagedNetworkPeeringPolicyResource created on azure
             // for more information of creating ManagedNetworkPeeringPolicyResource, please refer to the document of ManagedNetworkPeeringPolicyResource
-            string subscriptionId = "subscriptionA";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string managedNetworkName = "myManagedNetwork";
             string managedNetworkPeeringPolicyName = "myHubAndSpoke";
@@ -110,7 +110,7 @@ Id = new ResourceIdentifier("/subscriptionB/resourceGroups/myResourceGroup/provi
 
             // this example assumes you already have this ManagedNetworkPeeringPolicyResource created on azure
             // for more information of creating ManagedNetworkPeeringPolicyResource, please refer to the document of ManagedNetworkPeeringPolicyResource
-            string subscriptionId = "subscriptionA";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string managedNetworkName = "myManagedNetwork";
             string managedNetworkPeeringPolicyName = "myHubAndSpoke";

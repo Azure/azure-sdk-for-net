@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this AlertRuleResource created on azure
             // for more information of creating AlertRuleResource, please refer to the document of AlertRuleResource
-            string subscriptionId = "b67f7fec-69fc-4974-9099-a26bd6ffeda3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Rac46PostSwapRG";
             string ruleName = "myRuleName";
             ResourceIdentifier alertRuleResourceId = AlertRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ruleName);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this AlertRuleResource created on azure
             // for more information of creating AlertRuleResource, please refer to the document of AlertRuleResource
-            string subscriptionId = "b67f7fec-69fc-4974-9099-a26bd6ffeda3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Rac46PostSwapRG";
             string ruleName = "myRuleName";
             ResourceIdentifier alertRuleResourceId = AlertRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ruleName);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this AlertRuleResource created on azure
             // for more information of creating AlertRuleResource, please refer to the document of AlertRuleResource
-            string subscriptionId = "b67f7fec-69fc-4974-9099-a26bd6ffeda3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Rac46PostSwapRG";
             string ruleName = "chiricutin";
             ResourceIdentifier alertRuleResourceId = AlertRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ruleName);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this AlertRuleResource created on azure
             // for more information of creating AlertRuleResource, please refer to the document of AlertRuleResource
-            string subscriptionId = "b67f7fec-69fc-4974-9099-a26bd6ffeda3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Rac46PostSwapRG";
             string ruleName = "chiricutin";
             ResourceIdentifier alertRuleResourceId = AlertRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ruleName);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this AlertRuleResource created on azure
             // for more information of creating AlertRuleResource, please refer to the document of AlertRuleResource
-            string subscriptionId = "b67f7fec-69fc-4974-9099-a26bd6ffeda3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Rac46PostSwapRG";
             string ruleName = "chiricutin";
             ResourceIdentifier alertRuleResourceId = AlertRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ruleName);
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "b67f7fec-69fc-4974-9099-a26bd6ffeda3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

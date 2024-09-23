@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Kusto.Samples
 
             // this example assumes you already have this KustoManagedPrivateEndpointResource created on azure
             // for more information of creating KustoManagedPrivateEndpointResource, please refer to the document of KustoManagedPrivateEndpointResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster";
             string managedPrivateEndpointName = "managedPrivateEndpointTest";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Kusto.Samples
 
             // this example assumes you already have this KustoManagedPrivateEndpointResource created on azure
             // for more information of creating KustoManagedPrivateEndpointResource, please refer to the document of KustoManagedPrivateEndpointResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster";
             string managedPrivateEndpointName = "managedPrivateEndpointTest";
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Kusto.Samples
 
             // this example assumes you already have this KustoManagedPrivateEndpointResource created on azure
             // for more information of creating KustoManagedPrivateEndpointResource, please refer to the document of KustoManagedPrivateEndpointResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string clusterName = "kustoCluster";
             string managedPrivateEndpointName = "managedPrivateEndpointTest";

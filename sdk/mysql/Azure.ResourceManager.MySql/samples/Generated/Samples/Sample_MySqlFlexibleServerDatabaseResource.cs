@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
             // this example assumes you already have this MySqlFlexibleServerDatabaseResource created on azure
             // for more information of creating MySqlFlexibleServerDatabaseResource, please refer to the document of MySqlFlexibleServerDatabaseResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
             string databaseName = "db1";
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
             // this example assumes you already have this MySqlFlexibleServerDatabaseResource created on azure
             // for more information of creating MySqlFlexibleServerDatabaseResource, please refer to the document of MySqlFlexibleServerDatabaseResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
             string databaseName = "db1";
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
             // this example assumes you already have this MySqlFlexibleServerDatabaseResource created on azure
             // for more information of creating MySqlFlexibleServerDatabaseResource, please refer to the document of MySqlFlexibleServerDatabaseResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
             string databaseName = "db1";

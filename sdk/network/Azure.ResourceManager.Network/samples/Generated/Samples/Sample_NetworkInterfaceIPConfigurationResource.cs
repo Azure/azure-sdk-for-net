@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this NetworkInterfaceIPConfigurationResource created on azure
             // for more information of creating NetworkInterfaceIPConfigurationResource, please refer to the document of NetworkInterfaceIPConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string networkInterfaceName = "mynic";
             string ipConfigurationName = "ipconfig1";

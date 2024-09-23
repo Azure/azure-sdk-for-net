@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkPacketBrokerResource created on azure
             // for more information of creating NetworkPacketBrokerResource, please refer to the document of NetworkPacketBrokerResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkPacketBrokerName = "example-networkPacketBroker";
             ResourceIdentifier networkPacketBrokerResourceId = NetworkPacketBrokerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkPacketBrokerName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkPacketBrokerResource created on azure
             // for more information of creating NetworkPacketBrokerResource, please refer to the document of NetworkPacketBrokerResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkPacketBrokerName = "example-networkPacketBroker";
             ResourceIdentifier networkPacketBrokerResourceId = NetworkPacketBrokerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkPacketBrokerName);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkPacketBrokerResource created on azure
             // for more information of creating NetworkPacketBrokerResource, please refer to the document of NetworkPacketBrokerResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "example-rg";
             string networkPacketBrokerName = "example-networkPacketBroker";
             ResourceIdentifier networkPacketBrokerResourceId = NetworkPacketBrokerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkPacketBrokerName);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

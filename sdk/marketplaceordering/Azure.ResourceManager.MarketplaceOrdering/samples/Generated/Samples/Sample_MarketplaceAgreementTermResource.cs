@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Samples
 
             // this example assumes you already have this MarketplaceAgreementTermResource created on azure
             // for more information of creating MarketplaceAgreementTermResource, please refer to the document of MarketplaceAgreementTermResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AgreementOfferType offerType = AgreementOfferType.Virtualmachine;
             string publisherId = "pubid";
             string offerId = "offid";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Samples
 
             // this example assumes you already have this MarketplaceAgreementTermResource created on azure
             // for more information of creating MarketplaceAgreementTermResource, please refer to the document of MarketplaceAgreementTermResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AgreementOfferType offerType = AgreementOfferType.Virtualmachine;
             string publisherId = "pubid";
             string offerId = "offid";

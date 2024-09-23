@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this FederatedIdentityCredentialResource created on azure
             // for more information of creating FederatedIdentityCredentialResource, please refer to the document of FederatedIdentityCredentialResource
-            string subscriptionId = "c267c0e7-0a73-4789-9e17-d26aeb0904e5";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string resourceName = "resourceName";
             string federatedIdentityCredentialResourceName = "ficResourceName";
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this FederatedIdentityCredentialResource created on azure
             // for more information of creating FederatedIdentityCredentialResource, please refer to the document of FederatedIdentityCredentialResource
-            string subscriptionId = "c267c0e7-0a73-4789-9e17-d26aeb0904e5";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string resourceName = "resourceName";
             string federatedIdentityCredentialResourceName = "ficResourceName";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // this example assumes you already have this FederatedIdentityCredentialResource created on azure
             // for more information of creating FederatedIdentityCredentialResource, please refer to the document of FederatedIdentityCredentialResource
-            string subscriptionId = "c267c0e7-0a73-4789-9e17-d26aeb0904e5";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string resourceName = "resourceName";
             string federatedIdentityCredentialResourceName = "ficResourceName";

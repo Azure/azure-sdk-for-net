@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "subnet-test";
             string virtualNetworkName = "vnetname";
             ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "subnet-test";
             string virtualNetworkName = "vnetname";
             ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "subnet-test";
             string virtualNetworkName = "vnetname";
             ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "subnet-test";
             string virtualNetworkName = "vnetname";
             ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "subnet-test";
             string virtualNetworkName = "vnetname";
             ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "subnet-test";
             string virtualNetworkName = "vnetname";
             ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "subnet-test";
             string virtualNetworkName = "vnetname";
             ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "subnet-test";
             string virtualNetworkName = "vnetname";
             ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "subnet-test";
             string virtualNetworkName = "vnetname";
             ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "subnet-test";
             string virtualNetworkName = "vnetname";
             ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "subnet-test";
             string virtualNetworkName = "vnetname";
             ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "subnet-test";
             string virtualNetworkName = "vnetname";
             ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
@@ -484,7 +484,7 @@ Service = "Microsoft.Storage",
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "subnet-test";
             string virtualNetworkName = "vnetname";
             ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
@@ -532,7 +532,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "subnet-test";
             string virtualNetworkName = "vnetname";
             ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
@@ -572,7 +572,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "subnet-test";
             string virtualNetworkName = "vnetname";
             ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);

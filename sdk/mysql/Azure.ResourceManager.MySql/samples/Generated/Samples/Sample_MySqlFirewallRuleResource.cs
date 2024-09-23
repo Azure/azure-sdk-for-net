@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MySql.Samples
 
             // this example assumes you already have this MySqlFirewallRuleResource created on azure
             // for more information of creating MySqlFirewallRuleResource, please refer to the document of MySqlFirewallRuleResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
             string firewallRuleName = "rule1";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MySql.Samples
 
             // this example assumes you already have this MySqlFirewallRuleResource created on azure
             // for more information of creating MySqlFirewallRuleResource, please refer to the document of MySqlFirewallRuleResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
             string firewallRuleName = "rule1";
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MySql.Samples
 
             // this example assumes you already have this MySqlFirewallRuleResource created on azure
             // for more information of creating MySqlFirewallRuleResource, please refer to the document of MySqlFirewallRuleResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "testserver";
             string firewallRuleName = "rule1";

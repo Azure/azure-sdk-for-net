@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteGatewayResource created on azure
             // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string expressRouteGatewayName = "gateway-2";
             ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);
@@ -101,7 +101,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
 
             // this example assumes you already have this ExpressRouteGatewayResource created on azure
             // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string expressRouteGatewayName = "expressRouteGatewayName";
             ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);
@@ -136,7 +136,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
 
             // this example assumes you already have this ExpressRouteGatewayResource created on azure
             // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string expressRouteGatewayName = "expressRouteGatewayName";
             ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);
@@ -167,7 +167,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
 
             // this example assumes you already have this ExpressRouteGatewayResource created on azure
             // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string expressRouteGatewayName = "expressRouteGatewayName";
             ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);
@@ -210,7 +210,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupNa
 
             // this example assumes you already have this ExpressRouteGatewayResource created on azure
             // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string expressRouteGatewayName = "expressRouteGatewayName";
             ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);

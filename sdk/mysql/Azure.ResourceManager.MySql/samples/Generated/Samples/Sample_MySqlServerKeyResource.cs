@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MySql.Samples
 
             // this example assumes you already have this MySqlServerKeyResource created on azure
             // for more information of creating MySqlServerKeyResource, please refer to the document of MySqlServerKeyResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "testserver";
             string keyName = "someVault_someKey_01234567890123456789012345678901";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MySql.Samples
 
             // this example assumes you already have this MySqlServerKeyResource created on azure
             // for more information of creating MySqlServerKeyResource, please refer to the document of MySqlServerKeyResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "testserver";
             string keyName = "someVault_someKey_01234567890123456789012345678901";
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MySql.Samples
 
             // this example assumes you already have this MySqlServerKeyResource created on azure
             // for more information of creating MySqlServerKeyResource, please refer to the document of MySqlServerKeyResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "testserver";
             string keyName = "someVault_someKey_01234567890123456789012345678901";

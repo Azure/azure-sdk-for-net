@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationAccountResource created on azure
             // for more information of creating IntegrationAccountResource, please refer to the document of IntegrationAccountResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string integrationAccountName = "testIntegrationAccount";
             ResourceIdentifier integrationAccountResourceId = IntegrationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, integrationAccountName);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationAccountResource created on azure
             // for more information of creating IntegrationAccountResource, please refer to the document of IntegrationAccountResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string integrationAccountName = "testIntegrationAccount";
             ResourceIdentifier integrationAccountResourceId = IntegrationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, integrationAccountName);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationAccountResource created on azure
             // for more information of creating IntegrationAccountResource, please refer to the document of IntegrationAccountResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string integrationAccountName = "testIntegrationAccount";
             ResourceIdentifier integrationAccountResourceId = IntegrationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, integrationAccountName);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationAccountResource created on azure
             // for more information of creating IntegrationAccountResource, please refer to the document of IntegrationAccountResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string integrationAccountName = "testIntegrationAccount";
             ResourceIdentifier integrationAccountResourceId = IntegrationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, integrationAccountName);
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationAccountResource created on azure
             // for more information of creating IntegrationAccountResource, please refer to the document of IntegrationAccountResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string integrationAccountName = "testIntegrationAccount";
             ResourceIdentifier integrationAccountResourceId = IntegrationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, integrationAccountName);
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this IntegrationAccountResource created on azure
             // for more information of creating IntegrationAccountResource, please refer to the document of IntegrationAccountResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string integrationAccountName = "testIntegrationAccount";
             ResourceIdentifier integrationAccountResourceId = IntegrationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, integrationAccountName);
@@ -287,7 +287,7 @@ Code = "NotFound",
 
             // this example assumes you already have this IntegrationAccountResource created on azure
             // for more information of creating IntegrationAccountResource, please refer to the document of IntegrationAccountResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string integrationAccountName = "testIntegrationAccount";
             ResourceIdentifier integrationAccountResourceId = IntegrationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, integrationAccountName);

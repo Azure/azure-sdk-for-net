@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this SecurityRuleResource created on azure
             // for more information of creating SecurityRuleResource, please refer to the document of SecurityRuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkSecurityGroupName = "testnsg";
             string securityRuleName = "rule1";
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this SecurityRuleResource created on azure
             // for more information of creating SecurityRuleResource, please refer to the document of SecurityRuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkSecurityGroupName = "testnsg";
             string securityRuleName = "rule1";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this SecurityRuleResource created on azure
             // for more information of creating SecurityRuleResource, please refer to the document of SecurityRuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkSecurityGroupName = "testnsg";
             string securityRuleName = "rule1";

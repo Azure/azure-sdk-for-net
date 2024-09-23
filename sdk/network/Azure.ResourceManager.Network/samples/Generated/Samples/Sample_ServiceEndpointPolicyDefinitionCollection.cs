@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ServiceEndpointPolicyResource created on azure
             // for more information of creating ServiceEndpointPolicyResource, please refer to the document of ServiceEndpointPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceEndpointPolicyName = "testPolicy";
             ResourceIdentifier serviceEndpointPolicyResourceId = ServiceEndpointPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceEndpointPolicyName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ServiceEndpointPolicyResource created on azure
             // for more information of creating ServiceEndpointPolicyResource, please refer to the document of ServiceEndpointPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceEndpointPolicyName = "testPolicy";
             ResourceIdentifier serviceEndpointPolicyResourceId = ServiceEndpointPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceEndpointPolicyName);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ServiceEndpointPolicyResource created on azure
             // for more information of creating ServiceEndpointPolicyResource, please refer to the document of ServiceEndpointPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceEndpointPolicyName = "testPolicy";
             ResourceIdentifier serviceEndpointPolicyResourceId = ServiceEndpointPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceEndpointPolicyName);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ServiceEndpointPolicyResource created on azure
             // for more information of creating ServiceEndpointPolicyResource, please refer to the document of ServiceEndpointPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceEndpointPolicyName = "testPolicy";
             ResourceIdentifier serviceEndpointPolicyResourceId = ServiceEndpointPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceEndpointPolicyName);
@@ -183,7 +183,7 @@ new ResourceIdentifier("/subscriptions/subid1"),new ResourceIdentifier("/subscri
 
             // this example assumes you already have this ServiceEndpointPolicyResource created on azure
             // for more information of creating ServiceEndpointPolicyResource, please refer to the document of ServiceEndpointPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceEndpointPolicyName = "testPolicy";
             ResourceIdentifier serviceEndpointPolicyResourceId = ServiceEndpointPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceEndpointPolicyName);

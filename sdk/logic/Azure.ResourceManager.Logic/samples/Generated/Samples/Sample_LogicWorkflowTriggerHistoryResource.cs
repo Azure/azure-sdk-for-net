@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this LogicWorkflowTriggerHistoryResource created on azure
             // for more information of creating LogicWorkflowTriggerHistoryResource, please refer to the document of LogicWorkflowTriggerHistoryResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string workflowName = "testWorkflowName";
             string triggerName = "testTriggerName";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Logic.Samples
 
             // this example assumes you already have this LogicWorkflowTriggerHistoryResource created on azure
             // for more information of creating LogicWorkflowTriggerHistoryResource, please refer to the document of LogicWorkflowTriggerHistoryResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string workflowName = "testWorkflowName";
             string triggerName = "testTriggerName";

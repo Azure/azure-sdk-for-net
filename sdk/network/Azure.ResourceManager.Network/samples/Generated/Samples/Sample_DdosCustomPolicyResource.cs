@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this DdosCustomPolicyResource created on azure
             // for more information of creating DdosCustomPolicyResource, please refer to the document of DdosCustomPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string ddosCustomPolicyName = "test-ddos-custom-policy";
             ResourceIdentifier ddosCustomPolicyResourceId = DdosCustomPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ddosCustomPolicyName);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this DdosCustomPolicyResource created on azure
             // for more information of creating DdosCustomPolicyResource, please refer to the document of DdosCustomPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string ddosCustomPolicyName = "test-ddos-custom-policy";
             ResourceIdentifier ddosCustomPolicyResourceId = DdosCustomPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ddosCustomPolicyName);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this DdosCustomPolicyResource created on azure
             // for more information of creating DdosCustomPolicyResource, please refer to the document of DdosCustomPolicyResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string ddosCustomPolicyName = "test-ddos-custom-policy";
             ResourceIdentifier ddosCustomPolicyResourceId = DdosCustomPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ddosCustomPolicyName);
