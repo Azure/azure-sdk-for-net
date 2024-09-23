@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Name for the group of linked database resources. </summary>
+        [WirePath("groupNickname")]
         public string GroupNickname { get; set; }
         /// <summary> List of database resources to link with this database. </summary>
+        [WirePath("linkedDatabases")]
         public IList<RedisEnterpriseLinkedDatabase> LinkedDatabases { get; }
     }
 }
