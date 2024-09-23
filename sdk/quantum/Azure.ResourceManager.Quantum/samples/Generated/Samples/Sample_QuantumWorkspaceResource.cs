@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Quantum.Samples
 
             // this example assumes you already have this QuantumWorkspaceResource created on azure
             // for more information of creating QuantumWorkspaceResource, please refer to the document of QuantumWorkspaceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "quantumResourcegroup";
             string workspaceName = "quantumworkspace1";
             ResourceIdentifier quantumWorkspaceResourceId = QuantumWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Quantum.Samples
 
             // this example assumes you already have this QuantumWorkspaceResource created on azure
             // for more information of creating QuantumWorkspaceResource, please refer to the document of QuantumWorkspaceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "quantumResourcegroup";
             string workspaceName = "quantumworkspace1";
             ResourceIdentifier quantumWorkspaceResourceId = QuantumWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Quantum.Samples
 
             // this example assumes you already have this QuantumWorkspaceResource created on azure
             // for more information of creating QuantumWorkspaceResource, please refer to the document of QuantumWorkspaceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "quantumResourcegroup";
             string workspaceName = "quantumworkspace1";
             ResourceIdentifier quantumWorkspaceResourceId = QuantumWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Quantum.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Quantum.Samples
 
             // this example assumes you already have this QuantumWorkspaceResource created on azure
             // for more information of creating QuantumWorkspaceResource, please refer to the document of QuantumWorkspaceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "quantumResourcegroup";
             string workspaceName = "quantumworkspace1";
             ResourceIdentifier quantumWorkspaceResourceId = QuantumWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Quantum.Samples
 
             // this example assumes you already have this QuantumWorkspaceResource created on azure
             // for more information of creating QuantumWorkspaceResource, please refer to the document of QuantumWorkspaceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "quantumResourcegroup";
             string workspaceName = "quantumworkspace1";
             ResourceIdentifier quantumWorkspaceResourceId = QuantumWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryEventResource created on azure
             // for more information of creating SiteRecoveryEventResource, please refer to the document of SiteRecoveryEventResource
-            string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string eventName = "654b71d0-b2ce-4e6e-a861-98528d4bd375";

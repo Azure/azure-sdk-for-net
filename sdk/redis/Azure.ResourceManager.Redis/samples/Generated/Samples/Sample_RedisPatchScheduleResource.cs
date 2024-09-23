@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Redis.Samples
 
             // this example assumes you already have this RedisPatchScheduleResource created on azure
             // for more information of creating RedisPatchScheduleResource, please refer to the document of RedisPatchScheduleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string name = "cache1";
             RedisPatchScheduleDefaultName defaultName = RedisPatchScheduleDefaultName.Default;
@@ -71,7 +71,7 @@ MaintenanceWindow = XmlConvert.ToTimeSpan("PT5H"),
 
             // this example assumes you already have this RedisPatchScheduleResource created on azure
             // for more information of creating RedisPatchScheduleResource, please refer to the document of RedisPatchScheduleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string name = "cache1";
             RedisPatchScheduleDefaultName defaultName = RedisPatchScheduleDefaultName.Default;
@@ -99,7 +99,7 @@ MaintenanceWindow = XmlConvert.ToTimeSpan("PT5H"),
 
             // this example assumes you already have this RedisPatchScheduleResource created on azure
             // for more information of creating RedisPatchScheduleResource, please refer to the document of RedisPatchScheduleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string name = "cache1";
             RedisPatchScheduleDefaultName defaultName = RedisPatchScheduleDefaultName.Default;

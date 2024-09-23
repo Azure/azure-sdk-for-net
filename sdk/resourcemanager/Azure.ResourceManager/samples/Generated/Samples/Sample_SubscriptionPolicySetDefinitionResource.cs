@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // this example assumes you already have this SubscriptionPolicySetDefinitionResource created on azure
             // for more information of creating SubscriptionPolicySetDefinitionResource, please refer to the document of SubscriptionPolicySetDefinitionResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string policySetDefinitionName = "CostManagement";
             ResourceIdentifier subscriptionPolicySetDefinitionResourceId = SubscriptionPolicySetDefinitionResource.CreateResourceIdentifier(subscriptionId, policySetDefinitionName);
             SubscriptionPolicySetDefinitionResource subscriptionPolicySetDefinition = client.GetSubscriptionPolicySetDefinitionResource(subscriptionPolicySetDefinitionResourceId);
@@ -111,7 +111,7 @@ PolicyDefinitionReferenceId = "Resource_Naming",
 
             // this example assumes you already have this SubscriptionPolicySetDefinitionResource created on azure
             // for more information of creating SubscriptionPolicySetDefinitionResource, please refer to the document of SubscriptionPolicySetDefinitionResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string policySetDefinitionName = "CostManagement";
             ResourceIdentifier subscriptionPolicySetDefinitionResourceId = SubscriptionPolicySetDefinitionResource.CreateResourceIdentifier(subscriptionId, policySetDefinitionName);
             SubscriptionPolicySetDefinitionResource subscriptionPolicySetDefinition = client.GetSubscriptionPolicySetDefinitionResource(subscriptionPolicySetDefinitionResourceId);
@@ -199,7 +199,7 @@ Description = "Policies that help enforce resource organization standards within
 
             // this example assumes you already have this SubscriptionPolicySetDefinitionResource created on azure
             // for more information of creating SubscriptionPolicySetDefinitionResource, please refer to the document of SubscriptionPolicySetDefinitionResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string policySetDefinitionName = "CostManagement";
             ResourceIdentifier subscriptionPolicySetDefinitionResourceId = SubscriptionPolicySetDefinitionResource.CreateResourceIdentifier(subscriptionId, policySetDefinitionName);
             SubscriptionPolicySetDefinitionResource subscriptionPolicySetDefinition = client.GetSubscriptionPolicySetDefinitionResource(subscriptionPolicySetDefinitionResourceId);
@@ -225,7 +225,7 @@ Description = "Policies that help enforce resource organization standards within
 
             // this example assumes you already have this SubscriptionPolicySetDefinitionResource created on azure
             // for more information of creating SubscriptionPolicySetDefinitionResource, please refer to the document of SubscriptionPolicySetDefinitionResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string policySetDefinitionName = "CostManagement";
             ResourceIdentifier subscriptionPolicySetDefinitionResourceId = SubscriptionPolicySetDefinitionResource.CreateResourceIdentifier(subscriptionId, policySetDefinitionName);
             SubscriptionPolicySetDefinitionResource subscriptionPolicySetDefinition = client.GetSubscriptionPolicySetDefinitionResource(subscriptionPolicySetDefinitionResourceId);

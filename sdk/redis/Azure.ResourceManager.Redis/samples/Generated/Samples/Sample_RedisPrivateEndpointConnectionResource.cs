@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Redis.Samples
 
             // this example assumes you already have this RedisPrivateEndpointConnectionResource created on azure
             // for more information of creating RedisPrivateEndpointConnectionResource, please refer to the document of RedisPrivateEndpointConnectionResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgtest01";
             string cacheName = "cachetest01";
             string privateEndpointConnectionName = "pectest01";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Redis.Samples
 
             // this example assumes you already have this RedisPrivateEndpointConnectionResource created on azure
             // for more information of creating RedisPrivateEndpointConnectionResource, please refer to the document of RedisPrivateEndpointConnectionResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgtest01";
             string cacheName = "cachetest01";
             string privateEndpointConnectionName = "pectest01";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Redis.Samples
 
             // this example assumes you already have this RedisPrivateEndpointConnectionResource created on azure
             // for more information of creating RedisPrivateEndpointConnectionResource, please refer to the document of RedisPrivateEndpointConnectionResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgtest01";
             string cacheName = "cachetest01";
             string privateEndpointConnectionName = "pectest01";

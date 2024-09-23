@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
 
             // this example assumes you already have this ResourceHealthEventImpactedResource created on azure
             // for more information of creating ResourceHealthEventImpactedResource, please refer to the document of ResourceHealthEventImpactedResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string eventTrackingId = "BC_1-FXZ";
             string impactedResourceName = "abc-123-ghj-456";
             ResourceIdentifier resourceHealthEventImpactedResourceId = ResourceHealthEventImpactedResource.CreateResourceIdentifier(subscriptionId, eventTrackingId, impactedResourceName);

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resGroupFoo";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "77777777-b0c6-47a2-b37c-d8e65a629c18";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resGroupBar";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Purview.Samples
 
             // this example assumes you already have this PurviewPrivateEndpointConnectionResource created on azure
             // for more information of creating PurviewPrivateEndpointConnectionResource, please refer to the document of PurviewPrivateEndpointConnectionResource
-            string subscriptionId = "12345678-1234-1234-12345678abc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
             string privateEndpointConnectionName = "privateEndpointConnection1";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Purview.Samples
 
             // this example assumes you already have this PurviewPrivateEndpointConnectionResource created on azure
             // for more information of creating PurviewPrivateEndpointConnectionResource, please refer to the document of PurviewPrivateEndpointConnectionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
             string privateEndpointConnectionName = "privateEndpointConnection1";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Purview.Samples
 
             // this example assumes you already have this PurviewPrivateEndpointConnectionResource created on azure
             // for more information of creating PurviewPrivateEndpointConnectionResource, please refer to the document of PurviewPrivateEndpointConnectionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
             string privateEndpointConnectionName = "privateEndpointConnection1";

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryMigrationItemResource created on azure
             // for more information of creating SiteRecoveryMigrationItemResource, please refer to the document of SiteRecoveryMigrationItemResource
-            string subscriptionId = "cb53d0c3-bd59-4721-89bc-06916a9147ef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup1";
             string resourceName = "migrationvault";
             string fabricName = "vmwarefabric1";
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryMigrationItemResource created on azure
             // for more information of creating SiteRecoveryMigrationItemResource, please refer to the document of SiteRecoveryMigrationItemResource
-            string subscriptionId = "cb53d0c3-bd59-4721-89bc-06916a9147ef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup1";
             string resourceName = "migrationvault";
             string fabricName = "vmwarefabric1";
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryMigrationItemResource created on azure
             // for more information of creating SiteRecoveryMigrationItemResource, please refer to the document of SiteRecoveryMigrationItemResource
-            string subscriptionId = "cb53d0c3-bd59-4721-89bc-06916a9147ef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup1";
             string resourceName = "migrationvault";
             string fabricName = "vmwarefabric1";
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryMigrationItemResource created on azure
             // for more information of creating SiteRecoveryMigrationItemResource, please refer to the document of SiteRecoveryMigrationItemResource
-            string subscriptionId = "cb53d0c3-bd59-4721-89bc-06916a9147ef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup1";
             string resourceName = "migrationvault";
             string fabricName = "vmwarefabric1";
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryMigrationItemResource created on azure
             // for more information of creating SiteRecoveryMigrationItemResource, please refer to the document of SiteRecoveryMigrationItemResource
-            string subscriptionId = "cb53d0c3-bd59-4721-89bc-06916a9147ef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup1";
             string resourceName = "migrationvault";
             string fabricName = "vmwarefabric1";
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryMigrationItemResource created on azure
             // for more information of creating SiteRecoveryMigrationItemResource, please refer to the document of SiteRecoveryMigrationItemResource
-            string subscriptionId = "cb53d0c3-bd59-4721-89bc-06916a9147ef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup1";
             string resourceName = "migrationvault";
             string fabricName = "vmwarefabric1";
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryMigrationItemResource created on azure
             // for more information of creating SiteRecoveryMigrationItemResource, please refer to the document of SiteRecoveryMigrationItemResource
-            string subscriptionId = "cb53d0c3-bd59-4721-89bc-06916a9147ef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup1";
             string resourceName = "migrationvault";
             string fabricName = "vmwarefabric1";
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryMigrationItemResource created on azure
             // for more information of creating SiteRecoveryMigrationItemResource, please refer to the document of SiteRecoveryMigrationItemResource
-            string subscriptionId = "cb53d0c3-bd59-4721-89bc-06916a9147ef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup1";
             string resourceName = "migrationvault";
             string fabricName = "vmwarefabric1";
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this SiteRecoveryMigrationItemResource created on azure
             // for more information of creating SiteRecoveryMigrationItemResource, please refer to the document of SiteRecoveryMigrationItemResource
-            string subscriptionId = "cb53d0c3-bd59-4721-89bc-06916a9147ef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup1";
             string resourceName = "migrationvault";
             string fabricName = "vmwarefabric1";
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "cb53d0c3-bd59-4721-89bc-06916a9147ef";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

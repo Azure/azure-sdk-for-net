@@ -938,7 +938,7 @@ Value = BinaryData.FromString("\"-LC\""),
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this PolicyAssignmentResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestResourceGroup";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}", subscriptionId, resourceGroupName));
             PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
@@ -974,7 +974,7 @@ Value = BinaryData.FromString("\"-LC\""),
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this PolicyAssignmentResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestResourceGroup";
             string resourceProviderNamespace = "Microsoft.Compute";
             string parentResourcePath = "virtualMachines/MyTestVm";
@@ -1048,7 +1048,7 @@ Value = BinaryData.FromString("\"-LC\""),
             // for more information of creating ArmResource, please refer to the document of ArmResource
 
             // get the collection of this PolicyAssignmentResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}", subscriptionId));
             PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
 

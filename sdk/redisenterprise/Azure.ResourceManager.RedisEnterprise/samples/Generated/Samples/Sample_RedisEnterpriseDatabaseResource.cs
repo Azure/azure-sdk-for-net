@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
             // this example assumes you already have this RedisEnterpriseDatabaseResource created on azure
             // for more information of creating RedisEnterpriseDatabaseResource, please refer to the document of RedisEnterpriseDatabaseResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string clusterName = "cache1";
             string databaseName = "default";
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
             // this example assumes you already have this RedisEnterpriseDatabaseResource created on azure
             // for more information of creating RedisEnterpriseDatabaseResource, please refer to the document of RedisEnterpriseDatabaseResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string clusterName = "cache1";
             string databaseName = "default";
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
             // this example assumes you already have this RedisEnterpriseDatabaseResource created on azure
             // for more information of creating RedisEnterpriseDatabaseResource, please refer to the document of RedisEnterpriseDatabaseResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string clusterName = "cache1";
             string databaseName = "db1";
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
             // this example assumes you already have this RedisEnterpriseDatabaseResource created on azure
             // for more information of creating RedisEnterpriseDatabaseResource, please refer to the document of RedisEnterpriseDatabaseResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string clusterName = "cache1";
             string databaseName = "default";
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
             // this example assumes you already have this RedisEnterpriseDatabaseResource created on azure
             // for more information of creating RedisEnterpriseDatabaseResource, please refer to the document of RedisEnterpriseDatabaseResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string clusterName = "cache1";
             string databaseName = "default";
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
             // this example assumes you already have this RedisEnterpriseDatabaseResource created on azure
             // for more information of creating RedisEnterpriseDatabaseResource, please refer to the document of RedisEnterpriseDatabaseResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string clusterName = "cache1";
             string databaseName = "default";
@@ -223,7 +223,7 @@ new Uri("https://contosostorage.blob.core.window.net/urltoBlobFile1?sasKeyParame
 
             // this example assumes you already have this RedisEnterpriseDatabaseResource created on azure
             // for more information of creating RedisEnterpriseDatabaseResource, please refer to the document of RedisEnterpriseDatabaseResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string clusterName = "cache1";
             string databaseName = "default";
@@ -252,7 +252,7 @@ new Uri("https://contosostorage.blob.core.window.net/urltoBlobFile1?sasKeyParame
 
             // this example assumes you already have this RedisEnterpriseDatabaseResource created on azure
             // for more information of creating RedisEnterpriseDatabaseResource, please refer to the document of RedisEnterpriseDatabaseResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string clusterName = "cache1";
             string databaseName = "default";
@@ -284,7 +284,7 @@ new ResourceIdentifier("/subscriptions/subid2/resourceGroups/rg2/providers/Micro
 
             // this example assumes you already have this RedisEnterpriseDatabaseResource created on azure
             // for more information of creating RedisEnterpriseDatabaseResource, please refer to the document of RedisEnterpriseDatabaseResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string clusterName = "cache1";
             string databaseName = "default";

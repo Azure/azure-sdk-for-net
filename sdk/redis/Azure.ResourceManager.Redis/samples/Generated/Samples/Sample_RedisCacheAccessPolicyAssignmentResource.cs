@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Redis.Samples
 
             // this example assumes you already have this RedisCacheAccessPolicyAssignmentResource created on azure
             // for more information of creating RedisCacheAccessPolicyAssignmentResource, please refer to the document of RedisCacheAccessPolicyAssignmentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string cacheName = "cache1";
             string accessPolicyAssignmentName = "accessPolicyAssignmentName1";
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Redis.Samples
 
             // this example assumes you already have this RedisCacheAccessPolicyAssignmentResource created on azure
             // for more information of creating RedisCacheAccessPolicyAssignmentResource, please refer to the document of RedisCacheAccessPolicyAssignmentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string cacheName = "cache1";
             string accessPolicyAssignmentName = "accessPolicyAssignmentName1";
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Redis.Samples
 
             // this example assumes you already have this RedisCacheAccessPolicyAssignmentResource created on azure
             // for more information of creating RedisCacheAccessPolicyAssignmentResource, please refer to the document of RedisCacheAccessPolicyAssignmentResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string cacheName = "cache1";
             string accessPolicyAssignmentName = "accessPolicyAssignmentName1";

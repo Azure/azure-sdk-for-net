@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Relay.Samples
 
             // this example assumes you already have this RelayNamespaceAuthorizationRuleResource created on azure
             // for more information of creating RelayNamespaceAuthorizationRuleResource, please refer to the document of RelayNamespaceAuthorizationRuleResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup";
             string namespaceName = "example-RelayNamespace-01";
             string authorizationRuleName = "example-RelayAuthRules-01";
@@ -70,7 +70,7 @@ RelayAccessRight.Listen,RelayAccessRight.Send
 
             // this example assumes you already have this RelayNamespaceAuthorizationRuleResource created on azure
             // for more information of creating RelayNamespaceAuthorizationRuleResource, please refer to the document of RelayNamespaceAuthorizationRuleResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup";
             string namespaceName = "example-RelayNamespace-01";
             string authorizationRuleName = "example-RelayAuthRules-01";
@@ -98,7 +98,7 @@ RelayAccessRight.Listen,RelayAccessRight.Send
 
             // this example assumes you already have this RelayNamespaceAuthorizationRuleResource created on azure
             // for more information of creating RelayNamespaceAuthorizationRuleResource, please refer to the document of RelayNamespaceAuthorizationRuleResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup";
             string namespaceName = "example-RelayNamespace-01";
             string authorizationRuleName = "example-RelayAuthRules-01";
@@ -130,7 +130,7 @@ RelayAccessRight.Listen,RelayAccessRight.Send
 
             // this example assumes you already have this RelayNamespaceAuthorizationRuleResource created on azure
             // for more information of creating RelayNamespaceAuthorizationRuleResource, please refer to the document of RelayNamespaceAuthorizationRuleResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup";
             string namespaceName = "example-RelayNamespace-01";
             string authorizationRuleName = "example-RelayAuthRules-01";
@@ -158,7 +158,7 @@ RelayAccessRight.Listen,RelayAccessRight.Send
 
             // this example assumes you already have this RelayNamespaceAuthorizationRuleResource created on azure
             // for more information of creating RelayNamespaceAuthorizationRuleResource, please refer to the document of RelayNamespaceAuthorizationRuleResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroup";
             string namespaceName = "example-RelayNamespace-01";
             string authorizationRuleName = "example-RelayAuthRules-01";

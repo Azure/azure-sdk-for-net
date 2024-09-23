@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // this example assumes you already have this FeatureResource created on azure
             // for more information of creating FeatureResource, please refer to the document of FeatureResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceProviderNamespace = "Resource Provider Namespace";
             string featureName = "feature";
             ResourceIdentifier featureResourceId = FeatureResource.CreateResourceIdentifier(subscriptionId, resourceProviderNamespace, featureName);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // this example assumes you already have this FeatureResource created on azure
             // for more information of creating FeatureResource, please refer to the document of FeatureResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceProviderNamespace = "Resource Provider Namespace";
             string featureName = "feature";
             ResourceIdentifier featureResourceId = FeatureResource.CreateResourceIdentifier(subscriptionId, resourceProviderNamespace, featureName);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // this example assumes you already have this FeatureResource created on azure
             // for more information of creating FeatureResource, please refer to the document of FeatureResource
-            string subscriptionId = "ff23096b-f5a2-46ea-bd62-59c3e93fef9a";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceProviderNamespace = "Resource Provider Namespace";
             string featureName = "feature";
             ResourceIdentifier featureResourceId = FeatureResource.CreateResourceIdentifier(subscriptionId, resourceProviderNamespace, featureName);

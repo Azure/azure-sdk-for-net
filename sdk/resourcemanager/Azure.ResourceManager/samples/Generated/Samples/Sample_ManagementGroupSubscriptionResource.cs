@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             // this example assumes you already have this ManagementGroupSubscriptionResource created on azure
             // for more information of creating ManagementGroupSubscriptionResource, please refer to the document of ManagementGroupSubscriptionResource
             string groupId = "Group";
-            string subscriptionId = "728bcbe4-8d56-4510-86c2-4921b8beefbc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier managementGroupSubscriptionResourceId = ManagementGroupSubscriptionResource.CreateResourceIdentifier(groupId, subscriptionId);
             ManagementGroupSubscriptionResource managementGroupSubscription = client.GetManagementGroupSubscriptionResource(managementGroupSubscriptionResourceId);
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             // this example assumes you already have this ManagementGroupSubscriptionResource created on azure
             // for more information of creating ManagementGroupSubscriptionResource, please refer to the document of ManagementGroupSubscriptionResource
             string groupId = "Group";
-            string subscriptionId = "728bcbe4-8d56-4510-86c2-4921b8beefbc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier managementGroupSubscriptionResourceId = ManagementGroupSubscriptionResource.CreateResourceIdentifier(groupId, subscriptionId);
             ManagementGroupSubscriptionResource managementGroupSubscription = client.GetManagementGroupSubscriptionResource(managementGroupSubscriptionResourceId);
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             // this example assumes you already have this ManagementGroupSubscriptionResource created on azure
             // for more information of creating ManagementGroupSubscriptionResource, please refer to the document of ManagementGroupSubscriptionResource
             string groupId = "Group";
-            string subscriptionId = "728bcbe4-8d56-4510-86c2-4921b8beefbc";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier managementGroupSubscriptionResourceId = ManagementGroupSubscriptionResource.CreateResourceIdentifier(groupId, subscriptionId);
             ManagementGroupSubscriptionResource managementGroupSubscription = client.GetManagementGroupSubscriptionResource(managementGroupSubscriptionResourceId);
 

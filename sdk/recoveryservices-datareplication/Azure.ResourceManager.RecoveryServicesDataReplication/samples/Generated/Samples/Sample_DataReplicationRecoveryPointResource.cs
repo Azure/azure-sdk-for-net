@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
             // this example assumes you already have this DataReplicationRecoveryPointResource created on azure
             // for more information of creating DataReplicationRecoveryPointResource, please refer to the document of DataReplicationRecoveryPointResource
-            string subscriptionId = "930CEC23-4430-4513-B855-DBA237E2F3BF";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgrecoveryservicesdatareplication";
             string vaultName = "4";
             string protectedItemName = "d";
