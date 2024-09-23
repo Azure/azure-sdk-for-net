@@ -26,8 +26,9 @@ public class FileTests : AoaiTestBase<FileClient>
             "test_file_delete_me.txt",
             FileUploadPurpose.Assistants);
         Validate(file);
-        bool deleted = await client.DeleteFileAsync(file.Id);
-        Assert.IsTrue(deleted);
+        FileDeletionResult deletionResult = await client.DeleteFileAsync(file.Id);
+        Assert.That(deletionResult.FileId, Is.EqualTo(file.Id));
+        Assert.IsTrue(deletionResult.Deleted);
     }
 
     [RecordedTest]

@@ -24,14 +24,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         {
             var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
             var queueName = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var options = new ServiceBusReceiverOptions()
             {
                 ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete,
                 PrefetchCount = 5
             };
-            var receiver = new ServiceBusClient(connString).CreateReceiver(queueName, options);
+            var receiver = new ServiceBusClient(fullyQualifiedNamespace, Mock.Of<TokenCredential>()).CreateReceiver(queueName, options);
             Assert.AreEqual(queueName, receiver.EntityPath);
             Assert.AreEqual(fullyQualifiedNamespace, receiver.FullyQualifiedNamespace);
             Assert.IsNotNull(receiver.Identifier);
@@ -40,14 +39,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             Assert.AreEqual(5, receiver.PrefetchCount);
         }
 
+        [TestCase(true)]
+        [TestCase(false)]
         [Test]
-        public void EntityPathConstructedCorrectly()
+        public void EntityPathConstructedCorrectly(bool useConnectionString)
         {
             var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
+
+            ServiceBusClient client;
+            if (useConnectionString)
+            {
+                var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
+                client = new ServiceBusClient(connString);
+            }
+            else
+            {
+                client = new ServiceBusClient(fullyQualifiedNamespace, Mock.Of<TokenCredential>());
+            }
+
             var queueName = "queueName";
-            var client = new ServiceBusClient(connString);
             var receiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
             {
                 SubQueue = SubQueue.None
@@ -72,8 +83,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         {
             var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
-            var client = new ServiceBusClient(connString);
+            var client = new ServiceBusClient(fullyQualifiedNamespace, Mock.Of<TokenCredential>());
             var receiver = client.CreateReceiver("queueName");
             Assert.That(
                 async () => await receiver.PeekMessagesAsync(0),
@@ -88,8 +98,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         {
             var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
-            var client = new ServiceBusClient(connString);
+            var client = new ServiceBusClient(fullyQualifiedNamespace, Mock.Of<TokenCredential>());
             var receiver = client.CreateReceiver("queueName");
             Assert.That(
                 async () => await receiver.DeleteMessagesAsync(0, default),
@@ -101,8 +110,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         {
             var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
-            var client = new ServiceBusClient(connString);
+            var client = new ServiceBusClient(fullyQualifiedNamespace, Mock.Of<TokenCredential>());
             var receiver = client.CreateReceiver("queueName");
             Assert.That(
                 async () => await receiver.ReceiveMessagesAsync(0),
@@ -129,8 +137,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         {
             var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
-            var client = new ServiceBusClient(connString);
+            var client = new ServiceBusClient(fullyQualifiedNamespace, Mock.Of<TokenCredential>());
             var receiver = client.CreateReceiver("queue");
             Assert.That(
                 async () => await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(0)),
@@ -354,8 +361,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         {
             var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
-            var client = new ServiceBusClient(connString);
+            var mockCredential = new Mock<TokenCredential>();
+            var credential = mockCredential.Object;
+            var client = new ServiceBusClient(fullyQualifiedNamespace, credential);
             var receiver = client.CreateReceiver("queue");
             await receiver.CloseAsync();
             Assert.IsTrue(receiver.IsClosed);

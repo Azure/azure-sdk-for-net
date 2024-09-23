@@ -20,17 +20,9 @@ public class BasicOperationalInsightsTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "The workspace location."
-                    };
-
                 OperationalInsightsWorkspace workspace =
                     new(nameof(workspace))
                     {
-                        Location = location,
                         Sku = new OperationalInsightsWorkspaceSku
                         {
                             Name = OperationalInsightsWorkspaceSkuName.PerGB2018
@@ -40,20 +32,20 @@ public class BasicOperationalInsightsTests(bool async)
             })
         .Compare(
             """
-            @description('The workspace location.')
+            @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
             resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
-                name: take('workspace-${uniqueString(resourceGroup().id)}', 63)
-                location: location
-                identity: {
-                    type: 'SystemAssigned'
+              name: take('workspace-${uniqueString(resourceGroup().id)}', 63)
+              location: location
+              identity: {
+                type: 'SystemAssigned'
+              }
+              properties: {
+                sku: {
+                  name: 'PerGB2018'
                 }
-                properties: {
-                    sku: {
-                        name: 'PerGB2018'
-                    }
-                }
+              }
             }
             """)
         .Lint()

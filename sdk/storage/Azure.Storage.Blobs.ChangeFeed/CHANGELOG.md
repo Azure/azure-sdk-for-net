@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-preview.49 (Unreleased)
+## 12.0.0-preview.50 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.0.0-preview.49 (2024-09-18)
+
+### Features Added
+- This release contains bug fixes to improve quality.
 
 ## 12.0.0-preview.48 (2024-08-06)
 

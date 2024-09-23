@@ -28,15 +28,17 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="AnswerCallRequestInternal"/>. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <param name="callbackUri"> The callback uri. </param>
+        /// <param name="customCallingContext"> Used by customer to send custom calling context to targets when answering On-Behalf-Of call. </param>
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
         /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
         /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
         /// <param name="answeredBy"> The identifier of the call automation entity which answers the call. </param>
-        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, MediaStreamingOptionsInternal mediaStreamingConfiguration, TranscriptionOptionsInternal transcriptionConfiguration, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy)
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, CustomCallingContextInternal customCallingContext, string operationContext, MediaStreamingOptionsInternal mediaStreamingConfiguration, TranscriptionOptionsInternal transcriptionConfiguration, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy)
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
+            CustomCallingContext = customCallingContext;
             OperationContext = operationContext;
             MediaStreamingConfiguration = mediaStreamingConfiguration;
             TranscriptionConfiguration = transcriptionConfiguration;
@@ -48,6 +50,8 @@ namespace Azure.Communication.CallAutomation
         public string IncomingCallContext { get; }
         /// <summary> The callback uri. </summary>
         public string CallbackUri { get; }
+        /// <summary> Used by customer to send custom calling context to targets when answering On-Behalf-Of call. </summary>
+        public CustomCallingContextInternal CustomCallingContext { get; set; }
         /// <summary> A customer set value used to track the answering of a call. </summary>
         public string OperationContext { get; set; }
         /// <summary> Media Streaming Configuration. </summary>

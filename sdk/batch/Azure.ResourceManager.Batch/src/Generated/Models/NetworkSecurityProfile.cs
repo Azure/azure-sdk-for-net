@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityProfile"/>. </summary>
         internal NetworkSecurityProfile()
         {
-            AccessRules = new ChangeTrackingList<AccessRule>();
+            AccessRules = new ChangeTrackingList<BatchAccessRule>();
             EnabledLogCategories = new ChangeTrackingList<string>();
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
         /// <param name="enabledLogCategories"> List of log categories that are enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityProfile(string name, int? accessRulesVersion, IReadOnlyList<AccessRule> accessRules, int? diagnosticSettingsVersion, IReadOnlyList<string> enabledLogCategories, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityProfile(string name, int? accessRulesVersion, IReadOnlyList<BatchAccessRule> accessRules, int? diagnosticSettingsVersion, IReadOnlyList<string> enabledLogCategories, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AccessRulesVersion = accessRulesVersion;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Current access rules version. </summary>
         public int? AccessRulesVersion { get; }
         /// <summary> List of Access Rules. </summary>
-        public IReadOnlyList<AccessRule> AccessRules { get; }
+        public IReadOnlyList<BatchAccessRule> AccessRules { get; }
         /// <summary> Current diagnostic settings version. </summary>
         public int? DiagnosticSettingsVersion { get; }
         /// <summary> List of log categories that are enabled. </summary>

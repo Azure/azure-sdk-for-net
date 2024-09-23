@@ -5,7 +5,7 @@ using Azure.Core;
 namespace Azure.Maps.Search.Models
 {
     [CodeGenSerialization(nameof(BoundingBox), "boundingBox")]
-    public partial class GeoJsonMultiLineString
+    internal partial class GeoJsonMultiLineString
     {
     }
 }

@@ -66,9 +66,11 @@ namespace Azure.Identity.Samples
         public void AuthenticatingWithAuthorityHost()
         {
             #region Snippet:AuthenticatingWithAuthorityHost
-
-            var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { AuthorityHost = AzureAuthorityHosts.AzureGovernment });
-
+            var credential = new DefaultAzureCredential(
+                new DefaultAzureCredentialOptions
+                {
+                    AuthorityHost = AzureAuthorityHosts.AzureGovernment
+                });
             #endregion
         }
 

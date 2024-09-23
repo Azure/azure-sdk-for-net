@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListsAllWAFPoliciesInAResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/WafListPolicies.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/WafListPolicies.json
             // this example is just showing the usage of "WebApplicationFirewallPolicies_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetsAWAFPolicyWithinAResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/WafPolicyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/WafPolicyGet.json
             // this example is just showing the usage of "WebApplicationFirewallPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetsAWAFPolicyWithinAResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/WafPolicyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/WafPolicyGet.json
             // this example is just showing the usage of "WebApplicationFirewallPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetsAWAFPolicyWithinAResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/WafPolicyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/WafPolicyGet.json
             // this example is just showing the usage of "WebApplicationFirewallPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreatesOrUpdatesAWAFPolicyWithinAResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/WafPolicyCreateOrUpdate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/WafPolicyCreateOrUpdate.json
             // this example is just showing the usage of "WebApplicationFirewallPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -336,9 +336,80 @@ Action = RuleMatchActionType.JSChallenge,
 },
 }
 },
+},new ManagedRuleSet("Microsoft_HTTPDDoSRuleSet","1.0")
+{
+RuleGroupOverrides =
+{
+new ManagedRuleGroupOverride("ExcessiveRequests")
+{
+Rules =
+{
+new ManagedRuleOverride("500100")
+{
+State = ManagedRuleEnabledState.Enabled,
+Action = RuleMatchActionType.Block,
+Sensitivity = ManagedRuleSensitivityType.High,
+}
+},
+}
+},
 }
             })
                 {
+                    Exceptions =
+{
+new ExceptionEntry(ExceptionEntryMatchVariable.RequestUri,ExceptionEntryValueMatchOperator.Contains)
+{
+Values =
+{
+"health","account/images","default.aspx"
+},
+ExceptionManagedRuleSets =
+{
+new ExclusionManagedRuleSet("OWASP","3.2")
+},
+},new ExceptionEntry(ExceptionEntryMatchVariable.RequestHeader,ExceptionEntryValueMatchOperator.Contains)
+{
+Values =
+{
+"Mozilla/5.0","Chrome/122.0.0.0"
+},
+SelectorMatchOperator = ExceptionEntrySelectorMatchOperator.StartsWith,
+Selector = "User-Agent",
+ExceptionManagedRuleSets =
+{
+new ExclusionManagedRuleSet("OWASP","3.2")
+{
+RuleGroups =
+{
+new ExclusionManagedRuleGroup("REQUEST-932-APPLICATION-ATTACK-RCE")
+},
+}
+},
+},new ExceptionEntry(ExceptionEntryMatchVariable.RemoteAddr,ExceptionEntryValueMatchOperator.IPMatch)
+{
+Values =
+{
+"1.2.3.4","10.0.0.1/6"
+},
+ExceptionManagedRuleSets =
+{
+new ExclusionManagedRuleSet("Microsoft_BotManagerRuleSet","1.0")
+{
+RuleGroups =
+{
+new ExclusionManagedRuleGroup("BadBots")
+{
+Rules =
+{
+new ExclusionManagedRule("100100")
+},
+}
+},
+}
+},
+}
+},
                     Exclusions =
 {
 new OwaspCrsExclusionEntry(OwaspCrsExclusionEntryMatchVariable.RequestArgNames,OwaspCrsExclusionEntrySelectorMatchOperator.StartsWith,"hello")
