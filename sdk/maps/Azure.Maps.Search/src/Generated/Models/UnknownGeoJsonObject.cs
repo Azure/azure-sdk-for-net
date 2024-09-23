@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Unknown version of GeoJsonObject. </summary>
-    public partial class UnknownGeoJsonObject : GeoJsonObject
+    internal partial class UnknownGeoJsonObject : GeoJsonObject
     {
         /// <summary> Initializes a new instance of <see cref="UnknownGeoJsonObject"/>. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>

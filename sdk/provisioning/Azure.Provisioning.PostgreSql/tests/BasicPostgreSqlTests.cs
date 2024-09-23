@@ -106,45 +106,45 @@ public class BasicPostgreSqlTests(bool async)
 
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
-            
+
             resource server 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
-                name: take('server${uniqueString(resourceGroup().id)}', 24)
-                location: location
-                properties: {
-                    administratorLogin: adminLogin
-                    administratorLoginPassword: adminPass
-                    authConfig: {
-                        activeDirectoryAuth: 'Enabled'
-                        passwordAuth: 'Disabled'
-                        tenantId: tenant().tenantId
-                    }
-                    backup: {
-                        backupRetentionDays: 7
-                        geoRedundantBackup: 'Disabled'
-                    }
-                    createMode: 'Default'
-                    highAvailability: {
-                        mode: 'Disabled'
-                    }
-                    storage: {
-                        storageSizeGB: 32
-                    }
-                    version: '14'
+              name: take('server${uniqueString(resourceGroup().id)}', 24)
+              location: location
+              properties: {
+                administratorLogin: adminLogin
+                administratorLoginPassword: adminPass
+                authConfig: {
+                  activeDirectoryAuth: 'Enabled'
+                  passwordAuth: 'Disabled'
+                  tenantId: tenant().tenantId
                 }
-                sku: {
-                    name: 'Standard_D2ds_v4'
-                    tier: 'GeneralPurpose'
+                backup: {
+                  backupRetentionDays: 7
+                  geoRedundantBackup: 'Disabled'
                 }
+                createMode: 'Default'
+                highAvailability: {
+                  mode: 'Disabled'
+                }
+                storage: {
+                  storageSizeGB: 32
+                }
+                version: '14'
+              }
+              sku: {
+                name: 'Standard_D2ds_v4'
+                tier: 'GeneralPurpose'
+              }
             }
 
             resource admin 'Microsoft.DBforPostgreSQL/flexibleServers/administrators@2022-12-01' = {
-                name: aadAdminOid
-                properties: {
-                    principalName: aadAdminName
-                    principalType: 'ServicePrincipal'
-                    tenantId: subscription().tenantId
-                }
-                parent: server
+              name: aadAdminOid
+              properties: {
+                principalName: aadAdminName
+                principalType: 'ServicePrincipal'
+                tenantId: subscription().tenantId
+              }
+              parent: server
             }
             """)
         .Lint()

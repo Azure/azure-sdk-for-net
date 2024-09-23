@@ -46,6 +46,11 @@ namespace Azure.AI.OpenAI.Chat
                 writer.WritePropertyName("chunk_id"u8);
                 writer.WriteStringValue(ChunkId);
             }
+            if (SerializedAdditionalRawData?.ContainsKey("rerank_score") != true && Optional.IsDefined(RerankScore))
+            {
+                writer.WritePropertyName("rerank_score"u8);
+                writer.WriteNumberValue(RerankScore.Value);
+            }
             if (SerializedAdditionalRawData != null)
             {
                 foreach (var item in SerializedAdditionalRawData)
@@ -93,6 +98,7 @@ namespace Azure.AI.OpenAI.Chat
             string url = default;
             string filepath = default;
             string chunkId = default;
+            double? rerankScore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,6 +128,15 @@ namespace Azure.AI.OpenAI.Chat
                     chunkId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("rerank_score"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rerankScore = property.Value.GetDouble();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary ??= new Dictionary<string, BinaryData>();
@@ -135,6 +150,7 @@ namespace Azure.AI.OpenAI.Chat
                 url,
                 filepath,
                 chunkId,
+                rerankScore,
                 serializedAdditionalRawData);
         }
 

@@ -15,10 +15,10 @@ namespace Azure.Provisioning.SignalR
         public SignalRBuiltInRole(string value) { throw null; }
         public static Azure.Provisioning.SignalR.SignalRBuiltInRole SignalRAccessKeyReader { get { throw null; } }
         public static Azure.Provisioning.SignalR.SignalRBuiltInRole SignalRAppServer { get { throw null; } }
+        public static Azure.Provisioning.SignalR.SignalRBuiltInRole SignalRContributor { get { throw null; } }
         public static Azure.Provisioning.SignalR.SignalRBuiltInRole SignalRRestApiOwner { get { throw null; } }
         public static Azure.Provisioning.SignalR.SignalRBuiltInRole SignalRRestApiReader { get { throw null; } }
         public static Azure.Provisioning.SignalR.SignalRBuiltInRole SignalRServiceOwner { get { throw null; } }
-        public static Azure.Provisioning.SignalR.SignalRBuiltInRole SignalRWebPubSubContributor { get { throw null; } }
         public bool Equals(Azure.Provisioning.SignalR.SignalRBuiltInRole other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }

@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.AI.OpenAI;
