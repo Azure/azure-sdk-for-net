@@ -204,7 +204,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateDownloadRequest(int? timeout, string range, bool? rangeGetContentMD5, ShareFileRequestConditions shareFileRequestConditions)
+        internal HttpMessage CreateDownloadRequest(int? timeout, string range, bool? rangeGetContentMD5, string structuredBodyType, ShareFileRequestConditions shareFileRequestConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -230,6 +230,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-range-get-content-md5", rangeGetContentMD5.Value);
             }
+            if (structuredBodyType != null)
+            {
+                request.Headers.Add("x-ms-structured-body", structuredBodyType);
+            }
             if (shareFileRequestConditions?.LeaseId != null)
             {
                 request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
@@ -246,11 +250,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Return file data only from the specified byte range. </param>
         /// <param name="rangeGetContentMD5"> When this header is set to true and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size. </param>
+        /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<Stream, FileDownloadHeaders>> DownloadAsync(int? timeout = null, string range = null, bool? rangeGetContentMD5 = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, FileDownloadHeaders>> DownloadAsync(int? timeout = null, string range = null, bool? rangeGetContentMD5 = null, string structuredBodyType = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDownloadRequest(timeout, range, rangeGetContentMD5, shareFileRequestConditions);
+            using var message = CreateDownloadRequest(timeout, range, rangeGetContentMD5, structuredBodyType, shareFileRequestConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileDownloadHeaders(message.Response);
             switch (message.Response.Status)
@@ -270,11 +275,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Return file data only from the specified byte range. </param>
         /// <param name="rangeGetContentMD5"> When this header is set to true and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size. </param>
+        /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<Stream, FileDownloadHeaders> Download(int? timeout = null, string range = null, bool? rangeGetContentMD5 = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, FileDownloadHeaders> Download(int? timeout = null, string range = null, bool? rangeGetContentMD5 = null, string structuredBodyType = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDownloadRequest(timeout, range, rangeGetContentMD5, shareFileRequestConditions);
+            using var message = CreateDownloadRequest(timeout, range, rangeGetContentMD5, structuredBodyType, shareFileRequestConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileDownloadHeaders(message.Response);
             switch (message.Response.Status)
@@ -945,7 +951,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateUploadRangeRequest(string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, int? timeout, byte[] contentMD5, FileLastWrittenMode? fileLastWrittenMode, Stream optionalbody, ShareFileRequestConditions shareFileRequestConditions)
+        internal HttpMessage CreateUploadRangeRequest(string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, int? timeout, byte[] contentMD5, FileLastWrittenMode? fileLastWrittenMode, string structuredBodyType, long? structuredContentLength, Stream optionalbody, ShareFileRequestConditions shareFileRequestConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -977,6 +983,14 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
             }
+            if (structuredBodyType != null)
+            {
+                request.Headers.Add("x-ms-structured-body", structuredBodyType);
+            }
+            if (structuredContentLength != null)
+            {
+                request.Headers.Add("x-ms-structured-content-length", structuredContentLength.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             if (optionalbody != null)
             {
@@ -998,18 +1012,20 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request). </param>
         /// <param name="fileLastWrittenMode"> If the file last write time should be preserved or overwritten. </param>
+        /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
+        /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="optionalbody"> Initial data. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="range"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileUploadRangeHeaders>> UploadRangeAsync(string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, int? timeout = null, byte[] contentMD5 = null, FileLastWrittenMode? fileLastWrittenMode = null, Stream optionalbody = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FileUploadRangeHeaders>> UploadRangeAsync(string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, int? timeout = null, byte[] contentMD5 = null, FileLastWrittenMode? fileLastWrittenMode = null, string structuredBodyType = null, long? structuredContentLength = null, Stream optionalbody = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
             if (range == null)
             {
                 throw new ArgumentNullException(nameof(range));
             }
 
-            using var message = CreateUploadRangeRequest(range, fileRangeWrite, contentLength, timeout, contentMD5, fileLastWrittenMode, optionalbody, shareFileRequestConditions);
+            using var message = CreateUploadRangeRequest(range, fileRangeWrite, contentLength, timeout, contentMD5, fileLastWrittenMode, structuredBodyType, structuredContentLength, optionalbody, shareFileRequestConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileUploadRangeHeaders(message.Response);
             switch (message.Response.Status)
@@ -1028,18 +1044,20 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="contentMD5"> An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request). </param>
         /// <param name="fileLastWrittenMode"> If the file last write time should be preserved or overwritten. </param>
+        /// <param name="structuredBodyType"> Required if the request body is a structured message. Specifies the message schema version and properties. </param>
+        /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="optionalbody"> Initial data. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="range"/> is null. </exception>
-        public ResponseWithHeaders<FileUploadRangeHeaders> UploadRange(string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, int? timeout = null, byte[] contentMD5 = null, FileLastWrittenMode? fileLastWrittenMode = null, Stream optionalbody = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FileUploadRangeHeaders> UploadRange(string range, ShareFileRangeWriteType fileRangeWrite, long contentLength, int? timeout = null, byte[] contentMD5 = null, FileLastWrittenMode? fileLastWrittenMode = null, string structuredBodyType = null, long? structuredContentLength = null, Stream optionalbody = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
             if (range == null)
             {
                 throw new ArgumentNullException(nameof(range));
             }
 
-            using var message = CreateUploadRangeRequest(range, fileRangeWrite, contentLength, timeout, contentMD5, fileLastWrittenMode, optionalbody, shareFileRequestConditions);
+            using var message = CreateUploadRangeRequest(range, fileRangeWrite, contentLength, timeout, contentMD5, fileLastWrittenMode, structuredBodyType, structuredContentLength, optionalbody, shareFileRequestConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileUploadRangeHeaders(message.Response);
             switch (message.Response.Status)
