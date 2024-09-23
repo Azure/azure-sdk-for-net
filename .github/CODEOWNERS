@@ -1076,6 +1076,8 @@
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 /.github/workflows/                                                @Azure/azure-sdk-eng
 
+/.config/1espt/                                                    @benbp @weshaggard
+
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml                               @jsquire
 /eng/common/pipelines/codeowners-linter.yml                        @jsquire
