@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Peering.Samples
 
             // this example assumes you already have this PeerAsnResource created on azure
             // for more information of creating PeerAsnResource, please refer to the document of PeerAsnResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string peerAsnName = "peerAsnName";
             ResourceIdentifier peerAsnResourceId = PeerAsnResource.CreateResourceIdentifier(subscriptionId, peerAsnName);
             PeerAsnResource peerAsn = client.GetPeerAsnResource(peerAsnResourceId);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Peering.Samples
 
             // this example assumes you already have this PeerAsnResource created on azure
             // for more information of creating PeerAsnResource, please refer to the document of PeerAsnResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string peerAsnName = "peerAsnName";
             ResourceIdentifier peerAsnResourceId = PeerAsnResource.CreateResourceIdentifier(subscriptionId, peerAsnName);
             PeerAsnResource peerAsn = client.GetPeerAsnResource(peerAsnResourceId);
@@ -115,7 +115,7 @@ Phone = "+1 (234) 567-8900",
 
             // this example assumes you already have this PeerAsnResource created on azure
             // for more information of creating PeerAsnResource, please refer to the document of PeerAsnResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string peerAsnName = "peerAsnName";
             ResourceIdentifier peerAsnResourceId = PeerAsnResource.CreateResourceIdentifier(subscriptionId, peerAsnName);
             PeerAsnResource peerAsn = client.GetPeerAsnResource(peerAsnResourceId);

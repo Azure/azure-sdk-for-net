@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackResource created on azure
             // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);

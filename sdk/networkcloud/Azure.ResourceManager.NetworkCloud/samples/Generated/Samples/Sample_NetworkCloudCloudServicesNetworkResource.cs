@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this NetworkCloudCloudServicesNetworkResource created on azure
             // for more information of creating NetworkCloudCloudServicesNetworkResource, please refer to the document of NetworkCloudCloudServicesNetworkResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string cloudServicesNetworkName = "cloudServicesNetworkName";
             ResourceIdentifier networkCloudCloudServicesNetworkResourceId = NetworkCloudCloudServicesNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServicesNetworkName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this NetworkCloudCloudServicesNetworkResource created on azure
             // for more information of creating NetworkCloudCloudServicesNetworkResource, please refer to the document of NetworkCloudCloudServicesNetworkResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string cloudServicesNetworkName = "cloudServicesNetworkName";
             ResourceIdentifier networkCloudCloudServicesNetworkResourceId = NetworkCloudCloudServicesNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServicesNetworkName);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this NetworkCloudCloudServicesNetworkResource created on azure
             // for more information of creating NetworkCloudCloudServicesNetworkResource, please refer to the document of NetworkCloudCloudServicesNetworkResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string cloudServicesNetworkName = "cloudServicesNetworkName";
             ResourceIdentifier networkCloudCloudServicesNetworkResourceId = NetworkCloudCloudServicesNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServicesNetworkName);

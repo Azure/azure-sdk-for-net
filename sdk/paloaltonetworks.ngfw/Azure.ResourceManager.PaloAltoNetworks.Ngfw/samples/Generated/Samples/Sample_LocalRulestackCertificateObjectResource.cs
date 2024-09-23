@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackCertificateObjectResource created on azure
             // for more information of creating LocalRulestackCertificateObjectResource, please refer to the document of LocalRulestackCertificateObjectResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             string name = "armid1";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackCertificateObjectResource created on azure
             // for more information of creating LocalRulestackCertificateObjectResource, please refer to the document of LocalRulestackCertificateObjectResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             string name = "armid1";
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackCertificateObjectResource created on azure
             // for more information of creating LocalRulestackCertificateObjectResource, please refer to the document of LocalRulestackCertificateObjectResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             string name = "armid1";
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackCertificateObjectResource created on azure
             // for more information of creating LocalRulestackCertificateObjectResource, please refer to the document of LocalRulestackCertificateObjectResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             string name = "armid1";
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackCertificateObjectResource created on azure
             // for more information of creating LocalRulestackCertificateObjectResource, please refer to the document of LocalRulestackCertificateObjectResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             string name = "armid1";
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackCertificateObjectResource created on azure
             // for more information of creating LocalRulestackCertificateObjectResource, please refer to the document of LocalRulestackCertificateObjectResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgopenapi";
             string localRulestackName = "lrs1";
             string name = "armid1";

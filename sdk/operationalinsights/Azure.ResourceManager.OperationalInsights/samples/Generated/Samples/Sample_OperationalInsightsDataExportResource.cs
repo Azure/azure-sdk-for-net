@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsDataExportResource created on azure
             // for more information of creating OperationalInsightsDataExportResource, please refer to the document of OperationalInsightsDataExportResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RgTest1";
             string workspaceName = "DeWnTest1234";
             string dataExportName = "export1";
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsDataExportResource created on azure
             // for more information of creating OperationalInsightsDataExportResource, please refer to the document of OperationalInsightsDataExportResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RgTest1";
             string workspaceName = "DeWnTest1234";
             string dataExportName = "export1";
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsDataExportResource created on azure
             // for more information of creating OperationalInsightsDataExportResource, please refer to the document of OperationalInsightsDataExportResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "RgTest1";
             string workspaceName = "DeWnTest1234";
             string dataExportName = "export1";

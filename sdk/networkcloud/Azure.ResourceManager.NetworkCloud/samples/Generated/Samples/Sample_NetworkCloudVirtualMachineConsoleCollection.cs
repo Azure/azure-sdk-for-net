@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this NetworkCloudVirtualMachineResource created on azure
             // for more information of creating NetworkCloudVirtualMachineResource, please refer to the document of NetworkCloudVirtualMachineResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string virtualMachineName = "virtualMachineName";
             ResourceIdentifier networkCloudVirtualMachineResourceId = NetworkCloudVirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this NetworkCloudVirtualMachineResource created on azure
             // for more information of creating NetworkCloudVirtualMachineResource, please refer to the document of NetworkCloudVirtualMachineResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string virtualMachineName = "virtualMachineName";
             ResourceIdentifier networkCloudVirtualMachineResourceId = NetworkCloudVirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this NetworkCloudVirtualMachineResource created on azure
             // for more information of creating NetworkCloudVirtualMachineResource, please refer to the document of NetworkCloudVirtualMachineResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string virtualMachineName = "virtualMachineName";
             ResourceIdentifier networkCloudVirtualMachineResourceId = NetworkCloudVirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this NetworkCloudVirtualMachineResource created on azure
             // for more information of creating NetworkCloudVirtualMachineResource, please refer to the document of NetworkCloudVirtualMachineResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string virtualMachineName = "virtualMachineName";
             ResourceIdentifier networkCloudVirtualMachineResourceId = NetworkCloudVirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // this example assumes you already have this NetworkCloudVirtualMachineResource created on azure
             // for more information of creating NetworkCloudVirtualMachineResource, please refer to the document of NetworkCloudVirtualMachineResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string virtualMachineName = "virtualMachineName";
             ResourceIdentifier networkCloudVirtualMachineResourceId = NetworkCloudVirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName);

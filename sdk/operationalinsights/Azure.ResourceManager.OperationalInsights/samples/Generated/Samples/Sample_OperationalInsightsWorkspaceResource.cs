@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
             // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string workspaceName = "TestLinkWS";
             ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
             // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string workspaceName = "TestLinkWS";
             ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
             // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string workspaceName = "TestLinkWS";
             ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
             // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string workspaceName = "TestLinkWS";
             ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
             // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string workspaceName = "TestLinkWS";
             ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
             // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string workspaceName = "workspace1";
             ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
             // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string workspaceName = "TestLinkWS";
             ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
             // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string workspaceName = "workspace1";
             ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
             // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OIAutoRest5123";
             string workspaceName = "aztest5048";
             ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
             // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "mms-eus";
             string workspaceName = "atlantisdemo";
             ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
             // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OIAutoRest5123";
             string workspaceName = "aztest5048";
             ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -355,7 +355,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
             // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OIAutoRest5123";
             string workspaceName = "aztest5048";
             ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -391,7 +391,7 @@ Value = BinaryData.FromString("\"/subscriptions/12341234-1234-1234-1234-12341234
 
             // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
             // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "OIAutoRest5123";
             string workspaceName = "aztest5048";
             ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -419,7 +419,7 @@ Value = BinaryData.FromString("\"/subscriptions/12341234-1234-1234-1234-12341234
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -451,7 +451,7 @@ Value = BinaryData.FromString("\"/subscriptions/12341234-1234-1234-1234-12341234
 
             // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
             // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "oiautorest6685";
             string workspaceName = "oiautorest6685";
             ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -478,7 +478,7 @@ Value = BinaryData.FromString("\"/subscriptions/12341234-1234-1234-1234-12341234
 
             // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
             // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "oiautorest6685";
             string workspaceName = "oiautorest6685";
             ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -509,7 +509,7 @@ Value = BinaryData.FromString("\"/subscriptions/12341234-1234-1234-1234-12341234
 
             // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
             // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "oiautorest6685";
             string workspaceName = "oiautorest6685";
             ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);

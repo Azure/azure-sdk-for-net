@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Peering.Samples
 
             // this example assumes you already have this PeeringServicePrefixResource created on azure
             // for more information of creating PeeringServicePrefixResource, please refer to the document of PeeringServicePrefixResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string peeringServiceName = "peeringServiceName";
             string prefixName = "peeringServicePrefixName";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Peering.Samples
 
             // this example assumes you already have this PeeringServicePrefixResource created on azure
             // for more information of creating PeeringServicePrefixResource, please refer to the document of PeeringServicePrefixResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string peeringServiceName = "peeringServiceName";
             string prefixName = "peeringServicePrefixName";
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Peering.Samples
 
             // this example assumes you already have this PeeringServicePrefixResource created on azure
             // for more information of creating PeeringServicePrefixResource, please refer to the document of PeeringServicePrefixResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string peeringServiceName = "peeringServiceName";
             string prefixName = "peeringServicePrefixName";

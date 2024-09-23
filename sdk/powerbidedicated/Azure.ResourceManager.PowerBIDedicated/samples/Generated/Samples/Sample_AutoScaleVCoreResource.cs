@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
 
             // this example assumes you already have this AutoScaleVCoreResource created on azure
             // for more information of creating AutoScaleVCoreResource, please refer to the document of AutoScaleVCoreResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string vcoreName = "testvcore";
             ResourceIdentifier autoScaleVCoreResourceId = AutoScaleVCoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vcoreName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
 
             // this example assumes you already have this AutoScaleVCoreResource created on azure
             // for more information of creating AutoScaleVCoreResource, please refer to the document of AutoScaleVCoreResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string vcoreName = "testvcore";
             ResourceIdentifier autoScaleVCoreResourceId = AutoScaleVCoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vcoreName);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
 
             // this example assumes you already have this AutoScaleVCoreResource created on azure
             // for more information of creating AutoScaleVCoreResource, please refer to the document of AutoScaleVCoreResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string vcoreName = "testvcore";
             ResourceIdentifier autoScaleVCoreResourceId = AutoScaleVCoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vcoreName);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "613192d7-503f-477a-9cfe-4efc3ee2bd60";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

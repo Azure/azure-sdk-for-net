@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // this example assumes you already have this NotificationRegistrationResource created on azure
             // for more information of creating NotificationRegistrationResource, please refer to the document of NotificationRegistrationResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             string notificationRegistrationName = "fooNotificationRegistration";
             ResourceIdentifier notificationRegistrationResourceId = NotificationRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, notificationRegistrationName);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // this example assumes you already have this NotificationRegistrationResource created on azure
             // for more information of creating NotificationRegistrationResource, please refer to the document of NotificationRegistrationResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             string notificationRegistrationName = "fooNotificationRegistration";
             ResourceIdentifier notificationRegistrationResourceId = NotificationRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, notificationRegistrationName);
@@ -123,7 +123,7 @@ new AzureLocation("North Europe")
 
             // this example assumes you already have this NotificationRegistrationResource created on azure
             // for more information of creating NotificationRegistrationResource, please refer to the document of NotificationRegistrationResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             string notificationRegistrationName = "fooNotificationRegistration";
             ResourceIdentifier notificationRegistrationResourceId = NotificationRegistrationResource.CreateResourceIdentifier(subscriptionId, providerNamespace, notificationRegistrationName);

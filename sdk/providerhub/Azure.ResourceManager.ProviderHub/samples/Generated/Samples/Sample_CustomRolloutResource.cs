@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // this example assumes you already have this CustomRolloutResource created on azure
             // for more information of creating CustomRolloutResource, please refer to the document of CustomRolloutResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             string rolloutName = "canaryTesting99";
             ResourceIdentifier customRolloutResourceId = CustomRolloutResource.CreateResourceIdentifier(subscriptionId, providerNamespace, rolloutName);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // this example assumes you already have this CustomRolloutResource created on azure
             // for more information of creating CustomRolloutResource, please refer to the document of CustomRolloutResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             string rolloutName = "brazilUsShoeBoxTesting";
             ResourceIdentifier customRolloutResourceId = CustomRolloutResource.CreateResourceIdentifier(subscriptionId, providerNamespace, rolloutName);

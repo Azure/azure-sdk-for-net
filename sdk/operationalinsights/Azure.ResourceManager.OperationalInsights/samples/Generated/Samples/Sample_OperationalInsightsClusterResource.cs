@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsClusterResource created on azure
             // for more information of creating OperationalInsightsClusterResource, please refer to the document of OperationalInsightsClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "oiautorest6685";
             string clusterName = "oiautorest6685";
             ResourceIdentifier operationalInsightsClusterResourceId = OperationalInsightsClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsClusterResource created on azure
             // for more information of creating OperationalInsightsClusterResource, please refer to the document of OperationalInsightsClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "oiautorest6685";
             string clusterName = "oiautorest6685";
             ResourceIdentifier operationalInsightsClusterResourceId = OperationalInsightsClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsClusterResource created on azure
             // for more information of creating OperationalInsightsClusterResource, please refer to the document of OperationalInsightsClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "oiautorest6685";
             string clusterName = "oiautorest6685";
             ResourceIdentifier operationalInsightsClusterResourceId = OperationalInsightsClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);

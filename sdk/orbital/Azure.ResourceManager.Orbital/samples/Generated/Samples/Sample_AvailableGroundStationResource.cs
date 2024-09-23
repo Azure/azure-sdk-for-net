@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Orbital.Samples
 
             // this example assumes you already have this AvailableGroundStationResource created on azure
             // for more information of creating AvailableGroundStationResource, please refer to the document of AvailableGroundStationResource
-            string subscriptionId = "c1be1141-a7c9-4aac-9608-3c2e2f1152c3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string groundStationName = "EASTUS2_0";
             ResourceIdentifier availableGroundStationResourceId = AvailableGroundStationResource.CreateResourceIdentifier(subscriptionId, groundStationName);
             AvailableGroundStationResource availableGroundStation = client.GetAvailableGroundStationResource(availableGroundStationResourceId);

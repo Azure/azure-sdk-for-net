@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PostgreSql.Samples
 
             // this example assumes you already have this PostgreSqlPrivateLinkResource created on azure
             // for more information of creating PostgreSqlPrivateLinkResource, please refer to the document of PostgreSqlPrivateLinkResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Default";
             string serverName = "test-svr";
             string groupName = "plr";

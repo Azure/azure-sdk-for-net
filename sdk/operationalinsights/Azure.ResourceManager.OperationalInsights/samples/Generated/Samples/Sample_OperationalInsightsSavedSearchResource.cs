@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsSavedSearchResource created on azure
             // for more information of creating OperationalInsightsSavedSearchResource, please refer to the document of OperationalInsightsSavedSearchResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string workspaceName = "TestWS";
             string savedSearchId = "00000000-0000-0000-0000-00000000000";
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this OperationalInsightsSavedSearchResource created on azure
             // for more information of creating OperationalInsightsSavedSearchResource, please refer to the document of OperationalInsightsSavedSearchResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string workspaceName = "TestWS";
             string savedSearchId = "00000000-0000-0000-0000-00000000000";
@@ -101,7 +101,7 @@ new OperationalInsightsTag("Group","Computer")
 
             // this example assumes you already have this OperationalInsightsSavedSearchResource created on azure
             // for more information of creating OperationalInsightsSavedSearchResource, please refer to the document of OperationalInsightsSavedSearchResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string workspaceName = "TestWS";
             string savedSearchId = "00000000-0000-0000-0000-00000000000";

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
 
             // this example assumes you already have this NotificationHubsPrivateLinkResource created on azure
             // for more information of creating NotificationHubsPrivateLinkResource, please refer to the document of NotificationHubsPrivateLinkResource
-            string subscriptionId = "29cfa613-cbbc-4512-b1d6-1b3a92c7fa40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "5ktrial";
             string namespaceName = "nh-sdk-ns";
             string subResourceName = "namespace";

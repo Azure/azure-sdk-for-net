@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "pgtestsvc4";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "pgtestsvc4";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "pgtestsvc4";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "pgtestsvc4";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestGroup";
             string serverName = "pgtestsvc4";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "pgtestsvc4";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "testserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "pgtestsvc1";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "pgtestsvc4";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "testserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "testserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "testserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "testserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string targetDbServerName = "testtarget";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string serverName = "postgresqltestsvc1";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgLongTermRetention";
             string serverName = "pgsqlltrtestserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgLongTermRetention";
             string serverName = "pgsqlltrtestserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);

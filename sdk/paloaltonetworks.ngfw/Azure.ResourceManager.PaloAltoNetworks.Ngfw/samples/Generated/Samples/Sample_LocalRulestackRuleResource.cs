@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackRuleResource created on azure
             // for more information of creating LocalRulestackRuleResource, please refer to the document of LocalRulestackRuleResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string localRulestackName = "lrs1";
             string priority = "1";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackRuleResource created on azure
             // for more information of creating LocalRulestackRuleResource, please refer to the document of LocalRulestackRuleResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string localRulestackName = "lrs1";
             string priority = "1";
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
             // this example assumes you already have this LocalRulestackRuleResource created on azure
             // for more information of creating LocalRulestackRuleResource, please refer to the document of LocalRulestackRuleResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string localRulestackName = "lrs1";
             string priority = "1";
@@ -202,7 +202,7 @@ new RulestackTagInfo("keyName","value")
 
             // this example assumes you already have this LocalRulestackRuleResource created on azure
             // for more information of creating LocalRulestackRuleResource, please refer to the document of LocalRulestackRuleResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string localRulestackName = "lrs1";
             string priority = "1";
@@ -236,7 +236,7 @@ new RulestackTagInfo("keyName","value")
 
             // this example assumes you already have this LocalRulestackRuleResource created on azure
             // for more information of creating LocalRulestackRuleResource, please refer to the document of LocalRulestackRuleResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string localRulestackName = "lrs1";
             string priority = "1";
@@ -264,7 +264,7 @@ new RulestackTagInfo("keyName","value")
 
             // this example assumes you already have this LocalRulestackRuleResource created on azure
             // for more information of creating LocalRulestackRuleResource, please refer to the document of LocalRulestackRuleResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string localRulestackName = "lrs1";
             string priority = "1";
@@ -292,7 +292,7 @@ new RulestackTagInfo("keyName","value")
 
             // this example assumes you already have this LocalRulestackRuleResource created on azure
             // for more information of creating LocalRulestackRuleResource, please refer to the document of LocalRulestackRuleResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string localRulestackName = "lrs1";
             string priority = "1";
@@ -321,7 +321,7 @@ new RulestackTagInfo("keyName","value")
 
             // this example assumes you already have this LocalRulestackRuleResource created on azure
             // for more information of creating LocalRulestackRuleResource, please refer to the document of LocalRulestackRuleResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string localRulestackName = "lrs1";
             string priority = "1";
@@ -349,7 +349,7 @@ new RulestackTagInfo("keyName","value")
 
             // this example assumes you already have this LocalRulestackRuleResource created on azure
             // for more information of creating LocalRulestackRuleResource, please refer to the document of LocalRulestackRuleResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string localRulestackName = "lrs1";
             string priority = "1";
@@ -378,7 +378,7 @@ new RulestackTagInfo("keyName","value")
 
             // this example assumes you already have this LocalRulestackRuleResource created on azure
             // for more information of creating LocalRulestackRuleResource, please refer to the document of LocalRulestackRuleResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string localRulestackName = "lrs1";
             string priority = "1";
@@ -406,7 +406,7 @@ new RulestackTagInfo("keyName","value")
 
             // this example assumes you already have this LocalRulestackRuleResource created on azure
             // for more information of creating LocalRulestackRuleResource, please refer to the document of LocalRulestackRuleResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string localRulestackName = "lrs1";
             string priority = "1";
@@ -435,7 +435,7 @@ new RulestackTagInfo("keyName","value")
 
             // this example assumes you already have this LocalRulestackRuleResource created on azure
             // for more information of creating LocalRulestackRuleResource, please refer to the document of LocalRulestackRuleResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "firewall-rg";
             string localRulestackName = "lrs1";
             string priority = "1";

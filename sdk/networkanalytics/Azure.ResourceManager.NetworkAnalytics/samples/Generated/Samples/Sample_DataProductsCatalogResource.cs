@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Samples
 
             // this example assumes you already have this DataProductsCatalogResource created on azure
             // for more information of creating DataProductsCatalogResource, please refer to the document of DataProductsCatalogResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "aoiresourceGroupName";
             ResourceIdentifier dataProductsCatalogResourceId = DataProductsCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             DataProductsCatalogResource dataProductsCatalog = client.GetDataProductsCatalogResource(dataProductsCatalogResourceId);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Samples
 
             // this example assumes you already have this DataProductsCatalogResource created on azure
             // for more information of creating DataProductsCatalogResource, please refer to the document of DataProductsCatalogResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "aoiresourceGroupName";
             ResourceIdentifier dataProductsCatalogResourceId = DataProductsCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             DataProductsCatalogResource dataProductsCatalog = client.GetDataProductsCatalogResource(dataProductsCatalogResourceId);

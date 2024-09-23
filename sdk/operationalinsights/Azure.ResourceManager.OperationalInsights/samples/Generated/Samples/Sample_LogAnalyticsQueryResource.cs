@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this LogAnalyticsQueryResource created on azure
             // for more information of creating LogAnalyticsQueryResource, please refer to the document of LogAnalyticsQueryResource
-            string subscriptionId = "86dc51d3-92ed-4d7e-947a-775ea79b4918";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string queryPackName = "my-querypack";
             string id = "a449f8af-8e64-4b3a-9b16-5a7165ff98c4";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this LogAnalyticsQueryResource created on azure
             // for more information of creating LogAnalyticsQueryResource, please refer to the document of LogAnalyticsQueryResource
-            string subscriptionId = "86dc51d3-92ed-4d7e-947a-775ea79b4918";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string queryPackName = "my-querypack";
             string id = "a449f8af-8e64-4b3a-9b16-5a7165ff98c4";
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this LogAnalyticsQueryResource created on azure
             // for more information of creating LogAnalyticsQueryResource, please refer to the document of LogAnalyticsQueryResource
-            string subscriptionId = "86dc51d3-92ed-4d7e-947a-775ea79b4918";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string queryPackName = "my-querypack";
             string id = "a449f8af-8e64-4b3a-9b16-5a7165ff98c4";

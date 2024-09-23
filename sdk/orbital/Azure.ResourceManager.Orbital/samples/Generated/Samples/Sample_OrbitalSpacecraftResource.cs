@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Orbital.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "c1be1141-a7c9-4aac-9608-3c2e2f1152c3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Orbital.Samples
 
             // this example assumes you already have this OrbitalSpacecraftResource created on azure
             // for more information of creating OrbitalSpacecraftResource, please refer to the document of OrbitalSpacecraftResource
-            string subscriptionId = "c1be1141-a7c9-4aac-9608-3c2e2f1152c3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "contoso-Rgp";
             string spacecraftName = "CONTOSO_SAT";
             ResourceIdentifier orbitalSpacecraftResourceId = OrbitalSpacecraftResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, spacecraftName);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Orbital.Samples
 
             // this example assumes you already have this OrbitalSpacecraftResource created on azure
             // for more information of creating OrbitalSpacecraftResource, please refer to the document of OrbitalSpacecraftResource
-            string subscriptionId = "c1be1141-a7c9-4aac-9608-3c2e2f1152c3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "contoso-Rgp";
             string spacecraftName = "CONTOSO_SAT";
             ResourceIdentifier orbitalSpacecraftResourceId = OrbitalSpacecraftResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, spacecraftName);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Orbital.Samples
 
             // this example assumes you already have this OrbitalSpacecraftResource created on azure
             // for more information of creating OrbitalSpacecraftResource, please refer to the document of OrbitalSpacecraftResource
-            string subscriptionId = "c1be1141-a7c9-4aac-9608-3c2e2f1152c3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "contoso-Rgp";
             string spacecraftName = "CONTOSO_SAT";
             ResourceIdentifier orbitalSpacecraftResourceId = OrbitalSpacecraftResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, spacecraftName);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Orbital.Samples
 
             // this example assumes you already have this OrbitalSpacecraftResource created on azure
             // for more information of creating OrbitalSpacecraftResource, please refer to the document of OrbitalSpacecraftResource
-            string subscriptionId = "c1be1141-a7c9-4aac-9608-3c2e2f1152c3";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "contoso-Rgp";
             string spacecraftName = "CONTOSO_SAT";
             ResourceIdentifier orbitalSpacecraftResourceId = OrbitalSpacecraftResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, spacecraftName);

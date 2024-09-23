@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Peering.Samples
 
             // this example assumes you already have this PeeringRegisteredAsnResource created on azure
             // for more information of creating PeeringRegisteredAsnResource, please refer to the document of PeeringRegisteredAsnResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string peeringName = "peeringName";
             string registeredAsnName = "registeredAsnName0";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Peering.Samples
 
             // this example assumes you already have this PeeringRegisteredAsnResource created on azure
             // for more information of creating PeeringRegisteredAsnResource, please refer to the document of PeeringRegisteredAsnResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string peeringName = "peeringName";
             string registeredAsnName = "registeredAsnName";
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Peering.Samples
 
             // this example assumes you already have this PeeringRegisteredAsnResource created on azure
             // for more information of creating PeeringRegisteredAsnResource, please refer to the document of PeeringRegisteredAsnResource
-            string subscriptionId = "subId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgName";
             string peeringName = "peeringName";
             string registeredAsnName = "registeredAsnName";

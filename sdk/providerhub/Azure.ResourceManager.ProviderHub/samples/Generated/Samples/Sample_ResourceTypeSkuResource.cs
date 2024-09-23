@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // this example assumes you already have this ResourceTypeSkuResource created on azure
             // for more information of creating ResourceTypeSkuResource, please refer to the document of ResourceTypeSkuResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             string resourceType = "testResourceType";
             string sku = "testSku";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // this example assumes you already have this ResourceTypeSkuResource created on azure
             // for more information of creating ResourceTypeSkuResource, please refer to the document of ResourceTypeSkuResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             string resourceType = "testResourceType";
             string sku = "testSku";
@@ -114,7 +114,7 @@ new ResourceTypeSkuCost("xxx")
 
             // this example assumes you already have this ResourceTypeSkuResource created on azure
             // for more information of creating ResourceTypeSkuResource, please refer to the document of ResourceTypeSkuResource
-            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string providerNamespace = "Microsoft.Contoso";
             string resourceType = "testResourceType";
             string sku = "testSku";

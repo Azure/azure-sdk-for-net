@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
 
             // this example assumes you already have this NotificationHubPrivateEndpointConnectionResource created on azure
             // for more information of creating NotificationHubPrivateEndpointConnectionResource, please refer to the document of NotificationHubPrivateEndpointConnectionResource
-            string subscriptionId = "29cfa613-cbbc-4512-b1d6-1b3a92c7fa40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "5ktrial";
             string namespaceName = "nh-sdk-ns";
             string privateEndpointConnectionName = "nh-sdk-ns.1fa229cd-bf3f-47f0-8c49-afb36723997e";
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
 
             // this example assumes you already have this NotificationHubPrivateEndpointConnectionResource created on azure
             // for more information of creating NotificationHubPrivateEndpointConnectionResource, please refer to the document of NotificationHubPrivateEndpointConnectionResource
-            string subscriptionId = "29cfa613-cbbc-4512-b1d6-1b3a92c7fa40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "5ktrial";
             string namespaceName = "nh-sdk-ns";
             string privateEndpointConnectionName = "nh-sdk-ns.1fa229cd-bf3f-47f0-8c49-afb36723997e";
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
 
             // this example assumes you already have this NotificationHubPrivateEndpointConnectionResource created on azure
             // for more information of creating NotificationHubPrivateEndpointConnectionResource, please refer to the document of NotificationHubPrivateEndpointConnectionResource
-            string subscriptionId = "29cfa613-cbbc-4512-b1d6-1b3a92c7fa40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "5ktrial";
             string namespaceName = "nh-sdk-ns";
             string privateEndpointConnectionName = "nh-sdk-ns.1fa229cd-bf3f-47f0-8c49-afb36723997e";
