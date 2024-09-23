@@ -83,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
         [Test]
         public void TestNegotiateResultForAad()
         {
-            var token = "eyJhbGciOiJIUzI1NiIsImtpZCI6InMtZjZlMTVhZmItNjIxZS00OTc5LTgyZTgtN2FiMGQ4ZmIwMDM1IiwidHlwIjoiSldUIn0.eyJuYmYiOjE3MjcwNzAxODQsImV4cCI6MTcyNzA3MzcyNCwiaWF0IjoxNzI3MDcwMTg0LCJpc3MiOiJodHRwczovL3dlYnB1YnN1Yi5henVyZS5jb20iLCJhdWQiOiJodHRwczovL3Npby01a2tmY2dyMm9icXZtLndlYnB1YnN1Yi5henVyZS5jb20vY2xpZW50cy9zb2NrZXRpby9odWJzL2h1YiJ9.h3QkRTQ4tnI4E9Ee9NODnRO5dGbsscuJimyCnggtiTw";
+            var token = "eyJhbGciOiJIUzI1NiIsImtpZCI6InMtZjZlMTVhZmItNjIxZS00OTc5LTgyZTgtN2FiMGQ4ZmIwMDM1IiwidHlwIjoiSldUIn0.eyJuYmYiOjE3MjcwNzAxODQsImV4cCI6MTcyNzA3MzcyNCwiaWF0IjoxNzI3MDcwMTg0LCJpc3MiOiJodHRwczovL3dlYnB1YnN1Yi5henVyZS5jb20iLCJhdWQiOiJodHRwczovL3Npby01a2tmY2dyMm9icXZtLndlYnB1YnN1Yi5henVyZS5jb20vY2xpZW50cy9zb2NrZXRpby9odWJzL2h1YiJ9.h3QkRTQ4";
             var clientMoc = new Mock<WebPubSubServiceClient>();
             clientMoc.Setup(c => c.GetClientAccessUri(It.IsAny<TimeSpan>(), It.IsAny<string>(), It.IsAny<IEnumerable<string>>(), It.IsAny<IEnumerable<string>>(), It.IsAny<WebPubSubClientProtocol>(), It.IsAny<CancellationToken>()))
                 .Returns(new Uri($"https://abc.com?access_token={token}"));
