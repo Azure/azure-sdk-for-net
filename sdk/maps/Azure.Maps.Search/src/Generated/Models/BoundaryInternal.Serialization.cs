@@ -11,9 +11,9 @@ using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class Boundary
+    internal partial class BoundaryInternal
     {
-        internal static Boundary DeserializeBoundary(JsonElement element)
+        internal static BoundaryInternal DeserializeBoundaryInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -104,7 +104,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new Boundary(
+            return new BoundaryInternal(
                 type,
                 boundingBox ?? new ChangeTrackingList<double>(),
                 geometry,
@@ -119,10 +119,10 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new Boundary FromResponse(Response response)
+        internal static new BoundaryInternal FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeBoundary(document.RootElement);
+            return DeserializeBoundaryInternal(document.RootElement);
         }
     }
 }
