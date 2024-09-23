@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this HybridComputeMachineResource created on azure
             // for more information of creating HybridComputeMachineResource, please refer to the document of HybridComputeMachineResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
             ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this HybridComputeMachineResource created on azure
             // for more information of creating HybridComputeMachineResource, please refer to the document of HybridComputeMachineResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
             ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this HybridComputeMachineResource created on azure
             // for more information of creating HybridComputeMachineResource, please refer to the document of HybridComputeMachineResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
             ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this HybridComputeMachineResource created on azure
             // for more information of creating HybridComputeMachineResource, please refer to the document of HybridComputeMachineResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
             ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this HybridComputeMachineResource created on azure
             // for more information of creating HybridComputeMachineResource, please refer to the document of HybridComputeMachineResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string name = "myMachineName";
             ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this HybridComputeMachineResource created on azure
             // for more information of creating HybridComputeMachineResource, please refer to the document of HybridComputeMachineResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string name = "myMachineName";
             ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -242,7 +242,7 @@ VmGuestPatchClassificationWindow.Critical,VmGuestPatchClassificationWindow.Secur
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -274,7 +274,7 @@ VmGuestPatchClassificationWindow.Critical,VmGuestPatchClassificationWindow.Secur
 
             // this example assumes you already have this HybridComputeMachineResource created on azure
             // for more information of creating HybridComputeMachineResource, please refer to the document of HybridComputeMachineResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
             ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
@@ -315,7 +315,7 @@ TargetVersion = "1.10",
 
             // this example assumes you already have this HybridComputeMachineResource created on azure
             // for more information of creating HybridComputeMachineResource, please refer to the document of HybridComputeMachineResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string machineName = "myMachine";
             ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
@@ -342,7 +342,7 @@ TargetVersion = "1.10",
 
             // this example assumes you already have this HybridComputeMachineResource created on azure
             // for more information of creating HybridComputeMachineResource, please refer to the document of HybridComputeMachineResource
-            string subscriptionId = "86dc51d3-92ed-4d7e-947a-775ea79b4919";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string machineName = "machineName";
             ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);

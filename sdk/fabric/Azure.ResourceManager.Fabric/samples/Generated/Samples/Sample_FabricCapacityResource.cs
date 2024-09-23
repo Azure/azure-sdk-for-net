@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Fabric.Samples
 
             // this example assumes you already have this FabricCapacityResource created on azure
             // for more information of creating FabricCapacityResource, please refer to the document of FabricCapacityResource
-            string subscriptionId = "548B7FB7-3B2A-4F46-BB02-66473F1FC22C";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string capacityName = "azsdktest";
             ResourceIdentifier fabricCapacityResourceId = FabricCapacityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Fabric.Samples
 
             // this example assumes you already have this FabricCapacityResource created on azure
             // for more information of creating FabricCapacityResource, please refer to the document of FabricCapacityResource
-            string subscriptionId = "548B7FB7-3B2A-4F46-BB02-66473F1FC22C";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string capacityName = "azsdktest";
             ResourceIdentifier fabricCapacityResourceId = FabricCapacityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityName);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Fabric.Samples
 
             // this example assumes you already have this FabricCapacityResource created on azure
             // for more information of creating FabricCapacityResource, please refer to the document of FabricCapacityResource
-            string subscriptionId = "548B7FB7-3B2A-4F46-BB02-66473F1FC22C";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string capacityName = "azsdktest";
             ResourceIdentifier fabricCapacityResourceId = FabricCapacityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityName);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Fabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "548B7FB7-3B2A-4F46-BB02-66473F1FC22C";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Fabric.Samples
 
             // this example assumes you already have this FabricCapacityResource created on azure
             // for more information of creating FabricCapacityResource, please refer to the document of FabricCapacityResource
-            string subscriptionId = "548B7FB7-3B2A-4F46-BB02-66473F1FC22C";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string capacityName = "azsdktest";
             ResourceIdentifier fabricCapacityResourceId = FabricCapacityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityName);
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Fabric.Samples
 
             // this example assumes you already have this FabricCapacityResource created on azure
             // for more information of creating FabricCapacityResource, please refer to the document of FabricCapacityResource
-            string subscriptionId = "548B7FB7-3B2A-4F46-BB02-66473F1FC22C";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string capacityName = "azsdktest";
             ResourceIdentifier fabricCapacityResourceId = FabricCapacityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityName);
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Fabric.Samples
 
             // this example assumes you already have this FabricCapacityResource created on azure
             // for more information of creating FabricCapacityResource, please refer to the document of FabricCapacityResource
-            string subscriptionId = "548B7FB7-3B2A-4F46-BB02-66473F1FC22C";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string capacityName = "azsdktest";
             ResourceIdentifier fabricCapacityResourceId = FabricCapacityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, capacityName);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Fabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "548B7FB7-3B2A-4F46-BB02-66473F1FC22C";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

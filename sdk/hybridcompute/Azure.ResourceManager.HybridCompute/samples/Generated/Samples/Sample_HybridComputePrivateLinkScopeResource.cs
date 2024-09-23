@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "86dc51d3-92ed-4d7e-947a-775ea79b4919";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this HybridComputePrivateLinkScopeResource created on azure
             // for more information of creating HybridComputePrivateLinkScopeResource, please refer to the document of HybridComputePrivateLinkScopeResource
-            string subscriptionId = "86dc51d3-92ed-4d7e-947a-775ea79b4919";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string scopeName = "my-privatelinkscope";
             ResourceIdentifier hybridComputePrivateLinkScopeResourceId = HybridComputePrivateLinkScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scopeName);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this HybridComputePrivateLinkScopeResource created on azure
             // for more information of creating HybridComputePrivateLinkScopeResource, please refer to the document of HybridComputePrivateLinkScopeResource
-            string subscriptionId = "86dc51d3-92ed-4d7e-947a-775ea79b4919";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string scopeName = "my-privatelinkscope";
             ResourceIdentifier hybridComputePrivateLinkScopeResourceId = HybridComputePrivateLinkScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scopeName);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this HybridComputePrivateLinkScopeResource created on azure
             // for more information of creating HybridComputePrivateLinkScopeResource, please refer to the document of HybridComputePrivateLinkScopeResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string scopeName = "my-privatelinkscope";
             ResourceIdentifier hybridComputePrivateLinkScopeResourceId = HybridComputePrivateLinkScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scopeName);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "86dc51d3-92ed-4d7e-947a-775ea79b4919";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisWorkspaceResource created on azure
             // for more information of creating HealthcareApisWorkspaceResource, please refer to the document of HealthcareApisWorkspaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testRG";
             string workspaceName = "workspace1";
             ResourceIdentifier healthcareApisWorkspaceResourceId = HealthcareApisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisWorkspaceResource created on azure
             // for more information of creating HealthcareApisWorkspaceResource, please refer to the document of HealthcareApisWorkspaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testRG";
             string workspaceName = "workspace1";
             ResourceIdentifier healthcareApisWorkspaceResourceId = HealthcareApisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisWorkspaceResource created on azure
             // for more information of creating HealthcareApisWorkspaceResource, please refer to the document of HealthcareApisWorkspaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testRG";
             string workspaceName = "workspace1";
             ResourceIdentifier healthcareApisWorkspaceResourceId = HealthcareApisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisWorkspaceResource created on azure
             // for more information of creating HealthcareApisWorkspaceResource, please refer to the document of HealthcareApisWorkspaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testRG";
             string workspaceName = "workspace1";
             ResourceIdentifier healthcareApisWorkspaceResourceId = HealthcareApisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisWorkspaceResource created on azure
             // for more information of creating HealthcareApisWorkspaceResource, please refer to the document of HealthcareApisWorkspaceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testRG";
             string workspaceName = "workspace1";
             ResourceIdentifier healthcareApisWorkspaceResourceId = HealthcareApisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);

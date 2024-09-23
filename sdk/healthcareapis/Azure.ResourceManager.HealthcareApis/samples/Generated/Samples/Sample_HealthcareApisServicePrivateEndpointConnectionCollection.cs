@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisServiceResource created on azure
             // for more information of creating HealthcareApisServiceResource, please refer to the document of HealthcareApisServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgname";
             string resourceName = "service1";
             ResourceIdentifier healthcareApisServiceResourceId = HealthcareApisServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisServiceResource created on azure
             // for more information of creating HealthcareApisServiceResource, please refer to the document of HealthcareApisServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgname";
             string resourceName = "service1";
             ResourceIdentifier healthcareApisServiceResourceId = HealthcareApisServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisServiceResource created on azure
             // for more information of creating HealthcareApisServiceResource, please refer to the document of HealthcareApisServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgname";
             string resourceName = "service1";
             ResourceIdentifier healthcareApisServiceResourceId = HealthcareApisServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisServiceResource created on azure
             // for more information of creating HealthcareApisServiceResource, please refer to the document of HealthcareApisServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgname";
             string resourceName = "service1";
             ResourceIdentifier healthcareApisServiceResourceId = HealthcareApisServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisServiceResource created on azure
             // for more information of creating HealthcareApisServiceResource, please refer to the document of HealthcareApisServiceResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rgname";
             string resourceName = "service1";
             ResourceIdentifier healthcareApisServiceResourceId = HealthcareApisServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this HybridComputeGatewayResource created on azure
             // for more information of creating HybridComputeGatewayResource, please refer to the document of HybridComputeGatewayResource
-            string subscriptionId = "ffd506c8-3415-42d3-9612-fdb423fb17df";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string gatewayName = "{gatewayName}";
             ResourceIdentifier hybridComputeGatewayResourceId = HybridComputeGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this HybridComputeGatewayResource created on azure
             // for more information of creating HybridComputeGatewayResource, please refer to the document of HybridComputeGatewayResource
-            string subscriptionId = "ffd506c8-3415-42d3-9612-fdb423fb17df";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string gatewayName = "{gatewayName}";
             ResourceIdentifier hybridComputeGatewayResourceId = HybridComputeGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this HybridComputeGatewayResource created on azure
             // for more information of creating HybridComputeGatewayResource, please refer to the document of HybridComputeGatewayResource
-            string subscriptionId = "ffd506c8-3415-42d3-9612-fdb423fb17df";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string gatewayName = "{gatewayName}";
             ResourceIdentifier hybridComputeGatewayResourceId = HybridComputeGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "ffd506c8-3415-42d3-9612-fdb423fb17df";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

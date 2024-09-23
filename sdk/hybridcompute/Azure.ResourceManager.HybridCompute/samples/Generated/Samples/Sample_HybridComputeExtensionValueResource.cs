@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this HybridComputeExtensionValueResource created on azure
             // for more information of creating HybridComputeExtensionValueResource, please refer to the document of HybridComputeExtensionValueResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("EastUS");
             string publisher = "microsoft.azure.monitor";
             string extensionType = "azuremonitorlinuxagent";

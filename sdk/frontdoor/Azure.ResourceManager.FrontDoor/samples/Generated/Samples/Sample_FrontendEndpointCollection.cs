@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
 
             // this example assumes you already have this FrontDoorResource created on azure
             // for more information of creating FrontDoorResource, please refer to the document of FrontDoorResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string frontDoorName = "frontDoor1";
             ResourceIdentifier frontDoorResourceId = FrontDoorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, frontDoorName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
 
             // this example assumes you already have this FrontDoorResource created on azure
             // for more information of creating FrontDoorResource, please refer to the document of FrontDoorResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string frontDoorName = "frontDoor1";
             ResourceIdentifier frontDoorResourceId = FrontDoorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, frontDoorName);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
 
             // this example assumes you already have this FrontDoorResource created on azure
             // for more information of creating FrontDoorResource, please refer to the document of FrontDoorResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string frontDoorName = "frontDoor1";
             ResourceIdentifier frontDoorResourceId = FrontDoorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, frontDoorName);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
 
             // this example assumes you already have this FrontDoorResource created on azure
             // for more information of creating FrontDoorResource, please refer to the document of FrontDoorResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string frontDoorName = "frontDoor1";
             ResourceIdentifier frontDoorResourceId = FrontDoorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, frontDoorName);

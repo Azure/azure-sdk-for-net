@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.IotHub.Samples
 
             // this example assumes you already have this IotHubCertificateDescriptionResource created on azure
             // for more information of creating IotHubCertificateDescriptionResource, please refer to the document of IotHubCertificateDescriptionResource
-            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "testhub";
             string certificateName = "cert";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotHub.Samples
 
             // this example assumes you already have this IotHubCertificateDescriptionResource created on azure
             // for more information of creating IotHubCertificateDescriptionResource, please refer to the document of IotHubCertificateDescriptionResource
-            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "iothub";
             string certificateName = "cert";
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.IotHub.Samples
 
             // this example assumes you already have this IotHubCertificateDescriptionResource created on azure
             // for more information of creating IotHubCertificateDescriptionResource, please refer to the document of IotHubCertificateDescriptionResource
-            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "myhub";
             string certificateName = "cert";
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.IotHub.Samples
 
             // this example assumes you already have this IotHubCertificateDescriptionResource created on azure
             // for more information of creating IotHubCertificateDescriptionResource, please refer to the document of IotHubCertificateDescriptionResource
-            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "testHub";
             string certificateName = "cert";
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.IotHub.Samples
 
             // this example assumes you already have this IotHubCertificateDescriptionResource created on azure
             // for more information of creating IotHubCertificateDescriptionResource, please refer to the document of IotHubCertificateDescriptionResource
-            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "myFirstProvisioningService";
             string certificateName = "cert";

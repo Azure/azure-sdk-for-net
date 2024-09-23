@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
 
             // this example assumes you already have this HybridContainerServiceVirtualNetworkResource created on azure
             // for more information of creating HybridContainerServiceVirtualNetworkResource, please refer to the document of HybridContainerServiceVirtualNetworkResource
-            string subscriptionId = "a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-arcappliance-resgrp";
             string virtualNetworkName = "test-vnet-static";
             ResourceIdentifier hybridContainerServiceVirtualNetworkResourceId = HybridContainerServiceVirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
 
             // this example assumes you already have this HybridContainerServiceVirtualNetworkResource created on azure
             // for more information of creating HybridContainerServiceVirtualNetworkResource, please refer to the document of HybridContainerServiceVirtualNetworkResource
-            string subscriptionId = "a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-arcappliance-resgrp";
             string virtualNetworkName = "test-vnet-static";
             ResourceIdentifier hybridContainerServiceVirtualNetworkResourceId = HybridContainerServiceVirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
 
             // this example assumes you already have this HybridContainerServiceVirtualNetworkResource created on azure
             // for more information of creating HybridContainerServiceVirtualNetworkResource, please refer to the document of HybridContainerServiceVirtualNetworkResource
-            string subscriptionId = "a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-arcappliance-resgrp";
             string virtualNetworkName = "test-vnet-static";
             ResourceIdentifier hybridContainerServiceVirtualNetworkResourceId = HybridContainerServiceVirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

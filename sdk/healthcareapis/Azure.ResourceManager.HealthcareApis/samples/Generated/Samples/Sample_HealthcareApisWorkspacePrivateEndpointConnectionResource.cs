@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisWorkspacePrivateEndpointConnectionResource created on azure
             // for more information of creating HealthcareApisWorkspacePrivateEndpointConnectionResource, please refer to the document of HealthcareApisWorkspacePrivateEndpointConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testRG";
             string workspaceName = "workspace1";
             string privateEndpointConnectionName = "myConnection";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisWorkspacePrivateEndpointConnectionResource created on azure
             // for more information of creating HealthcareApisWorkspacePrivateEndpointConnectionResource, please refer to the document of HealthcareApisWorkspacePrivateEndpointConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testRG";
             string workspaceName = "workspace1";
             string privateEndpointConnectionName = "myConnection";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
             // this example assumes you already have this HealthcareApisWorkspacePrivateEndpointConnectionResource created on azure
             // for more information of creating HealthcareApisWorkspacePrivateEndpointConnectionResource, please refer to the document of HealthcareApisWorkspacePrivateEndpointConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testRG";
             string workspaceName = "workspace1";
             string privateEndpointConnectionName = "myConnection";

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Kubernetes.Samples
 
             // this example assumes you already have this ConnectedClusterResource created on azure
             // for more information of creating ConnectedClusterResource, please refer to the document of ConnectedClusterResource
-            string subscriptionId = "1bfbb5d0-917e-4346-9026-1d3b344417f5";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "k8sc-rg";
             string clusterName = "testCluster";
             ResourceIdentifier connectedClusterResourceId = ConnectedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Kubernetes.Samples
 
             // this example assumes you already have this ConnectedClusterResource created on azure
             // for more information of creating ConnectedClusterResource, please refer to the document of ConnectedClusterResource
-            string subscriptionId = "1bfbb5d0-917e-4346-9026-1d3b344417f5";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "k8sc-rg";
             string clusterName = "testCluster";
             ResourceIdentifier connectedClusterResourceId = ConnectedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Kubernetes.Samples
 
             // this example assumes you already have this ConnectedClusterResource created on azure
             // for more information of creating ConnectedClusterResource, please refer to the document of ConnectedClusterResource
-            string subscriptionId = "1bfbb5d0-917e-4346-9026-1d3b344417f5";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "k8sc-rg";
             string clusterName = "testCluster";
             ResourceIdentifier connectedClusterResourceId = ConnectedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Kubernetes.Samples
 
             // this example assumes you already have this ConnectedClusterResource created on azure
             // for more information of creating ConnectedClusterResource, please refer to the document of ConnectedClusterResource
-            string subscriptionId = "1bfbb5d0-917e-4346-9026-1d3b344417f5";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "k8sc-rg";
             string clusterName = "testCluster";
             ResourceIdentifier connectedClusterResourceId = ConnectedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Kubernetes.Samples
 
             // this example assumes you already have this ConnectedClusterResource created on azure
             // for more information of creating ConnectedClusterResource, please refer to the document of ConnectedClusterResource
-            string subscriptionId = "1bfbb5d0-917e-4346-9026-1d3b344417f5";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "k8sc-rg";
             string clusterName = "testCluster";
             ResourceIdentifier connectedClusterResourceId = ConnectedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Kubernetes.Samples
 
             // this example assumes you already have this ConnectedClusterResource created on azure
             // for more information of creating ConnectedClusterResource, please refer to the document of ConnectedClusterResource
-            string subscriptionId = "1bfbb5d0-917e-4346-9026-1d3b344417f5";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "k8sc-rg";
             string clusterName = "testCluster";
             ResourceIdentifier connectedClusterResourceId = ConnectedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Kubernetes.Samples
 
             // this example assumes you already have this ConnectedClusterResource created on azure
             // for more information of creating ConnectedClusterResource, please refer to the document of ConnectedClusterResource
-            string subscriptionId = "1bfbb5d0-917e-4346-9026-1d3b344417f5";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "k8sc-rg";
             string clusterName = "testCluster";
             ResourceIdentifier connectedClusterResourceId = ConnectedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Kubernetes.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1bfbb5d0-917e-4346-9026-1d3b344417f5";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

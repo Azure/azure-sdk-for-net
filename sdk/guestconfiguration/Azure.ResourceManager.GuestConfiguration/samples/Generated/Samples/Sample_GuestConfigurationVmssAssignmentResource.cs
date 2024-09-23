@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Samples
 
             // this example assumes you already have this GuestConfigurationVmssAssignmentResource created on azure
             // for more information of creating GuestConfigurationVmssAssignmentResource, please refer to the document of GuestConfigurationVmssAssignmentResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string vmssName = "myVMSSName";
             string name = "NotInstalledApplicationForWindows";
@@ -89,7 +89,7 @@ Value = "NotePad,sql",
 
             // this example assumes you already have this GuestConfigurationVmssAssignmentResource created on azure
             // for more information of creating GuestConfigurationVmssAssignmentResource, please refer to the document of GuestConfigurationVmssAssignmentResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string vmssName = "myVMSSName";
             string name = "SecureProtocol";
@@ -121,7 +121,7 @@ Value = "NotePad,sql",
 
             // this example assumes you already have this GuestConfigurationVmssAssignmentResource created on azure
             // for more information of creating GuestConfigurationVmssAssignmentResource, please refer to the document of GuestConfigurationVmssAssignmentResource
-            string subscriptionId = "mySubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string vmssName = "myVMSSName";
             string name = "SecureProtocol";
@@ -154,7 +154,7 @@ Value = "NotePad,sql",
 
             // this example assumes you already have this GuestConfigurationVmssAssignmentResource created on azure
             // for more information of creating GuestConfigurationVmssAssignmentResource, please refer to the document of GuestConfigurationVmssAssignmentResource
-            string subscriptionId = "mySubscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string vmssName = "myVMSSName";
             string name = "AuditSecureProtocol";
@@ -185,7 +185,7 @@ Value = "NotePad,sql",
 
             // this example assumes you already have this GuestConfigurationVmssAssignmentResource created on azure
             // for more information of creating GuestConfigurationVmssAssignmentResource, please refer to the document of GuestConfigurationVmssAssignmentResource
-            string subscriptionId = "mySubscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroupName";
             string vmssName = "myvmss";
             string name = "AuditSecureProtocol";

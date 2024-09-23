@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
             // this example assumes you already have this NetworkSecurityPerimeterConfigurationResource created on azure
             // for more information of creating NetworkSecurityPerimeterConfigurationResource, please refer to the document of NetworkSecurityPerimeterConfigurationResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string scopeName = "my-privatelinkscope";
             string perimeterName = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee.myAssociation";
