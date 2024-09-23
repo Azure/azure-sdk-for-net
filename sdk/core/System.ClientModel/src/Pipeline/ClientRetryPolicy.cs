@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.ClientModel.Options;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.ExceptionServices;
@@ -24,9 +25,13 @@ public class ClientRetryPolicy : PipelinePolicy
 
     private const int DefaultMaxRetries = 3;
     private static readonly TimeSpan DefaultInitialDelay = TimeSpan.FromSeconds(0.8);
+    private static readonly TimeSpan DefaultMaxDelay = TimeSpan.FromMinutes(1);
 
     private readonly int _maxRetries;
     private readonly TimeSpan _initialDelay;
+    private readonly TimeSpan _maxDelay;
+
+    private readonly bool _enabled;
 
     /// <summary>
     /// Creates a new instance of the <see cref="ClientRetryPolicy"/> class.
@@ -36,6 +41,20 @@ public class ClientRetryPolicy : PipelinePolicy
     {
         _maxRetries = maxRetries;
         _initialDelay = DefaultInitialDelay;
+    }
+
+    /// <summary>
+    /// Creates a new instance of the <see cref="ClientRetryPolicy"/> class.
+    /// </summary>
+    /// <param name="options">Options used to construct the
+    /// <see cref="ClientRetryPolicy"/>.</param>
+    public ClientRetryPolicy(ClientRetryOptions options)
+    {
+        bool disableRetries = options.DisableRetries.HasValue && options.DisableRetries.Value;
+        _enabled = !disableRetries;
+
+        _maxRetries = options.MaxRetries ?? DefaultMaxRetries;
+        _maxDelay = options.MaxDelay ?? DefaultMaxDelay;
     }
 
     /// <inheritdoc/>
@@ -48,6 +67,24 @@ public class ClientRetryPolicy : PipelinePolicy
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
+        // If retries were disabled via ClientRetryOptions, behave as a base
+        // PipelinePolicy and simply pass the message on to the next policy.
+        if (!_enabled)
+        {
+            if (async)
+            {
+                await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
+            }
+            else
+            {
+                ProcessNext(message, pipeline, currentIndex);
+            }
+
+            return;
+        }
+
+        // Policy is enabled, implement retry logic.
+
         List<Exception>? allTryExceptions = null;
 
         while (true)
@@ -98,6 +135,13 @@ public class ClientRetryPolicy : PipelinePolicy
             if (shouldRetry)
             {
                 TimeSpan delay = GetNextDelay(message, message.RetryCount);
+
+                // Reset delay so it doesn't exceed the configured max delay.
+                if (delay > _maxDelay)
+                {
+                    delay = _maxDelay;
+                }
+
                 if (delay > TimeSpan.Zero)
                 {
                     if (async)
