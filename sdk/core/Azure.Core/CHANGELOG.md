@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Moved implementation of `Azure.AzureKeyCredential` into `System.ClientModel.ApiKeyCredential` and made `ApiKeyCredential` the base type for `AzureKeyCredential` ([#46128](https://github.com/Azure/azure-sdk-for-net/pull/46128)).
+
 ### Breaking Changes
 
 ### Bugs Fixed
