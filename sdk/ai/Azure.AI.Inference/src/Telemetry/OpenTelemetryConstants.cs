@@ -8,6 +8,6 @@ namespace Azure.AI.Inference.Telemetry
         public const string ClientName = "Azure.AI.Inference.ChatCompletionsClient";
         public const string AppContextSwitch = "OpenAI.Experimental.EnableOpenTelemetry";
         public const string EnvironmentVariableTraceContents = "AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED";
-        public const string EnvironmentVariableSwitchName = "OPENAI_EXPERIMENTAL_ENABLE_OPEN_TELEMETRY";
+        public const string EnvironmentVariableSwitchName = "AZURE_INFERENCE_EXPERIMENTAL_ENABLE_OPEN_TELEMETRY";
     }
 }

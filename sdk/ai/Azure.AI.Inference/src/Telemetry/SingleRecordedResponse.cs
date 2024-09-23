@@ -10,7 +10,7 @@ namespace Azure.AI.Inference.Telemetry
 {
     internal class SingleRecordedResponse : AbstractRecordedResponse
     {
-        private readonly string[] m_completions;
+        private readonly string[] _completions;
         /// <summary>
         /// Create the instance of Single recorded response.
         /// </summary>
@@ -23,7 +23,7 @@ namespace Azure.AI.Inference.Telemetry
             PromptTokens = response.Usage.PromptTokens;
             CompletionTokens = response.Usage.CompletionTokens;
 
-            m_completions = new string[response.Choices.Count];
+            _completions = new string[response.Choices.Count];
             // Record the event for each response
             int i = 0;
             // For ChatCompletions we do not have single finish reason
@@ -55,11 +55,11 @@ namespace Azure.AI.Inference.Telemetry
                     messageDict.Add("tool_calls", calls);
                     evt["message"] = messageDict;
                 }
-                m_completions[i] = JsonSerializer.Serialize(evt);
+                _completions[i] = JsonSerializer.Serialize(evt);
                 i++;
             }
         }
 
-        public override string[] GetSerializedCompletions() { return m_completions; }
+        public override string[] GetSerializedCompletions() { return _completions; }
     }
 }

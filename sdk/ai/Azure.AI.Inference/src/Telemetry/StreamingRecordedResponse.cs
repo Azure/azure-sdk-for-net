@@ -12,10 +12,10 @@ namespace Azure.AI.Inference.Telemetry
 {
     internal class StreamingRecordedResponse : AbstractRecordedResponse
     {
-        private readonly StringBuilder m_contents = new();
-        private readonly bool m_traceContent;
-        private bool m_hasFuncCall;
-        private readonly Dictionary<string, StringBuilder> m_hshFunctionArgs = new();
+        private readonly StringBuilder _contents = new();
+        private readonly bool _traceContent;
+        private bool _hasFuncCall;
+        private readonly Dictionary<string, StringBuilder> _hshFunctionArgs = new();
 
         /// <summary>
         /// Construct the streaming response based on first returned item.
@@ -23,7 +23,7 @@ namespace Azure.AI.Inference.Telemetry
         /// </summary>
         public StreamingRecordedResponse(bool traceContent)
         {
-            m_traceContent = traceContent;
+            _traceContent = traceContent;
         }
 
         public void Update(StreamingChatCompletionsUpdate item)
@@ -43,20 +43,20 @@ namespace Azure.AI.Inference.Telemetry
             // Check that this update has a function call.
             bool updateHasFuncCall = !((string.IsNullOrEmpty(item.FunctionName) || string.IsNullOrEmpty(item.FunctionArgumentsUpdate)));
             // Set flag if any of updates has function call.
-            m_hasFuncCall = m_hasFuncCall || updateHasFuncCall;
-            if (m_traceContent)
+            _hasFuncCall = _hasFuncCall || updateHasFuncCall;
+            if (_traceContent)
             {
                 if (!string.IsNullOrEmpty(item.ContentUpdate))
-                    m_contents.Append(item.ContentUpdate);
+                    _contents.Append(item.ContentUpdate);
                 if (!updateHasFuncCall)
                     return;
-                if (m_hshFunctionArgs.TryGetValue(item.FunctionName, out StringBuilder sbArgs))
+                if (_hshFunctionArgs.TryGetValue(item.FunctionName, out StringBuilder sbArgs))
                 {
                     sbArgs.Append(item.FunctionArgumentsUpdate);
                 }
                 else
                 {
-                    m_hshFunctionArgs.Add(item.FunctionName, new StringBuilder(item.FunctionArgumentsUpdate));
+                    _hshFunctionArgs.Add(item.FunctionName, new StringBuilder(item.FunctionArgumentsUpdate));
                 }
             }
         }
@@ -64,7 +64,7 @@ namespace Azure.AI.Inference.Telemetry
         private List<Dictionary<string, object>> GetFuncArgs()
         {
             List<Dictionary<string, object>> listArgs = new();
-            foreach (StringBuilder sb in m_hshFunctionArgs.Values)
+            foreach (StringBuilder sb in _hshFunctionArgs.Values)
             {
                 if (sb.Length > 0)
                     listArgs.Add(JsonSerializer.Deserialize<Dictionary<string, object>>(sb.ToString()));
@@ -79,14 +79,14 @@ namespace Azure.AI.Inference.Telemetry
                 {"index", 0},
             };
             var messageDict = new Dictionary<string, object>();
-            if (m_traceContent)
+            if (_traceContent)
             {
-                messageDict["content"] = m_contents.ToString();
+                messageDict["content"] = _contents.ToString();
                 evt["message"] = messageDict;
             }
-            if (m_hasFuncCall)
+            if (_hasFuncCall)
             {
-                if (m_traceContent)
+                if (_traceContent)
                     messageDict.Add("tool_calls", GetFuncArgs());
                 else
                     messageDict.Add("tool_calls", new List<Dictionary<string, object>>());

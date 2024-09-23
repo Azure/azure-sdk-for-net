@@ -61,7 +61,7 @@ namespace Azure.AI.Inference.Tests
             )
         {
             Environment.SetEnvironmentVariable("some_env_123", env);
-            Assert.AreEqual(expected, OpenTelemetryScope.GetSwithVariableVal("some_env_123"));
+            Assert.AreEqual(expected, OpenTelemetryScope.GetSwitchVariableVal("some_env_123"));
         }
 
         [Test, Sequential]

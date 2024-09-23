@@ -6,7 +6,6 @@ using System;
 using Azure.AI.Inference.Telemetry;
 using NUnit.Framework;
 using System.Text.Json;
-using System.Xml.Linq;
 
 namespace Azure.AI.Inference.Tests
 {
