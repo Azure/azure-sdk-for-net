@@ -4,6 +4,8 @@
 using Azure.Core;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
+using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Generator.CSharp.Providers;
 using NUnit.Framework;
 using System;
 using System.Net;
@@ -24,6 +26,10 @@ namespace Azure.Generator.Tests
             var input = InputFactory.Primitive.String("uuid", "Azure.Core.uuid");
 
             var actual = AzureClientPlugin.Instance.TypeFactory.CreateCSharpType(input);
+
+            var model = new ModelProvider(null!);
+
+            Assert.AreEqual(10, model.Properties);
 
             Assert.IsNotNull(actual);
             Assert.IsTrue(actual?.IsFrameworkType);
