@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // this example assumes you already have this StorageSyncWorkflowResource created on azure
             // for more information of creating StorageSyncWorkflowResource, please refer to the document of StorageSyncWorkflowResource
-            string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup_1";
             string storageSyncServiceName = "SampleStorageSyncService_1";
             string workflowId = "828219ea-083e-48b5-89ea-8fd9991b2e75";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // this example assumes you already have this StorageSyncWorkflowResource created on azure
             // for more information of creating StorageSyncWorkflowResource, please refer to the document of StorageSyncWorkflowResource
-            string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup_1";
             string storageSyncServiceName = "SampleStorageSyncService_1";
             string workflowId = "7ffd50b3-5574-478d-9ff2-9371bc42ce68";

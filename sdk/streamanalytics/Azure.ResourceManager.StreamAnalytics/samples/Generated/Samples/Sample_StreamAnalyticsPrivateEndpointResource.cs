@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamAnalyticsPrivateEndpointResource created on azure
             // for more information of creating StreamAnalyticsPrivateEndpointResource, please refer to the document of StreamAnalyticsPrivateEndpointResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string clusterName = "testcluster";
             string privateEndpointName = "testpe";
@@ -80,7 +80,7 @@ GroupIds =
 
             // this example assumes you already have this StreamAnalyticsPrivateEndpointResource created on azure
             // for more information of creating StreamAnalyticsPrivateEndpointResource, please refer to the document of StreamAnalyticsPrivateEndpointResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string clusterName = "testcluster";
             string privateEndpointName = "testpe";
@@ -112,7 +112,7 @@ GroupIds =
 
             // this example assumes you already have this StreamAnalyticsPrivateEndpointResource created on azure
             // for more information of creating StreamAnalyticsPrivateEndpointResource, please refer to the document of StreamAnalyticsPrivateEndpointResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string clusterName = "testcluster";
             string privateEndpointName = "testpe";

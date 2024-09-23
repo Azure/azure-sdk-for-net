@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "5c6bc8e1-1eaf-4192-94d8-58ce463ac86c";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "5c6bc8e1-1eaf-4192-94d8-58ce463ac86c";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // this example assumes you already have this StorageSyncServiceResource created on azure
             // for more information of creating StorageSyncServiceResource, please refer to the document of StorageSyncServiceResource
-            string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup_1";
             string storageSyncServiceName = "SampleStorageSyncService_1";
             ResourceIdentifier storageSyncServiceResourceId = StorageSyncServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, storageSyncServiceName);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // this example assumes you already have this StorageSyncServiceResource created on azure
             // for more information of creating StorageSyncServiceResource, please refer to the document of StorageSyncServiceResource
-            string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup_1";
             string storageSyncServiceName = "SampleStorageSyncService_1";
             ResourceIdentifier storageSyncServiceResourceId = StorageSyncServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, storageSyncServiceName);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // this example assumes you already have this StorageSyncServiceResource created on azure
             // for more information of creating StorageSyncServiceResource, please refer to the document of StorageSyncServiceResource
-            string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SampleResourceGroup_1";
             string storageSyncServiceName = "SampleStorageSyncService_1";
             ResourceIdentifier storageSyncServiceResourceId = StorageSyncServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, storageSyncServiceName);
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // this example assumes you already have this StorageSyncServiceResource created on azure
             // for more information of creating StorageSyncServiceResource, please refer to the document of StorageSyncServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "res6977";
             string storageSyncServiceName = "sss2527";
             ResourceIdentifier storageSyncServiceResourceId = StorageSyncServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, storageSyncServiceName);

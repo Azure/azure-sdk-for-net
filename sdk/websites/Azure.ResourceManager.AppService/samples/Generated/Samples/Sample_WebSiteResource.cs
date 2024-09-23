@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "sitef6141";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "sitef6141";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "sitef6141";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "sitef6141";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "sitef6141";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "sitef6141";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -264,7 +264,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "sitef6141";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -295,7 +295,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "sitef6141";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -330,7 +330,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "sitef6141";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -357,7 +357,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "sitef6141";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -398,7 +398,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "sitef6141";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -425,7 +425,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "sitef6141";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -452,7 +452,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "sitef6141";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -552,7 +552,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "sitef6141";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -579,7 +579,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "sitef6141";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -620,7 +620,7 @@ MountPath = "/mounts/a/files",
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testSite";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -650,7 +650,7 @@ MountPath = "/mounts/a/files",
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testSite";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -679,7 +679,7 @@ MountPath = "/mounts/a/files",
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "tests346";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -710,7 +710,7 @@ MountPath = "/mounts/a/files",
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "SampleApp";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -741,7 +741,7 @@ MountPath = "/mounts/a/files",
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "SampleApp";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -770,7 +770,7 @@ MountPath = "/mounts/a/files",
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "SampleApp";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -797,7 +797,7 @@ MountPath = "/mounts/a/files",
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "SampleApp";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -828,7 +828,7 @@ MountPath = "/mounts/a/files",
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "SampleApp";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -859,7 +859,7 @@ MountPath = "/mounts/a/files",
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "SampleApp";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -890,7 +890,7 @@ MountPath = "/mounts/a/files",
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testSite";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -920,7 +920,7 @@ MountPath = "/mounts/a/files",
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "SampleApp";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -949,7 +949,7 @@ MountPath = "/mounts/a/files",
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "SampleApp";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -976,7 +976,7 @@ MountPath = "/mounts/a/files",
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "testsite2";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -1010,7 +1010,7 @@ MountPath = "/mounts/a/files",
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "testsite2";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -1092,7 +1092,7 @@ MountPath = "/mounts/a/files",
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "testsite2";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -1120,7 +1120,7 @@ MountPath = "/mounts/a/files",
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testResourceGroup";
             string name = "test-name";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -1152,7 +1152,7 @@ MountPath = "/mounts/a/files",
 
             // this example assumes you already have this WebSiteResource created on azure
             // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-resource-group";
             string name = "test-name";
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);

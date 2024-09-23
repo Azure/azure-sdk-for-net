@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobTransformationResource created on azure
             // for more information of creating StreamingJobTransformationResource, please refer to the document of StreamingJobTransformationResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg4423";
             string jobName = "sj8374";
             string transformationName = "transformation952";
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobTransformationResource created on azure
             // for more information of creating StreamingJobTransformationResource, please refer to the document of StreamingJobTransformationResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg4423";
             string jobName = "sj8374";
             string transformationName = "transformation952";

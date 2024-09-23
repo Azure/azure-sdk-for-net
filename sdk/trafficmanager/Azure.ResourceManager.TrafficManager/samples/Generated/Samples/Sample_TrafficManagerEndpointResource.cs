@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerEndpointResource created on azure
             // for more information of creating TrafficManagerEndpointResource, please refer to the document of TrafficManagerEndpointResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager1421";
             string profileName = "azsmnet6386";
             string endpointType = "ExternalEndpoints";
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerEndpointResource created on azure
             // for more information of creating TrafficManagerEndpointResource, please refer to the document of TrafficManagerEndpointResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager2191";
             string profileName = "azuresdkfornetautoresttrafficmanager8224";
             string endpointType = "ExternalEndpoints";
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerEndpointResource created on azure
             // for more information of creating TrafficManagerEndpointResource, please refer to the document of TrafficManagerEndpointResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager1421";
             string profileName = "azsmnet6386";
             string endpointType = "ExternalEndpoints";
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerEndpointResource created on azure
             // for more information of creating TrafficManagerEndpointResource, please refer to the document of TrafficManagerEndpointResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager2191";
             string profileName = "azuresdkfornetautoresttrafficmanager8224";
             string endpointType = "ExternalEndpoints";
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
             // this example assumes you already have this TrafficManagerEndpointResource created on azure
             // for more information of creating TrafficManagerEndpointResource, please refer to the document of TrafficManagerEndpointResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "azuresdkfornetautoresttrafficmanager1421";
             string profileName = "azsmnet6386";
             string endpointType = "ExternalEndpoints";

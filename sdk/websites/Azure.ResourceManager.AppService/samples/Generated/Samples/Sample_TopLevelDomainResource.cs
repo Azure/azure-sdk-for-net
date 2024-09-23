@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this TopLevelDomainResource created on azure
             // for more information of creating TopLevelDomainResource, please refer to the document of TopLevelDomainResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string name = "com";
             ResourceIdentifier topLevelDomainResourceId = TopLevelDomainResource.CreateResourceIdentifier(subscriptionId, name);
             TopLevelDomainResource topLevelDomain = client.GetTopLevelDomainResource(topLevelDomainResourceId);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this TopLevelDomainResource created on azure
             // for more information of creating TopLevelDomainResource, please refer to the document of TopLevelDomainResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string name = "in";
             ResourceIdentifier topLevelDomainResourceId = TopLevelDomainResource.CreateResourceIdentifier(subscriptionId, name);
             TopLevelDomainResource topLevelDomain = client.GetTopLevelDomainResource(topLevelDomainResourceId);

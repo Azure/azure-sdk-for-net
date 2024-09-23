@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this DomainOwnershipIdentifierResource created on azure
             // for more information of creating DomainOwnershipIdentifierResource, please refer to the document of DomainOwnershipIdentifierResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string domainName = "example.com";
             string name = "SampleOwnershipId";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this DomainOwnershipIdentifierResource created on azure
             // for more information of creating DomainOwnershipIdentifierResource, please refer to the document of DomainOwnershipIdentifierResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string domainName = "example.com";
             string name = "ownershipIdentifier";
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this DomainOwnershipIdentifierResource created on azure
             // for more information of creating DomainOwnershipIdentifierResource, please refer to the document of DomainOwnershipIdentifierResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string domainName = "example.com";
             string name = "SampleOwnershipId";

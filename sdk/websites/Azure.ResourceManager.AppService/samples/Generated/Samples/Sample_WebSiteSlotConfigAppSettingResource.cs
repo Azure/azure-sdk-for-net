@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this WebSiteSlotConfigAppSettingResource created on azure
             // for more information of creating WebSiteSlotConfigAppSettingResource, please refer to the document of WebSiteSlotConfigAppSettingResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "testc6282";
             string slot = "stage";

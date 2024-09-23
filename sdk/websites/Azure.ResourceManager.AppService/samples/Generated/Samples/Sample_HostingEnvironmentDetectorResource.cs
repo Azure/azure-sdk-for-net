@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this HostingEnvironmentDetectorResource created on azure
             // for more information of creating HostingEnvironmentDetectorResource, please refer to the document of HostingEnvironmentDetectorResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Sample-WestUSResourceGroup";
             string name = "SampleAppServiceEnvironment";
             string detectorName = "runtimeavailability";

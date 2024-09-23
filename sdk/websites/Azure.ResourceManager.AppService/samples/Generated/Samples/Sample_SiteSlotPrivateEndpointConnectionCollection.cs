@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this WebSiteSlotResource created on azure
             // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testSite";
             string slot = "stage";
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this WebSiteSlotResource created on azure
             // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testSite";
             string slot = "stage";
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this WebSiteSlotResource created on azure
             // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testSite";
             string slot = "stage";
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this WebSiteSlotResource created on azure
             // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string name = "testSite";
             string slot = "stage";

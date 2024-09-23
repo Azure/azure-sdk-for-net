@@ -175,7 +175,7 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
 
             // this example assumes you already have this DiskPoolResource created on azure
             // for more information of creating DiskPoolResource, please refer to the document of DiskPoolResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Sample-WestUSResourceGroup";
             string diskPoolName = "SampleAse";
             ResourceIdentifier diskPoolResourceId = DiskPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, diskPoolName);

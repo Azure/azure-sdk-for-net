@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseDatabaseResource created on azure
             // for more information of creating SynapseDatabaseResource, please refer to the document of SynapseDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "synapseWorkspaceName";
             string kustoPoolName = "kustoclusterrptest4";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseDatabaseResource created on azure
             // for more information of creating SynapseDatabaseResource, please refer to the document of SynapseDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "synapseWorkspaceName";
             string kustoPoolName = "kustoclusterrptest4";
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseDatabaseResource created on azure
             // for more information of creating SynapseDatabaseResource, please refer to the document of SynapseDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "synapseWorkspaceName";
             string kustoPoolName = "kustoclusterrptest4";
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseDatabaseResource created on azure
             // for more information of creating SynapseDatabaseResource, please refer to the document of SynapseDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "synapseWorkspaceName";
             string kustoPoolName = "kustoclusterrptest4";
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseDatabaseResource created on azure
             // for more information of creating SynapseDatabaseResource, please refer to the document of SynapseDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "kustorptest";
             string kustoPoolName = "kustoclusterrptest4";
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseDatabaseResource created on azure
             // for more information of creating SynapseDatabaseResource, please refer to the document of SynapseDatabaseResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "kustorptest";
             string workspaceName = "synapseWorkspaceName";
             string kustoPoolName = "kustoclusterrptest4";

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             // this example assumes you already have this SupportTicketFileResource created on azure
             // for more information of creating SupportTicketFileResource, please refer to the document of SupportTicketFileResource
-            string subscriptionId = "132d901f-189d-4381-9214-fe68e27e05a1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string fileWorkspaceName = "testworkspace";
             string fileName = "test.txt";
             ResourceIdentifier supportTicketFileResourceId = SupportTicketFileResource.CreateResourceIdentifier(subscriptionId, fileWorkspaceName, fileName);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             // this example assumes you already have this SupportTicketFileResource created on azure
             // for more information of creating SupportTicketFileResource, please refer to the document of SupportTicketFileResource
-            string subscriptionId = "132d901f-189d-4381-9214-fe68e27e05a1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string fileWorkspaceName = "testworkspace";
             string fileName = "test.txt";
             ResourceIdentifier supportTicketFileResourceId = SupportTicketFileResource.CreateResourceIdentifier(subscriptionId, fileWorkspaceName, fileName);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             // this example assumes you already have this SupportTicketFileResource created on azure
             // for more information of creating SupportTicketFileResource, please refer to the document of SupportTicketFileResource
-            string subscriptionId = "132d901f-189d-4381-9214-fe68e27e05a1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string fileWorkspaceName = "testworkspaceName";
             string fileName = "test.txt";
             ResourceIdentifier supportTicketFileResourceId = SupportTicketFileResource.CreateResourceIdentifier(subscriptionId, fileWorkspaceName, fileName);

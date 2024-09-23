@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Workloads.Samples
 
             // this example assumes you already have this SapCentralServerInstanceResource created on azure
             // for more information of creating SapCentralServerInstanceResource, please refer to the document of SapCentralServerInstanceResource
-            string subscriptionId = "6d875e77-e412-4d7d-9af4-8895278b4443";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string sapVirtualInstanceName = "X00";
             string centralInstanceName = "centralServer";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Workloads.Samples
 
             // this example assumes you already have this SapCentralServerInstanceResource created on azure
             // for more information of creating SapCentralServerInstanceResource, please refer to the document of SapCentralServerInstanceResource
-            string subscriptionId = "6d875e77-e412-4d7d-9af4-8895278b4443";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string sapVirtualInstanceName = "X00";
             string centralInstanceName = "centralServer";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Workloads.Samples
 
             // this example assumes you already have this SapCentralServerInstanceResource created on azure
             // for more information of creating SapCentralServerInstanceResource, please refer to the document of SapCentralServerInstanceResource
-            string subscriptionId = "6d875e77-e412-4d7d-9af4-8895278b4443";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string sapVirtualInstanceName = "X00";
             string centralInstanceName = "centralServer";
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Workloads.Samples
 
             // this example assumes you already have this SapCentralServerInstanceResource created on azure
             // for more information of creating SapCentralServerInstanceResource, please refer to the document of SapCentralServerInstanceResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string sapVirtualInstanceName = "X00";
             string centralInstanceName = "centralServer";
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Workloads.Samples
 
             // this example assumes you already have this SapCentralServerInstanceResource created on azure
             // for more information of creating SapCentralServerInstanceResource, please refer to the document of SapCentralServerInstanceResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "test-rg";
             string sapVirtualInstanceName = "X00";
             string centralInstanceName = "centralServer";

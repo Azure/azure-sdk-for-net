@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg7983";
             string jobName = "sj2331";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg7983";
             string jobName = "sj2331";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg7983";
             string jobName = "sj2331";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg7983";
             string jobName = "sj2331";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg3410";
             string jobName = "sj5095";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6450";
             string jobName = "sj7094";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg5023";
             string jobName = "sj900";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -392,7 +392,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6912";
             string jobName = "sj3310";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -447,7 +447,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string jobName = "sjName";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -495,7 +495,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string jobName = "sjName";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -542,7 +542,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg2157";
             string jobName = "sj6458";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -589,7 +589,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg5176";
             string jobName = "sj2790";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -641,7 +641,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6912";
             string jobName = "sj3310";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -698,7 +698,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg7983";
             string jobName = "sj2331";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -733,7 +733,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg7983";
             string jobName = "sj2331";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -764,7 +764,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg7983";
             string jobName = "sj2331";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -807,7 +807,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg7983";
             string jobName = "sj2331";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -842,7 +842,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg7983";
             string jobName = "sj2331";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -873,7 +873,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg7983";
             string jobName = "sj2331";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -916,7 +916,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg3410";
             string jobName = "sj5095";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -951,7 +951,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg3410";
             string jobName = "sj5095";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -982,7 +982,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg3410";
             string jobName = "sj5095";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1025,7 +1025,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6450";
             string jobName = "sj7094";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1060,7 +1060,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6450";
             string jobName = "sj7094";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1091,7 +1091,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6450";
             string jobName = "sj7094";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1134,7 +1134,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg5023";
             string jobName = "sj900";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1169,7 +1169,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg5023";
             string jobName = "sj900";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1200,7 +1200,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg5023";
             string jobName = "sj900";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1243,7 +1243,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6912";
             string jobName = "sj3310";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1278,7 +1278,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6912";
             string jobName = "sj3310";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1309,7 +1309,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6912";
             string jobName = "sj3310";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1352,7 +1352,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string jobName = "sjName";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1387,7 +1387,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string jobName = "sjName";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1418,7 +1418,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string jobName = "sjName";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1461,7 +1461,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string jobName = "sjName";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1496,7 +1496,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string jobName = "sjName";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1527,7 +1527,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg";
             string jobName = "sjName";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1570,7 +1570,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg2157";
             string jobName = "sj6458";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1605,7 +1605,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg2157";
             string jobName = "sj6458";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1636,7 +1636,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg2157";
             string jobName = "sj6458";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1679,7 +1679,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg5176";
             string jobName = "sj2790";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1714,7 +1714,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg5176";
             string jobName = "sj2790";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1745,7 +1745,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg5176";
             string jobName = "sj2790";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1788,7 +1788,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6912";
             string jobName = "sj3310";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1823,7 +1823,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6912";
             string jobName = "sj3310";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1854,7 +1854,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg6912";
             string jobName = "sj3310";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
@@ -1897,7 +1897,7 @@ AccountKey = "accountKey==",
 
             // this example assumes you already have this StreamingJobResource created on azure
             // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg2157";
             string jobName = "sj6458";
             ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);

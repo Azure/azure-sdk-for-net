@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Samples
 
             // this example assumes you already have this HealthMonitorStateChangeResource created on azure
             // for more information of creating HealthMonitorStateChangeResource, please refer to the document of HealthMonitorStateChangeResource
-            string subscriptionId = "bc27da3b-3ba2-4e00-a6ec-1fde64aa1e21";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "tugamidiAlerts";
             string providerName = "Microsoft.Compute";
             string resourceCollectionName = "virtualMachines";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Samples
 
             // this example assumes you already have this HealthMonitorStateChangeResource created on azure
             // for more information of creating HealthMonitorStateChangeResource, please refer to the document of HealthMonitorStateChangeResource
-            string subscriptionId = "bc27da3b-3ba2-4e00-a6ec-1fde64aa1e21";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "tugamidiAlerts";
             string providerName = "Microsoft.Compute";
             string resourceCollectionName = "virtualMachines";

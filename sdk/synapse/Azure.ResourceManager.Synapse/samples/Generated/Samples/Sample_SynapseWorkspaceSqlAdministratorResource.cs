@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseWorkspaceSqlAdministratorResource created on azure
             // for more information of creating SynapseWorkspaceSqlAdministratorResource, please refer to the document of SynapseWorkspaceSqlAdministratorResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string workspaceName = "workspace1";
             ResourceIdentifier synapseWorkspaceSqlAdministratorResourceId = SynapseWorkspaceSqlAdministratorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseWorkspaceSqlAdministratorResource created on azure
             // for more information of creating SynapseWorkspaceSqlAdministratorResource, please refer to the document of SynapseWorkspaceSqlAdministratorResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string workspaceName = "workspace1";
             ResourceIdentifier synapseWorkspaceSqlAdministratorResourceId = SynapseWorkspaceSqlAdministratorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // this example assumes you already have this SynapseWorkspaceSqlAdministratorResource created on azure
             // for more information of creating SynapseWorkspaceSqlAdministratorResource, please refer to the document of SynapseWorkspaceSqlAdministratorResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroup1";
             string workspaceName = "workspace1";
             ResourceIdentifier synapseWorkspaceSqlAdministratorResourceId = SynapseWorkspaceSqlAdministratorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);

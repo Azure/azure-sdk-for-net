@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this AppServiceCertificateOrderResource created on azure
             // for more information of creating AppServiceCertificateOrderResource, please refer to the document of AppServiceCertificateOrderResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string certificateOrderName = "SampleCertificateOrderName";
             ResourceIdentifier appServiceCertificateOrderResourceId = AppServiceCertificateOrderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, certificateOrderName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this AppServiceCertificateOrderResource created on azure
             // for more information of creating AppServiceCertificateOrderResource, please refer to the document of AppServiceCertificateOrderResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string certificateOrderName = "SampleCertificateOrderName";
             ResourceIdentifier appServiceCertificateOrderResourceId = AppServiceCertificateOrderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, certificateOrderName);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this AppServiceCertificateOrderResource created on azure
             // for more information of creating AppServiceCertificateOrderResource, please refer to the document of AppServiceCertificateOrderResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string certificateOrderName = "SampleCertificateOrderName";
             ResourceIdentifier appServiceCertificateOrderResourceId = AppServiceCertificateOrderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, certificateOrderName);
@@ -173,7 +173,7 @@ KeyVaultSecretName = "SampleSecretName2",
 
             // this example assumes you already have this AppServiceCertificateOrderResource created on azure
             // for more information of creating AppServiceCertificateOrderResource, please refer to the document of AppServiceCertificateOrderResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string certificateOrderName = "SampleCertificateOrderName";
             ResourceIdentifier appServiceCertificateOrderResourceId = AppServiceCertificateOrderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, certificateOrderName);
@@ -207,7 +207,7 @@ KeyVaultSecretName = "SampleSecretName2",
 
             // this example assumes you already have this AppServiceCertificateOrderResource created on azure
             // for more information of creating AppServiceCertificateOrderResource, please refer to the document of AppServiceCertificateOrderResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string certificateOrderName = "SampleCertificateOrderName";
             ResourceIdentifier appServiceCertificateOrderResourceId = AppServiceCertificateOrderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, certificateOrderName);
@@ -240,7 +240,7 @@ KeyVaultSecretName = "SampleSecretName2",
 
             // this example assumes you already have this AppServiceCertificateOrderResource created on azure
             // for more information of creating AppServiceCertificateOrderResource, please refer to the document of AppServiceCertificateOrderResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string certificateOrderName = "SampleCertificateOrderName";
             ResourceIdentifier appServiceCertificateOrderResourceId = AppServiceCertificateOrderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, certificateOrderName);
@@ -267,7 +267,7 @@ KeyVaultSecretName = "SampleSecretName2",
 
             // this example assumes you already have this AppServiceCertificateOrderResource created on azure
             // for more information of creating AppServiceCertificateOrderResource, please refer to the document of AppServiceCertificateOrderResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string certificateOrderName = "SampleCertificateOrderName";
             ResourceIdentifier appServiceCertificateOrderResourceId = AppServiceCertificateOrderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, certificateOrderName);
@@ -298,7 +298,7 @@ KeyVaultSecretName = "SampleSecretName2",
 
             // this example assumes you already have this AppServiceCertificateOrderResource created on azure
             // for more information of creating AppServiceCertificateOrderResource, please refer to the document of AppServiceCertificateOrderResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string certificateOrderName = "SampleCertOrder";
             ResourceIdentifier appServiceCertificateOrderResourceId = AppServiceCertificateOrderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, certificateOrderName);
@@ -330,7 +330,7 @@ KeyVaultSecretName = "SampleSecretName2",
 
             // this example assumes you already have this AppServiceCertificateOrderResource created on azure
             // for more information of creating AppServiceCertificateOrderResource, please refer to the document of AppServiceCertificateOrderResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string certificateOrderName = "SampleCertificateOrderName";
             ResourceIdentifier appServiceCertificateOrderResourceId = AppServiceCertificateOrderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, certificateOrderName);
@@ -357,7 +357,7 @@ KeyVaultSecretName = "SampleSecretName2",
 
             // this example assumes you already have this AppServiceCertificateOrderResource created on azure
             // for more information of creating AppServiceCertificateOrderResource, please refer to the document of AppServiceCertificateOrderResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "SampleCertOrder";
             ResourceIdentifier appServiceCertificateOrderResourceId = AppServiceCertificateOrderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
@@ -387,7 +387,7 @@ KeyVaultSecretName = "SampleSecretName2",
 
             // this example assumes you already have this AppServiceCertificateOrderResource created on azure
             // for more information of creating AppServiceCertificateOrderResource, please refer to the document of AppServiceCertificateOrderResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg123";
             string name = "SampleCertOrder";
             ResourceIdentifier appServiceCertificateOrderResourceId = AppServiceCertificateOrderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);

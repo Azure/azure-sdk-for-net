@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobFunctionResource created on azure
             // for more information of creating StreamingJobFunctionResource, please refer to the document of StreamingJobFunctionResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg1637";
             string jobName = "sj8653";
             string functionName = "function8197";
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobFunctionResource created on azure
             // for more information of creating StreamingJobFunctionResource, please refer to the document of StreamingJobFunctionResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg7";
             string jobName = "sj9093";
             string functionName = "function588";
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobFunctionResource created on azure
             // for more information of creating StreamingJobFunctionResource, please refer to the document of StreamingJobFunctionResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg1637";
             string jobName = "sj8653";
             string functionName = "function8197";
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobFunctionResource created on azure
             // for more information of creating StreamingJobFunctionResource, please refer to the document of StreamingJobFunctionResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg1637";
             string jobName = "sj8653";
             string functionName = "function8197";
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobFunctionResource created on azure
             // for more information of creating StreamingJobFunctionResource, please refer to the document of StreamingJobFunctionResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg7";
             string jobName = "sj9093";
             string functionName = "function588";
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobFunctionResource created on azure
             // for more information of creating StreamingJobFunctionResource, please refer to the document of StreamingJobFunctionResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg1637";
             string jobName = "sj8653";
             string functionName = "function8197";
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobFunctionResource created on azure
             // for more information of creating StreamingJobFunctionResource, please refer to the document of StreamingJobFunctionResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg7";
             string jobName = "sj9093";
             string functionName = "function588";
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // this example assumes you already have this StreamingJobFunctionResource created on azure
             // for more information of creating StreamingJobFunctionResource, please refer to the document of StreamingJobFunctionResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "sjrg7";
             string jobName = "sj9093";
             string functionName = "function588";

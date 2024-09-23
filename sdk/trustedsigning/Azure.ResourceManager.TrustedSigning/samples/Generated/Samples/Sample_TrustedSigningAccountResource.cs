@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
 
             // this example assumes you already have this TrustedSigningAccountResource created on azure
             // for more information of creating TrustedSigningAccountResource, please refer to the document of TrustedSigningAccountResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             ResourceIdentifier trustedSigningAccountResourceId = TrustedSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
 
             // this example assumes you already have this TrustedSigningAccountResource created on azure
             // for more information of creating TrustedSigningAccountResource, please refer to the document of TrustedSigningAccountResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             ResourceIdentifier trustedSigningAccountResourceId = TrustedSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
 
             // this example assumes you already have this TrustedSigningAccountResource created on azure
             // for more information of creating TrustedSigningAccountResource, please refer to the document of TrustedSigningAccountResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             ResourceIdentifier trustedSigningAccountResourceId = TrustedSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);

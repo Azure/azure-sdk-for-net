@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
 
             // this example assumes you already have this TrustedSigningCertificateProfileResource created on azure
             // for more information of creating TrustedSigningCertificateProfileResource, please refer to the document of TrustedSigningCertificateProfileResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             string profileName = "profileA";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
 
             // this example assumes you already have this TrustedSigningCertificateProfileResource created on azure
             // for more information of creating TrustedSigningCertificateProfileResource, please refer to the document of TrustedSigningCertificateProfileResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             string profileName = "profileA";
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
 
             // this example assumes you already have this TrustedSigningCertificateProfileResource created on azure
             // for more information of creating TrustedSigningCertificateProfileResource, please refer to the document of TrustedSigningCertificateProfileResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             string profileName = "profileA";
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
 
             // this example assumes you already have this TrustedSigningCertificateProfileResource created on azure
             // for more information of creating TrustedSigningCertificateProfileResource, please refer to the document of TrustedSigningCertificateProfileResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             string profileName = "profileA";

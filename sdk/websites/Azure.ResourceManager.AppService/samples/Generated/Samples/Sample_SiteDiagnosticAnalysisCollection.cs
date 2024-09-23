@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this SiteDiagnosticResource created on azure
             // for more information of creating SiteDiagnosticResource, please refer to the document of SiteDiagnosticResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Sample-WestUSResourceGroup";
             string siteName = "SampleApp";
             string diagnosticCategory = "availability";
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this SiteDiagnosticResource created on azure
             // for more information of creating SiteDiagnosticResource, please refer to the document of SiteDiagnosticResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Sample-WestUSResourceGroup";
             string siteName = "SampleApp";
             string diagnosticCategory = "availability";
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this SiteDiagnosticResource created on azure
             // for more information of creating SiteDiagnosticResource, please refer to the document of SiteDiagnosticResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Sample-WestUSResourceGroup";
             string siteName = "SampleApp";
             string diagnosticCategory = "availability";
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this SiteDiagnosticResource created on azure
             // for more information of creating SiteDiagnosticResource, please refer to the document of SiteDiagnosticResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Sample-WestUSResourceGroup";
             string siteName = "SampleApp";
             string diagnosticCategory = "availability";
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this SiteDiagnosticResource created on azure
             // for more information of creating SiteDiagnosticResource, please refer to the document of SiteDiagnosticResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Sample-WestUSResourceGroup";
             string siteName = "SampleApp";
             string diagnosticCategory = "availability";
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this SiteDiagnosticResource created on azure
             // for more information of creating SiteDiagnosticResource, please refer to the document of SiteDiagnosticResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Sample-WestUSResourceGroup";
             string siteName = "SampleApp";
             string diagnosticCategory = "availability";
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this SiteDiagnosticResource created on azure
             // for more information of creating SiteDiagnosticResource, please refer to the document of SiteDiagnosticResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Sample-WestUSResourceGroup";
             string siteName = "SampleApp";
             string diagnosticCategory = "availability";
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // this example assumes you already have this SiteDiagnosticResource created on azure
             // for more information of creating SiteDiagnosticResource, please refer to the document of SiteDiagnosticResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "Sample-WestUSResourceGroup";
             string siteName = "SampleApp";
             string diagnosticCategory = "availability";
