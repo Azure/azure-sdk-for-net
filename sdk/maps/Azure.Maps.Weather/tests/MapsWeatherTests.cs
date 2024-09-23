@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using NUnit.Framework;
@@ -9,7 +9,6 @@ using Azure.Core.TestFramework;
 using Azure.Core.GeoJson;
 using Azure.Maps.Weather.Models;
 using Azure.Maps.Weather.Models.Options;
-using System.Runtime.InteropServices;
 
 namespace Azure.Maps.Weather.Tests
 {
