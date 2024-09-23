@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ElasticSanSnapshotResource created on azure
             // for more information of creating ElasticSanSnapshotResource, please refer to the document of ElasticSanSnapshotResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             string volumeGroupName = "volumegroupname";
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ElasticSanSnapshotResource created on azure
             // for more information of creating ElasticSanSnapshotResource, please refer to the document of ElasticSanSnapshotResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             string volumeGroupName = "volumegroupname";
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ElasticSanSnapshotResource created on azure
             // for more information of creating ElasticSanSnapshotResource, please refer to the document of ElasticSanSnapshotResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             string volumeGroupName = "volumegroupname";
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ElasticSanSnapshotResource created on azure
             // for more information of creating ElasticSanSnapshotResource, please refer to the document of ElasticSanSnapshotResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             string volumeGroupName = "volumegroupname";
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ElasticSanSnapshotResource created on azure
             // for more information of creating ElasticSanSnapshotResource, please refer to the document of ElasticSanSnapshotResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             string volumeGroupName = "volumegroupname";
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ElasticSanSnapshotResource created on azure
             // for more information of creating ElasticSanSnapshotResource, please refer to the document of ElasticSanSnapshotResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             string volumeGroupName = "volumegroupname";

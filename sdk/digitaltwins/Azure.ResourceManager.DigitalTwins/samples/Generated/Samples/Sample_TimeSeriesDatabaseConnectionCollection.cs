@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
 
             // this example assumes you already have this DigitalTwinsDescriptionResource created on azure
             // for more information of creating DigitalTwinsDescriptionResource, please refer to the document of DigitalTwinsDescriptionResource
-            string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resRg";
             string resourceName = "myDigitalTwinsService";
             ResourceIdentifier digitalTwinsDescriptionResourceId = DigitalTwinsDescriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
 
             // this example assumes you already have this DigitalTwinsDescriptionResource created on azure
             // for more information of creating DigitalTwinsDescriptionResource, please refer to the document of DigitalTwinsDescriptionResource
-            string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resRg";
             string resourceName = "myDigitalTwinsService";
             ResourceIdentifier digitalTwinsDescriptionResourceId = DigitalTwinsDescriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
 
             // this example assumes you already have this DigitalTwinsDescriptionResource created on azure
             // for more information of creating DigitalTwinsDescriptionResource, please refer to the document of DigitalTwinsDescriptionResource
-            string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resRg";
             string resourceName = "myDigitalTwinsService";
             ResourceIdentifier digitalTwinsDescriptionResourceId = DigitalTwinsDescriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
 
             // this example assumes you already have this DigitalTwinsDescriptionResource created on azure
             // for more information of creating DigitalTwinsDescriptionResource, please refer to the document of DigitalTwinsDescriptionResource
-            string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resRg";
             string resourceName = "myDigitalTwinsService";
             ResourceIdentifier digitalTwinsDescriptionResourceId = DigitalTwinsDescriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
 
             // this example assumes you already have this DigitalTwinsDescriptionResource created on azure
             // for more information of creating DigitalTwinsDescriptionResource, please refer to the document of DigitalTwinsDescriptionResource
-            string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resRg";
             string resourceName = "myDigitalTwinsService";
             ResourceIdentifier digitalTwinsDescriptionResourceId = DigitalTwinsDescriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
 
             // this example assumes you already have this DigitalTwinsDescriptionResource created on azure
             // for more information of creating DigitalTwinsDescriptionResource, please refer to the document of DigitalTwinsDescriptionResource
-            string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resRg";
             string resourceName = "myDigitalTwinsService";
             ResourceIdentifier digitalTwinsDescriptionResourceId = DigitalTwinsDescriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);

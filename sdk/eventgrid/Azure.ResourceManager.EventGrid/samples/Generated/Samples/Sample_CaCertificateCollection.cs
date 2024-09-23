@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this EventGridNamespaceResource created on azure
             // for more information of creating EventGridNamespaceResource, please refer to the document of EventGridNamespaceResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string namespaceName = "exampleNamespaceName1";
             ResourceIdentifier eventGridNamespaceResourceId = EventGridNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this EventGridNamespaceResource created on azure
             // for more information of creating EventGridNamespaceResource, please refer to the document of EventGridNamespaceResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string namespaceName = "exampleNamespaceName1";
             ResourceIdentifier eventGridNamespaceResourceId = EventGridNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this EventGridNamespaceResource created on azure
             // for more information of creating EventGridNamespaceResource, please refer to the document of EventGridNamespaceResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string namespaceName = "exampleNamespaceName1";
             ResourceIdentifier eventGridNamespaceResourceId = EventGridNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this EventGridNamespaceResource created on azure
             // for more information of creating EventGridNamespaceResource, please refer to the document of EventGridNamespaceResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string namespaceName = "exampleNamespaceName1";
             ResourceIdentifier eventGridNamespaceResourceId = EventGridNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this EventGridNamespaceResource created on azure
             // for more information of creating EventGridNamespaceResource, please refer to the document of EventGridNamespaceResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string namespaceName = "namespace123";
             ResourceIdentifier eventGridNamespaceResourceId = EventGridNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);

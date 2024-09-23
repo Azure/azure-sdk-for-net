@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
 
             // this example assumes you already have this EdgeOrderResource created on azure
             // for more information of creating EdgeOrderResource, please refer to the document of EdgeOrderResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             AzureLocation location = new AzureLocation("%7B%7B%7Blocation%7D%7D");
             string orderName = "TestOrderItemName901";

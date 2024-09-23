@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsConsumerGroupResource created on azure
             // for more information of creating EventHubsConsumerGroupResource, please refer to the document of EventHubsConsumerGroupResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-2661";
             string eventHubName = "sdk-EventHub-6681";
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsConsumerGroupResource created on azure
             // for more information of creating EventHubsConsumerGroupResource, please refer to the document of EventHubsConsumerGroupResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-2661";
             string eventHubName = "sdk-EventHub-6681";
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsConsumerGroupResource created on azure
             // for more information of creating EventHubsConsumerGroupResource, please refer to the document of EventHubsConsumerGroupResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-2661";
             string eventHubName = "sdk-EventHub-6681";

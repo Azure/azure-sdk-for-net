@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
 
             // this example assumes you already have this DevOpsPoolResource created on azure
             // for more information of creating DevOpsPoolResource, please refer to the document of DevOpsPoolResource
-            string subscriptionId = "a2e95d27-c161-4b61-bda4-11512c14c2c2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string poolName = "pool";
             ResourceIdentifier devOpsPoolResourceId = DevOpsPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, poolName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
 
             // this example assumes you already have this DevOpsPoolResource created on azure
             // for more information of creating DevOpsPoolResource, please refer to the document of DevOpsPoolResource
-            string subscriptionId = "a2e95d27-c161-4b61-bda4-11512c14c2c2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string poolName = "pool";
             ResourceIdentifier devOpsPoolResourceId = DevOpsPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, poolName);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
 
             // this example assumes you already have this DevOpsPoolResource created on azure
             // for more information of creating DevOpsPoolResource, please refer to the document of DevOpsPoolResource
-            string subscriptionId = "a2e95d27-c161-4b61-bda4-11512c14c2c2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg";
             string poolName = "pool";
             ResourceIdentifier devOpsPoolResourceId = DevOpsPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, poolName);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "a2e95d27-c161-4b61-bda4-11512c14c2c2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
 
             // this example assumes you already have this DevOpsPoolResource created on azure
             // for more information of creating DevOpsPoolResource, please refer to the document of DevOpsPoolResource
-            string subscriptionId = "a2e95d27-c161-4b61-bda4-11512c14c2c2";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "my-resource-group";
             string poolName = "my-dev-ops-pool";
             ResourceIdentifier devOpsPoolResourceId = DevOpsPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, poolName);

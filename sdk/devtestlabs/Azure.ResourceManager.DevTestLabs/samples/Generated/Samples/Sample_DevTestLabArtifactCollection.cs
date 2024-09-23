@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // this example assumes you already have this DevTestLabArtifactSourceResource created on azure
             // for more information of creating DevTestLabArtifactSourceResource, please refer to the document of DevTestLabArtifactSourceResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string labName = "{labName}";
             string artifactSourceName = "{artifactSourceName}";
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // this example assumes you already have this DevTestLabArtifactSourceResource created on azure
             // for more information of creating DevTestLabArtifactSourceResource, please refer to the document of DevTestLabArtifactSourceResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string labName = "{labName}";
             string artifactSourceName = "{artifactSourceName}";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // this example assumes you already have this DevTestLabArtifactSourceResource created on azure
             // for more information of creating DevTestLabArtifactSourceResource, please refer to the document of DevTestLabArtifactSourceResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string labName = "{labName}";
             string artifactSourceName = "{artifactSourceName}";
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // this example assumes you already have this DevTestLabArtifactSourceResource created on azure
             // for more information of creating DevTestLabArtifactSourceResource, please refer to the document of DevTestLabArtifactSourceResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string labName = "{labName}";
             string artifactSourceName = "{artifactSourceName}";

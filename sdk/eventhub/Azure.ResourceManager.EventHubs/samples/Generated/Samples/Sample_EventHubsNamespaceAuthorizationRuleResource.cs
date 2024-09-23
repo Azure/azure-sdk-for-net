@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsNamespaceAuthorizationRuleResource created on azure
             // for more information of creating EventHubsNamespaceAuthorizationRuleResource, please refer to the document of EventHubsNamespaceAuthorizationRuleResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-2702";
             string authorizationRuleName = "sdk-Authrules-1746";
@@ -70,7 +70,7 @@ EventHubsAccessRight.Listen,EventHubsAccessRight.Send
 
             // this example assumes you already have this EventHubsNamespaceAuthorizationRuleResource created on azure
             // for more information of creating EventHubsNamespaceAuthorizationRuleResource, please refer to the document of EventHubsNamespaceAuthorizationRuleResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-8980";
             string authorizationRuleName = "sdk-Authrules-8929";
@@ -98,7 +98,7 @@ EventHubsAccessRight.Listen,EventHubsAccessRight.Send
 
             // this example assumes you already have this EventHubsNamespaceAuthorizationRuleResource created on azure
             // for more information of creating EventHubsNamespaceAuthorizationRuleResource, please refer to the document of EventHubsNamespaceAuthorizationRuleResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-2702";
             string authorizationRuleName = "sdk-Authrules-1746";
@@ -130,7 +130,7 @@ EventHubsAccessRight.Listen,EventHubsAccessRight.Send
 
             // this example assumes you already have this EventHubsNamespaceAuthorizationRuleResource created on azure
             // for more information of creating EventHubsNamespaceAuthorizationRuleResource, please refer to the document of EventHubsNamespaceAuthorizationRuleResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-2702";
             string authorizationRuleName = "sdk-Authrules-1746";
@@ -158,7 +158,7 @@ EventHubsAccessRight.Listen,EventHubsAccessRight.Send
 
             // this example assumes you already have this EventHubsNamespaceAuthorizationRuleResource created on azure
             // for more information of creating EventHubsNamespaceAuthorizationRuleResource, please refer to the document of EventHubsNamespaceAuthorizationRuleResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-8980";
             string authorizationRuleName = "sdk-Authrules-8929";

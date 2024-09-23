@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerNamespaceResource created on azure
             // for more information of creating PartnerNamespaceResource, please refer to the document of PartnerNamespaceResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string parentName = "exampletopic1";
             ResourceIdentifier partnerNamespaceResourceId = PartnerNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, parentName);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerNamespaceResource created on azure
             // for more information of creating PartnerNamespaceResource, please refer to the document of PartnerNamespaceResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string parentName = "exampletopic1";
             ResourceIdentifier partnerNamespaceResourceId = PartnerNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, parentName);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerNamespaceResource created on azure
             // for more information of creating PartnerNamespaceResource, please refer to the document of PartnerNamespaceResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string parentName = "exampletopic1";
             ResourceIdentifier partnerNamespaceResourceId = PartnerNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, parentName);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerNamespaceResource created on azure
             // for more information of creating PartnerNamespaceResource, please refer to the document of PartnerNamespaceResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string parentName = "exampletopic1";
             ResourceIdentifier partnerNamespaceResourceId = PartnerNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, parentName);
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerNamespaceResource created on azure
             // for more information of creating PartnerNamespaceResource, please refer to the document of PartnerNamespaceResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "examplerg";
             string parentName = "exampletopic1";
             ResourceIdentifier partnerNamespaceResourceId = PartnerNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, parentName);

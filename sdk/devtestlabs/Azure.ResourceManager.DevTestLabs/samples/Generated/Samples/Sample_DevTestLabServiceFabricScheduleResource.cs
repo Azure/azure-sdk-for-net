@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // this example assumes you already have this DevTestLabServiceFabricScheduleResource created on azure
             // for more information of creating DevTestLabServiceFabricScheduleResource, please refer to the document of DevTestLabServiceFabricScheduleResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string labName = "{labName}";
             string userName = "@me";
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // this example assumes you already have this DevTestLabServiceFabricScheduleResource created on azure
             // for more information of creating DevTestLabServiceFabricScheduleResource, please refer to the document of DevTestLabServiceFabricScheduleResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string labName = "{labName}";
             string userName = "@me";
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // this example assumes you already have this DevTestLabServiceFabricScheduleResource created on azure
             // for more information of creating DevTestLabServiceFabricScheduleResource, please refer to the document of DevTestLabServiceFabricScheduleResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string labName = "{labName}";
             string userName = "@me";
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // this example assumes you already have this DevTestLabServiceFabricScheduleResource created on azure
             // for more information of creating DevTestLabServiceFabricScheduleResource, please refer to the document of DevTestLabServiceFabricScheduleResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string labName = "{labName}";
             string userName = "@me";

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ElasticSanVolumeGroupResource created on azure
             // for more information of creating ElasticSanVolumeGroupResource, please refer to the document of ElasticSanVolumeGroupResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             string volumeGroupName = "volumegroupname";
@@ -93,7 +93,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
 
             // this example assumes you already have this ElasticSanVolumeGroupResource created on azure
             // for more information of creating ElasticSanVolumeGroupResource, please refer to the document of ElasticSanVolumeGroupResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             string volumeGroupName = "volumegroupname";
@@ -127,7 +127,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
 
             // this example assumes you already have this ElasticSanVolumeGroupResource created on azure
             // for more information of creating ElasticSanVolumeGroupResource, please refer to the document of ElasticSanVolumeGroupResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             string volumeGroupName = "volumegroupname";
@@ -155,7 +155,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
 
             // this example assumes you already have this ElasticSanVolumeGroupResource created on azure
             // for more information of creating ElasticSanVolumeGroupResource, please refer to the document of ElasticSanVolumeGroupResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             string volumeGroupName = "volumegroupname";
@@ -183,7 +183,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
 
             // this example assumes you already have this ElasticSanVolumeGroupResource created on azure
             // for more information of creating ElasticSanVolumeGroupResource, please refer to the document of ElasticSanVolumeGroupResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             string volumeGroupName = "volumegroupname";
@@ -215,7 +215,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
 
             // this example assumes you already have this ElasticSanVolumeGroupResource created on azure
             // for more information of creating ElasticSanVolumeGroupResource, please refer to the document of ElasticSanVolumeGroupResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             string volumeGroupName = "volumegroupname";

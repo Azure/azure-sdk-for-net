@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsNamespaceResource created on azure
             // for more information of creating EventHubsNamespaceResource, please refer to the document of EventHubsNamespaceResource
-            string subscriptionId = "subID";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SDK-EventHub-4794";
             string namespaceName = "sdk-Namespace-5828";
             ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsNamespaceResource created on azure
             // for more information of creating EventHubsNamespaceResource, please refer to the document of EventHubsNamespaceResource
-            string subscriptionId = "subID";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-2924";
             ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsNamespaceResource created on azure
             // for more information of creating EventHubsNamespaceResource, please refer to the document of EventHubsNamespaceResource
-            string subscriptionId = "subID";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SDK-EventHub-4794";
             string namespaceName = "sdk-Namespace-5828";
             ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsNamespaceResource created on azure
             // for more information of creating EventHubsNamespaceResource, please refer to the document of EventHubsNamespaceResource
-            string subscriptionId = "subID";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SDK-EventHub-4794";
             string namespaceName = "sdk-Namespace-5828";
             ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsNamespaceResource created on azure
             // for more information of creating EventHubsNamespaceResource, please refer to the document of EventHubsNamespaceResource
-            string subscriptionId = "subID";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "SDK-EventHub-4794";
             string namespaceName = "sdk-Namespace-5828";
             ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);

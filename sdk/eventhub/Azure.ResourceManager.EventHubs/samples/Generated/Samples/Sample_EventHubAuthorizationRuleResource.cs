@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubAuthorizationRuleResource created on azure
             // for more information of creating EventHubAuthorizationRuleResource, please refer to the document of EventHubAuthorizationRuleResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-960";
             string eventHubName = "sdk-EventHub-532";
@@ -71,7 +71,7 @@ EventHubsAccessRight.Listen,EventHubsAccessRight.Send
 
             // this example assumes you already have this EventHubAuthorizationRuleResource created on azure
             // for more information of creating EventHubAuthorizationRuleResource, please refer to the document of EventHubAuthorizationRuleResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-960";
             string eventHubName = "sdk-EventHub-532";
@@ -104,7 +104,7 @@ EventHubsAccessRight.Listen,EventHubsAccessRight.Send
 
             // this example assumes you already have this EventHubAuthorizationRuleResource created on azure
             // for more information of creating EventHubAuthorizationRuleResource, please refer to the document of EventHubAuthorizationRuleResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-Namespace-960";
             string eventHubName = "sdk-EventHub-532";
@@ -133,7 +133,7 @@ EventHubsAccessRight.Listen,EventHubsAccessRight.Send
 
             // this example assumes you already have this EventHubAuthorizationRuleResource created on azure
             // for more information of creating EventHubAuthorizationRuleResource, please refer to the document of EventHubAuthorizationRuleResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-namespace-960";
             string eventHubName = "sdk-EventHub-532";
@@ -162,7 +162,7 @@ EventHubsAccessRight.Listen,EventHubsAccessRight.Send
 
             // this example assumes you already have this EventHubAuthorizationRuleResource created on azure
             // for more information of creating EventHubAuthorizationRuleResource, please refer to the document of EventHubAuthorizationRuleResource
-            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ArunMonocle";
             string namespaceName = "sdk-namespace-960";
             string eventHubName = "sdk-EventHub-532";

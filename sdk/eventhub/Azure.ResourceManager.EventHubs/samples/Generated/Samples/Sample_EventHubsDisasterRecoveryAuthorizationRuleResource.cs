@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsDisasterRecoveryAuthorizationRuleResource created on azure
             // for more information of creating EventHubsDisasterRecoveryAuthorizationRuleResource, please refer to the document of EventHubsDisasterRecoveryAuthorizationRuleResource
-            string subscriptionId = "exampleSubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string namespaceName = "sdk-Namespace-9080";
             string @alias = "sdk-DisasterRecovery-4879";
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsDisasterRecoveryAuthorizationRuleResource created on azure
             // for more information of creating EventHubsDisasterRecoveryAuthorizationRuleResource, please refer to the document of EventHubsDisasterRecoveryAuthorizationRuleResource
-            string subscriptionId = "exampleSubscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "exampleResourceGroup";
             string namespaceName = "sdk-Namespace-2702";
             string @alias = "sdk-DisasterRecovery-4047";

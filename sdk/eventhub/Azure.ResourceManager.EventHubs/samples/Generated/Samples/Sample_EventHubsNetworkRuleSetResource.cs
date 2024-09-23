@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // this example assumes you already have this EventHubsNetworkRuleSetResource created on azure
             // for more information of creating EventHubsNetworkRuleSetResource, please refer to the document of EventHubsNetworkRuleSetResource
-            string subscriptionId = "Subscription";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-6019";
             ResourceIdentifier eventHubsNetworkRuleSetResourceId = EventHubsNetworkRuleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
@@ -106,7 +106,7 @@ Action = EventHubsNetworkRuleIPAction.Allow,
 
             // this example assumes you already have this EventHubsNetworkRuleSetResource created on azure
             // for more information of creating EventHubsNetworkRuleSetResource, please refer to the document of EventHubsNetworkRuleSetResource
-            string subscriptionId = "Subscription";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-6019";
             ResourceIdentifier eventHubsNetworkRuleSetResourceId = EventHubsNetworkRuleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);

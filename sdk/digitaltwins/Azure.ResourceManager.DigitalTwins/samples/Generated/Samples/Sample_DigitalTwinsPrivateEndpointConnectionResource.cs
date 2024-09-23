@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
 
             // this example assumes you already have this DigitalTwinsPrivateEndpointConnectionResource created on azure
             // for more information of creating DigitalTwinsPrivateEndpointConnectionResource, please refer to the document of DigitalTwinsPrivateEndpointConnectionResource
-            string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resRg";
             string resourceName = "myDigitalTwinsService";
             string privateEndpointConnectionName = "myPrivateConnection";
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
 
             // this example assumes you already have this DigitalTwinsPrivateEndpointConnectionResource created on azure
             // for more information of creating DigitalTwinsPrivateEndpointConnectionResource, please refer to the document of DigitalTwinsPrivateEndpointConnectionResource
-            string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resRg";
             string resourceName = "myDigitalTwinsService";
             string privateEndpointConnectionName = "myPrivateConnection";
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
 
             // this example assumes you already have this DigitalTwinsPrivateEndpointConnectionResource created on azure
             // for more information of creating DigitalTwinsPrivateEndpointConnectionResource, please refer to the document of DigitalTwinsPrivateEndpointConnectionResource
-            string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resRg";
             string resourceName = "myDigitalTwinsService";
             string privateEndpointConnectionName = "myPrivateConnection";

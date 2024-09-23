@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ElasticSanResource created on azure
             // for more information of creating ElasticSanResource, please refer to the document of ElasticSanResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             ResourceIdentifier elasticSanResourceId = ElasticSanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, elasticSanName);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ElasticSanResource created on azure
             // for more information of creating ElasticSanResource, please refer to the document of ElasticSanResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             ResourceIdentifier elasticSanResourceId = ElasticSanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, elasticSanName);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ElasticSanResource created on azure
             // for more information of creating ElasticSanResource, please refer to the document of ElasticSanResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             ResourceIdentifier elasticSanResourceId = ElasticSanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, elasticSanName);
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ElasticSanResource created on azure
             // for more information of creating ElasticSanResource, please refer to the document of ElasticSanResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             ResourceIdentifier elasticSanResourceId = ElasticSanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, elasticSanName);
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ElasticSanResource created on azure
             // for more information of creating ElasticSanResource, please refer to the document of ElasticSanResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             ResourceIdentifier elasticSanResourceId = ElasticSanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, elasticSanName);
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ElasticSanResource created on azure
             // for more information of creating ElasticSanResource, please refer to the document of ElasticSanResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             ResourceIdentifier elasticSanResourceId = ElasticSanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, elasticSanName);
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ElasticSanResource created on azure
             // for more information of creating ElasticSanResource, please refer to the document of ElasticSanResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             ResourceIdentifier elasticSanResourceId = ElasticSanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, elasticSanName);
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ElasticSanResource created on azure
             // for more information of creating ElasticSanResource, please refer to the document of ElasticSanResource
-            string subscriptionId = "subscriptionid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourcegroupname";
             string elasticSanName = "elasticsanname";
             ResourceIdentifier elasticSanResourceId = ElasticSanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, elasticSanName);

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
 
             // this example assumes you already have this DevTestLabArmTemplateResource created on azure
             // for more information of creating DevTestLabArmTemplateResource, please refer to the document of DevTestLabArmTemplateResource
-            string subscriptionId = "{subscriptionId}";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string labName = "{labName}";
             string artifactSourceName = "{artifactSourceName}";

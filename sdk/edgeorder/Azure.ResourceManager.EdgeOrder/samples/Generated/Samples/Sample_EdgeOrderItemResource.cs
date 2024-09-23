@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
 
             // this example assumes you already have this EdgeOrderItemResource created on azure
             // for more information of creating EdgeOrderItemResource, please refer to the document of EdgeOrderItemResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string orderItemName = "TestOrderItemName01";
             ResourceIdentifier edgeOrderItemResourceId = EdgeOrderItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, orderItemName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
 
             // this example assumes you already have this EdgeOrderItemResource created on azure
             // for more information of creating EdgeOrderItemResource, please refer to the document of EdgeOrderItemResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string orderItemName = "TestOrderItemName01";
             ResourceIdentifier edgeOrderItemResourceId = EdgeOrderItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, orderItemName);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
 
             // this example assumes you already have this EdgeOrderItemResource created on azure
             // for more information of creating EdgeOrderItemResource, please refer to the document of EdgeOrderItemResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string orderItemName = "TestOrderItemName01";
             ResourceIdentifier edgeOrderItemResourceId = EdgeOrderItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, orderItemName);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
 
             // this example assumes you already have this EdgeOrderItemResource created on azure
             // for more information of creating EdgeOrderItemResource, please refer to the document of EdgeOrderItemResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string orderItemName = "TestOrderItemName1";
             ResourceIdentifier edgeOrderItemResourceId = EdgeOrderItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, orderItemName);
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
 
             // this example assumes you already have this EdgeOrderItemResource created on azure
             // for more information of creating EdgeOrderItemResource, please refer to the document of EdgeOrderItemResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "TestRG";
             string orderItemName = "TestOrderName1";
             ResourceIdentifier edgeOrderItemResourceId = EdgeOrderItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, orderItemName);
