@@ -8,6 +8,8 @@ public partial class DataSourceAuthentication
 {
     public static DataSourceAuthentication FromApiKey(string apiKey)
         => new InternalAzureChatDataSourceApiKeyAuthenticationOptions(apiKey);
+    public static DataSourceAuthentication FromUsernameAndPassword(string username, string password)
+        => new InternalAzureChatDataSourceUsernameAndPasswordAuthenticationOptions(username, password);
     public static DataSourceAuthentication FromAccessToken(string accessToken)
         => new InternalAzureChatDataSourceAccessTokenAuthenticationOptions(accessToken);
     public static DataSourceAuthentication FromConnectionString(string connectionString)

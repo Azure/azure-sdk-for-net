@@ -74,6 +74,7 @@ namespace Azure.AI.OpenAI.Chat
                 {
                     case "deployment_name": return InternalAzureChatDataSourceDeploymentNameVectorizationSource.DeserializeInternalAzureChatDataSourceDeploymentNameVectorizationSource(element, options);
                     case "endpoint": return InternalAzureChatDataSourceEndpointVectorizationSource.DeserializeInternalAzureChatDataSourceEndpointVectorizationSource(element, options);
+                    case "integrated": return InternalAzureChatDataSourceIntegratedVectorizationSource.DeserializeInternalAzureChatDataSourceIntegratedVectorizationSource(element, options);
                     case "model_id": return InternalAzureChatDataSourceModelIdVectorizationSource.DeserializeInternalAzureChatDataSourceModelIdVectorizationSource(element, options);
                 }
             }
