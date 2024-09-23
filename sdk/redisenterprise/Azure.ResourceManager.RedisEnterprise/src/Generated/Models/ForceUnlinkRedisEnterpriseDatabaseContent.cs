@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> The resource IDs of the database resources to be unlinked. </summary>
+        [WirePath("ids")]
         public IList<ResourceIdentifier> Ids { get; }
     }
 }

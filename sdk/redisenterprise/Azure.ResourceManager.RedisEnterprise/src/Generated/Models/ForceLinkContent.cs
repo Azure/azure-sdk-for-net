@@ -76,8 +76,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> The name of the group of linked database resources. This should match the existing replication group name. </summary>
+        [WirePath("groupNickname")]
         public string GroupNickname { get; }
         /// <summary> The resource IDs of the databases that are expected to be linked and included in the replication group. This parameter is used to validate that the linking is to the expected (unlinked) part of the replication group, if it is splintered. </summary>
+        [WirePath("linkedDatabases")]
         public IList<RedisEnterpriseLinkedDatabase> LinkedDatabases { get; }
     }
 }

@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             RedisEnterpriseSku sku = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
-            HighAvailability? highAvailability = default;
+            RedisEnterpriseHighAvailability? highAvailability = default;
             RedisEnterpriseTlsVersion? minimumTlsVersion = default;
             ClusterPropertiesEncryption encryption = default;
             string hostName = default;
             RedisEnterpriseProvisioningStatus? provisioningState = default;
-            RedundancyMode? redundancyMode = default;
+            RedisEnterpriseRedundancyMode? redundancyMode = default;
             RedisEnterpriseClusterResourceState? resourceState = default;
             string redisVersion = default;
             IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                             {
                                 continue;
                             }
-                            highAvailability = new HighAvailability(property0.Value.GetString());
+                            highAvailability = new RedisEnterpriseHighAvailability(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("minimumTlsVersion"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                             {
                                 continue;
                             }
-                            redundancyMode = new RedundancyMode(property0.Value.GetString());
+                            redundancyMode = new RedisEnterpriseRedundancyMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("resourceState"u8))

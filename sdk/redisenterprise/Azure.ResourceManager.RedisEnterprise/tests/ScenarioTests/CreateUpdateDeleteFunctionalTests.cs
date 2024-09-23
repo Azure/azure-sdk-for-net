@@ -48,16 +48,16 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
             Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseSkuName.EnterpriseE10, clusterResponse.Data.Sku.Name);
-            Assert.AreEqual(HighAvailability.Enabled, clusterResponse.Data.HighAvailability);
-            Assert.AreEqual(RedundancyMode.ZR, clusterResponse.Data.RedundancyMode);
+            Assert.AreEqual(RedisEnterpriseHighAvailability.Enabled, clusterResponse.Data.HighAvailability);
+            Assert.AreEqual(RedisEnterpriseRedundancyMode.ZR, clusterResponse.Data.RedundancyMode);
             Assert.AreEqual(2, clusterResponse.Data.Sku.Capacity);
 
             clusterResponse = await Collection.GetAsync(redisEnterpriseCacheName);
             Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
             Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseSkuName.EnterpriseE10, clusterResponse.Data.Sku.Name);
-            Assert.AreEqual(HighAvailability.Enabled, clusterResponse.Data.HighAvailability);
-            Assert.AreEqual(RedundancyMode.ZR, clusterResponse.Data.RedundancyMode);
+            Assert.AreEqual(RedisEnterpriseHighAvailability.Enabled, clusterResponse.Data.HighAvailability);
+            Assert.AreEqual(RedisEnterpriseRedundancyMode.ZR, clusterResponse.Data.RedundancyMode);
             Assert.AreEqual(2, clusterResponse.Data.Sku.Capacity);
 
             var databaseCollection = clusterResponse.GetRedisEnterpriseDatabases();
@@ -122,20 +122,20 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 })
             {
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
-                HighAvailability = HighAvailability.Disabled
+                HighAvailability = RedisEnterpriseHighAvailability.Disabled
             };
 
             var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
             Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
             Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
-            Assert.AreEqual(HighAvailability.Disabled, clusterResponse.Data.HighAvailability);
+            Assert.AreEqual(RedisEnterpriseHighAvailability.Disabled, clusterResponse.Data.HighAvailability);
 
             clusterResponse = await Collection.GetAsync(redisEnterpriseCacheName);
             Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
             Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
-            Assert.AreEqual(HighAvailability.Disabled, clusterResponse.Data.HighAvailability);
+            Assert.AreEqual(RedisEnterpriseHighAvailability.Disabled, clusterResponse.Data.HighAvailability);
 
             var databaseCollection = clusterResponse.GetRedisEnterpriseDatabases();
             string databaseName = "default";
@@ -164,19 +164,19 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
 
             // Disabling high availability
-            data.HighAvailability = HighAvailability.Enabled;
+            data.HighAvailability = RedisEnterpriseHighAvailability.Enabled;
 
             clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
             Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
             Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
-            Assert.AreEqual(HighAvailability.Enabled, clusterResponse.Data.HighAvailability);
+            Assert.AreEqual(RedisEnterpriseHighAvailability.Enabled, clusterResponse.Data.HighAvailability);
 
             clusterResponse = await Collection.GetAsync(redisEnterpriseCacheName);
             Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
             Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
-            Assert.AreEqual(HighAvailability.Enabled, clusterResponse.Data.HighAvailability);
+            Assert.AreEqual(RedisEnterpriseHighAvailability.Enabled, clusterResponse.Data.HighAvailability);
 
             await databaseResponse.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await databaseCollection.ExistsAsync(databaseName)).Value;

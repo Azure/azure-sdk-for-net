@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Sets whether AOF is enabled. Note that at most one of AOF or RDB persistence may be enabled. </summary>
+        [WirePath("aofEnabled")]
         public bool? IsAofEnabled { get; set; }
         /// <summary> Sets whether RDB is enabled. Note that at most one of AOF or RDB persistence may be enabled. </summary>
+        [WirePath("rdbEnabled")]
         public bool? IsRdbEnabled { get; set; }
         /// <summary> Sets the frequency at which data is written to disk. Defaults to '1s', meaning 'every second'. Note that the 'always' setting is deprecated, because of its performance impact. </summary>
+        [WirePath("aofFrequency")]
         public PersistenceSettingAofFrequency? AofFrequency { get; set; }
         /// <summary> Sets the frequency at which a snapshot of the database is created. </summary>
+        [WirePath("rdbFrequency")]
         public PersistenceSettingRdbFrequency? RdbFrequency { get; set; }
     }
 }
