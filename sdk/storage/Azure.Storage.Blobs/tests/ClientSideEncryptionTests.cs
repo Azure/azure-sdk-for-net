@@ -181,7 +181,7 @@ namespace Azure.Storage.Blobs.Test
         private async Task<byte[]> ReplicateEncryptionV1_0(byte[] plaintext, EncryptionData encryptionMetadata, IKeyEncryptionKey keyEncryptionKey)
         {
             Assert.NotNull(encryptionMetadata, "Never encrypted data.");
-            Assert.AreEqual(ClientSideEncryptionVersion.V1_0, encryptionMetadata.EncryptionAgent.EncryptionVersion);
+            Assert.AreEqual(ClientSideEncryptionVersionInternal.V1_0, encryptionMetadata.EncryptionAgent.EncryptionVersion);
 
             var explicitlyUnwrappedKey = IsAsync // can't instrument this
                 ? await keyEncryptionKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)
@@ -197,7 +197,7 @@ namespace Azure.Storage.Blobs.Test
         private async Task<byte[]> ReplicateEncryptionV2_0(byte[] plaintext, EncryptionData encryptionMetadata, IKeyEncryptionKey keyEncryptionKey)
         {
             Assert.NotNull(encryptionMetadata, "Never encrypted data.");
-            Assert.AreEqual(ClientSideEncryptionVersion.V2_0, encryptionMetadata.EncryptionAgent.EncryptionVersion);
+            Assert.AreEqual(ClientSideEncryptionVersionInternal.V2_0, encryptionMetadata.EncryptionAgent.EncryptionVersion);
 
             var explicitlyUnwrappedContent = IsAsync // can't instrument this
                 ? await keyEncryptionKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)
@@ -685,7 +685,22 @@ namespace Azure.Storage.Blobs.Test
                     Assert.AreEqual(metadata[kvp.Key], downloadedMetadata[kvp.Key]);
                 }
                 Assert.IsTrue(downloadedMetadata.ContainsKey(EncryptionDataKey));
-                Assert.AreEqual(version, EncryptionDataSerializer.Deserialize(downloadedMetadata[EncryptionDataKey]).EncryptionAgent.EncryptionVersion);
+
+                ClientSideEncryptionVersionInternal versionInternal = ClientSideEncryptionVersionInternal.V2_0;
+                switch (version)
+                {
+#pragma warning disable CS0618 // obsolete
+                    case ClientSideEncryptionVersion.V1_0:
+                        versionInternal = ClientSideEncryptionVersionInternal.V1_0;
+                        break;
+#pragma warning restore CS0618 // obsolete
+                    case ClientSideEncryptionVersion.V2_0:
+                        versionInternal = ClientSideEncryptionVersionInternal.V2_0;
+                        break;
+                    default:
+                        throw new ArgumentException("Bad version in EncryptionData");
+                }
+                Assert.AreEqual(versionInternal, EncryptionDataSerializer.Deserialize(downloadedMetadata[EncryptionDataKey]).EncryptionAgent.EncryptionVersion);
             }
         }
 

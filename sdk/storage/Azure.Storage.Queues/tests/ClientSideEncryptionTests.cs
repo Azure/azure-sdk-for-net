@@ -253,6 +253,7 @@ namespace Azure.Storage.Queues.Test
                 }
 
                 string expectedEncryptedMessage;
+                ClientSideEncryptionVersionInternal versionInternal = ClientSideEncryptionVersionInternal.V2_0;
                 switch (version)
                 {
 #pragma warning disable CS0618 // obsolete
@@ -261,18 +262,20 @@ namespace Azure.Storage.Queues.Test
                             message,
                             explicitlyUnwrappedKey,
                             encryptionMetadata.ContentEncryptionIV);
+                        versionInternal = ClientSideEncryptionVersionInternal.V1_0;
                         break;
 #pragma warning restore CS0618 // obsolete
                     case ClientSideEncryptionVersion.V2_0:
                         expectedEncryptedMessage = EncryptDataV2_0(
                             message,
                             explicitlyUnwrappedKey);
+                        versionInternal = ClientSideEncryptionVersionInternal.V2_0;
                         break;
                     default: throw new ArgumentException("Test does not support clientside encryption version");
                 }
 
                 // compare data
-                Assert.AreEqual(version, parsedEncryptedMessage.EncryptionData.EncryptionAgent.EncryptionVersion);
+                Assert.AreEqual(versionInternal, parsedEncryptedMessage.EncryptionData.EncryptionAgent.EncryptionVersion);
                 Assert.AreEqual(expectedEncryptedMessage, parsedEncryptedMessage.EncryptedMessageText);
             }
         }
