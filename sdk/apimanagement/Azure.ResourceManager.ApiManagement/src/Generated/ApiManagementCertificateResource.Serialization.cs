@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ServiceCertificateResource : IJsonModel<ApiManagementCertificateData>
+    public partial class ApiManagementCertificateResource : IJsonModel<ApiManagementCertificateData>
     {
         void IJsonModel<ApiManagementCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementCertificateData>)Data).Write(writer, options);
 

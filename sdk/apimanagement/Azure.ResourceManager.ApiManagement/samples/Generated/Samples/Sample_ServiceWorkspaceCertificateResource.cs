@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceCertificateResource serviceWorkspaceCertificate = client.GetServiceWorkspaceCertificateResource(serviceWorkspaceCertificateResourceId);
 
             // invoke the operation
-            CertificateCreateOrUpdateContent content = new CertificateCreateOrUpdateContent()
+            ApiManagementCertificateCreateOrUpdateContent content = new ApiManagementCertificateCreateOrUpdateContent()
             {
                 Data = "****************Base 64 Encoded Certificate *******************************",
                 Password = "****Certificate Password******",
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceCertificateResource serviceWorkspaceCertificate = client.GetServiceWorkspaceCertificateResource(serviceWorkspaceCertificateResourceId);
 
             // invoke the operation
-            CertificateCreateOrUpdateContent content = new CertificateCreateOrUpdateContent()
+            ApiManagementCertificateCreateOrUpdateContent content = new ApiManagementCertificateCreateOrUpdateContent()
             {
                 KeyVaultDetails = new KeyVaultContractCreateProperties()
                 {

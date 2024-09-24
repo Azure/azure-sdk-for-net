@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Certificate create or update details. </summary>
-    public partial class CertificateCreateOrUpdateContent
+    /// <summary> Logger update contract. </summary>
+    public partial class ApiManagementLoggerPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +45,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CertificateCreateOrUpdateContent"/>. </summary>
-        public CertificateCreateOrUpdateContent()
+        /// <summary> Initializes a new instance of <see cref="ApiManagementLoggerPatch"/>. </summary>
+        public ApiManagementLoggerPatch()
         {
+            Credentials = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CertificateCreateOrUpdateContent"/>. </summary>
-        /// <param name="data"> Base 64 encoded certificate using the application/x-pkcs12 representation. </param>
-        /// <param name="password"> Password for the Certificate. </param>
-        /// <param name="keyVaultDetails"> KeyVault location details of the certificate. </param>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementLoggerPatch"/>. </summary>
+        /// <param name="loggerType"> Logger type. </param>
+        /// <param name="description"> Logger description. </param>
+        /// <param name="credentials"> Logger credentials. </param>
+        /// <param name="isBuffered"> Whether records are buffered in the logger before publishing. Default is assumed to be true. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateCreateOrUpdateContent(string data, string password, KeyVaultContractCreateProperties keyVaultDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementLoggerPatch(LoggerType? loggerType, string description, IDictionary<string, string> credentials, bool? isBuffered, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Data = data;
-            Password = password;
-            KeyVaultDetails = keyVaultDetails;
+            LoggerType = loggerType;
+            Description = description;
+            Credentials = credentials;
+            IsBuffered = isBuffered;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Base 64 encoded certificate using the application/x-pkcs12 representation. </summary>
-        [WirePath("properties.data")]
-        public string Data { get; set; }
-        /// <summary> Password for the Certificate. </summary>
-        [WirePath("properties.password")]
-        public string Password { get; set; }
-        /// <summary> KeyVault location details of the certificate. </summary>
-        [WirePath("properties.keyVault")]
-        public KeyVaultContractCreateProperties KeyVaultDetails { get; set; }
+        /// <summary> Logger type. </summary>
+        [WirePath("properties.loggerType")]
+        public LoggerType? LoggerType { get; set; }
+        /// <summary> Logger description. </summary>
+        [WirePath("properties.description")]
+        public string Description { get; set; }
+        /// <summary> Logger credentials. </summary>
+        [WirePath("properties.credentials")]
+        public IDictionary<string, string> Credentials { get; }
+        /// <summary> Whether records are buffered in the logger before publishing. Default is assumed to be true. </summary>
+        [WirePath("properties.isBuffered")]
+        public bool? IsBuffered { get; set; }
     }
 }

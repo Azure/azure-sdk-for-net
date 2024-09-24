@@ -13,7 +13,7 @@ using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
-    public partial class Sample_ServiceLoggerResource
+    public partial class Sample_ApiManagementLoggerResource
     {
         // ApiManagementHeadLogger
         [NUnit.Framework.Test]
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceLoggerResource created on azure
-            // for more information of creating ServiceLoggerResource, please refer to the document of ServiceLoggerResource
+            // this example assumes you already have this ApiManagementLoggerResource created on azure
+            // for more information of creating ApiManagementLoggerResource, please refer to the document of ApiManagementLoggerResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string loggerId = "templateLogger";
-            ResourceIdentifier serviceLoggerResourceId = ServiceLoggerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, loggerId);
-            ServiceLoggerResource serviceLogger = client.GetServiceLoggerResource(serviceLoggerResourceId);
+            ResourceIdentifier apiManagementLoggerResourceId = ApiManagementLoggerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, loggerId);
+            ApiManagementLoggerResource apiManagementLogger = client.GetApiManagementLoggerResource(apiManagementLoggerResourceId);
 
             // invoke the operation
-            bool result = await serviceLogger.GetEntityTagAsync();
+            bool result = await apiManagementLogger.GetEntityTagAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceLoggerResource created on azure
-            // for more information of creating ServiceLoggerResource, please refer to the document of ServiceLoggerResource
+            // this example assumes you already have this ApiManagementLoggerResource created on azure
+            // for more information of creating ApiManagementLoggerResource, please refer to the document of ApiManagementLoggerResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string loggerId = "templateLogger";
-            ResourceIdentifier serviceLoggerResourceId = ServiceLoggerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, loggerId);
-            ServiceLoggerResource serviceLogger = client.GetServiceLoggerResource(serviceLoggerResourceId);
+            ResourceIdentifier apiManagementLoggerResourceId = ApiManagementLoggerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, loggerId);
+            ApiManagementLoggerResource apiManagementLogger = client.GetApiManagementLoggerResource(apiManagementLoggerResourceId);
 
             // invoke the operation
-            ServiceLoggerResource result = await serviceLogger.GetAsync();
+            ApiManagementLoggerResource result = await apiManagementLogger.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -88,23 +88,23 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceLoggerResource created on azure
-            // for more information of creating ServiceLoggerResource, please refer to the document of ServiceLoggerResource
+            // this example assumes you already have this ApiManagementLoggerResource created on azure
+            // for more information of creating ApiManagementLoggerResource, please refer to the document of ApiManagementLoggerResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string loggerId = "eh1";
-            ResourceIdentifier serviceLoggerResourceId = ServiceLoggerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, loggerId);
-            ServiceLoggerResource serviceLogger = client.GetServiceLoggerResource(serviceLoggerResourceId);
+            ResourceIdentifier apiManagementLoggerResourceId = ApiManagementLoggerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, loggerId);
+            ApiManagementLoggerResource apiManagementLogger = client.GetApiManagementLoggerResource(apiManagementLoggerResourceId);
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            LoggerUpdateContract loggerUpdateContract = new LoggerUpdateContract()
+            ApiManagementLoggerPatch patch = new ApiManagementLoggerPatch()
             {
                 LoggerType = LoggerType.AzureEventHub,
                 Description = "updating description",
             };
-            ServiceLoggerResource result = await serviceLogger.UpdateAsync(ifMatch, loggerUpdateContract);
+            ApiManagementLoggerResource result = await apiManagementLogger.UpdateAsync(ifMatch, patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -126,18 +126,18 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceLoggerResource created on azure
-            // for more information of creating ServiceLoggerResource, please refer to the document of ServiceLoggerResource
+            // this example assumes you already have this ApiManagementLoggerResource created on azure
+            // for more information of creating ApiManagementLoggerResource, please refer to the document of ApiManagementLoggerResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string loggerId = "loggerId";
-            ResourceIdentifier serviceLoggerResourceId = ServiceLoggerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, loggerId);
-            ServiceLoggerResource serviceLogger = client.GetServiceLoggerResource(serviceLoggerResourceId);
+            ResourceIdentifier apiManagementLoggerResourceId = ApiManagementLoggerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, loggerId);
+            ApiManagementLoggerResource apiManagementLogger = client.GetApiManagementLoggerResource(apiManagementLoggerResourceId);
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            await serviceLogger.DeleteAsync(WaitUntil.Completed, ifMatch);
+            await apiManagementLogger.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine($"Succeeded");
         }

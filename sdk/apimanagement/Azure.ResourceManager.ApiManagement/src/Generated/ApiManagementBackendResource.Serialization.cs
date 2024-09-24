@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ServiceBackendResource : IJsonModel<ApiManagementBackendData>
+    public partial class ApiManagementBackendResource : IJsonModel<ApiManagementBackendData>
     {
         void IJsonModel<ApiManagementBackendData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementBackendData>)Data).Write(writer, options);
 
