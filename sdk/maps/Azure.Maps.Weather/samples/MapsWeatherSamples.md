@@ -167,15 +167,16 @@ GetTropicalStormForecastOptions options = new GetTropicalStormForecastOptions()
 {
     Year = 2021,
     BasinId = BasinId.NP,
-    GovernmentStormId = 2
+    GovernmentStormId = 2,
+    IncludeDetails = true,
+    IncludeGeometricDetails = true,
 };
 Response<StormForecastResult> response = client.GetTropicalStormForecast(options);
+Console.WriteLine("Geometry type: " + response.Value.StormForecasts[0].WindRadiiSummary[0].RadiiGeometry.Type);
 Console.WriteLine(
-    "Coordinates(longitude, latitude): ("
-    + response.Value.StormForecasts[0].Coordinates.Longitude
-    + ", "
-    + response.Value.StormForecasts[0].Coordinates.Latitude
-    + ")"
+    "Coordinates(longitude, latitude): ({0}, {1})",
+    response.Value.StormForecasts[0].Coordinates.Longitude,
+    response.Value.StormForecasts[0].Coordinates.Latitude
 );
 ```
 ### Get Tropical Storm Locations
@@ -184,16 +185,14 @@ Console.WriteLine(
 GetTropicalStormLocationsOptions options = new GetTropicalStormLocationsOptions()
 {
     Year = 2021,
-    BasinId = "NP",
+    BasinId = BasinId.NP,
     GovernmentStormId = 2
 };
 Response<StormLocationsResult> response = client.GetTropicalStormLocations(options);
 Console.WriteLine(
-    "Coordinates(longitude, latitude): ("
-    + response.Value.StormLocations[0].Coordinates.Longitude
-    + ", "
-    + response.Value.StormLocations[0].Coordinates.Latitude
-    + ")"
+    "Coordinates(longitude, latitude): ({0}, {1})",
+    response.Value.StormLocations[0].Coordinates.Longitude,
+    response.Value.StormLocations[0].Coordinates.Latitude
 );
 ```
 ### Get Tropical Storm Search
@@ -202,7 +201,7 @@ Console.WriteLine(
 GetTropicalStormSearchOptions options = new GetTropicalStormSearchOptions()
 {
     Year = 2021,
-    BasinId = "NP",
+    BasinId = BasinId.NP,
     GovernmentStormId = 2
 };
 Response<StormSearchResult> response = client.GetTropicalStormSearch(options);

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core.GeoJson;
 using Azure.Maps.Common;
 
 namespace Azure.Maps.Weather.Models
@@ -19,32 +20,11 @@ namespace Azure.Maps.Weather.Models
             RadiusSectorData = new ChangeTrackingList<RadiusSector>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StormWindRadiiSummary"/>. </summary>
-        /// <param name="timestamp"> DateTime for which the wind radii summary data is valid, displayed in ISO8601 format. </param>
-        /// <param name="windSpeed"> Wind speed associated with the radiusSectorData. </param>
-        /// <param name="radiusSectorData"> Contains the information needed to plot wind radius quadrants. Bearing 0–90 = NE quadrant; 90–180 = SE quadrant; 180–270 = SW quadrant; 270–360 = NW quadrant. </param>
-        /// <param name="radiiGeometry">
-        /// GeoJSON object. Displayed when radiiGeometry=true in request. Describes the outline of the wind radius quadrants.
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
-        /// </param>
-        internal StormWindRadiiSummary(string timestamp, WeatherValue windSpeed, IReadOnlyList<RadiusSector> radiusSectorData, GeoJsonGeometry radiiGeometry)
-        {
-            Timestamp = timestamp;
-            WindSpeed = windSpeed;
-            RadiusSectorData = radiusSectorData;
-            RadiiGeometry = radiiGeometry;
-        }
-
         /// <summary> DateTime for which the wind radii summary data is valid, displayed in ISO8601 format. </summary>
         public string Timestamp { get; }
         /// <summary> Wind speed associated with the radiusSectorData. </summary>
         public WeatherValue WindSpeed { get; }
         /// <summary> Contains the information needed to plot wind radius quadrants. Bearing 0–90 = NE quadrant; 90–180 = SE quadrant; 180–270 = SW quadrant; 270–360 = NW quadrant. </summary>
         public IReadOnlyList<RadiusSector> RadiusSectorData { get; }
-        /// <summary>
-        /// GeoJSON object. Displayed when radiiGeometry=true in request. Describes the outline of the wind radius quadrants.
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
-        /// </summary>
-        public GeoJsonGeometry RadiiGeometry { get; }
     }
 }

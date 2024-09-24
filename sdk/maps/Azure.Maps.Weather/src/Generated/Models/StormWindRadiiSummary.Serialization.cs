@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core.GeoJson;
 using Azure.Maps.Common;
 
 namespace Azure.Maps.Weather.Models
@@ -22,7 +23,7 @@ namespace Azure.Maps.Weather.Models
             string dateTime = default;
             WeatherValue windSpeed = default;
             IReadOnlyList<RadiusSector> radiusSectorData = default;
-            GeoJsonGeometry radiiGeometry = default;
+            GeoObject radiiGeometry = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateTime"u8))
@@ -59,7 +60,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    radiiGeometry = GeoJsonGeometry.DeserializeGeoJsonGeometry(property.Value);
+                    radiiGeometry = JsonSerializer.Deserialize<GeoObject>(property.Value.GetRawText());
                     continue;
                 }
             }

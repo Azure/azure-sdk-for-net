@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
+using Azure.Core.GeoJson;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Maps;
 using Azure.ResourceManager.Maps.Models;
-using Azure.Core.GeoJson;
 using Azure.Maps.Weather.Models;
 using Azure.Maps.Weather.Models.Options;
+using NUnit.Framework;
 
 namespace Azure.Maps.Weather.Tests.Samples
 {
@@ -369,15 +369,16 @@ namespace Azure.Maps.Weather.Tests.Samples
             {
                 Year = 2021,
                 BasinId = BasinId.NP,
-                GovernmentStormId = 2
+                GovernmentStormId = 2,
+                IncludeDetails = true,
+                IncludeGeometricDetails = true,
             };
             Response<StormForecastResult> response = client.GetTropicalStormForecast(options);
+            Console.WriteLine("Geometry type: " + response.Value.StormForecasts[0].WindRadiiSummary[0].RadiiGeometry.Type);
             Console.WriteLine(
-                "Coordinates(longitude, latitude): ("
-                + response.Value.StormForecasts[0].Coordinates.Longitude
-                + ", "
-                + response.Value.StormForecasts[0].Coordinates.Latitude
-                + ")"
+                "Coordinates(longitude, latitude): ({0}, {1})",
+                response.Value.StormForecasts[0].Coordinates.Longitude,
+                response.Value.StormForecasts[0].Coordinates.Latitude
             );
             #endregion
         }
@@ -395,16 +396,14 @@ namespace Azure.Maps.Weather.Tests.Samples
             GetTropicalStormLocationsOptions options = new GetTropicalStormLocationsOptions()
             {
                 Year = 2021,
-                BasinId = "NP",
+                BasinId = BasinId.NP,
                 GovernmentStormId = 2
             };
             Response<StormLocationsResult> response = client.GetTropicalStormLocations(options);
             Console.WriteLine(
-                "Coordinates(longitude, latitude): ("
-                + response.Value.StormLocations[0].Coordinates.Longitude
-                + ", "
-                + response.Value.StormLocations[0].Coordinates.Latitude
-                + ")"
+                "Coordinates(longitude, latitude): ({0}, {1})",
+                response.Value.StormLocations[0].Coordinates.Longitude,
+                response.Value.StormLocations[0].Coordinates.Latitude
             );
             #endregion
         }
@@ -422,7 +421,7 @@ namespace Azure.Maps.Weather.Tests.Samples
             GetTropicalStormSearchOptions options = new GetTropicalStormSearchOptions()
             {
                 Year = 2021,
-                BasinId = "NP",
+                BasinId = BasinId.NP,
                 GovernmentStormId = 2
             };
             Response<StormSearchResult> response = client.GetTropicalStormSearch(options);

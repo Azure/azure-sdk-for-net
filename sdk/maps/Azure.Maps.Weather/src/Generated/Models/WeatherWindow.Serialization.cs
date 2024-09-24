@@ -7,6 +7,7 @@
 
 using System;
 using System.Text.Json;
+using Azure.Core.GeoJson;
 using Azure.Maps.Common;
 
 namespace Azure.Maps.Weather.Models
@@ -25,7 +26,7 @@ namespace Azure.Maps.Weather.Models
             DateTimeOffset? endDateTime = default;
             string beginStatus = default;
             string endStatus = default;
-            GeoJsonGeometry geometry = default;
+            GeoObject geometry = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("left"u8))
@@ -80,7 +81,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    geometry = GeoJsonGeometry.DeserializeGeoJsonGeometry(property.Value);
+                    geometry = JsonSerializer.Deserialize<GeoObject>(property.Value.GetRawText());
                     continue;
                 }
             }

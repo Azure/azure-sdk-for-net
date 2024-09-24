@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Weather.Models
 {
@@ -15,28 +16,6 @@ namespace Azure.Maps.Weather.Models
         /// <summary> Initializes a new instance of <see cref="WeatherWindow"/>. </summary>
         internal WeatherWindow()
         {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WeatherWindow"/>. </summary>
-        /// <param name="topLeft"> Location of the point on the left side of the window at the time of the timeframe. </param>
-        /// <param name="bottomRight"> Location of the point on the right side of the window at the end of the timeframe. </param>
-        /// <param name="beginTimestamp"> DateTime of the beginning of the window of movement, displayed in ISO8601 format. </param>
-        /// <param name="endTimestamp"> DateTime of the end of the window of movement, displayed in ISO8601 format. </param>
-        /// <param name="beginStatus"> Storm status at the beginning of the window. </param>
-        /// <param name="endStatus"> Storm status at the end of the window. </param>
-        /// <param name="geometry">
-        /// Displayed when windowGeometry=true in request. GeoJSON object containing coordinates describing the window of movement during the specified timeframe.
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
-        /// </param>
-        internal WeatherWindow(LatLongPair topLeft, LatLongPair bottomRight, DateTimeOffset? beginTimestamp, DateTimeOffset? endTimestamp, string beginStatus, string endStatus, GeoJsonGeometry geometry)
-        {
-            TopLeft = topLeft;
-            BottomRight = bottomRight;
-            BeginTimestamp = beginTimestamp;
-            EndTimestamp = endTimestamp;
-            BeginStatus = beginStatus;
-            EndStatus = endStatus;
-            Geometry = geometry;
         }
 
         /// <summary> Location of the point on the left side of the window at the time of the timeframe. </summary>
@@ -51,10 +30,5 @@ namespace Azure.Maps.Weather.Models
         public string BeginStatus { get; }
         /// <summary> Storm status at the end of the window. </summary>
         public string EndStatus { get; }
-        /// <summary>
-        /// Displayed when windowGeometry=true in request. GeoJSON object containing coordinates describing the window of movement during the specified timeframe.
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
-        /// </summary>
-        public GeoJsonGeometry Geometry { get; }
     }
 }

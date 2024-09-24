@@ -469,26 +469,6 @@ namespace Azure.Maps.Weather.Models
         public System.DateTimeOffset? StartTime { get { throw null; } }
         public string Threshold { get { throw null; } }
     }
-    public partial class GeoJsonGeometry : Azure.Maps.Weather.Models.GeoJsonObject
-    {
-        public GeoJsonGeometry() { }
-    }
-    public abstract partial class GeoJsonObject
-    {
-        protected GeoJsonObject() { }
-    }
-    public enum GeoJsonObjectType
-    {
-        GeoJsonPoint = 0,
-        GeoJsonMultiPoint = 1,
-        GeoJsonLineString = 2,
-        GeoJsonMultiLineString = 3,
-        GeoJsonPolygon = 4,
-        GeoJsonMultiPolygon = 5,
-        GeoJsonGeometryCollection = 6,
-        GeoJsonFeature = 7,
-        GeoJsonFeatureCollection = 8,
-    }
     public partial class HazardDetail
     {
         internal HazardDetail() { }
@@ -749,7 +729,7 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.StormLocationsResult StormLocationsResult(System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.StormLocation> stormLocations = null, string nextLink = null) { throw null; }
         public static Azure.Maps.Weather.Models.StormSearchResult StormSearchResult(System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.StormSearchResultItem> storms = null, string nextLink = null) { throw null; }
         public static Azure.Maps.Weather.Models.StormSearchResultItem StormSearchResultItem(string year = null, Azure.Maps.Weather.Models.BasinId? basinId = default(Azure.Maps.Weather.Models.BasinId?), string name = null, bool? isActive = default(bool?), bool? isRetired = default(bool?), bool? isSubtropical = default(bool?), int? govId = default(int?)) { throw null; }
-        public static Azure.Maps.Weather.Models.StormWindRadiiSummary StormWindRadiiSummary(string timestamp = null, Azure.Maps.Weather.Models.WeatherValue windSpeed = null, System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.RadiusSector> radiusSectorData = null, Azure.Maps.Weather.Models.GeoJsonGeometry radiiGeometry = null) { throw null; }
+        public static Azure.Maps.Weather.Models.StormWindRadiiSummary StormWindRadiiSummary(string timestamp = null, Azure.Maps.Weather.Models.WeatherValue windSpeed = null, System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.RadiusSector> radiusSectorData = null, Azure.Core.GeoJson.GeoObject radiiGeometry = null) { throw null; }
         public static Azure.Maps.Weather.Models.SunGlare SunGlare(int? calculatedVehicleHeading = default(int?), int? glareIndex = default(int?)) { throw null; }
         public static Azure.Maps.Weather.Models.TemperatureSummary TemperatureSummary(Azure.Maps.Weather.Models.PastHoursTemperature pastSixHours = null, Azure.Maps.Weather.Models.PastHoursTemperature pastTwelveHours = null, Azure.Maps.Weather.Models.PastHoursTemperature pastTwentyFourHours = null) { throw null; }
         public static Azure.Maps.Weather.Models.WaypointForecast WaypointForecast(Azure.Maps.Weather.Models.IconCode? iconCode = default(Azure.Maps.Weather.Models.IconCode?), string shortDescription = null, bool? isDaytime = default(bool?), int? cloudCover = default(int?), Azure.Maps.Weather.Models.WeatherValue temperature = null, Azure.Maps.Weather.Models.WindDetails wind = null, Azure.Maps.Weather.Models.WindDetails windGust = null, Azure.Maps.Weather.Models.WeatherAlongRoutePrecipitation precipitation = null, int? lightningCount = default(int?), Azure.Maps.Weather.Models.SunGlare sunGlare = null, Azure.Maps.Weather.Models.WeatherHazards hazards = null, System.Collections.Generic.IEnumerable<Azure.Maps.Weather.Models.WeatherNotification> notifications = null) { throw null; }
@@ -764,7 +744,7 @@ namespace Azure.Maps.Weather.Models
         public static Azure.Maps.Weather.Models.WeatherValueYear WeatherValueYear(float? value = default(float?), string unit = null, int? unitType = default(int?), int? year = default(int?)) { throw null; }
         public static Azure.Maps.Weather.Models.WeatherValueYearMax WeatherValueYearMax(Azure.Maps.Weather.Models.WeatherValueYear maximum = null) { throw null; }
         public static Azure.Maps.Weather.Models.WeatherValueYearMaxMinAvg WeatherValueYearMaxMinAvg(Azure.Maps.Weather.Models.WeatherValueYear maximum = null, Azure.Maps.Weather.Models.WeatherValueYear minimum = null, Azure.Maps.Weather.Models.WeatherValue average = null) { throw null; }
-        public static Azure.Maps.Weather.Models.WeatherWindow WeatherWindow(Azure.Maps.Weather.Models.LatLongPair topLeft = null, Azure.Maps.Weather.Models.LatLongPair bottomRight = null, System.DateTimeOffset? beginTimestamp = default(System.DateTimeOffset?), System.DateTimeOffset? endTimestamp = default(System.DateTimeOffset?), string beginStatus = null, string endStatus = null, Azure.Maps.Weather.Models.GeoJsonGeometry geometry = null) { throw null; }
+        public static Azure.Maps.Weather.Models.WeatherWindow WeatherWindow(Azure.Maps.Weather.Models.LatLongPair topLeft = null, Azure.Maps.Weather.Models.LatLongPair bottomRight = null, System.DateTimeOffset? beginTimestamp = default(System.DateTimeOffset?), System.DateTimeOffset? endTimestamp = default(System.DateTimeOffset?), string beginStatus = null, string endStatus = null, Azure.Core.GeoJson.GeoObject geometry = null) { throw null; }
         public static Azure.Maps.Weather.Models.WindDetails WindDetails(Azure.Maps.Weather.Models.WindDirection direction = null, Azure.Maps.Weather.Models.WeatherValue speed = null) { throw null; }
         public static Azure.Maps.Weather.Models.WindDirection WindDirection(int? degrees = default(int?), string description = null) { throw null; }
     }
@@ -982,7 +962,7 @@ namespace Azure.Maps.Weather.Models
     public partial class StormWindRadiiSummary
     {
         internal StormWindRadiiSummary() { }
-        public Azure.Maps.Weather.Models.GeoJsonGeometry RadiiGeometry { get { throw null; } }
+        public Azure.Core.GeoJson.GeoObject RadiiGeometry { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Weather.Models.RadiusSector> RadiusSectorData { get { throw null; } }
         public string Timestamp { get { throw null; } }
         public Azure.Maps.Weather.Models.WeatherValue WindSpeed { get { throw null; } }
@@ -1165,7 +1145,7 @@ namespace Azure.Maps.Weather.Models
         public Azure.Maps.Weather.Models.LatLongPair BottomRight { get { throw null; } }
         public string EndStatus { get { throw null; } }
         public System.DateTimeOffset? EndTimestamp { get { throw null; } }
-        public Azure.Maps.Weather.Models.GeoJsonGeometry Geometry { get { throw null; } }
+        public Azure.Core.GeoJson.GeoObject Geometry { get { throw null; } }
         public Azure.Maps.Weather.Models.LatLongPair TopLeft { get { throw null; } }
     }
     public partial class WindDetails

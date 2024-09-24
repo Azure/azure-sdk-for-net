@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Weather.Models
 {
@@ -920,12 +921,9 @@ namespace Azure.Maps.Weather.Models
         /// <param name="endTimestamp"> DateTime of the end of the window of movement, displayed in ISO8601 format. </param>
         /// <param name="beginStatus"> Storm status at the beginning of the window. </param>
         /// <param name="endStatus"> Storm status at the end of the window. </param>
-        /// <param name="geometry">
-        /// Displayed when windowGeometry=true in request. GeoJSON object containing coordinates describing the window of movement during the specified timeframe.
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
-        /// </param>
+        /// <param name="geometry"> Displayed when windowGeometry=true in request. GeoJSON object containing coordinates describing the window of movement during the specified timeframe. </param>
         /// <returns> A new <see cref="Models.WeatherWindow"/> instance for mocking. </returns>
-        public static WeatherWindow WeatherWindow(LatLongPair topLeft = null, LatLongPair bottomRight = null, DateTimeOffset? beginTimestamp = null, DateTimeOffset? endTimestamp = null, string beginStatus = null, string endStatus = null, GeoJsonGeometry geometry = null)
+        public static WeatherWindow WeatherWindow(LatLongPair topLeft = null, LatLongPair bottomRight = null, DateTimeOffset? beginTimestamp = null, DateTimeOffset? endTimestamp = null, string beginStatus = null, string endStatus = null, GeoObject geometry = null)
         {
             return new WeatherWindow(
                 topLeft,
@@ -941,12 +939,9 @@ namespace Azure.Maps.Weather.Models
         /// <param name="timestamp"> DateTime for which the wind radii summary data is valid, displayed in ISO8601 format. </param>
         /// <param name="windSpeed"> Wind speed associated with the radiusSectorData. </param>
         /// <param name="radiusSectorData"> Contains the information needed to plot wind radius quadrants. Bearing 0–90 = NE quadrant; 90–180 = SE quadrant; 180–270 = SW quadrant; 270–360 = NW quadrant. </param>
-        /// <param name="radiiGeometry">
-        /// GeoJSON object. Displayed when radiiGeometry=true in request. Describes the outline of the wind radius quadrants.
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
-        /// </param>
+        /// <param name="radiiGeometry"> GeoJSON object. Displayed when radiiGeometry=true in request. Describes the outline of the wind radius quadrants. </param>
         /// <returns> A new <see cref="Models.StormWindRadiiSummary"/> instance for mocking. </returns>
-        public static StormWindRadiiSummary StormWindRadiiSummary(string timestamp = null, WeatherValue windSpeed = null, IEnumerable<RadiusSector> radiusSectorData = null, GeoJsonGeometry radiiGeometry = null)
+        public static StormWindRadiiSummary StormWindRadiiSummary(string timestamp = null, WeatherValue windSpeed = null, IEnumerable<RadiusSector> radiusSectorData = null, GeoObject radiiGeometry = null)
         {
             radiusSectorData ??= new List<RadiusSector>();
 
