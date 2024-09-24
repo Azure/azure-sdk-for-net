@@ -229,14 +229,19 @@ namespace Azure.Maps.Weather.Tests
                 BasinId = BasinId.NP,
                 GovernmentStormId = 2,
                 IncludeDetails = true,
-                IncludeGeometricDetails = true,
+                IncludeGeometricDetails = true
             };
             Response<StormForecastResult> response = await client.GetTropicalStormForecastAsync(options);
-            Console.WriteLine("Geometry type: " + response.Value.StormForecasts[0].WindRadiiSummary[0].RadiiGeometry.Type);
+            if (response.Value.StormForecasts[0].WindRadiiSummary[0].RadiiGeometry is GeoPolygon geoPolygon) {
+                Console.WriteLine("Geometry type: Polygon");
+                for (int i = 0; i < geoPolygon.Coordinates[0].Count; ++i) {
+                    Console.WriteLine("Point {0}: {1}", i, geoPolygon.Coordinates[0][i]);
+                }
+            }
             Console.WriteLine(
-                "Coordinates(longitude, latitude): ({0}, {1})",
-                response.Value.StormForecasts[0].Coordinates.Longitude,
-                response.Value.StormForecasts[0].Coordinates.Latitude
+                "Wind speed: {0}{1}",
+                response.Value.StormForecasts[0].WindRadiiSummary[0].WindSpeed.Value,
+                response.Value.StormForecasts[0].WindRadiiSummary[0].WindSpeed.UnitLabel
             );
             Assert.NotNull(response);
         }
