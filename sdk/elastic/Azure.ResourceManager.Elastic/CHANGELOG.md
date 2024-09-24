@@ -7,6 +7,7 @@
 - Upgraded api-version tag to 'package-2024-06-15-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/14ac81f2a50ae8dbf5b0fc78c13f809b49ee4375/specification/elastic/resource-manager/readme.md.
 - Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.0.0-beta.4 (2023-11-29)
 
