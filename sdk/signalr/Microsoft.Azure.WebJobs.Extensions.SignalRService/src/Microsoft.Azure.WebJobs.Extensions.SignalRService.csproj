@@ -5,7 +5,6 @@
     <PackageId>Microsoft.Azure.WebJobs.Extensions.SignalRService</PackageId>
     <Version>1.15.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.14.0</ApiCompatVersion>
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <NoWarn>$(NoWarn);CS1591;AZC0107;</NoWarn>
