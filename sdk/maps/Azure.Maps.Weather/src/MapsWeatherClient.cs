@@ -861,7 +861,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return await restClient.GetAirQualityDailyForecastsAsync(JsonFormat.Json, coord, options.Language.ToString(), options.Duration, cancellationToken).ConfigureAwait(false);
+                return await restClient.GetAirQualityDailyForecastsAsync(JsonFormat.Json, coord, options.Language.ToString(), options.DurationInDays, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -889,7 +889,7 @@ namespace Azure.Maps.Weather
                     Convert.ToDouble(options.Coordinates.Latitude, CultureInfo.InvariantCulture.NumberFormat),
                     Convert.ToDouble(options.Coordinates.Longitude, CultureInfo.InvariantCulture.NumberFormat)
                 };
-                return restClient.GetAirQualityDailyForecasts(JsonFormat.Json, coord, options.Language.ToString(), options.Duration, cancellationToken);
+                return restClient.GetAirQualityDailyForecasts(JsonFormat.Json, coord, options.Language.ToString(), options.DurationInDays, cancellationToken);
             }
             catch (Exception e)
             {

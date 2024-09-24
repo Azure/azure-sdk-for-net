@@ -1166,7 +1166,7 @@ namespace Azure.Maps.Weather.Models.Options
     public partial class GetAirQualityDailyForecastsOptions : Azure.Maps.Weather.Models.Options.WeatherBaseOptions
     {
         public GetAirQualityDailyForecastsOptions() { }
-        public int? Duration { get { throw null; } set { } }
+        public int? DurationInDays { get { throw null; } set { } }
     }
     public partial class GetAirQualityHourlyForecastsOptions : Azure.Maps.Weather.Models.Options.WeatherBaseOptions
     {

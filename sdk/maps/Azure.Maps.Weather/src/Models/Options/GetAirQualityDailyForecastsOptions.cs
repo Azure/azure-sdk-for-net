@@ -7,6 +7,6 @@ namespace Azure.Maps.Weather.Models.Options
     public class GetAirQualityDailyForecastsOptions : WeatherBaseOptions
     {
         /// <summary> Specifies for how long the responses are returned. </summary>
-        public int? Duration { get; set; }
+        public int? DurationInDays { get; set; }
     }
 }
