@@ -1,0 +1,3411 @@
+{
+ "$id": "1",
+ "Name": "AI.Model",
+ "ApiVersions": [
+  "2024-05-01-preview"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "kind": "enum",
+   "name": "ChatRole",
+   "crossLanguageDefinitionId": "AI.Model.ChatRole",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "4",
+     "kind": "enumvalue",
+     "name": "system",
+     "value": "system",
+     "valueType": {
+      "$id": "5",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "description": "The role that instructs or sets the behavior of the assistant.",
+     "decorators": []
+    },
+    {
+     "$id": "6",
+     "kind": "enumvalue",
+     "name": "user",
+     "value": "user",
+     "valueType": {
+      "$id": "7",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "description": "The role that provides input for chat completions.",
+     "decorators": []
+    },
+    {
+     "$id": "8",
+     "kind": "enumvalue",
+     "name": "assistant",
+     "value": "assistant",
+     "valueType": {
+      "$id": "9",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "description": "The role that provides responses to system-instructed, user-prompted input.",
+     "decorators": []
+    },
+    {
+     "$id": "10",
+     "kind": "enumvalue",
+     "name": "tool",
+     "value": "tool",
+     "valueType": {
+      "$id": "11",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "description": "The role that represents extension tool activity within a chat completions operation.",
+     "decorators": []
+    }
+   ],
+   "access": "public",
+   "description": "A description of the intended purpose of a message within a chat completions interaction.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "12",
+   "kind": "enum",
+   "name": "ChatMessageImageDetailLevel",
+   "crossLanguageDefinitionId": "AI.Model.ChatMessageImageDetailLevel",
+   "valueType": {
+    "$id": "13",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "14",
+     "kind": "enumvalue",
+     "name": "auto",
+     "value": "auto",
+     "valueType": {
+      "$id": "15",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "12"
+     },
+     "description": "Specifies that the model should determine which detail level to apply using heuristics like image size.",
+     "decorators": []
+    },
+    {
+     "$id": "16",
+     "kind": "enumvalue",
+     "name": "low",
+     "value": "low",
+     "valueType": {
+      "$id": "17",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "12"
+     },
+     "description": "Specifies that image evaluation should be constrained to the 'low-res' model that may be faster and consume fewer\ntokens but may also be less accurate for highly detailed images.",
+     "decorators": []
+    },
+    {
+     "$id": "18",
+     "kind": "enumvalue",
+     "name": "high",
+     "value": "high",
+     "valueType": {
+      "$id": "19",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "12"
+     },
+     "description": "Specifies that image evaluation should enable the 'high-res' model that may be more accurate for highly detailed\nimages but may also be slower and consume more tokens.",
+     "decorators": []
+    }
+   ],
+   "access": "public",
+   "description": "A representation of the possible image detail levels for image-based chat completions message content.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Json",
+   "decorators": []
+  },
+  {
+   "$id": "20",
+   "kind": "enum",
+   "name": "ChatCompletionsToolSelectionPreset",
+   "crossLanguageDefinitionId": "AI.Model.ChatCompletionsToolSelectionPreset",
+   "valueType": {
+    "$id": "21",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "22",
+     "kind": "enumvalue",
+     "name": "auto",
+     "value": "auto",
+     "valueType": {
+      "$id": "23",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "20"
+     },
+     "description": "Specifies that the model may either use any of the tools provided in this chat completions request or\ninstead return a standard chat completions response as if no tools were provided.",
+     "decorators": []
+    },
+    {
+     "$id": "24",
+     "kind": "enumvalue",
+     "name": "none",
+     "value": "none",
+     "valueType": {
+      "$id": "25",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "20"
+     },
+     "description": "Specifies that the model should not respond with a tool call and should instead provide a standard chat\ncompletions response. Response content may still be influenced by the provided tool definitions.",
+     "decorators": []
+    },
+    {
+     "$id": "26",
+     "kind": "enumvalue",
+     "name": "required",
+     "value": "required",
+     "valueType": {
+      "$id": "27",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "20"
+     },
+     "description": "Specifies that the model should respond with a call to one or more tools.",
+     "decorators": []
+    }
+   ],
+   "access": "public",
+   "description": "Represents a generic policy for how a chat completions tool may be selected.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Json",
+   "decorators": []
+  },
+  {
+   "$id": "28",
+   "kind": "enum",
+   "name": "ExtraParameters",
+   "crossLanguageDefinitionId": "AI.Model.ExtraParameters",
+   "valueType": {
+    "$id": "29",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "30",
+     "kind": "enumvalue",
+     "name": "error",
+     "value": "error",
+     "valueType": {
+      "$id": "31",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "28"
+     },
+     "description": "The service will error if it detected extra parameters in the request payload. This is the service default.",
+     "decorators": []
+    },
+    {
+     "$id": "32",
+     "kind": "enumvalue",
+     "name": "drop",
+     "value": "drop",
+     "valueType": {
+      "$id": "33",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "28"
+     },
+     "description": "The service will ignore (drop) extra parameters in the request payload. It will only pass the known parameters to the back-end AI model.",
+     "decorators": []
+    },
+    {
+     "$id": "34",
+     "kind": "enumvalue",
+     "name": "pass_through",
+     "value": "pass-through",
+     "valueType": {
+      "$id": "35",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "28"
+     },
+     "description": "The service will pass extra parameters to the back-end AI model.",
+     "decorators": []
+    }
+   ],
+   "description": "Controls what happens if extra parameters, undefined by the REST API, are passed in the JSON request payload.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input",
+   "decorators": []
+  },
+  {
+   "$id": "36",
+   "kind": "enum",
+   "name": "CompletionsFinishReason",
+   "crossLanguageDefinitionId": "AI.Model.CompletionsFinishReason",
+   "valueType": {
+    "$id": "37",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "38",
+     "kind": "enumvalue",
+     "name": "stopped",
+     "value": "stop",
+     "valueType": {
+      "$id": "39",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "36"
+     },
+     "description": "Completions ended normally and reached its end of token generation.",
+     "decorators": []
+    },
+    {
+     "$id": "40",
+     "kind": "enumvalue",
+     "name": "tokenLimitReached",
+     "value": "length",
+     "valueType": {
+      "$id": "41",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "36"
+     },
+     "description": "Completions exhausted available token limits before generation could complete.",
+     "decorators": []
+    },
+    {
+     "$id": "42",
+     "kind": "enumvalue",
+     "name": "contentFiltered",
+     "value": "content_filter",
+     "valueType": {
+      "$id": "43",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "36"
+     },
+     "description": "Completions generated a response that was identified as potentially sensitive per content\nmoderation policies.",
+     "decorators": []
+    },
+    {
+     "$id": "44",
+     "kind": "enumvalue",
+     "name": "toolCalls",
+     "value": "tool_calls",
+     "valueType": {
+      "$id": "45",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "36"
+     },
+     "description": "Completion ended with the model calling a provided tool for output.",
+     "decorators": []
+    }
+   ],
+   "access": "public",
+   "description": "Representation of the manner in which a completions response concluded.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "46",
+   "kind": "enum",
+   "name": "ModelType",
+   "crossLanguageDefinitionId": "AI.Model.ModelType",
+   "valueType": {
+    "$id": "47",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "48",
+     "kind": "enumvalue",
+     "name": "embeddings",
+     "value": "embeddings",
+     "valueType": {
+      "$id": "49",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "46"
+     },
+     "description": "Embeddings.",
+     "decorators": []
+    },
+    {
+     "$id": "50",
+     "kind": "enumvalue",
+     "name": "image_generation",
+     "value": "image_generation",
+     "valueType": {
+      "$id": "51",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "46"
+     },
+     "description": "Image generation",
+     "decorators": []
+    },
+    {
+     "$id": "52",
+     "kind": "enumvalue",
+     "name": "text_generation",
+     "value": "text_generation",
+     "valueType": {
+      "$id": "53",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "46"
+     },
+     "description": "Text generation",
+     "decorators": []
+    },
+    {
+     "$id": "54",
+     "kind": "enumvalue",
+     "name": "image_embeddings",
+     "value": "image_embeddings",
+     "valueType": {
+      "$id": "55",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "46"
+     },
+     "description": "Image embeddings",
+     "decorators": []
+    },
+    {
+     "$id": "56",
+     "kind": "enumvalue",
+     "name": "audio_generation",
+     "value": "audio_generation",
+     "valueType": {
+      "$id": "57",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "46"
+     },
+     "description": "Audio generation",
+     "decorators": []
+    },
+    {
+     "$id": "58",
+     "kind": "enumvalue",
+     "name": "chat",
+     "value": "chat",
+     "valueType": {
+      "$id": "59",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "46"
+     },
+     "description": "Chat completions",
+     "decorators": []
+    }
+   ],
+   "access": "public",
+   "description": "The type of AI model",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "60",
+   "kind": "enum",
+   "name": "Versions",
+   "crossLanguageDefinitionId": "AI.Model.Versions",
+   "valueType": {
+    "$id": "61",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "62",
+     "kind": "enumvalue",
+     "name": "v2024_05_01_Preview",
+     "value": "2024-05-01-preview",
+     "valueType": {
+      "$id": "63",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "60"
+     },
+     "description": "The 2024-05-01-preview version of the AI.Model service.",
+     "decorators": []
+    }
+   ],
+   "description": "The AI.Model service versions.",
+   "isFixed": true,
+   "isFlags": false,
+   "usage": "ApiVersionEnum",
+   "decorators": []
+  }
+ ],
+ "Models": [
+  {
+   "$id": "64",
+   "kind": "model",
+   "name": "ChatCompletionsOptions",
+   "crossLanguageDefinitionId": "AI.Model.ChatCompletionsOptions",
+   "usage": "Input,Json",
+   "description": "The configuration information for a chat completions request.\nCompletions support a wide variety of tasks and generate text that continues from or \"completes\"\nprovided prompt data.",
+   "decorators": [],
+   "additionalProperties": {
+    "$id": "65",
+    "kind": "unknown",
+    "name": "unknown",
+    "crossLanguageDefinitionId": "",
+    "decorators": []
+   },
+   "properties": [
+    {
+     "$id": "66",
+     "kind": "property",
+     "name": "messages",
+     "serializedName": "messages",
+     "description": "The collection of context messages associated with this chat completions request.\nTypical usage begins with a chat message for the System role that provides instructions for\nthe behavior of the assistant, followed by alternating messages between the User and\nAssistant roles.",
+     "type": {
+      "$id": "67",
+      "kind": "array",
+      "name": "ArrayChatRequestMessage",
+      "valueType": {
+       "$id": "68",
+       "kind": "model",
+       "name": "ChatRequestMessage",
+       "crossLanguageDefinitionId": "AI.Model.ChatRequestMessage",
+       "access": "public",
+       "usage": "Input,Json",
+       "description": "An abstract representation of a chat message as provided in a request.",
+       "decorators": [],
+       "discriminatorProperty": {
+        "$id": "69",
+        "kind": "property",
+        "name": "role",
+        "serializedName": "role",
+        "description": "The chat role associated with this message.",
+        "type": {
+         "$ref": "2"
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": true,
+        "decorators": [],
+        "crossLanguageDefinitionId": "AI.Model.ChatRequestMessage.role"
+       },
+       "properties": [
+        {
+         "$ref": "69"
+        }
+       ],
+       "discriminatedSubtypes": {
+        "$id": "70",
+        "system": {
+         "$id": "71",
+         "kind": "model",
+         "name": "ChatRequestSystemMessage",
+         "crossLanguageDefinitionId": "AI.Model.ChatRequestSystemMessage",
+         "access": "public",
+         "usage": "Input,Json",
+         "description": "A request chat message containing system instructions that influence how the model will generate a chat completions\nresponse.",
+         "discriminatorValue": "system",
+         "decorators": [],
+         "baseModel": {
+          "$ref": "68"
+         },
+         "properties": [
+          {
+           "$id": "72",
+           "kind": "property",
+           "name": "role",
+           "serializedName": "role",
+           "description": "The chat role associated with this message, which is always 'system' for system messages.",
+           "type": {
+            "$id": "73",
+            "kind": "constant",
+            "valueType": {
+             "$id": "74",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "value": "system",
+            "decorators": []
+           },
+           "optional": false,
+           "readOnly": false,
+           "discriminator": true,
+           "decorators": [],
+           "crossLanguageDefinitionId": "AI.Model.ChatRequestSystemMessage.role"
+          },
+          {
+           "$id": "75",
+           "kind": "property",
+           "name": "content",
+           "serializedName": "content",
+           "description": "The contents of the system message.",
+           "type": {
+            "$id": "76",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+           },
+           "optional": false,
+           "readOnly": false,
+           "discriminator": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "AI.Model.ChatRequestSystemMessage.content"
+          }
+         ]
+        },
+        "user": {
+         "$id": "77",
+         "kind": "model",
+         "name": "ChatRequestUserMessage",
+         "crossLanguageDefinitionId": "AI.Model.ChatRequestUserMessage",
+         "access": "public",
+         "usage": "Input,Json",
+         "description": "A request chat message representing user input to the assistant.",
+         "discriminatorValue": "user",
+         "decorators": [],
+         "baseModel": {
+          "$ref": "68"
+         },
+         "properties": [
+          {
+           "$id": "78",
+           "kind": "property",
+           "name": "role",
+           "serializedName": "role",
+           "description": "The chat role associated with this message, which is always 'user' for user messages.",
+           "type": {
+            "$id": "79",
+            "kind": "constant",
+            "valueType": {
+             "$id": "80",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "value": "user",
+            "decorators": []
+           },
+           "optional": false,
+           "readOnly": false,
+           "discriminator": true,
+           "decorators": [],
+           "crossLanguageDefinitionId": "AI.Model.ChatRequestUserMessage.role"
+          },
+          {
+           "$id": "81",
+           "kind": "property",
+           "name": "content",
+           "serializedName": "content",
+           "description": "The contents of the user message, with available input types varying by selected model.",
+           "type": {
+            "$id": "82",
+            "kind": "union",
+            "name": "ChatRequestUserMessageContent",
+            "variantTypes": [
+             {
+              "$id": "83",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+             },
+             {
+              "$id": "84",
+              "kind": "array",
+              "name": "ArrayChatMessageContentItem",
+              "valueType": {
+               "$id": "85",
+               "kind": "model",
+               "name": "ChatMessageContentItem",
+               "crossLanguageDefinitionId": "AI.Model.ChatMessageContentItem",
+               "access": "public",
+               "usage": "Input,Json",
+               "description": "An abstract representation of a structured content item within a chat message.",
+               "decorators": [],
+               "discriminatorProperty": {
+                "$id": "86",
+                "kind": "property",
+                "name": "type",
+                "serializedName": "type",
+                "description": "The discriminated object type.",
+                "type": {
+                 "$id": "87",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": true,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AI.Model.ChatMessageContentItem.type"
+               },
+               "properties": [
+                {
+                 "$ref": "86"
+                }
+               ],
+               "discriminatedSubtypes": {
+                "$id": "88",
+                "text": {
+                 "$id": "89",
+                 "kind": "model",
+                 "name": "ChatMessageTextContentItem",
+                 "crossLanguageDefinitionId": "AI.Model.ChatMessageTextContentItem",
+                 "access": "public",
+                 "usage": "Input,Json",
+                 "description": "A structured chat content item containing plain text.",
+                 "discriminatorValue": "text",
+                 "decorators": [],
+                 "baseModel": {
+                  "$ref": "85"
+                 },
+                 "properties": [
+                  {
+                   "$id": "90",
+                   "kind": "property",
+                   "name": "type",
+                   "serializedName": "type",
+                   "description": "The discriminated object type: always 'text' for this type.",
+                   "type": {
+                    "$id": "91",
+                    "kind": "constant",
+                    "valueType": {
+                     "$id": "92",
+                     "kind": "string",
+                     "name": "string",
+                     "crossLanguageDefinitionId": "TypeSpec.string",
+                     "decorators": []
+                    },
+                    "value": "text",
+                    "decorators": []
+                   },
+                   "optional": false,
+                   "readOnly": false,
+                   "discriminator": true,
+                   "decorators": [],
+                   "crossLanguageDefinitionId": "AI.Model.ChatMessageTextContentItem.type"
+                  },
+                  {
+                   "$id": "93",
+                   "kind": "property",
+                   "name": "text",
+                   "serializedName": "text",
+                   "description": "The content of the message.",
+                   "type": {
+                    "$id": "94",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                   },
+                   "optional": false,
+                   "readOnly": false,
+                   "discriminator": false,
+                   "decorators": [],
+                   "crossLanguageDefinitionId": "AI.Model.ChatMessageTextContentItem.text"
+                  }
+                 ]
+                },
+                "image_url": {
+                 "$id": "95",
+                 "kind": "model",
+                 "name": "ChatMessageImageContentItem",
+                 "crossLanguageDefinitionId": "AI.Model.ChatMessageImageContentItem",
+                 "access": "public",
+                 "usage": "Input,Json",
+                 "description": "A structured chat content item containing an image reference.",
+                 "discriminatorValue": "image_url",
+                 "decorators": [],
+                 "baseModel": {
+                  "$ref": "85"
+                 },
+                 "properties": [
+                  {
+                   "$id": "96",
+                   "kind": "property",
+                   "name": "type",
+                   "serializedName": "type",
+                   "description": "The discriminated object type: always 'image_url' for this type.",
+                   "type": {
+                    "$id": "97",
+                    "kind": "constant",
+                    "valueType": {
+                     "$id": "98",
+                     "kind": "string",
+                     "name": "string",
+                     "crossLanguageDefinitionId": "TypeSpec.string",
+                     "decorators": []
+                    },
+                    "value": "image_url",
+                    "decorators": []
+                   },
+                   "optional": false,
+                   "readOnly": false,
+                   "discriminator": true,
+                   "decorators": [],
+                   "crossLanguageDefinitionId": "AI.Model.ChatMessageImageContentItem.type"
+                  },
+                  {
+                   "$id": "99",
+                   "kind": "property",
+                   "name": "imageUrl",
+                   "serializedName": "image_url",
+                   "description": "An internet location, which must be accessible to the model,from which the image may be retrieved.",
+                   "type": {
+                    "$id": "100",
+                    "kind": "model",
+                    "name": "ChatMessageImageUrl",
+                    "crossLanguageDefinitionId": "AI.Model.ChatMessageImageUrl",
+                    "access": "public",
+                    "usage": "Input,Json",
+                    "description": "An internet location from which the model may retrieve an image.",
+                    "decorators": [],
+                    "properties": [
+                     {
+                      "$id": "101",
+                      "kind": "property",
+                      "name": "url",
+                      "serializedName": "url",
+                      "description": "The URL of the image.",
+                      "type": {
+                       "$id": "102",
+                       "kind": "string",
+                       "name": "string",
+                       "crossLanguageDefinitionId": "TypeSpec.string",
+                       "decorators": []
+                      },
+                      "optional": false,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "AI.Model.ChatMessageImageUrl.url"
+                     },
+                     {
+                      "$id": "103",
+                      "kind": "property",
+                      "name": "detail",
+                      "serializedName": "detail",
+                      "description": "The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and\naccuracy.",
+                      "type": {
+                       "$ref": "12"
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "AI.Model.ChatMessageImageUrl.detail"
+                     }
+                    ]
+                   },
+                   "optional": false,
+                   "readOnly": false,
+                   "discriminator": false,
+                   "decorators": [],
+                   "crossLanguageDefinitionId": "AI.Model.ChatMessageImageContentItem.imageUrl"
+                  }
+                 ]
+                }
+               }
+              },
+              "crossLanguageDefinitionId": "TypeSpec.Array",
+              "decorators": []
+             }
+            ],
+            "decorators": []
+           },
+           "optional": false,
+           "readOnly": false,
+           "discriminator": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "AI.Model.ChatRequestUserMessage.content"
+          }
+         ]
+        },
+        "assistant": {
+         "$id": "104",
+         "kind": "model",
+         "name": "ChatRequestAssistantMessage",
+         "crossLanguageDefinitionId": "AI.Model.ChatRequestAssistantMessage",
+         "access": "public",
+         "usage": "Input,Json",
+         "description": "A request chat message representing response or action from the assistant.",
+         "discriminatorValue": "assistant",
+         "decorators": [],
+         "baseModel": {
+          "$ref": "68"
+         },
+         "properties": [
+          {
+           "$id": "105",
+           "kind": "property",
+           "name": "role",
+           "serializedName": "role",
+           "description": "The chat role associated with this message, which is always 'assistant' for assistant messages.",
+           "type": {
+            "$id": "106",
+            "kind": "constant",
+            "valueType": {
+             "$id": "107",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "value": "assistant",
+            "decorators": []
+           },
+           "optional": false,
+           "readOnly": false,
+           "discriminator": true,
+           "decorators": [],
+           "crossLanguageDefinitionId": "AI.Model.ChatRequestAssistantMessage.role"
+          },
+          {
+           "$id": "108",
+           "kind": "property",
+           "name": "content",
+           "serializedName": "content",
+           "description": "The content of the message.",
+           "type": {
+            "$id": "109",
+            "kind": "nullable",
+            "type": {
+             "$id": "110",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            }
+           },
+           "optional": true,
+           "readOnly": false,
+           "discriminator": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "AI.Model.ChatRequestAssistantMessage.content"
+          },
+          {
+           "$id": "111",
+           "kind": "property",
+           "name": "toolCalls",
+           "serializedName": "tool_calls",
+           "description": "The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat\ncompletions request to resolve as configured.",
+           "type": {
+            "$id": "112",
+            "kind": "array",
+            "name": "ArrayChatCompletionsToolCall",
+            "valueType": {
+             "$id": "113",
+             "kind": "model",
+             "name": "ChatCompletionsToolCall",
+             "crossLanguageDefinitionId": "AI.Model.ChatCompletionsToolCall",
+             "access": "public",
+             "usage": "Input,Output,Json",
+             "description": "An abstract representation of a tool call that must be resolved in a subsequent request to perform the requested\nchat completion.",
+             "decorators": [],
+             "discriminatorProperty": {
+              "$id": "114",
+              "kind": "property",
+              "name": "type",
+              "serializedName": "type",
+              "description": "The object type.",
+              "type": {
+               "$id": "115",
+               "kind": "string",
+               "name": "string",
+               "crossLanguageDefinitionId": "TypeSpec.string",
+               "decorators": []
+              },
+              "optional": false,
+              "readOnly": false,
+              "discriminator": true,
+              "decorators": [],
+              "crossLanguageDefinitionId": "AI.Model.ChatCompletionsToolCall.type"
+             },
+             "properties": [
+              {
+               "$ref": "114"
+              },
+              {
+               "$id": "116",
+               "kind": "property",
+               "name": "id",
+               "serializedName": "id",
+               "description": "The ID of the tool call.",
+               "type": {
+                "$id": "117",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+               },
+               "optional": false,
+               "readOnly": false,
+               "discriminator": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "AI.Model.ChatCompletionsToolCall.id"
+              }
+             ],
+             "discriminatedSubtypes": {
+              "$id": "118",
+              "function": {
+               "$id": "119",
+               "kind": "model",
+               "name": "ChatCompletionsFunctionToolCall",
+               "crossLanguageDefinitionId": "AI.Model.ChatCompletionsFunctionToolCall",
+               "access": "public",
+               "usage": "Input,Output,Json",
+               "description": "A tool call to a function tool, issued by the model in evaluation of a configured function tool, that represents\na function invocation needed for a subsequent chat completions request to resolve.",
+               "discriminatorValue": "function",
+               "decorators": [],
+               "baseModel": {
+                "$ref": "113"
+               },
+               "properties": [
+                {
+                 "$id": "120",
+                 "kind": "property",
+                 "name": "type",
+                 "serializedName": "type",
+                 "description": "The type of tool call, in this case always 'function'.",
+                 "type": {
+                  "$id": "121",
+                  "kind": "constant",
+                  "valueType": {
+                   "$id": "122",
+                   "kind": "string",
+                   "name": "string",
+                   "crossLanguageDefinitionId": "TypeSpec.string",
+                   "decorators": []
+                  },
+                  "value": "function",
+                  "decorators": []
+                 },
+                 "optional": false,
+                 "readOnly": false,
+                 "discriminator": true,
+                 "decorators": [],
+                 "crossLanguageDefinitionId": "AI.Model.ChatCompletionsFunctionToolCall.type"
+                },
+                {
+                 "$id": "123",
+                 "kind": "property",
+                 "name": "function",
+                 "serializedName": "function",
+                 "description": "The details of the function invocation requested by the tool call.",
+                 "type": {
+                  "$id": "124",
+                  "kind": "model",
+                  "name": "FunctionCall",
+                  "crossLanguageDefinitionId": "AI.Model.FunctionCall",
+                  "access": "public",
+                  "usage": "Input,Output,Json",
+                  "description": "The name and arguments of a function that should be called, as generated by the model.",
+                  "decorators": [],
+                  "properties": [
+                   {
+                    "$id": "125",
+                    "kind": "property",
+                    "name": "name",
+                    "serializedName": "name",
+                    "description": "The name of the function to call.",
+                    "type": {
+                     "$id": "126",
+                     "kind": "string",
+                     "name": "string",
+                     "crossLanguageDefinitionId": "TypeSpec.string",
+                     "decorators": []
+                    },
+                    "optional": false,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "AI.Model.FunctionCall.name"
+                   },
+                   {
+                    "$id": "127",
+                    "kind": "property",
+                    "name": "arguments",
+                    "serializedName": "arguments",
+                    "description": "The arguments to call the function with, as generated by the model in JSON format.\nNote that the model does not always generate valid JSON, and may hallucinate parameters\nnot defined by your function schema. Validate the arguments in your code before calling\nyour function.",
+                    "type": {
+                     "$id": "128",
+                     "kind": "string",
+                     "name": "string",
+                     "crossLanguageDefinitionId": "TypeSpec.string",
+                     "decorators": []
+                    },
+                    "optional": false,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "AI.Model.FunctionCall.arguments"
+                   }
+                  ]
+                 },
+                 "optional": false,
+                 "readOnly": false,
+                 "discriminator": false,
+                 "decorators": [],
+                 "crossLanguageDefinitionId": "AI.Model.ChatCompletionsFunctionToolCall.function"
+                }
+               ]
+              }
+             }
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+           },
+           "optional": true,
+           "readOnly": false,
+           "discriminator": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "AI.Model.ChatRequestAssistantMessage.toolCalls"
+          }
+         ]
+        },
+        "tool": {
+         "$id": "129",
+         "kind": "model",
+         "name": "ChatRequestToolMessage",
+         "crossLanguageDefinitionId": "AI.Model.ChatRequestToolMessage",
+         "access": "public",
+         "usage": "Input,Json",
+         "description": "A request chat message representing requested output from a configured tool.",
+         "discriminatorValue": "tool",
+         "decorators": [],
+         "baseModel": {
+          "$ref": "68"
+         },
+         "properties": [
+          {
+           "$id": "130",
+           "kind": "property",
+           "name": "role",
+           "serializedName": "role",
+           "description": "The chat role associated with this message, which is always 'tool' for tool messages.",
+           "type": {
+            "$id": "131",
+            "kind": "constant",
+            "valueType": {
+             "$id": "132",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "value": "tool",
+            "decorators": []
+           },
+           "optional": false,
+           "readOnly": false,
+           "discriminator": true,
+           "decorators": [],
+           "crossLanguageDefinitionId": "AI.Model.ChatRequestToolMessage.role"
+          },
+          {
+           "$id": "133",
+           "kind": "property",
+           "name": "content",
+           "serializedName": "content",
+           "description": "The content of the message.",
+           "type": {
+            "$id": "134",
+            "kind": "nullable",
+            "type": {
+             "$id": "135",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            }
+           },
+           "optional": false,
+           "readOnly": false,
+           "discriminator": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "AI.Model.ChatRequestToolMessage.content"
+          },
+          {
+           "$id": "136",
+           "kind": "property",
+           "name": "toolCallId",
+           "serializedName": "tool_call_id",
+           "description": "The ID of the tool call resolved by the provided content.",
+           "type": {
+            "$id": "137",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+           },
+           "optional": false,
+           "readOnly": false,
+           "discriminator": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "AI.Model.ChatRequestToolMessage.toolCallId"
+          }
+         ]
+        }
+       }
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ChatCompletionsOptions.messages"
+    },
+    {
+     "$id": "138",
+     "kind": "property",
+     "name": "frequency_penalty",
+     "serializedName": "frequency_penalty",
+     "description": "A value that influences the probability of generated tokens appearing based on their cumulative\nfrequency in generated text.\nPositive values will make tokens less likely to appear as their frequency increases and\ndecrease the likelihood of the model repeating the same statements verbatim.\nSupported range is [-2, 2].",
+     "type": {
+      "$id": "139",
+      "kind": "float32",
+      "name": "float32",
+      "crossLanguageDefinitionId": "TypeSpec.float32",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ChatCompletionsOptions.frequency_penalty"
+    },
+    {
+     "$id": "140",
+     "kind": "property",
+     "name": "InternalShouldStreamResponse",
+     "serializedName": "stream",
+     "description": "A value indicating whether chat completions should be streamed for this request.",
+     "type": {
+      "$id": "141",
+      "kind": "boolean",
+      "name": "boolean",
+      "crossLanguageDefinitionId": "TypeSpec.boolean",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ChatCompletionsOptions.stream"
+    },
+    {
+     "$id": "142",
+     "kind": "property",
+     "name": "presence_penalty",
+     "serializedName": "presence_penalty",
+     "description": "A value that influences the probability of generated tokens appearing based on their existing\npresence in generated text.\nPositive values will make tokens less likely to appear when they already exist and increase the\nmodel's likelihood to output new topics.\nSupported range is [-2, 2].",
+     "type": {
+      "$id": "143",
+      "kind": "float32",
+      "name": "float32",
+      "crossLanguageDefinitionId": "TypeSpec.float32",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ChatCompletionsOptions.presence_penalty"
+    },
+    {
+     "$id": "144",
+     "kind": "property",
+     "name": "temperature",
+     "serializedName": "temperature",
+     "description": "The sampling temperature to use that controls the apparent creativity of generated completions.\nHigher values will make output more random while lower values will make results more focused\nand deterministic.\nIt is not recommended to modify temperature and top_p for the same completions request as the\ninteraction of these two settings is difficult to predict.\nSupported range is [0, 1].",
+     "type": {
+      "$id": "145",
+      "kind": "float32",
+      "name": "float32",
+      "crossLanguageDefinitionId": "TypeSpec.float32",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ChatCompletionsOptions.temperature"
+    },
+    {
+     "$id": "146",
+     "kind": "property",
+     "name": "NucleusSamplingFactor",
+     "serializedName": "top_p",
+     "description": "An alternative to sampling with temperature called nucleus sampling. This value causes the\nmodel to consider the results of tokens with the provided probability mass. As an example, a\nvalue of 0.15 will cause only the tokens comprising the top 15% of probability mass to be\nconsidered.\nIt is not recommended to modify temperature and top_p for the same completions request as the\ninteraction of these two settings is difficult to predict.\nSupported range is [0, 1].",
+     "type": {
+      "$id": "147",
+      "kind": "float32",
+      "name": "float32",
+      "crossLanguageDefinitionId": "TypeSpec.float32",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ChatCompletionsOptions.top_p"
+    },
+    {
+     "$id": "148",
+     "kind": "property",
+     "name": "max_tokens",
+     "serializedName": "max_tokens",
+     "description": "The maximum number of tokens to generate.",
+     "type": {
+      "$id": "149",
+      "kind": "int32",
+      "name": "int32",
+      "crossLanguageDefinitionId": "TypeSpec.int32",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ChatCompletionsOptions.max_tokens"
+    },
+    {
+     "$id": "150",
+     "kind": "property",
+     "name": "response_format",
+     "serializedName": "response_format",
+     "description": "The format that the model must output. Use this to enable JSON mode instead of the default text mode.\nNote that to enable JSON mode, some AI models may also require you to instruct the model to produce JSON\nvia a system or user message.",
+     "type": {
+      "$id": "151",
+      "kind": "model",
+      "name": "ChatCompletionsResponseFormat",
+      "crossLanguageDefinitionId": "AI.Model.ChatCompletionsResponseFormat",
+      "access": "public",
+      "usage": "Input,Json",
+      "description": "Represents the format that the model must output. Use this to enable JSON mode instead of the default text mode.\nNote that to enable JSON mode, some AI models may also require you to instruct the model to produce JSON\nvia a system or user message.",
+      "decorators": [],
+      "discriminatorProperty": {
+       "$id": "152",
+       "kind": "property",
+       "name": "type",
+       "serializedName": "type",
+       "description": "The response format type to use for chat completions.",
+       "type": {
+        "$id": "153",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "optional": false,
+       "readOnly": false,
+       "discriminator": true,
+       "decorators": [],
+       "crossLanguageDefinitionId": "AI.Model.ChatCompletionsResponseFormat.type"
+      },
+      "properties": [
+       {
+        "$ref": "152"
+       }
+      ],
+      "discriminatedSubtypes": {
+       "$id": "154",
+       "text": {
+        "$id": "155",
+        "kind": "model",
+        "name": "ChatCompletionsResponseFormatText",
+        "crossLanguageDefinitionId": "AI.Model.ChatCompletionsResponseFormatText",
+        "usage": "Input,Json",
+        "description": "A response format for Chat Completions that emits text responses. This is the default response format.",
+        "discriminatorValue": "text",
+        "decorators": [],
+        "baseModel": {
+         "$ref": "151"
+        },
+        "properties": [
+         {
+          "$id": "156",
+          "kind": "property",
+          "name": "type",
+          "serializedName": "type",
+          "description": "Response format type: always 'text' for this object.",
+          "type": {
+           "$id": "157",
+           "kind": "constant",
+           "valueType": {
+            "$id": "158",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+           },
+           "value": "text",
+           "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": true,
+          "decorators": [],
+          "crossLanguageDefinitionId": "AI.Model.ChatCompletionsResponseFormatText.type"
+         }
+        ]
+       },
+       "json_object": {
+        "$id": "159",
+        "kind": "model",
+        "name": "ChatCompletionsResponseFormatJSON",
+        "crossLanguageDefinitionId": "AI.Model.ChatCompletionsResponseFormatJSON",
+        "usage": "Input,Json",
+        "description": "A response format for Chat Completions that restricts responses to emitting valid JSON objects.\nNote that to enable JSON mode, some AI models may also require you to instruct the model to produce JSON\nvia a system or user message.",
+        "discriminatorValue": "json_object",
+        "decorators": [],
+        "baseModel": {
+         "$ref": "151"
+        },
+        "properties": [
+         {
+          "$id": "160",
+          "kind": "property",
+          "name": "type",
+          "serializedName": "type",
+          "description": "Response format type: always 'json_object' for this object.",
+          "type": {
+           "$id": "161",
+           "kind": "constant",
+           "valueType": {
+            "$id": "162",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+           },
+           "value": "json_object",
+           "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": true,
+          "decorators": [],
+          "crossLanguageDefinitionId": "AI.Model.ChatCompletionsResponseFormatJSON.type"
+         }
+        ]
+       }
+      }
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ChatCompletionsOptions.response_format"
+    },
+    {
+     "$id": "163",
+     "kind": "property",
+     "name": "StopSequences",
+     "serializedName": "stop",
+     "description": "A collection of textual sequences that will end completions generation.",
+     "type": {
+      "$id": "164",
+      "kind": "array",
+      "name": "Array",
+      "valueType": {
+       "$id": "165",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ChatCompletionsOptions.stop"
+    },
+    {
+     "$id": "166",
+     "kind": "property",
+     "name": "tools",
+     "serializedName": "tools",
+     "description": "The available tool definitions that the chat completions request can use, including caller-defined functions.",
+     "type": {
+      "$id": "167",
+      "kind": "array",
+      "name": "ArrayChatCompletionsToolDefinition",
+      "valueType": {
+       "$id": "168",
+       "kind": "model",
+       "name": "ChatCompletionsToolDefinition",
+       "crossLanguageDefinitionId": "AI.Model.ChatCompletionsToolDefinition",
+       "access": "public",
+       "usage": "Input,Json",
+       "description": "An abstract representation of a tool that can be used by the model to improve a chat completions response.",
+       "decorators": [],
+       "discriminatorProperty": {
+        "$id": "169",
+        "kind": "property",
+        "name": "type",
+        "serializedName": "type",
+        "description": "The object type.",
+        "type": {
+         "$id": "170",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": true,
+        "decorators": [],
+        "crossLanguageDefinitionId": "AI.Model.ChatCompletionsToolDefinition.type"
+       },
+       "properties": [
+        {
+         "$ref": "169"
+        }
+       ],
+       "discriminatedSubtypes": {
+        "$id": "171",
+        "function": {
+         "$id": "172",
+         "kind": "model",
+         "name": "ChatCompletionsFunctionToolDefinition",
+         "crossLanguageDefinitionId": "AI.Model.ChatCompletionsFunctionToolDefinition",
+         "access": "public",
+         "usage": "Input,Json",
+         "description": "The definition information for a chat completions function tool that can call a function in response to a tool call.",
+         "discriminatorValue": "function",
+         "decorators": [],
+         "baseModel": {
+          "$ref": "168"
+         },
+         "properties": [
+          {
+           "$id": "173",
+           "kind": "property",
+           "name": "type",
+           "serializedName": "type",
+           "description": "The object name, which is always 'function'.",
+           "type": {
+            "$id": "174",
+            "kind": "constant",
+            "valueType": {
+             "$id": "175",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "value": "function",
+            "decorators": []
+           },
+           "optional": false,
+           "readOnly": false,
+           "discriminator": true,
+           "decorators": [],
+           "crossLanguageDefinitionId": "AI.Model.ChatCompletionsFunctionToolDefinition.type"
+          },
+          {
+           "$id": "176",
+           "kind": "property",
+           "name": "function",
+           "serializedName": "function",
+           "description": "The function definition details for the function tool.",
+           "type": {
+            "$id": "177",
+            "kind": "model",
+            "name": "FunctionDefinition",
+            "crossLanguageDefinitionId": "AI.Model.FunctionDefinition",
+            "access": "public",
+            "usage": "Input,Json",
+            "description": "The definition of a caller-specified function that chat completions may invoke in response to matching user input.",
+            "decorators": [],
+            "properties": [
+             {
+              "$id": "178",
+              "kind": "property",
+              "name": "name",
+              "serializedName": "name",
+              "description": "The name of the function to be called.",
+              "type": {
+               "$id": "179",
+               "kind": "string",
+               "name": "string",
+               "crossLanguageDefinitionId": "TypeSpec.string",
+               "decorators": []
+              },
+              "optional": false,
+              "readOnly": false,
+              "discriminator": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "AI.Model.FunctionDefinition.name"
+             },
+             {
+              "$id": "180",
+              "kind": "property",
+              "name": "description",
+              "serializedName": "description",
+              "description": "A description of what the function does. The model will use this description when selecting the function and\ninterpreting its parameters.",
+              "type": {
+               "$id": "181",
+               "kind": "string",
+               "name": "string",
+               "crossLanguageDefinitionId": "TypeSpec.string",
+               "decorators": []
+              },
+              "optional": true,
+              "readOnly": false,
+              "discriminator": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "AI.Model.FunctionDefinition.description"
+             },
+             {
+              "$id": "182",
+              "kind": "property",
+              "name": "parameters",
+              "serializedName": "parameters",
+              "description": "The parameters the function accepts, described as a JSON Schema object.",
+              "type": {
+               "$id": "183",
+               "kind": "unknown",
+               "name": "unknown",
+               "crossLanguageDefinitionId": "",
+               "decorators": []
+              },
+              "optional": true,
+              "readOnly": false,
+              "discriminator": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "AI.Model.FunctionDefinition.parameters"
+             }
+            ]
+           },
+           "optional": false,
+           "readOnly": false,
+           "discriminator": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "AI.Model.ChatCompletionsFunctionToolDefinition.function"
+          }
+         ]
+        }
+       }
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ChatCompletionsOptions.tools"
+    },
+    {
+     "$id": "184",
+     "kind": "property",
+     "name": "toolChoice",
+     "serializedName": "tool_choice",
+     "description": "If specified, the model will configure which of the provided tools it can use for the chat completions response.",
+     "type": {
+      "$id": "185",
+      "kind": "union",
+      "name": "ChatCompletionsOptionsToolChoice",
+      "variantTypes": [
+       {
+        "$ref": "20"
+       },
+       {
+        "$id": "186",
+        "kind": "model",
+        "name": "ChatCompletionsNamedToolSelection",
+        "crossLanguageDefinitionId": "AI.Model.ChatCompletionsNamedToolSelection",
+        "access": "public",
+        "usage": "Input,Json",
+        "description": "An abstract representation of an explicit, named tool selection to use for a chat completions request.",
+        "decorators": [],
+        "discriminatorProperty": {
+         "$id": "187",
+         "kind": "property",
+         "name": "type",
+         "serializedName": "type",
+         "description": "The object type.",
+         "type": {
+          "$id": "188",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": true,
+         "decorators": [],
+         "crossLanguageDefinitionId": "AI.Model.ChatCompletionsNamedToolSelection.type"
+        },
+        "properties": [
+         {
+          "$ref": "187"
+         }
+        ],
+        "discriminatedSubtypes": {
+         "$id": "189",
+         "function": {
+          "$id": "190",
+          "kind": "model",
+          "name": "ChatCompletionsNamedFunctionToolSelection",
+          "crossLanguageDefinitionId": "AI.Model.ChatCompletionsNamedFunctionToolSelection",
+          "access": "public",
+          "usage": "Input,Json",
+          "description": "A tool selection of a specific, named function tool that will limit chat completions to using the named function.",
+          "discriminatorValue": "function",
+          "decorators": [],
+          "baseModel": {
+           "$ref": "186"
+          },
+          "properties": [
+           {
+            "$id": "191",
+            "kind": "property",
+            "name": "type",
+            "serializedName": "type",
+            "description": "The object type, which is always 'function'.",
+            "type": {
+             "$id": "192",
+             "kind": "constant",
+             "valueType": {
+              "$id": "193",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+             },
+             "value": "function",
+             "decorators": []
+            },
+            "optional": false,
+            "readOnly": false,
+            "discriminator": true,
+            "decorators": [],
+            "crossLanguageDefinitionId": "AI.Model.ChatCompletionsNamedFunctionToolSelection.type"
+           },
+           {
+            "$id": "194",
+            "kind": "property",
+            "name": "function",
+            "serializedName": "function",
+            "description": "The function that should be called.",
+            "type": {
+             "$id": "195",
+             "kind": "model",
+             "name": "ChatCompletionsFunctionToolSelection",
+             "crossLanguageDefinitionId": "AI.Model.ChatCompletionsFunctionToolSelection",
+             "access": "public",
+             "usage": "Input,Json",
+             "description": "A tool selection of a specific, named function tool that will limit chat completions to using the named function.",
+             "decorators": [],
+             "properties": [
+              {
+               "$id": "196",
+               "kind": "property",
+               "name": "name",
+               "serializedName": "name",
+               "description": "The name of the function that should be called.",
+               "type": {
+                "$id": "197",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+               },
+               "optional": false,
+               "readOnly": false,
+               "discriminator": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "AI.Model.ChatCompletionsFunctionToolSelection.name"
+              }
+             ]
+            },
+            "optional": false,
+            "readOnly": false,
+            "discriminator": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "AI.Model.ChatCompletionsNamedFunctionToolSelection.function"
+           }
+          ]
+         }
+        }
+       }
+      ],
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ChatCompletionsOptions.toolChoice"
+    },
+    {
+     "$id": "198",
+     "kind": "property",
+     "name": "seed",
+     "serializedName": "seed",
+     "description": "If specified, the system will make a best effort to sample deterministically such that repeated requests with the\nsame seed and parameters should return the same result. Determinism is not guaranteed.",
+     "type": {
+      "$id": "199",
+      "kind": "int64",
+      "name": "int64",
+      "crossLanguageDefinitionId": "TypeSpec.int64",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ChatCompletionsOptions.seed"
+    },
+    {
+     "$id": "200",
+     "kind": "property",
+     "name": "model",
+     "serializedName": "model",
+     "description": "ID of the specific AI model to use, if more than one model is available on the endpoint.",
+     "type": {
+      "$id": "201",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ChatCompletionsOptions.model"
+    }
+   ]
+  },
+  {
+   "$ref": "68"
+  },
+  {
+   "$ref": "71"
+  },
+  {
+   "$ref": "77"
+  },
+  {
+   "$ref": "85"
+  },
+  {
+   "$ref": "89"
+  },
+  {
+   "$ref": "95"
+  },
+  {
+   "$ref": "100"
+  },
+  {
+   "$ref": "104"
+  },
+  {
+   "$ref": "113"
+  },
+  {
+   "$ref": "119"
+  },
+  {
+   "$ref": "124"
+  },
+  {
+   "$ref": "129"
+  },
+  {
+   "$ref": "151"
+  },
+  {
+   "$ref": "155"
+  },
+  {
+   "$ref": "159"
+  },
+  {
+   "$ref": "168"
+  },
+  {
+   "$ref": "172"
+  },
+  {
+   "$ref": "177"
+  },
+  {
+   "$ref": "186"
+  },
+  {
+   "$ref": "190"
+  },
+  {
+   "$ref": "195"
+  },
+  {
+   "$id": "202",
+   "kind": "model",
+   "name": "CompleteRequest",
+   "crossLanguageDefinitionId": "complete.Request.anonymous",
+   "usage": "Spread,Json",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "203",
+     "kind": "property",
+     "name": "chatCompletionsOptions",
+     "serializedName": "chatCompletionsOptions",
+     "type": {
+      "$ref": "64"
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "complete.Request.anonymous.chatCompletionsOptions"
+    }
+   ]
+  },
+  {
+   "$id": "204",
+   "kind": "model",
+   "name": "ChatCompletions",
+   "crossLanguageDefinitionId": "AI.Model.ChatCompletions",
+   "access": "public",
+   "usage": "Output,Json",
+   "description": "Representation of the response data from a chat completions request.\nCompletions support a wide variety of tasks and generate text that continues from or \"completes\"\nprovided prompt data.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "205",
+     "kind": "property",
+     "name": "id",
+     "serializedName": "id",
+     "description": "A unique identifier associated with this chat completions response.",
+     "type": {
+      "$id": "206",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ChatCompletions.id"
+    },
+    {
+     "$id": "207",
+     "kind": "property",
+     "name": "created",
+     "serializedName": "created",
+     "description": "The first timestamp associated with generation activity for this completions response,\nrepresented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.",
+     "type": {
+      "$id": "208",
+      "kind": "utcDateTime",
+      "name": "utcDateTime",
+      "encode": "unixTimestamp",
+      "wireType": {
+       "$id": "209",
+       "kind": "int32",
+       "name": "int32",
+       "crossLanguageDefinitionId": "TypeSpec.int32",
+       "decorators": []
+      },
+      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ChatCompletions.created"
+    },
+    {
+     "$id": "210",
+     "kind": "property",
+     "name": "model",
+     "serializedName": "model",
+     "description": "The model used for the chat completion.",
+     "type": {
+      "$id": "211",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ChatCompletions.model"
+    },
+    {
+     "$id": "212",
+     "kind": "property",
+     "name": "usage",
+     "serializedName": "usage",
+     "description": "Usage information for tokens processed and generated as part of this completions operation.",
+     "type": {
+      "$id": "213",
+      "kind": "model",
+      "name": "CompletionsUsage",
+      "crossLanguageDefinitionId": "AI.Model.CompletionsUsage",
+      "access": "public",
+      "usage": "Output,Json",
+      "description": "Representation of the token counts processed for a completions request.\nCounts consider all tokens across prompts, choices, choice alternates, best_of generations, and\nother consumers.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "214",
+        "kind": "property",
+        "name": "completion_tokens",
+        "serializedName": "completion_tokens",
+        "description": "The number of tokens generated across all completions emissions.",
+        "type": {
+         "$id": "215",
+         "kind": "int32",
+         "name": "int32",
+         "crossLanguageDefinitionId": "TypeSpec.int32",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "AI.Model.CompletionsUsage.completion_tokens"
+       },
+       {
+        "$id": "216",
+        "kind": "property",
+        "name": "prompt_tokens",
+        "serializedName": "prompt_tokens",
+        "description": "The number of tokens in the provided prompts for the completions request.",
+        "type": {
+         "$id": "217",
+         "kind": "int32",
+         "name": "int32",
+         "crossLanguageDefinitionId": "TypeSpec.int32",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "AI.Model.CompletionsUsage.prompt_tokens"
+       },
+       {
+        "$id": "218",
+        "kind": "property",
+        "name": "total_tokens",
+        "serializedName": "total_tokens",
+        "description": "The total number of tokens processed for the completions request and response.",
+        "type": {
+         "$id": "219",
+         "kind": "int32",
+         "name": "int32",
+         "crossLanguageDefinitionId": "TypeSpec.int32",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "AI.Model.CompletionsUsage.total_tokens"
+       }
+      ]
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ChatCompletions.usage"
+    },
+    {
+     "$id": "220",
+     "kind": "property",
+     "name": "choices",
+     "serializedName": "choices",
+     "description": "The collection of completions choices associated with this completions response.\nGenerally, `n` choices are generated per provided prompt with a default value of 1.\nToken limits and other settings may limit the number of choices generated.",
+     "type": {
+      "$id": "221",
+      "kind": "array",
+      "name": "ArrayChatChoice",
+      "valueType": {
+       "$id": "222",
+       "kind": "model",
+       "name": "ChatChoice",
+       "crossLanguageDefinitionId": "AI.Model.ChatChoice",
+       "access": "public",
+       "usage": "Output,Json",
+       "description": "The representation of a single prompt completion as part of an overall chat completions request.\nGenerally, `n` choices are generated per provided prompt with a default value of 1.\nToken limits and other settings may limit the number of choices generated.",
+       "decorators": [],
+       "properties": [
+        {
+         "$id": "223",
+         "kind": "property",
+         "name": "index",
+         "serializedName": "index",
+         "description": "The ordered index associated with this chat completions choice.",
+         "type": {
+          "$id": "224",
+          "kind": "int32",
+          "name": "int32",
+          "crossLanguageDefinitionId": "TypeSpec.int32",
+          "decorators": []
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "AI.Model.ChatChoice.index"
+        },
+        {
+         "$id": "225",
+         "kind": "property",
+         "name": "finish_reason",
+         "serializedName": "finish_reason",
+         "description": "The reason that this chat completions choice completed its generated.",
+         "type": {
+          "$id": "226",
+          "kind": "nullable",
+          "type": {
+           "$ref": "36"
+          }
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "AI.Model.ChatChoice.finish_reason"
+        },
+        {
+         "$id": "227",
+         "kind": "property",
+         "name": "message",
+         "serializedName": "message",
+         "description": "The chat message for a given chat completions prompt.",
+         "type": {
+          "$id": "228",
+          "kind": "model",
+          "name": "ChatResponseMessage",
+          "crossLanguageDefinitionId": "AI.Model.ChatResponseMessage",
+          "access": "public",
+          "usage": "Output,Json",
+          "description": "A representation of a chat message as received in a response.",
+          "decorators": [],
+          "properties": [
+           {
+            "$id": "229",
+            "kind": "property",
+            "name": "role",
+            "serializedName": "role",
+            "description": "The chat role associated with the message.",
+            "type": {
+             "$ref": "2"
+            },
+            "optional": false,
+            "readOnly": false,
+            "discriminator": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "AI.Model.ChatResponseMessage.role"
+           },
+           {
+            "$id": "230",
+            "kind": "property",
+            "name": "content",
+            "serializedName": "content",
+            "description": "The content of the message.",
+            "type": {
+             "$id": "231",
+             "kind": "nullable",
+             "type": {
+              "$id": "232",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+             }
+            },
+            "optional": false,
+            "readOnly": false,
+            "discriminator": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "AI.Model.ChatResponseMessage.content"
+           },
+           {
+            "$id": "233",
+            "kind": "property",
+            "name": "toolCalls",
+            "serializedName": "tool_calls",
+            "description": "The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat\ncompletions request to resolve as configured.",
+            "type": {
+             "$id": "234",
+             "kind": "array",
+             "name": "ArrayChatCompletionsToolCall",
+             "valueType": {
+              "$ref": "113"
+             },
+             "crossLanguageDefinitionId": "TypeSpec.Array",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "AI.Model.ChatResponseMessage.toolCalls"
+           }
+          ]
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "AI.Model.ChatChoice.message"
+        }
+       ]
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ChatCompletions.choices"
+    }
+   ]
+  },
+  {
+   "$ref": "213"
+  },
+  {
+   "$ref": "222"
+  },
+  {
+   "$ref": "228"
+  },
+  {
+   "$id": "235",
+   "kind": "model",
+   "name": "ModelInfo",
+   "crossLanguageDefinitionId": "AI.Model.ModelInfo",
+   "access": "public",
+   "usage": "Output,Json",
+   "description": "Represents some basic information about the AI model.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "236",
+     "kind": "property",
+     "name": "model_name",
+     "serializedName": "model_name",
+     "description": "The name of the AI model. For example: `Phi21`",
+     "type": {
+      "$id": "237",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ModelInfo.model_name"
+    },
+    {
+     "$id": "238",
+     "kind": "property",
+     "name": "model_type",
+     "serializedName": "model_type",
+     "description": "The type of the AI model. A Unique identifier for the profile.",
+     "type": {
+      "$ref": "46"
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ModelInfo.model_type"
+    },
+    {
+     "$id": "239",
+     "kind": "property",
+     "name": "model_provider_name",
+     "serializedName": "model_provider_name",
+     "description": "The model provider name. For example: `Microsoft Research`",
+     "type": {
+      "$id": "240",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.ModelInfo.model_provider_name"
+    }
+   ]
+  },
+  {
+   "$id": "241",
+   "kind": "model",
+   "name": "StreamingChatCompletionsUpdate",
+   "crossLanguageDefinitionId": "AI.Model.StreamingChatCompletionsUpdate",
+   "usage": "Output",
+   "description": "Represents a response update to a chat completions request, when the service is streaming updates \nusing Server Sent Events (SSE).\nCompletions support a wide variety of tasks and generate text that continues from or \"completes\"\nprovided prompt data.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "242",
+     "kind": "property",
+     "name": "id",
+     "serializedName": "id",
+     "description": "A unique identifier associated with this chat completions response.",
+     "type": {
+      "$id": "243",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.StreamingChatCompletionsUpdate.id"
+    },
+    {
+     "$id": "244",
+     "kind": "property",
+     "name": "created",
+     "serializedName": "created",
+     "description": "The first timestamp associated with generation activity for this completions response,\nrepresented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.",
+     "type": {
+      "$id": "245",
+      "kind": "utcDateTime",
+      "name": "utcDateTime",
+      "encode": "unixTimestamp",
+      "wireType": {
+       "$id": "246",
+       "kind": "int32",
+       "name": "int32",
+       "crossLanguageDefinitionId": "TypeSpec.int32",
+       "decorators": []
+      },
+      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.StreamingChatCompletionsUpdate.created"
+    },
+    {
+     "$id": "247",
+     "kind": "property",
+     "name": "model",
+     "serializedName": "model",
+     "description": "The model used for the chat completion.",
+     "type": {
+      "$id": "248",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.StreamingChatCompletionsUpdate.model"
+    },
+    {
+     "$id": "249",
+     "kind": "property",
+     "name": "usage",
+     "serializedName": "usage",
+     "description": "Usage information for tokens processed and generated as part of this completions operation.",
+     "type": {
+      "$ref": "213"
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.StreamingChatCompletionsUpdate.usage"
+    },
+    {
+     "$id": "250",
+     "kind": "property",
+     "name": "choices",
+     "serializedName": "choices",
+     "description": "An update to the collection of completion choices associated with this completions response.\nGenerally, `n` choices are generated per provided prompt with a default value of 1.\nToken limits and other settings may limit the number of choices generated.",
+     "type": {
+      "$id": "251",
+      "kind": "array",
+      "name": "ArrayStreamingChatChoiceUpdate",
+      "valueType": {
+       "$id": "252",
+       "kind": "model",
+       "name": "StreamingChatChoiceUpdate",
+       "crossLanguageDefinitionId": "AI.Model.StreamingChatChoiceUpdate",
+       "usage": "Output",
+       "description": "Represents an update to a single prompt completion when the service is streaming updates \nusing Server Sent Events (SSE).\nGenerally, `n` choices are generated per provided prompt with a default value of 1.\nToken limits and other settings may limit the number of choices generated.",
+       "decorators": [],
+       "properties": [
+        {
+         "$id": "253",
+         "kind": "property",
+         "name": "index",
+         "serializedName": "index",
+         "description": "The ordered index associated with this chat completions choice.",
+         "type": {
+          "$id": "254",
+          "kind": "int32",
+          "name": "int32",
+          "crossLanguageDefinitionId": "TypeSpec.int32",
+          "decorators": []
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "AI.Model.StreamingChatChoiceUpdate.index"
+        },
+        {
+         "$id": "255",
+         "kind": "property",
+         "name": "finish_reason",
+         "serializedName": "finish_reason",
+         "description": "The reason that this chat completions choice completed its generated.",
+         "type": {
+          "$id": "256",
+          "kind": "nullable",
+          "type": {
+           "$ref": "36"
+          }
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "AI.Model.StreamingChatChoiceUpdate.finish_reason"
+        },
+        {
+         "$id": "257",
+         "kind": "property",
+         "name": "delta",
+         "serializedName": "delta",
+         "description": "An update to the chat message for a given chat completions prompt.",
+         "type": {
+          "$ref": "228"
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "AI.Model.StreamingChatChoiceUpdate.delta"
+        }
+       ]
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AI.Model.StreamingChatCompletionsUpdate.choices"
+    }
+   ]
+  },
+  {
+   "$ref": "252"
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "258",
+   "Name": "ChatCompletionsClient",
+   "Operations": [
+    {
+     "$id": "259",
+     "Name": "complete",
+     "ResourceName": "Client1",
+     "Description": "Gets chat completions for the provided chat messages.\nCompletions support a wide variety of tasks and generate text that continues from or \"completes\"\nprovided prompt data. The method makes a REST API call to the `/chat/completions` route\non the given endpoint.",
+     "Accessibility": "internal",
+     "Parameters": [
+      {
+       "$id": "260",
+       "Name": "endpoint",
+       "NameInRequest": "endpoint",
+       "Type": {
+        "$id": "261",
+        "kind": "url",
+        "name": "url",
+        "crossLanguageDefinitionId": "TypeSpec.url"
+       },
+       "Location": "Uri",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": true,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "262",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "263",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "264",
+        "Type": {
+         "$id": "265",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-05-01-preview"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "266",
+       "Name": "extraParams",
+       "NameInRequest": "extra-parameters",
+       "Type": {
+        "$ref": "28"
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "267",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "268",
+        "kind": "constant",
+        "valueType": {
+         "$id": "269",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "270",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "271",
+        "kind": "constant",
+        "valueType": {
+         "$id": "272",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "273",
+       "Name": "completeRequest",
+       "NameInRequest": "completeRequest",
+       "Type": {
+        "$ref": "202"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Spread",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "274",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "204"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}",
+     "Path": "/chat/completions",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Customizations.Client1.complete",
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "275",
+       "kind": "http",
+       "name": "maximum set chat completion",
+       "description": "maximum set chat completion",
+       "filePath": "2024-05-01-preview/GetChatCompletions_MaximumSet_Gen.json",
+       "parameters": [
+        {
+         "$id": "276",
+         "parameter": {
+          "$ref": "262"
+         },
+         "value": {
+          "$id": "277",
+          "kind": "string",
+          "type": {
+           "$ref": "263"
+          },
+          "value": "2024-05-01-preview"
+         }
+        },
+        {
+         "$id": "278",
+         "parameter": {
+          "$ref": "266"
+         },
+         "value": {
+          "$id": "279",
+          "kind": "string",
+          "type": {
+           "$ref": "28"
+          },
+          "value": "error"
+         }
+        },
+        {
+         "$id": "280",
+         "parameter": {
+          "$ref": "273"
+         },
+         "value": {
+          "$id": "281",
+          "kind": "model",
+          "type": {
+           "$ref": "202"
+          },
+          "value": {
+           "$id": "282"
+          }
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "283",
+         "response": {
+          "$ref": "274"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "284",
+          "kind": "model",
+          "type": {
+           "$ref": "204"
+          },
+          "value": {
+           "$id": "285",
+           "id": {
+            "$id": "286",
+            "kind": "string",
+            "type": {
+             "$ref": "206"
+            },
+            "value": "jmrhtfblhsuikkokuyxhfarwite"
+           },
+           "created": {
+            "$id": "287",
+            "kind": "number",
+            "type": {
+             "$ref": "208"
+            },
+            "value": 14
+           },
+           "model": {
+            "$id": "288",
+            "kind": "string",
+            "type": {
+             "$ref": "211"
+            },
+            "value": "pqixfxtbrvywpoe"
+           },
+           "usage": {
+            "$id": "289",
+            "kind": "model",
+            "type": {
+             "$ref": "213"
+            },
+            "value": {
+             "$id": "290",
+             "completion_tokens": {
+              "$id": "291",
+              "kind": "number",
+              "type": {
+               "$ref": "215"
+              },
+              "value": 26
+             },
+             "prompt_tokens": {
+              "$id": "292",
+              "kind": "number",
+              "type": {
+               "$ref": "217"
+              },
+              "value": 20
+             },
+             "total_tokens": {
+              "$id": "293",
+              "kind": "number",
+              "type": {
+               "$ref": "219"
+              },
+              "value": 2
+             }
+            }
+           },
+           "choices": {
+            "$id": "294",
+            "kind": "array",
+            "type": {
+             "$ref": "221"
+            },
+            "value": [
+             {
+              "$id": "295",
+              "kind": "model",
+              "type": {
+               "$ref": "222"
+              },
+              "value": {
+               "$id": "296",
+               "index": {
+                "$id": "297",
+                "kind": "number",
+                "type": {
+                 "$ref": "224"
+                },
+                "value": 8
+               },
+               "finish_reason": {
+                "$id": "298",
+                "kind": "string",
+                "type": {
+                 "$ref": "36"
+                },
+                "value": "stop"
+               },
+               "message": {
+                "$id": "299",
+                "kind": "model",
+                "type": {
+                 "$ref": "228"
+                },
+                "value": {
+                 "$id": "300",
+                 "role": {
+                  "$id": "301",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "2"
+                  },
+                  "value": "system"
+                 },
+                 "content": {
+                  "$id": "302",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "232"
+                  },
+                  "value": "csgynyhcslcsbdjvomhiiqxy"
+                 },
+                 "tool_calls": {
+                  "$id": "303",
+                  "kind": "array",
+                  "type": {
+                   "$ref": "234"
+                  },
+                  "value": []
+                 }
+                }
+               }
+              }
+             }
+            ]
+           }
+          }
+         }
+        }
+       ]
+      },
+      {
+       "$id": "304",
+       "kind": "http",
+       "name": "minimum set chat completion",
+       "description": "minimum set chat completion",
+       "filePath": "2024-05-01-preview/GetChatCompletions_MinimumSet_Gen.json",
+       "parameters": [
+        {
+         "$id": "305",
+         "parameter": {
+          "$ref": "262"
+         },
+         "value": {
+          "$id": "306",
+          "kind": "string",
+          "type": {
+           "$ref": "263"
+          },
+          "value": "2024-05-01-preview"
+         }
+        },
+        {
+         "$id": "307",
+         "parameter": {
+          "$ref": "273"
+         },
+         "value": {
+          "$id": "308",
+          "kind": "model",
+          "type": {
+           "$ref": "202"
+          },
+          "value": {
+           "$id": "309"
+          }
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "310",
+         "response": {
+          "$ref": "274"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "311",
+          "kind": "model",
+          "type": {
+           "$ref": "204"
+          },
+          "value": {
+           "$id": "312",
+           "id": {
+            "$id": "313",
+            "kind": "string",
+            "type": {
+             "$ref": "206"
+            },
+            "value": "jmrhtfblhsuikkokuyxhfarwite"
+           },
+           "created": {
+            "$id": "314",
+            "kind": "number",
+            "type": {
+             "$ref": "208"
+            },
+            "value": 14
+           },
+           "model": {
+            "$id": "315",
+            "kind": "string",
+            "type": {
+             "$ref": "211"
+            },
+            "value": "pqixfxtbrvywpoe"
+           },
+           "usage": {
+            "$id": "316",
+            "kind": "model",
+            "type": {
+             "$ref": "213"
+            },
+            "value": {
+             "$id": "317",
+             "completion_tokens": {
+              "$id": "318",
+              "kind": "number",
+              "type": {
+               "$ref": "215"
+              },
+              "value": 26
+             },
+             "prompt_tokens": {
+              "$id": "319",
+              "kind": "number",
+              "type": {
+               "$ref": "217"
+              },
+              "value": 20
+             },
+             "total_tokens": {
+              "$id": "320",
+              "kind": "number",
+              "type": {
+               "$ref": "219"
+              },
+              "value": 2
+             }
+            }
+           },
+           "choices": {
+            "$id": "321",
+            "kind": "array",
+            "type": {
+             "$ref": "221"
+            },
+            "value": [
+             {
+              "$id": "322",
+              "kind": "model",
+              "type": {
+               "$ref": "222"
+              },
+              "value": {
+               "$id": "323",
+               "index": {
+                "$id": "324",
+                "kind": "number",
+                "type": {
+                 "$ref": "224"
+                },
+                "value": 8
+               },
+               "finish_reason": {
+                "$id": "325",
+                "kind": "string",
+                "type": {
+                 "$ref": "36"
+                },
+                "value": "stop"
+               },
+               "message": {
+                "$id": "326",
+                "kind": "model",
+                "type": {
+                 "$ref": "228"
+                },
+                "value": {
+                 "$id": "327",
+                 "role": {
+                  "$id": "328",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "2"
+                  },
+                  "value": "system"
+                 },
+                 "content": {
+                  "$id": "329",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "232"
+                  },
+                  "value": "csgynyhcslcsbdjvomhiiqxy"
+                 }
+                }
+               }
+              }
+             }
+            ]
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "330",
+     "Name": "getModelInfo",
+     "ResourceName": "Client1",
+     "Description": "Returns information about the AI model.\nThe method makes a REST API call to the `/info` route on the given endpoint.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$ref": "260"
+      },
+      {
+       "$id": "331",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "332",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "333",
+        "Type": {
+         "$id": "334",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-05-01-preview"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "335",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "336",
+        "kind": "constant",
+        "valueType": {
+         "$id": "337",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "338",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "235"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/info",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Customizations.Client1.getModelInfo",
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "339",
+       "kind": "http",
+       "name": "maximum set model information",
+       "description": "maximum set model information",
+       "filePath": "2024-05-01-preview/GetModelInfo_MaximumSet_Gen.json",
+       "parameters": [
+        {
+         "$id": "340",
+         "parameter": {
+          "$ref": "331"
+         },
+         "value": {
+          "$id": "341",
+          "kind": "string",
+          "type": {
+           "$ref": "332"
+          },
+          "value": "2024-05-01-preview"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "342",
+         "response": {
+          "$ref": "338"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "343",
+          "kind": "model",
+          "type": {
+           "$ref": "235"
+          },
+          "value": {
+           "$id": "344",
+           "model_name": {
+            "$id": "345",
+            "kind": "string",
+            "type": {
+             "$ref": "237"
+            },
+            "value": "kvndu"
+           },
+           "model_type": {
+            "$id": "346",
+            "kind": "string",
+            "type": {
+             "$ref": "46"
+            },
+            "value": "embeddings"
+           },
+           "model_provider_name": {
+            "$id": "347",
+            "kind": "string",
+            "type": {
+             "$ref": "240"
+            },
+            "value": "cfaheoodkzkhuurrkgr"
+           }
+          }
+         }
+        }
+       ]
+      },
+      {
+       "$id": "348",
+       "kind": "http",
+       "name": "minimum set model information",
+       "description": "minimum set model information",
+       "filePath": "2024-05-01-preview/GetModelInfo_MinimumSet_Gen.json",
+       "parameters": [
+        {
+         "$id": "349",
+         "parameter": {
+          "$ref": "331"
+         },
+         "value": {
+          "$id": "350",
+          "kind": "string",
+          "type": {
+           "$ref": "332"
+          },
+          "value": "2024-05-01-preview"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "351",
+         "response": {
+          "$ref": "338"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "352",
+          "kind": "model",
+          "type": {
+           "$ref": "235"
+          },
+          "value": {
+           "$id": "353",
+           "model_name": {
+            "$id": "354",
+            "kind": "string",
+            "type": {
+             "$ref": "237"
+            },
+            "value": "kvndu"
+           },
+           "model_type": {
+            "$id": "355",
+            "kind": "string",
+            "type": {
+             "$ref": "46"
+            },
+            "value": "embeddings"
+           },
+           "model_provider_name": {
+            "$id": "356",
+            "kind": "string",
+            "type": {
+             "$ref": "240"
+            },
+            "value": "cfaheoodkzkhuurrkgr"
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "Protocol": {
+    "$id": "357"
+   },
+   "Parameters": [
+    {
+     "$ref": "260"
+    }
+   ],
+   "Decorators": []
+  }
+ ],
+ "Auth": {
+  "$id": "358",
+  "ApiKey": {
+   "$id": "359",
+   "Name": "Authorization",
+   "Prefix": "Bearer"
+  },
+  "OAuth2": {
+   "$id": "360",
+   "Scopes": [
+    "https://ml.azure.com/.default"
+   ]
+  }
+ }
+}
