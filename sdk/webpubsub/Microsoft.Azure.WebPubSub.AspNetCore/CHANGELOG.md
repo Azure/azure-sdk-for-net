@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0 (2024-09-23)
+## 1.4.0 (2024-09-25)
 
 ### Features Added
 - Support MQTT client event handling.
