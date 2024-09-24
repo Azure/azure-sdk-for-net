@@ -36,8 +36,8 @@ namespace Azure.AI.Inference.Telemetry
         private readonly string _caller;
         private readonly bool _traceContent;
         private readonly bool _enableTelemetry = AppContextSwitchHelper.GetConfigValue(AppContextSwitch, EnvironmentVariableSwitchName);
-        private readonly DiagnosticListener _source = null;
-        private readonly StreamingRecordedResponse _recordedStreamingResponse;
+        private readonly DiagnosticListener m_source = null;
+        private readonly StreamingRecordedResponse m_recordedStreamingResponse;
 
         /// <summary>
         /// Return the content of the message.
@@ -92,13 +92,13 @@ namespace Azure.AI.Inference.Telemetry
             _caller = caller;
             if (!string.IsNullOrEmpty(caller))
             {
-                _source = new("Azure.AI.Inference");
-                _source.Write($"{_caller}.Start", activityName);
+                m_source = new("Azure.AI.Inference");
+                m_source.Write($"{_caller}.Start", activityName);
             }
             if (!_enableTelemetry)
                 return;
             _traceContent = GetSwitchVariableVal(EnvironmentVariableTraceContents);
-            _recordedStreamingResponse = new(_traceContent);
+            m_recordedStreamingResponse = new(_traceContent);
             _activity?.Start();
             // Record the request to telemetry;
             _commonTags = new TagList{
@@ -154,12 +154,12 @@ namespace Azure.AI.Inference.Telemetry
             if (!_enableTelemetry || item is not StreamingChatCompletionsUpdate)
                 return;
             StreamingChatCompletionsUpdate castedItem = item as StreamingChatCompletionsUpdate;
-            _recordedStreamingResponse.Update(castedItem);
+            m_recordedStreamingResponse.Update(castedItem);
         }
 
         public void RecordStreamingResponse()
         {
-            RecordResponseInternal(_recordedStreamingResponse);
+            RecordResponseInternal(m_recordedStreamingResponse);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.AI.Inference.Telemetry
             if (!_enableTelemetry)
                 return;
             if (!string.IsNullOrEmpty(_caller))
-                _source.Write(_caller + ".Exception", e);
+                m_source.Write(_caller + ".Exception", e);
             var errorType = e?.GetType()?.FullName;
             var tags = _commonTags;
             tags.Add(ErrorTypeKey, errorType);
@@ -249,7 +249,7 @@ namespace Azure.AI.Inference.Telemetry
         public void Dispose()
         {
             _activity?.Stop();
-            _source?.Dispose();
+            m_source?.Dispose();
         }
     }
 }

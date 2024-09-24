@@ -71,6 +71,7 @@ namespace Azure.AI.Inference.Tests
             )
         {
             AppContext.SetSwitch(OpenTelemetryConstants.AppContextSwitch, contextSwitch);
+            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableTraceContents, "0");
             using var listener = new ValidatingActivityListener();
             using var metricsListener = new ValidatingMeterListener();
             SingleRecordedResponse response = null;

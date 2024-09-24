@@ -6,13 +6,14 @@ using Azure.AI.Inference.Tests.Utilities;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Inference.Tests
 {
     public class InferenceClientTelemetryTest : RecordedTestBase<InferenceClientTestEnvironment>
     {
-        private ChatCompletionsOptions m_requestOptions, m_requestStreamingOptions;
+        private ChatCompletionsOptions _requestOptions, _requestStreamingOptions;
 
         public InferenceClientTelemetryTest(bool isAsync) : base(isAsync)
         { }
@@ -26,7 +27,7 @@ namespace Azure.AI.Inference.Tests
         [SetUp]
         public void Setup()
         {
-            m_requestOptions = new ChatCompletionsOptions()
+            _requestOptions = new ChatCompletionsOptions()
             {
                 Messages =
                 {
@@ -37,7 +38,7 @@ namespace Azure.AI.Inference.Tests
                 Temperature = 1,
                 MaxTokens = 10
             };
-            m_requestStreamingOptions = new ChatCompletionsOptions()
+            _requestStreamingOptions = new ChatCompletionsOptions()
             {
                 Messages =
                 {
@@ -51,15 +52,19 @@ namespace Azure.AI.Inference.Tests
         }
 
         [RecordedTest]
-        [TestCase(TestType.Basic, true)]
-        [TestCase(TestType.Basic, false)]
-        [TestCase(TestType.Streaming, true)]
-        [TestCase(TestType.Streaming, false)]
+        [TestCase(TestType.Basic, true, true)]
+        [TestCase(TestType.Basic, false, true)]
+        [TestCase(TestType.Streaming, true, false)]
+        [TestCase(TestType.Streaming, false, true)]
+        [TestCase(TestType.Streaming, true, true)]
         public async Task TestGoodChatResponse(
             TestType testType,
-            bool traceContent
+            bool traceContent,
+            bool withUsage
             )
         {
+            if (testType == TestType.Basic)
+                Assert.True(withUsage, "The Basic test cannot be without tag usage. Please correct the test.");
             Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableTraceContents, traceContent.ToString());
             var endpoint = new Uri(TestEnvironment.GithubEndpoint);
             var client = CreateClient(endpoint);
@@ -70,13 +75,18 @@ namespace Azure.AI.Inference.Tests
             {
                 case TestType.Basic:
                     {
-                        Response<ChatCompletions> response = await client.CompleteAsync(m_requestOptions);
+                        Response<ChatCompletions> response = await client.CompleteAsync(_requestOptions);
                         recordedResponse = new SingleRecordedResponse(response, traceContent);
                     }
                     break;
                 case TestType.Streaming:
                     {
-                        StreamingResponse<StreamingChatCompletionsUpdate> response = await client.CompleteStreamingAsync(m_requestStreamingOptions);
+                        if (withUsage)
+                        {
+                            _requestStreamingOptions.AdditionalProperties["stream_options"] = BinaryData.FromObjectAsJson(
+                                    new Dictionary<string, bool>() { { "include_usage", true } });
+                        }
+                        StreamingResponse<StreamingChatCompletionsUpdate> response = await client.CompleteStreamingAsync(_requestStreamingOptions);
                         recordedResponse = await GetStreamingResponse(response, traceContent);
                     }
                     break;
@@ -86,19 +96,16 @@ namespace Azure.AI.Inference.Tests
             // For example, for gpt models the version is appended as a suffix.
             if (recordedResponse is StreamingRecordedResponse)
             {
-                m_requestStreamingOptions.Model = recordedResponse.Model;
-                actListener.ValidateStartActivity(m_requestStreamingOptions, endpoint, traceContent);
+                _requestStreamingOptions.Model = recordedResponse.Model;
+                actListener.ValidateStartActivity(_requestStreamingOptions, endpoint, traceContent);
             }
             else
             {
-                m_requestOptions.Model = recordedResponse.Model;
-                actListener.ValidateStartActivity(m_requestOptions, endpoint, traceContent);
+                _requestOptions.Model = recordedResponse.Model;
+                actListener.ValidateStartActivity(_requestOptions, endpoint, traceContent);
             }
             actListener.ValidateResponseEvents(recordedResponse, traceContent);
-            // TODO: When we will support usage tags on streaming
-            // always set them and check.
-            meterListener.ValidateTags(recordedResponse.Model, endpoint,
-                testType == TestType.Basic);
+            meterListener.ValidateTags(recordedResponse.Model, endpoint, withUsage);
             meterListener.VaidateDuration(recordedResponse.Model, endpoint);
         }
 
@@ -121,14 +128,14 @@ namespace Azure.AI.Inference.Tests
                 },
                 Model = "6b6b217e-6ed3-11ef-9135-8c1645fec84b"
             };
-            m_requestStreamingOptions.Model = "6b6b217e-6ed3-11ef-9135-8c1645fec84b";
+            _requestStreamingOptions.Model = "6b6b217e-6ed3-11ef-9135-8c1645fec84b";
             try
             {
                 switch (testType)
                 {
                     case TestType.Basic: await client.CompleteAsync(requestOptions);
                         break;
-                    case TestType.Streaming: await client.CompleteStreamingAsync(m_requestStreamingOptions);
+                    case TestType.Streaming: await client.CompleteStreamingAsync(_requestStreamingOptions);
                         break;
                 };
                 Assert.True(false, "The exception was not thrown.");
@@ -137,7 +144,7 @@ namespace Azure.AI.Inference.Tests
             {
                 Assert.That(ex is RequestFailedException, $"The exception was of wrong type {ex.GetType()}");
                 actListener.ValidateErrorTag("400", ex.Message);
-                meterListener.VaidateDuration(m_requestStreamingOptions.Model, endpoint, "Azure.RequestFailedException");
+                meterListener.VaidateDuration(_requestStreamingOptions.Model, endpoint, "Azure.RequestFailedException");
             }
         }
 

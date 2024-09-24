@@ -126,7 +126,8 @@ namespace Azure.AI.Inference.Tests.Utilities
             // Check that we do not have the actual completion events.
             foreach (ActivityEvent evt in activity.Events)
             {
-                Assert.That(evt.Name != name);
+                if (evt.Name == name)
+                    Assert.That(evt.Name != name, $"The event {name} was found on activity.");
             }
         }
 
