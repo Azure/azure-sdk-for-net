@@ -1,14 +1,13 @@
 # Release History
 
-## 11.7.0-beta.1 (Unreleased)
+## 11.7.0-beta.1 (2024-09-24)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for `VectorSearchCompression.TruncationDimension` which allows for specifying the number of dimensions to 
+  truncate vectors to.
+- Added support for `VectorQuery.FilterOverride` which allow for vector queries to override the broader `SearchOptions.Filter` to allow for vector queries to have more specific configurations.
+- `SplitSkill` now supports tokenization.
+- `DocumentDebugInfo` is extended with vector scores for the result.
 
 ## 11.6.0 (2024-07-17)
 
