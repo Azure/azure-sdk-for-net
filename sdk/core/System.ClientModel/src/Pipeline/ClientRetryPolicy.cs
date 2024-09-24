@@ -68,7 +68,7 @@ public class ClientRetryPolicy : PipelinePolicy
 
         if (isDerivedType)
         {
-            supportedVersion = SupportedVersion ?? ClientRetryOptionsVersion.V1_1_0;
+            supportedVersion = SupportedOptionsVersion ?? ClientRetryOptionsVersion.V1_1_0;
         }
 
         ClientRetryOptionsVersion highestSetOptionVersion = GetHighestSetOptionVersion(options);
@@ -391,7 +391,7 @@ public class ClientRetryPolicy : PipelinePolicy
     /// Highest version supported by a derived type providing a customized
     /// implementation of <see cref="ClientRetryPolicy"/>.
     /// </summary>
-    protected virtual ClientRetryOptionsVersion? SupportedVersion => default;
+    protected virtual ClientRetryOptionsVersion? SupportedOptionsVersion => default;
 
     /// <summary>
     /// Get the highest version corresponding to an option that is set on the

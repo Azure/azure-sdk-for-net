@@ -70,7 +70,7 @@ public class ClientRetryOptionsTests
         }
 
         // No supported version provided
-        protected override ClientRetryOptionsVersion? SupportedVersion =>
+        protected override ClientRetryOptionsVersion? SupportedOptionsVersion =>
             default;
     }
 
@@ -82,7 +82,7 @@ public class ClientRetryOptionsTests
         }
 
         // Base type supports higher version than V1_1_0
-        protected override ClientRetryOptionsVersion? SupportedVersion =>
+        protected override ClientRetryOptionsVersion? SupportedOptionsVersion =>
             ClientRetryOptionsVersion.V1_1_0;
     }
 

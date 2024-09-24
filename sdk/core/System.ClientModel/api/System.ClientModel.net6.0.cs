@@ -115,7 +115,7 @@ namespace System.ClientModel.Primitives
         public ClientRetryPolicy(System.ClientModel.Primitives.ClientRetryOptions options) { }
         public ClientRetryPolicy(int maxRetries = 3) { }
         public static System.ClientModel.Primitives.ClientRetryPolicy Default { get { throw null; } }
-        protected virtual System.ClientModel.Primitives.ClientRetryPolicy.ClientRetryOptionsVersion? SupportedVersion { get { throw null; } }
+        protected virtual System.ClientModel.Primitives.ClientRetryPolicy.ClientRetryOptionsVersion? SupportedOptionsVersion { get { throw null; } }
         protected virtual System.TimeSpan GetNextDelay(System.ClientModel.Primitives.PipelineMessage message, int tryCount) { throw null; }
         protected virtual void OnRequestSent(System.ClientModel.Primitives.PipelineMessage message) { }
         protected virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
