@@ -281,18 +281,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="backendUpdateParameters"> Update parameters. </param>
+        /// <param name="content"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backendUpdateParameters"/> is null. </exception>
-        public virtual async Task<Response<ServiceBackendResource>> UpdateAsync(ETag ifMatch, BackendUpdateParameters backendUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ServiceBackendResource>> UpdateAsync(ETag ifMatch, BackendUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(backendUpdateParameters, nameof(backendUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _serviceBackendBackendClientDiagnostics.CreateScope("ServiceBackendResource.Update");
             scope.Start();
             try
             {
-                var response = await _serviceBackendBackendRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, backendUpdateParameters, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceBackendBackendRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, content, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ServiceBackendResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -324,18 +324,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="backendUpdateParameters"> Update parameters. </param>
+        /// <param name="content"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backendUpdateParameters"/> is null. </exception>
-        public virtual Response<ServiceBackendResource> Update(ETag ifMatch, BackendUpdateParameters backendUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ServiceBackendResource> Update(ETag ifMatch, BackendUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(backendUpdateParameters, nameof(backendUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _serviceBackendBackendClientDiagnostics.CreateScope("ServiceBackendResource.Update");
             scope.Start();
             try
             {
-                var response = _serviceBackendBackendRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, backendUpdateParameters, cancellationToken);
+                var response = _serviceBackendBackendRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, content, cancellationToken);
                 return Response.FromValue(new ServiceBackendResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -177,6 +177,8 @@ rename-mapping:
   NetworkStatusContractByLocation: NetworkStatusContractWithLocation
   ApiManagementServiceResource: ApiManagementService
   ApiReleaseContract: ApiRelease
+  BackendUpdateParameters: BackendUpdateContent
+  CertificateCreateOrUpdateParameters: CertificateCreateOrUpdateContent
   OperationContract: ApiOperation
   SchemaContract: ApiSchema
   TagDescriptionContract: ApiTagDescription

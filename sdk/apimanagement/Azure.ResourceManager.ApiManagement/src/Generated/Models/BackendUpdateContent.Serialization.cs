@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class BackendUpdateParameters : IUtf8JsonSerializable, IJsonModel<BackendUpdateParameters>
+    public partial class BackendUpdateContent : IUtf8JsonSerializable, IJsonModel<BackendUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackendUpdateParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackendUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BackendUpdateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BackendUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackendUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackendUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackendUpdateParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BackendUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("properties"u8);
@@ -114,19 +114,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        BackendUpdateParameters IJsonModel<BackendUpdateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BackendUpdateContent IJsonModel<BackendUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackendUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackendUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackendUpdateParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BackendUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBackendUpdateParameters(document.RootElement, options);
+            return DeserializeBackendUpdateContent(document.RootElement, options);
         }
 
-        internal static BackendUpdateParameters DeserializeBackendUpdateParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BackendUpdateContent DeserializeBackendUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BackendUpdateParameters(
+            return new BackendUpdateContent(
                 title,
                 description,
                 resourceId,
@@ -284,35 +284,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BackendUpdateParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BackendUpdateContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackendUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackendUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackendUpdateParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackendUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BackendUpdateParameters IPersistableModel<BackendUpdateParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BackendUpdateContent IPersistableModel<BackendUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackendUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackendUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeBackendUpdateParameters(document.RootElement, options);
+                        return DeserializeBackendUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackendUpdateParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackendUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BackendUpdateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BackendUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
