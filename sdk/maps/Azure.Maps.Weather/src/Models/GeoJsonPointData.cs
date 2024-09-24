@@ -3,12 +3,9 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.Maps.Weather.Models
 {
     /// <summary> The GeoJsonPointData. </summary>
-    [CodeGenModel("GeoJsonPointData")]
     internal partial class GeoJsonPointData
     {
     }

@@ -3,12 +3,9 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.Maps.Weather.Models
 {
     /// <summary> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </summary>
-    [CodeGenModel("GeoJsonObjectType")]
     internal enum GeoJsonObjectType
     {
         /// <summary> `GeoJSON Point` geometry. </summary>

@@ -8,7 +8,6 @@ using Azure.Core;
 namespace Azure.Maps.Weather.Models
 {
     /// <summary> The GeoJsonLineStringData. </summary>
-    [CodeGenModel("GeoJsonLineStringData")]
     internal partial class GeoJsonLineStringData
     {
     }

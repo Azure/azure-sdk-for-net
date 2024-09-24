@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Weather.Models
 {

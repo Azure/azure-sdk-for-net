@@ -8,7 +8,6 @@ using Azure.Core;
 namespace Azure.Maps.Weather.Models
 {
     /// <summary> The GeoJsonMultiPointData. </summary>
-    [CodeGenModel("GeoJsonMultiPointData")]
     internal partial class GeoJsonMultiPointData
     {
     }

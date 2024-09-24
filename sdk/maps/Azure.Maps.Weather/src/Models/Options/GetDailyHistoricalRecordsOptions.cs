@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core.GeoJson;
-using Azure.Maps.Weather;
 
 namespace Azure.Maps.Weather.Models.Options
 {

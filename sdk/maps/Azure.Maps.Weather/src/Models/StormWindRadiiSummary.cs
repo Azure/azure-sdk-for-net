@@ -4,14 +4,11 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.GeoJson;
-using Azure.Maps.Common;
 
 namespace Azure.Maps.Weather.Models
 {
     /// <summary> Displayed when details=true or radiiGeometry=true in the request. </summary>
-    [CodeGenModel("StormWindRadiiSummary")]
     public partial class StormWindRadiiSummary
     {
         /// <summary> Initializes a new instance of <see cref="StormWindRadiiSummary"/>. </summary>

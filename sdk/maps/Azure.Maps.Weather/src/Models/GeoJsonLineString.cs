@@ -8,7 +8,6 @@ using Azure.Core;
 namespace Azure.Maps.Weather.Models
 {
     /// <summary> A valid `GeoJSON LineString` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.4) for details. </summary>
-    [CodeGenModel("GeoJsonLineString")]
     internal partial class GeoJsonLineString : GeoJsonGeometry
     {
     }
