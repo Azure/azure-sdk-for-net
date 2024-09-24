@@ -14,13 +14,17 @@ function ShouldVerifyChangeLog ($ServiceDirectory, $PackageName) {
     {
         $ciYml = ConvertFrom-Json (Get-Content $jsonCiYmlPath -Raw)
 
+        Write-Host $jsonCiYmlPath
+
         if ($ciYml.extends -and $ciYml.extends.parameters -and $ciYml.extends.parameters.Artifacts) {
+            # if parsed from a json file, this is a PSObject, not a PSCustomObject
             $packagesCheckingChangeLog = $ciYml.extends.parameters.Artifacts `
-                | Where-Object { -not ($_["skipVerifyChangelog"] -eq $true) }
+                | Where-Object { -not ($_.PSObject.Properties["skipVerifyChangelog"] -and $_.skipVerifyChangelog -eq $true) } `
                 | Select-Object -ExpandProperty name
 
             if ($packagesCheckingChangeLog -contains $PackageName)
             {
+                Write-Host $packagesCheckingChangeLog
                 return $true
             } else {
                 return $false
