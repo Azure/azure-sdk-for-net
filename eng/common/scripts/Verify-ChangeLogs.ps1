@@ -37,8 +37,8 @@ $allPassing = $true
 foreach($propertiesFile in $packageProperties) {
   $PackageProp = Get-Content -Path $propertiesFile | ConvertFrom-Json
 
-  if (-not (ShouldVerifyChangeLog -ServiceDirectory (Join-Path $RepoRoot "sdk" $packageInfo.ServiceDirectory) -PackageName $packageInfo.Name)) {
-        Write-Host "Skipping changelog verification for $($packageInfo.Name)"
+  if (-not (ShouldVerifyChangeLog -ServiceDirectory (Join-Path $RepoRoot "sdk" $PackageProp.ServiceDirectory) -PackageName $PackageProp.Name)) {
+        Write-Host "Skipping changelog verification for $($PackageProp.Name)"
         continue
   }
 
