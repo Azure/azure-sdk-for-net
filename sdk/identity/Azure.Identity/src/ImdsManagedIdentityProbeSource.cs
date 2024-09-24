@@ -23,8 +23,7 @@ namespace Azure.Identity
         internal const string GatewayError = "ManagedIdentityCredential authentication unavailable. The request failed due to a gateway error.";
         internal const string AggregateError = "ManagedIdentityCredential authentication unavailable. Multiple attempts failed to obtain a token from the managed identity endpoint.";
 
-        private readonly string _clientId;
-        private readonly string _resourceId;
+        private readonly ManagedIdentityId _managedIdentityId;
         private readonly Uri _imdsEndpoint;
         private TimeSpan? _imdsNetworkTimeout;
         private bool _isChainedCredential;
@@ -33,8 +32,7 @@ namespace Azure.Identity
         internal ImdsManagedIdentityProbeSource(ManagedIdentityClientOptions options, MsalManagedIdentityClient client) : base(options.Pipeline)
         {
             _client = client;
-            _clientId = options.ClientId;
-            _resourceId = options.ResourceIdentifier?.ToString();
+            _managedIdentityId = options.ManagedIdentityId;
             _imdsNetworkTimeout = options.InitialImdsConnectionTimeout;
             _isChainedCredential = options.Options?.IsChainedCredential ?? false;
             _imdsEndpoint = GetImdsUri();
@@ -69,13 +67,17 @@ namespace Azure.Identity
 
             request.Uri.AppendQuery("resource", resource);
 
-            if (!string.IsNullOrEmpty(_clientId))
+            string idQueryParam = _managedIdentityId?._idType switch
             {
-                request.Uri.AppendQuery(Constants.ManagedIdentityClientId, _clientId);
-            }
-            if (!string.IsNullOrEmpty(_resourceId))
+                ManagedIdentityIdType.ClientId => Constants.ManagedIdentityClientId,
+                ManagedIdentityIdType.ResourceId => "msi-res-id",
+                ManagedIdentityIdType.ObjectId => "object_id",
+                _ => null
+            };
+
+            if (idQueryParam != null)
             {
-                request.Uri.AppendQuery(Constants.ManagedIdentityResourceId, _resourceId);
+                request.Uri.AppendQuery(idQueryParam, _managedIdentityId._userAssignedId);
             }
 
             return request;

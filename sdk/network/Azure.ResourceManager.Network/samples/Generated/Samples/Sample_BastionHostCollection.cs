@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetBastionHost()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/BastionHostGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/BastionHostGet.json
             // this example is just showing the usage of "BastionHosts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetBastionHost()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/BastionHostGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/BastionHostGet.json
             // this example is just showing the usage of "BastionHosts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetBastionHost()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/BastionHostGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/BastionHostGet.json
             // this example is just showing the usage of "BastionHosts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetBastionHostWithZones()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/BastionHostGetWithZones.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/BastionHostGetWithZones.json
             // this example is just showing the usage of "BastionHosts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetBastionHostWithZones()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/BastionHostGetWithZones.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/BastionHostGetWithZones.json
             // this example is just showing the usage of "BastionHosts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetBastionHostWithZones()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/BastionHostGetWithZones.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/BastionHostGetWithZones.json
             // this example is just showing the usage of "BastionHosts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetDeveloperBastionHost()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/BastionHostDeveloperGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/BastionHostDeveloperGet.json
             // this example is just showing the usage of "BastionHosts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetDeveloperBastionHost()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/BastionHostDeveloperGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/BastionHostDeveloperGet.json
             // this example is just showing the usage of "BastionHosts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetDeveloperBastionHost()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/BastionHostDeveloperGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/BastionHostDeveloperGet.json
             // this example is just showing the usage of "BastionHosts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateBastionHost()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/BastionHostPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/BastionHostPut.json
             // this example is just showing the usage of "BastionHosts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -386,7 +386,7 @@ Name = "bastionHostIpConfiguration",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateBastionHostWithZones()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/BastionHostPutWithZones.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/BastionHostPutWithZones.json
             // this example is just showing the usage of "BastionHosts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -433,7 +433,7 @@ Name = "bastionHostIpConfiguration",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateDeveloperBastionHost()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/BastionHostDeveloperPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/BastionHostDeveloperPut.json
             // this example is just showing the usage of "BastionHosts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -482,7 +482,7 @@ AddressPrefix = "1.1.1.1/16",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListAllBastionHostsForAGivenResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-01-01/examples/BastionHostListByResourceGroup.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/BastionHostListByResourceGroup.json
             // this example is just showing the usage of "BastionHosts_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

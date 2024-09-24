@@ -4,7 +4,7 @@
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
-using OpenAI.Assistants;
+using Azure.AI.OpenAI.Utility;
 
 namespace Azure.AI.OpenAI.Assistants;
 
@@ -27,16 +27,25 @@ internal partial class AzureAssistantClient : AssistantClient
         return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
     }
 
-    public override IAsyncEnumerable<ClientResult> GetAssistantsAsync(int? limit, string order, string after, string before, RequestOptions options)
+    public override AsyncCollectionResult GetAssistantsAsync(int? limit, string order, string after, string before, RequestOptions options)
     {
-        AzureAssistantsPageEnumerator enumerator = new(Pipeline, _endpoint, limit, order, after, before, _apiVersion, options);
-        return PageCollectionHelpers.CreateAsync(enumerator);
+        return new AzureAsyncCollectionResult<Assistant, AssistantCollectionPageToken>(
+            Pipeline,
+            options,
+            continuation => CreateGetAssistantsRequest(limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
+            page => AssistantCollectionPageToken.FromResponse(page, limit, order, before),
+            page => ModelReaderWriter.Read<InternalListAssistantsResponse>(page.GetRawResponse().Content).Data,
+            options?.CancellationToken ?? default);
     }
 
-    public override IEnumerable<ClientResult> GetAssistants(int? limit, string order, string after, string before, RequestOptions options)
+    public override CollectionResult GetAssistants(int? limit, string order, string after, string before, RequestOptions options)
     {
-        AzureAssistantsPageEnumerator enumerator = new(Pipeline, _endpoint, limit, order, after, before, _apiVersion, options);
-        return PageCollectionHelpers.Create(enumerator);
+        return new AzureCollectionResult<Assistant, AssistantCollectionPageToken>(
+            Pipeline,
+            options,
+            continuation => CreateGetAssistantsRequest(limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
+            page => AssistantCollectionPageToken.FromResponse(page, limit, order, before),
+            page => ModelReaderWriter.Read<InternalListAssistantsResponse>(page.GetRawResponse().Content).Data);
     }
 
     public override async Task<ClientResult> GetAssistantAsync(string assistantId, RequestOptions options)
@@ -108,20 +117,27 @@ internal partial class AzureAssistantClient : AssistantClient
     }
 
     /// <inheritdoc />
-    public override IAsyncEnumerable<ClientResult> GetMessagesAsync(string threadId, int? limit, string order, string after, string before, RequestOptions options)
+    public override AsyncCollectionResult GetMessagesAsync(string threadId, int? limit, string order, string after, string before, RequestOptions options)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-
-        AzureMessagesPageEnumerator enumerator = new(Pipeline, _endpoint, threadId, limit, order, after, before, _apiVersion, options);
-        return PageCollectionHelpers.CreateAsync(enumerator);
+        return new AzureAsyncCollectionResult<ThreadMessage, MessageCollectionPageToken>(
+            Pipeline,
+            options,
+            continuation => CreateGetMessagesRequest(threadId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
+            page => MessageCollectionPageToken.FromResponse(page, threadId, limit, order, before),
+            page => ModelReaderWriter.Read<InternalListMessagesResponse>(page.GetRawResponse().Content).Data,
+            options?.CancellationToken ?? default);
     }
 
-    public override IEnumerable<ClientResult> GetMessages(string threadId, int? limit, string order, string after, string before, RequestOptions options)
+    public override CollectionResult GetMessages(string threadId, int? limit, string order, string after, string before, RequestOptions options)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-
-        AzureMessagesPageEnumerator enumerator = new(Pipeline, _endpoint, threadId, limit, order, after, before, _apiVersion, options);
-        return PageCollectionHelpers.Create(enumerator);
+        return new AzureCollectionResult<ThreadMessage, MessageCollectionPageToken>(
+           Pipeline,
+           options,
+           continuation => CreateGetMessagesRequest(threadId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
+           page => MessageCollectionPageToken.FromResponse(page, threadId, limit, order, before),
+           page => ModelReaderWriter.Read<InternalListMessagesResponse>(page.GetRawResponse().Content).Data);
     }
 
     /// <inheritdoc cref="InternalAssistantMessageClient.GetMessageAsync"/>
@@ -258,20 +274,27 @@ internal partial class AzureAssistantClient : AssistantClient
         }
     }
 
-    public override IAsyncEnumerable<ClientResult> GetRunsAsync(string threadId, int? limit, string order, string after, string before, RequestOptions options)
+    public override AsyncCollectionResult GetRunsAsync(string threadId, int? limit, string order, string after, string before, RequestOptions options)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-
-        AzureRunsPageEnumerator enumerator = new(Pipeline, _endpoint, threadId, limit, order, after, before, _apiVersion, options);
-        return PageCollectionHelpers.CreateAsync(enumerator);
+        return new AzureAsyncCollectionResult<ThreadRun, RunCollectionPageToken>(
+            Pipeline,
+            options,
+            continuation => CreateGetRunsRequest(threadId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
+            page => RunCollectionPageToken.FromResponse(page, threadId, limit, order, before),
+            page => ModelReaderWriter.Read<InternalListRunsResponse>(page.GetRawResponse().Content).Data,
+            options?.CancellationToken ?? default);
     }
 
-    public override IEnumerable<ClientResult> GetRuns(string threadId, int? limit, string order, string after, string before, RequestOptions options)
+    public override CollectionResult GetRuns(string threadId, int? limit, string order, string after, string before, RequestOptions options)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-
-        AzureRunsPageEnumerator enumerator = new(Pipeline, _endpoint, threadId, limit, order, after, before, _apiVersion, options);
-        return PageCollectionHelpers.Create(enumerator);
+        return new AzureCollectionResult<ThreadRun, RunCollectionPageToken>(
+            Pipeline,
+            options,
+            continuation => CreateGetRunsRequest(threadId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
+            page => RunCollectionPageToken.FromResponse(page, threadId, limit, order, before),
+            page => ModelReaderWriter.Read<InternalListRunsResponse>(page.GetRawResponse().Content).Data);
     }
 
     /// <inheritdoc cref="InternalAssistantRunClient.GetRunAsync"/>
@@ -376,22 +399,31 @@ internal partial class AzureAssistantClient : AssistantClient
         }
     }
 
-    public override IAsyncEnumerable<ClientResult> GetRunStepsAsync(string threadId, string runId, int? limit, string order, string after, string before, RequestOptions options)
+    public override AsyncCollectionResult GetRunStepsAsync(string threadId, string runId, int? limit, string order, string after, string before, RequestOptions options)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
         Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-        AzureRunStepsPageEnumerator enumerator = new(Pipeline, _endpoint, threadId, runId, limit, order, after, before, _apiVersion, options);
-        return PageCollectionHelpers.CreateAsync(enumerator);
+        return new AzureAsyncCollectionResult<RunStep, RunStepCollectionPageToken>(
+            Pipeline,
+            options,
+            continuation => CreateGetRunStepsRequest(threadId, runId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
+            page => RunStepCollectionPageToken.FromResponse(page, threadId, runId, limit, order, before),
+            page => ModelReaderWriter.Read<InternalListRunStepsResponse>(page.GetRawResponse().Content).Data,
+            options?.CancellationToken ?? default);
     }
 
-    public override IEnumerable<ClientResult> GetRunSteps(string threadId, string runId, int? limit, string order, string after, string before, RequestOptions options)
+    public override CollectionResult GetRunSteps(string threadId, string runId, int? limit, string order, string after, string before, RequestOptions options)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
         Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-        AzureRunStepsPageEnumerator enumerator = new(Pipeline, _endpoint, threadId, runId, limit, order, after, before, _apiVersion, options);
-        return PageCollectionHelpers.Create(enumerator);
+        return new AzureCollectionResult<RunStep, RunStepCollectionPageToken>(
+            Pipeline,
+            options,
+            continuation => CreateGetRunStepsRequest(threadId, runId, limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
+            page => RunStepCollectionPageToken.FromResponse(page, threadId, runId, limit, order, before),
+            page => ModelReaderWriter.Read<InternalListRunStepsResponse>(page.GetRawResponse().Content).Data);
     }
 
     /// <inheritdoc cref="InternalAssistantRunClient.GetRunStepAsync"/>
@@ -487,6 +519,9 @@ internal partial class AzureAssistantClient : AssistantClient
     private new PipelineMessage CreateCreateAssistantRequest(BinaryContent content, RequestOptions options = null)
         => NewJsonPostBuilder(content, options).WithPath("assistants").Build();
 
+    private new PipelineMessage CreateGetAssistantsRequest(int? limit, string order, string after, string before, RequestOptions options)
+        => NewGetListBuilder(limit, order, after, before, options).WithPath("assistants").Build();
+
     private new PipelineMessage CreateGetAssistantRequest(string assistantId, RequestOptions options)
         => NewJsonGetBuilder(options).WithPath("assistants", assistantId).Build();
 
@@ -514,6 +549,9 @@ internal partial class AzureAssistantClient : AssistantClient
     private PipelineMessage CreateCreateMessageRequest(string threadId, BinaryContent content, RequestOptions options)
         => NewJsonPostBuilder(content, options).WithPath("threads", threadId, "messages").Build();
 
+    private PipelineMessage CreateGetMessagesRequest(string threadId, int? limit, string order, string after, string before, RequestOptions options)
+        => NewGetListBuilder(limit, order, after, before, options).WithPath("threads", threadId, "messages").Build();
+
     private PipelineMessage CreateGetMessageRequest(string threadId, string messageId, RequestOptions options)
         => NewJsonGetBuilder(options).WithPath("threads", threadId, "messages", messageId).Build();
 
@@ -529,6 +567,9 @@ internal partial class AzureAssistantClient : AssistantClient
     private PipelineMessage CreateCreateRunRequest(string threadId, BinaryContent content, RequestOptions options)
         => NewJsonPostBuilder(content, options).WithPath("threads", threadId, "runs").Build();
 
+    private PipelineMessage CreateGetRunsRequest(string threadId, int? limit, string order, string after, string before, RequestOptions options)
+        => NewGetListBuilder(limit, order, after, before, options).WithPath("threads", threadId, "runs").Build();
+
     private PipelineMessage CreateGetRunRequest(string threadId, string runId, RequestOptions options)
         => NewJsonGetBuilder(options).WithPath("threads", threadId, "runs", runId).Build();
 
@@ -540,6 +581,9 @@ internal partial class AzureAssistantClient : AssistantClient
 
     private PipelineMessage CreateSubmitToolOutputsToRunRequest(string threadId, string runId, BinaryContent content, RequestOptions options)
         => NewJsonPostBuilder(content, options).WithPath("threads", threadId, "runs", runId, "submit_tool_outputs").Build();
+
+    private PipelineMessage CreateGetRunStepsRequest(string threadId, string runId, int? limit, string order, string after, string before, RequestOptions options)
+        => NewGetListBuilder(limit, order, after, before, options).WithPath("threads", threadId, "runs", runId, "steps").Build();
 
     private PipelineMessage CreateGetRunStepRequest(string threadId, string runId, string stepId, RequestOptions options)
         => NewJsonGetBuilder(options).WithPath("threads", threadId, "runs", runId, "steps", stepId).Build();

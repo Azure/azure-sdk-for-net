@@ -126,10 +126,11 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from Microsoft Entra ID, using the specified client details specified in the environment variables
+        /// Obtains a token from Microsoft Entra ID, using the client details specified in the environment variables
         /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate.
-        /// Acquired tokens are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible,
-        /// reuse credential instances to optimize cache effectiveness.
+        /// Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the credential
+        /// instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances
+        /// to optimize cache effectiveness.
         /// </summary>
         /// <remarks>
         /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are not specified, the default <see cref="AccessToken"/>
@@ -145,10 +146,11 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from Microsoft Entra ID, using the specified client details specified in the environment variables
+        /// Obtains a token from Microsoft Entra ID, using the client details specified in the environment variables
         /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate.
-        /// Acquired tokens are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible,
-        /// reuse credential instances to optimize cache effectiveness.
+        /// Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the credential
+        /// instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances
+        /// to optimize cache effectiveness.
         /// </summary>
         /// <remarks>
         /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are not specified, the default <see cref="AccessToken"/>

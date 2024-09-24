@@ -7668,6 +7668,29 @@ namespace Azure.Storage.Blobs.Test
         }
         #endregion
 
+        [Test]
+        [TestCase(null, false)]
+        [TestCase("ContainerNotFound", true)]
+        [TestCase("ContainerDisabled", false)]
+        [TestCase("", false)]
+        public void BlobErrorCode_EqualityOperatorOverloadTest(string errorCode, bool expected)
+        {
+            var ex = new RequestFailedException(status: 404, message: "Some error.", errorCode: errorCode, innerException: null);
+
+            bool result1 = BlobErrorCode.ContainerNotFound == ex.ErrorCode;
+            bool result2 = ex.ErrorCode == BlobErrorCode.ContainerNotFound;
+            Assert.AreEqual(expected, result1);
+            Assert.AreEqual(expected, result2);
+
+            bool result3 = BlobErrorCode.ContainerNotFound != ex.ErrorCode;
+            bool result4 = ex.ErrorCode != BlobErrorCode.ContainerNotFound;
+            Assert.AreEqual(!expected, result3);
+            Assert.AreEqual(!expected, result4);
+
+            bool result5 = BlobErrorCode.ContainerNotFound.Equals(ex.ErrorCode);
+            Assert.AreEqual(expected, result5);
+        }
+
         //[Test]
         //public async Task SetTierAsync_Batch()
         //{

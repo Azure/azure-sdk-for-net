@@ -17,8 +17,7 @@ namespace Azure.Identity
 
         private readonly Uri _endpoint;
         private readonly string _secret;
-        private readonly string _clientId;
-        private readonly string _resourceId;
+        private readonly ManagedIdentityId _managedIdentityId;
 
         protected static bool TryValidateEnvVars(string msiEndpoint, string secret, out Uri endpointUri)
         {
@@ -47,8 +46,7 @@ namespace Azure.Identity
         {
             _endpoint = endpoint;
             _secret = secret;
-            _clientId = options.ClientId;
-            _resourceId = options.ResourceIdentifier?.ToString();
+            _managedIdentityId = options.ManagedIdentityId;
         }
 
         protected override Request CreateRequest(string[] scopes)
@@ -64,14 +62,16 @@ namespace Azure.Identity
             request.Uri.AppendQuery("api-version", AppServiceMsiApiVersion);
             request.Uri.AppendQuery("resource", resource);
 
-            if (!string.IsNullOrEmpty(_clientId))
+            string idQueryParam = _managedIdentityId?._idType switch
             {
-                request.Uri.AppendQuery(ClientIdHeaderName, _clientId);
-            }
+                ManagedIdentityIdType.ClientId => ClientIdHeaderName,
+                ManagedIdentityIdType.ResourceId => Constants.ManagedIdentityResourceId,
+                _ => null
+            };
 
-            if (!string.IsNullOrEmpty(_resourceId))
+            if (idQueryParam != null)
             {
-                request.Uri.AppendQuery(Constants.ManagedIdentityResourceId, _resourceId);
+                request.Uri.AppendQuery(idQueryParam, _managedIdentityId._userAssignedId);
             }
 
             return request;

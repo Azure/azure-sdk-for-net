@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the access key id. </summary>
+        [WirePath("accessKeyId")]
         public string AccessKeyId { get; set; }
         /// <summary> Gets or sets the secret access key. </summary>
+        [WirePath("secretAccessKey")]
         public string SecretAccessKey { get; set; }
     }
 }

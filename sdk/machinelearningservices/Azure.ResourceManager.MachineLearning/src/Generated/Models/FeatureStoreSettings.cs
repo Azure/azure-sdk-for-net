@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The FeatureStoreSettings. </summary>
+    /// <summary> Settings for feature store type workspace. </summary>
     public partial class FeatureStoreSettings
     {
         /// <summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FeatureStoreSettings"/>. </summary>
-        /// <param name="computeRuntime"></param>
+        /// <param name="computeRuntime"> Compute runtime config for feature store type workspace. </param>
         /// <param name="offlineStoreConnectionName"></param>
         /// <param name="onlineStoreConnectionName"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -63,9 +63,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the compute runtime. </summary>
+        /// <summary> Compute runtime config for feature store type workspace. </summary>
         internal ComputeRuntimeDto ComputeRuntime { get; set; }
         /// <summary> Gets or sets the spark runtime version. </summary>
+        [WirePath("computeRuntime.sparkRuntimeVersion")]
         public string SparkRuntimeVersion
         {
             get => ComputeRuntime is null ? default : ComputeRuntime.SparkRuntimeVersion;
@@ -78,8 +79,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the offline store connection name. </summary>
+        [WirePath("offlineStoreConnectionName")]
         public string OfflineStoreConnectionName { get; set; }
         /// <summary> Gets or sets the online store connection name. </summary>
+        [WirePath("onlineStoreConnectionName")]
         public string OnlineStoreConnectionName { get; set; }
     }
 }

@@ -315,7 +315,7 @@
 /sdk/communication/Azure.Communication.Identity/                   @Azure/acs-identity-sdk @AikoBB @maximrytych-ms @mjafferi-msft
 
 # PRLabel: %Communication - Phone Numbers
-/sdk/communication/Azure.Communication.PhoneNumbers/               @miguhern @whisper6284 @RoyHerrod @danielav7
+/sdk/communication/Azure.Communication.PhoneNumbers/               @miguhern @whisper6284 @danielav7
 
 # PRLabel: %Communication - Programmable Connectivity
 /sdk/communication/Azure.Communication.ProgrammableConnectivity/   @aronhegedusms
@@ -538,10 +538,10 @@
 # ServiceOwners:                                                   @aim-for-better @idear1203 @deshriva
 
 # PRLabel: %Health Deidentification
-/sdk/healthdataaiservices/                                         @GrahamMThomas @danielszaniszlo
+/sdk/healthdataaiservices/                                         @GrahamMThomas
 
 # ServiceLabel: %Health Deidentification
-# ServiceOwners:                                                   @GrahamMThomas @danielszaniszlo
+# ServiceOwners:                                                   @GrahamMThomas
 
 # ServiceLabel: %HPC Cache
 # ServiceOwners:                                                   @romahamu @omzevall
@@ -648,25 +648,25 @@
 # ServiceOwners:                                                   @omziv @anatse @raronen @ischrei @danhadari @azmonapplicationinsights
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
 
 # ServiceLabel: %Monitor - Distro
-# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
 
 # PRLabel: %Monitor - Exporter
-/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
 
 # ServiceLabel: %Monitor - Exporter
-# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
 
 # PRLabel: %Monitor - LiveMetrics
-/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar @xiang17
+/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @xiang17
 
 # ServiceLabel: %Monitor - LiveMetrics
-# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar @xiang17
+# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @xiang17
 
 # ServiceLabel: %MySQL
 # ServiceOwners:                                                   @ajlam @ambhatna @kummanish
@@ -676,6 +676,12 @@
 
 # PRLabel: %Mixed Reality
 /sdk/objectanchors/                                                @crtreasu @rgarcia @JoshLove-msft
+
+# PRLabel: %Remote Rendering
+/sdk/remoterendering/                                              @FlorianBorn71 @MichaelZp0 @ChristopherManthei
+
+#ServiceLabel: %Remote Rendering
+#ServiceOwners:                                                    @FlorianBorn71 @MichaelZp0 @ChristopherManthei
 
 # ServiceLabel: %Mixed Reality
 # ServiceOwners:                                                   @crtreasu @rgarcia
@@ -749,10 +755,10 @@
 # ServiceLabel: %Image Analysis
 # ServiceOwners:                                                   @rhurey @dargilco
 
-# PRLabel: %Playwright
+# PRLabel: %Microsoft Playwright Testing
 /sdk/playwrighttesting/                                            @shreyaanand @mjmadhu
 
-# ServiceLabel: %Playwright
+# ServiceLabel: %Microsoft Playwright Testing
 # ServiceOwners:                                                   @shreyaanand @mjmadhu
 
 # ServiceLabel: %Policy
@@ -967,6 +973,12 @@
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
 
+# PRLabel: %Hardware Security Modules
+/sdk/hardwaresecuritymodules/Azure.ResourceManager.*/              @emmeliaAra
+
+# ServiceLabel: %Hardware Security Modules %Mgmt
+# ServiceOwners:                                                   @emmeliaAra
+
 # PRLabel: %DevOps - Infrastructure
 /sdk/devopsinfrastructure/Azure.ResourceManager.*/                 @oolaoluwa
 
@@ -1015,6 +1027,12 @@
 # ServiceLabel: %Nginx %Mgmt
 # ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti
 
+# PRLabel: %Operator Nexus - Network Cloud
+/sdk/networkcloud/Azure.ResourceManager.*/                         @Azure/azure-sdk-write-networkcloud
+
+# ServiceLabel: %Operator Nexus - Network Cloud %Mgmt
+# ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
+
 # PRLabel: %Oracle
 /sdk/oracle/Azure.ResourceManager.*/                               @v-jamcheung @v-rvilathurs @v-eelhomsi
 
@@ -1046,11 +1064,19 @@
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
 
+# PRLabel: %Compute - Fleet
+/sdk/computefleet/                                                 @sahilarora92 @dhruvil009
+
+# ServiceLabel: %Compute - Fleet
+# ServiceOwners:                                                   @sahilarora92 @dhruvil009
+
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
 /eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 /.github/workflows/                                                @Azure/azure-sdk-eng
+
+/.config/1espt/                                                    @benbp @weshaggard
 
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml                               @jsquire

@@ -20,6 +20,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+use-write-core: true
 
 no-property-type-replacement: PrivateEndpoint
 format-by-name-rules:

@@ -39,9 +39,14 @@ namespace Azure.Identity.Tests
                 else
                 {
                     ManagedIdentityCredential cred = (ManagedIdentityCredential)factory.CreateManagedIdentityCredential();
-
-                    Assert.AreEqual(expResourceId?.ToString(), cred.Client.ResourceIdentifier?.ToString());
-                    Assert.AreEqual(expClientId, cred.Client.ClientId);
+                    if (setResourceId)
+                    {
+                        Assert.AreEqual(expResourceId.ToString(), cred.Client.ManagedIdentityId._userAssignedId);
+                    }
+                    if (setClientId)
+                    {
+                        Assert.AreEqual(expClientId, cred.Client.ManagedIdentityId._userAssignedId);
+                    }
                 }
             }
         }

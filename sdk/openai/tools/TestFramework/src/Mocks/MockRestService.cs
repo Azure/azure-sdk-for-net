@@ -5,6 +5,7 @@ using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using OpenAI.TestFramework.Utils;
 
 namespace OpenAI.TestFramework.Mocks;
@@ -20,15 +21,7 @@ public class MockRestService<TData> : IDisposable
     /// </summary>
     /// <param name="id">The ID of the entry.</param>
     /// <param name="data">The data associated with the entry.</param>
-    public record Entry(string id, TData data)
-    {
-#if NETFRAMEWORK
-        public Entry() : this(string.Empty, default!)
-        {
-            // .Net framework System.Text.Json cannot deserialize records without a parameterless constructor
-        }
-#endif
-    };
+    public record Entry(string id, TData data);
 
     /// <summary>
     /// Represents an error in the mock REST service.
@@ -41,9 +34,7 @@ public class MockRestService<TData> : IDisposable
     private static readonly JsonSerializerOptions s_options = new()
     {
         WriteIndented = true,
-#pragma warning disable SYSLIB0020
-        IgnoreNullValues = true
-#pragma warning restore SYSLIB0020
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
     };
 
     private ConcurrentDictionary<string, TData> _data;
@@ -395,7 +386,7 @@ public class MockRestService<TData> : IDisposable
             return default;
         }
 
-        return JsonHelpers.Deserialize<TData>(request.InputStream, s_options);
+        return JsonSerializer.Deserialize<TData>(request.InputStream, s_options);
     }
 
     private static void WriteJsonResponse<T>(HttpListenerResponse response, int status, T data)
@@ -403,7 +394,7 @@ public class MockRestService<TData> : IDisposable
         response.StatusCode = status;
 
         using MemoryStream buffer = new();
-        JsonHelpers.Serialize(buffer, data, s_options);
+        JsonSerializer.Serialize(buffer, data, s_options);
         buffer.Seek(0, SeekOrigin.Begin);
 
         response.ContentType = "application/json";
