@@ -11,15 +11,32 @@ namespace Azure.CloudMachine.Tests;
 
 public class CloudMachineTests
 {
-    [TestCase]
-    public void Configure()
+    [Theory]
+    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "" }])]
+    public void Configure(string[] args)
     {
-        bool initializing = CloudMachineInfrastructure.Configure(["--init"], (cmi) =>
-        {
-        });
+        if (CloudMachineInfrastructure.Configure(args, (cmi) => {
+        })) return;
 
         CloudMachineClient cm = new();
-
         Console.WriteLine(cm.Id);
+    }
+
+    [Theory]
+    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "" }])]
+    public void Storage(string[] args)
+    {
+        if (CloudMachineInfrastructure.Configure(args, (cmi) => {
+        })) return;
+
+        CloudMachineClient cm = new();
+        var uploaded = cm.Upload(new
+        {
+            Foo = 5,
+            Bar = true
+        });
+        BinaryData downloaded = cm.Download(uploaded);
     }
 }
