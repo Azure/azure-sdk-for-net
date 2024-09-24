@@ -40,8 +40,7 @@ namespace Azure.AI.OpenAI.Chat
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
         /// <summary> Initializes a new instance of <see cref="AzureChatCitation"/>. </summary>
         /// <param name="content"> The content of the citation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -58,15 +57,17 @@ namespace Azure.AI.OpenAI.Chat
         /// <param name="url"> The URL of the citation. </param>
         /// <param name="filepath"> The file path for the citation. </param>
         /// <param name="chunkId"> The chunk ID for the citation. </param>
+        /// <param name="rerankScore"> The rerank score for the retrieval. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureChatCitation(string content, string title, string url, string filepath, string chunkId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureChatCitation(string content, string title, string url, string filepath, string chunkId, double? rerankScore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Content = content;
             Title = title;
             Url = url;
             Filepath = filepath;
             ChunkId = chunkId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            RerankScore = rerankScore;
+            SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureChatCitation"/> for deserialization. </summary>
@@ -84,5 +85,7 @@ namespace Azure.AI.OpenAI.Chat
         public string Filepath { get; }
         /// <summary> The chunk ID for the citation. </summary>
         public string ChunkId { get; }
+        /// <summary> The rerank score for the retrieval. </summary>
+        public double? RerankScore { get; }
     }
 }

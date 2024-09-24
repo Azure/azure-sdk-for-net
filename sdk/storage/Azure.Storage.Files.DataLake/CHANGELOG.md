@@ -1,14 +1,24 @@
 # Release History
 
-## 12.20.0-beta.2 (Unreleased)
+## 12.21.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added GenerateUserDelegationSasUri() for DataLakePathClient, DataLakeFileSystemClient, and DataLakeDirectoryClient
+- Deprecated Read()/ReadAsync() in favor of ReadStreaming()/ReadStreamingAsync() and ReadContent()/ReadContentAsync() for DataLake #45418
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.20.0 (2024-09-18)
+
+### Features Added
+- Includes all features from 12.20.0-beta.1.
+
+### Bugs Fixed
+- Fixed \[BUG\] Method overload DataLakeFileClient.OpenReadAsync()/OpenRead() to correctly handle the allowBlobModifications flag #45516
 
 ## 12.20.0-beta.1 (2024-08-06)
 

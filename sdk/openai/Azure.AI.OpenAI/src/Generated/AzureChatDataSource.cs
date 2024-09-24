@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI.Chat
     /// response behavior.
     /// The use of this configuration is compatible only with Azure OpenAI.
     /// Please note <see cref="AzureChatDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureCosmosDBChatDataSource"/>, <see cref="AzureMachineLearningIndexChatDataSource"/>, <see cref="AzureSearchChatDataSource"/>, <see cref="ElasticsearchChatDataSource"/> and <see cref="PineconeChatDataSource"/>.
+    /// The available derived classes include <see cref="AzureCosmosDBChatDataSource"/>, <see cref="AzureSearchChatDataSource"/>, <see cref="ElasticsearchChatDataSource"/>, <see cref="MongoDBChatDataSource"/> and <see cref="PineconeChatDataSource"/>.
     /// </summary>
     public abstract partial class AzureChatDataSource
     {
@@ -47,8 +47,7 @@ namespace Azure.AI.OpenAI.Chat
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
         /// <summary> Initializes a new instance of <see cref="AzureChatDataSource"/>. </summary>
         protected AzureChatDataSource()
         {
@@ -60,7 +59,7 @@ namespace Azure.AI.OpenAI.Chat
         internal AzureChatDataSource(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The differentiating type identifier for the data source. </summary>

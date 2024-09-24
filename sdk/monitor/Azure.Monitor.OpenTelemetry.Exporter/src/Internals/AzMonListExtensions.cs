@@ -391,10 +391,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         var dbSystem = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString();
                         return AzMonListExtensions.s_dbSystems.Contains(dbSystem) ? "SQL" : dbSystem?.Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
                     }
-                case OperationType.Rpc:
-                    {
-                        return AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeRpcSystem)?.ToString();
-                    }
                 case OperationType.Messaging:
                     {
                         return AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeMessagingSystem)?.ToString();

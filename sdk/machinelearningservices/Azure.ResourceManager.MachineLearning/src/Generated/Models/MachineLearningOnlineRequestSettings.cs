@@ -51,35 +51,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineRequestSettings"/>. </summary>
-        /// <param name="maxConcurrentRequestsPerInstance"> The number of maximum concurrent requests per node allowed per deployment. Defaults to 1. </param>
         /// <param name="maxQueueWait">
-        /// The maximum amount of time a request will stay in the queue in ISO 8601 format.
+        /// (Deprecated for Managed Online Endpoints) The maximum amount of time a request will stay in the queue in ISO 8601 format.
         /// Defaults to 500ms.
+        /// (Now increase `request_timeout_ms` to account for any networking/queue delays)
         /// </param>
         /// <param name="requestTimeout">
         /// The scoring timeout in ISO 8601 format.
         /// Defaults to 5000ms.
         /// </param>
+        /// <param name="maxConcurrentRequestsPerInstance"> The number of maximum concurrent requests per node allowed per deployment. Defaults to 1. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningOnlineRequestSettings(int? maxConcurrentRequestsPerInstance, TimeSpan? maxQueueWait, TimeSpan? requestTimeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningOnlineRequestSettings(TimeSpan? maxQueueWait, TimeSpan? requestTimeout, int? maxConcurrentRequestsPerInstance, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            MaxConcurrentRequestsPerInstance = maxConcurrentRequestsPerInstance;
             MaxQueueWait = maxQueueWait;
             RequestTimeout = requestTimeout;
+            MaxConcurrentRequestsPerInstance = maxConcurrentRequestsPerInstance;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The number of maximum concurrent requests per node allowed per deployment. Defaults to 1. </summary>
-        public int? MaxConcurrentRequestsPerInstance { get; set; }
         /// <summary>
-        /// The maximum amount of time a request will stay in the queue in ISO 8601 format.
+        /// (Deprecated for Managed Online Endpoints) The maximum amount of time a request will stay in the queue in ISO 8601 format.
         /// Defaults to 500ms.
+        /// (Now increase `request_timeout_ms` to account for any networking/queue delays)
         /// </summary>
+        [WirePath("maxQueueWait")]
         public TimeSpan? MaxQueueWait { get; set; }
         /// <summary>
         /// The scoring timeout in ISO 8601 format.
         /// Defaults to 5000ms.
         /// </summary>
+        [WirePath("requestTimeout")]
         public TimeSpan? RequestTimeout { get; set; }
+        /// <summary> The number of maximum concurrent requests per node allowed per deployment. Defaults to 1. </summary>
+        [WirePath("maxConcurrentRequestsPerInstance")]
+        public int? MaxConcurrentRequestsPerInstance { get; set; }
     }
 }

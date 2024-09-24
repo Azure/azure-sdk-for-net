@@ -91,6 +91,11 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(DestinationIPAddress))
+            {
+                writer.WritePropertyName("destinationIPAddress"u8);
+                writer.WriteStringValue(DestinationIPAddress);
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
@@ -194,6 +199,7 @@ namespace Azure.ResourceManager.Network
             IDictionary<string, string> tags = default;
             IList<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations = default;
             IList<PrivateLinkServiceIPConfiguration> ipConfigurations = default;
+            string destinationIPAddress = default;
             IReadOnlyList<NetworkInterfaceData> networkInterfaces = default;
             NetworkProvisioningState? provisioningState = default;
             IReadOnlyList<NetworkPrivateEndpointConnectionData> privateEndpointConnections = default;
@@ -307,6 +313,11 @@ namespace Azure.ResourceManager.Network
                             ipConfigurations = array;
                             continue;
                         }
+                        if (property0.NameEquals("destinationIPAddress"u8))
+                        {
+                            destinationIPAddress = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("networkInterfaces"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -410,6 +421,7 @@ namespace Azure.ResourceManager.Network
                 etag,
                 loadBalancerFrontendIPConfigurations ?? new ChangeTrackingList<FrontendIPConfigurationData>(),
                 ipConfigurations ?? new ChangeTrackingList<PrivateLinkServiceIPConfiguration>(),
+                destinationIPAddress,
                 networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
                 provisioningState,
                 privateEndpointConnections ?? new ChangeTrackingList<NetworkPrivateEndpointConnectionData>(),

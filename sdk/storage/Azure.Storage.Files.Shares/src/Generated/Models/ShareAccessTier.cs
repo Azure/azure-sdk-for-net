@@ -25,6 +25,7 @@ namespace Azure.Storage.Files.Shares.Models
         private const string TransactionOptimizedValue = "TransactionOptimized";
         private const string HotValue = "Hot";
         private const string CoolValue = "Cool";
+        private const string PremiumValue = "Premium";
 
         /// <summary> TransactionOptimized. </summary>
         public static ShareAccessTier TransactionOptimized { get; } = new ShareAccessTier(TransactionOptimizedValue);
@@ -32,6 +33,8 @@ namespace Azure.Storage.Files.Shares.Models
         public static ShareAccessTier Hot { get; } = new ShareAccessTier(HotValue);
         /// <summary> Cool. </summary>
         public static ShareAccessTier Cool { get; } = new ShareAccessTier(CoolValue);
+        /// <summary> Premium. </summary>
+        public static ShareAccessTier Premium { get; } = new ShareAccessTier(PremiumValue);
         /// <summary> Determines if two <see cref="ShareAccessTier"/> values are the same. </summary>
         public static bool operator ==(ShareAccessTier left, ShareAccessTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ShareAccessTier"/> values are not the same. </summary>

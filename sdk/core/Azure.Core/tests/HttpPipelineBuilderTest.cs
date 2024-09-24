@@ -250,10 +250,7 @@ namespace Azure.Core.Tests
             List<EventWrittenEventArgs> events = new();
 
             using var listener = new AzureEventSourceListener(
-                (args, s) =>
-                {
-                    events.Add(args);
-                },
+                events.Add,
                 EventLevel.Verbose);
 
             var pipeline = HttpPipelineBuilder.Build(

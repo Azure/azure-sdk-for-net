@@ -81,7 +81,7 @@ AzureOpenAIClientOptions optionsWithCustomAudience = new()
 
 #### Create client with an API key
 
-While not as secure as Microsoft Entra-based authentication, it's possible to authenticate using a client subscription key:
+While not as secure as [Microsoft Entra-based authentication](#create-client-with-a-microsoft-entra-credential), it's possible to authenticate using a client subscription key:
 
 ```C# Snippet:ConfigureClient:WithAOAITopLevelClient
 string keyFromEnvironment = Environment.GetEnvironmentVariable("AZURE_OPENAI_API_KEY");
@@ -157,7 +157,7 @@ ChatCompletion completion = chatClient.CompleteChat(
     [
         // System messages represent instructions or other guidance about how the assistant should behave
         new SystemChatMessage("You are a helpful assistant that talks like a pirate."),
-        // User messages represent user input, whether historical or the most recen tinput
+        // User messages represent user input, whether historical or the most recent input
         new UserChatMessage("Hi, can you help me?"),
         // Assistant messages in a request represent conversation history for responses
         new AssistantChatMessage("Arrr! Of course, me hearty! What can I do for ye?"),
@@ -169,7 +169,7 @@ Console.WriteLine($"{completion.Role}: {completion.Content[0].Text}");
 
 ### Stream chat messages
 
-Streaming chat completions use the `CompleteChatStreaming` and `CompleteChatStreamingAsync` method, which return a `ResultCollection<StreamingChatCompletionUpdate>` or `AsyncResultCollection<StreamingChatCompletionUpdate>` instead of a `ClientResult<ChatCompletion>`. These result collections can be iterated over using `foreach` or `await foreach`, with each update arriving as new data is available from the streamed response.
+Streaming chat completions use the `CompleteChatStreaming` and `CompleteChatStreamingAsync` method, which return a `ResultCollection<StreamingChatCompletionUpdate>` or `AsyncCollectionResult<StreamingChatCompletionUpdate>` instead of a `ClientResult<ChatCompletion>`. These result collections can be iterated over using `foreach` or `await foreach`, with each update arriving as new data is available from the streamed response.
 
 ```C# Snippet:StreamChatMessages
 AzureOpenAIClient azureClient = new(
@@ -177,7 +177,7 @@ AzureOpenAIClient azureClient = new(
     new DefaultAzureCredential());
 ChatClient chatClient = azureClient.GetChatClient("my-gpt-35-turbo-deployment");
 
-ResultCollection<StreamingChatCompletionUpdate> completionUpdates = chatClient.CompleteChatStreaming(
+CollectionResult<StreamingChatCompletionUpdate> completionUpdates = chatClient.CompleteChatStreaming(
     [
         new SystemChatMessage("You are a helpful assistant that talks like a pirate."),
         new UserChatMessage("Hi, can you help me?"),
@@ -362,7 +362,9 @@ foreach (KeyValuePair<int, string> indexToIdPair in toolCallIdsByIndex)
         functionArgumentBuildersByIndex[indexToIdPair.Key].ToString()));
 }
 
-conversationMessages.Add(new AssistantChatMessage(toolCalls, contentBuilder.ToString()));
+var assistantChatMessage = new AssistantChatMessage(toolCalls);
+assistantChatMessage.Content.Add(ChatMessageContentPart.CreateTextPart(contentBuilder.ToString()));
+conversationMessages.Add(assistantChatMessage);
 
 // Placeholder: each tool call must be resolved, like in the non-streaming case
 string GetToolCallOutput(ChatToolCall toolCall) => null;
@@ -526,7 +528,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_openai_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/src/Custom/AzureOpenAIClient.cs
 [openai_rest]: https://learn.microsoft.com/azure/cognitive-services/openai/reference
 [azure_openai_completions_docs]: https://learn.microsoft.com/azure/cognitive-services/openai/how-to/completions
-[azure_openai_embeddgings_docs]: https://learn.microsoft.com/azure/cognitive-services/openai/concepts/understand-embeddings
+[azure_openai_embeddings_docs]: https://learn.microsoft.com/azure/cognitive-services/openai/concepts/understand-embeddings
 [openai_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/

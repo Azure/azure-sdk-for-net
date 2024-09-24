@@ -1302,6 +1302,7 @@ namespace Azure.Storage.Files.Shares
                 metadata: options?.Metadata,
                 smbProperties: options?.SmbProperties,
                 filePermission: options?.FilePermission,
+                filePermissionFormat: options?.PermissionFormat,
                 filePermissionCopyMode: options?.FilePermissionCopyMode,
                 ignoreReadOnly: options?.IgnoreReadOnly,
                 setArchiveAttribute: options?.Archive,
@@ -1378,6 +1379,7 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties,
                 filePermission,
+                filePermissionFormat: default,
                 filePermissionCopyMode,
                 ignoreReadOnly,
                 setArchiveAttribute,
@@ -1424,6 +1426,7 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties: default,
                 filePermission: default,
+                filePermissionFormat: default,
                 filePermissionCopyMode: default,
                 ignoreReadOnly: default,
                 setArchiveAttribute: default,
@@ -1467,6 +1470,7 @@ namespace Azure.Storage.Files.Shares
                 metadata: options?.Metadata,
                 smbProperties: options?.SmbProperties,
                 filePermission: options?.FilePermission,
+                filePermissionFormat: options?.PermissionFormat,
                 filePermissionCopyMode: options?.FilePermissionCopyMode,
                 ignoreReadOnly: options?.IgnoreReadOnly,
                 setArchiveAttribute: options?.Archive,
@@ -1543,6 +1547,7 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties,
                 filePermission,
+                filePermissionFormat: default,
                 filePermissionCopyMode,
                 ignoreReadOnly,
                 setArchiveAttribute,
@@ -1589,6 +1594,7 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties: default,
                 filePermission: default,
+                filePermissionFormat: default,
                 filePermissionCopyMode: default,
                 ignoreReadOnly: default,
                 setArchiveAttribute: default,
@@ -1616,6 +1622,9 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="filePermission">
         /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="filePermissionFormat">
+        /// Optional file permission format.
         /// </param>
         /// <param name="filePermissionCopyMode">
         /// Specifies the option to copy file security descriptor from source file or
@@ -1658,6 +1667,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata,
             FileSmbProperties smbProperties,
             string filePermission,
+            FilePermissionFormat? filePermissionFormat,
             PermissionCopyMode? filePermissionCopyMode,
             bool? ignoreReadOnly,
             bool? setArchiveAttribute,
@@ -1768,6 +1778,7 @@ namespace Azure.Storage.Files.Shares
                             copySource: uriBuilder.ToString(),
                             metadata: metadata,
                             filePermission: filePermission,
+                            filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProperties?.FilePermissionKey,
                             copyFileSmbInfo: copyFileSmbInfo,
                             shareFileRequestConditions: conditions,
@@ -1780,6 +1791,7 @@ namespace Azure.Storage.Files.Shares
                             copySource: uriBuilder.ToString(),
                             metadata: metadata,
                             filePermission: filePermission,
+                            filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProperties?.FilePermissionKey,
                             copyFileSmbInfo: copyFileSmbInfo,
                             shareFileRequestConditions: conditions,
@@ -2738,11 +2750,14 @@ namespace Azure.Storage.Files.Shares
             long position = 0,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
-                => OpenRead(
-                    position,
-                    bufferSize,
-                    allowfileModifications ? new ShareFileRequestConditions() : null,
-                    cancellationToken);
+                => OpenReadInteral(
+                    position: position,
+                    bufferSize: bufferSize,
+                    conditions: allowfileModifications ? new ShareFileRequestConditions() : null,
+                    allowModifications: allowfileModifications,
+                    transferValidationOverride: default,
+                    async: false,
+                    cancellationToken: cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Opens a stream for reading from the file.  The stream will only download
@@ -2828,11 +2843,14 @@ namespace Azure.Storage.Files.Shares
             long position = 0,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
-                => await OpenReadAsync(
-                    position,
-                    bufferSize,
-                    allowfileModifications ? new ShareFileRequestConditions() : null,
-                    cancellationToken).ConfigureAwait(false);
+                => await OpenReadInteral(
+                    position: position,
+                    bufferSize: bufferSize,
+                    conditions: allowfileModifications ? new ShareFileRequestConditions() : null,
+                    allowModifications: allowfileModifications,
+                    transferValidationOverride: default,
+                    async: true,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Opens a stream for reading from the file.  The stream will only download

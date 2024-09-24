@@ -3,7 +3,7 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using OpenAI.Batch;
+using Azure.AI.OpenAI.Utility;
 
 namespace Azure.AI.OpenAI.Batch;
 
@@ -25,16 +25,25 @@ internal partial class AzureBatchClient : BatchClient
         return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
     }
 
-    public override async Task<ClientResult> GetBatchesAsync(string after, int? limit, RequestOptions options)
+    public override AsyncCollectionResult GetBatchesAsync(string after, int? limit, RequestOptions options)
     {
-        using PipelineMessage message = CreateGetBatchesRequest(after, limit, options);
-        return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        return new AzureAsyncCollectionResult<object, BatchCollectionPageToken>(
+            Pipeline,
+            options,
+            continuation => CreateGetBatchesRequest(continuation?.After ?? after, limit, options),
+            page => BatchCollectionPageToken.FromResponse(page, limit),
+            page => throw new NotImplementedException("Parsing has not yet been implemented"),
+            options?.CancellationToken ?? default);
     }
 
-    public override ClientResult GetBatches(string after, int? limit, RequestOptions options)
+    public override CollectionResult GetBatches(string after, int? limit, RequestOptions options)
     {
-        using PipelineMessage message = CreateGetBatchesRequest(after, limit, options);
-        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        return new AzureCollectionResult<object, BatchCollectionPageToken>(
+            Pipeline,
+            options,
+            continuation => CreateGetBatchesRequest(continuation?.After ?? after, limit, options),
+            page => BatchCollectionPageToken.FromResponse(page, limit),
+            page => throw new NotImplementedException("Parsing has not yet been implemented"));
     }
 
     public override async Task<ClientResult> GetBatchAsync(string batchId, RequestOptions options)

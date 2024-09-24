@@ -422,14 +422,6 @@ namespace Azure.Storage
             public const string UriSubDomain = "queue";
 
             public const string QueueTraitsMetadata = "metadata";
-
-            internal static class Permissions
-            {
-                public const char Read = 'r';
-                public const char Add = 'a';
-                public const char Update = 'u';
-                public const char Process = 'p';
-            }
         }
 
         /// <summary>

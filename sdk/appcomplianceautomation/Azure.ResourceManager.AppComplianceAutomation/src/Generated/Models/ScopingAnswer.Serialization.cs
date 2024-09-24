@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         void IJsonModel<ScopingAnswer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ScopingAnswer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScopingAnswer)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("questionId"u8);
             writer.WriteStringValue(QuestionId);
             writer.WritePropertyName("answers"u8);
@@ -50,7 +58,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ScopingAnswer IJsonModel<ScopingAnswer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

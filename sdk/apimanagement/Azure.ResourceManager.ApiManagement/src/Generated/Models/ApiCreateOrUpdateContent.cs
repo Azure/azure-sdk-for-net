@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <param name="apiVersionSet"> Version set details. </param>
         /// <param name="value"> Content value when Importing an API. </param>
-        /// <param name="format"> Format of the Content in which the API is getting imported. </param>
+        /// <param name="format"> Format of the Content in which the API is getting imported. New formats can be added in the future. </param>
         /// <param name="wsdlSelector"> Criteria to limit import of WSDL to a subset of the document. </param>
         /// <param name="soapApiType">
         /// Type of API to create.
@@ -83,6 +83,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         ///  * `soap` creates a SOAP pass-through API
         ///  * `websocket` creates websocket API
         ///  * `graphql` creates GraphQL API.
+        ///  New types can be added in the future.
         /// </param>
         /// <param name="translateRequiredQueryParametersConduct"> Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -183,7 +184,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Content value when Importing an API. </summary>
         [WirePath("properties.value")]
         public string Value { get; set; }
-        /// <summary> Format of the Content in which the API is getting imported. </summary>
+        /// <summary> Format of the Content in which the API is getting imported. New formats can be added in the future. </summary>
         [WirePath("properties.format")]
         public ContentFormat? Format { get; set; }
         /// <summary> Criteria to limit import of WSDL to a subset of the document. </summary>
@@ -195,6 +196,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         ///  * `soap` creates a SOAP pass-through API
         ///  * `websocket` creates websocket API
         ///  * `graphql` creates GraphQL API.
+        ///  New types can be added in the future.
         /// </summary>
         [WirePath("properties.apiType")]
         public SoapApiType? SoapApiType { get; set; }

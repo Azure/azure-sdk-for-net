@@ -5,7 +5,10 @@ using Azure;
 using Azure.Core;
 using Azure.Messaging.WebPubSub;
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Text;
+using System.Web;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
 {
@@ -41,23 +44,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
 
         public WebPubSubServiceClient Client => _client;
 
-        internal SocketIONegotiationResult GetNegotiationResult()
+        internal SocketIONegotiationResult GetNegotiationResult(string userId)
         {
             if (_useConnectionStrings)
             {
                 var expireAfter = TimeSpan.FromHours(1);
-                var token = GenerateTokenFromAzureKeyCredential(DateTimeOffset.UtcNow.Add(expireAfter));
+                var token = GenerateTokenFromAzureKeyCredential(userId, DateTimeOffset.UtcNow.Add(expireAfter));
                 return new SocketIONegotiationResult(new Uri($"{_endpoint}clients/socketio/hubs/{_hub}?access_token={token}"));
             }
             else
             {
                 // For managed identity, the service can handle it.
-                var url = _client.GetClientAccessUri();
-                return new SocketIONegotiationResult(url);
+                // TODO: Currently, there's a bug in `GetClientAccessUri` and we need to get url by ourselves.
+                var url = _client.GetClientAccessUri(userId: userId);
+                var token = HttpUtility.ParseQueryString(url.Query)["access_token"];
+                // The `aud` in token is correct, we use it as the endpoint.
+                var endpoint = new JwtSecurityTokenHandler().ReadJwtToken(token).Claims.First(c => c.Type == "aud").Value.TrimEnd('/'); // Must have
+                return new SocketIONegotiationResult(new Uri($"{endpoint}?access_token={token}"));
             }
         }
 
-        private string GenerateTokenFromAzureKeyCredential(DateTimeOffset expiresAt)
+        private string GenerateTokenFromAzureKeyCredential(string userId, DateTimeOffset expiresAt)
         {
             var keyBytes = Encoding.UTF8.GetBytes(_keyCredential.Key);
 
@@ -75,6 +82,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
             jwt.AddClaim(JwtBuilder.Exp, expiresAt);
             jwt.AddClaim(JwtBuilder.Iat, now);
             jwt.AddClaim(JwtBuilder.Aud, audience);
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                jwt.AddClaim(JwtBuilder.Sub, userId);
+            }
 
             return jwt.BuildString();
         }

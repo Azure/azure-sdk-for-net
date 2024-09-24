@@ -79,7 +79,7 @@ namespace Azure.Storage
             => new InvalidOperationException($"SAS Uri cannot be generated. {builderName}.{paramName} cannot be set to create a {sasType} SAS.");
 
         public static InvalidOperationException SasIncorrectResourceType(string builderName, string builderParam, string value, string clientName)
-            => new InvalidOperationException($"SAS Uri cannot be generated. Expected {builderName}.{builderParam} to be set to {value} to generate" +
+            => new InvalidOperationException($"SAS Uri cannot be generated. Expected {builderName}.{builderParam} to be set to {value} to generate " +
                 $"the respective SAS for the client, {clientName}");
 
         public static ArgumentException InvalidPermission(char s)

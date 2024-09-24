@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Arm path of referenced hostpool. </summary>
+        [WirePath("hostPoolArmPath")]
         public ResourceIdentifier HostPoolId { get; set; }
         /// <summary> Is the scaling plan enabled for this hostpool. </summary>
+        [WirePath("scalingPlanEnabled")]
         public bool? IsScalingPlanEnabled { get; set; }
     }
 }

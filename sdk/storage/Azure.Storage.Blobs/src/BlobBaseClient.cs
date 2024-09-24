@@ -3040,11 +3040,14 @@ namespace Azure.Storage.Blobs.Specialized
             long position = 0,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
-                => OpenRead(
-                    position,
-                    bufferSize,
-                    allowBlobModifications ? new BlobRequestConditions() : null,
-                    cancellationToken);
+                => OpenReadInternal(
+                    position: position,
+                    bufferSize: bufferSize,
+                    conditions: allowBlobModifications ? new BlobRequestConditions() : null,
+                    allowModifications: allowBlobModifications,
+                    transferValidationOverride: default,
+                    async: false,
+                    cancellationToken: cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Opens a stream for reading from the blob.  The stream will only download
@@ -3118,12 +3121,14 @@ namespace Azure.Storage.Blobs.Specialized
             long position = 0,
             int? bufferSize = default,
             CancellationToken cancellationToken = default)
-                => await OpenReadAsync(
-                    position,
-                    bufferSize,
-                    allowBlobModifications ? new BlobRequestConditions() : null,
-                    cancellationToken)
-                    .ConfigureAwait(false);
+                => await OpenReadInternal(
+                    position: position,
+                    bufferSize: bufferSize,
+                    conditions: allowBlobModifications ? new BlobRequestConditions() : null,
+                    allowModifications: allowBlobModifications,
+                    transferValidationOverride: default,
+                    async: true,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Opens a stream for reading from the blob.  The stream will only download
@@ -3293,12 +3298,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="source">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
         /// be a <see cref="Uri" /> of up to 2 KB in length that specifies a
-        /// blob.  A source blob in the same storage account can be
-        /// authenticated via Shared Key.  However, if the source is a blob in
-        /// another account, the source blob must either be public or must be
-        /// authenticated via a shared access signature. If the source blob
-        /// is public, no authentication is required to perform the copy
-        /// operation.
+        /// blob. <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         ///
         /// The source object may be a file in the Azure File service.  If the
         /// source object is a file that is to be copied to a blob, then the
@@ -3360,12 +3361,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="source">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
         /// be a <see cref="Uri" /> of up to 2 KB in length that specifies a
-        /// blob.  A source blob in the same storage account can be
-        /// authenticated via Shared Key.  However, if the source is a blob in
-        /// another account, the source blob must either be public or must be
-        /// authenticated via a shared access signature. If the source blob
-        /// is public, no authentication is required to perform the copy
-        /// operation.
+        /// blob. <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         ///
         /// The source object may be a file in the Azure File service.  If the
         /// source object is a file that is to be copied to a blob, then the
@@ -3448,12 +3445,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="source">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
         /// be a <see cref="Uri" /> of up to 2 KB in length that specifies a
-        /// blob.  A source blob in the same storage account can be
-        /// authenticated via Shared Key.  However, if the source is a blob in
-        /// another account, the source blob must either be public or must be
-        /// authenticated via a shared access signature. If the source blob
-        /// is public, no authentication is required to perform the copy
-        /// operation.
+        /// blob. <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         ///
         /// The source object may be a file in the Azure File service.  If the
         /// source object is a file that is to be copied to a blob, then the
@@ -3515,12 +3508,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="source">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
         /// be a <see cref="Uri" /> of up to 2 KB in length that specifies a
-        /// blob.  A source blob in the same storage account can be
-        /// authenticated via Shared Key.  However, if the source is a blob in
-        /// another account, the source blob must either be public or must be
-        /// authenticated via a shared access signature. If the source blob
-        /// is public, no authentication is required to perform the copy
-        /// operation.
+        /// blob. <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         ///
         /// The source object may be a file in the Azure File service.  If the
         /// source object is a file that is to be copied to a blob, then the
@@ -3603,12 +3592,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="source">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
         /// be a <see cref="Uri" /> of up to 2 KB in length that specifies a
-        /// blob.  A source blob in the same storage account can be
-        /// authenticated via Shared Key.  However, if the source is a blob in
-        /// another account, the source blob must either be public or must be
-        /// authenticated via a shared access signature. If the source blob
-        /// is public, no authentication is required to perform the copy
-        /// operation.
+        /// blob. <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         ///
         /// The source object may be a file in the Azure File service.  If the
         /// source object is a file that is to be copied to a blob, then the
@@ -3967,11 +3952,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="source">
         /// Required. Specifies the URL of the source blob. The value may be a URL of up to 2 KB in length
-        /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
-        /// source blob must either be public or must be authorized via a shared access signature. If the
-        /// source blob is public, no authorization is required to perform the operation. If the size of the
-        /// source blob is greater than 256 MiB, the request will fail with 409 (Conflict). The blob type of
-        /// the source blob has to be block blob.
+        /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI.
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see> If the size of the source blob is greater than 256 MiB, the request will fail
+        /// with 409 (Conflict). The blob type of the source blob has to be block blob.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -4021,11 +4005,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="source">
         /// Required. Specifies the URL of the source blob. The value may be a URL of up to 2 KB in length
-        /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
-        /// source blob must either be public or must be authorized via a shared access signature. If the
-        /// source blob is public, no authorization is required to perform the operation. If the size of the
-        /// source blob is greater than 256 MiB, the request will fail with 409 (Conflict). The blob type of
-        /// the source blob has to be block blob.
+        /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI.
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see> If the size of the source blob is greater than 256 MiB, the request will fail
+        /// with 409 (Conflict). The blob type of the source blob has to be block blob.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -4075,11 +4058,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="source">
         /// Required. Specifies the URL of the source blob. The value may be a URL of up to 2 KB in length
-        /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
-        /// source blob must either be public or must be authorized via a shared access signature. If the
-        /// source blob is public, no authorization is required to perform the operation. If the size of the
-        /// source blob is greater than 256 MiB, the request will fail with 409 (Conflict). The blob type of
-        /// the source blob has to be block blob.
+        /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI.
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see> If the size of the source blob is greater than 256 MiB, the request will fail
+        /// with 409 (Conflict). The blob type of the source blob has to be block blob.
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this blob.
@@ -6838,42 +6820,167 @@ namespace Azure.Storage.Blobs.Specialized
             // Deep copy of builder so we don't modify the user's original BlobSasBuilder.
             builder = BlobSasBuilder.DeepCopy(builder);
 
-            // Assign builder's ContainerName, BlobName, Snapshot, BlobVersionId, and EncryptionScope if they are null.
-            builder.BlobContainerName ??= BlobContainerName;
-            builder.BlobName ??= Name;
-            builder.Snapshot ??= _snapshot;
-            builder.BlobVersionId ??= _blobVersionId;
-            builder.EncryptionScope ??= _clientConfiguration.EncryptionScope;
-
-            if (!builder.BlobContainerName.Equals(BlobContainerName, StringComparison.InvariantCulture))
-            {
-                throw Errors.SasNamesNotMatching(
-                    nameof(builder.BlobContainerName),
-                    nameof(BlobSasBuilder),
-                    nameof(BlobContainerName));
-            }
-            if (!builder.BlobName.Equals(Name, StringComparison.InvariantCulture))
-            {
-                throw Errors.SasNamesNotMatching(
-                    nameof(builder.BlobName),
-                    nameof(BlobSasBuilder),
-                    nameof(Name));
-            }
-            if (string.Compare(_snapshot, builder.Snapshot, StringComparison.InvariantCulture) != 0)
-            {
-                throw Errors.SasNamesNotMatching(
-                    nameof(builder.Snapshot),
-                    nameof(BlobSasBuilder));
-            }
-            if (string.Compare(_blobVersionId, builder.BlobVersionId, StringComparison.InvariantCulture) != 0)
-            {
-                throw Errors.SasNamesNotMatching(
-                    nameof(builder.BlobVersionId),
-                    nameof(BlobSasBuilder));
-            }
+            SetBuilderAndValidate(builder);
             BlobUriBuilder sasUri = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
             {
                 Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential, out stringToSign)
+            };
+            return sasUri.ToUri();
+        }
+        #endregion
+
+        #region GenerateUserDelegationSas
+        /// <summary>
+        /// The <see cref="GenerateUserDelegationSasUri(BlobSasPermissions, DateTimeOffset, UserDelegationKey)"/>
+        /// returns a <see cref="Uri"/> representing a Blob Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties
+        /// and parameters passed. The SAS is signed by the user delegation key
+        /// that is passed in.
+        ///
+        /// For more information, see
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-user-delegation-sas">
+        /// Creating an user delegation SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="BlobSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <param name="userDelegationKey">
+        /// Required. A <see cref="UserDelegationKey"/> returned from
+        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync"/>.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        public virtual Uri GenerateUserDelegationSasUri(BlobSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey) =>
+            GenerateUserDelegationSasUri(permissions, expiresOn, userDelegationKey, out _);
+
+        /// <summary>
+        /// The <see cref="GenerateUserDelegationSasUri(BlobSasPermissions, DateTimeOffset, UserDelegationKey, out string)"/>
+        /// returns a <see cref="Uri"/> representing a Blob Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties
+        /// and parameters passed. The SAS is signed by the user delegation key
+        /// that is passed in.
+        ///
+        /// For more information, see
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-user-delegation-sas">
+        /// Creating an user delegation SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="BlobSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <param name="userDelegationKey">
+        /// Required. A <see cref="UserDelegationKey"/> returned from
+        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync"/>.
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        public virtual Uri GenerateUserDelegationSasUri(BlobSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey, out string stringToSign) =>
+            GenerateUserDelegationSasUri(new BlobSasBuilder(permissions, expiresOn)
+            {
+                BlobContainerName = BlobContainerName,
+                BlobName = Name,
+                Snapshot = _snapshot,
+                BlobVersionId = _blobVersionId,
+                EncryptionScope = _clientConfiguration.EncryptionScope
+            }, userDelegationKey, out stringToSign);
+
+        /// <summary>
+        /// The <see cref="GenerateUserDelegationSasUri(BlobSasBuilder, UserDelegationKey)"/>
+        /// returns a <see cref="Uri"/> representing a Blob Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties
+        /// and builder passed. The SAS is signed by the user delegation key
+        /// that is passed in.
+        ///
+        /// For more information, see
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-user-delegation-sas">
+        /// Creating an user delegation SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Required. Used to generate a Shared Access Signature (SAS).
+        /// </param>
+        /// <param name="userDelegationKey">
+        /// Required. A <see cref="UserDelegationKey"/> returned from
+        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync"/>.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        public virtual Uri GenerateUserDelegationSasUri(BlobSasBuilder builder, UserDelegationKey userDelegationKey) =>
+            GenerateUserDelegationSasUri(builder, userDelegationKey, out _);
+
+        /// <summary>
+        /// The <see cref="GenerateUserDelegationSasUri(BlobSasBuilder, UserDelegationKey, out string)"/>
+        /// returns a <see cref="Uri"/> representing a Blob Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties
+        /// and builder passed. The SAS is signed by the user delegation key
+        /// that is passed in.
+        ///
+        /// For more information, see
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-user-delegation-sas">
+        /// Creating an user delegation SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Required. Used to generate a Shared Access Signature (SAS).
+        /// </param>
+        /// <param name="userDelegationKey">
+        /// Required. A <see cref="UserDelegationKey"/> returned from
+        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync"/>.
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        public virtual Uri GenerateUserDelegationSasUri(BlobSasBuilder builder, UserDelegationKey userDelegationKey, out string stringToSign)
+        {
+            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            userDelegationKey = userDelegationKey ?? throw Errors.ArgumentNull(nameof(userDelegationKey));
+
+            // Deep copy of builder so we don't modify the user's origial BlobSasBuilder.
+            builder = BlobSasBuilder.DeepCopy(builder);
+
+            SetBuilderAndValidate(builder);
+            if (string.IsNullOrEmpty(AccountName))
+            {
+                throw Errors.SasClientMissingData(nameof(AccountName));
+            }
+
+            BlobUriBuilder sasUri = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
+            {
+                Sas = builder.ToSasQueryParameters(userDelegationKey, AccountName, out stringToSign)
             };
             return sasUri.ToUri();
         }
@@ -6911,6 +7018,44 @@ namespace Azure.Storage.Blobs.Specialized
             return _parentBlobContainerClient;
         }
         #endregion
+
+        private void SetBuilderAndValidate(BlobSasBuilder builder)
+        {
+            // Assign builder's ContainerName, BlobName, Snapshot, BlobVersionId, and EncryptionScope if they are null.
+            builder.BlobContainerName ??= BlobContainerName;
+            builder.BlobName ??= Name;
+            builder.Snapshot ??= _snapshot;
+            builder.BlobVersionId ??= _blobVersionId;
+            builder.EncryptionScope ??= _clientConfiguration.EncryptionScope;
+
+            // Validate that builder is properly set
+            if (!builder.BlobContainerName.Equals(BlobContainerName, StringComparison.InvariantCulture))
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.BlobContainerName),
+                    nameof(BlobSasBuilder),
+                    nameof(BlobContainerName));
+            }
+            if (!builder.BlobName.Equals(Name, StringComparison.InvariantCulture))
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.BlobName),
+                    nameof(BlobSasBuilder),
+                    nameof(Name));
+            }
+            if (string.Compare(_snapshot, builder.Snapshot, StringComparison.InvariantCulture) != 0)
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.Snapshot),
+                    nameof(BlobSasBuilder));
+            }
+            if (string.Compare(_blobVersionId, builder.BlobVersionId, StringComparison.InvariantCulture) != 0)
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.BlobVersionId),
+                    nameof(BlobSasBuilder));
+            }
+        }
     }
 
     /// <summary>

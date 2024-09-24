@@ -36,7 +36,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: useSessions))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 string sessionId = null;
                 if (useSessions)
@@ -96,7 +96,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: useSessions))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 string sessionId = null;
                 if (useSessions)
@@ -296,7 +296,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 });
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 await sender.SendMessagesAsync(messages);
@@ -356,7 +356,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 });
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessagesAsync(messages);
                 AssertSendActivities(sender, messages, listener);
@@ -399,7 +399,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
                 for (int i = 0; i < 100; i++)
                 {

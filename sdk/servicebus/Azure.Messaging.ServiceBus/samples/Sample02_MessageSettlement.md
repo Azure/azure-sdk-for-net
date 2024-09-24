@@ -1,22 +1,22 @@
 # Settling messages
 
-This sample demonstrates how to [settle](https://docs.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#settling-receive-operations)
-received messages. Message settlement can only be used when using a receiver in [PeekLock](https://docs.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock)
+This sample demonstrates how to [settle](https://learn.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#settling-receive-operations)
+received messages. Message settlement can only be used when using a receiver in [PeekLock](https://learn.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock)
  mode, which is the default behavior. In order for the settlement operation to be successful, the message must be locked. By default, received messages will be locked for 30 seconds. This can be configured via the portal or when creating the queue or subscription using the `ServiceBusAdministrationClient` or by using the [Azure Resource Manager library](https://www.nuget.org/packages/Azure.ResourceManager.ServiceBus). Additionally, it is possible to extend the lock for an already received message by using the `RenewMessageLockAsync` method.
 
 ## Completing a message
 
 ```C# Snippet:ServiceBusCompleteMessage
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
-// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
 
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
-ServiceBusMessage message = new ServiceBusMessage("Hello world!");
+ServiceBusMessage message = new("Hello world!");
 
 // send the message
 await sender.SendMessageAsync(message);

@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+
 namespace Azure.AI.OpenAI.Chat;
 
 [CodeGenModel("AzureCosmosDBChatDataSourceParameters")]
@@ -8,10 +10,10 @@ internal partial class InternalAzureCosmosDBChatDataSourceParameters
 {
     [CodeGenMember("IncludeContexts")]
     private IList<string> _internalIncludeContexts = new ChangeTrackingList<string>();
-    private DataSourceOutputContextFlags? _outputContextFlags;
+    private DataSourceOutputContexts? _outputContextFlags;
 
-    /// <inheritdoc cref="DataSourceOutputContextFlags"/>
-    public DataSourceOutputContextFlags? OutputContextFlags
+    /// <inheritdoc cref="DataSourceOutputContexts"/>
+    public DataSourceOutputContexts? OutputContextFlags
     {
         get => DataSourceOutputContextFlagsExtensions.FromStringList(_internalIncludeContexts);
         internal set

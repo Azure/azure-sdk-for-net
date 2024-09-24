@@ -16,8 +16,6 @@ using Azure.ResourceManager.Maps.Models;
 
 using NUnit.Framework;
 using Azure.Core.GeoJson;
-using Azure.Maps.Search.Models.Queries;
-using Azure.Maps.Search.Models.Options;
 
 namespace Azure.Maps.Search.Tests
 {
@@ -80,29 +78,20 @@ namespace Azure.Maps.Search.Tests
          [Test]
         public void GetGeocoding()
         {
-            var clientOptions = new MapsSearchClientOptions()
-            {
-                Endpoint = TestEnvironment.Endpoint
-            };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsSearchClient(TestEnvironment.Credential, clientId, clientOptions);
+            var client = TestEnvironment.CreateClient();
             #region Snippet:GetGeocoding
-            var query = "15171 NE 24th St, Redmond, WA 98052, United States";
-            Response <GeocodingResponse> result = client.GetGeocoding(query);
-            Console.WriteLine("Result for query: \"{0}\"", query);
-            Console.WriteLine(result);
+            Response<GeocodingResponse> searchResult = client.GetGeocoding("1 Microsoft Way, Redmond, WA 98052");
+            for (int i = 0; i < searchResult.Value.Features.Count; i++)
+            {
+                Console.WriteLine("Coordinate:" + string.Join(",", searchResult.Value.Features[i].Geometry.Coordinates));
+            }
             #endregion
         }
 
         [Test]
         public void GetGeocodingBatch()
         {
-            var clientOptions = new MapsSearchClientOptions()
-            {
-                Endpoint = TestEnvironment.Endpoint
-            };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsSearchClient(TestEnvironment.Credential, clientId, clientOptions);
+            var client = TestEnvironment.CreateClient();
             #region Snippet:GetGeocodingBatch
             List<GeocodingQuery> queries = new List<GeocodingQuery>
                     {
@@ -112,70 +101,91 @@ namespace Azure.Maps.Search.Tests
                         },
                         new GeocodingQuery()
                         {
-                             Coordinates = new GeoPosition(121.5, 25.0)
+                             AddressLine = "400 Broad St"
                         },
                     };
             Response<GeocodingBatchResponse> results = client.GetGeocodingBatch(queries);
-            Console.WriteLine(results);
+
+            // Print coordinates
+            for (var i = 0; i < results.Value.BatchItems.Count; i++)
+            {
+                for (var j = 0; j < results.Value.BatchItems[i].Features.Count; j++)
+                {
+                    Console.WriteLine("Coordinates: " + string.Join(",", results.Value.BatchItems[i].Features[j].Geometry.Coordinates));
+                }
+            }
             #endregion
         }
 
         [Test]
         public void GetPolygon()
         {
-            var clientOptions = new MapsSearchClientOptions()
-            {
-                Endpoint = TestEnvironment.Endpoint
-            };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsSearchClient(TestEnvironment.Credential, clientId, clientOptions);
+            var client = TestEnvironment.CreateClient();
             #region Snippet:GetPolygon
             GetPolygonOptions options = new GetPolygonOptions()
             {
-                Coordinates = new GeoPosition(121.5, 25.0)
+                Coordinates = new GeoPosition(-122.204141, 47.61256),
+                ResultType = BoundaryResultTypeEnum.Locality,
+                Resolution = ResolutionEnum.Small,
             };
             Response<Boundary> result = client.GetPolygon(options);
-            Console.WriteLine(result);
+
+            // Print polygon information
+            Console.WriteLine($"Boundary copyright URL: {result.Value.Properties?.CopyrightUrl}");
+            Console.WriteLine($"Boundary copyright: {result.Value.Properties?.Copyright}");
+
+            Console.WriteLine($"{result.Value.Geometry.Count} polygons in the result.");
+            Console.WriteLine($"First polygon coordinates (latitude, longitude):");
+
+            // Print polygon coordinates
+            foreach (var coordinate in ((GeoPolygon)result.Value.Geometry[0]).Coordinates[0])
+            {
+                Console.WriteLine($"{coordinate.Latitude:N5}, {coordinate.Longitude:N5}");
+            }
             #endregion
         }
 
         [Test]
         public void GetReverseGeocoding()
         {
-            var clientOptions = new MapsSearchClientOptions()
-            {
-                Endpoint = TestEnvironment.Endpoint
-            };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsSearchClient(TestEnvironment.Credential, clientId, clientOptions);
+            var client = TestEnvironment.CreateClient();
             #region Snippet:GetReverseGeocoding
             GeoPosition coordinates = new GeoPosition(-122.138685, 47.6305637);
             Response<GeocodingResponse> result = client.GetReverseGeocoding(coordinates);
+
+            // Print addresses
+            for (int i = 0; i < result.Value.Features.Count; i++)
+            {
+                Console.WriteLine(result.Value.Features[i].Properties.Address.FormattedAddress);
+            }
             #endregion
         }
 
         [Test]
         public void GetReverseGeocodingBatch()
         {
-            var clientOptions = new MapsSearchClientOptions()
-            {
-                Endpoint = TestEnvironment.Endpoint
-            };
-            var clientId = TestEnvironment.MapAccountClientId;
-            var client = new MapsSearchClient(TestEnvironment.Credential, clientId, clientOptions);
+            var client = TestEnvironment.CreateClient();
             #region Snippet:GetReverseGeocodingBatch
             List<ReverseGeocodingQuery> items = new List<ReverseGeocodingQuery>
                     {
                         new ReverseGeocodingQuery()
                         {
-                            Coordinates = new GeoPosition(121.53, 25.0)
+                            Coordinates = new GeoPosition(-122.349309, 47.620498)
                         },
                         new ReverseGeocodingQuery()
                         {
-                            Coordinates = new GeoPosition(121.5, 25.0)
+                            Coordinates = new GeoPosition(-122.138679, 47.630356),
+                            ResultTypes = new List<ReverseGeocodingResultTypeEnum>(){ ReverseGeocodingResultTypeEnum.Address, ReverseGeocodingResultTypeEnum.Neighborhood }
                         },
                     };
             Response<GeocodingBatchResponse> result = client.GetReverseGeocodingBatch(items);
+
+            // Print addresses
+            for (var i = 0; i < result.Value.BatchItems.Count; i++)
+            {
+                Console.WriteLine(result.Value.BatchItems[i].Features[0].Properties.Address.AddressLine);
+                Console.WriteLine(result.Value.BatchItems[i].Features[0].Properties.Address.Neighborhood);
+            }
             #endregion
         }
     }
