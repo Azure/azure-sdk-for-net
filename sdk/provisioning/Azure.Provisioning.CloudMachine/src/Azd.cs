@@ -10,7 +10,6 @@ using Azure.Provisioning.Expressions;
 using System.Text.Json.Nodes;
 using System.Text.Json;
 using System;
-using System.Collections.Generic;
 
 namespace Azure.CloudMachine;
 

@@ -23,6 +23,7 @@ public class CloudMachineTests
         Console.WriteLine(cm.Id);
     }
 
+    [Ignore("no recordings yet")]
     [Theory]
     [TestCase([new string[] { "--init" }])]
     [TestCase([new string[] { "" }])]

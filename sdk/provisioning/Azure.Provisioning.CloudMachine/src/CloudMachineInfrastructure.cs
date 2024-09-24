@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CloudMachine;
 
 public class CloudMachineInfrastructure : Infrastructure
 {
-    private readonly string _name;
+    private readonly string _cmid;
     private UserAssignedIdentity _identity;
     private StorageAccount _storage;
     private BlobService _blobs;
@@ -45,43 +45,46 @@ public class CloudMachineInfrastructure : Infrastructure
     ///// </summary>
     //public BicepParameter PrincipalNameParameter => new BicepParameter("principalName", typeof(string));
 
-    public CloudMachineInfrastructure(string name = "cm") : base(name!)
+    public CloudMachineInfrastructure(string cmid) : base("cm")
     {
-        _name = name ?? "cm";
-        _identity = new($"{_name}_identity");
+        _cmid = cmid;
+        _identity = new("cm_identity");
+        _identity.Name = _cmid;
         ManagedServiceIdentity managedServiceIdentity = new()
         {
             ManagedServiceIdentityType = ManagedServiceIdentityType.UserAssigned,
             UserAssignedIdentities = { { BicepFunction.Interpolate($"{_identity.Id}").Compile().ToString(), new UserAssignedIdentityDetails() } }
         };
 
-        _storage = StorageResources.CreateAccount($"{_name}_sa");
+        _storage = StorageResources.CreateAccount($"cm_sa");
         _storage.Identity = managedServiceIdentity;
+        _storage.Name = _cmid;
 
-        _blobs = new($"{_name}_blobs")
+        _blobs = new("cm_blobs")
         {
             Parent = _storage,
         };
-        _container = new BlobContainer($"{_name}_container", "2023-01-01")
+        _container = new BlobContainer("cm_container", "2023-01-01")
         {
             Parent = _blobs,
             Name = "default"
         };
 
-        _serviceBusNamespace = new($"{_name}_sb")
+        _serviceBusNamespace = new("cm_sb")
         {
             Sku = new ServiceBusSku
             {
                 Name = ServiceBusSkuName.Standard,
                 Tier = ServiceBusSkuTier.Standard
             },
+            Name = _cmid,
         };
-        _serviceBusNamespaceAuthorizationRule = new($"{_name}_sb_auth_rule", "2021-11-01")
+        _serviceBusNamespaceAuthorizationRule = new($"cm_sb_auth_rule", "2021-11-01")
         {
             Parent = _serviceBusNamespace,
             Rights = [ServiceBusAccessRight.Listen, ServiceBusAccessRight.Send, ServiceBusAccessRight.Manage]
         };
-        _serviceBusTopic_main = new($"{_name}_sb_topic_main", "2021-11-01")
+        _serviceBusTopic_main = new("cm_sb_topic_main", "2021-11-01")
         {
             Parent = _serviceBusNamespace,
             MaxMessageSizeInKilobytes = 256,
@@ -91,7 +94,7 @@ public class CloudMachineInfrastructure : Infrastructure
             SupportOrdering = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _serviceBusSubscription_main = new($"{_name}_sb_sub_main", "2021-11-01")
+        _serviceBusSubscription_main = new("cm_sb_sub_main", "2021-11-01")
         {
             Parent = _serviceBusTopic_main,
             IsClientAffine = false,
@@ -104,7 +107,7 @@ public class CloudMachineInfrastructure : Infrastructure
             EnableBatchedOperations = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _serviceBusTopic_app = new($"{_name}_sb_topic_app", "2021-11-01")
+        _serviceBusTopic_app = new("cm_sb_topic_app", "2021-11-01")
         {
             Parent = _serviceBusNamespace,
             MaxMessageSizeInKilobytes = 256,
@@ -114,7 +117,7 @@ public class CloudMachineInfrastructure : Infrastructure
             SupportOrdering = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _serviceBusSubscription_app = new($"{_name}_sb_sub_app", "2021-11-01")
+        _serviceBusSubscription_app = new("cm_sb_sub_app", "2021-11-01")
         {
             Parent = _serviceBusTopic_app,
             IsClientAffine = false,
@@ -127,13 +130,14 @@ public class CloudMachineInfrastructure : Infrastructure
             EnableBatchedOperations = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _eventGridTopic_Blobs = new($"{_name}_eg_blob", "2022-06-15")
+        _eventGridTopic_Blobs = new("cm_eg_blob", "2022-06-15")
         {
             TopicType = "Microsoft.Storage.StorageAccounts",
             Source = _storage.Id,
-            Identity = managedServiceIdentity
+            Identity = managedServiceIdentity,
+            Name = _cmid
         };
-        _systemTopicEventSubscription = new($"{_name}_eg_blob_sub", "2022-06-15")
+        _systemTopicEventSubscription = new($"cm_eg_blob_sub", "2022-06-15")
         {
             Parent = _eventGridTopic_Blobs,
             DeliveryWithResourceIdentity = new DeliveryWithResourceIdentity
@@ -225,7 +229,9 @@ public class CloudMachineInfrastructure : Infrastructure
             return false;
         }
 
-        CloudMachineInfrastructure cmi = new();
+        string cmid = Azd.ReadOrCreateCmid();
+
+        CloudMachineInfrastructure cmi = new(cmid);
         if (configure != default)
         {
             configure(cmi);
