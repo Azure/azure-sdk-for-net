@@ -6,5 +6,8 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
     public enum TestScenarioName
     {
         UploadSingleBlockBlobTest,
+        UploadDirectoryBlockBlobTest,
+        DownloadSingleBlockBlobTest,
+        None = default
     }
 }

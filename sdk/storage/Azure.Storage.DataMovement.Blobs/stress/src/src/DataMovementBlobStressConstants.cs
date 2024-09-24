@@ -40,5 +40,12 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             ///
             public const string JobCompletionIndex = "JOB_COMPLETION_INDEX";
         }
+
+        public static partial class TestScenarioNameStr
+        {
+            public const string UploadSingleBlockBlob = "UploadSingleBlockBlob";
+            public const string UploadDirectoryBlockBlob = "UploadDirectoryBlockBlob";
+            public const string DownloadSingleBlockBlob = "DownloadSingleBlockBlob";
+        }
     }
 }

@@ -42,17 +42,17 @@ public class Metrics
     public const string GenerationTwoCollections = "GenerationTwoCollections";
 
     /// <summary>
-    ///   This is the metric name used to collect how many blobs were uploaded
+    ///   This is the metric name used to collect how many objects (e.g. local file, blob, share file) were transferred.
     /// </summary>
     ///
-    public const string ObjectsTransferred = "BatchesSent";
+    public const string ObjectsTransferred = "ObjectsTransferred";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on how many times
     ///   the individual transfer part was restarted or retried.
     /// </summary>
     ///
-    public const string TransferRetriedRestarted = "SenderRestarted";
+    public const string TransferRetriedRestarted = "TransferRestarted";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on the total number of bytes that have been

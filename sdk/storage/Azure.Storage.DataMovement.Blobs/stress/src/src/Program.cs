@@ -26,17 +26,17 @@ public class Program
     ///
     /// <param name="args">The command line inputs.</param>
     ///
-    public static async Task Main()
+    public static async Task Main(string[] args)
     {
         // Parse command line arguments
-        await RunAllScenarios().ConfigureAwait(false);
+        await CommandLine.Parser.Default.ParseArguments<Options>(args).WithParsedAsync(RunOptions).ConfigureAwait(false);
     }
 
     /// <summary>
     ///   Starts a background task for each test and role that needs to be run in this process, and waits for all
     ///   test runs to completed before finishing the run.
     /// </summary>
-    private static async Task RunAllScenarios()
+    private static async Task RunOptions(Options opts)
     {
         // See if there are environment variables available to use in the .env file
         var environment = new Dictionary<string, string>();
@@ -45,9 +45,6 @@ public class Program
 
         environment.TryGetValue(DataMovementBlobStressConstants.EnvironmentVariables.ApplicationInsightsKey, out var appInsightsKey);
         environment.TryGetValue(DataMovementBlobStressConstants.EnvironmentVariables.StorageBlobEndpoint, out var blobEndpoint);
-        Console.Out.WriteLine($"Finished reading environment file\n" +
-            $"ApplicationInsightsKey: {appInsightsKey}\n" +
-            $"Blob Endpoint: {blobEndpoint}\n");
 
         // Check values
 
@@ -68,15 +65,36 @@ public class Program
 
         try
         {
-            metrics.Client.Context.GlobalProperties["TestName"] = "UploadSingleBlockBlob";
+            TestScenarioName testScenarioName = StringToTestScenario(opts.Test);
+            metrics.Client.Context.GlobalProperties["TestName"] = opts.Test;
             string guid = Guid.NewGuid().ToString();
 
             metrics.Client.TrackEvent("Starting a test run.");
             Console.Out.WriteLine($"Starting test run...");
 
-            TestScenarioBase testScenarioInstance = new BlobSingleUploadScenario(new Uri(blobEndpoint), tokenCredential, metrics, guid);
+            TestScenarioBase testScenario = null;
+            TransferManagerOptions transferManagerOptions = new TransferManagerOptions()
+            {
+                MaximumConcurrency = opts.Parallel,
+            };
+            DataTransferOptions transferOptions = new DataTransferOptions()
+            {
+                MaximumTransferChunkSize = opts.BlockSize,
+                InitialTransferSize = opts.InitialTransferSize,
+            };
+            switch (testScenarioName)
+            {
+                case TestScenarioName.UploadSingleBlockBlobTest:
+                    testScenario = new BlobSingleUploadScenario(new Uri(blobEndpoint), transferManagerOptions, transferOptions, tokenCredential, metrics, guid);
+                    break;
+                case TestScenarioName.UploadDirectoryBlockBlobTest:
+                    testScenario = new BlobDirectoryUploadScenario(new Uri(blobEndpoint), tokenCredential, metrics, guid);
+                    break;
+                default:
+                    throw new Exception("No Scenario or Invalid scenario passed");
+            }
 
-            var testRun = testScenarioInstance.RunTestAsync(cancellationSource.Token);
+            var testRun = testScenario.RunTestAsync(cancellationSource.Token);
 
             while (!testRun.IsCompleted)
             {
@@ -123,7 +141,9 @@ public class Program
     ///
     public static TestScenarioName StringToTestScenario(string testScenario) => testScenario switch
     {
-        "UploadSingleBlockBlob" => TestScenarioName.UploadSingleBlockBlobTest,
+        DataMovementBlobStressConstants.TestScenarioNameStr.UploadSingleBlockBlob => TestScenarioName.UploadSingleBlockBlobTest,
+        DataMovementBlobStressConstants.TestScenarioNameStr.UploadDirectoryBlockBlob => TestScenarioName.UploadDirectoryBlockBlobTest,
+        DataMovementBlobStressConstants.TestScenarioNameStr.DownloadSingleBlockBlob => TestScenarioName.DownloadSingleBlockBlobTest,
         _ => throw new ArgumentNullException(),
     };
 
@@ -136,7 +156,22 @@ public class Program
         [Option('t', "test", HelpText = "Test scenario to run.")]
         public string Test { get; set; }
 
-        [Option('r', "role", HelpText = "Role to run in this container.")]
-        public string Role { get; set; }
+        [Option('s', "size", HelpText = "Size of each objects to transfer.")]
+        public int Size { get; set; }
+
+        [Option('b', "blockSize", HelpText = "Size of the chunk/block size")]
+        public int BlockSize { get; set; }
+
+        [Option('i', "initialTransferSize", HelpText = "Initial transfer size.")]
+        public int InitialTransferSize { get; set; }
+
+        [Option('c', "count", HelpText = "Number of objects to transfer.")]
+        public int Count { get; set; }
+
+        [Option('d', "duration", HelpText = "Duration of the test run.")]
+        public int Duration { get; set; }
+
+        [Option('p', "parallel", HelpText = "Maximum concurrency.")]
+        public int Parallel { get; set; }
     }
 }

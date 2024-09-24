@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -17,24 +14,30 @@ using Azure.Storage.DataMovement.Tests;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
-    public class BlobSingleUploadScenario : BlobUploadScenarioBase
+    public class BlobSingleUploadScenario : BlobScenarioBase
     {
+        private TransferManagerOptions _transferManagerOptions;
+        private DataTransferOptions _dataTransferOptions;
         public BlobSingleUploadScenario(
             Uri destinationBlobUri,
+            TransferManagerOptions transferManagerOptions,
+            DataTransferOptions dataTransferOptions,
             TokenCredential tokenCredential,
             Metrics metrics,
             string testRunId)
             : base(destinationBlobUri, tokenCredential, metrics, testRunId)
         {
+            _transferManagerOptions = transferManagerOptions;
+            _dataTransferOptions = dataTransferOptions;
         }
 
-        public override string Name => "blobSingleUpload";
+        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.UploadSingleBlockBlob;
 
         public override async Task RunTestAsync(CancellationToken cancellationToken)
         {
             DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
-            string destinationContainerName = ConfigurationHelper.Randomize("container-");
-            string blobName = ConfigurationHelper.Randomize("blob-");
+            string destinationContainerName = ConfigurationHelper.Randomize("container");
+            string blobName = ConfigurationHelper.Randomize("blob");
             var blobSize = 1024 * 1024 * 1024;
             var blockSize = 4 * 1024 * 1024;
             var blockCount = blobSize / blockSize;
@@ -63,9 +66,13 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             StorageResource destinationResource = _blobsStorageResourceProvider.FromBlob(blobUriBuilder.ToUri().AbsoluteUri);
 
             // Start Transfer
-            TransferManager transferManager = new TransferManager();
+            TransferManager transferManager = new TransferManager(_transferManagerOptions);
             Console.Out.WriteLine($"Starting transfer from {sourceResource.Uri.AbsoluteUri} to {destinationResource.Uri.AbsoluteUri}");
-            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, cancellationToken: cancellationToken);
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                _dataTransferOptions,
+                cancellationToken: cancellationToken);
 
             // Wait for transfer to finish
             await transfer.WaitForCompletionAsync(cancellationToken);
@@ -80,7 +87,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             Console.Out.WriteLine($"Verifying source and target stream match");
             Console.Out.WriteLine($"Source Stream Length: {sourceStream.Length}");
             Console.Out.WriteLine($"Target Stream Length: {targetStream.Length}");
-            //Assert.AreEqual(sourceStream.Length, targetStream.Length);
+            Assert.AreEqual(sourceStream.Length, targetStream.Length);
             if (sourceStream.Equals(targetStream))
             {
                 Console.Out.WriteLine("Source and target stream match");

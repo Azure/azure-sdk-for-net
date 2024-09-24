@@ -5,10 +5,13 @@ using System;
 using Azure.Core;
 using Azure.Storage.Stress;
 using Azure.Storage.Blobs;
+using System.Threading.Tasks;
+using System.IO;
+using System.Threading;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
-    public abstract class BlobUploadScenarioBase : TestScenarioBase
+    public abstract class BlobScenarioBase : TestScenarioBase
     {
         protected internal readonly Uri _destinationBlobUri;
         protected internal readonly TokenCredential _tokenCredential;
@@ -16,7 +19,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
         protected internal LocalFilesStorageResourceProvider _localFilesStorageResourceProvider;
         protected internal BlobServiceClient _destinationServiceClient;
 
-        public BlobUploadScenarioBase(
+        public BlobScenarioBase(
             Uri destinationBlobUri,
             TokenCredential tokenCredential,
             Metrics metrics,
@@ -28,6 +31,25 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             _blobsStorageResourceProvider = new BlobsStorageResourceProvider(tokenCredential);
             _localFilesStorageResourceProvider = new LocalFilesStorageResourceProvider();
             _destinationServiceClient = new BlobServiceClient(destinationBlobUri, tokenCredential);
+        }
+
+        public async Task CreateLocalFilesToUploadAsync(
+            string directoryPrefix,
+            int fileCount = 1,
+            int fileSize = DataMovementBlobStressConstants.KB * 4,
+            CancellationToken cancellationToken = default)
+        {
+            for (int i = 0; i < fileCount; i++)
+            {
+                using Stream originalStream = await ConfigurationHelper.CreateLimitedMemoryStream(fileSize);
+                string localSourceFile = Path.Combine(directoryPrefix, ConfigurationHelper.Randomize("file"));
+                // create a new file and copy contents of stream into it, and then close the FileStream
+                // so the StagedUploadAsync call is not prevented from reading using its FileStream.
+                using (FileStream fileStream = File.OpenWrite(localSourceFile))
+                {
+                    await originalStream.CopyToAsync(destination: fileStream,  bufferSize: default, cancellationToken: cancellationToken);
+                }
+            }
         }
     }
 }
