@@ -1,14 +1,12 @@
 # Release History
 
-## 11.7.0-beta.1 (Unreleased)
+## 11.7.0-beta.1 (2024-09-24)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for `VectorSearchCompression.TruncationDimension`, which allows specifying the number of dimensions to truncate vectors to.
+- Added support for `VectorQuery.FilterOverride`, which allows vector queries to override the broader `SearchOptions.Filter`, enabling more specific configurations for vector queries.
+- `SplitSkill` now supports tokenization.
+- `DocumentDebugInfo` is extended with vector scores for the results.
 
 ## 11.6.0 (2024-07-17)
 
@@ -394,5 +392,3 @@
 
 - Initial preview of the Azure.Search client library enabling you to query
   and update documents in search indexes.
-
-[net-guidelines-collection-properties]: https://docs.microsoft.com/dotnet/standard/design-guidelines/guidelines-for-collections#collection-properties-and-return-values

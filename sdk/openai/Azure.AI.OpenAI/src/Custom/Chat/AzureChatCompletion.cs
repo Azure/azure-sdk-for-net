@@ -8,22 +8,22 @@ using OpenAI.Chat;
 
 #pragma warning disable AZC0112
 
-namespace Azure.AI.OpenAI;
+namespace Azure.AI.OpenAI.Chat;
 
 public static partial class AzureChatCompletionExtensions
 {
     [Experimental("AOAI001")]
-    public static ContentFilterResultForPrompt GetContentFilterResultForPrompt(this ChatCompletion chatCompletion)
+    public static RequestContentFilterResult GetRequestContentFilterResult(this ChatCompletion chatCompletion)
     {
-        return AdditionalPropertyHelpers.GetAdditionalListProperty<ContentFilterResultForPrompt>(
+        return AdditionalPropertyHelpers.GetAdditionalListProperty<RequestContentFilterResult>(
             chatCompletion.SerializedAdditionalRawData,
             "prompt_filter_results")?[0];
     }
 
     [Experimental("AOAI001")]
-    public static ContentFilterResultForResponse GetContentFilterResultForResponse(this ChatCompletion chatCompletion)
+    public static ResponseContentFilterResult GetResponseContentFilterResult(this ChatCompletion chatCompletion)
     {
-        return AdditionalPropertyHelpers.GetAdditionalProperty<ContentFilterResultForResponse>(
+        return AdditionalPropertyHelpers.GetAdditionalProperty<ResponseContentFilterResult>(
             chatCompletion.Choices?[0]?.SerializedAdditionalRawData,
             "content_filter_results");
     }

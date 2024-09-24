@@ -57,14 +57,16 @@ namespace Azure.AI.OpenAI.Chat
         /// <param name="url"> The URL of the citation. </param>
         /// <param name="filepath"> The file path for the citation. </param>
         /// <param name="chunkId"> The chunk ID for the citation. </param>
+        /// <param name="rerankScore"> The rerank score for the retrieval. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureChatCitation(string content, string title, string url, string filepath, string chunkId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureChatCitation(string content, string title, string url, string filepath, string chunkId, double? rerankScore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Content = content;
             Title = title;
             Url = url;
             Filepath = filepath;
             ChunkId = chunkId;
+            RerankScore = rerankScore;
             SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -83,5 +85,7 @@ namespace Azure.AI.OpenAI.Chat
         public string Filepath { get; }
         /// <summary> The chunk ID for the citation. </summary>
         public string ChunkId { get; }
+        /// <summary> The rerank score for the retrieval. </summary>
+        public double? RerankScore { get; }
     }
 }

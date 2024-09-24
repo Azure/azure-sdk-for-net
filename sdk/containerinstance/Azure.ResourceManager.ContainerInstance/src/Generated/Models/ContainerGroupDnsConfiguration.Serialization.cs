@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         void IJsonModel<ContainerGroupDnsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupDnsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerGroupDnsConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("nameServers"u8);
             writer.WriteStartArray();
             foreach (var item in NameServers)
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContainerGroupDnsConfiguration IJsonModel<ContainerGroupDnsConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

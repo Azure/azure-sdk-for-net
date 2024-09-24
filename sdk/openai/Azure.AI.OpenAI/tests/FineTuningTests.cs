@@ -166,7 +166,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         int maxLoops = 10;
         do
         {
-            result = await client.GetJobEventsAsync(job.ID, null, 10, new()).FirstOrDefaultAsync();
+            result = await client.GetJobEventsAsync(job.ID, null, 10, new()).GetRawPagesAsync().FirstOrDefaultAsync();
             events = ValidateAndParse<ListResponse<FineTuningJobEvent>>(result);
 
             if (events.Data?.Count > 0)
@@ -193,7 +193,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         Assert.That(job.Status, Is.EqualTo("cancelled"));
     }
 
-    [RecordedTest]
+    [RecordedTest(AutomaticRecord = false)]
     [Category("LongRunning")] // CAUTION: This test can take up 30 *minutes* to run in live mode
     public async Task CreateAndDeleteFineTuning()
     {
@@ -204,7 +204,9 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
 
         // upload training data
         OpenAIFileInfo uploadedFile = await UploadAndWaitForCompleteOrFail(fileClient, fineTuningFile.RelativePath);
+#pragma warning disable CS0618
         Assert.That(uploadedFile.Status, Is.EqualTo(OpenAIFileStatus.Processed));
+#pragma warning restore CS0618
 
         // Create the fine tuning job
         using var requestContent = new FineTuningOptions()
@@ -229,7 +231,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         Assert.True(deleted, "Failed to delete fine tuning model: {0}", job.FineTunedModel);
     }
 
-    [RecordedTest]
+    [RecordedTest(AutomaticRecord = false)]
     [Category("LongRunning")] // CAUTION: This test can take around 10 to 15 *minutes* in live mode to run
     public async Task DeployAndChatWithModel()
     {
@@ -321,6 +323,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
         OpenAIFileInfo uploadedFile = await fileClient.UploadFileAsync(path, FileUploadPurpose.FineTune);
         Validate(uploadedFile);
 
+#pragma warning disable CS0618
         uploadedFile = await WaitUntilReturnLast(
             uploadedFile,
             () => fileClient.GetFileAsync(uploadedFile.Id),
@@ -328,6 +331,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
             TimeSpan.FromSeconds(5),
             TimeSpan.FromMinutes(5))
             .ConfigureAwait(false);
+#pragma warning restore CS0618
 
         return uploadedFile;
     }
@@ -351,18 +355,18 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
     }
 
     private IAsyncEnumerable<FineTuningJob> EnumerateJobsAsync(FineTuningClient client)
-        => EnumerateAsync<FineTuningJob>((after, limit, opt) => client.GetJobsAsync(after, limit, opt));
+        => EnumerateAsync<FineTuningJob>(client.GetJobsAsync);
 
     private IAsyncEnumerable<FineTuningCheckpoint> EnumerateCheckpoints(FineTuningClient client, string jobId)
         => EnumerateAsync<FineTuningCheckpoint>((after, limit, opt) => client.GetJobCheckpointsAsync(jobId, after, limit, opt));
 
-    private async IAsyncEnumerable<T> EnumerateAsync<T>(Func<string?, int?, RequestOptions, IAsyncEnumerable<ClientResult>> getAsyncEnumerable)
+    private async IAsyncEnumerable<T> EnumerateAsync<T>(Func<string?, int?, RequestOptions, AsyncCollectionResult> getAsyncEnumerable)
         where T : FineTuningModelBase
     {
         int numPerFetch = 10;
         RequestOptions reqOptions = new();
 
-        await foreach (ClientResult pageResult in getAsyncEnumerable(null, numPerFetch, reqOptions))
+        await foreach (ClientResult pageResult in getAsyncEnumerable(null, numPerFetch, reqOptions).GetRawPagesAsync())
         {
             ListResponse<T> items = ValidateAndParse<ListResponse<T>>(pageResult);
             if (items.Data?.Count > 0)

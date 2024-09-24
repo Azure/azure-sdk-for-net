@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -100,6 +102,21 @@ namespace Azure.ResourceManager.RedisEnterprise
                 writer.WritePropertyName("geoReplication"u8);
                 writer.WriteObjectValue(GeoReplication, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(RedisVersion))
+            {
+                writer.WritePropertyName("redisVersion"u8);
+                writer.WriteStringValue(RedisVersion);
+            }
+            if (Optional.IsDefined(DeferUpgrade))
+            {
+                writer.WritePropertyName("deferUpgrade"u8);
+                writer.WriteStringValue(DeferUpgrade.Value.ToString());
+            }
+            if (Optional.IsDefined(AccessKeysAuthentication))
+            {
+                writer.WritePropertyName("accessKeysAuthentication"u8);
+                writer.WriteStringValue(AccessKeysAuthentication.Value.ToString());
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -152,6 +169,9 @@ namespace Azure.ResourceManager.RedisEnterprise
             RedisPersistenceSettings persistence = default;
             IList<RedisEnterpriseModule> modules = default;
             RedisEnterpriseDatabaseGeoReplication geoReplication = default;
+            string redisVersion = default;
+            DeferUpgradeSetting? deferUpgrade = default;
+            AccessKeysAuthentication? accessKeysAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -275,6 +295,29 @@ namespace Azure.ResourceManager.RedisEnterprise
                             geoReplication = RedisEnterpriseDatabaseGeoReplication.DeserializeRedisEnterpriseDatabaseGeoReplication(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("redisVersion"u8))
+                        {
+                            redisVersion = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("deferUpgrade"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            deferUpgrade = new DeferUpgradeSetting(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("accessKeysAuthentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            accessKeysAuthentication = new AccessKeysAuthentication(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -298,7 +341,277 @@ namespace Azure.ResourceManager.RedisEnterprise
                 persistence,
                 modules ?? new ChangeTrackingList<RedisEnterpriseModule>(),
                 geoReplication,
+                redisVersion,
+                deferUpgrade,
+                accessKeysAuthentication,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientProtocol), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    clientProtocol: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientProtocol))
+                {
+                    builder.Append("    clientProtocol: ");
+                    builder.AppendLine($"'{ClientProtocol.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    port: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Port))
+                {
+                    builder.Append("    port: ");
+                    builder.AppendLine($"{Port.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    resourceState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceState))
+                {
+                    builder.Append("    resourceState: ");
+                    builder.AppendLine($"'{ResourceState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusteringPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    clusteringPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClusteringPolicy))
+                {
+                    builder.Append("    clusteringPolicy: ");
+                    builder.AppendLine($"'{ClusteringPolicy.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EvictionPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    evictionPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EvictionPolicy))
+                {
+                    builder.Append("    evictionPolicy: ");
+                    builder.AppendLine($"'{EvictionPolicy.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Persistence), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    persistence: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Persistence))
+                {
+                    builder.Append("    persistence: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Persistence, options, 4, false, "    persistence: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Modules), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    modules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Modules))
+                {
+                    if (Modules.Any())
+                    {
+                        builder.Append("    modules: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Modules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    modules: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoReplication), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    geoReplication: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GeoReplication))
+                {
+                    builder.Append("    geoReplication: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, GeoReplication, options, 4, false, "    geoReplication: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RedisVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    redisVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RedisVersion))
+                {
+                    builder.Append("    redisVersion: ");
+                    if (RedisVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RedisVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RedisVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeferUpgrade), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    deferUpgrade: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeferUpgrade))
+                {
+                    builder.Append("    deferUpgrade: ");
+                    builder.AppendLine($"'{DeferUpgrade.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessKeysAuthentication), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    accessKeysAuthentication: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccessKeysAuthentication))
+                {
+                    builder.Append("    accessKeysAuthentication: ");
+                    builder.AppendLine($"'{AccessKeysAuthentication.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<RedisEnterpriseDatabaseData>.Write(ModelReaderWriterOptions options)
@@ -309,6 +622,8 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseData)} does not support writing '{options.Format}' format.");
             }

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.BotService.Models
 
         void IJsonModel<ServiceProviderParameterMetadataConstraints>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceProviderParameterMetadataConstraints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceProviderParameterMetadataConstraints)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.BotService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ServiceProviderParameterMetadataConstraints IJsonModel<ServiceProviderParameterMetadataConstraints>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

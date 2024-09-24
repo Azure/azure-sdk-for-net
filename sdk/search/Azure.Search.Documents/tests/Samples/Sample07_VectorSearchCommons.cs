@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("text-embedding-ada-002");
 
             Embedding embedding = embeddingClient.GenerateEmbedding(input);
-            return embedding.Vector;
+            return embedding.ToFloats();
         }
         #endregion
 

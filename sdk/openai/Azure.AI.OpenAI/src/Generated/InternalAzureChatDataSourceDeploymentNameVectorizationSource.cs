@@ -20,7 +20,7 @@ namespace Azure.AI.OpenAI.Chat
         /// resource as the model deployment being used for chat completions.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        internal InternalAzureChatDataSourceDeploymentNameVectorizationSource(string deploymentName)
+        public InternalAzureChatDataSourceDeploymentNameVectorizationSource(string deploymentName)
         {
             Argument.AssertNotNull(deploymentName, nameof(deploymentName));
 
@@ -59,7 +59,7 @@ namespace Azure.AI.OpenAI.Chat
         /// The number of dimensions to request on embeddings.
         /// Only supported in 'text-embedding-3' and later models.
         /// </summary>
-        internal int? Dimensions { get; set; }
+        public int? Dimensions { get; set; }
     }
 }
 
