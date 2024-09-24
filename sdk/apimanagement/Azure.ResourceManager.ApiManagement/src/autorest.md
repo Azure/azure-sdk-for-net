@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: ApiManagement
 namespace: Azure.ResourceManager.ApiManagement
-require: https://github.com/Azure/azure-rest-api-specs/blob/2d973fccf9f28681a481e9760fa12b2334216e21/specification/apimanagement/resource-manager/readme.md
-tag: package-preview-2023-03
+require: https://github.com/Azure/azure-rest-api-specs/blob/86d7e7d7c7ea9428a3a8e983d746a270f0581bc7/specification/apimanagement/resource-manager/readme.md
+tag: package-2024-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -65,6 +65,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/namedValues/{namedValueId}: ApiManagementNamedValue
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}: ApiManagementGroup
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/schemas/{schemaId}: ApiManagementGlobalSchema
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}: GatewayResource
 
 format-by-name-rules:
   'tenantId': 'uuid'
