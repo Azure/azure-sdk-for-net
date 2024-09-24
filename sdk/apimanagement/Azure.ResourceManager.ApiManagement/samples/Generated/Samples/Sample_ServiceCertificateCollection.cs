@@ -296,12 +296,12 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string certificateId = "tempcert";
-            CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters = new CertificateCreateOrUpdateParameters()
+            CertificateCreateOrUpdateContent content = new CertificateCreateOrUpdateContent()
             {
                 Data = "****************Base 64 Encoded Certificate *******************************",
                 Password = "****Certificate Password******",
             };
-            ArmOperation<ServiceCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateId, certificateCreateOrUpdateParameters);
+            ArmOperation<ServiceCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateId, content);
             ServiceCertificateResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string certificateId = "templateCertkv";
-            CertificateCreateOrUpdateParameters certificateCreateOrUpdateParameters = new CertificateCreateOrUpdateParameters()
+            CertificateCreateOrUpdateContent content = new CertificateCreateOrUpdateContent()
             {
                 KeyVaultDetails = new KeyVaultContractCreateProperties()
                 {
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                     IdentityClientId = "ceaa6b06-c00f-43ef-99ac-f53d1fe876a0",
                 },
             };
-            ArmOperation<ServiceCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateId, certificateCreateOrUpdateParameters);
+            ArmOperation<ServiceCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateId, content);
             ServiceCertificateResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

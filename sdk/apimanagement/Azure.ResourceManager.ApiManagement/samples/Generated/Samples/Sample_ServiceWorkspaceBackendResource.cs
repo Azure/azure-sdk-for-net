@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            BackendUpdateParameters backendUpdateParameters = new BackendUpdateParameters()
+            BackendUpdateContent content = new BackendUpdateContent()
             {
                 Description = "description5308",
                 Tls = new BackendTlsProperties()
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                     ShouldValidateCertificateName = true,
                 },
             };
-            ServiceWorkspaceBackendResource result = await serviceWorkspaceBackend.UpdateAsync(ifMatch, backendUpdateParameters);
+            ServiceWorkspaceBackendResource result = await serviceWorkspaceBackend.UpdateAsync(ifMatch, content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

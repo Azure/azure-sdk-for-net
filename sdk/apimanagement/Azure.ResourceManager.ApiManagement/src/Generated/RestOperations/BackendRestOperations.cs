@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string backendId, ETag ifMatch, BackendUpdateParameters backendUpdateParameters)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string backendId, ETag ifMatch, BackendUpdateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.ApiManagement
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string backendId, ETag ifMatch, BackendUpdateParameters backendUpdateParameters)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string backendId, ETag ifMatch, BackendUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -522,9 +522,9 @@ namespace Azure.ResourceManager.ApiManagement
             request.Headers.Add("If-Match", ifMatch);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(backendUpdateParameters, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -535,19 +535,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="backendId"> Identifier of the Backend entity. Must be unique in the current API Management service instance. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="backendUpdateParameters"> Update parameters. </param>
+        /// <param name="content"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="backendId"/> or <paramref name="backendUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="backendId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="backendId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiManagementBackendData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string backendId, ETag ifMatch, BackendUpdateParameters backendUpdateParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementBackendData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string backendId, ETag ifMatch, BackendUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
-            Argument.AssertNotNull(backendUpdateParameters, nameof(backendUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, backendId, ifMatch, backendUpdateParameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, backendId, ifMatch, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -569,19 +569,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="backendId"> Identifier of the Backend entity. Must be unique in the current API Management service instance. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="backendUpdateParameters"> Update parameters. </param>
+        /// <param name="content"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="backendId"/> or <paramref name="backendUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="backendId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="backendId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiManagementBackendData> Update(string subscriptionId, string resourceGroupName, string serviceName, string backendId, ETag ifMatch, BackendUpdateParameters backendUpdateParameters, CancellationToken cancellationToken = default)
+        public Response<ApiManagementBackendData> Update(string subscriptionId, string resourceGroupName, string serviceName, string backendId, ETag ifMatch, BackendUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
-            Argument.AssertNotNull(backendUpdateParameters, nameof(backendUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, backendId, ifMatch, backendUpdateParameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, backendId, ifMatch, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
