@@ -94,8 +94,15 @@ namespace Azure.Core.Pipeline
         /// <remarks>Service client libraries may override this to handle service specific authentication challenges.</remarks>
         /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
         /// <returns>A boolean indicating whether the request was successfully authenticated and should be sent to the transport.</returns>
-        protected virtual ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message)
+        protected virtual async ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message)
         {
+            if (AuthorizationChallengeParser.IsCaeClaimsChallenge(message.Response) &&
+                TryGetTokenRequestContextForCaeChallenge(message, out var tokenRequestContext))
+            {
+                await AuthenticateAndAuthorizeRequestAsync(message, tokenRequestContext).ConfigureAwait(false);
+                return true;
+            }
+
             return default;
         }
 
@@ -107,7 +114,39 @@ namespace Azure.Core.Pipeline
         /// <returns>A boolean indicating whether the request was successfully authenticated and should be sent to the transport.</returns>
         protected virtual bool AuthorizeRequestOnChallenge(HttpMessage message)
         {
+            if (AuthorizationChallengeParser.IsCaeClaimsChallenge(message.Response) &&
+                TryGetTokenRequestContextForCaeChallenge(message, out var tokenRequestContext))
+            {
+                AuthenticateAndAuthorizeRequest(message, tokenRequestContext);
+                return true;
+            }
             return false;
+        }
+
+        internal bool TryGetTokenRequestContextForCaeChallenge(HttpMessage message, out TokenRequestContext tokenRequestContext)
+        {
+            string? decodedClaims = null;
+            try
+            {
+                decodedClaims = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "claims") switch
+                {
+                    null => null,
+                    { Length: 0 } => null,
+                    string enc => System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(enc))
+                };
+            }
+            catch (FormatException)
+            {
+                //AzureCoreEventSource.Singleton.FailedToDecodeClaims(e.ToString());
+            }
+            if (decodedClaims == null)
+            {
+                tokenRequestContext = default;
+                return false;
+            }
+
+            tokenRequestContext = new TokenRequestContext(_scopes, message.Request.ClientRequestId, decodedClaims, isCaeEnabled: true);
+            return true;
         }
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
