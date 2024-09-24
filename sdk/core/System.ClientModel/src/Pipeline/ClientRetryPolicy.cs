@@ -393,6 +393,13 @@ public class ClientRetryPolicy : PipelinePolicy
     /// </summary>
     protected virtual ClientRetryOptionsVersion? SupportedVersion => default;
 
+    /// <summary>
+    /// Get the highest version corresponding to an option that is set on the
+    /// options instance.  If an option is not set on the options instance, its
+    /// version is not considered.
+    /// </summary>
+    /// <param name="options"></param>
+    /// <returns></returns>
     private static ClientRetryOptionsVersion GetHighestSetOptionVersion(ClientRetryOptions options)
     {
         ClientRetryOptionsVersion maxVersionSet = ClientRetryOptionsVersion.V1_1_0;
@@ -416,7 +423,9 @@ public class ClientRetryPolicy : PipelinePolicy
     }
 
     /// <summary>
-    /// TBD.
+    /// Mapping from option properties available in
+    /// <see cref="ClientRetryOptions"/> to the version that that option was
+    /// added to the options type.
     /// </summary>
     protected enum ClientRetryOptionsVersion
     {

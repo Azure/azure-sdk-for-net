@@ -13,7 +13,7 @@ public class ClientRetryOptionsTests
     {
         ClientRetryOptions options = new ClientRetryOptions()
         {
-            // Setting this causes it to throw
+            // Setting this V1_2_0 option causes constructor to throw.
             MaxRetries = 5
         };
 
@@ -24,7 +24,7 @@ public class ClientRetryOptionsTests
     [Test]
     public void PolicyConstructorDoesNotThrowIfOnlySupportedOptionsSet_UnspecifiedVersionPolicy()
     {
-        // No options set, policy constructor shouldn't throw
+        // No options are set, so policy constructor shouldn't throw.
         ClientRetryOptions options = new ClientRetryOptions();
 
         Assert.DoesNotThrow(() => new CustomRetryPolicyWithUnspecifiedVersion(options));
@@ -35,7 +35,7 @@ public class ClientRetryOptionsTests
     {
         ClientRetryOptions options = new ClientRetryOptions()
         {
-            // Setting this causes it to throw
+            // Setting this V1_2_0 option causes constructor to throw.
             MaxRetries = 5
         };
 
@@ -46,7 +46,7 @@ public class ClientRetryOptionsTests
     [Test]
     public void PolicyConstructorDoesNotThrowIfOnlySupportedOptionsSet_LowerVersionPolicy()
     {
-        // No options set, policy constructor shouldn't throw
+        // No options are set, so policy constructor shouldn't throw.
         ClientRetryOptions options = new ClientRetryOptions();
 
         Assert.DoesNotThrow(() => new CustomRetryPolicyWithLowerVersion(options));
@@ -55,7 +55,6 @@ public class ClientRetryOptionsTests
     [Test]
     public void PolicyConstructorDoesNotThrowForBaseRetryPolicy()
     {
-        // No options set, policy constructor shouldn't throw
         ClientRetryOptions options = new ClientRetryOptions();
 
         Assert.DoesNotThrow(() => new ClientRetryPolicy(options));

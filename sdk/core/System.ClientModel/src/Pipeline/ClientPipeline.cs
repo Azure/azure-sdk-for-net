@@ -114,6 +114,7 @@ public sealed partial class ClientPipeline
         {
             pipelineLength++; // for retry policy
         }
+
         pipelineLength++; // for transport
 
         PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
