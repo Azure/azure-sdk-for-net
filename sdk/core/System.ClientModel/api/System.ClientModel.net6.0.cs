@@ -96,14 +96,23 @@ namespace System.ClientModel.Primitives
     {
         public ClientPipelineOptions() { }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
+        public System.ClientModel.Primitives.ClientRetryOptions RetryOptions { get { throw null; } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
         protected void AssertNotFrozen() { }
         public virtual void Freeze() { }
     }
+    public partial class ClientRetryOptions
+    {
+        public ClientRetryOptions() { }
+        public bool? DisableRetries { get { throw null; } set { } }
+        public System.TimeSpan? MaxDelay { get { throw null; } set { } }
+        public int? MaxRetries { get { throw null; } set { } }
+    }
     public partial class ClientRetryPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
+        public ClientRetryPolicy(System.ClientModel.Primitives.ClientRetryOptions options) { }
         public ClientRetryPolicy(int maxRetries = 3) { }
         public static System.ClientModel.Primitives.ClientRetryPolicy Default { get { throw null; } }
         protected virtual System.TimeSpan GetNextDelay(System.ClientModel.Primitives.PipelineMessage message, int tryCount) { throw null; }

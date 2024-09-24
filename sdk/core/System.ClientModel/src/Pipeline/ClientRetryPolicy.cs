@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
-using System.ClientModel.Options;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.ExceptionServices;
@@ -50,11 +49,35 @@ public class ClientRetryPolicy : PipelinePolicy
     /// <see cref="ClientRetryPolicy"/>.</param>
     public ClientRetryPolicy(ClientRetryOptions options)
     {
+        AssertVersion(options);
+
         bool disableRetries = options.DisableRetries.HasValue && options.DisableRetries.Value;
         _enabled = !disableRetries;
 
         _maxRetries = options.MaxRetries ?? DefaultMaxRetries;
         _maxDelay = options.MaxDelay ?? DefaultMaxDelay;
+    }
+
+    private void AssertVersion(ClientRetryOptions options)
+    {
+        // if ("highest version set by user" > "highest version known to target type")
+        //    throw new NotSupportedException();
+
+        bool isDerivedType = GetType() != Default.GetType();
+        ClientRetryOptionsVersion supportedVersion = ClientRetryOptionsVersion.V1_2_0;
+
+        if (isDerivedType)
+        {
+            supportedVersion = SupportedVersion ?? ClientRetryOptionsVersion.V1_1_0;
+        }
+
+        ClientRetryOptionsVersion highestSetOptionVersion = GetHighestVersionSetByUser(options);
+
+        if (highestSetOptionVersion > supportedVersion)
+        {
+            throw new NotSupportedException($"Custom retry policy of type '{GetType()}' does " +
+                $"not support ClientRetryOptions version {highestSetOptionVersion}.");
+        }
     }
 
     /// <inheritdoc/>
@@ -361,5 +384,49 @@ public class ClientRetryPolicy : PipelinePolicy
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
         }
+    }
+
+    /// <summary>
+    /// Highest version supported by a derived type providing a customized
+    /// implementation of <see cref="ClientRetryPolicy"/>.
+    /// </summary>
+    protected virtual ClientRetryOptionsVersion? SupportedVersion => default;
+
+    private ClientRetryOptionsVersion GetHighestVersionSetByUser(ClientRetryOptions options)
+    {
+        ClientRetryOptionsVersion maxVersionSet = ClientRetryOptionsVersion.V1_1_0;
+
+        if (options.DisableRetries != null && ClientRetryOptionsVersion.V1_2_0 > maxVersionSet)
+        {
+            maxVersionSet = ClientRetryOptionsVersion.V1_2_0;
+        }
+
+        if (options.MaxDelay != null && ClientRetryOptionsVersion.V1_2_0 > maxVersionSet)
+        {
+            maxVersionSet = ClientRetryOptionsVersion.V1_2_0;
+        }
+
+        if (options.MaxRetries != null && ClientRetryOptionsVersion.V1_2_0 > maxVersionSet)
+        {
+            maxVersionSet = ClientRetryOptionsVersion.V1_2_0;
+        }
+
+        return maxVersionSet;
+    }
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    protected enum ClientRetryOptionsVersion
+    {
+        /// <summary>
+        /// No ClientRetryOptions available in SCM 1.1.0.
+        /// </summary>
+        V1_1_0 = 1,
+
+        /// <summary>
+        /// Added DisableRetries, MaxDelay, MaxRetries options.
+        /// </summary>
+        V1_2_0 = 2,
     }
 }

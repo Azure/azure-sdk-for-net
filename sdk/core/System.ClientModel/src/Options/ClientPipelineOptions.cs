@@ -23,6 +23,19 @@ public class ClientPipelineOptions
     private PipelineTransport? _transport;
     private TimeSpan? _timeout;
 
+    /// <summary>
+    /// Gets a new instance of <see cref="ClientPipelineOptions"/>.
+    /// </summary>
+    public ClientPipelineOptions()
+    {
+        RetryOptions = new();
+    }
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    public ClientRetryOptions RetryOptions { get; }
+
     #region Pipeline creation: Overrides of default pipeline policies
 
     /// <summary>
@@ -176,5 +189,32 @@ public class ClientPipelineOptions
         {
             throw new InvalidOperationException("Cannot change a ClientPipelineOptions instance after it has been used to create a ClientPipeline.");
         }
+    }
+
+    /// <summary>
+    /// Return true if client pipeline should contain a retry policy.
+    /// </summary>
+    internal bool AddRetryPolicy => RetryPolicy != null ||
+        !RetryOptions.DisableRetries.HasValue ||
+        !RetryOptions.DisableRetries.Value;
+
+    /// <summary>
+    /// Get the retry policy to add to the pipeline based on the options
+    /// that have been set.
+    /// </summary>
+    /// <returns></returns>
+    internal PipelinePolicy GetRetryPolicy()
+    {
+        if (RetryPolicy != null)
+        {
+            return RetryPolicy;
+        }
+
+        if (RetryOptions.AreSet)
+        {
+            return new ClientRetryPolicy(RetryOptions);
+        }
+
+        return ClientRetryPolicy.Default;
     }
 }
