@@ -6,12 +6,6 @@ parameters:
   default: succeeded()
 
 steps:
-  - pwsh: |
-      Get-ChildItem -Recurse -Path "$(Build.SourcesDirectory)/sdk" -Include ci.yml `
-        | ForEach-Object { Get-Content $_ -Raw | yq -o=json > "$($_.FullName).json" }
-    displayName: Generate ci.yml.json
-    condition: ${{ parameters.Condition }}
-
   - task: Powershell@2
     inputs:
       filePath: $(Build.SourcesDirectory)/eng/common/scripts/Verify-ChangeLogs.ps1

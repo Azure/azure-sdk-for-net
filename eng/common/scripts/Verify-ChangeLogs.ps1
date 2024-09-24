@@ -8,17 +8,16 @@ Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot common.ps1)
 
 function ShouldVerifyChangeLog ($ServiceDirectory, $PackageName) {
-    $jsonCiYmlPath = Join-Path $ServiceDirectory "ci.yml.json"
+    $jsonCiYmlPath = Join-Path $ServiceDirectory "ci.yml"
 
     if (Test-Path $jsonCiYmlPath)
     {
-        $ciYml = ConvertFrom-Json (Get-Content $jsonCiYmlPath -Raw) -AsHashTable
+        $ciYml = Get-Content $jsonCiYmlPath -Raw | yq -o=json | ConvertFrom-Json -AsHashTable
 
         if ($ciYml.extends -and $ciYml.extends.parameters -and $ciYml.extends.parameters.Artifacts) {
             $packagesCheckingChangeLog = $ciYml.extends.parameters.Artifacts `
                 | Where-Object { -not ($_["skipVerifyChangelog"] -eq $true) } `
                 | Select-Object -ExpandProperty name
-
             if ($packagesCheckingChangeLog -contains $PackageName)
             {
                 return $true
@@ -27,6 +26,11 @@ function ShouldVerifyChangeLog ($ServiceDirectory, $PackageName) {
             }
         }
     }
+}
+
+if (-not (Get-Command 'yq' -ErrorAction SilentlyContinue)) {
+    Write-Host "Error: 'yq' is not installed or not found in PATH. Please remedy this before running this script."
+    exit 1
 }
 
 # find which packages we need to confirm the changelog for
