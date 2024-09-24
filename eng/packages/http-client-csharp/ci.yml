@@ -12,7 +12,7 @@ pr:
 
 variables:
   - template: /eng/pipelines/templates/variables/image.yml
-  
+
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
@@ -63,3 +63,5 @@ extends:
                   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
                   DOTNET_CLI_TELEMETRY_OPTOUT: 1
                   DOTNET_MULTILEVEL_LOOKUP: 0
+              - pwsh: ./eng/packages/http-client-csharp/eng/scripts/Test-Packages.ps1
+                displayName: "Run tests"
