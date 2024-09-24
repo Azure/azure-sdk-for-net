@@ -3,11 +3,10 @@
 ## 11.7.0-beta.1 (2024-09-24)
 
 ### Features Added
-- Added support for `VectorSearchCompression.TruncationDimension` which allows for specifying the number of dimensions to 
-  truncate vectors to.
-- Added support for `VectorQuery.FilterOverride` which allow for vector queries to override the broader `SearchOptions.Filter` to allow for vector queries to have more specific configurations.
+- Added support for `VectorSearchCompression.TruncationDimension`, which allows specifying the number of dimensions to truncate vectors to.
+- Added support for `VectorQuery.FilterOverride`, which allows vector queries to override the broader `SearchOptions.Filter`, enabling more specific configurations for vector queries.
 - `SplitSkill` now supports tokenization.
-- `DocumentDebugInfo` is extended with vector scores for the result.
+- `DocumentDebugInfo` is extended with vector scores for the results.
 
 ## 11.6.0 (2024-07-17)
 
