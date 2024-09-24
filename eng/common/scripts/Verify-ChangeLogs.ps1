@@ -22,8 +22,7 @@ function ShouldVerifyChangeLog ($ServiceDirectory, $PackageName) {
             if ($packagesCheckingChangeLog -contains $PackageName)
             {
                 return $true
-            }
-            else {
+            } else {
                 return $false
             }
         }
