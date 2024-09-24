@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class LoggerUpdateContract : IUtf8JsonSerializable, IJsonModel<LoggerUpdateContract>
+    public partial class ApiManagementLoggerPatch : IUtf8JsonSerializable, IJsonModel<ApiManagementLoggerPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoggerUpdateContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementLoggerPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<LoggerUpdateContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiManagementLoggerPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LoggerUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementLoggerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoggerUpdateContract)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementLoggerPatch)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("properties"u8);
@@ -80,19 +80,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        LoggerUpdateContract IJsonModel<LoggerUpdateContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiManagementLoggerPatch IJsonModel<ApiManagementLoggerPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LoggerUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementLoggerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoggerUpdateContract)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementLoggerPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLoggerUpdateContract(document.RootElement, options);
+            return DeserializeApiManagementLoggerPatch(document.RootElement, options);
         }
 
-        internal static LoggerUpdateContract DeserializeLoggerUpdateContract(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApiManagementLoggerPatch DeserializeApiManagementLoggerPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -163,38 +163,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LoggerUpdateContract(loggerType, description, credentials ?? new ChangeTrackingDictionary<string, string>(), isBuffered, serializedAdditionalRawData);
+            return new ApiManagementLoggerPatch(loggerType, description, credentials ?? new ChangeTrackingDictionary<string, string>(), isBuffered, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<LoggerUpdateContract>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApiManagementLoggerPatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LoggerUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementLoggerPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoggerUpdateContract)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementLoggerPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        LoggerUpdateContract IPersistableModel<LoggerUpdateContract>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApiManagementLoggerPatch IPersistableModel<ApiManagementLoggerPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LoggerUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementLoggerPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeLoggerUpdateContract(document.RootElement, options);
+                        return DeserializeApiManagementLoggerPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoggerUpdateContract)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementLoggerPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<LoggerUpdateContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiManagementLoggerPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string certificateId = "tempcert";
-            CertificateCreateOrUpdateContent content = new CertificateCreateOrUpdateContent()
+            ApiManagementCertificateCreateOrUpdateContent content = new ApiManagementCertificateCreateOrUpdateContent()
             {
                 Data = "****************Base 64 Encoded Certificate *******************************",
                 Password = "****Certificate Password******",
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string certificateId = "templateCertkv";
-            CertificateCreateOrUpdateContent content = new CertificateCreateOrUpdateContent()
+            ApiManagementCertificateCreateOrUpdateContent content = new ApiManagementCertificateCreateOrUpdateContent()
             {
                 KeyVaultDetails = new KeyVaultContractCreateProperties()
                 {

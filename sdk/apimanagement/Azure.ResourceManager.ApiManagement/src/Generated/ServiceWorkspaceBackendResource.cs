@@ -282,18 +282,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="content"> Update parameters. </param>
+        /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ServiceWorkspaceBackendResource>> UpdateAsync(ETag ifMatch, BackendUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ServiceWorkspaceBackendResource>> UpdateAsync(ETag ifMatch, ApiManagementBackendPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _serviceWorkspaceBackendWorkspaceBackendClientDiagnostics.CreateScope("ServiceWorkspaceBackendResource.Update");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceBackendWorkspaceBackendRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, content, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceWorkspaceBackendWorkspaceBackendRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ServiceWorkspaceBackendResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -325,18 +325,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="content"> Update parameters. </param>
+        /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ServiceWorkspaceBackendResource> Update(ETag ifMatch, BackendUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ServiceWorkspaceBackendResource> Update(ETag ifMatch, ApiManagementBackendPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _serviceWorkspaceBackendWorkspaceBackendClientDiagnostics.CreateScope("ServiceWorkspaceBackendResource.Update");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceBackendWorkspaceBackendRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, content, cancellationToken);
+                var response = _serviceWorkspaceBackendWorkspaceBackendRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken);
                 return Response.FromValue(new ServiceWorkspaceBackendResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

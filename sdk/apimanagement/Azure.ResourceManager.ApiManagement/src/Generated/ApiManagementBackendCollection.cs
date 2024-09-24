@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceBackendResource"/> and their operations.
-    /// Each <see cref="ServiceBackendResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
-    /// To get a <see cref="ServiceBackendCollection"/> instance call the GetServiceBackends method from an instance of <see cref="ApiManagementServiceResource"/>.
+    /// A class representing a collection of <see cref="ApiManagementBackendResource"/> and their operations.
+    /// Each <see cref="ApiManagementBackendResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
+    /// To get an <see cref="ApiManagementBackendCollection"/> instance call the GetApiManagementBackends method from an instance of <see cref="ApiManagementServiceResource"/>.
     /// </summary>
-    public partial class ServiceBackendCollection : ArmCollection, IEnumerable<ServiceBackendResource>, IAsyncEnumerable<ServiceBackendResource>
+    public partial class ApiManagementBackendCollection : ArmCollection, IEnumerable<ApiManagementBackendResource>, IAsyncEnumerable<ApiManagementBackendResource>
     {
-        private readonly ClientDiagnostics _serviceBackendBackendClientDiagnostics;
-        private readonly BackendRestOperations _serviceBackendBackendRestClient;
+        private readonly ClientDiagnostics _apiManagementBackendBackendClientDiagnostics;
+        private readonly BackendRestOperations _apiManagementBackendBackendRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceBackendCollection"/> class for mocking. </summary>
-        protected ServiceBackendCollection()
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementBackendCollection"/> class for mocking. </summary>
+        protected ApiManagementBackendCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceBackendCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementBackendCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ServiceBackendCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ApiManagementBackendCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceBackendBackendClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceBackendResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServiceBackendResource.ResourceType, out string serviceBackendBackendApiVersion);
-            _serviceBackendBackendRestClient = new BackendRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBackendBackendApiVersion);
+            _apiManagementBackendBackendClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementBackendResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ApiManagementBackendResource.ResourceType, out string apiManagementBackendBackendApiVersion);
+            _apiManagementBackendBackendRestClient = new BackendRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementBackendBackendApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceBackendResource"/></description>
+        /// <description><see cref="ApiManagementBackendResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,19 +79,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backendId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceBackendResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backendId, ApiManagementBackendData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementBackendResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backendId, ApiManagementBackendData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceBackendBackendClientDiagnostics.CreateScope("ServiceBackendCollection.CreateOrUpdate");
+            using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serviceBackendBackendRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _serviceBackendBackendRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, data, ifMatch);
+                var response = await _apiManagementBackendBackendRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var uri = _apiManagementBackendBackendRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, data, ifMatch);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ServiceBackendResource>(Response.FromValue(new ServiceBackendResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new ApiManagementArmOperation<ApiManagementBackendResource>(Response.FromValue(new ApiManagementBackendResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceBackendResource"/></description>
+        /// <description><see cref="ApiManagementBackendResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,19 +131,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backendId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServiceBackendResource> CreateOrUpdate(WaitUntil waitUntil, string backendId, ApiManagementBackendData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementBackendResource> CreateOrUpdate(WaitUntil waitUntil, string backendId, ApiManagementBackendData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceBackendBackendClientDiagnostics.CreateScope("ServiceBackendCollection.CreateOrUpdate");
+            using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serviceBackendBackendRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, data, ifMatch, cancellationToken);
-                var uri = _serviceBackendBackendRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, data, ifMatch);
+                var response = _apiManagementBackendBackendRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, data, ifMatch, cancellationToken);
+                var uri = _apiManagementBackendBackendRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, data, ifMatch);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ServiceBackendResource>(Response.FromValue(new ServiceBackendResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new ApiManagementArmOperation<ApiManagementBackendResource>(Response.FromValue(new ApiManagementBackendResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceBackendResource"/></description>
+        /// <description><see cref="ApiManagementBackendResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -180,18 +180,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backendId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
-        public virtual async Task<Response<ServiceBackendResource>> GetAsync(string backendId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementBackendResource>> GetAsync(string backendId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
 
-            using var scope = _serviceBackendBackendClientDiagnostics.CreateScope("ServiceBackendCollection.Get");
+            using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serviceBackendBackendRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementBackendBackendRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBackendResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementBackendResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceBackendResource"/></description>
+        /// <description><see cref="ApiManagementBackendResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,18 +225,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backendId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
-        public virtual Response<ServiceBackendResource> Get(string backendId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementBackendResource> Get(string backendId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
 
-            using var scope = _serviceBackendBackendClientDiagnostics.CreateScope("ServiceBackendCollection.Get");
+            using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendCollection.Get");
             scope.Start();
             try
             {
-                var response = _serviceBackendBackendRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, cancellationToken);
+                var response = _apiManagementBackendBackendRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBackendResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementBackendResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceBackendResource"/></description>
+        /// <description><see cref="ApiManagementBackendResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceBackendResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceBackendResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApiManagementBackendResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementBackendResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBackendBackendRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBackendBackendRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBackendResource(Client, ApiManagementBackendData.DeserializeApiManagementBackendData(e)), _serviceBackendBackendClientDiagnostics, Pipeline, "ServiceBackendCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementBackendBackendRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementBackendBackendRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementBackendResource(Client, ApiManagementBackendData.DeserializeApiManagementBackendData(e)), _apiManagementBackendBackendClientDiagnostics, Pipeline, "ApiManagementBackendCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceBackendResource"/></description>
+        /// <description><see cref="ApiManagementBackendResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,12 +303,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceBackendResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceBackendResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiManagementBackendResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementBackendResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBackendBackendRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBackendBackendRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBackendResource(Client, ApiManagementBackendData.DeserializeApiManagementBackendData(e)), _serviceBackendBackendClientDiagnostics, Pipeline, "ServiceBackendCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementBackendBackendRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementBackendBackendRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementBackendResource(Client, ApiManagementBackendData.DeserializeApiManagementBackendData(e)), _apiManagementBackendBackendClientDiagnostics, Pipeline, "ApiManagementBackendCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceBackendResource"/></description>
+        /// <description><see cref="ApiManagementBackendResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,11 +340,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
 
-            using var scope = _serviceBackendBackendClientDiagnostics.CreateScope("ServiceBackendCollection.Exists");
+            using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _serviceBackendBackendRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementBackendBackendRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceBackendResource"/></description>
+        /// <description><see cref="ApiManagementBackendResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -383,11 +383,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
 
-            using var scope = _serviceBackendBackendClientDiagnostics.CreateScope("ServiceBackendCollection.Exists");
+            using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendCollection.Exists");
             scope.Start();
             try
             {
-                var response = _serviceBackendBackendRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, cancellationToken: cancellationToken);
+                var response = _apiManagementBackendBackendRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceBackendResource"/></description>
+        /// <description><see cref="ApiManagementBackendResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -422,18 +422,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backendId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
-        public virtual async Task<NullableResponse<ServiceBackendResource>> GetIfExistsAsync(string backendId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ApiManagementBackendResource>> GetIfExistsAsync(string backendId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
 
-            using var scope = _serviceBackendBackendClientDiagnostics.CreateScope("ServiceBackendCollection.GetIfExists");
+            using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serviceBackendBackendRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementBackendBackendRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<ServiceBackendResource>(response.GetRawResponse());
-                return Response.FromValue(new ServiceBackendResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ApiManagementBackendResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementBackendResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceBackendResource"/></description>
+        /// <description><see cref="ApiManagementBackendResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -467,18 +467,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backendId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
-        public virtual NullableResponse<ServiceBackendResource> GetIfExists(string backendId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ApiManagementBackendResource> GetIfExists(string backendId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
 
-            using var scope = _serviceBackendBackendClientDiagnostics.CreateScope("ServiceBackendCollection.GetIfExists");
+            using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serviceBackendBackendRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, cancellationToken: cancellationToken);
+                var response = _apiManagementBackendBackendRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<ServiceBackendResource>(response.GetRawResponse());
-                return Response.FromValue(new ServiceBackendResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ApiManagementBackendResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementBackendResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        IEnumerator<ServiceBackendResource> IEnumerable<ServiceBackendResource>.GetEnumerator()
+        IEnumerator<ApiManagementBackendResource> IEnumerable<ApiManagementBackendResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ServiceBackendResource> IAsyncEnumerable<ServiceBackendResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ApiManagementBackendResource> IAsyncEnumerable<ApiManagementBackendResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

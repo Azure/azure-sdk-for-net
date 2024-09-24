@@ -14,7 +14,7 @@ using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
-    public partial class Sample_ServiceBackendResource
+    public partial class Sample_ApiManagementBackendResource
     {
         // ApiManagementHeadBackend
         [NUnit.Framework.Test]
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceBackendResource created on azure
-            // for more information of creating ServiceBackendResource, please refer to the document of ServiceBackendResource
+            // this example assumes you already have this ApiManagementBackendResource created on azure
+            // for more information of creating ApiManagementBackendResource, please refer to the document of ApiManagementBackendResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string backendId = "sfbackend";
-            ResourceIdentifier serviceBackendResourceId = ServiceBackendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, backendId);
-            ServiceBackendResource serviceBackend = client.GetServiceBackendResource(serviceBackendResourceId);
+            ResourceIdentifier apiManagementBackendResourceId = ApiManagementBackendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, backendId);
+            ApiManagementBackendResource apiManagementBackend = client.GetApiManagementBackendResource(apiManagementBackendResourceId);
 
             // invoke the operation
-            bool result = await serviceBackend.GetEntityTagAsync();
+            bool result = await apiManagementBackend.GetEntityTagAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceBackendResource created on azure
-            // for more information of creating ServiceBackendResource, please refer to the document of ServiceBackendResource
+            // this example assumes you already have this ApiManagementBackendResource created on azure
+            // for more information of creating ApiManagementBackendResource, please refer to the document of ApiManagementBackendResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string backendId = "sfbackend";
-            ResourceIdentifier serviceBackendResourceId = ServiceBackendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, backendId);
-            ServiceBackendResource serviceBackend = client.GetServiceBackendResource(serviceBackendResourceId);
+            ResourceIdentifier apiManagementBackendResourceId = ApiManagementBackendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, backendId);
+            ApiManagementBackendResource apiManagementBackend = client.GetApiManagementBackendResource(apiManagementBackendResourceId);
 
             // invoke the operation
-            ServiceBackendResource result = await serviceBackend.GetAsync();
+            ApiManagementBackendResource result = await apiManagementBackend.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -89,18 +89,18 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceBackendResource created on azure
-            // for more information of creating ServiceBackendResource, please refer to the document of ServiceBackendResource
+            // this example assumes you already have this ApiManagementBackendResource created on azure
+            // for more information of creating ApiManagementBackendResource, please refer to the document of ApiManagementBackendResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string backendId = "proxybackend";
-            ResourceIdentifier serviceBackendResourceId = ServiceBackendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, backendId);
-            ServiceBackendResource serviceBackend = client.GetServiceBackendResource(serviceBackendResourceId);
+            ResourceIdentifier apiManagementBackendResourceId = ApiManagementBackendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, backendId);
+            ApiManagementBackendResource apiManagementBackend = client.GetApiManagementBackendResource(apiManagementBackendResourceId);
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            BackendUpdateContent content = new BackendUpdateContent()
+            ApiManagementBackendPatch patch = new ApiManagementBackendPatch()
             {
                 Description = "description5308",
                 Tls = new BackendTlsProperties()
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                     ShouldValidateCertificateName = true,
                 },
             };
-            ServiceBackendResource result = await serviceBackend.UpdateAsync(ifMatch, content);
+            ApiManagementBackendResource result = await apiManagementBackend.UpdateAsync(ifMatch, patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -131,18 +131,18 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceBackendResource created on azure
-            // for more information of creating ServiceBackendResource, please refer to the document of ServiceBackendResource
+            // this example assumes you already have this ApiManagementBackendResource created on azure
+            // for more information of creating ApiManagementBackendResource, please refer to the document of ApiManagementBackendResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string backendId = "sfbackend";
-            ResourceIdentifier serviceBackendResourceId = ServiceBackendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, backendId);
-            ServiceBackendResource serviceBackend = client.GetServiceBackendResource(serviceBackendResourceId);
+            ResourceIdentifier apiManagementBackendResourceId = ApiManagementBackendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, backendId);
+            ApiManagementBackendResource apiManagementBackend = client.GetApiManagementBackendResource(apiManagementBackendResourceId);
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            await serviceBackend.DeleteAsync(WaitUntil.Completed, ifMatch);
+            await apiManagementBackend.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine($"Succeeded");
         }
@@ -160,21 +160,21 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceBackendResource created on azure
-            // for more information of creating ServiceBackendResource, please refer to the document of ServiceBackendResource
+            // this example assumes you already have this ApiManagementBackendResource created on azure
+            // for more information of creating ApiManagementBackendResource, please refer to the document of ApiManagementBackendResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string backendId = "proxybackend";
-            ResourceIdentifier serviceBackendResourceId = ServiceBackendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, backendId);
-            ServiceBackendResource serviceBackend = client.GetServiceBackendResource(serviceBackendResourceId);
+            ResourceIdentifier apiManagementBackendResourceId = ApiManagementBackendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, backendId);
+            ApiManagementBackendResource apiManagementBackend = client.GetApiManagementBackendResource(apiManagementBackendResourceId);
 
             // invoke the operation
             BackendReconnectContract backendReconnectContract = new BackendReconnectContract()
             {
                 After = XmlConvert.ToTimeSpan("PT3S"),
             };
-            await serviceBackend.ReconnectAsync(backendReconnectContract: backendReconnectContract);
+            await apiManagementBackend.ReconnectAsync(backendReconnectContract: backendReconnectContract);
 
             Console.WriteLine($"Succeeded");
         }

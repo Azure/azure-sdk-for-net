@@ -65,6 +65,9 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/namedValues/{namedValueId}: ApiManagementNamedValue
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}: ApiManagementGroup
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/schemas/{schemaId}: ApiManagementGlobalSchema
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}: ApiManagementBackend
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/certificates/{certificateId}: ApiManagementCertificate
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/loggers/{loggerId}: ApiManagementLogger
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}: GatewayResource
 
 format-by-name-rules:
@@ -177,8 +180,9 @@ rename-mapping:
   NetworkStatusContractByLocation: NetworkStatusContractWithLocation
   ApiManagementServiceResource: ApiManagementService
   ApiReleaseContract: ApiRelease
-  BackendUpdateParameters: BackendUpdateContent
-  CertificateCreateOrUpdateParameters: CertificateCreateOrUpdateContent
+  BackendUpdateParameters: ApiManagementBackendPatch
+  CertificateCreateOrUpdateParameters: ApiManagementCertificateCreateOrUpdateContent
+  LoggerUpdateContract: ApiManagementLoggerPatch
   OperationContract: ApiOperation
   SchemaContract: ApiSchema
   TagDescriptionContract: ApiTagDescription
