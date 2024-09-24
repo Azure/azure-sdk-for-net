@@ -157,7 +157,7 @@ public class BatchTests : AoaiTestBase<BatchClient>
             }
 
             using MemoryStream stream = new MemoryStream();
-            JsonHelpers.Serialize(stream, _operations, JsonOptions.OpenAIJsonOptions);
+            JsonSerializer.Serialize(stream, _operations, JsonOptions.OpenAIJsonOptions);
             stream.Seek(0, SeekOrigin.Begin);
             var data = BinaryData.FromStream(stream);
 

@@ -5,8 +5,8 @@ using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 using Azure.AI.OpenAI.Tests.Utils;
-using OpenAI.TestFramework.Utils;
 
 namespace Azure.AI.OpenAI.Tests.Models;
 
@@ -20,7 +20,7 @@ public class BatchOptions
     public BinaryContent ToBinaryContent()
     {
         using MemoryStream stream = new MemoryStream();
-        JsonHelpers.Serialize(stream, this, JsonOptions.OpenAIJsonOptions);
+        JsonSerializer.Serialize(stream, this, JsonOptions.OpenAIJsonOptions);
 
         stream.Seek(0, SeekOrigin.Begin);
         var data = BinaryData.FromStream(stream);

@@ -1015,12 +1015,6 @@
 # ServiceLabel: %Network - Mobile %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
 
-# PRLabel: %Network - Cloud
-/sdk/networkcloud/Azure.ResourceManager.*/                         @Azure/azure-sdk-write-networkcloud
-
-# ServiceLabel: %Network - Cloud %Mgmt
-# ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
-
 # PRLabel: %New Relic
 /sdk/newrelicobservability/Azure.ResourceManager.*/                @dipeshbhakat-microsoft @vipray-ms
 
@@ -1081,6 +1075,8 @@
 /eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 /.github/workflows/                                                @Azure/azure-sdk-eng
+
+/.config/1espt/                                                    @benbp @weshaggard
 
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml                               @jsquire
