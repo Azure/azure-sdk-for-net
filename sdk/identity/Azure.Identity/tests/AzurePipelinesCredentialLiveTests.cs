@@ -70,10 +70,7 @@ namespace Azure.Identity.Tests
             var cred = new AzurePipelinesCredential(tenantId, clientId, serviceConnectionId, systemAccessToken);
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new[] { "https://management.azure.com//.default" }), CancellationToken.None));
-            Assert.That(ex.Message, Does.Contain("401 (Unauthorized)"));
-
-            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new[] { "https://management.azure.com//.default" }), CancellationToken.None);
-            Assert.IsNotNull(token.Token);
+            Assert.That(ex.Message, Does.Contain("not authorized"));
         }
     }
 }
