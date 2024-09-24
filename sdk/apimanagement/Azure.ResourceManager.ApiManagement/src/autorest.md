@@ -201,7 +201,7 @@ rename-mapping:
   ContentTypeContract.properties.id: ContentTypeIdentifier
   ContentTypeContract.properties.name: ContentTypeName
   EmailTemplateContract: ApiManagementEmailTemplate
-  GatewayContract: ApiManagementSelfHostedGateway
+  GatewayContract: ApiManagementGateway
   GlobalSchemaContract: ApiManagementGlobalSchema
   GroupContract: ApiManagementGroup
   GroupContract.properties.type: GroupType
