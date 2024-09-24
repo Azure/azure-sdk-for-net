@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataShare.Models
 
         void IJsonModel<ShareSynchronization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ShareSynchronization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ShareSynchronization)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ConsumerEmail))
             {
                 writer.WritePropertyName("consumerEmail"u8);
@@ -91,7 +99,6 @@ namespace Azure.ResourceManager.DataShare.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ShareSynchronization IJsonModel<ShareSynchronization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
