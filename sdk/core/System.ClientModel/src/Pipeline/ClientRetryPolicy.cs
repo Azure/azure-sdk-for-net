@@ -71,12 +71,13 @@ public class ClientRetryPolicy : PipelinePolicy
             supportedVersion = SupportedVersion ?? ClientRetryOptionsVersion.V1_1_0;
         }
 
-        ClientRetryOptionsVersion highestSetOptionVersion = GetHighestVersionSetByUser(options);
+        ClientRetryOptionsVersion highestSetOptionVersion = GetHighestSetOptionVersion(options);
 
         if (highestSetOptionVersion > supportedVersion)
         {
             throw new NotSupportedException($"Custom retry policy of type '{GetType()}' does " +
-                $"not support ClientRetryOptions version {highestSetOptionVersion}.");
+                $"not support ClientRetryOptions version {highestSetOptionVersion}. " +
+                $"Highest options version this policy supports is {supportedVersion}.");
         }
     }
 
@@ -392,7 +393,7 @@ public class ClientRetryPolicy : PipelinePolicy
     /// </summary>
     protected virtual ClientRetryOptionsVersion? SupportedVersion => default;
 
-    private ClientRetryOptionsVersion GetHighestVersionSetByUser(ClientRetryOptions options)
+    private static ClientRetryOptionsVersion GetHighestSetOptionVersion(ClientRetryOptions options)
     {
         ClientRetryOptionsVersion maxVersionSet = ClientRetryOptionsVersion.V1_1_0;
 
@@ -425,7 +426,7 @@ public class ClientRetryPolicy : PipelinePolicy
         V1_1_0 = 1,
 
         /// <summary>
-        /// Added DisableRetries, MaxDelay, MaxRetries options.
+        /// Added DisableRetries, MaxDelay, MaxRetries options in SCM 1.2.0.
         /// </summary>
         V1_2_0 = 2,
     }
