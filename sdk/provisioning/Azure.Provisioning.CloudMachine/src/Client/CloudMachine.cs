@@ -69,13 +69,3 @@ public partial class CloudMachineClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override string ToString() => Id;
 }
-
-class ClientCache
-{
-    private readonly Dictionary<string, object> _clients = new Dictionary<string, object>();
-
-    public void Cache(string id, object client)
-    {
-
-    }
-}
