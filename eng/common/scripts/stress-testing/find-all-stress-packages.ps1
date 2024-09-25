@@ -87,8 +87,10 @@ function VerifyAddonsVersion([hashtable]$chart, [string]$chartFile) {
     foreach ($dependency in $chart.dependencies) {
         if ($dependency.name -eq "stress-test-addons" -and
             $dependency.version -like '0.1.*' -or
-            $dependency.version -like '^0.1.*') {
-            throw "The stress-test-addons version in use for '$chartFile' is $($dependency.version), please use versions >= 0.2.0"
+            $dependency.version -like '^0.1.*' -or
+            $dependency.version -like '0.2.*' -or
+            $dependency.version -like '^0.2.*') {
+            throw "The stress-test-addons version in use for '$chartFile' is $($dependency.version), use the version ~0.3.0 to avoid breaking changes"
         }
     }
 }

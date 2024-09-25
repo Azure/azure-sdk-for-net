@@ -327,6 +327,7 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.KeyVaultProperties> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId) { throw null; }
         public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         public static Azure.Provisioning.KeyVault.KeyVaultService FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

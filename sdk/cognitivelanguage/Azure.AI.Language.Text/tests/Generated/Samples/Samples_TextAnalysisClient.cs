@@ -18,15 +18,45 @@ namespace Azure.AI.Language.Text.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeText_ShortVersion()
+        public void Example_Text_AnalyzeText_SuccessfulDynamicClassificationRequest()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
                 kind = "DynamicClassification",
+                parameters = new
+                {
+                    categories = new object[]
+            {
+"Health",
+"Politics",
+"Music",
+"Sports"
+            },
+                    classificationType = "Multi",
+                    modelVersion = "latest",
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+language = "en",
+text = "The WHO is issuing a warning about Monkey Pox.",
+},
+new
+{
+id = "2",
+language = "en",
+text = "Mo Salah plays in Liverpool FC in England.",
+}
+            },
+                },
             });
             Response response = client.AnalyzeText(content);
 
@@ -36,15 +66,45 @@ namespace Azure.AI.Language.Text.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeText_ShortVersion_Async()
+        public async Task Example_Text_AnalyzeText_SuccessfulDynamicClassificationRequest_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
                 kind = "DynamicClassification",
+                parameters = new
+                {
+                    categories = new object[]
+            {
+"Health",
+"Politics",
+"Music",
+"Sports"
+            },
+                    classificationType = "Multi",
+                    modelVersion = "latest",
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+language = "en",
+text = "The WHO is issuing a warning about Monkey Pox.",
+},
+new
+{
+id = "2",
+language = "en",
+text = "Mo Salah plays in Liverpool FC in England.",
+}
+            },
+                },
             });
             Response response = await client.AnalyzeTextAsync(content);
 
@@ -54,63 +114,97 @@ namespace Azure.AI.Language.Text.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeText_ShortVersion_Convenience()
+        public void Example_Text_AnalyzeText_SuccessfulDynamicClassificationRequest_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            AnalyzeTextInput analyzeTextInput = new TextDynamicClassificationInput();
+            AnalyzeTextInput analyzeTextInput = new TextDynamicClassificationInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("1", "The WHO is issuing a warning about Monkey Pox.")
+{
+Language = "en",
+}, new MultiLanguageInput("2", "Mo Salah plays in Liverpool FC in England.")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new DynamicClassificationActionContent(new string[] { "Health", "Politics", "Music", "Sports" })
+                {
+                    ModelVersion = "latest",
+                    ClassificationType = ClassificationType.Multi,
+                },
+            };
             Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeText_ShortVersion_Convenience_Async()
+        public async Task Example_Text_AnalyzeText_SuccessfulDynamicClassificationRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            AnalyzeTextInput analyzeTextInput = new TextDynamicClassificationInput();
+            AnalyzeTextInput analyzeTextInput = new TextDynamicClassificationInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("1", "The WHO is issuing a warning about Monkey Pox.")
+{
+Language = "en",
+}, new MultiLanguageInput("2", "Mo Salah plays in Liverpool FC in England.")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new DynamicClassificationActionContent(new string[] { "Health", "Politics", "Music", "Sports" })
+                {
+                    ModelVersion = "latest",
+                    ClassificationType = ClassificationType.Multi,
+                },
+            };
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeText_AllParameters()
+        public void Example_Text_AnalyzeText_SuccessfulEntityLinkingRequest()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
-                kind = "DynamicClassification",
+                kind = "EntityLinking",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                },
                 analysisInput = new
                 {
                     documents = new object[]
             {
 new
 {
-id = "<id>",
-text = "<text>",
-language = "<language>",
+id = "1",
+language = "en",
+text = "Microsoft was founded by Bill Gates and Paul Allen.",
+},
+new
+{
+id = "2",
+language = "en",
+text = "Pike place market is my favorite Seattle attraction.",
 }
             },
                 },
-                parameters = new
-                {
-                    loggingOptOut = true,
-                    modelVersion = "<modelVersion>",
-                    classificationType = "Multi",
-                    categories = new object[]
-            {
-"<categories>"
-            },
-                },
             });
-            Response response = client.AnalyzeText(content, showStatistics: true);
+            Response response = client.AnalyzeText(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -118,39 +212,39 @@ language = "<language>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeText_AllParameters_Async()
+        public async Task Example_Text_AnalyzeText_SuccessfulEntityLinkingRequest_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
-                kind = "DynamicClassification",
+                kind = "EntityLinking",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                },
                 analysisInput = new
                 {
                     documents = new object[]
             {
 new
 {
-id = "<id>",
-text = "<text>",
-language = "<language>",
+id = "1",
+language = "en",
+text = "Microsoft was founded by Bill Gates and Paul Allen.",
+},
+new
+{
+id = "2",
+language = "en",
+text = "Pike place market is my favorite Seattle attraction.",
 }
             },
                 },
-                parameters = new
-                {
-                    loggingOptOut = true,
-                    modelVersion = "<modelVersion>",
-                    classificationType = "Multi",
-                    categories = new object[]
-            {
-"<categories>"
-            },
-                },
             });
-            Response response = await client.AnalyzeTextAsync(content, showStatistics: true);
+            Response response = await client.AnalyzeTextAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -158,56 +252,1692 @@ language = "<language>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeText_AllParameters_Convenience()
+        public void Example_Text_AnalyzeText_SuccessfulEntityLinkingRequest_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            AnalyzeTextInput analyzeTextInput = new TextDynamicClassificationInput
+            AnalyzeTextInput analyzeTextInput = new TextEntityLinkingInput
             {
                 TextInput = new MultiLanguageTextInput
                 {
-                    MultiLanguageInputs = {new MultiLanguageInput("<id>", "<text>")
+                    MultiLanguageInputs = {new MultiLanguageInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
 {
-Language = "<language>",
+Language = "en",
+}, new MultiLanguageInput("2", "Pike place market is my favorite Seattle attraction.")
+{
+Language = "en",
 }},
                 },
-                ActionContent = new DynamicClassificationActionContent(new string[] { "<categories>" })
+                ActionContent = new EntityLinkingActionContent
                 {
-                    LoggingOptOut = true,
-                    ModelVersion = "<modelVersion>",
-                    ClassificationType = ClassificationType.Multi,
+                    ModelVersion = "latest",
                 },
             };
-            Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput, showStatistics: true);
+            Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeText_AllParameters_Convenience_Async()
+        public async Task Example_Text_AnalyzeText_SuccessfulEntityLinkingRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
-            AnalyzeTextInput analyzeTextInput = new TextDynamicClassificationInput
+            AnalyzeTextInput analyzeTextInput = new TextEntityLinkingInput
             {
                 TextInput = new MultiLanguageTextInput
                 {
-                    MultiLanguageInputs = {new MultiLanguageInput("<id>", "<text>")
+                    MultiLanguageInputs = {new MultiLanguageInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
 {
-Language = "<language>",
+Language = "en",
+}, new MultiLanguageInput("2", "Pike place market is my favorite Seattle attraction.")
+{
+Language = "en",
 }},
                 },
-                ActionContent = new DynamicClassificationActionContent(new string[] { "<categories>" })
+                ActionContent = new EntityLinkingActionContent
                 {
-                    LoggingOptOut = true,
-                    ModelVersion = "<modelVersion>",
-                    ClassificationType = ClassificationType.Multi,
+                    ModelVersion = "latest",
                 },
             };
-            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput, showStatistics: true);
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionExclusionRequest()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "EntityRecognition",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                    exclusionList = new object[]
+            {
+"Numeric"
+            },
+                    overlapPolicy = new
+                    {
+                        policyKind = "allowOverlap",
+                    },
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "2",
+language = "en",
+text = "When I was 5 years old I had $90.00 dollars to my name.",
+},
+new
+{
+id = "3",
+language = "en",
+text = "When we flew from LAX it seemed like we were moving at 10 meters per second. I was lucky to see Amsterdam, Effile Tower, and the Nile.",
+}
+            },
+                },
+            });
+            Response response = client.AnalyzeText(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionExclusionRequest_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "EntityRecognition",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                    exclusionList = new object[]
+            {
+"Numeric"
+            },
+                    overlapPolicy = new
+                    {
+                        policyKind = "allowOverlap",
+                    },
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "2",
+language = "en",
+text = "When I was 5 years old I had $90.00 dollars to my name.",
+},
+new
+{
+id = "3",
+language = "en",
+text = "When we flew from LAX it seemed like we were moving at 10 meters per second. I was lucky to see Amsterdam, Effile Tower, and the Nile.",
+}
+            },
+                },
+            });
+            Response response = await client.AnalyzeTextAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionExclusionRequest_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextEntityRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("2", "When I was 5 years old I had $90.00 dollars to my name.")
+{
+Language = "en",
+}, new MultiLanguageInput("3", "When we flew from LAX it seemed like we were moving at 10 meters per second. I was lucky to see Amsterdam, Effile Tower, and the Nile.")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new EntitiesActionContent
+                {
+                    ModelVersion = "latest",
+                    Exclusions = { EntityCategory.Numeric },
+                    OverlapPolicy = new AllowOverlapEntityPolicyType(),
+                },
+            };
+            Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionExclusionRequest_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextEntityRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("2", "When I was 5 years old I had $90.00 dollars to my name.")
+{
+Language = "en",
+}, new MultiLanguageInput("3", "When we flew from LAX it seemed like we were moving at 10 meters per second. I was lucky to see Amsterdam, Effile Tower, and the Nile.")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new EntitiesActionContent
+                {
+                    ModelVersion = "latest",
+                    Exclusions = { EntityCategory.Numeric },
+                    OverlapPolicy = new AllowOverlapEntityPolicyType(),
+                },
+            };
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionInclusionRequest()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "EntityRecognition",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                    inclusionList = new object[]
+            {
+"Location"
+            },
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "2",
+language = "en",
+text = "When I was 5 years old I had $90.00 dollars to my name.",
+},
+new
+{
+id = "3",
+language = "en",
+text = "When we flew from LAX it seemed like we were moving at 10 meters per second. I was lucky to see Amsterdam, Effile Tower, and the Nile.",
+}
+            },
+                },
+            });
+            Response response = client.AnalyzeText(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionInclusionRequest_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "EntityRecognition",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                    inclusionList = new object[]
+            {
+"Location"
+            },
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "2",
+language = "en",
+text = "When I was 5 years old I had $90.00 dollars to my name.",
+},
+new
+{
+id = "3",
+language = "en",
+text = "When we flew from LAX it seemed like we were moving at 10 meters per second. I was lucky to see Amsterdam, Effile Tower, and the Nile.",
+}
+            },
+                },
+            });
+            Response response = await client.AnalyzeTextAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionInclusionRequest_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextEntityRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("2", "When I was 5 years old I had $90.00 dollars to my name.")
+{
+Language = "en",
+}, new MultiLanguageInput("3", "When we flew from LAX it seemed like we were moving at 10 meters per second. I was lucky to see Amsterdam, Effile Tower, and the Nile.")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new EntitiesActionContent
+                {
+                    ModelVersion = "latest",
+                    Inclusions = { EntityCategory.Location },
+                },
+            };
+            Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionInclusionRequest_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextEntityRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("2", "When I was 5 years old I had $90.00 dollars to my name.")
+{
+Language = "en",
+}, new MultiLanguageInput("3", "When we flew from LAX it seemed like we were moving at 10 meters per second. I was lucky to see Amsterdam, Effile Tower, and the Nile.")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new EntitiesActionContent
+                {
+                    ModelVersion = "latest",
+                    Inclusions = { EntityCategory.Location },
+                },
+            };
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionInferenceOptionsRequest()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "EntityRecognition",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                    inferenceOptions = new
+                    {
+                        excludeNormalizedValues = true,
+                    },
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+language = "en",
+text = "When I was 5 years old I had $90.00 dollars to my name.",
+}
+            },
+                },
+            });
+            Response response = client.AnalyzeText(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionInferenceOptionsRequest_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "EntityRecognition",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                    inferenceOptions = new
+                    {
+                        excludeNormalizedValues = true,
+                    },
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+language = "en",
+text = "When I was 5 years old I had $90.00 dollars to my name.",
+}
+            },
+                },
+            });
+            Response response = await client.AnalyzeTextAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionInferenceOptionsRequest_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextEntityRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("1", "When I was 5 years old I had $90.00 dollars to my name.")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new EntitiesActionContent
+                {
+                    ModelVersion = "latest",
+                    InferenceOptions = new EntityInferenceConfig
+                    {
+                        ExcludeNormalizedValues = true,
+                    },
+                },
+            };
+            Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionInferenceOptionsRequest_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextEntityRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("1", "When I was 5 years old I had $90.00 dollars to my name.")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new EntitiesActionContent
+                {
+                    ModelVersion = "latest",
+                    InferenceOptions = new EntityInferenceConfig
+                    {
+                        ExcludeNormalizedValues = true,
+                    },
+                },
+            };
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionOverlapPolicy()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "EntityRecognition",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                    overlapPolicy = new
+                    {
+                        policyKind = "matchLongest",
+                    },
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "4",
+language = "en",
+text = "25th April Meeting was an intresting one. At least we gont to experience the WorldCup",
+}
+            },
+                },
+            });
+            Response response = client.AnalyzeText(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionOverlapPolicy_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "EntityRecognition",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                    overlapPolicy = new
+                    {
+                        policyKind = "matchLongest",
+                    },
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "4",
+language = "en",
+text = "25th April Meeting was an intresting one. At least we gont to experience the WorldCup",
+}
+            },
+                },
+            });
+            Response response = await client.AnalyzeTextAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionOverlapPolicy_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextEntityRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("4", "25th April Meeting was an intresting one. At least we gont to experience the WorldCup")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new EntitiesActionContent
+                {
+                    ModelVersion = "latest",
+                    OverlapPolicy = new MatchLongestEntityPolicyType(),
+                },
+            };
+            Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionOverlapPolicy_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextEntityRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("4", "25th April Meeting was an intresting one. At least we gont to experience the WorldCup")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new EntitiesActionContent
+                {
+                    ModelVersion = "latest",
+                    OverlapPolicy = new MatchLongestEntityPolicyType(),
+                },
+            };
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionRequest()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "EntityRecognition",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                    overlapPolicy = new
+                    {
+                        policyKind = "allowOverlap",
+                    },
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "2",
+language = "en",
+text = "When I was 5 years old I had $90.00 dollars to my name.",
+},
+new
+{
+id = "3",
+language = "en",
+text = "When we flew from LAX it seemed like we were moving at 10 meters per second. I was lucky to see Amsterdam, Effile Tower, and the Nile.",
+},
+new
+{
+id = "4",
+language = "en",
+text = "25th April Meeting was an intresting one. At least we gont to experience the WorldCup",
+},
+new
+{
+id = "5",
+language = "en",
+text = "My IP is 127.12.1.1 and my phone   number is 5555555555",
+}
+            },
+                },
+            });
+            Response response = client.AnalyzeText(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionRequest_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "EntityRecognition",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                    overlapPolicy = new
+                    {
+                        policyKind = "allowOverlap",
+                    },
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "2",
+language = "en",
+text = "When I was 5 years old I had $90.00 dollars to my name.",
+},
+new
+{
+id = "3",
+language = "en",
+text = "When we flew from LAX it seemed like we were moving at 10 meters per second. I was lucky to see Amsterdam, Effile Tower, and the Nile.",
+},
+new
+{
+id = "4",
+language = "en",
+text = "25th April Meeting was an intresting one. At least we gont to experience the WorldCup",
+},
+new
+{
+id = "5",
+language = "en",
+text = "My IP is 127.12.1.1 and my phone   number is 5555555555",
+}
+            },
+                },
+            });
+            Response response = await client.AnalyzeTextAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionRequest_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextEntityRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("2", "When I was 5 years old I had $90.00 dollars to my name.")
+{
+Language = "en",
+}, new MultiLanguageInput("3", "When we flew from LAX it seemed like we were moving at 10 meters per second. I was lucky to see Amsterdam, Effile Tower, and the Nile.")
+{
+Language = "en",
+}, new MultiLanguageInput("4", "25th April Meeting was an intresting one. At least we gont to experience the WorldCup")
+{
+Language = "en",
+}, new MultiLanguageInput("5", "My IP is 127.12.1.1 and my phone   number is 5555555555")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new EntitiesActionContent
+                {
+                    ModelVersion = "latest",
+                    OverlapPolicy = new AllowOverlapEntityPolicyType(),
+                },
+            };
+            Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionRequest_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextEntityRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("2", "When I was 5 years old I had $90.00 dollars to my name.")
+{
+Language = "en",
+}, new MultiLanguageInput("3", "When we flew from LAX it seemed like we were moving at 10 meters per second. I was lucky to see Amsterdam, Effile Tower, and the Nile.")
+{
+Language = "en",
+}, new MultiLanguageInput("4", "25th April Meeting was an intresting one. At least we gont to experience the WorldCup")
+{
+Language = "en",
+}, new MultiLanguageInput("5", "My IP is 127.12.1.1 and my phone   number is 5555555555")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new EntitiesActionContent
+                {
+                    ModelVersion = "latest",
+                    OverlapPolicy = new AllowOverlapEntityPolicyType(),
+                },
+            };
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulKeyPhraseExtractionRequest()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "KeyPhraseExtraction",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+language = "en",
+text = "Microsoft was founded by Bill Gates and Paul Allen.",
+},
+new
+{
+id = "2",
+language = "en",
+text = "Text Analytics is one of the Azure Cognitive Services.",
+},
+new
+{
+id = "3",
+language = "en",
+text = "My cat might need to see a veterinarian.",
+}
+            },
+                },
+            });
+            Response response = client.AnalyzeText(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulKeyPhraseExtractionRequest_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "KeyPhraseExtraction",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+language = "en",
+text = "Microsoft was founded by Bill Gates and Paul Allen.",
+},
+new
+{
+id = "2",
+language = "en",
+text = "Text Analytics is one of the Azure Cognitive Services.",
+},
+new
+{
+id = "3",
+language = "en",
+text = "My cat might need to see a veterinarian.",
+}
+            },
+                },
+            });
+            Response response = await client.AnalyzeTextAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulKeyPhraseExtractionRequest_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextKeyPhraseExtractionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+{
+Language = "en",
+}, new MultiLanguageInput("2", "Text Analytics is one of the Azure Cognitive Services.")
+{
+Language = "en",
+}, new MultiLanguageInput("3", "My cat might need to see a veterinarian.")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new KeyPhraseActionContent
+                {
+                    ModelVersion = "latest",
+                },
+            };
+            Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulKeyPhraseExtractionRequest_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextKeyPhraseExtractionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+{
+Language = "en",
+}, new MultiLanguageInput("2", "Text Analytics is one of the Azure Cognitive Services.")
+{
+Language = "en",
+}, new MultiLanguageInput("3", "My cat might need to see a veterinarian.")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new KeyPhraseActionContent
+                {
+                    ModelVersion = "latest",
+                },
+            };
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulLanguageDetectionRequest()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "LanguageDetection",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+text = "Hello world",
+},
+new
+{
+id = "2",
+text = "Bonjour tout le monde",
+},
+new
+{
+id = "3",
+text = "Hola mundo",
+},
+new
+{
+id = "4",
+text = "Tumhara naam kya hai?",
+}
+            },
+                },
+            });
+            Response response = client.AnalyzeText(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulLanguageDetectionRequest_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "LanguageDetection",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+text = "Hello world",
+},
+new
+{
+id = "2",
+text = "Bonjour tout le monde",
+},
+new
+{
+id = "3",
+text = "Hola mundo",
+},
+new
+{
+id = "4",
+text = "Tumhara naam kya hai?",
+}
+            },
+                },
+            });
+            Response response = await client.AnalyzeTextAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulLanguageDetectionRequest_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextLanguageDetectionInput
+            {
+                TextInput = new LanguageDetectionTextInput
+                {
+                    LanguageInputs = { new LanguageInput("1", "Hello world"), new LanguageInput("2", "Bonjour tout le monde"), new LanguageInput("3", "Hola mundo"), new LanguageInput("4", "Tumhara naam kya hai?") },
+                },
+                ActionContent = new LanguageDetectionActionContent
+                {
+                    ModelVersion = "latest",
+                },
+            };
+            Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulLanguageDetectionRequest_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextLanguageDetectionInput
+            {
+                TextInput = new LanguageDetectionTextInput
+                {
+                    LanguageInputs = { new LanguageInput("1", "Hello world"), new LanguageInput("2", "Bonjour tout le monde"), new LanguageInput("3", "Hola mundo"), new LanguageInput("4", "Tumhara naam kya hai?") },
+                },
+                ActionContent = new LanguageDetectionActionContent
+                {
+                    ModelVersion = "latest",
+                },
+            };
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionExclusionRequest()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "PiiEntityRecognition",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                    excludePiiCategories = new object[]
+            {
+"USSocialSecurityNumber"
+            },
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+language = "en",
+text = "My SSN is 859-98-0987",
+},
+new
+{
+id = "2",
+language = "en",
+text = "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.",
+},
+new
+{
+id = "3",
+language = "en",
+text = "Is 998.214.865-68 your Brazilian CPF number?",
+}
+            },
+                },
+            });
+            Response response = client.AnalyzeText(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionExclusionRequest_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "PiiEntityRecognition",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                    excludePiiCategories = new object[]
+            {
+"USSocialSecurityNumber"
+            },
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+language = "en",
+text = "My SSN is 859-98-0987",
+},
+new
+{
+id = "2",
+language = "en",
+text = "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.",
+},
+new
+{
+id = "3",
+language = "en",
+text = "Is 998.214.865-68 your Brazilian CPF number?",
+}
+            },
+                },
+            });
+            Response response = await client.AnalyzeTextAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionExclusionRequest_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextPiiEntitiesRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("1", "My SSN is 859-98-0987")
+{
+Language = "en",
+}, new MultiLanguageInput("2", "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.")
+{
+Language = "en",
+}, new MultiLanguageInput("3", "Is 998.214.865-68 your Brazilian CPF number?")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new PiiActionContent
+                {
+                    ModelVersion = "latest",
+                    ExcludePiiCategories = { PiiCategoriesExclude.UsSocialSecurityNumber },
+                },
+            };
+            Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionExclusionRequest_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextPiiEntitiesRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("1", "My SSN is 859-98-0987")
+{
+Language = "en",
+}, new MultiLanguageInput("2", "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.")
+{
+Language = "en",
+}, new MultiLanguageInput("3", "Is 998.214.865-68 your Brazilian CPF number?")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new PiiActionContent
+                {
+                    ModelVersion = "latest",
+                    ExcludePiiCategories = { PiiCategoriesExclude.UsSocialSecurityNumber },
+                },
+            };
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRedactionRequest()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "PiiEntityRecognition",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                    redactionCharacter = "-",
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+language = "en",
+text = "My SSN is 859-98-0987",
+},
+new
+{
+id = "2",
+language = "en",
+text = "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.",
+},
+new
+{
+id = "3",
+language = "en",
+text = "Is 998.214.865-68 your Brazilian CPF number?",
+}
+            },
+                },
+            });
+            Response response = client.AnalyzeText(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRedactionRequest_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "PiiEntityRecognition",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                    redactionCharacter = "-",
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+language = "en",
+text = "My SSN is 859-98-0987",
+},
+new
+{
+id = "2",
+language = "en",
+text = "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.",
+},
+new
+{
+id = "3",
+language = "en",
+text = "Is 998.214.865-68 your Brazilian CPF number?",
+}
+            },
+                },
+            });
+            Response response = await client.AnalyzeTextAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRedactionRequest_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextPiiEntitiesRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("1", "My SSN is 859-98-0987")
+{
+Language = "en",
+}, new MultiLanguageInput("2", "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.")
+{
+Language = "en",
+}, new MultiLanguageInput("3", "Is 998.214.865-68 your Brazilian CPF number?")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new PiiActionContent
+                {
+                    ModelVersion = "latest",
+                    RedactionCharacter = RedactionCharacter.Minus,
+                },
+            };
+            Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRedactionRequest_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextPiiEntitiesRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("1", "My SSN is 859-98-0987")
+{
+Language = "en",
+}, new MultiLanguageInput("2", "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.")
+{
+Language = "en",
+}, new MultiLanguageInput("3", "Is 998.214.865-68 your Brazilian CPF number?")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new PiiActionContent
+                {
+                    ModelVersion = "latest",
+                    RedactionCharacter = RedactionCharacter.Minus,
+                },
+            };
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRequest()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "PiiEntityRecognition",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+language = "en",
+text = "My SSN is 859-98-0987",
+},
+new
+{
+id = "2",
+language = "en",
+text = "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.",
+},
+new
+{
+id = "3",
+language = "en",
+text = "Is 998.214.865-68 your Brazilian CPF number?",
+}
+            },
+                },
+            });
+            Response response = client.AnalyzeText(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRequest_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "PiiEntityRecognition",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+language = "en",
+text = "My SSN is 859-98-0987",
+},
+new
+{
+id = "2",
+language = "en",
+text = "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.",
+},
+new
+{
+id = "3",
+language = "en",
+text = "Is 998.214.865-68 your Brazilian CPF number?",
+}
+            },
+                },
+            });
+            Response response = await client.AnalyzeTextAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRequest_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextPiiEntitiesRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("1", "My SSN is 859-98-0987")
+{
+Language = "en",
+}, new MultiLanguageInput("2", "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.")
+{
+Language = "en",
+}, new MultiLanguageInput("3", "Is 998.214.865-68 your Brazilian CPF number?")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new PiiActionContent
+                {
+                    ModelVersion = "latest",
+                },
+            };
+            Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRequest_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextPiiEntitiesRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("1", "My SSN is 859-98-0987")
+{
+Language = "en",
+}, new MultiLanguageInput("2", "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.")
+{
+Language = "en",
+}, new MultiLanguageInput("3", "Is 998.214.865-68 your Brazilian CPF number?")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new PiiActionContent
+                {
+                    ModelVersion = "latest",
+                },
+            };
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulSentimentAnalysisRequest()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "SentimentAnalysis",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+language = "en",
+text = "Great atmosphere. Close to plenty of restaurants, hotels, and transit! Staff are friendly and helpful.",
+}
+            },
+                },
+            });
+            Response response = client.AnalyzeText(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulSentimentAnalysisRequest_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "SentimentAnalysis",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+language = "en",
+text = "Great atmosphere. Close to plenty of restaurants, hotels, and transit! Staff are friendly and helpful.",
+}
+            },
+                },
+            });
+            Response response = await client.AnalyzeTextAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulSentimentAnalysisRequest_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextSentimentAnalysisInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("1", "Great atmosphere. Close to plenty of restaurants, hotels, and transit! Staff are friendly and helpful.")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new SentimentAnalysisActionContent
+                {
+                    ModelVersion = "latest",
+                },
+            };
+            Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulSentimentAnalysisRequest_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextSentimentAnalysisInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("1", "Great atmosphere. Close to plenty of restaurants, hotels, and transit! Staff are friendly and helpful.")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new SentimentAnalysisActionContent
+                {
+                    ModelVersion = "latest",
+                },
+            };
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
         }
 
         [Test]

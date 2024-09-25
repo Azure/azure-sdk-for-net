@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Communication.Email
@@ -41,5 +40,10 @@ namespace Azure.Communication.Email
         /// Contents of the attachment as BinaryData.
         /// </summary>
         public BinaryData Content { get; }
+
+        /// <summary>
+        /// Optional unique identifier (CID) to reference an inline attachment.
+        /// </summary>
+        public string ContentId { get; set; }
     }
 }

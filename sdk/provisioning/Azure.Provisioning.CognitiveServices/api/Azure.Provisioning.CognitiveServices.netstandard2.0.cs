@@ -25,6 +25,7 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CognitiveServicesSku> Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.CognitiveServices.CognitiveServicesBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId) { throw null; }
         public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.CognitiveServices.CognitiveServicesBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         public static Azure.Provisioning.CognitiveServices.CognitiveServicesAccount FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.CognitiveServices.ServiceAccountApiKeys GetKeys() { throw null; }

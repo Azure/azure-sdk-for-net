@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Identity
@@ -46,10 +47,10 @@ namespace Azure.Identity
 
         internal TenantIdResolverBase TenantIdResolver { get; set; } = TenantIdResolverBase.Default;
 
-        internal virtual T Clone<T>()
-            where T : TokenCredentialOptions, new()
+        internal virtual T Clone<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
+            where T : TokenCredentialOptions
         {
-            T clone = new T();
+            T clone = (T)Activator.CreateInstance(typeof(T), true);
 
             // copy TokenCredentialOptions Properties
             clone.AuthorityHost = AuthorityHost;

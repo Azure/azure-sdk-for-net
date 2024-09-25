@@ -26,12 +26,6 @@ public class BasicKeyVaultTests(bool async)
                         Value = KeyVaultSkuName.Standard,
                         Description = "Vault type"
                     };
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "Vault location."
-                    };
                 BicepParameter secretValue =
                     new(nameof(secretValue), typeof(string))
                     {
@@ -52,7 +46,6 @@ public class BasicKeyVaultTests(bool async)
                 KeyVaultService kv =
                     new(nameof(kv))
                     {
-                        Location = location,
                         Properties =
                             new KeyVaultProperties
                             {
@@ -99,9 +92,6 @@ public class BasicKeyVaultTests(bool async)
             @description('Vault type')
             param skuName string = 'standard'
 
-            @description('Vault location.')
-            param location string = resourceGroup().location
-
             @secure()
             @description('Specifies the value of the secret that you want to create.')
             param secretValue string
@@ -109,46 +99,49 @@ public class BasicKeyVaultTests(bool async)
             @description('Specifies the object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault.')
             param objectId string
 
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
             var tenantId = subscription().tenantId
 
             resource kv 'Microsoft.KeyVault/vaults@2019-09-01' = {
-                name: take('kv-${uniqueString(resourceGroup().id)}', 24)
-                location: location
-                properties: {
-                    tenantId: tenantId
-                    sku: {
-                        family: 'A'
-                        name: skuName
-                    }
-                    accessPolicies: [
-                        {
-                            tenantId: tenantId
-                            objectId: objectId
-                            permissions: {
-                                keys: [
-                                    'list'
-                                ]
-                                secrets: [
-                                    'list'
-                                ]
-                            }
-                        }
-                    ]
-                    enableSoftDelete: true
-                    softDeleteRetentionInDays: 90
-                    networkAcls: {
-                        bypass: 'AzureServices'
-                        defaultAction: 'Allow'
-                    }
+              name: take('kv-${uniqueString(resourceGroup().id)}', 24)
+              location: location
+              properties: {
+                tenantId: tenantId
+                sku: {
+                  family: 'A'
+                  name: skuName
                 }
+                accessPolicies: [
+                  {
+                    tenantId: tenantId
+                    objectId: objectId
+                    permissions: {
+                      keys: [
+                        'list'
+                      ]
+                      secrets: [
+                        'list'
+                      ]
+                    }
+                  }
+                ]
+                enableSoftDelete: true
+                softDeleteRetentionInDays: 90
+                networkAcls: {
+                  bypass: 'AzureServices'
+                  defaultAction: 'Allow'
+                }
+              }
             }
 
             resource secret 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
-                name: 'myDarkNecessities'
-                properties: {
-                    value: secretValue
-                }
-                parent: kv
+              name: 'myDarkNecessities'
+              properties: {
+                value: secretValue
+              }
+              parent: kv
             }
 
             output name string = kv.name

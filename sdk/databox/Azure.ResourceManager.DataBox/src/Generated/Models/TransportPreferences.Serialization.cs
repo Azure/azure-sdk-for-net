@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataBox.Models
 
         void IJsonModel<TransportPreferences>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TransportPreferences>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TransportPreferences)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("preferredShipmentType"u8);
             writer.WriteStringValue(PreferredShipmentType.ToSerialString());
             if (options.Format != "W" && Optional.IsDefined(IsUpdated))
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.DataBox.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TransportPreferences IJsonModel<TransportPreferences>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

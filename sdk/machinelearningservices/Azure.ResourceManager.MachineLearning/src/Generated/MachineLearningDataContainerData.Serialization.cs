@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ResourceType(property.Value.GetString());
+                    DeserializeTypeValue(property, ref type);
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))

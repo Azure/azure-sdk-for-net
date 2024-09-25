@@ -60,8 +60,11 @@ jobs:
       SDKType: ${{ parameters.SDKType }}
 
     steps:
-      - checkout: self
-        fetchDepth: 0
+      - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+        parameters:
+          Paths:
+            - "/*"
+            - "!SessionRecords"
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
         parameters:

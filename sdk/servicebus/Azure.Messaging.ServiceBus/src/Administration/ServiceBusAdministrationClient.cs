@@ -226,7 +226,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -288,7 +288,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -350,7 +350,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -413,7 +413,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -479,7 +479,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -551,7 +551,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -617,7 +617,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -685,7 +685,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -757,7 +757,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -832,7 +832,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -898,7 +898,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -966,7 +966,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -1035,7 +1035,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -1094,7 +1094,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -1156,7 +1156,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -1229,7 +1229,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -1301,7 +1301,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -1359,7 +1359,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -1421,7 +1421,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -1496,7 +1496,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -1553,7 +1553,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -1636,7 +1636,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -1694,7 +1694,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -1781,7 +1781,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -1842,7 +1842,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -1902,7 +1902,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -1988,7 +1988,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -2079,7 +2079,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -2161,7 +2161,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -2241,7 +2241,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -2327,7 +2327,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -2417,7 +2417,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -2485,7 +2485,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -2556,7 +2556,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">
@@ -2630,7 +2630,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <exception cref="UnauthorizedAccessException">Insufficient permission to perform this operation.
         /// You should check to ensure that your <see cref="ServiceBusAdministrationClient"/> has the necessary
         /// claims to perform this operation.
-        /// <seealso href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-sas#rights-required-for-service-bus-operations"/>
         /// </exception>
         /// <exception cref="ServiceBusException">
         ///   <list type="bullet">

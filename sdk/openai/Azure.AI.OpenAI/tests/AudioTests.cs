@@ -82,8 +82,8 @@ public class AudioTests(bool isAsync) : AoaiTestBase<AudioClient>(isAsync)
             TranscribedSegment firstSegment = transcription.Segments[0];
             Assert.That(firstSegment, Is.Not.Null);
             Assert.That(firstSegment.Id, Is.EqualTo(0));
-            Assert.That(firstSegment.Start, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(0)));
-            Assert.That(firstSegment.End, Is.GreaterThan(firstSegment.Start));
+            Assert.That(firstSegment.StartTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(0)));
+            Assert.That(firstSegment.EndTime, Is.GreaterThan(firstSegment.StartTime));
             Assert.That(firstSegment.Text, Is.Not.Null.Or.Empty);
         }
     }
@@ -159,8 +159,8 @@ public class AudioTests(bool isAsync) : AoaiTestBase<AudioClient>(isAsync)
             TranscribedSegment firstSegment = translation.Segments[0];
             Assert.That(firstSegment, Is.Not.Null);
             Assert.That(firstSegment.Id, Is.EqualTo(0));
-            Assert.That(firstSegment.Start, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(0)));
-            Assert.That(firstSegment.End, Is.GreaterThan(firstSegment.Start));
+            Assert.That(firstSegment.StartTime, Is.GreaterThanOrEqualTo(TimeSpan.FromSeconds(0)));
+            Assert.That(firstSegment.EndTime, Is.GreaterThan(firstSegment.StartTime));
             Assert.That(firstSegment.Text, Is.Not.Null.Or.Empty);
         }
     }

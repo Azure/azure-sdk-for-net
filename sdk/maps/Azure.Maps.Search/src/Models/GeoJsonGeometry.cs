@@ -4,8 +4,12 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    [CodeGenSerialization(nameof(BoundingBox), "boundingBox")]
-    public partial class GeoJsonGeometry
+    internal partial class GeoJsonGeometry : GeoJsonObject
     {
+        /// <summary> Initializes a new instance of GeoJsonGeometry. </summary>
+        public GeoJsonGeometry()
+        {
+            Type = GeoJsonObjectType.GeoJsonGeometryCollection;
+        }
     }
 }
