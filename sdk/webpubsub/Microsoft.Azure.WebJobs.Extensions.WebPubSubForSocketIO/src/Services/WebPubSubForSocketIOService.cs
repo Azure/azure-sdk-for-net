@@ -14,34 +14,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
     {
         private readonly WebPubSubServiceClient _client;
         private readonly bool _useConnectionStrings;
-        private readonly Uri _endpoint;
         private readonly AzureKeyCredential _keyCredential;
-        private readonly string _hub;
 
         public WebPubSubForSocketIOService(Uri endpoint, AzureKeyCredential keyCredential, string hub)
+            : this(new WebPubSubServiceClient(endpoint, hub, keyCredential), keyCredential)
         {
-            _client = new WebPubSubServiceClient(endpoint, hub, keyCredential);
-            _endpoint = endpoint;
-            _keyCredential = keyCredential;
-            _hub = hub;
-            _useConnectionStrings = true;
         }
 
         public WebPubSubForSocketIOService(Uri endpoint, TokenCredential credential, string hub)
+            : this(new WebPubSubServiceClient(endpoint, hub, credential))
         {
-            _client = new WebPubSubServiceClient(endpoint, hub, credential);
-            _endpoint = endpoint;
-            _hub = hub;
-            _useConnectionStrings = false;
         }
 
         // For tests.
-        public WebPubSubForSocketIOService(WebPubSubServiceClient client, Uri endpoint = null, string hub = null, bool useConnectionStrings = false)
+        internal WebPubSubForSocketIOService(WebPubSubServiceClient client, AzureKeyCredential keyCredential = null)
         {
             _client = client;
-            _endpoint = endpoint;
-            _hub = hub;
-            _useConnectionStrings = useConnectionStrings;
+            if (keyCredential != null)
+            {
+                _keyCredential = keyCredential;
+                _useConnectionStrings = true;
+            }
         }
 
         public WebPubSubServiceClient Client => _client;
@@ -52,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
             {
                 var expireAfter = TimeSpan.FromHours(1);
                 var token = GenerateTokenFromAzureKeyCredential(userId, DateTimeOffset.UtcNow.Add(expireAfter));
-                return new SocketIONegotiationResult(new Uri($"{_endpoint.AbsoluteUri.TrimEnd('/')}/clients/socketio/hubs/{_hub}?access_token={token}"));
+                return new SocketIONegotiationResult(new Uri($"{_client.Endpoint.AbsoluteUri.TrimEnd('/')}/clients/socketio/hubs/{_client.Hub}?access_token={token}"));
             }
             else
             {
@@ -61,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
                 // We need to concat them manually.
                 var url = _client.GetClientAccessUri(userId: userId);
                 var token = HttpUtility.ParseQueryString(url.Query)["access_token"];
-                return new SocketIONegotiationResult(new Uri($"{_endpoint.AbsoluteUri.TrimEnd('/')}/clients/socketio/hubs/{_hub}?access_token={token}"));
+                return new SocketIONegotiationResult(new Uri($"{_client.Endpoint.AbsoluteUri.TrimEnd('/')}/clients/socketio/hubs/{_client.Hub}?access_token={token}"));
             }
         }
 
@@ -72,12 +65,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
             var jwt = new JwtBuilder(keyBytes);
             var now = DateTimeOffset.UtcNow;
 
-            string endpoint = _endpoint.AbsoluteUri;
-            if (!endpoint.EndsWith("/", StringComparison.Ordinal))
-            {
-                endpoint += "/";
-            }
-            var audience = $"{endpoint}clients/socketio/hubs/{_hub}";
+            string endpoint = _client.Endpoint.AbsoluteUri;
+            var audience = $"{endpoint.TrimEnd('/')}/clients/socketio/hubs/{_client.Hub}";
 
             jwt.AddClaim(JwtBuilder.Nbf, now);
             jwt.AddClaim(JwtBuilder.Exp, expiresAt);

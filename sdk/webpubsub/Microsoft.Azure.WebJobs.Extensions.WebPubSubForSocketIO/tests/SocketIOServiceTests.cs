@@ -1,6 +1,7 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Azure;
 using Azure.Identity;
 using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Config;
@@ -9,6 +10,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Threading;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
@@ -88,13 +90,33 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var clientMoc = new Mock<WebPubSubServiceClient>();
             clientMoc.Setup(c => c.GetClientAccessUri(It.IsAny<TimeSpan>(), It.IsAny<string>(), It.IsAny<IEnumerable<string>>(), It.IsAny<IEnumerable<string>>(), It.IsAny<WebPubSubClientProtocol>(), It.IsAny<CancellationToken>()))
                 .Returns(new Uri($"https://abc.com?access_token={token}"));
+            clientMoc.Setup(c => c.Hub).Returns("hub");
+            clientMoc.Setup(c => c.Endpoint).Returns(new Uri(uri));
 
-            var service = new WebPubSubForSocketIOService(clientMoc.Object, endpoint: new Uri(uri), hub: "hub", useConnectionStrings: false);
+            var service = new WebPubSubForSocketIOService(clientMoc.Object);
             var result = service.GetNegotiationResult("user");
 
             Assert.AreEqual("https://sio-5kkfcgr2obqvm.webpubsub.azure.com/", result.Endpoint.AbsoluteUri);
             Assert.AreEqual("/clients/socketio/hubs/hub", result.Path);
             Assert.AreEqual(token, result.Token);
+        }
+
+        [Test]
+        public void TestNegotiationResultForKey()
+        {
+            var clientMoc = new Mock<WebPubSubServiceClient>();
+            clientMoc.Setup(c => c.Hub).Returns("hub");
+            clientMoc.Setup(c => c.Endpoint).Returns(new Uri("https://abc.com"));
+
+            var service = new WebPubSubForSocketIOService(clientMoc.Object, new AzureKeyCredential("abcdefghijklmn"));
+            var result = service.GetNegotiationResult("user");
+
+            Assert.AreEqual("https://abc.com/", result.Endpoint.AbsoluteUri);
+            Assert.AreEqual("/clients/socketio/hubs/hub", result.Path);
+
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(result.Token);
+            Assert.AreEqual("user", jwt.Subject);
+            Assert.AreEqual("https://abc.com/clients/socketio/hubs/hub", jwt.Audiences.First());
         }
     }
 }
