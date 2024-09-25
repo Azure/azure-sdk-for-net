@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.ApiManagement
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ApiManagementGatewayConfigConnectionResources in the GatewayResource. </summary>
-        /// <returns> An object representing collection of ApiManagementGatewayConfigConnectionResources and their operations over a ApiManagementGatewayConfigConnectionResource. </returns>
-        public virtual ApiManagementGatewayConfigConnectionResourceCollection GetApiManagementGatewayConfigConnectionResources()
+        /// <summary> Gets a collection of GatewayConfigConnectionResources in the GatewayResource. </summary>
+        /// <returns> An object representing collection of GatewayConfigConnectionResources and their operations over a GatewayConfigConnectionResource. </returns>
+        public virtual GatewayConfigConnectionResourceCollection GetGatewayConfigConnectionResources()
         {
-            return GetCachedClient(client => new ApiManagementGatewayConfigConnectionResourceCollection(client, Id));
+            return GetCachedClient(client => new GatewayConfigConnectionResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiManagementGatewayConfigConnectionResource"/></description>
+        /// <description><see cref="GatewayConfigConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="configConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementGatewayConfigConnectionResource>> GetApiManagementGatewayConfigConnectionResourceAsync(string configConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GatewayConfigConnectionResource>> GetGatewayConfigConnectionResourceAsync(string configConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetApiManagementGatewayConfigConnectionResources().GetAsync(configConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetGatewayConfigConnectionResources().GetAsync(configConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiManagementGatewayConfigConnectionResource"/></description>
+        /// <description><see cref="GatewayConfigConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -159,9 +159,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="configConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementGatewayConfigConnectionResource> GetApiManagementGatewayConfigConnectionResource(string configConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<GatewayConfigConnectionResource> GetGatewayConfigConnectionResource(string configConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementGatewayConfigConnectionResources().Get(configConnectionName, cancellationToken);
+            return GetGatewayConfigConnectionResources().Get(configConnectionName, cancellationToken);
         }
 
         /// <summary>

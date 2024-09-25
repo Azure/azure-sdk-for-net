@@ -984,22 +984,22 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementGatewayConfigConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementGatewayConfigConnectionResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGatewayConfigConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GatewayConfigConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GatewayConfigConnectionResource.CreateResourceIdentifier" /> to create a <see cref="GatewayConfigConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementGatewayConfigConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetGatewayConfigConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiManagementGatewayConfigConnectionResource"/> object. </returns>
-        public static ApiManagementGatewayConfigConnectionResource GetApiManagementGatewayConfigConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GatewayConfigConnectionResource"/> object. </returns>
+        public static GatewayConfigConnectionResource GetGatewayConfigConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiManagementArmClient(client).GetApiManagementGatewayConfigConnectionResource(id);
+            return GetMockableApiManagementArmClient(client).GetGatewayConfigConnectionResource(id);
         }
 
         /// <summary>

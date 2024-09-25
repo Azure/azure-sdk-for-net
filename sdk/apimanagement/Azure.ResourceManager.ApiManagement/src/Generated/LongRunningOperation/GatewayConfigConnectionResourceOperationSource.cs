@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal class ApiManagementGatewayConfigConnectionResourceOperationSource : IOperationSource<ApiManagementGatewayConfigConnectionResource>
+    internal class GatewayConfigConnectionResourceOperationSource : IOperationSource<GatewayConfigConnectionResource>
     {
         private readonly ArmClient _client;
 
-        internal ApiManagementGatewayConfigConnectionResourceOperationSource(ArmClient client)
+        internal GatewayConfigConnectionResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        ApiManagementGatewayConfigConnectionResource IOperationSource<ApiManagementGatewayConfigConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        GatewayConfigConnectionResource IOperationSource<GatewayConfigConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ApiManagementGatewayConfigConnectionResourceData.DeserializeApiManagementGatewayConfigConnectionResourceData(document.RootElement);
-            return new ApiManagementGatewayConfigConnectionResource(_client, data);
+            return new GatewayConfigConnectionResource(_client, data);
         }
 
-        async ValueTask<ApiManagementGatewayConfigConnectionResource> IOperationSource<ApiManagementGatewayConfigConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GatewayConfigConnectionResource> IOperationSource<GatewayConfigConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ApiManagementGatewayConfigConnectionResourceData.DeserializeApiManagementGatewayConfigConnectionResourceData(document.RootElement);
-            return new ApiManagementGatewayConfigConnectionResource(_client, data);
+            return new GatewayConfigConnectionResource(_client, data);
         }
     }
 }
