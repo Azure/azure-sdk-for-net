@@ -131,6 +131,7 @@ override-operation-name:
   ContentType_ListByService: GetContentTypes
   ContentItem_ListByService: GetContentItems
   ContentItem_GetEntityTag: GetContentItemEntityTag
+  OperationStatus_Get: GetOperationStatus
   ProductSubscriptions_List: GetAllProductSubscriptionData # temporary - to be removed once the polymorphic resource change is merged.
 
 prepend-rp-prefix:
