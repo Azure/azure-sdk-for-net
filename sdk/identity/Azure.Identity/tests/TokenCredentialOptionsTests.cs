@@ -312,7 +312,7 @@ namespace Azure.Identity.Tests
             CollectionAssert.IsSubsetOf(iSupportsInterfaces, s_KnownISupportsInterfaces);
 
             // create source instance and set values for all the supported intefaces
-            var source = Activator.CreateInstance(sourceType);
+            var source = Activator.CreateInstance(sourceType, true);
 
             if (source is ISupportsAdditionallyAllowedTenants aat)
             {

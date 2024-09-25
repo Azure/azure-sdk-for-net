@@ -21,13 +21,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         void IJsonModel<AssociatedApiProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AssociatedApiProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AssociatedApiProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -58,97 +67,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(AuthenticationSettings))
-            {
-                writer.WritePropertyName("authenticationSettings"u8);
-                writer.WriteObjectValue(AuthenticationSettings, options);
-            }
-            if (Optional.IsDefined(SubscriptionKeyParameterNames))
-            {
-                writer.WritePropertyName("subscriptionKeyParameterNames"u8);
-                writer.WriteObjectValue(SubscriptionKeyParameterNames, options);
-            }
-            if (Optional.IsDefined(ApiType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ApiType.Value.ToString());
-            }
-            if (Optional.IsDefined(ApiRevision))
-            {
-                writer.WritePropertyName("apiRevision"u8);
-                writer.WriteStringValue(ApiRevision);
-            }
-            if (Optional.IsDefined(ApiVersion))
-            {
-                writer.WritePropertyName("apiVersion"u8);
-                writer.WriteStringValue(ApiVersion);
-            }
-            if (Optional.IsDefined(IsCurrent))
-            {
-                writer.WritePropertyName("isCurrent"u8);
-                writer.WriteBooleanValue(IsCurrent.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsOnline))
-            {
-                writer.WritePropertyName("isOnline"u8);
-                writer.WriteBooleanValue(IsOnline.Value);
-            }
-            if (Optional.IsDefined(ApiRevisionDescription))
-            {
-                writer.WritePropertyName("apiRevisionDescription"u8);
-                writer.WriteStringValue(ApiRevisionDescription);
-            }
-            if (Optional.IsDefined(ApiVersionDescription))
-            {
-                writer.WritePropertyName("apiVersionDescription"u8);
-                writer.WriteStringValue(ApiVersionDescription);
-            }
-            if (Optional.IsDefined(ApiVersionSetId))
-            {
-                writer.WritePropertyName("apiVersionSetId"u8);
-                writer.WriteStringValue(ApiVersionSetId);
-            }
-            if (Optional.IsDefined(IsSubscriptionRequired))
-            {
-                writer.WritePropertyName("subscriptionRequired"u8);
-                writer.WriteBooleanValue(IsSubscriptionRequired.Value);
-            }
-            if (Optional.IsDefined(TermsOfServiceLink))
-            {
-                writer.WritePropertyName("termsOfServiceUrl"u8);
-                writer.WriteStringValue(TermsOfServiceLink);
-            }
-            if (Optional.IsDefined(Contact))
-            {
-                writer.WritePropertyName("contact"u8);
-                writer.WriteObjectValue(Contact, options);
-            }
-            if (Optional.IsDefined(License))
-            {
-                writer.WritePropertyName("license"u8);
-                writer.WriteObjectValue(License, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         AssociatedApiProperties IJsonModel<AssociatedApiProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

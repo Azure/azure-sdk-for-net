@@ -3,6 +3,7 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using Azure.AI.OpenAI.Utility;
 
 namespace Azure.AI.OpenAI.Batch;
 
@@ -24,16 +25,25 @@ internal partial class AzureBatchClient : BatchClient
         return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
     }
 
-    public override IAsyncEnumerable<ClientResult> GetBatchesAsync(string after, int? limit, RequestOptions options)
+    public override AsyncCollectionResult GetBatchesAsync(string after, int? limit, RequestOptions options)
     {
-        BatchesPageEnumerator enumerator = new(Pipeline, _endpoint, after, limit, options);
-        return PageCollectionHelpers.CreateAsync(enumerator);
+        return new AzureAsyncCollectionResult<object, BatchCollectionPageToken>(
+            Pipeline,
+            options,
+            continuation => CreateGetBatchesRequest(continuation?.After ?? after, limit, options),
+            page => BatchCollectionPageToken.FromResponse(page, limit),
+            page => throw new NotImplementedException("Parsing has not yet been implemented"),
+            options?.CancellationToken ?? default);
     }
 
-    public override IEnumerable<ClientResult> GetBatches(string after, int? limit, RequestOptions options)
+    public override CollectionResult GetBatches(string after, int? limit, RequestOptions options)
     {
-        BatchesPageEnumerator enumerator = new(Pipeline, _endpoint, after, limit, options);
-        return PageCollectionHelpers.Create(enumerator);
+        return new AzureCollectionResult<object, BatchCollectionPageToken>(
+            Pipeline,
+            options,
+            continuation => CreateGetBatchesRequest(continuation?.After ?? after, limit, options),
+            page => BatchCollectionPageToken.FromResponse(page, limit),
+            page => throw new NotImplementedException("Parsing has not yet been implemented"));
     }
 
     public override async Task<ClientResult> GetBatchAsync(string batchId, RequestOptions options)

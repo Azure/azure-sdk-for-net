@@ -4,9 +4,13 @@
 
 ### Features Added
 
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fix HDInsight GetHDInsightClustersAsync Exceptipn: Value cannot be an empty string. (Parameter 'resourceId'). Issue link: https://github.com/Azure/azure-sdk-for-net/issues/45709
 
 ### Other Changes
 

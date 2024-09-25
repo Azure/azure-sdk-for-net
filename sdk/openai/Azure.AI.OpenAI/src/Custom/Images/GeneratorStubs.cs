@@ -3,5 +3,5 @@
 
 namespace Azure.AI.OpenAI;
 
-[CodeGenModel("AzureContentFilterImagePromptResults")] public partial class ImageContentFilterResultForPrompt { }
-[CodeGenModel("AzureContentFilterImageResponseResults")] public partial class ImageContentFilterResultForResponse { }
+[CodeGenModel("AzureContentFilterImagePromptResults")] public partial class RequestImageContentFilterResult { }
+[CodeGenModel("AzureContentFilterImageResponseResults")] public partial class ResponseImageContentFilterResult { }

@@ -20,63 +20,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         void IJsonModel<MariaDBLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MariaDBLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MariaDBLinkedService)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(LinkedServiceVersion))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(LinkedServiceVersion);
-            }
-            if (Optional.IsDefined(ConnectVia))
-            {
-                writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia, options);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteStartObject();
-                foreach (var item in Parameters)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(Annotations))
-            {
-                writer.WritePropertyName("annotations"u8);
-                writer.WriteStartArray();
-                foreach (var item in Annotations)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndArray();
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DriverVersion))
@@ -109,6 +68,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("database"u8);
                 JsonSerializer.Serialize(writer, Database);
             }
+            if (Optional.IsDefined(SslMode))
+            {
+                writer.WritePropertyName("sslMode"u8);
+                JsonSerializer.Serialize(writer, SslMode);
+            }
+            if (Optional.IsDefined(UseSystemTrustStore))
+            {
+                writer.WritePropertyName("useSystemTrustStore"u8);
+                JsonSerializer.Serialize(writer, UseSystemTrustStore);
+            }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
@@ -132,7 +101,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         MariaDBLinkedService IJsonModel<MariaDBLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -167,6 +135,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<int> port = default;
             DataFactoryElement<string> username = default;
             DataFactoryElement<string> database = default;
+            DataFactoryElement<int> sslMode = default;
+            DataFactoryElement<int> useSystemTrustStore = default;
             DataFactoryKeyVaultSecret password = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -295,6 +265,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                             database = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("sslMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sslMode = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("useSystemTrustStore"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useSystemTrustStore = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("password"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -329,6 +317,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 port,
                 username,
                 database,
+                sslMode,
+                useSystemTrustStore,
                 password,
                 encryptedCredential);
         }

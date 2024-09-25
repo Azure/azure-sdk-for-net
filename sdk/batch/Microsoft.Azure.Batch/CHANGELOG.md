@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 16.3.1 (2024-09-19)
+
+### Bugs Fixed
+
+- Fixed `ImageReference` constructor null reference exception.
+
 ## 16.3.0 (2024-07-01)
 
 ### Features Added

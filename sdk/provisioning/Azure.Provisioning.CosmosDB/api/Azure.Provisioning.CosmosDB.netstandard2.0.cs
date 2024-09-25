@@ -93,7 +93,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_09_15;
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
-            public static readonly string V2024_05_15_preview;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_09_01_preview;
         }
     }
     public partial class CassandraClusterBackupSchedule : Azure.Provisioning.Primitives.ProvisioningConstruct
@@ -441,6 +442,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CosmosDBVirtualNetworkRule> VirtualNetworkRules { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CosmosDBAccountLocation> WriteLocations { get { throw null; } }
+        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId) { throw null; }
         public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         public static Azure.Provisioning.CosmosDB.CosmosDBAccount FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.CosmosDB.CosmosDBAccountKeyList GetKeys() { throw null; }
@@ -472,7 +474,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_09_15;
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
-            public static readonly string V2024_05_15_preview;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_09_01_preview;
         }
     }
     public partial class CosmosDBAccountBackupPolicy : Azure.Provisioning.Primitives.ProvisioningConstruct

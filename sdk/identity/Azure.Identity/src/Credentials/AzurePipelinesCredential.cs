@@ -116,6 +116,8 @@ namespace Azure.Identity
             message.Request.Uri.Reset(requestUri);
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, $"Bearer {systemToken}");
             message.Request.Headers.SetValue(HttpHeader.Names.ContentType, "application/json");
+            // Prevents the service from responding with a redirect HTTP status code (useful for automation).
+            message.Request.Headers.SetValue("X-TFS-FedAuthRedirect", "Suppress");
             message.Request.Method = RequestMethod.Post;
             return message;
         }

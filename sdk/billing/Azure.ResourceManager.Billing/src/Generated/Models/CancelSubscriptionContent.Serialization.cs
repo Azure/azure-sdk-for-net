@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Billing.Models
 
         void IJsonModel<CancelSubscriptionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CancelSubscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CancelSubscriptionContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("cancellationReason"u8);
             writer.WriteStringValue(CancellationReason.ToString());
             if (Optional.IsDefined(CustomerId))
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.Billing.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CancelSubscriptionContent IJsonModel<CancelSubscriptionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

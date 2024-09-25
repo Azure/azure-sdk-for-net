@@ -789,6 +789,18 @@ namespace Azure.Messaging.EventGrid
                 identity,
                 storageDiagnostics);
         }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageLifecyclePolicyCompletedEventData"/>. </summary>
+        /// <param name="scheduleTime"> The time the policy task was scheduled. </param>
+        /// <param name="deleteSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
+        /// <param name="tierToCoolSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
+        /// <param name="tierToArchiveSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
+        /// <returns> A new <see cref="SystemEvents.StorageLifecyclePolicyCompletedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime, StorageLifecyclePolicyActionSummaryDetail deleteSummary, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary)
+        {
+            return StorageLifecyclePolicyCompletedEventData(scheduleTime, deleteSummary, tierToCoolSummary, default, tierToArchiveSummary);
+        }
     }
 #pragma warning restore CA1054 // URI-like parameters should not be strings
 }

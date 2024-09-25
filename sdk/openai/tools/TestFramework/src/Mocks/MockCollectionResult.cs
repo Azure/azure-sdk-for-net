@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel;
-using System.ClientModel.Primitives;
+using System.Globalization;
 
 namespace OpenAI.TestFramework.Mocks
 {
@@ -13,24 +13,66 @@ namespace OpenAI.TestFramework.Mocks
     public class MockCollectionResult<TValue> : CollectionResult<TValue>
     {
         private readonly Func<IEnumerable<TValue>> _enumerateFunc;
+        private readonly int _itemsPerPage;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MockCollectionResult{TValue}"/> class with the specified enumeration
         /// function and optional pipeline response.
         /// </summary>
         /// <param name="enumerateFunc">The function used to enumerate the collection.</param>
-        /// <param name="response">The pipeline response associated with the collection.</param>
-        public MockCollectionResult(Func<IEnumerable<TValue>> enumerateFunc, PipelineResponse? response = null) :
-            base(response ?? new MockPipelineResponse())
+        /// <param name="itemsPerPage">The number of items per page.</param>
+        public MockCollectionResult(Func<IEnumerable<TValue>> enumerateFunc, int itemsPerPage = 5)
         {
+            if (itemsPerPage < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(itemsPerPage), "Items per page must be greater than 0.");
+            }
+
             _enumerateFunc = enumerateFunc ?? throw new ArgumentNullException(nameof(enumerateFunc));
+            _itemsPerPage = itemsPerPage;
         }
 
-        /// <summary>
-        /// Returns an enumerator that iterates through the collection.
-        /// </summary>
-        /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-        public override IEnumerator<TValue> GetEnumerator()
-            => _enumerateFunc().GetEnumerator();
+        /// <inheritdoc />
+        public override IEnumerable<ClientResult> GetRawPages()
+        {
+            List<TValue> items = new(_itemsPerPage);
+            int next = 0;
+            foreach (TValue item in _enumerateFunc())
+            {
+                items.Add(item);
+                next++;
+                if (items.Count == _itemsPerPage)
+                {
+                    yield return new MockPage<TValue>
+                    {
+                        Values = items,
+                        Next = next
+                    }.AsClientResult();
+
+                    items.Clear();
+                }
+            }
+
+            if (items.Count > 0)
+            {
+                yield return new MockPage<TValue>
+                {
+                    Values = items,
+                    Next = next
+                }.AsClientResult();
+            }
+        }
+
+        /// <inheritdoc />
+        public override ContinuationToken? GetContinuationToken(ClientResult page)
+        {
+            var parsed = MockPage<TValue>.FromClientResult(page);
+            string token = parsed.Next.ToString(CultureInfo.InvariantCulture);
+            return ContinuationToken.FromBytes(BinaryData.FromString(token));
+        }
+
+        /// <inheritdoc />
+        protected override IEnumerable<TValue> GetValuesFromPage(ClientResult page)
+            => MockPage<TValue>.FromClientResult(page).Values;
     }
 }
