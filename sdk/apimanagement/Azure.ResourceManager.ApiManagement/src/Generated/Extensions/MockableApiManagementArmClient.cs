@@ -635,15 +635,15 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiManagementGatewayConfigConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiManagementGatewayConfigConnectionResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGatewayConfigConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="GatewayConfigConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GatewayConfigConnectionResource.CreateResourceIdentifier" /> to create a <see cref="GatewayConfigConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiManagementGatewayConfigConnectionResource"/> object. </returns>
-        public virtual ApiManagementGatewayConfigConnectionResource GetApiManagementGatewayConfigConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GatewayConfigConnectionResource"/> object. </returns>
+        public virtual GatewayConfigConnectionResource GetGatewayConfigConnectionResource(ResourceIdentifier id)
         {
-            ApiManagementGatewayConfigConnectionResource.ValidateResourceId(id);
-            return new ApiManagementGatewayConfigConnectionResource(Client, id);
+            GatewayConfigConnectionResource.ValidateResourceId(id);
+            return new GatewayConfigConnectionResource(Client, id);
         }
 
         /// <summary>

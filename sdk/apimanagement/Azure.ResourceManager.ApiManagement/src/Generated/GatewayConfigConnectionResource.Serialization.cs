@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementGatewayConfigConnectionResource : IJsonModel<ApiManagementGatewayConfigConnectionResourceData>
+    public partial class GatewayConfigConnectionResource : IJsonModel<ApiManagementGatewayConfigConnectionResourceData>
     {
         void IJsonModel<ApiManagementGatewayConfigConnectionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGatewayConfigConnectionResourceData>)Data).Write(writer, options);
 
