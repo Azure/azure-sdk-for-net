@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         void IJsonModel<ManagedRuleSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedRuleSet)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("ruleSetType"u8);
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
@@ -70,7 +78,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ManagedRuleSet IJsonModel<ManagedRuleSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
