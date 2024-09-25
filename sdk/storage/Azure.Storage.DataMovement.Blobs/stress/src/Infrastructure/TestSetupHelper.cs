@@ -10,7 +10,7 @@ using Azure.Storage.Tests.Shared;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
-    internal static class ConfigurationHelper
+    internal static class TestSetupHelper
     {
         public static string Randomize(string prefix = "sample") =>
             $"{prefix}-{Guid.NewGuid()}";
@@ -68,10 +68,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             fileName ??= Randomize("file-");
 
             // Create new source file
-            Console.Out.WriteLine($"Creating Stream..");
             using Stream originalStream = await CreateLimitedMemoryStream(fileSize, cancellationToken: cancellationToken);
-            Console.Out.WriteLine($"Stream Created..");
-            Console.Out.WriteLine($"Creating Local File.. {prefixPath} + {fileName}");
             string localSourceFile = Path.Combine(prefixPath, fileName);
             // create a new file and copy contents of stream into it, and then close the FileStream
             // so the StagedUploadAsync call is not prevented from reading using its FileStream.
@@ -86,6 +83,25 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             }
             LocalFilesStorageResourceProvider files = new();
             return files.FromFile(localSourceFile);
+        }
+
+        public static async Task CreateLocalFilesToUploadAsync(
+            string directoryPrefix,
+            int fileCount = 1,
+            int fileSize = DataMovementBlobStressConstants.KB * 4,
+            CancellationToken cancellationToken = default)
+        {
+            for (int i = 0; i < fileCount; i++)
+            {
+                using Stream originalStream = await CreateLimitedMemoryStream(fileSize);
+                string localSourceFile = Path.Combine(directoryPrefix, Randomize("file"));
+                // create a new file and copy contents of stream into it, and then close the FileStream
+                // so the StagedUploadAsync call is not prevented from reading using its FileStream.
+                using (FileStream fileStream = File.OpenWrite(localSourceFile))
+                {
+                    await originalStream.CopyToAsync(destination: fileStream, bufferSize: default, cancellationToken: cancellationToken);
+                }
+            }
         }
     }
 }

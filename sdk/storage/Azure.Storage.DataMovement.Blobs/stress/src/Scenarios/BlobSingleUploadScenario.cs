@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Azure.Core;
 using Azure.Storage.Stress;
 using Azure.Storage.Blobs;
@@ -16,8 +15,10 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
 {
     public class BlobSingleUploadScenario : BlobScenarioBase
     {
+        private int _blobSize;
         public BlobSingleUploadScenario(
             Uri destinationBlobUri,
+            int blobSize,
             TransferManagerOptions transferManagerOptions,
             DataTransferOptions dataTransferOptions,
             TokenCredential tokenCredential,
@@ -25,6 +26,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             string testRunId)
             : base(destinationBlobUri, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
         {
+            _blobSize = blobSize;
         }
 
         public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.UploadSingleBlockBlob;
@@ -32,27 +34,17 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
         public override async Task RunTestAsync(CancellationToken cancellationToken)
         {
             DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
-            string destinationContainerName = ConfigurationHelper.Randomize("container");
+            string destinationContainerName = TestSetupHelper.Randomize("container");
             BlobContainerClient destinationContainerClient = _destinationServiceClient.GetBlobContainerClient(destinationContainerName);
             await destinationContainerClient.CreateIfNotExistsAsync();
-            string blobName = ConfigurationHelper.Randomize("blob");
-            var blobSize = 1024 * 1024 * 1024;
-            var blockSize = 4 * 1024 * 1024;
-            var blockCount = blobSize / blockSize;
-
-            var sourceStream = new MemoryStream(blobSize);
-            var random = new Random();
-            var buffer = new byte[blockSize];
-            random.NextBytes(buffer);
-            for (int i = 0; i < blockCount; i++)
-            {
-                sourceStream.Write(buffer, 0, blockSize);
-            }
-            sourceStream.Seek(0, SeekOrigin.Begin);
+            string blobName = TestSetupHelper.Randomize("blob");
 
             // Create Local Source Storage Resource
             Console.Out.WriteLine($"Creating temporary file storage resource from directory: {disposingLocalDirectory.DirectoryPath}");
-            StorageResource sourceResource = await ConfigurationHelper.GetTemporaryFileStorageResourceAsync(disposingLocalDirectory.DirectoryPath);
+            StorageResource sourceResource = await TestSetupHelper.GetTemporaryFileStorageResourceAsync(
+                disposingLocalDirectory.DirectoryPath,
+                fileSize: _blobSize,
+                cancellationToken: cancellationToken);
 
             // Create Destination Storage Resource
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(_destinationBlobUri)
@@ -73,8 +65,8 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             }.TransferAndVerifyAsync(
                 sourceResource,
                 destinationResource,
-                (c) => Task.FromResult(File.OpenRead(sourceResource.Uri.AbsolutePath)),
-                destinationBlob.OpenReadAsync(default, cancellationToken),
+                cToken => Task.FromResult(File.OpenRead(sourceResource.Uri.AbsolutePath) as Stream),
+                async cToken => await destinationBlob.OpenReadAsync(default, cToken),
                 options: _dataTransferOptions,
                 cancellationToken: cancellationToken);
         }

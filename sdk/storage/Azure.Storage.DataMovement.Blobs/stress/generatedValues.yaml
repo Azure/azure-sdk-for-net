@@ -1,7 +1,7 @@
 scenarios:
-- testScenario: blobsingleupload
-  Scenario: blobSingleUpload
-  image: Dockerfile
+- image: Dockerfile
   imageBuildDir: ../../../..
-  imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/storage-dm-blobs/dockerfile:amnguye
+  testScenario: uploadsingleblockblob
+  Scenario: uploadsingleblockblob
+  imageTag: stressstorage4okf44ko4zuos.azurecr.io/amnguye/net-stgdm-blobs/dockerfile:amnguye
 

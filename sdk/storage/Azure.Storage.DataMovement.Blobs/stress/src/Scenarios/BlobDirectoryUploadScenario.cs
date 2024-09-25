@@ -2,22 +2,23 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Azure.Core;
 using Azure.Storage.Stress;
 using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Tests;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
     public class BlobDirectoryUploadScenario : BlobScenarioBase
     {
+        private int _blobSize;
+        private int _blobCount;
         public BlobDirectoryUploadScenario(
             Uri destinationBlobUri,
+            int blobSize,
+            int blobCount,
             TransferManagerOptions transferManagerOptions,
             DataTransferOptions dataTransferOptions,
             TokenCredential tokenCredential,
@@ -25,6 +26,8 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             string testRunId)
             : base(destinationBlobUri, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
         {
+            _blobSize = blobSize;
+            _blobCount = blobCount;
         }
 
         public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.UploadDirectoryBlockBlob;
@@ -35,21 +38,16 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             // Create destination blob container
-            string destinationContainerName = ConfigurationHelper.Randomize("container");
+            string destinationContainerName = TestSetupHelper.Randomize("container");
             BlobContainerClient destinationContainerClient = _destinationServiceClient.GetBlobContainerClient(destinationContainerName);
             await destinationContainerClient.CreateIfNotExistsAsync();
 
-            var blobCount = 3000;
-            var blobSize = 1024 * 1024 * 1024;
-            var blockSize = 4 * 1024 * 1024;
-            var blockCount = blobSize / blockSize;
-
             // Create Local Files
-            await CreateLocalFilesToUploadAsync(disposingLocalDirectory.DirectoryPath, blobCount, blobSize);
+            await TestSetupHelper.CreateLocalFilesToUploadAsync(disposingLocalDirectory.DirectoryPath, _blobCount, _blobSize);
 
             // Create Local Source Storage Resource
             Console.Out.WriteLine($"Creating temporary file storage resource from directory: {disposingLocalDirectory.DirectoryPath}");
-            StorageResource sourceResource = await ConfigurationHelper.GetTemporaryFileStorageResourceAsync(disposingLocalDirectory.DirectoryPath);
+            StorageResource sourceResource = await TestSetupHelper.GetTemporaryFileStorageResourceAsync(disposingLocalDirectory.DirectoryPath);
 
             // Create Destination Storage Resource
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(_destinationBlobUri)
@@ -72,7 +70,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                 destinationResource,
                 TransferValidator.GetLocalFileLister(disposingLocalDirectory.DirectoryPath),
                 TransferValidator.GetBlobLister(destinationContainerClient, default),
-                blobCount,
+                _blobCount,
                 _dataTransferOptions,
                 cancellationToken);
         }

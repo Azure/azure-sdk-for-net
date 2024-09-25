@@ -85,10 +85,35 @@ public class Program
             switch (testScenarioName)
             {
                 case TestScenarioName.UploadSingleBlockBlobTest:
-                    testScenario = new BlobSingleUploadScenario(new Uri(blobEndpoint), transferManagerOptions, transferOptions, tokenCredential, metrics, guid);
+                    testScenario = new BlobSingleUploadScenario(
+                        new Uri(blobEndpoint),
+                        opts.Size,
+                        transferManagerOptions,
+                        transferOptions,
+                        tokenCredential,
+                        metrics,
+                        guid);
                     break;
                 case TestScenarioName.UploadDirectoryBlockBlobTest:
-                    testScenario = new BlobDirectoryUploadScenario(new Uri(blobEndpoint), transferManagerOptions, transferOptions, tokenCredential, metrics, guid);
+                    testScenario = new BlobDirectoryUploadScenario(
+                        destinationBlobUri: new Uri(blobEndpoint),
+                        blobSize: opts.Size,
+                        blobCount: opts.Count,
+                        transferManagerOptions: transferManagerOptions,
+                        dataTransferOptions: transferOptions,
+                        tokenCredential: tokenCredential,
+                        metrics: metrics,
+                        testRunId: guid);
+                    break;
+                case TestScenarioName.DownloadSingleBlockBlobTest:
+                    testScenario = new BlobSingleDownloadScenario(
+                        new Uri(blobEndpoint),
+                        opts.Size,
+                        transferManagerOptions,
+                        transferOptions,
+                        tokenCredential,
+                        metrics,
+                        guid);
                     break;
                 default:
                     throw new Exception("No Scenario or Invalid scenario passed");

@@ -38,24 +38,5 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             _localFilesStorageResourceProvider = new LocalFilesStorageResourceProvider();
             _destinationServiceClient = new BlobServiceClient(destinationBlobUri, tokenCredential);
         }
-
-        public async Task CreateLocalFilesToUploadAsync(
-            string directoryPrefix,
-            int fileCount = 1,
-            int fileSize = DataMovementBlobStressConstants.KB * 4,
-            CancellationToken cancellationToken = default)
-        {
-            for (int i = 0; i < fileCount; i++)
-            {
-                using Stream originalStream = await ConfigurationHelper.CreateLimitedMemoryStream(fileSize);
-                string localSourceFile = Path.Combine(directoryPrefix, ConfigurationHelper.Randomize("file"));
-                // create a new file and copy contents of stream into it, and then close the FileStream
-                // so the StagedUploadAsync call is not prevented from reading using its FileStream.
-                using (FileStream fileStream = File.OpenWrite(localSourceFile))
-                {
-                    await originalStream.CopyToAsync(destination: fileStream,  bufferSize: default, cancellationToken: cancellationToken);
-                }
-            }
-        }
     }
 }
