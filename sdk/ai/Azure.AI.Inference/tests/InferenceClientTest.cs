@@ -23,11 +23,6 @@ namespace Azure.AI.Inference.Tests
 {
     public class InferenceClientTest: RecordedTestBase<InferenceClientTestEnvironment>
     {
-        [SetUp]
-        public void setup()
-        {
-            AppContext.SetSwitch(OpenTelemetryConstants.AppContextSwitch, false);
-        }
         public enum TargetModel
         {
             MistralSmall,

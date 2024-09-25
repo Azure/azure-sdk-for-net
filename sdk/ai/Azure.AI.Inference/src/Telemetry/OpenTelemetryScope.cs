@@ -35,10 +35,12 @@ namespace Azure.AI.Inference.Telemetry
         private readonly Stopwatch _duration;
         private readonly TagList _commonTags;
         private readonly string _caller;
-        private readonly bool _traceContent;
+        private readonly bool _traceContent = AppContextSwitchHelper.GetConfigValue(
+            TraceContentsSwitch,
+            EnvironmentVariableTraceContents);
         private readonly bool _enableTelemetry = AppContextSwitchHelper.GetConfigValue(
             AppContextSwitch,
-            EnvironmentVariableTraceContents);
+            EnvironmentVariableSwitchName);
         private readonly DiagnosticListener m_source = null;
         private readonly StreamingRecordedResponse m_recordedStreamingResponse;
 
@@ -62,12 +64,6 @@ namespace Azure.AI.Inference.Telemetry
             return "";
         }
 
-        public static bool GetSwitchVariableVal(string name)
-        {
-            string enable = Environment.GetEnvironmentVariable(name);
-            return enable != null && (enable.Equals("true", StringComparison.OrdinalIgnoreCase) || enable.Equals("1"));
-        }
-
         /// <summary>
         /// Set the tag on the activity, if the tag is present.
         /// </summary>
@@ -89,8 +85,7 @@ namespace Azure.AI.Inference.Telemetry
         /// <param name="caller">The calling method.</param>
         public OpenTelemetryScope(ChatCompletionsOptions requestOptions, Uri endpoint, string caller=null)
         {
-            var model = requestOptions.Model ?? "chat";
-            var activityName = $"chat {model}";
+            var activityName = requestOptions.Model == null ? "chat" : $"chat {requestOptions.Model}";
             _activity = s_chatSource.CreateActivity(activityName, ActivityKind.Client);
             _caller = caller;
             if (!string.IsNullOrEmpty(caller))
@@ -100,7 +95,6 @@ namespace Azure.AI.Inference.Telemetry
             }
             if (!_enableTelemetry)
                 return;
-            _traceContent = GetSwitchVariableVal(EnvironmentVariableTraceContents);
             m_recordedStreamingResponse = new(_traceContent);
             _activity?.Start();
             // Record the request to telemetry;
@@ -120,12 +114,7 @@ namespace Azure.AI.Inference.Telemetry
             }
             SetTagMaybe(GenAiRequestMaxTokensKey, requestOptions.MaxTokens);
             SetTagMaybe(GenAiRequestTemperatureKey, requestOptions.Temperature);
-            if (requestOptions.AdditionalProperties != null && requestOptions.AdditionalProperties.ContainsKey("top_p"))
-            {
-                SetTagMaybe(
-                    GenAiRequestTopPKey,
-                    JsonSerializer.Deserialize<double?>(requestOptions.AdditionalProperties["top_p"]));
-            }
+            SetTagMaybe(GenAiRequestTopPKey, requestOptions.NucleusSamplingFactor);
             if (_traceContent)
             {
                 // Log all messages as the events.

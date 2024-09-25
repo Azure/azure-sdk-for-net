@@ -48,7 +48,6 @@ namespace Azure.AI.Inference.Tests
                 },
                 Model = "gpt-4o"
             };
-            AppContext.SetSwitch(OpenTelemetryConstants.AppContextSwitch, true);
         }
 
         [RecordedTest]
@@ -65,6 +64,7 @@ namespace Azure.AI.Inference.Tests
         {
             if (testType == TestType.Basic)
                 Assert.True(withUsage, "The Basic test cannot be without tag usage. Please correct the test.");
+            using var _ = new TestAppContextSwitch(OpenTelemetryConstants.AppContextSwitch, "true");
             Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableTraceContents, traceContent.ToString());
             var endpoint = new Uri(TestEnvironment.GithubEndpoint);
             var client = CreateClient(endpoint);
@@ -114,6 +114,7 @@ namespace Azure.AI.Inference.Tests
         [TestCase(TestType.Streaming)]
         public async Task TestBadChatResponse(TestType testType)
         {
+            using var _ = new TestAppContextSwitch(OpenTelemetryConstants.AppContextSwitch, "true");
             var endpoint = new Uri(TestEnvironment.GithubEndpoint);
             var client = CreateClient(endpoint);
             using var actListener = new ValidatingActivityListener();

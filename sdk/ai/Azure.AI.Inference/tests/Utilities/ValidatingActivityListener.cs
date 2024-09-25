@@ -24,7 +24,7 @@ namespace Azure.AI.Inference.Tests.Utilities
         {
             // We have another activity, which is created when we start the http request.
             // that is why we limit the stopped activities by.
-            if (act.DisplayName.StartsWith("chat "))
+            if (act.DisplayName.StartsWith("chat"))
                 m_listeners.Enqueue(act);
         }
 
