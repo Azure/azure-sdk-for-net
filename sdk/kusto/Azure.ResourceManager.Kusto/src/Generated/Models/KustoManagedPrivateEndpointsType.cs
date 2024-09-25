@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public static bool operator ==(KustoManagedPrivateEndpointsType left, KustoManagedPrivateEndpointsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoManagedPrivateEndpointsType"/> values are not the same. </summary>
         public static bool operator !=(KustoManagedPrivateEndpointsType left, KustoManagedPrivateEndpointsType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KustoManagedPrivateEndpointsType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoManagedPrivateEndpointsType"/>. </summary>
         public static implicit operator KustoManagedPrivateEndpointsType(string value) => new KustoManagedPrivateEndpointsType(value);
 
         /// <inheritdoc />
