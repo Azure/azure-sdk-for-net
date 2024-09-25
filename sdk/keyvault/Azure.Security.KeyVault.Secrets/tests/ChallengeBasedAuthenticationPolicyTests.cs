@@ -200,7 +200,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         }
 
         [Test]
-        public void GetClaims()
+        public void GetClaimsFromChallengeHeaders()
         {
             MockResponse response401WithClaims = new MockResponse(401)
                 .WithHeader("WWW-Authenticate", @"Bearer realm="""", authorization_uri=""https://login.microsoftonline.com/common/oauth2/authorize"", error=""insufficient_claims"", claims=""eyJhY2Nlc3NfdG9rZW4iOnsiYWNycyI6eyJlc3NlbnRpYWwiOnRydWUsInZhbHVlIjoiY3AxIn19fQ==""");
@@ -209,6 +209,121 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             MockResponse response401 = new MockResponse(401)
                     .WithHeader("WWW-Authenticate", @"Bearer authorization=""https://login.windows.net/de763a21-49f7-4b08-a8e1-52c8fbc103b4"", resource=""https://vault.azure.net""");
             Assert.IsNull(ChallengeBasedAuthenticationPolicy.getDecodedClaimsParameter(null, response401));
+        }
+
+        [Test]
+        public void HandlesCaeChallenges(){
+            MockTransport transport = new(new[]
+            {
+                // Initial scope challlenge
+                new MockResponse(401)
+                    .WithHeader("WWW-Authenticate", @"Bearer authorization=""https://login.windows.net/de763a21-49f7-4b08-a8e1-52c8fbc103b4"", resource=""https://vault.azure.net"""),
+
+                new MockResponse(200)
+                    .WithJson("""
+                    {
+                        "token_type": "Bearer",
+                        "expires_in": 3599,
+                        "resource": "https://vault.azure.net",
+                        "access_token": "ZGU3NjNhMjEtNDlmNy00YjA4LWE4ZTEtNTJjOGZiYzEwM2I0"
+                    }
+                    """),
+
+                // CAE Challenge
+                new MockResponse(401)
+                    .WithHeader("WWW-Authenticate", @"Bearer realm="""", authorization_uri=""https://login.microsoftonline.com/common/oauth2/authorize"", error=""insufficient_claims"", claims=""eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwidmFsdWUiOiIxNzI2MDc3NTk1In0sInhtc19jYWVlcnJvciI6eyJ2YWx1ZSI6IjEwMDEyIn19fQ=="""),
+
+                new MockResponse(200)
+                    .WithJson("""
+                    {
+                        "token_type": "Bearer",
+                        "expires_in": 3599,
+                        "resource": "https://vault.azure.net",
+                        "access_token": "NzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3"
+                    }
+                    """),
+
+                new MockResponse(200)
+                {
+                    ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
+                },
+            });
+
+            SecretClient client = new(
+                VaultUri,
+                new MockCredential(transport),
+                new SecretClientOptions()
+                {
+                    Transport = transport,
+                });
+
+            Response<KeyVaultSecret> response = client.GetSecret("test-secret");
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual("secret-value", response.Value.Value);
+        }
+
+        [Test]
+        public void ThrowsWithTwoConsecutiveCaeChallenges()
+        {
+            MockTransport transport = new(new[]
+            {
+                // Initial scope challlenge
+                new MockResponse(401)
+                    .WithHeader("WWW-Authenticate", @"Bearer authorization=""https://login.windows.net/de763a21-49f7-4b08-a8e1-52c8fbc103b4"", resource=""https://vault.azure.net"""),
+
+                new MockResponse(200)
+                    .WithJson("""
+                    {
+                        "token_type": "Bearer",
+                        "expires_in": 3599,
+                        "resource": "https://vault.azure.net",
+                        "access_token": "ZGU3NjNhMjEtNDlmNy00YjA4LWE4ZTEtNTJjOGZiYzEwM2I0"
+                    }
+                    """),
+
+                // CAE Challenge
+                new MockResponse(401)
+                    .WithHeader("WWW-Authenticate", @"Bearer realm="""", authorization_uri=""https://login.microsoftonline.com/common/oauth2/authorize"", error=""insufficient_claims"", claims=""eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwidmFsdWUiOiIxNzI2MDc3NTk1In0sInhtc19jYWVlcnJvciI6eyJ2YWx1ZSI6IjEwMDEyIn19fQ=="""),
+
+                new MockResponse(200)
+                    .WithJson("""
+                    {
+                        "token_type": "Bearer",
+                        "expires_in": 3599,
+                        "resource": "https://vault.azure.net",
+                        "access_token": "NzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3"
+                    }
+                    """),
+
+                // Second CAE Challenge
+                new MockResponse(401)
+                    .WithHeader("WWW-Authenticate", @"Bearer realm="""", authorization_uri=""https://login.microsoftonline.com/common/oauth2/authorize"", error=""insufficient_claims"", claims=""eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwidmFsdWUiOiIxNzI2MDc3NTk1In0sInhtc19jYWVlcnJvciI6eyJ2YWx1ZSI6IjEwMDEyIn19fQ=="""),
+
+                new MockResponse(200)
+                    .WithJson("""
+                    {
+                        "token_type": "Bearer",
+                        "expires_in": 3599,
+                        "resource": "https://vault.azure.net",
+                        "access_token": GUID.NewGuid().ToString()
+                    }
+                    """),
+
+                new MockResponse(200)
+                {
+                    ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
+                },
+            });
+
+            SecretClient client = new(
+                VaultUri,
+                new MockCredential(transport),
+                new SecretClientOptions()
+                {
+                    Transport = transport,
+                });
+
+            Assert.Throws<RequestFailedException>(() => client.GetSecret("test-secret"));
         }
 
         private class MockTransportBuilder
