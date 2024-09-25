@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
@@ -90,6 +91,7 @@ namespace Azure.Core.Pipeline
 
         /// <summary>
         /// Executed in the event a 401 response with a WWW-Authenticate authentication challenge header is received after the initial request.
+        /// The default implementation will attempt to handle Continuous Access Evaluation (CAE) claims challenges.
         /// </summary>
         /// <remarks>Service client libraries may override this to handle service specific authentication challenges.</remarks>
         /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
@@ -108,6 +110,7 @@ namespace Azure.Core.Pipeline
 
         /// <summary>
         /// Executed in the event a 401 response with a WWW-Authenticate authentication challenge header is received after the initial request.
+        /// The default implementation will attempt to handle Continuous Access Evaluation (CAE) claims challenges.
         /// </summary>
         /// <remarks>Service client libraries may override this to handle service specific authentication challenges.</remarks>
         /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
@@ -126,18 +129,19 @@ namespace Azure.Core.Pipeline
         internal bool TryGetTokenRequestContextForCaeChallenge(HttpMessage message, out TokenRequestContext tokenRequestContext)
         {
             string? decodedClaims = null;
+            string? encodedClaims = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "claims");
             try
             {
-                decodedClaims = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "claims") switch
+                decodedClaims = encodedClaims switch
                 {
                     null => null,
                     { Length: 0 } => null,
-                    string enc => System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(enc))
+                    string enc => Encoding.UTF8.GetString(Convert.FromBase64String(enc))
                 };
             }
-            catch (FormatException)
+            catch (FormatException ex)
             {
-                //AzureCoreEventSource.Singleton.FailedToDecodeClaims(e.ToString());
+                AzureCoreEventSource.Singleton.FailedToDecodeCaeChallengeClaims(encodedClaims, ex.ToString());
             }
             if (decodedClaims == null)
             {
