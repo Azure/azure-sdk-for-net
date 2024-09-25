@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Cdn.Models
 
         void IJsonModel<CacheConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CacheConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(QueryStringCachingBehavior))
             {
                 writer.WritePropertyName("queryStringCachingBehavior"u8);
@@ -73,7 +81,6 @@ namespace Azure.ResourceManager.Cdn.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CacheConfiguration IJsonModel<CacheConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Reservations.Models
 
         void IJsonModel<ReservationToExchange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ReservationToExchange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReservationToExchange)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ReservationId))
             {
                 writer.WritePropertyName("reservationId"u8);
@@ -61,7 +69,6 @@ namespace Azure.ResourceManager.Reservations.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ReservationToExchange IJsonModel<ReservationToExchange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

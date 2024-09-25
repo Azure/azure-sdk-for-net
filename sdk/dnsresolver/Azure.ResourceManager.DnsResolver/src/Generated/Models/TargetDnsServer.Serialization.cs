@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         void IJsonModel<TargetDnsServer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TargetDnsServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TargetDnsServer)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("ipAddress"u8);
             writer.WriteStringValue(IPAddress.ToString());
             if (Optional.IsDefined(Port))
@@ -49,7 +57,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TargetDnsServer IJsonModel<TargetDnsServer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
