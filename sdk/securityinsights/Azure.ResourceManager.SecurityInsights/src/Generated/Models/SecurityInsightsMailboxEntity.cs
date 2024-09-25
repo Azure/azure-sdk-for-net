@@ -76,16 +76,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> The mailbox's primary address. </summary>
+        [WirePath("properties.mailboxPrimaryAddress")]
         public string MailboxPrimaryAddress { get; }
         /// <summary> The mailbox's display name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; }
         /// <summary> The mailbox's UPN. </summary>
+        [WirePath("properties.upn")]
         public string Upn { get; }
         /// <summary> The AzureAD identifier of mailbox. Similar to AadUserId in account entity but this property is specific to mailbox object on office side. </summary>
+        [WirePath("properties.externalDirectoryObjectId")]
         public Guid? ExternalDirectoryObjectId { get; }
     }
 }

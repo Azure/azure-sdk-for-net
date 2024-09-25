@@ -87,14 +87,14 @@ The Azure Identity library provides the same [logging capabilities](https://gith
 The simplest way to see the logs to help debug authentication issues is to enable the console logger.
 
 ```c#
-// Setup a listener to monitor logged events.
+// Set up a listener to monitor logged events.
 using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
 ```
 
 All credentials can be configured with diagnostic options, in the same way as other clients in the SDK.
 
 ```c#
-DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
+DefaultAzureCredentialOptions options = new
 {
     Diagnostics =
     {
@@ -106,6 +106,20 @@ DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
 ```
 
 > CAUTION: Requests and responses in the Azure Identity library contain sensitive information. Precaution must be taken to protect logs when customizing the output to avoid compromising account security.
+
+When troubleshooting authentication issues, you may also want to enable logging of sensitive information. To enable this type of logging, set the `IsLoggingContentEnabled` property to `true`. To only log details about the account that was used to attempt authentication and authorization, set the `IsAccountIdentifierLoggingEnabled` property to `true`:
+
+```c#
+DefaultAzureCredentialOptions options = new
+{
+    Diagnostics =
+    {
+        LoggedHeaderNames = { "x-ms-request-id" },
+        LoggedQueryParameters = { "api-version" },
+        IsAccountIdentifierLoggingEnabled = true
+    }
+};
+```
 
 ## Troubleshoot `DefaultAzureCredential` authentication issues
 

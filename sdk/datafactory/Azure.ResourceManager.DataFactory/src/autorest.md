@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: DataFactory
 namespace: Azure.ResourceManager.DataFactory
-require: https://github.com/Azure/azure-rest-api-specs/blob/09741dc7c9e43a8f9401d782186cac723dc4af71/specification/datafactory/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/1ad29756bd141a47cac770140105a706d065ae1b/specification/datafactory/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,6 +20,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+use-write-core: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -149,6 +150,7 @@ rename-mapping:
   GlobalParameterSpecification.type: GlobalParameterType
   HDInsightActivityDebugInfoOption: HDInsightActivityDebugInfoOptionSetting
   HDInsightOnDemandLinkedService.typeProperties.timeToLive: TimeToLiveExpression
+  HDInsightOnDemandLinkedService.typeProperties.version: Version
   HttpSource: DataFactoryHttpFileSource
   IntegrationRuntime: DataFactoryIntegrationRuntimeProperties
   IntegrationRuntimeAutoUpdate: IntegrationRuntimeAutoUpdateState
@@ -251,6 +253,7 @@ rename-mapping:
   AzureFunctionActivity.typeProperties.headers: RequestHeaders
   WebActivity.typeProperties.headers: RequestHeaders
   WebHookActivity.typeProperties.headers: RequestHeaders
+  LinkedService.version: LinkedServiceVersion
 
 prepend-rp-prefix:
   - BlobEventsTrigger

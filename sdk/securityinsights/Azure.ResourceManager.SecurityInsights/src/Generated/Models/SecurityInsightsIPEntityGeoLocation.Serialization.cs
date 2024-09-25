@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -174,6 +175,158 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Asn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  asn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Asn))
+                {
+                    builder.Append("  asn: ");
+                    builder.AppendLine($"{Asn.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(City), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  city: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(City))
+                {
+                    builder.Append("  city: ");
+                    if (City.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{City}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{City}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CountryCode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  countryCode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CountryCode))
+                {
+                    builder.Append("  countryCode: ");
+                    if (CountryCode.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CountryCode}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CountryCode}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CountryName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  countryName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CountryName))
+                {
+                    builder.Append("  countryName: ");
+                    if (CountryName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CountryName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CountryName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Latitude), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  latitude: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Latitude))
+                {
+                    builder.Append("  latitude: ");
+                    builder.AppendLine($"'{Latitude.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Longitude), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  longitude: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Longitude))
+                {
+                    builder.Append("  longitude: ");
+                    builder.AppendLine($"'{Longitude.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("  state: ");
+                    if (State.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{State}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{State}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SecurityInsightsIPEntityGeoLocation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIPEntityGeoLocation>)this).GetFormatFromOptions(options) : options.Format;
@@ -182,6 +335,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsIPEntityGeoLocation)} does not support writing '{options.Format}' format.");
             }

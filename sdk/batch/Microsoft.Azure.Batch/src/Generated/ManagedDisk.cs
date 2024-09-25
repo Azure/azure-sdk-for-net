@@ -24,15 +24,21 @@ namespace Microsoft.Azure.Batch
     {
         private class PropertyContainer : PropertyCollection
         {
+            public readonly PropertyAccessor<VMDiskSecurityProfile> SecurityProfileProperty;
             public readonly PropertyAccessor<Common.StorageAccountType?> StorageAccountTypeProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
+                this.SecurityProfileProperty = this.CreatePropertyAccessor<VMDiskSecurityProfile>(nameof(SecurityProfile), BindingAccess.Read | BindingAccess.Write);
                 this.StorageAccountTypeProperty = this.CreatePropertyAccessor<Common.StorageAccountType?>(nameof(StorageAccountType), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.ManagedDisk protocolObject) : base(BindingState.Bound)
             {
+                this.SecurityProfileProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.SecurityProfile, o => new VMDiskSecurityProfile(o)),
+                    nameof(SecurityProfile),
+                    BindingAccess.Read | BindingAccess.Write);
                 this.StorageAccountTypeProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.StorageAccountType, Common.StorageAccountType>(protocolObject.StorageAccountType),
                     nameof(StorageAccountType),
@@ -48,11 +54,14 @@ namespace Microsoft.Azure.Batch
         /// Initializes a new instance of the <see cref="ManagedDisk"/> class.
         /// </summary>
         /// <param name='storageAccountType'>The Azure Storage account name.</param>
+        /// <param name='securityProfile'>Gets or sets specifies the security profile settings for the managed disk.</param>
         public ManagedDisk(
-            Common.StorageAccountType? storageAccountType = default(Common.StorageAccountType?))
+            Common.StorageAccountType? storageAccountType = default(Common.StorageAccountType?),
+            VMDiskSecurityProfile securityProfile = default(VMDiskSecurityProfile))
         {
             this.propertyContainer = new PropertyContainer();
             this.StorageAccountType = storageAccountType;
+            this.SecurityProfile = securityProfile;
         }
 
         /// <summary>
@@ -71,6 +80,15 @@ namespace Microsoft.Azure.Batch
         #endregion Constructors
 
         #region ManagedDisk
+
+        /// <summary>
+        /// Gets or sets gets or sets specifies the security profile settings for the managed disk.
+        /// </summary>
+        public VMDiskSecurityProfile SecurityProfile
+        {
+            get { return this.propertyContainer.SecurityProfileProperty.Value; }
+            set { this.propertyContainer.SecurityProfileProperty.Value = value; }
+        }
 
         /// <summary>
         /// Gets or sets the Azure Storage account name.
@@ -107,6 +125,7 @@ namespace Microsoft.Azure.Batch
         {
             Models.ManagedDisk result = new Models.ManagedDisk()
             {
+                SecurityProfile = UtilitiesInternal.CreateObjectWithNullCheck(this.SecurityProfile, (o) => o.GetTransportObject()),
                 StorageAccountType = UtilitiesInternal.MapNullableEnum<Common.StorageAccountType, Models.StorageAccountType>(this.StorageAccountType),
             };
 

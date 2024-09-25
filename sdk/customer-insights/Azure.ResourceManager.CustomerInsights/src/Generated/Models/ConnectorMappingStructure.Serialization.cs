@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         void IJsonModel<ConnectorMappingStructure>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingStructure>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectorMappingStructure)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("propertyName"u8);
             writer.WriteStringValue(PropertyName);
             writer.WritePropertyName("columnName"u8);
@@ -55,7 +63,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ConnectorMappingStructure IJsonModel<ConnectorMappingStructure>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

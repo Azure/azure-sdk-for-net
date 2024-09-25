@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Description of the endpoint deployment. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
     }
 }

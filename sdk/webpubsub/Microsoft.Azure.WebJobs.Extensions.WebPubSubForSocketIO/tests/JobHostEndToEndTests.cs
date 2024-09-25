@@ -1,15 +1,15 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Trigger.Model;
 using Microsoft.Azure.WebJobs.Host;
-using Microsoft.Azure.WebJobs.Host.Indexers;
 using Microsoft.Azure.WebPubSub.Common;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 {
@@ -117,12 +117,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             Assert.AreEqual("Exception while executing function: SocketIOFuncs.TestSocketIOTriggerWith3Param", exception.Message);
         }
 
-        [TestCase]
-        public async Task TestSocketIOInputBinding()
+        [TestCase("SocketIOFuncs.TestSocketIOInputConnection")]
+        [TestCase("SocketIOFuncs.TestSocketIOInputConnectionWithUserId")]
+        public async Task TestSocketIOInputBinding(string function)
         {
             var host = TestHelpers.NewHost(typeof(SocketIOFuncs), configuration: KeyBasedConfiguration);
 
-            await host.GetJobHost().CallAsync("SocketIOFuncs.TestSocketIOInputConnection");
+            await host.GetJobHost().CallAsync(function);
         }
 
         [TestCase]
@@ -173,7 +174,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 
         private static SocketIOSocketContext CreateConnectionContext()
         {
-            return new SocketIOSocketContext(WebPubSubEventType.User, "message", "testhub", "000000", "/ns", "sid", "sig", "origin", null);
+            return new SocketIOSocketContext(WebPubSubEventType.User, "message", "testhub", "000000", "uid", "/ns", "sid", "sig", "origin", null);
         }
 
         private sealed class SocketIOFuncs
@@ -184,10 +185,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             {
                 // Valid case use default url for verification.
                 Assert.AreEqual(TestContext, connectionContext);
+                Assert.AreEqual("uid", connectionContext.UserId);
             }
 
             public static void TestSocketIOTriggerWith2Param(
-                [SocketIOTrigger("chat", "msgEvent", parameterNames: new[] {"arg1", "arg2"})] SocketIOMessageRequest request,
+                [SocketIOTrigger("chat", "msgEvent", parameterNames: new[] { "arg1", "arg2" })] SocketIOMessageRequest request,
                 SocketIOSocketContext connectionContext,
                 string arg1,
                 string arg2)
@@ -197,6 +199,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
                 Assert.AreEqual("msgEvent", request.EventName);
                 Assert.AreEqual("d1", arg1);
                 Assert.AreEqual("d2", arg2);
+                Assert.AreEqual("uid", connectionContext.UserId);
             }
 
             public static void TestSocketIOTriggerWith3Param(
@@ -211,6 +214,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
                 Assert.AreEqual("msgEvent", request.EventName);
                 Assert.AreEqual("d1", arg1);
                 Assert.AreEqual("d2", arg2);
+                Assert.AreEqual("uid", connectionContext.UserId);
             }
 
             public static void TestSocketIOTriggerWith2ParamAndParameterAttr(
@@ -224,6 +228,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
                 Assert.AreEqual("msgEvent", request.EventName);
                 Assert.AreEqual("d1", arg2);
                 Assert.AreEqual("d2", arg1);
+                Assert.AreEqual("uid", connectionContext.UserId);
             }
 
             public static void TestSocketIOTriggerInvalid(
@@ -236,6 +241,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             {
                 // Valid case use default url for verification.
                 Assert.AreEqual("https://abc/", connection.Endpoint.AbsoluteUri);
+            }
+
+            public static void TestSocketIOInputConnectionWithUserId(
+                [SocketIONegotiation(Hub = "chat", UserId = "uid")] SocketIONegotiationResult connection)
+            {
+                // Valid case use default url for verification.
+                Assert.AreEqual("https://abc/", connection.Endpoint.AbsoluteUri);
+                var jwt = new JwtSecurityTokenHandler().ReadJwtToken(connection.Token);
+                Assert.AreEqual("uid", jwt.Subject);
             }
 
             public static async Task TestSocketIOOutput(

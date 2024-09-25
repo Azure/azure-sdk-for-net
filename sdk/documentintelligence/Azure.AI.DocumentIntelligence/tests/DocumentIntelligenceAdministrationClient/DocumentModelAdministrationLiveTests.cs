@@ -161,7 +161,15 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             await using var disposableModel = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl);
 
-            var authorizeCopyContent = new AuthorizeCopyContent(modelId, description, tags, serializedAdditionalRawData: null);
+            var authorizeCopyContent = new AuthorizeCopyContent(modelId)
+            {
+                Description = description
+            };
+
+            foreach (var tag in tags)
+            {
+                authorizeCopyContent.Tags.Add(tag);
+            }
 
             CopyAuthorization copyAuthorization = await client.AuthorizeModelCopyAsync(authorizeCopyContent);
 

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
                 Name = TestEnvironment.CapacityName,
                 ResourceType = ResourceType
             };
-            var result = await Subscription.CheckNameAvailabilityFabricCapacityAsync(DefaultLocation, content);
+            var result = await Subscription.CheckFabricCapacityNameAvailabilityAsync(DefaultLocation, content);
 
             // Assert
             Assert.IsNotNull(result?.Value);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
                 Name = TestEnvironment.CapacityName + "1",
                 ResourceType = ResourceType
             };
-            var result = await Subscription.CheckNameAvailabilityFabricCapacityAsync(DefaultLocation, content);
+            var result = await Subscription.CheckFabricCapacityNameAvailabilityAsync(DefaultLocation, content);
 
             // Assert
             Assert.IsNotNull(result?.Value);

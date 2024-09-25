@@ -21,12 +21,19 @@ namespace Azure.AI.OpenAI.Chat
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (SerializedAdditionalRawData?.ContainsKey("type") != true)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
+            }
+            if (SerializedAdditionalRawData != null)
+            {
+                foreach (var item in SerializedAdditionalRawData)
                 {
+                    if (ModelSerializationExtensions.IsSentinelValue(item.Value))
+                    {
+                        continue;
+                    }
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
@@ -66,9 +73,9 @@ namespace Azure.AI.OpenAI.Chat
                 switch (discriminator.GetString())
                 {
                     case "azure_cosmos_db": return AzureCosmosDBChatDataSource.DeserializeAzureCosmosDBChatDataSource(element, options);
-                    case "azure_ml_index": return AzureMachineLearningIndexChatDataSource.DeserializeAzureMachineLearningIndexChatDataSource(element, options);
                     case "azure_search": return AzureSearchChatDataSource.DeserializeAzureSearchChatDataSource(element, options);
                     case "elasticsearch": return ElasticsearchChatDataSource.DeserializeElasticsearchChatDataSource(element, options);
+                    case "mongo_db": return MongoDBChatDataSource.DeserializeMongoDBChatDataSource(element, options);
                     case "pinecone": return PineconeChatDataSource.DeserializePineconeChatDataSource(element, options);
                 }
             }

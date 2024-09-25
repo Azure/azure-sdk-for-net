@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> The client Id for authenticating a Service Principal. </summary>
+        [WirePath("clientId")]
         public Guid? ClientId { get; set; }
         /// <summary> The tenant Id for authenticating a Service Principal. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
         /// <summary> The client secret for authenticating a Service Principal. </summary>
+        [WirePath("clientSecret")]
         public string ClientSecret { get; set; }
         /// <summary> Base64-encoded certificate used to authenticate a Service Principal. </summary>
+        [WirePath("clientCertificate")]
         public string ClientCertificate { get; set; }
         /// <summary> The password for the certificate used to authenticate a Service Principal. </summary>
+        [WirePath("clientCertificatePassword")]
         public string ClientCertificatePassword { get; set; }
         /// <summary> Specifies whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the Client Certificate. </summary>
+        [WirePath("clientCertificateSendChain")]
         public bool? ClientCertificateSendChain { get; set; }
     }
 }

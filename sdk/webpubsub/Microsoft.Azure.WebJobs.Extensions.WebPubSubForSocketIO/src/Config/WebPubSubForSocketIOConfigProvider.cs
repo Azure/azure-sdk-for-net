@@ -188,7 +188,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
         private SocketIONegotiationResult GetNegotiationResult(SocketIONegotiationAttribute attribute)
         {
             var service = GetService(attribute.Connection, attribute.Hub);
-            return service.GetNegotiationResult();
+            return service.GetNegotiationResult(attribute.UserId);
         }
 
         private void ValidateConnectionString(string attributeConnectionString, string attributeConnectionStringName)

@@ -28,20 +28,6 @@ helper-namespace: Azure.Maps.Common
 ```yaml
 directive:
 - from: swagger-document
-  where: $.securityDefinitions
-  transform: |
-    $["azure_auth"] = $["AADToken"];
-    delete $["AADToken"];
-- from: swagger-document
-  where: '$.security[0]'
-  transform: |
-    $["azure_auth"] = $["AADToken"];
-    delete $["AADToken"];
-- from: swagger-document
-  where: $.securityDefinitions
-  transform: |
-    $["SharedKey"]["in"] = "header";
-- from: swagger-document
   where: "$.definitions.GeocodingBatchRequestItem.properties.bbox"
   transform: >
     $["x-ms-client-name"] = "boundingBox";

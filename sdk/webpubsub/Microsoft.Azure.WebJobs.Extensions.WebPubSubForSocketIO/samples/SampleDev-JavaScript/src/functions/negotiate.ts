@@ -5,6 +5,7 @@ const socketIONegotiate = input.generic({
     direction: 'in',
     name: 'result',
     hub: 'hub',
+    userId: '{query.userId}'
 });
 
 export async function negotiate(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {

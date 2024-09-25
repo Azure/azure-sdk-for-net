@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Optional. Minimum number of container replicas. </summary>
+        [WirePath("minReplicas")]
         public int? MinReplicas { get; set; }
         /// <summary> Optional. Maximum number of container replicas. Defaults to 10 if not set. </summary>
+        [WirePath("maxReplicas")]
         public int? MaxReplicas { get; set; }
         /// <summary> Scaling rules. </summary>
+        [WirePath("rules")]
         public IList<ContainerAppScaleRule> Rules { get; }
     }
 }

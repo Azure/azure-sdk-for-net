@@ -20,64 +20,48 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         void IJsonModel<VerticaLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<VerticaLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VerticaLinkedService)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(ConnectVia))
-            {
-                writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia, options);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteStartObject();
-                foreach (var item in Parameters)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(Annotations))
-            {
-                writer.WritePropertyName("annotations"u8);
-                writer.WriteStartArray();
-                foreach (var item in Annotations)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndArray();
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 JsonSerializer.Serialize(writer, ConnectionString);
+            }
+            if (Optional.IsDefined(Server))
+            {
+                writer.WritePropertyName("server"u8);
+                JsonSerializer.Serialize(writer, Server);
+            }
+            if (Optional.IsDefined(Port))
+            {
+                writer.WritePropertyName("port"u8);
+                JsonSerializer.Serialize(writer, Port);
+            }
+            if (Optional.IsDefined(Uid))
+            {
+                writer.WritePropertyName("uid"u8);
+                JsonSerializer.Serialize(writer, Uid);
+            }
+            if (Optional.IsDefined(Database))
+            {
+                writer.WritePropertyName("database"u8);
+                JsonSerializer.Serialize(writer, Database);
             }
             if (Optional.IsDefined(Password))
             {
@@ -102,7 +86,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         VerticaLinkedService IJsonModel<VerticaLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -126,11 +109,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
+            string version = default;
             IntegrationRuntimeReference connectVia = default;
             string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> connectionString = default;
+            DataFactoryElement<string> server = default;
+            DataFactoryElement<int> port = default;
+            DataFactoryElement<string> uid = default;
+            DataFactoryElement<string> database = default;
             DataFactoryKeyVaultSecret password = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -140,6 +128,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("version"u8))
+                {
+                    version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("connectVia"u8))
@@ -209,6 +202,42 @@ namespace Azure.ResourceManager.DataFactory.Models
                             connectionString = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("server"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            server = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("port"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            port = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("uid"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            uid = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("database"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            database = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("pwd"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -231,12 +260,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new VerticaLinkedService(
                 type,
+                version,
                 connectVia,
                 description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
                 connectionString,
+                server,
+                port,
+                uid,
+                database,
                 password,
                 encryptedCredential);
         }

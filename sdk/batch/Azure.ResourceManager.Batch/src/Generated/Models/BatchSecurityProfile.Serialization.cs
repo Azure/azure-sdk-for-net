@@ -19,17 +19,25 @@ namespace Azure.ResourceManager.Batch.Models
 
         void IJsonModel<BatchSecurityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BatchSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchSecurityProfile)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(SecurityType))
             {
                 writer.WritePropertyName("securityType"u8);
-                writer.WriteStringValue(SecurityType.Value.ToString());
+                writer.WriteStringValue(SecurityType.Value.ToSerialString());
             }
             if (Optional.IsDefined(EncryptionAtHost))
             {
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.Batch.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BatchSecurityProfile IJsonModel<BatchSecurityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -92,7 +99,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    securityType = new BatchSecurityType(property.Value.GetString());
+                    securityType = property.Value.GetString().ToBatchSecurityType();
                     continue;
                 }
                 if (property.NameEquals("encryptionAtHost"u8))

@@ -1,10 +1,8 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
-
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
@@ -12,11 +10,24 @@
 
 ### Other Changes
 
+## 1.2.0-beta.1 (2024-09-06)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2022-11' to 'package-preview-2024-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/2d973fccf9f28681a481e9760fa12b2334216e21/specification/securityinsights/resource-manager/readme.md.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.42.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.13.0
+
 ## 1.1.0 (2023-11-30)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -26,7 +37,7 @@
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 

@@ -156,10 +156,9 @@ namespace Microsoft.Azure.Batch
         /// Gets or sets the SSH public key that can be used for remote login to the compute node.
         /// </summary>
         /// <remarks>
-        /// <para>The public key should be compatible with Open SSH encoding and should be base 64 encoded. This property 
-        /// can be specified only for Linux nodes. The Batch service will return an error if this property is set for pools 
-        /// created with <see cref="Microsoft.Azure.Batch.CloudServiceConfiguration"/> or <see cref="Microsoft.Azure.Batch.VirtualMachineConfiguration"/> 
-        /// with Windows compute nodes.</para>
+        /// <para>The public key should be compatible with OpenSSH encoding and should be base 64 encoded. This property 
+        /// can be specified only for Linux Compute Nodes. If this is specified for a Windows Compute Node, then the Batch 
+        /// service rejects the request; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request).</para>
         /// </remarks>
         public string SshPublicKey
         {

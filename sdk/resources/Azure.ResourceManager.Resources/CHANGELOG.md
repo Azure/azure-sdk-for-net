@@ -1,14 +1,10 @@
 # Release History
 
-## 1.9.0-beta.1 (Unreleased)
+## 1.9.0 (2024-09-24)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `DataBoundary` support.
 
 ## 1.8.0 (2024-07-04)
 

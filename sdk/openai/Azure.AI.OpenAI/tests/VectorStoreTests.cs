@@ -10,14 +10,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Utils.Config;
-using Azure.Core.TestFramework;
+using NUnit.Framework;
 using OpenAI;
+using OpenAI.Assistants;
 using OpenAI.Files;
+using OpenAI.TestFramework;
 using OpenAI.VectorStores;
 
 namespace Azure.AI.OpenAI.Tests;
-
-#pragma warning disable OPENAI001
 
 public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
 {
@@ -39,8 +39,9 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
 
         VectorStore vectorStore = await client.CreateVectorStoreAsync();
         Validate(vectorStore);
-        bool deleted = await client.DeleteVectorStoreAsync(vectorStore);
-        Assert.That(deleted, Is.True);
+        VectorStoreDeletionResult deletionResult = await client.DeleteVectorStoreAsync(vectorStore);
+        Assert.That(deletionResult.VectorStoreId, Is.EqualTo(vectorStore.Id));
+        Assert.That(deletionResult.Deleted, Is.True);
 
         IReadOnlyList<OpenAIFileInfo> testFiles = await GetNewTestFilesAsync(client.GetConfigOrThrow(), 5);
 
@@ -82,13 +83,16 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
             Assert.That(vectorStore.Metadata?.TryGetValue("test-key", out string metadataValue) == true && metadataValue == "test-value");
         });
 
-        deleted = await client.DeleteVectorStoreAsync(vectorStore.Id);
-        Assert.That(deleted, Is.True);
+        deletionResult = await client.DeleteVectorStoreAsync(vectorStore.Id);
+        Assert.That(deletionResult.VectorStoreId, Is.EqualTo(vectorStore.Id));
+        Assert.That(deletionResult.Deleted, Is.True);
 
-        vectorStore = await client.CreateVectorStoreAsync(new VectorStoreCreationOptions()
+        var options = new VectorStoreCreationOptions();
+        foreach (var file in testFiles)
         {
-            FileIds = testFiles.Select(file => file.Id).ToList()
-        });
+            options.FileIds.Add(file.Id);
+        }
+        vectorStore = await client.CreateVectorStoreAsync(options);
         Validate(vectorStore);
         Assert.Multiple(() =>
         {
@@ -111,10 +115,7 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
             Assert.That(vectorStore.Name, Is.EqualTo($"Test Vector Store {i}"));
         }
 
-
-        AsyncPageableCollection<VectorStore> response = SyncOrAsync(client,
-            c => c.GetVectorStores(ListOrder.NewestFirst),
-            c => c.GetVectorStoresAsync(ListOrder.NewestFirst));
+        AsyncCollectionResult<VectorStore> response = client.GetVectorStoresAsync(new VectorStoreCollectionOptions() { Order = VectorStoreCollectionOrder.Descending });
         Assert.That(response, Is.Not.Null);
 
         int lastIdSeen = int.MaxValue;
@@ -162,16 +163,15 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
             });
         }
 
-        bool removed = await client.RemoveFileFromStoreAsync(vectorStore, files[0]);
-        Assert.True(removed);
+        FileFromStoreRemovalResult removalResult = await client.RemoveFileFromStoreAsync(vectorStore, files[0]);
+        Assert.That(removalResult.FileId, Is.EqualTo(files[0].Id));
+        Assert.True(removalResult.Removed);
 
         // Errata: removals aren't immediately reflected when requesting the list
         Thread.Sleep(1000);
 
         int count = 0;
-        AsyncPageableCollection<VectorStoreFileAssociation> response = SyncOrAsync(client,
-            c => c.GetFileAssociations(vectorStore),
-            c => c.GetFileAssociationsAsync(vectorStore));
+        AsyncCollectionResult<VectorStoreFileAssociation> response = client.GetFileAssociationsAsync(vectorStore);
         await foreach (VectorStoreFileAssociation association in response)
         {
             count++;
@@ -205,9 +205,7 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
             b => b.Status != VectorStoreBatchFileJobStatus.InProgress);
         Assert.That(batchJob.Status, Is.EqualTo(VectorStoreBatchFileJobStatus.Completed));
 
-        AsyncPageableCollection<VectorStoreFileAssociation> response = SyncOrAsync(client,
-            c => c.GetFileAssociations(batchJob),
-            c => c.GetFileAssociationsAsync(batchJob));
+        AsyncCollectionResult<VectorStoreFileAssociation> response = client.GetFileAssociationsAsync(batchJob);
         await foreach (VectorStoreFileAssociation association in response)
         {
             Assert.Multiple(() =>

@@ -7,6 +7,8 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -72,11 +74,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     case "Mpi": return MpiDistributionConfiguration.DeserializeMpiDistributionConfiguration(element, options);
                     case "PyTorch": return PyTorchDistributionConfiguration.DeserializePyTorchDistributionConfiguration(element, options);
-                    case "Ray": return RayDistributionConfiguration.DeserializeRayDistributionConfiguration(element, options);
                     case "TensorFlow": return TensorFlowDistributionConfiguration.DeserializeTensorFlowDistributionConfiguration(element, options);
                 }
             }
             return UnknownDistributionConfiguration.DeserializeUnknownDistributionConfiguration(element, options);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DistributionType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  distributionType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  distributionType: ");
+                builder.AppendLine($"'{DistributionType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MachineLearningDistributionConfiguration>.Write(ModelReaderWriterOptions options)
@@ -87,6 +115,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningDistributionConfiguration)} does not support writing '{options.Format}' format.");
             }

@@ -47,6 +47,30 @@ namespace Azure.ResourceManager.Elastic.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="MonitoredSubscriptionPropertyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitoredSubscriptionPropertyResource.CreateResourceIdentifier" /> to create a <see cref="MonitoredSubscriptionPropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MonitoredSubscriptionPropertyResource"/> object. </returns>
+        public virtual MonitoredSubscriptionPropertyResource GetMonitoredSubscriptionPropertyResource(ResourceIdentifier id)
+        {
+            MonitoredSubscriptionPropertyResource.ValidateResourceId(id);
+            return new MonitoredSubscriptionPropertyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="OpenAIIntegrationRPModelResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OpenAIIntegrationRPModelResource.CreateResourceIdentifier" /> to create an <see cref="OpenAIIntegrationRPModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OpenAIIntegrationRPModelResource"/> object. </returns>
+        public virtual OpenAIIntegrationRPModelResource GetOpenAIIntegrationRPModelResource(ResourceIdentifier id)
+        {
+            OpenAIIntegrationRPModelResource.ValidateResourceId(id);
+            return new OpenAIIntegrationRPModelResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="MonitoringTagRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MonitoringTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="MonitoringTagRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

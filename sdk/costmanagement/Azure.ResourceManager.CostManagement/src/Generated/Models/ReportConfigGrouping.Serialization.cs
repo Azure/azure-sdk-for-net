@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         void IJsonModel<ReportConfigGrouping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ReportConfigGrouping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReportConfigGrouping)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(QueryColumnType.ToString());
             writer.WritePropertyName("name"u8);
@@ -45,7 +53,6 @@ namespace Azure.ResourceManager.CostManagement.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ReportConfigGrouping IJsonModel<ReportConfigGrouping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

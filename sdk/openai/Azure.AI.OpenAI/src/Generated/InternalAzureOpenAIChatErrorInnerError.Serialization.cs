@@ -21,25 +21,29 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (SerializedAdditionalRawData?.ContainsKey("code") != true && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
-                writer.WriteStringValue(Code);
+                writer.WriteStringValue(Code.Value.ToString());
             }
-            if (Optional.IsDefined(RevisedPrompt))
+            if (SerializedAdditionalRawData?.ContainsKey("revised_prompt") != true && Optional.IsDefined(RevisedPrompt))
             {
                 writer.WritePropertyName("revised_prompt"u8);
                 writer.WriteStringValue(RevisedPrompt);
             }
-            if (Optional.IsDefined(ContentFilterResults))
+            if (SerializedAdditionalRawData?.ContainsKey("content_filter_results") != true && Optional.IsDefined(ContentFilterResults))
             {
                 writer.WritePropertyName("content_filter_results"u8);
                 writer.WriteObjectValue(ContentFilterResults, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (SerializedAdditionalRawData != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in SerializedAdditionalRawData)
                 {
+                    if (ModelSerializationExtensions.IsSentinelValue(item.Value))
+                    {
+                        continue;
+                    }
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
@@ -74,16 +78,20 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            string code = default;
+            InternalAzureOpenAIChatErrorInnerErrorCode? code = default;
             string revisedPrompt = default;
-            ContentFilterResultForPrompt contentFilterResults = default;
+            RequestContentFilterResult contentFilterResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
                 {
-                    code = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    code = new InternalAzureOpenAIChatErrorInnerErrorCode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("revised_prompt"u8))
@@ -97,11 +105,12 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    contentFilterResults = ContentFilterResultForPrompt.DeserializeContentFilterResultForPrompt(property.Value, options);
+                    contentFilterResults = RequestContentFilterResult.DeserializeRequestContentFilterResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
+                    rawDataDictionary ??= new Dictionary<string, BinaryData>();
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }

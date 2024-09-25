@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -26,14 +24,11 @@ public class JsonConfig : IConfiguration
     public static readonly JsonSerializerOptions JSON_OPTIONS = new()
     {
         PropertyNameCaseInsensitive = true,
-        PropertyNamingPolicy = JsonHelpers.SnakeCaseLower,
-        DictionaryKeyPolicy = JsonHelpers.SnakeCaseLower,
+        PropertyNamingPolicy = JsonOptions.SnakeCaseLower,
+        DictionaryKeyPolicy = JsonOptions.SnakeCaseLower,
         WriteIndented = true,
-#if NETFRAMEWORK
-        IgnoreNullValues = true,
-#else
+        AllowTrailingCommas = true,
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-#endif
     };
 
     /// <inheritdoc />

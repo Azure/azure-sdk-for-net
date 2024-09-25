@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.Fabric
             }
         }
 
-        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, AzureLocation location, FabricNameAvailabilityContent content)
+        internal RequestUriBuilder CreateCheckFabricCapacityNameAvailabilityRequestUri(string subscriptionId, AzureLocation location, FabricNameAvailabilityContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.Fabric
             return uri;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, FabricNameAvailabilityContent content)
+        internal HttpMessage CreateCheckFabricCapacityNameAvailabilityRequest(string subscriptionId, AzureLocation location, FabricNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -775,12 +775,12 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FabricNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, FabricNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<FabricNameAvailabilityResult>> CheckFabricCapacityNameAvailabilityAsync(string subscriptionId, AzureLocation location, FabricNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, location, content);
+            using var message = CreateCheckFabricCapacityNameAvailabilityRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -803,12 +803,12 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FabricNameAvailabilityResult> CheckNameAvailability(string subscriptionId, AzureLocation location, FabricNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<FabricNameAvailabilityResult> CheckFabricCapacityNameAvailability(string subscriptionId, AzureLocation location, FabricNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, location, content);
+            using var message = CreateCheckFabricCapacityNameAvailabilityRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

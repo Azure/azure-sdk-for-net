@@ -1,14 +1,27 @@
 # Release History
 
-## 1.43.0-beta.1 (Unreleased)
+## 1.44.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- `TokenRequestContext` added the `IsProofOfPossessionEnabled`, `ResourceRequestMethod`, and `ResourceRequestUri` properties to support Proof of Possession tokens ([45134](https://github.com/Azure/azure-sdk-for-net/pull/45134)).
+- `AccessToken` added the `TokenType` property to support distinguishing Bearer tokens from Proof of Possession (PoP) tokens ([45134](https://github.com/Azure/azure-sdk-for-net/pull/45134)).
+- Moved implementation of `Azure.AzureKeyCredential` into `System.ClientModel.ApiKeyCredential` and made `ApiKeyCredential` the base type for `AzureKeyCredential` ([#46128](https://github.com/Azure/azure-sdk-for-net/pull/46128)).
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.43.0 (2024-09-12)
+
+### Other Changes
+
+- Upgraded `System.Text.Json` package dependency to 6.0.9 ([#45416](https://github.com/Azure/azure-sdk-for-net/pull/45416)).
+- Added a new constructor on `AzureEventSourceListener` for callers that don't need the formatted message ([#45191](https://github.com/Azure/azure-sdk-for-net/pull/45191)).
+- Remove unused callback from `HttpRequestMessage` options in `HttpClientTransport` transport ([#45696](https://github.com/Azure/azure-sdk-for-net/pull/45696)).
+- Added `RequiresUnreferencedCode` and `RequiresDynamicCode` attributes to `ToDynamicFromJson` extension methods and `DynamicData` APIs to support AOT scenarios ([#45417](https://github.com/Azure/azure-sdk-for-net/pull/45417)).
 
 ## 1.42.0 (2024-08-01)
 

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -103,6 +104,59 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new SourceUploadDefinition(uploadUrl, relativePath, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UploadUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  uploadUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UploadUri))
+                {
+                    builder.Append("  uploadUrl: ");
+                    builder.AppendLine($"'{UploadUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RelativePath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  relativePath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RelativePath))
+                {
+                    builder.Append("  relativePath: ");
+                    if (RelativePath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RelativePath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RelativePath}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SourceUploadDefinition>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SourceUploadDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -111,6 +165,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SourceUploadDefinition)} does not support writing '{options.Format}' format.");
             }
