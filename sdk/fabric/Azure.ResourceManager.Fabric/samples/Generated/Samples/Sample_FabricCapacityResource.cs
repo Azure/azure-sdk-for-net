@@ -204,6 +204,37 @@ namespace Azure.ResourceManager.Fabric.Samples
             Console.WriteLine($"Succeeded");
         }
 
+        // Check name availability of a capacity
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CheckFabricCapacityNameAvailability_CheckNameAvailabilityOfACapacity()
+        {
+            // Generated from example definition: 2023-11-01/FabricCapacities_CheckNameAvailability.json
+            // this example is just showing the usage of "FabricCapacities_CheckFabricCapacityNameAvailability" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "548B7FB7-3B2A-4F46-BB02-66473F1FC22C";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            AzureLocation location = new AzureLocation("westcentralus");
+            FabricNameAvailabilityContent content = new FabricNameAvailabilityContent()
+            {
+                Name = "azsdktest",
+                ResourceType = "Microsoft.Fabric/capacities",
+            };
+            FabricNameAvailabilityResult result = await subscriptionResource.CheckFabricCapacityNameAvailabilityAsync(location, content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // List eligible SKUs for an existing capacity
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]

@@ -1935,7 +1935,7 @@
        "description": "WhatsApp platform's template content. This is the payload returned from WhatsApp API.",
        "type": {
         "$id": "195",
-        "kind": "any",
+        "kind": "unknown",
         "name": "unknown",
         "crossLanguageDefinitionId": "",
         "decorators": []
@@ -2553,6 +2553,7 @@
          "response": {
           "$ref": "246"
          },
+         "statusCode": 200,
          "bodyValue": {
           "$id": "260",
           "kind": "string",

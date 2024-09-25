@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         public string Publisher { get { throw null; } set { } }
         public System.DateTimeOffset? RetrievedOn { get { throw null; } set { } }
         public string Signature { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
