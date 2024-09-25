@@ -88,9 +88,7 @@ namespace Azure.Identity
             IAccount account,
             string tenantId,
             bool enableCae,
-#if PREVIEW_FEATURE_FLAG
-            PopTokenRequestContext? popTokenRequestContext,
-#endif
+            TokenRequestContext context,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -100,9 +98,7 @@ namespace Azure.Identity
                 account,
                 tenantId,
                 enableCae,
-#if PREVIEW_FEATURE_FLAG
-                popTokenRequestContext,
-#endif
+                context,
                 async,
                 cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
@@ -115,9 +111,7 @@ namespace Azure.Identity
             IAccount account,
             string tenantId,
             bool enableCae,
-#if PREVIEW_FEATURE_FLAG
-            PopTokenRequestContext? popTokenRequestContext,
-#endif
+            TokenRequestContext context,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -137,12 +131,10 @@ namespace Azure.Identity
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
 
-#if PREVIEW_FEATURE_FLAG
-            if (popTokenRequestContext.HasValue && popTokenRequestContext.Value.IsProofOfPossessionEnabled)
+            if (context.IsProofOfPossessionEnabled)
             {
-                builder.WithProofOfPossession(popTokenRequestContext.Value.ProofOfPossessionNonce, popTokenRequestContext.Value.HttpMethod, popTokenRequestContext.Value.Uri);
+                builder.WithProofOfPossession(context.ProofOfPossessionNonce, new(context.ResourceRequestMethod), context.ResourceRequestUri);
             }
-#endif
 
             return await builder
                 .ExecuteAsync(async, cancellationToken)
@@ -155,9 +147,7 @@ namespace Azure.Identity
             AuthenticationRecord record,
             string tenantId,
             bool enableCae,
-#if PREVIEW_FEATURE_FLAG
-            PopTokenRequestContext? popTokenRequestContext,
-#endif
+            TokenRequestContext tokenRequestContext,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -167,9 +157,7 @@ namespace Azure.Identity
                 record,
                 tenantId,
                 enableCae,
-#if PREVIEW_FEATURE_FLAG
-                popTokenRequestContext,
-#endif
+                tokenRequestContext,
                 async,
                 cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
@@ -182,9 +170,7 @@ namespace Azure.Identity
             AuthenticationRecord record,
             string tenantId,
             bool enableCae,
-#if PREVIEW_FEATURE_FLAG
-            PopTokenRequestContext? popTokenRequestContext,
-#endif
+            TokenRequestContext context,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -208,12 +194,10 @@ namespace Azure.Identity
             {
                 builder.WithClaims(claims);
             }
-#if PREVIEW_FEATURE_FLAG
-            if (popTokenRequestContext.HasValue && popTokenRequestContext.Value.IsProofOfPossessionEnabled)
+            if (context.IsProofOfPossessionEnabled)
             {
-                builder.WithProofOfPossession(popTokenRequestContext.Value.ProofOfPossessionNonce, popTokenRequestContext.Value.HttpMethod, popTokenRequestContext.Value.Uri);
+                builder.WithProofOfPossession(context.ProofOfPossessionNonce, new(context.ResourceRequestMethod), context.ResourceRequestUri);
             }
-#endif
 
             return await builder.ExecuteAsync(async, cancellationToken)
                            .ConfigureAwait(false);
@@ -227,9 +211,7 @@ namespace Azure.Identity
             string tenantId,
             bool enableCae,
             BrowserCustomizationOptions browserOptions,
-#if PREVIEW_FEATURE_FLAG
-            PopTokenRequestContext? popTokenRequestContext,
-#endif
+            TokenRequestContext tokenRequestContext,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -253,9 +235,7 @@ namespace Azure.Identity
                         tenantId,
                         enableCae,
                         browserOptions,
-#if PREVIEW_FEATURE_FLAG
-                        popTokenRequestContext,
-#endif
+                        tokenRequestContext,
                         true,
                         cancellationToken).ConfigureAwait(false);
                     LogAccountDetails(result);
@@ -274,9 +254,7 @@ namespace Azure.Identity
                 tenantId,
                 enableCae,
                 browserOptions,
-#if PREVIEW_FEATURE_FLAG
-                        popTokenRequestContext,
-#endif
+                tokenRequestContext,
                 async,
                 cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
@@ -291,9 +269,7 @@ namespace Azure.Identity
             string tenantId,
             bool enableCae,
             BrowserCustomizationOptions browserOptions,
-#if PREVIEW_FEATURE_FLAG
-            PopTokenRequestContext? popTokenRequestContext,
-#endif
+            TokenRequestContext tokenRequestContext,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -329,12 +305,10 @@ namespace Azure.Identity
                     builder.WithSystemWebViewOptions(browserOptions.SystemBrowserOptions);
                 }
             }
-#if PREVIEW_FEATURE_FLAG
-            if (popTokenRequestContext.HasValue && popTokenRequestContext.Value.IsProofOfPossessionEnabled)
+            if (tokenRequestContext.IsProofOfPossessionEnabled)
             {
-                builder.WithProofOfPossession(popTokenRequestContext.Value.ProofOfPossessionNonce, popTokenRequestContext.Value.HttpMethod, popTokenRequestContext.Value.Uri);
+                builder.WithProofOfPossession(tokenRequestContext.ProofOfPossessionNonce, new(tokenRequestContext.ResourceRequestMethod), tokenRequestContext.ResourceRequestUri);
             }
-#endif
             return await builder
                 .ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);

@@ -33,11 +33,7 @@ public static class Default
         PropertyNameCaseInsensitive = true,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         WriteIndented = true,
-#if NET
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-#else
-        IgnoreNullValues = true,
-#endif
     };
 
     /// <summary>
@@ -52,8 +48,8 @@ public static class Default
                 _recordingJsonOptions = InnerRecordingJsonOptions.Clone();
                 _recordingJsonOptions.Converters.Add(
 
-#if NET6_0
-                    // .Net 6.0 seems to have a weird bug here. This is not needed for .Net framework, nor .Net 7+
+#if !NET7_0_OR_GREATER
+                    // System.Text.Json 6.0.9 seems to have a weird bug here. This is not needed for .Net 7+
                     new Utf8JsonSerializableConverterFactory()
 #else
                     new Utf8JsonSerializableConverter()
@@ -73,11 +69,7 @@ public static class Default
     {
         PropertyNameCaseInsensitive = true,
         WriteIndented = true,
-#if NET
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-#else
-        IgnoreNullValues = true,
-#endif
     };
 
     /// <summary>

@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Maintenance
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus? Status { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -71,6 +72,7 @@ namespace Azure.ResourceManager.Maintenance
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
         public Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationVisibility? Visibility { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.MaintenanceConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.MaintenanceConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.MaintenanceConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -308,6 +310,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MaintenanceConfigurationId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -322,6 +325,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public System.Collections.Generic.IList<string> ResourceGroups { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceType> ResourceTypes { get { throw null; } }
         public Azure.ResourceManager.Maintenance.Models.VmTagSettings TagSettings { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -372,6 +376,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public System.Collections.Generic.IList<string> ClassificationsToInclude { get { throw null; } }
         public System.Collections.Generic.IList<string> PackageNameMasksToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> PackageNameMasksToInclude { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.Models.MaintenanceLinuxPatchSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.MaintenanceLinuxPatchSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.MaintenanceLinuxPatchSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.Models.MaintenanceLinuxPatchSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.MaintenanceLinuxPatchSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -384,6 +389,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public Azure.ResourceManager.Maintenance.Models.MaintenanceLinuxPatchSettings LinuxParameters { get { throw null; } set { } }
         public Azure.ResourceManager.Maintenance.Models.MaintenanceRebootOption? RebootSetting { get { throw null; } set { } }
         public Azure.ResourceManager.Maintenance.Models.MaintenanceWindowsPatchSettings WindowsParameters { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.Models.MaintenancePatchConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.MaintenancePatchConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.MaintenancePatchConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.Models.MaintenancePatchConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.MaintenancePatchConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -441,6 +447,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public System.DateTimeOffset? NotBefore { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.Models.MaintenanceUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.MaintenanceUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.MaintenanceUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.Models.MaintenanceUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.MaintenanceUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -478,6 +485,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public bool? IsExcludeKbsRebootRequired { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> KbNumbersToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> KbNumbersToInclude { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.Models.MaintenanceWindowsPatchSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.MaintenanceWindowsPatchSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.MaintenanceWindowsPatchSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.Models.MaintenanceWindowsPatchSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.MaintenanceWindowsPatchSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -529,6 +537,7 @@ namespace Azure.ResourceManager.Maintenance.Models
     {
         internal ScheduledEventApproveResult() { }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -545,6 +554,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public VmTagSettings() { }
         public Azure.ResourceManager.Maintenance.Models.VmTagOperator? FilterOperator { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.Models.VmTagSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.VmTagSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.VmTagSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Maintenance.Models.VmTagSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.VmTagSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

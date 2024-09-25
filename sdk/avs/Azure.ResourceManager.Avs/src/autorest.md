@@ -19,6 +19,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+use-write-core: true
 
 override-operation-name:
   Locations_CheckQuotaAvailability: CheckAvsQuotaAvailability

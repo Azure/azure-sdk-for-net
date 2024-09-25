@@ -21,37 +21,26 @@ namespace Azure.ResourceManager.ElasticSan
 
         void IJsonModel<ElasticSanVolumeGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticSanVolumeGroupData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -90,21 +79,10 @@ namespace Azure.ResourceManager.ElasticSan
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(EnforceDataIntegrityCheckForIscsi))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("enforceDataIntegrityCheckForIscsi"u8);
+                writer.WriteBooleanValue(EnforceDataIntegrityCheckForIscsi.Value);
             }
             writer.WriteEndObject();
         }
@@ -140,6 +118,7 @@ namespace Azure.ResourceManager.ElasticSan
             ElasticSanEncryptionProperties encryptionProperties = default;
             NetworkRuleSet networkAcls = default;
             IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default;
+            bool? enforceDataIntegrityCheckForIscsi = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,6 +224,15 @@ namespace Azure.ResourceManager.ElasticSan
                             privateEndpointConnections = array;
                             continue;
                         }
+                        if (property0.NameEquals("enforceDataIntegrityCheckForIscsi"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enforceDataIntegrityCheckForIscsi = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -266,6 +254,7 @@ namespace Azure.ResourceManager.ElasticSan
                 encryptionProperties,
                 networkAcls,
                 privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(),
+                enforceDataIntegrityCheckForIscsi,
                 serializedAdditionalRawData);
         }
 

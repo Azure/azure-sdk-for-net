@@ -19,38 +19,22 @@ namespace Azure.ResourceManager.Cdn.Models
 
         void IJsonModel<CustomDomainHttpsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("certificateSource"u8);
-            writer.WriteStringValue(CertificateSource.ToString());
-            writer.WritePropertyName("protocolType"u8);
-            writer.WriteStringValue(ProtocolType.ToString());
-            if (Optional.IsDefined(MinimumTlsVersion))
-            {
-                writer.WritePropertyName("minimumTlsVersion"u8);
-                writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         CustomDomainHttpsContent IJsonModel<CustomDomainHttpsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

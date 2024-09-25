@@ -6,7 +6,7 @@
     </Description>
     <AssemblyTitle>Azure.AI.OpenAI Client Library</AssemblyTitle>
     <VersionPrefix>2.0.0</VersionPrefix>
-    <VersionSuffix>beta.5</VersionSuffix>
+    <VersionSuffix>beta.6</VersionSuffix>
     <PackageTags>Microsoft Azure OpenAI</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -37,10 +37,7 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="Azure.Core" VersionOverride="1.42.0" />
-
-        <ExcludeFromProjectReferenceToConversion Include="Azure.Core" />
-        <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
+        <PackageReference Include="Azure.Core" />
       </ItemGroup>
     </Otherwise>
   </Choose>
@@ -56,13 +53,11 @@
       <ItemGroup>
         <Reference Include="$([System.IO.Path]::GetFileName('$(ExternalOpenAILibrary)'))" HintPath="$(ExternalOpenAILibrary)" />
         <PackageReference Include="System.ClientModel" VersionOverride="$(SystemClientModelVersion)" />
-
-        <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
       </ItemGroup>
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="OpenAI" VersionOverride="2.0.0-beta.11" />
+        <PackageReference Include="OpenAI" />
       </ItemGroup>
     </Otherwise>
   </Choose>

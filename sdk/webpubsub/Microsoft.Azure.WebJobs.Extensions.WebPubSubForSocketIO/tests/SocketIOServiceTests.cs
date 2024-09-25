@@ -2,9 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Azure.Identity;
+using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Config;
+using Moq;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Threading;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 {
@@ -73,6 +78,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 
             Assert.IsTrue(configs.TryGetKey(host, out var key));
             Assert.Null(key);
+        }
+
+        [Test]
+        public void TestNegotiateResultForAad()
+        {
+            var token = "eyJhbGciOiJIUzI1NiIsImtpZCI6InMtZjZlMTVhZmItNjIxZS00OTc5LTgyZTgtN2FiMGQ4ZmIwMDM1IiwidHlwIjoiSldUIn0.eyJuYmYiOjE3MjcwNzAxODQsImV4cCI6MTcyNzA3MzcyNCwiaWF0IjoxNzI3MDcwMTg0LCJpc3MiOiJodHRwczovL3dlYnB1YnN1Yi5henVyZS5jb20iLCJhdWQiOiJodHRwczovL3Npby01a2tmY2dyMm9icXZtLndlYnB1YnN1Yi5henVyZS5jb20vY2xpZW50cy9zb2NrZXRpby9odWJzL2h1YiJ9.h3QkRTQ4";
+            var clientMoc = new Mock<WebPubSubServiceClient>();
+            clientMoc.Setup(c => c.GetClientAccessUri(It.IsAny<TimeSpan>(), It.IsAny<string>(), It.IsAny<IEnumerable<string>>(), It.IsAny<IEnumerable<string>>(), It.IsAny<WebPubSubClientProtocol>(), It.IsAny<CancellationToken>()))
+                .Returns(new Uri($"https://abc.com?access_token={token}"));
+
+            var service = new WebPubSubForSocketIOService(clientMoc.Object);
+            var result = service.GetNegotiationResult("user");
+
+            Assert.AreEqual("https://sio-5kkfcgr2obqvm.webpubsub.azure.com/", result.Endpoint.AbsoluteUri);
+            Assert.AreEqual("/clients/socketio/hubs/hub", result.Path);
+            Assert.AreEqual(token, result.Token);
         }
     }
 }

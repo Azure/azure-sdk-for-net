@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
@@ -15,91 +17,84 @@ public partial class AzureCosmosDBChatDataSource : AzureChatDataSource
     required public string ContainerName
     {
         get => InternalParameters.ContainerName;
-        init => InternalParameters.ContainerName = value;
+        set => InternalParameters.ContainerName = value;
     }
 
     /// <inheritdoc cref="InternalAzureCosmosDBChatDataSourceParameters.DatabaseName"/>
     required public string DatabaseName
     {
         get => InternalParameters.DatabaseName;
-        init => InternalParameters.DatabaseName = value;
+        set => InternalParameters.DatabaseName = value;
     }
 
     /// <inheritdoc cref="InternalAzureCosmosDBChatDataSourceParameters.IndexName"/>
     required public string IndexName
     {
         get => InternalParameters.IndexName;
-        init => InternalParameters.IndexName = value;
+        set => InternalParameters.IndexName = value;
     }
 
     /// <inheritdoc cref="InternalAzureCosmosDBChatDataSourceParameters.Authentication"/>
     required public DataSourceAuthentication Authentication
     {
         get => InternalParameters.Authentication;
-        init => InternalParameters.Authentication = value;
+        set => InternalParameters.Authentication = value;
     }
 
     /// <inheritdoc cref="InternalAzureCosmosDBChatDataSourceParameters.VectorizationSource"/>
     required public DataSourceVectorizer VectorizationSource
     {
         get => InternalParameters.VectorizationSource;
-        init => InternalParameters.VectorizationSource = value;
+        set => InternalParameters.VectorizationSource = value;
     }
 
     /// <inheritdoc cref="InternalAzureCosmosDBChatDataSourceParameters.FieldMappings"/>
     required public DataSourceFieldMappings FieldMappings
     {
         get => InternalParameters.FieldMappings;
-        init => InternalParameters.FieldMappings = value;
+        set => InternalParameters.FieldMappings = value;
     }
 
     /// <inheritdoc cref="InternalAzureCosmosDBChatDataSourceParameters.TopNDocuments"/>
     public int? TopNDocuments
     {
         get => InternalParameters.TopNDocuments;
-        init => InternalParameters.TopNDocuments = value;
+        set => InternalParameters.TopNDocuments = value;
     }
 
     /// <inheritdoc cref="InternalAzureCosmosDBChatDataSourceParameters.InScope"/>
     public bool? InScope
     {
         get => InternalParameters.InScope;
-        init => InternalParameters.InScope = value;
+        set => InternalParameters.InScope = value;
     }
 
     /// <inheritdoc cref="InternalAzureCosmosDBChatDataSourceParameters.Strictness"/>
     public int? Strictness
     {
         get => InternalParameters.Strictness;
-        init => InternalParameters.Strictness = value;
-    }
-
-    /// <inheritdoc cref="InternalAzureCosmosDBChatDataSourceParameters.RoleInformation"/>
-    public string RoleInformation
-    {
-        get => InternalParameters.RoleInformation;
-        init => InternalParameters.RoleInformation = value;
+        set => InternalParameters.Strictness = value;
     }
 
     /// <inheritdoc cref="InternalAzureCosmosDBChatDataSourceParameters.MaxSearchQueries"/>
     public int? MaxSearchQueries
     {
         get => InternalParameters.MaxSearchQueries;
-        init => InternalParameters.MaxSearchQueries = value;
+        set => InternalParameters.MaxSearchQueries = value;
     }
 
     /// <inheritdoc cref="InternalAzureCosmosDBChatDataSourceParameters.AllowPartialResult"/>
     public bool? AllowPartialResult
     {
         get => InternalParameters.AllowPartialResult;
-        init => InternalParameters.AllowPartialResult = value;
+        set => InternalParameters.AllowPartialResult = value;
     }
 
     /// <inheritdoc cref="InternalAzureCosmosDBChatDataSourceParameters.OutputContextFlags"/>
-    public DataSourceOutputContextFlags? OutputContextFlags
+    public DataSourceOutputContexts? OutputContextFlags
     {
         get => InternalParameters.OutputContextFlags;
-        init => InternalParameters.OutputContextFlags = value;
+        set => InternalParameters.OutputContextFlags = value;
     }
 
     /// <summary>
