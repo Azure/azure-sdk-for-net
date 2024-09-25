@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(GrantType left, GrantType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GrantType"/> values are not the same. </summary>
         public static bool operator !=(GrantType left, GrantType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GrantType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GrantType"/>. </summary>
         public static implicit operator GrantType(string value) => new GrantType(value);
 
         /// <inheritdoc />

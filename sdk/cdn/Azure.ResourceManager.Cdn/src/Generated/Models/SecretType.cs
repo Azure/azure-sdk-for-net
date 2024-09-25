@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(SecretType left, SecretType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecretType"/> values are not the same. </summary>
         public static bool operator !=(SecretType left, SecretType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecretType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecretType"/>. </summary>
         public static implicit operator SecretType(string value) => new SecretType(value);
 
         /// <inheritdoc />

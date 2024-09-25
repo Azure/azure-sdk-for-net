@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static bool operator ==(ComponentIngestionMode left, ComponentIngestionMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComponentIngestionMode"/> values are not the same. </summary>
         public static bool operator !=(ComponentIngestionMode left, ComponentIngestionMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComponentIngestionMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComponentIngestionMode"/>. </summary>
         public static implicit operator ComponentIngestionMode(string value) => new ComponentIngestionMode(value);
 
         /// <inheritdoc />
