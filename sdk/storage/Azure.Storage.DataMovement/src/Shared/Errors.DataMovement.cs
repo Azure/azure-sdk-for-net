@@ -128,5 +128,8 @@ namespace Azure.Storage
 
         public static ArgumentException UnexpectedPropertyType(string propertyName, params string[] expectedTypes)
             => new ArgumentException($"Unexpected property type encountered for storage resource property {propertyName}: {string.Join(",", (string[])expectedTypes)}");
+
+        public static InvalidOperationException CheckpointerDisabled()
+            => new InvalidOperationException("The transfer checkpointer is disabled.");
     }
 }

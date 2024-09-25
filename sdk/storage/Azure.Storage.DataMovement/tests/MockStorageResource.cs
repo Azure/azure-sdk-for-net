@@ -135,5 +135,36 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceItemProperties sourceProperties,
             CancellationToken cancellationToken = default)
             => Task.CompletedTask;
+
+        public static (StorageResourceItem Source, StorageResourceItem Destination) GetMockTransferResources(
+            TransferDirection transferDirection,
+            DataTransferOrder transferOrder = DataTransferOrder.Unordered,
+            long fileSize = 4L * Constants.KB,
+            int sourceFailAfter = int.MaxValue,
+            int destinationFailAfter = int.MaxValue)
+        {
+            Uri localUri = new(@"C:\Sample\test.txt");
+            Uri remoteUri = new("https://example.com");
+
+            StorageResourceItem sourceResource;
+            StorageResourceItem destinationResource;
+            if (transferDirection == TransferDirection.Copy)
+            {
+                sourceResource = MakeSourceResource(fileSize, uri: remoteUri, failAfter: sourceFailAfter);
+                destinationResource = MakeDestinationResource(uri: remoteUri, transferOrder: transferOrder, failAfter: destinationFailAfter);
+            }
+            else if (transferDirection == TransferDirection.Upload)
+            {
+                sourceResource = MakeSourceResource(fileSize, uri: localUri, failAfter: sourceFailAfter);
+                destinationResource = MakeDestinationResource(uri: remoteUri, transferOrder: transferOrder, failAfter: destinationFailAfter);
+            }
+            else // transferType == TransferDirection.Download
+            {
+                sourceResource = MakeSourceResource(fileSize, uri: remoteUri, failAfter: sourceFailAfter);
+                destinationResource = MakeDestinationResource(uri: localUri, transferOrder: transferOrder, failAfter: destinationFailAfter);
+            }
+
+            return (sourceResource, destinationResource);
+        }
     }
 }
