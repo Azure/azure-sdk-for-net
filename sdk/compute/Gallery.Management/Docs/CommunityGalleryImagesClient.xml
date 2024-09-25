@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetCommunityGalleryImageAsync(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetCommunityGalleryImageAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CommunityGalleryImagesClient client = new CommunityGalleryImagesClient("<SubscriptionId>", credential);
+
+Response response = await client.GetCommunityGalleryImageAsync("<location>", "<publicGalleryName>", "<galleryImageName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetCommunityGalleryImageAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CommunityGalleryImagesClient client = new CommunityGalleryImagesClient("<SubscriptionId>", credential);
+
+Response response = await client.GetCommunityGalleryImageAsync("<location>", "<publicGalleryName>", "<galleryImageName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("osType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("osState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("endOfLifeDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("identifier").GetProperty("publisher").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("identifier").GetProperty("offer").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("identifier").GetProperty("sku").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recommended").GetProperty("vCPUs").GetProperty("min").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recommended").GetProperty("vCPUs").GetProperty("max").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recommended").GetProperty("memory").GetProperty("min").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recommended").GetProperty("memory").GetProperty("max").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("disallowed").GetProperty("diskTypes")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("hyperVGeneration").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("features")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("features")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("purchasePlan").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("purchasePlan").GetProperty("publisher").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("purchasePlan").GetProperty("product").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("architecture").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("privacyStatementUri").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("eula").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("disclaimer").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("artifactTags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("identifier").GetProperty("uniqueId").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCommunityGalleryImage(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetCommunityGalleryImage and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CommunityGalleryImagesClient client = new CommunityGalleryImagesClient("<SubscriptionId>", credential);
+
+Response response = client.GetCommunityGalleryImage("<location>", "<publicGalleryName>", "<galleryImageName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetCommunityGalleryImage with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CommunityGalleryImagesClient client = new CommunityGalleryImagesClient("<SubscriptionId>", credential);
+
+Response response = client.GetCommunityGalleryImage("<location>", "<publicGalleryName>", "<galleryImageName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("osType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("osState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("endOfLifeDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("identifier").GetProperty("publisher").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("identifier").GetProperty("offer").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("identifier").GetProperty("sku").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recommended").GetProperty("vCPUs").GetProperty("min").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recommended").GetProperty("vCPUs").GetProperty("max").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recommended").GetProperty("memory").GetProperty("min").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recommended").GetProperty("memory").GetProperty("max").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("disallowed").GetProperty("diskTypes")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("hyperVGeneration").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("features")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("features")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("purchasePlan").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("purchasePlan").GetProperty("publisher").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("purchasePlan").GetProperty("product").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("architecture").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("privacyStatementUri").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("eula").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("disclaimer").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("artifactTags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("identifier").GetProperty("uniqueId").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCommunityGalleryImagesAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetCommunityGalleryImagesAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CommunityGalleryImagesClient client = new CommunityGalleryImagesClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetCommunityGalleryImagesAsync("<location>", "<publicGalleryName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetCommunityGalleryImagesAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CommunityGalleryImagesClient client = new CommunityGalleryImagesClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetCommunityGalleryImagesAsync("<location>", "<publicGalleryName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("osType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("osState").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("endOfLifeDate").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("identifier").GetProperty("publisher").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("identifier").GetProperty("offer").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("identifier").GetProperty("sku").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("recommended").GetProperty("vCPUs").GetProperty("min").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("recommended").GetProperty("vCPUs").GetProperty("max").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("recommended").GetProperty("memory").GetProperty("min").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("recommended").GetProperty("memory").GetProperty("max").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("disallowed").GetProperty("diskTypes")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("hyperVGeneration").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("features")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("features")[0].GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("purchasePlan").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("purchasePlan").GetProperty("publisher").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("purchasePlan").GetProperty("product").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("architecture").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("privacyStatementUri").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("eula").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("disclaimer").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("artifactTags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("identifier").GetProperty("uniqueId").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetCommunityGalleryImages(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetCommunityGalleryImages and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CommunityGalleryImagesClient client = new CommunityGalleryImagesClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetCommunityGalleryImages("<location>", "<publicGalleryName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetCommunityGalleryImages with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CommunityGalleryImagesClient client = new CommunityGalleryImagesClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetCommunityGalleryImages("<location>", "<publicGalleryName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("osType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("osState").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("endOfLifeDate").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("identifier").GetProperty("publisher").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("identifier").GetProperty("offer").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("identifier").GetProperty("sku").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("recommended").GetProperty("vCPUs").GetProperty("min").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("recommended").GetProperty("vCPUs").GetProperty("max").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("recommended").GetProperty("memory").GetProperty("min").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("recommended").GetProperty("memory").GetProperty("max").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("disallowed").GetProperty("diskTypes")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("hyperVGeneration").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("features")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("features")[0].GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("purchasePlan").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("purchasePlan").GetProperty("publisher").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("purchasePlan").GetProperty("product").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("architecture").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("privacyStatementUri").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("eula").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("disclaimer").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("artifactTags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("identifier").GetProperty("uniqueId").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

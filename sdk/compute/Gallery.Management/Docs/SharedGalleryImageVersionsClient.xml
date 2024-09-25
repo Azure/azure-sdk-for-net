@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetSharedGalleryImageVersionAsync(string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetSharedGalleryImageVersionAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SharedGalleryImageVersionsClient client = new SharedGalleryImageVersionsClient("<SubscriptionId>", credential);
+
+Response response = await client.GetSharedGalleryImageVersionAsync("<location>", "<galleryUniqueName>", "<galleryImageName>", "<galleryImageVersionName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSharedGalleryImageVersionAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SharedGalleryImageVersionsClient client = new SharedGalleryImageVersionsClient("<SubscriptionId>", credential);
+
+Response response = await client.GetSharedGalleryImageVersionAsync("<location>", "<galleryUniqueName>", "<galleryImageName>", "<galleryImageVersionName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishedDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("endOfLifeDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("excludeFromLatest").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("osDiskImage").GetProperty("diskSizeGB").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("osDiskImage").GetProperty("hostCaching").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("dataDiskImages")[0].GetProperty("diskSizeGB").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("dataDiskImages")[0].GetProperty("hostCaching").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("artifactTags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("identifier").GetProperty("uniqueId").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+]]></code></example>
+    </member>
+    <member name="GetSharedGalleryImageVersion(string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetSharedGalleryImageVersion and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SharedGalleryImageVersionsClient client = new SharedGalleryImageVersionsClient("<SubscriptionId>", credential);
+
+Response response = client.GetSharedGalleryImageVersion("<location>", "<galleryUniqueName>", "<galleryImageName>", "<galleryImageVersionName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSharedGalleryImageVersion with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SharedGalleryImageVersionsClient client = new SharedGalleryImageVersionsClient("<SubscriptionId>", credential);
+
+Response response = client.GetSharedGalleryImageVersion("<location>", "<galleryUniqueName>", "<galleryImageName>", "<galleryImageVersionName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishedDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("endOfLifeDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("excludeFromLatest").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("osDiskImage").GetProperty("diskSizeGB").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("osDiskImage").GetProperty("hostCaching").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("dataDiskImages")[0].GetProperty("diskSizeGB").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("dataDiskImages")[0].GetProperty("hostCaching").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("artifactTags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("identifier").GetProperty("uniqueId").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+]]></code></example>
+    </member>
+    <member name="GetSharedGalleryImageVersionsAsync(string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetSharedGalleryImageVersionsAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SharedGalleryImageVersionsClient client = new SharedGalleryImageVersionsClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetSharedGalleryImageVersionsAsync("<location>", "<galleryUniqueName>", "<galleryImageName>", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetSharedGalleryImageVersionsAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SharedGalleryImageVersionsClient client = new SharedGalleryImageVersionsClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetSharedGalleryImageVersionsAsync("<location>", "<galleryUniqueName>", "<galleryImageName>", "tenant", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishedDate").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("endOfLifeDate").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("excludeFromLatest").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("osDiskImage").GetProperty("diskSizeGB").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("osDiskImage").GetProperty("hostCaching").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("dataDiskImages")[0].GetProperty("diskSizeGB").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("dataDiskImages")[0].GetProperty("hostCaching").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("artifactTags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("identifier").GetProperty("uniqueId").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetSharedGalleryImageVersions(string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetSharedGalleryImageVersions and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SharedGalleryImageVersionsClient client = new SharedGalleryImageVersionsClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetSharedGalleryImageVersions("<location>", "<galleryUniqueName>", "<galleryImageName>", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetSharedGalleryImageVersions with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SharedGalleryImageVersionsClient client = new SharedGalleryImageVersionsClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetSharedGalleryImageVersions("<location>", "<galleryUniqueName>", "<galleryImageName>", "tenant", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishedDate").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("endOfLifeDate").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("excludeFromLatest").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("osDiskImage").GetProperty("diskSizeGB").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("osDiskImage").GetProperty("hostCaching").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("dataDiskImages")[0].GetProperty("diskSizeGB").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("storageProfile").GetProperty("dataDiskImages")[0].GetProperty("hostCaching").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("artifactTags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("identifier").GetProperty("uniqueId").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

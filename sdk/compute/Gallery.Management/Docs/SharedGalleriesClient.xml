@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetSharedGalleryAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetSharedGalleryAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SharedGalleriesClient client = new SharedGalleriesClient("<SubscriptionId>", credential);
+
+Response response = await client.GetSharedGalleryAsync("<location>", "<galleryUniqueName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSharedGalleryAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SharedGalleriesClient client = new SharedGalleriesClient("<SubscriptionId>", credential);
+
+Response response = await client.GetSharedGalleryAsync("<location>", "<galleryUniqueName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("artifactTags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("identifier").GetProperty("uniqueId").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+]]></code></example>
+    </member>
+    <member name="GetSharedGallery(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetSharedGallery and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SharedGalleriesClient client = new SharedGalleriesClient("<SubscriptionId>", credential);
+
+Response response = client.GetSharedGallery("<location>", "<galleryUniqueName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSharedGallery with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SharedGalleriesClient client = new SharedGalleriesClient("<SubscriptionId>", credential);
+
+Response response = client.GetSharedGallery("<location>", "<galleryUniqueName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("artifactTags").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("identifier").GetProperty("uniqueId").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+]]></code></example>
+    </member>
+    <member name="GetSharedGalleriesAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetSharedGalleriesAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SharedGalleriesClient client = new SharedGalleriesClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetSharedGalleriesAsync("<location>", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetSharedGalleriesAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SharedGalleriesClient client = new SharedGalleriesClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetSharedGalleriesAsync("<location>", "tenant", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("artifactTags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("identifier").GetProperty("uniqueId").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetSharedGalleries(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetSharedGalleries and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SharedGalleriesClient client = new SharedGalleriesClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetSharedGalleries("<location>", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetSharedGalleries with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SharedGalleriesClient client = new SharedGalleriesClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetSharedGalleries("<location>", "tenant", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("artifactTags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("identifier").GetProperty("uniqueId").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

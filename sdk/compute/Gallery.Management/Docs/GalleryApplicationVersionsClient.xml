@@ -1,0 +1,1099 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetGalleryApplicationVersionAsync(string,string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetGalleryApplicationVersionAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+Response response = await client.GetGalleryApplicationVersionAsync("<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", "<galleryApplicationVersionName>", null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("location").ToString());
+]]></code>
+This sample shows how to call GetGalleryApplicationVersionAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+Response response = await client.GetGalleryApplicationVersionAsync("<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", "<galleryApplicationVersionName>", "ReplicationStatus", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("source").GetProperty("mediaLink").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("source").GetProperty("defaultConfigurationLink").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("install").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("remove").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("update").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("settings").GetProperty("packageFileName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("settings").GetProperty("configFileName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("advancedSettings").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("enableHealthCheck").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("script").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("required").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("defaultValue").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("regionalReplicaCount").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("storageAccountType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("confidentialVMEncryptionType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("secureVMDiskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("excludeFromLatest").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("replicaCount").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("excludeFromLatest").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("publishedDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("endOfLifeDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("storageAccountType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("replicationMode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocation").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocation").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocationReplicaCount").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("storageAccountType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("confidentialVMEncryptionType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("secureVMDiskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("safetyProfile").GetProperty("allowDeletionOfReplicatedLocations").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("aggregatedState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("region").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("details").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("progress").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetGalleryApplicationVersion(string,string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetGalleryApplicationVersion and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+Response response = client.GetGalleryApplicationVersion("<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", "<galleryApplicationVersionName>", null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("location").ToString());
+]]></code>
+This sample shows how to call GetGalleryApplicationVersion with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+Response response = client.GetGalleryApplicationVersion("<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", "<galleryApplicationVersionName>", "ReplicationStatus", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("source").GetProperty("mediaLink").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("source").GetProperty("defaultConfigurationLink").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("install").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("remove").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("update").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("settings").GetProperty("packageFileName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("settings").GetProperty("configFileName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("advancedSettings").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("enableHealthCheck").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("script").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("required").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("defaultValue").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("regionalReplicaCount").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("storageAccountType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("confidentialVMEncryptionType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("secureVMDiskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("excludeFromLatest").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("replicaCount").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("excludeFromLatest").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("publishedDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("endOfLifeDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("storageAccountType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("replicationMode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocation").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocation").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocationReplicaCount").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("storageAccountType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("confidentialVMEncryptionType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("secureVMDiskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("safetyProfile").GetProperty("allowDeletionOfReplicatedLocations").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("aggregatedState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("region").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("details").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("progress").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetGalleryApplicationVersionsByGalleryApplicationAsync(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetGalleryApplicationVersionsByGalleryApplicationAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetGalleryApplicationVersionsByGalleryApplicationAsync("<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("location").ToString());
+}
+]]></code>
+This sample shows how to call GetGalleryApplicationVersionsByGalleryApplicationAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+await foreach (BinaryData item in client.GetGalleryApplicationVersionsByGalleryApplicationAsync("<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("source").GetProperty("mediaLink").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("source").GetProperty("defaultConfigurationLink").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("install").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("remove").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("update").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("settings").GetProperty("packageFileName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("settings").GetProperty("configFileName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("advancedSettings").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("enableHealthCheck").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("script").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("required").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("defaultValue").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("regionalReplicaCount").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("storageAccountType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("confidentialVMEncryptionType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("secureVMDiskEncryptionSetId").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("diskEncryptionSetId").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("diskEncryptionSetId").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("excludeFromLatest").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("replicaCount").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("excludeFromLatest").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("publishedDate").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("endOfLifeDate").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("storageAccountType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("replicationMode").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocation").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocation").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocationReplicaCount").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("storageAccountType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("confidentialVMEncryptionType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("secureVMDiskEncryptionSetId").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("diskEncryptionSetId").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("diskEncryptionSetId").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("safetyProfile").GetProperty("allowDeletionOfReplicatedLocations").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("aggregatedState").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("region").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("state").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("details").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("progress").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetGalleryApplicationVersionsByGalleryApplication(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetGalleryApplicationVersionsByGalleryApplication and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetGalleryApplicationVersionsByGalleryApplication("<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("location").ToString());
+}
+]]></code>
+This sample shows how to call GetGalleryApplicationVersionsByGalleryApplication with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+foreach (BinaryData item in client.GetGalleryApplicationVersionsByGalleryApplication("<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("source").GetProperty("mediaLink").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("source").GetProperty("defaultConfigurationLink").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("install").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("remove").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("update").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("settings").GetProperty("packageFileName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("settings").GetProperty("configFileName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("advancedSettings").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("enableHealthCheck").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("script").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("required").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("defaultValue").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("regionalReplicaCount").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("storageAccountType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("confidentialVMEncryptionType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("secureVMDiskEncryptionSetId").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("diskEncryptionSetId").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("diskEncryptionSetId").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("excludeFromLatest").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("replicaCount").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("excludeFromLatest").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("publishedDate").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("endOfLifeDate").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("storageAccountType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("replicationMode").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocation").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocation").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocationReplicaCount").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("storageAccountType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("confidentialVMEncryptionType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("secureVMDiskEncryptionSetId").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("diskEncryptionSetId").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("diskEncryptionSetId").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("safetyProfile").GetProperty("allowDeletionOfReplicatedLocations").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("aggregatedState").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("region").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("state").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("details").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("progress").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdateAsync(WaitUntil,string,string,string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrUpdateAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    location = "<location>",
+});
+Operation<BinaryData> operation = await client.CreateOrUpdateAsync(WaitUntil.Completed, "<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", "<galleryApplicationVersionName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("location").ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        publishingProfile = new
+        {
+            source = new
+            {
+                mediaLink = "<mediaLink>",
+                defaultConfigurationLink = "<defaultConfigurationLink>",
+            },
+            manageActions = new
+            {
+                install = "<install>",
+                remove = "<remove>",
+                update = "<update>",
+            },
+            settings = new
+            {
+                packageFileName = "<packageFileName>",
+                configFileName = "<configFileName>",
+            },
+            advancedSettings = new
+            {
+                key = "<advancedSettings>",
+            },
+            enableHealthCheck = true,
+            customActions = new object[]
+            {
+                new
+                {
+                    name = "<name>",
+                    script = "<script>",
+                    description = "<description>",
+                    parameters = new object[]
+                    {
+                        new
+                        {
+                            name = "<name>",
+                            required = true,
+                            type = "String",
+                            defaultValue = "<defaultValue>",
+                            description = "<description>",
+                        }
+                    },
+                }
+            },
+            targetRegions = new object[]
+            {
+                new
+                {
+                    name = "<name>",
+                    regionalReplicaCount = 1234,
+                    storageAccountType = "Standard_LRS",
+                    encryption = new
+                    {
+                        osDiskImage = new
+                        {
+                            securityProfile = new
+                            {
+                                confidentialVMEncryptionType = "EncryptedVMGuestStateOnlyWithPmk",
+                                secureVMDiskEncryptionSetId = "<secureVMDiskEncryptionSetId>",
+                            },
+                            diskEncryptionSetId = "<diskEncryptionSetId>",
+                        },
+                        dataDiskImages = new object[]
+                        {
+                            new
+                            {
+                                lun = 1234,
+                                diskEncryptionSetId = "<diskEncryptionSetId>",
+                            }
+                        },
+                    },
+                    excludeFromLatest = true,
+                }
+            },
+            replicaCount = 1234,
+            excludeFromLatest = true,
+            endOfLifeDate = "2022-05-10T18:57:31.2311892Z",
+            storageAccountType = "Standard_LRS",
+            replicationMode = "Full",
+            targetExtendedLocations = new object[]
+            {
+                new
+                {
+                    name = "<name>",
+                    extendedLocation = new
+                    {
+                        name = "<name>",
+                        type = "EdgeZone",
+                    },
+                    extendedLocationReplicaCount = 1234,
+                    storageAccountType = "Standard_LRS",
+                }
+            },
+        },
+        safetyProfile = new
+        {
+            allowDeletionOfReplicatedLocations = true,
+        },
+    },
+    location = "<location>",
+    tags = new
+    {
+        key = "<tags>",
+    },
+});
+Operation<BinaryData> operation = await client.CreateOrUpdateAsync(WaitUntil.Completed, "<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", "<galleryApplicationVersionName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("source").GetProperty("mediaLink").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("source").GetProperty("defaultConfigurationLink").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("install").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("remove").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("update").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("settings").GetProperty("packageFileName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("settings").GetProperty("configFileName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("advancedSettings").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("enableHealthCheck").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("script").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("required").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("defaultValue").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("regionalReplicaCount").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("storageAccountType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("confidentialVMEncryptionType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("secureVMDiskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("excludeFromLatest").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("replicaCount").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("excludeFromLatest").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("publishedDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("endOfLifeDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("storageAccountType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("replicationMode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocation").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocation").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocationReplicaCount").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("storageAccountType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("confidentialVMEncryptionType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("secureVMDiskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("safetyProfile").GetProperty("allowDeletionOfReplicatedLocations").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("aggregatedState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("region").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("details").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("progress").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdate(WaitUntil,string,string,string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrUpdate and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    location = "<location>",
+});
+Operation<BinaryData> operation = client.CreateOrUpdate(WaitUntil.Completed, "<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", "<galleryApplicationVersionName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("location").ToString());
+]]></code>
+This sample shows how to call CreateOrUpdate with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        publishingProfile = new
+        {
+            source = new
+            {
+                mediaLink = "<mediaLink>",
+                defaultConfigurationLink = "<defaultConfigurationLink>",
+            },
+            manageActions = new
+            {
+                install = "<install>",
+                remove = "<remove>",
+                update = "<update>",
+            },
+            settings = new
+            {
+                packageFileName = "<packageFileName>",
+                configFileName = "<configFileName>",
+            },
+            advancedSettings = new
+            {
+                key = "<advancedSettings>",
+            },
+            enableHealthCheck = true,
+            customActions = new object[]
+            {
+                new
+                {
+                    name = "<name>",
+                    script = "<script>",
+                    description = "<description>",
+                    parameters = new object[]
+                    {
+                        new
+                        {
+                            name = "<name>",
+                            required = true,
+                            type = "String",
+                            defaultValue = "<defaultValue>",
+                            description = "<description>",
+                        }
+                    },
+                }
+            },
+            targetRegions = new object[]
+            {
+                new
+                {
+                    name = "<name>",
+                    regionalReplicaCount = 1234,
+                    storageAccountType = "Standard_LRS",
+                    encryption = new
+                    {
+                        osDiskImage = new
+                        {
+                            securityProfile = new
+                            {
+                                confidentialVMEncryptionType = "EncryptedVMGuestStateOnlyWithPmk",
+                                secureVMDiskEncryptionSetId = "<secureVMDiskEncryptionSetId>",
+                            },
+                            diskEncryptionSetId = "<diskEncryptionSetId>",
+                        },
+                        dataDiskImages = new object[]
+                        {
+                            new
+                            {
+                                lun = 1234,
+                                diskEncryptionSetId = "<diskEncryptionSetId>",
+                            }
+                        },
+                    },
+                    excludeFromLatest = true,
+                }
+            },
+            replicaCount = 1234,
+            excludeFromLatest = true,
+            endOfLifeDate = "2022-05-10T18:57:31.2311892Z",
+            storageAccountType = "Standard_LRS",
+            replicationMode = "Full",
+            targetExtendedLocations = new object[]
+            {
+                new
+                {
+                    name = "<name>",
+                    extendedLocation = new
+                    {
+                        name = "<name>",
+                        type = "EdgeZone",
+                    },
+                    extendedLocationReplicaCount = 1234,
+                    storageAccountType = "Standard_LRS",
+                }
+            },
+        },
+        safetyProfile = new
+        {
+            allowDeletionOfReplicatedLocations = true,
+        },
+    },
+    location = "<location>",
+    tags = new
+    {
+        key = "<tags>",
+    },
+});
+Operation<BinaryData> operation = client.CreateOrUpdate(WaitUntil.Completed, "<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", "<galleryApplicationVersionName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("source").GetProperty("mediaLink").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("source").GetProperty("defaultConfigurationLink").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("install").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("remove").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("update").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("settings").GetProperty("packageFileName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("settings").GetProperty("configFileName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("advancedSettings").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("enableHealthCheck").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("script").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("required").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("defaultValue").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("regionalReplicaCount").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("storageAccountType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("confidentialVMEncryptionType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("secureVMDiskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("excludeFromLatest").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("replicaCount").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("excludeFromLatest").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("publishedDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("endOfLifeDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("storageAccountType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("replicationMode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocation").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocation").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocationReplicaCount").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("storageAccountType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("confidentialVMEncryptionType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("secureVMDiskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("safetyProfile").GetProperty("allowDeletionOfReplicatedLocations").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("aggregatedState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("region").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("details").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("progress").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateAsync(WaitUntil,string,string,string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Operation<BinaryData> operation = await client.UpdateAsync(WaitUntil.Completed, "<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", "<galleryApplicationVersionName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("location").ToString());
+]]></code>
+This sample shows how to call UpdateAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        publishingProfile = new
+        {
+            source = new
+            {
+                mediaLink = "<mediaLink>",
+                defaultConfigurationLink = "<defaultConfigurationLink>",
+            },
+            manageActions = new
+            {
+                install = "<install>",
+                remove = "<remove>",
+                update = "<update>",
+            },
+            settings = new
+            {
+                packageFileName = "<packageFileName>",
+                configFileName = "<configFileName>",
+            },
+            advancedSettings = new
+            {
+                key = "<advancedSettings>",
+            },
+            enableHealthCheck = true,
+            customActions = new object[]
+            {
+                new
+                {
+                    name = "<name>",
+                    script = "<script>",
+                    description = "<description>",
+                    parameters = new object[]
+                    {
+                        new
+                        {
+                            name = "<name>",
+                            required = true,
+                            type = "String",
+                            defaultValue = "<defaultValue>",
+                            description = "<description>",
+                        }
+                    },
+                }
+            },
+            targetRegions = new object[]
+            {
+                new
+                {
+                    name = "<name>",
+                    regionalReplicaCount = 1234,
+                    storageAccountType = "Standard_LRS",
+                    encryption = new
+                    {
+                        osDiskImage = new
+                        {
+                            securityProfile = new
+                            {
+                                confidentialVMEncryptionType = "EncryptedVMGuestStateOnlyWithPmk",
+                                secureVMDiskEncryptionSetId = "<secureVMDiskEncryptionSetId>",
+                            },
+                            diskEncryptionSetId = "<diskEncryptionSetId>",
+                        },
+                        dataDiskImages = new object[]
+                        {
+                            new
+                            {
+                                lun = 1234,
+                                diskEncryptionSetId = "<diskEncryptionSetId>",
+                            }
+                        },
+                    },
+                    excludeFromLatest = true,
+                }
+            },
+            replicaCount = 1234,
+            excludeFromLatest = true,
+            endOfLifeDate = "2022-05-10T18:57:31.2311892Z",
+            storageAccountType = "Standard_LRS",
+            replicationMode = "Full",
+            targetExtendedLocations = new object[]
+            {
+                new
+                {
+                    name = "<name>",
+                    extendedLocation = new
+                    {
+                        name = "<name>",
+                        type = "EdgeZone",
+                    },
+                    extendedLocationReplicaCount = 1234,
+                    storageAccountType = "Standard_LRS",
+                }
+            },
+        },
+        safetyProfile = new
+        {
+            allowDeletionOfReplicatedLocations = true,
+        },
+    },
+    tags = new
+    {
+        key = "<tags>",
+    },
+});
+Operation<BinaryData> operation = await client.UpdateAsync(WaitUntil.Completed, "<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", "<galleryApplicationVersionName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("source").GetProperty("mediaLink").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("source").GetProperty("defaultConfigurationLink").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("install").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("remove").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("update").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("settings").GetProperty("packageFileName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("settings").GetProperty("configFileName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("advancedSettings").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("enableHealthCheck").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("script").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("required").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("defaultValue").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("regionalReplicaCount").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("storageAccountType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("confidentialVMEncryptionType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("secureVMDiskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("excludeFromLatest").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("replicaCount").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("excludeFromLatest").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("publishedDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("endOfLifeDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("storageAccountType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("replicationMode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocation").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocation").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocationReplicaCount").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("storageAccountType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("confidentialVMEncryptionType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("secureVMDiskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("safetyProfile").GetProperty("allowDeletionOfReplicatedLocations").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("aggregatedState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("region").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("details").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("progress").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="Update(WaitUntil,string,string,string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Update and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Operation<BinaryData> operation = client.Update(WaitUntil.Completed, "<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", "<galleryApplicationVersionName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("location").ToString());
+]]></code>
+This sample shows how to call Update with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        publishingProfile = new
+        {
+            source = new
+            {
+                mediaLink = "<mediaLink>",
+                defaultConfigurationLink = "<defaultConfigurationLink>",
+            },
+            manageActions = new
+            {
+                install = "<install>",
+                remove = "<remove>",
+                update = "<update>",
+            },
+            settings = new
+            {
+                packageFileName = "<packageFileName>",
+                configFileName = "<configFileName>",
+            },
+            advancedSettings = new
+            {
+                key = "<advancedSettings>",
+            },
+            enableHealthCheck = true,
+            customActions = new object[]
+            {
+                new
+                {
+                    name = "<name>",
+                    script = "<script>",
+                    description = "<description>",
+                    parameters = new object[]
+                    {
+                        new
+                        {
+                            name = "<name>",
+                            required = true,
+                            type = "String",
+                            defaultValue = "<defaultValue>",
+                            description = "<description>",
+                        }
+                    },
+                }
+            },
+            targetRegions = new object[]
+            {
+                new
+                {
+                    name = "<name>",
+                    regionalReplicaCount = 1234,
+                    storageAccountType = "Standard_LRS",
+                    encryption = new
+                    {
+                        osDiskImage = new
+                        {
+                            securityProfile = new
+                            {
+                                confidentialVMEncryptionType = "EncryptedVMGuestStateOnlyWithPmk",
+                                secureVMDiskEncryptionSetId = "<secureVMDiskEncryptionSetId>",
+                            },
+                            diskEncryptionSetId = "<diskEncryptionSetId>",
+                        },
+                        dataDiskImages = new object[]
+                        {
+                            new
+                            {
+                                lun = 1234,
+                                diskEncryptionSetId = "<diskEncryptionSetId>",
+                            }
+                        },
+                    },
+                    excludeFromLatest = true,
+                }
+            },
+            replicaCount = 1234,
+            excludeFromLatest = true,
+            endOfLifeDate = "2022-05-10T18:57:31.2311892Z",
+            storageAccountType = "Standard_LRS",
+            replicationMode = "Full",
+            targetExtendedLocations = new object[]
+            {
+                new
+                {
+                    name = "<name>",
+                    extendedLocation = new
+                    {
+                        name = "<name>",
+                        type = "EdgeZone",
+                    },
+                    extendedLocationReplicaCount = 1234,
+                    storageAccountType = "Standard_LRS",
+                }
+            },
+        },
+        safetyProfile = new
+        {
+            allowDeletionOfReplicatedLocations = true,
+        },
+    },
+    tags = new
+    {
+        key = "<tags>",
+    },
+});
+Operation<BinaryData> operation = client.Update(WaitUntil.Completed, "<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", "<galleryApplicationVersionName>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("source").GetProperty("mediaLink").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("source").GetProperty("defaultConfigurationLink").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("install").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("remove").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("manageActions").GetProperty("update").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("settings").GetProperty("packageFileName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("settings").GetProperty("configFileName").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("advancedSettings").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("enableHealthCheck").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("script").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("required").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("defaultValue").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("customActions")[0].GetProperty("parameters")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("regionalReplicaCount").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("storageAccountType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("confidentialVMEncryptionType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("secureVMDiskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetRegions")[0].GetProperty("excludeFromLatest").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("replicaCount").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("excludeFromLatest").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("publishedDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("endOfLifeDate").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("storageAccountType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("replicationMode").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocation").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocation").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("extendedLocationReplicaCount").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("storageAccountType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("confidentialVMEncryptionType").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("securityProfile").GetProperty("secureVMDiskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("osDiskImage").GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("lun").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("publishingProfile").GetProperty("targetExtendedLocations")[0].GetProperty("encryption").GetProperty("dataDiskImages")[0].GetProperty("diskEncryptionSetId").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("safetyProfile").GetProperty("allowDeletionOfReplicatedLocations").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("aggregatedState").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("region").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("details").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("replicationStatus").GetProperty("summary")[0].GetProperty("progress").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("location").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteAsync(WaitUntil,string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteAsync.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+Operation operation = await client.DeleteAsync(WaitUntil.Completed, "<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", "<galleryApplicationVersionName>");
+]]></code>
+This sample shows how to call DeleteAsync with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+Operation operation = await client.DeleteAsync(WaitUntil.Completed, "<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", "<galleryApplicationVersionName>");
+]]></code></example>
+    </member>
+    <member name="Delete(WaitUntil,string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call Delete.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+Operation operation = client.Delete(WaitUntil.Completed, "<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", "<galleryApplicationVersionName>");
+]]></code>
+This sample shows how to call Delete with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+GalleryApplicationVersionsClient client = new GalleryApplicationVersionsClient("<SubscriptionId>", credential);
+
+Operation operation = client.Delete(WaitUntil.Completed, "<resourceGroupName>", "<galleryName>", "<galleryApplicationName>", "<galleryApplicationVersionName>");
+]]></code></example>
+    </member>
+  </members>
+</doc>
