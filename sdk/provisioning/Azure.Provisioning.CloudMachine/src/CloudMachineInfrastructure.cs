@@ -45,9 +45,9 @@ public class CloudMachineInfrastructure : Infrastructure
     ///// </summary>
     //public BicepParameter PrincipalNameParameter => new BicepParameter("principalName", typeof(string));
 
-    public CloudMachineInfrastructure(string cmid) : base("cm")
+    public CloudMachineInfrastructure(string cloudMachineId) : base("cm")
     {
-        _cmid = cmid;
+        _cmid = cloudMachineId;
         _identity = new("cm_identity");
         _identity.Name = _cmid;
         ManagedServiceIdentity managedServiceIdentity = new()
