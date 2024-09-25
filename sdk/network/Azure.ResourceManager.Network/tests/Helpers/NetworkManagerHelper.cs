@@ -111,6 +111,13 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 throw;
             }
         }
+        public static async Task DeleteVirtualNetworksAsync(IEnumerable<VirtualNetworkResource> vnets)
+        {
+            foreach (var vnet in vnets)
+            {
+                await vnet.DeleteAsync(WaitUntil.Completed);
+            }
+        }
 
         public static async Task DeleteResourceAsync<TResource>(this TResource resource)
         {
