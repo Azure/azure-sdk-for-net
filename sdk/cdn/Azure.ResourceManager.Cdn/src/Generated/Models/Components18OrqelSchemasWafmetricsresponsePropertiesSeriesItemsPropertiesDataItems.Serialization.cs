@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Cdn.Models
 
         void IJsonModel<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(DateOn))
             {
                 writer.WritePropertyName("dateTime"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.Cdn.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems IJsonModel<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

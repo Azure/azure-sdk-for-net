@@ -20,42 +20,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         void IJsonModel<ServicePrincipalCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServicePrincipalCredential)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(CredentialType);
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Annotations))
-            {
-                writer.WritePropertyName("annotations"u8);
-                writer.WriteStartArray();
-                foreach (var item in Annotations)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndArray();
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ServicePrincipalId))
@@ -86,7 +66,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         ServicePrincipalCredential IJsonModel<ServicePrincipalCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

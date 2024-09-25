@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> Clustering policy - default is OSSCluster. Specified at create time. </summary>
+    /// <summary> Clustering policy - default is OSSCluster. This property must be chosen at create time, and cannot be changed without deleting the database. </summary>
     public readonly partial struct RedisEnterpriseClusteringPolicy : IEquatable<RedisEnterpriseClusteringPolicy>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         private const string EnterpriseClusterValue = "EnterpriseCluster";
         private const string OssClusterValue = "OSSCluster";
 
-        /// <summary> EnterpriseCluster. </summary>
+        /// <summary> Enterprise clustering policy uses only the classic redis protocol, which does not support redis cluster commands. </summary>
         public static RedisEnterpriseClusteringPolicy EnterpriseCluster { get; } = new RedisEnterpriseClusteringPolicy(EnterpriseClusterValue);
-        /// <summary> OSSCluster. </summary>
+        /// <summary> OSS clustering policy follows the redis cluster specification, and requires all clients to support redis clustering. </summary>
         public static RedisEnterpriseClusteringPolicy OssCluster { get; } = new RedisEnterpriseClusteringPolicy(OssClusterValue);
         /// <summary> Determines if two <see cref="RedisEnterpriseClusteringPolicy"/> values are the same. </summary>
         public static bool operator ==(RedisEnterpriseClusteringPolicy left, RedisEnterpriseClusteringPolicy right) => left.Equals(right);

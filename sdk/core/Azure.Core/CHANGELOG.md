@@ -6,6 +6,7 @@
 
 - `TokenRequestContext` added the `IsProofOfPossessionEnabled`, `ResourceRequestMethod`, and `ResourceRequestUri` properties to support Proof of Possession tokens ([45134](https://github.com/Azure/azure-sdk-for-net/pull/45134)).
 - `AccessToken` added the `TokenType` property to support distinguishing Bearer tokens from Proof of Possession (PoP) tokens ([45134](https://github.com/Azure/azure-sdk-for-net/pull/45134)).
+- Moved implementation of `Azure.AzureKeyCredential` into `System.ClientModel.ApiKeyCredential` and made `ApiKeyCredential` the base type for `AzureKeyCredential` ([#46128](https://github.com/Azure/azure-sdk-for-net/pull/46128)).
 - `BearerTokenAuthenticationPolicy` now will attempt to handle Continuous Access Evaluation (CAE) challenges, if present, by default.
 
 ### Breaking Changes
