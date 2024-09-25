@@ -167,8 +167,8 @@ namespace Azure.AI.Inference
                     => SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
                         responseForEnumeration.ContentStream,
                         StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
-                        cancellationToken,
-                        otel
+                        otel,
+                        cancellationToken
                         ));
         }
 
@@ -222,8 +222,9 @@ namespace Azure.AI.Inference
                     => SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
                         responseForEnumeration.ContentStream,
                         StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
-                        cancellationToken,
-                        otel));
+                        otel,
+                        cancellationToken
+                        ));
         }
 
         internal HttpMessage CreatePostRequestMessage(

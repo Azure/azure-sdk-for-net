@@ -25,7 +25,7 @@ namespace Azure.AI.Inference.Telemetry
         public const string GenAiRequestTopPKey = "gen_ai.request.top_p";
 
         public const string GenAiResponseIdKey = "gen_ai.response.id";
-        public const string GenAiResponseFinishReasonKey = "gen_ai.response.finish_reasons";
+        public const string GenAiResponseFinishReasonsKey = "gen_ai.response.finish_reasons";
         public const string GenAiResponseModelKey = "gen_ai.response.model";
 
         public const string GenAiSystemKey = "gen_ai.system";

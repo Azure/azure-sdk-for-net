@@ -13,7 +13,6 @@ dotnet add package Azure.AI.Inference --prerelease
 Now we will need to add the dependencies for OpenTelemetry.
 
 ```dotnetcli
-dotnet add package OpenTelemetry
 dotnet add package OpenTelemetry.Exporter.Console
 dotnet add package OpenTelemetry.Exporter.OpenTelemetryProtocol
 dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore --prerelease
@@ -96,23 +95,23 @@ System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 ```
 
 ## Running the application
-**IMPORTANT!** To switch on the telemetry we need to set environment variable `AZURE_INFERENCE_EXPERIMENTAL_ENABLE_OPEN_TELEMETRY` to "1" or "true". To enable the collection of chat requests and responses please set `AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED` variable to "1". It can be done in IDE or in the console as outlined below.
+**IMPORTANT!** To switch on the telemetry we need to set environment variable `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` to "1" or "true". To enable the collection of chat requests and responses please set `AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED` variable to "1". It can be done in IDE or in the console as outlined below.
 
 On Windows CMD
 ```
-set AZURE_INFERENCE_EXPERIMENTAL_ENABLE_OPEN_TELEMETRY=1
+set AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE=1
 set AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED=1
 ```
 
 On PowerShell
 ```
-$env:AZURE_INFERENCE_EXPERIMENTAL_ENABLE_OPEN_TELEMETRY="1"
+$env:AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE="1"
 $env:AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED="1"
 ```
 
 On Bash
 ```bash
-export AZURE_INFERENCE_EXPERIMENTAL_ENABLE_OPEN_TELEMETRY=1
+export AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE=1
 export AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED=1
 ```
 

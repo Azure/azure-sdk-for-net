@@ -9,6 +9,7 @@ using System.Text.Json;
 using Azure.Core;
 using static Azure.AI.Inference.Telemetry.OpenTelemetryInternalConstants;
 using static Azure.AI.Inference.Telemetry.OpenTelemetryConstants;
+using System.Threading.Tasks;
 
 namespace Azure.AI.Inference.Telemetry
 {
@@ -35,7 +36,9 @@ namespace Azure.AI.Inference.Telemetry
         private readonly TagList _commonTags;
         private readonly string _caller;
         private readonly bool _traceContent;
-        private readonly bool _enableTelemetry = AppContextSwitchHelper.GetConfigValue(AppContextSwitch, EnvironmentVariableSwitchName);
+        private readonly bool _enableTelemetry = AppContextSwitchHelper.GetConfigValue(
+            AppContextSwitch,
+            EnvironmentVariableTraceContents);
         private readonly DiagnosticListener m_source = null;
         private readonly StreamingRecordedResponse m_recordedStreamingResponse;
 
@@ -168,20 +171,40 @@ namespace Azure.AI.Inference.Telemetry
         /// <param name="e">Exception thrown by completion call.</param>
         public void RecordError(Exception e)
         {
+            var errorType = e?.GetType()?.FullName;
+            RecordErrorInternal(
+                errorType,
+                e?.Message ?? errorType,
+                e);
+        }
+
+        /// <summary>
+        /// Record the task cancellation event.
+        /// </summary>
+        public void RecordCancellation()
+        {
+            RecordErrorInternal(
+                typeof(TaskCanceledException).ToString(),
+                "A task was canceled.",
+                "A task was canceled.");
+        }
+
+        private void RecordErrorInternal(string type, string message, object exception)
+        {
             if (!_enableTelemetry)
                 return;
             if (!string.IsNullOrEmpty(_caller))
-                m_source.Write(_caller + ".Exception", e);
-            var errorType = e?.GetType()?.FullName;
+                m_source.Write(_caller + ".Exception", exception);
+            var errorType = type;
             var tags = _commonTags;
             tags.Add(ErrorTypeKey, errorType);
             s_duration.Record(_duration.Elapsed.TotalSeconds, tags);
-            if ( e is Azure.RequestFailedException requestFailed)
+            if (exception is Azure.RequestFailedException requestFailed)
             {
                 errorType = requestFailed.Status.ToString();
             }
             _activity?.SetTag(ErrorTypeKey, errorType);
-            _activity?.SetStatus(ActivityStatusCode.Error, e?.Message ?? errorType);
+            _activity?.SetStatus(ActivityStatusCode.Error, message);
         }
 
         /// <summary>
@@ -240,7 +263,7 @@ namespace Azure.AI.Inference.Telemetry
             // Set activity tags
             if (!string.IsNullOrEmpty(recordedResponse.FinishReason))
             {
-                _activity?.SetTag(GenAiResponseFinishReasonKey, recordedResponse.FinishReason);
+                _activity?.SetTag(GenAiResponseFinishReasonsKey, recordedResponse.FinishReason);
             }
             _activity?.SetTag(GenAiResponseModelKey, recordedResponse.Model);
             _activity?.SetTag(GenAiResponseIdKey, recordedResponse.Id);

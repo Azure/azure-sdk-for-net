@@ -11,7 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Inference.Telemetry;
 using Azure.AI.Inference.Tests.Utilities;
+using Azure.Core;
 using Azure.Core.Sse;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Inference.Tests
@@ -242,8 +244,8 @@ namespace Azure.AI.Inference.Tests
                 var enumerator = SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
                         stream,
                         StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
-                        ct,
-                        scope);
+                        scope,
+                        ct);
                 await foreach (var val in enumerator)
                 {
                     resp.Update(val);

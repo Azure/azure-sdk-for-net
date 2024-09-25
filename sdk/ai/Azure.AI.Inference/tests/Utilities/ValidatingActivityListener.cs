@@ -93,7 +93,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             }
             ValidateTag(activity, GenAiResponseIdKey, response.Id);
             ValidateTag(activity, GenAiResponseModelKey, response.Model);
-            ValidateTag(activity, GenAiResponseFinishReasonKey, response.FinishReason);
+            ValidateTag(activity, GenAiResponseFinishReasonsKey, response.FinishReason);
             ValidateIntTag(activity, GenAiUsageOutputTokensKey, response.CompletionTokens);
             ValidateIntTag(activity, GenAiUsageInputTokensKey, response.PromptTokens);
             var validChoices = new HashSet<string>();

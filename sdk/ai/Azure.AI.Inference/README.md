@@ -48,7 +48,6 @@ dotnet add package Azure.Identity
 To enable telemetry, please install the Open telemetry package
 
 ```dotnetcli
-dotnet add package OpenTelemetry
 dotnet add package OpenTelemetry.Exporter.Console
 dotnet add package OpenTelemetry.Exporter.OpenTelemetryProtocol
 ```
@@ -80,7 +79,7 @@ The Open Telemetry library provides tracing for Azure AI Inference client librar
 To switch on the telemetry, we need to set environment variable `AZURE_INFERENCE_EXPERIMENTAL_ENABLE_OPEN_TELEMETRY` to "1" or "true" (case insensitive). The environment variable `AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED` controls whether the actual message contents will be included in the traces or not. By default, the message contents are not recorded. Set the value of the environment variable to "true" or "1" (case insensitive) for the message contents to be included as part of the trace. Any other value will cause the message contents not to be traced.
 
 ### Trace Exporter(s)
-For the traces to be captured, you need to setup the applicable trace exporters. The chosen exporter will be based on where you want the traces to be output. In the example below we will export the traces to console, Azure Monitor and also will create an export through Open Telemetry protocol which can be used by Aspire Dashboard see the [installation instructions](https://learn.microsoft.com/dotnet/aspire/fundamentals/dashboard/standalone).
+For the traces to be captured, you need to set up the applicable trace exporters. The chosen exporter will be based on where you want the traces to be output. In the example below we will export the traces to console, Azure Monitor and also will create an export through Open Telemetry protocol which can be used by Aspire Dashboard see the [installation instructions](https://learn.microsoft.com/dotnet/aspire/fundamentals/dashboard/standalone).
 Please refer to [this](https://learn.microsoft.com/azure/azure-monitor/app/create-workspace-resource) documentation for more information about how to create Azure Monitor resource. Configure the environment variable `APP_INSIGHTS_CONNECTION_STR` based on your Azure Monitor resource. 
 
 ```C#

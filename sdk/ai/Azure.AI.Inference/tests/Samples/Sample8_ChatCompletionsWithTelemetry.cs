@@ -110,7 +110,7 @@ namespace Azure.AI.Inference.Tests.Samples
 #else
             var endpoint = new Uri(TestEnvironment.GithubEndpoint);
             var credential = new AzureKeyCredential(TestEnvironment.GithubToken);
-            var model = "mistral-small";
+            var model = "gpt-4o";
             var appInsightsConn = TestEnvironment.TestApplicationInsights;
 #endif
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
@@ -148,14 +148,18 @@ namespace Azure.AI.Inference.Tests.Samples
                     new ChatRequestSystemMessage("You are a helpful assistant."),
                     new ChatRequestUserMessage("What is the capital of France?"),
                 },
-                Model = model
+                Model = model,
+                //AdditionalProperties = {
+                //    { "stream_options", BinaryData.FromObjectAsJson(
+                //        new Dictionary<string, bool>(){{ "include_usage", true } }) }
+                //}
             };
 
             // Call the enpoint and output the response.
             StreamingResponse<StreamingChatCompletionsUpdate> response = client.CompleteStreaming(requestOptions);
             Assert.That(response, Is.Not.Null);
 
-#if !SNIPPET
+#if SNIPPET
             await checkStreamingResponse(response);
 #else
             await foreach (StreamingChatCompletionsUpdate chatUpdate in response)

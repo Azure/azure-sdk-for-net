@@ -18,8 +18,8 @@ namespace Azure.Core.Sse
         internal static async IAsyncEnumerable<T> EnumerateFromSseStream(
             Stream stream,
             Func<JsonElement, IEnumerable<T>> multiElementDeserializer,
-            [EnumeratorCancellation] CancellationToken cancellationToken = default,
-            OpenTelemetryScope scope = null)
+            OpenTelemetryScope scope,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace Azure.Core.Sse
                 }
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    scope?.RecordError(new TaskCanceledException());
+                    scope?.RecordCancellation();
                 }
             }
             finally
@@ -75,12 +75,12 @@ namespace Azure.Core.Sse
         internal static IAsyncEnumerable<T> EnumerateFromSseStream(
             Stream stream,
             Func<JsonElement, T> elementDeserializer,
-            CancellationToken cancellationToken = default,
-            OpenTelemetryScope scope = null)
+            OpenTelemetryScope scope,
+            CancellationToken cancellationToken = default)
             => EnumerateFromSseStream(
                 stream,
                 (element) => new T[] { elementDeserializer.Invoke(element) },
-                cancellationToken,
-                scope);
+                scope,
+                cancellationToken);
     }
 }
