@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(ZonalPlatformFaultDomainAlignMode left, ZonalPlatformFaultDomainAlignMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ZonalPlatformFaultDomainAlignMode"/> values are not the same. </summary>
         public static bool operator !=(ZonalPlatformFaultDomainAlignMode left, ZonalPlatformFaultDomainAlignMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ZonalPlatformFaultDomainAlignMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ZonalPlatformFaultDomainAlignMode"/>. </summary>
         public static implicit operator ZonalPlatformFaultDomainAlignMode(string value) => new ZonalPlatformFaultDomainAlignMode(value);
 
         /// <inheritdoc />
