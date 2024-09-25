@@ -20,8 +20,7 @@ internal static class Azd
 
     internal static void Init(string infraDirectory, CloudMachineInfrastructure cmi)
     {
-        if (!Directory.Exists(infraDirectory))
-            Directory.CreateDirectory(infraDirectory);
+        Directory.CreateDirectory(infraDirectory);
 
         cmi.Build().Save(infraDirectory);
         var cmid = ReadOrCreateCmid();
