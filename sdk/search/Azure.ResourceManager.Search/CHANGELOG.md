@@ -5,77 +5,45 @@
 ### Features Added
 
 - Upgraded api-version tag from 'package-preview-2024-03' to 'package-preview-2024-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c3cc9abe085093ba880ee3eeb792edb4fa789553/specification/search/resource-manager/readme.md
-
 ## 1.3.0-beta.3 (2024-05-16)
-
 ### Bugs Fixed
-
 - Correct casing of SkuName when using the ArmSearchModelFactory.
-
 ## 1.3.0-beta.2 (2024-04-29)
-
 ### Features Added
-
 - Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
-
 ## 1.3.0-beta.1 (2024-04-17)
-
 ### Features Added
-
 - Upgraded api-version tag from 'package-2023-11' to 'package-preview-2024-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/3fb73ef5a3af2c138b53e3cced182095b671a679/specification/search/resource-manager/readme.md
-
 ## 1.2.2 (2024-03-23)
-
 ### Features Added
-
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Added experimental Bicep serialization.
-
 ## 1.2.1 (2023-11-30)
-
 ### Features Added
-
 - Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
-
 ### Other Changes
-
 - Upgraded dependent `Azure.ResourceManager` to 1.9.0.
-
 ## 1.2.0 (2023-11-01)
-
 ### Features Added
-
 - Added support for '2023-11-01' management plane API version.
 - Enable the [semantic search](https://learn.microsoft.com/azure/search/semantic-search-overview) feature
-
 ## 1.2.0-beta.1 (2023-05-31)
-
 ### Features Added
-
 - Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
-
 ### Other Changes
-
 - Upgraded dependent Azure.Core to 1.32.0.
 - Upgraded dependent Azure.ResourceManager to 1.6.0.
-
 ## 1.1.0 (2023-03-21)
-
 ### Features Added
-
 - Added support for '2022-09-01' management plane API version.
 - Added support for enabling RBAC authentication on search services.
-
 ## 1.0.1 (2023-02-20)
-
 ### Other Changes
-
 - Upgraded dependent `Azure.Core` to `1.28.0`.
 - Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
-
 ## 1.0.0 (2022-09-28)
-
 This release is the first stable release of the Search Service Management client library.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
