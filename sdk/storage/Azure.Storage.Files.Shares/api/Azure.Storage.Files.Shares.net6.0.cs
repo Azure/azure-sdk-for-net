@@ -115,7 +115,7 @@ namespace Azure.Storage.Files.Shares
     }
     public partial class ShareClientOptions : Azure.Core.ClientOptions
     {
-        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2025_01_05) { }
+        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2024_11_04) { }
         public bool? AllowSourceTrailingDot { get { throw null; } set { } }
         public bool? AllowTrailingDot { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareAudience? Audience { get { throw null; } set { } }
@@ -808,7 +808,6 @@ namespace Azure.Storage.Files.Shares.Models
     {
         internal ShareFileDownloadInfo() { }
         public System.IO.Stream Content { get { throw null; } }
-        public byte[] ContentCrc { get { throw null; } }
         public byte[] ContentHash { get { throw null; } }
         public long ContentLength { get { throw null; } }
         public string ContentType { get { throw null; } }
