@@ -5,65 +5,65 @@
 
 #nullable disable
 
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
+using Azure;
 
 namespace BasicTypeSpec
 {
     internal static partial class ClientPipelineExtensions
     {
-        public static async ValueTask<PipelineResponse> ProcessMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
+        public static async ValueTask<global::Azure.Response> ProcessMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
         {
             await pipeline.SendAsync(message).ConfigureAwait(false);
 
             if (message.Response.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
             {
-                throw await ClientResultException.CreateAsync(message.Response).ConfigureAwait(false);
+                throw await global::Azure.RequestFailedException.CreateAsync(message.Response).ConfigureAwait(false);
             }
 
             PipelineResponse response = message.BufferResponse ? message.Response : message.ExtractResponse();
             return response;
         }
 
-        public static PipelineResponse ProcessMessage(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
+        public static global::Azure.Response ProcessMessage(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
         {
             pipeline.Send(message);
 
             if (message.Response.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
             {
-                throw new ClientResultException(message.Response);
+                throw new global::Azure.RequestFailedException(message.Response);
             }
 
-            PipelineResponse response = message.BufferResponse ? message.Response : message.ExtractResponse();
+            global::Azure.Response response = message.BufferResponse ? message.Response : message.ExtractResponse();
             return response;
         }
 
-        public static async ValueTask<ClientResult<bool>> ProcessHeadAsBoolMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
+        public static async ValueTask<global::Azure.Response<bool>> ProcessHeadAsBoolMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
         {
-            PipelineResponse response = await pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
+            global::Azure.Response response = await pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
             switch (response.Status)
             {
                 case >= 200 and < 300:
-                    return ClientResult.FromValue(true, response);
+                    return global::Azure.Response.FromValue<bool>(true, response);
                 case >= 400 and < 500:
-                    return ClientResult.FromValue(false, response);
+                    return global::Azure.Response.FromValue<bool>(false, response);
                 default:
-                    return new ErrorResult<bool>(response, new ClientResultException(response));
+                    return new ErrorResult<bool>(response, new global::Azure.RequestFailedException(response));
             }
         }
 
-        public static ClientResult<bool> ProcessHeadAsBoolMessage(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
+        public static global::Azure.Response<bool> ProcessHeadAsBoolMessage(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
         {
-            PipelineResponse response = pipeline.ProcessMessage(message, options);
+            global::Azure.Response response = pipeline.ProcessMessage(message, options);
             switch (response.Status)
             {
                 case >= 200 and < 300:
-                    return ClientResult.FromValue(true, response);
+                    return global::Azure.Response.FromValue<bool>(true, response);
                 case >= 400 and < 500:
-                    return ClientResult.FromValue(false, response);
+                    return global::Azure.Response.FromValue<bool>(false, response);
                 default:
-                    return new ErrorResult<bool>(response, new ClientResultException(response));
+                    return new ErrorResult<bool>(response, new global::Azure.RequestFailedException(response));
             }
         }
     }

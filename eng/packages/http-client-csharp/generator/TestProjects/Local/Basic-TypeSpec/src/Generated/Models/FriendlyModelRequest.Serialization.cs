@@ -10,6 +10,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using BasicTypeSpec;
 
 namespace BasicTypeSpec.Models
@@ -136,10 +137,10 @@ namespace BasicTypeSpec.Models
             return BinaryContent.Create(friendlyModelRequest, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="FriendlyModelRequest"/> from. </param>
-        public static explicit operator FriendlyModelRequest(ClientResult result)
+        /// <param name="result"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="FriendlyModelRequest"/> from. </param>
+        public static explicit operator FriendlyModelRequest(global::Azure.Response result)
         {
-            using PipelineResponse response = result.GetRawResponse();
+            using global::Azure.Response response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeFriendlyModelRequest(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

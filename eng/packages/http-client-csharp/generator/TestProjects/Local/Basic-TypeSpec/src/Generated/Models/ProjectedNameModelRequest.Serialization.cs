@@ -10,6 +10,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using BasicTypeSpec;
 
 namespace BasicTypeSpec.Models
@@ -136,10 +137,10 @@ namespace BasicTypeSpec.Models
             return BinaryContent.Create(projectedNameModelRequest, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ProjectedNameModelRequest"/> from. </param>
-        public static explicit operator ProjectedNameModelRequest(ClientResult result)
+        /// <param name="result"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="ProjectedNameModelRequest"/> from. </param>
+        public static explicit operator ProjectedNameModelRequest(global::Azure.Response result)
         {
-            using PipelineResponse response = result.GetRawResponse();
+            using global::Azure.Response response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeProjectedNameModelRequest(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
