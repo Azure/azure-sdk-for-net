@@ -50,7 +50,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BasicTransfer_Single(
             [Values(TransferDirection.Copy, TransferDirection.Upload, TransferDirection.Download)] TransferDirection transferDirection)
         {
-            (StorageResourceItem source, StorageResourceItem destination) = MockStorageResource.GetMockTransferResources(transferDirection);
+            (StorageResourceItem source, StorageResourceItem destination) = MockStorageResourceItem.GetMockTransferResources(transferDirection);
             TransferManagerOptions managerOptions = new()
             {
                 CheckpointerOptions = TransferCheckpointStoreOptions.Disabled()
@@ -61,12 +61,55 @@ namespace Azure.Storage.DataMovement.Tests
             TestEventsRaised events = new(transferOptions);
             DataTransfer transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
 
-            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(10));
+            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(5));
             await transfer.WaitForCompletionAsync(tokenSource.Token);
 
             Assert.That(transfer.HasCompleted, Is.True);
-            events.AssertUnexpectedFailureCheck();
             await events.AssertSingleCompletedCheck();
+        }
+
+        [Test]
+        public async Task BasicTransfer_Container(
+            [Values(TransferDirection.Copy, TransferDirection.Upload, TransferDirection.Download)] TransferDirection transferDirection)
+        {
+            Uri localUri = new(@"C:\SampleContainer");
+            Uri remoteUri = new("https://example.com/container1");
+            Uri remoteUri2 = new("https://example.com/container2");
+            int resourceCount = 3;
+
+            StorageResourceContainer source;
+            StorageResourceContainer destination;
+            if (transferDirection == TransferDirection.Copy)
+            {
+                source = new MockStorageResourceContainer(remoteUri, resourceCount: resourceCount);
+                destination = new MockStorageResourceContainer(remoteUri2);
+            }
+            else if (transferDirection == TransferDirection.Upload)
+            {
+                source = new MockStorageResourceContainer(localUri, resourceCount: resourceCount);
+                destination = new MockStorageResourceContainer(remoteUri2);
+            }
+            else // transferType == TransferDirection.Download
+            {
+                source = new MockStorageResourceContainer(remoteUri, resourceCount: resourceCount);
+                destination = new MockStorageResourceContainer(localUri);
+            }
+
+            TransferManagerOptions managerOptions = new()
+            {
+                CheckpointerOptions = TransferCheckpointStoreOptions.Disabled()
+            };
+            TransferManager transferManager = new(managerOptions);
+
+            DataTransferOptions transferOptions = new();
+            TestEventsRaised events = new(transferOptions);
+            DataTransfer transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
+
+            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(5));
+            await transfer.WaitForCompletionAsync(tokenSource.Token);
+
+            Assert.That(transfer.HasCompleted, Is.True);
+            await events.AssertContainerCompletedCheck(resourceCount);
         }
     }
 }

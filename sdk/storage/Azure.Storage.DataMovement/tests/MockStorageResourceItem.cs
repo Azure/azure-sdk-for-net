@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    internal class MockStorageResource : StorageResourceItem
+    internal class MockStorageResourceItem : StorageResourceItem
     {
         private readonly Uri _uri;
         private readonly int _failAfter;
@@ -26,7 +26,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override long? Length { get; }
 
-        private MockStorageResource(long? length, Uri uri, int failAfter, DataTransferOrder transferOrder = DataTransferOrder.Sequential)
+        private MockStorageResourceItem(long? length, Uri uri, int failAfter, DataTransferOrder transferOrder = DataTransferOrder.Sequential)
         {
             Length = length;
             _uri = uri ?? new Uri("https://example.com");
@@ -34,14 +34,14 @@ namespace Azure.Storage.DataMovement.Tests
             TransferType = transferOrder;
         }
 
-        public static MockStorageResource MakeSourceResource(long length, Uri uri = default, int failAfter = int.MaxValue)
+        public static MockStorageResourceItem MakeSourceResource(long length, Uri uri = default, int failAfter = int.MaxValue)
         {
-            return new MockStorageResource(length, uri, failAfter);
+            return new MockStorageResourceItem(length, uri, failAfter);
         }
 
-        public static MockStorageResource MakeDestinationResource(Uri uri = default, DataTransferOrder transferOrder = DataTransferOrder.Sequential, int failAfter = int.MaxValue)
+        public static MockStorageResourceItem MakeDestinationResource(Uri uri = default, DataTransferOrder transferOrder = DataTransferOrder.Sequential, int failAfter = int.MaxValue)
         {
-            return new MockStorageResource(default, uri, failAfter, transferOrder);
+            return new MockStorageResourceItem(default, uri, failAfter, transferOrder);
         }
 
         protected internal override Task CompleteTransferAsync(

@@ -22,7 +22,7 @@ namespace Azure.Storage.DataMovement.Tests
             long fileSize = 4L * Constants.GB;
             Uri localUri = new(@"C:\Sample\test.txt");
             Uri remoteUri = new("https://example.com");
-            (StorageResourceItem srcResource, StorageResourceItem dstResource) = MockStorageResource.GetMockTransferResources(
+            (StorageResourceItem srcResource, StorageResourceItem dstResource) = MockStorageResourceItem.GetMockTransferResources(
                 transferDirection,
                 transferOrder,
                 fileSize);
@@ -46,7 +46,7 @@ namespace Azure.Storage.DataMovement.Tests
             [Values(DataTransferOrder.Sequential, DataTransferOrder.Unordered)] DataTransferOrder transferOrder)
         {
             long fileSize = 4L * Constants.GB;
-            (StorageResourceItem srcResource, StorageResourceItem dstResource) = MockStorageResource.GetMockTransferResources(
+            (StorageResourceItem srcResource, StorageResourceItem dstResource) = MockStorageResourceItem.GetMockTransferResources(
                 transferDirection,
                 transferOrder,
                 fileSize,
@@ -71,7 +71,7 @@ namespace Azure.Storage.DataMovement.Tests
             [Values(DataTransferOrder.Sequential, DataTransferOrder.Unordered)] DataTransferOrder transferOrder)
         {
             long fileSize = 4L * Constants.GB;
-            (StorageResourceItem srcResource, StorageResourceItem dstResource) = MockStorageResource.GetMockTransferResources(
+            (StorageResourceItem srcResource, StorageResourceItem dstResource) = MockStorageResourceItem.GetMockTransferResources(
                 transferDirection,
                 transferOrder,
                 fileSize,
