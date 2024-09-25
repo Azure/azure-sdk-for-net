@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (Optional.IsDefined(EnableFips))
+            {
+                writer.WritePropertyName("enableFips"u8);
+                writer.WriteBooleanValue(EnableFips.Value);
+            }
             writer.WritePropertyName("workloadProfileType"u8);
             writer.WriteStringValue(WorkloadProfileType);
             if (Optional.IsDefined(MinimumNodeCount))
@@ -79,6 +84,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             string name = default;
+            bool? enableFips = default;
             string workloadProfileType = default;
             int? minimumCount = default;
             int? maximumCount = default;
@@ -89,6 +95,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("enableFips"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableFips = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("workloadProfileType"u8))
@@ -120,7 +135,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerAppWorkloadProfile(name, workloadProfileType, minimumCount, maximumCount, serializedAdditionalRawData);
+            return new ContainerAppWorkloadProfile(
+                name,
+                enableFips,
+                workloadProfileType,
+                minimumCount,
+                maximumCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppWorkloadProfile>.Write(ModelReaderWriterOptions options)

@@ -4268,6 +4268,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         public ContainerAppWorkloadProfile(string workloadProfileType, int minimumCount, int maximumCount) { }
         public ContainerAppWorkloadProfile(string name, string workloadProfileType) { }
+        public bool? EnableFips { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int MaximumCount { get { throw null; } set { } }
         public int? MaximumNodeCount { get { throw null; } set { } }
@@ -4925,7 +4926,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private readonly int _dummyPrimitive;
         public JobRunningState(string value) { throw null; }
         public static Azure.ResourceManager.AppContainers.Models.JobRunningState Progressing { get { throw null; } }
-        public static Azure.ResourceManager.AppContainers.Models.JobRunningState Running { get { throw null; } }
+        public static Azure.ResourceManager.AppContainers.Models.JobRunningState Ready { get { throw null; } }
         public static Azure.ResourceManager.AppContainers.Models.JobRunningState Suspended { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppContainers.Models.JobRunningState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

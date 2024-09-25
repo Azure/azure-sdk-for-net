@@ -210,6 +210,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 {
 new ContainerAppWorkloadProfile("My-GP-01","GeneralPurpose")
 {
+EnableFips = true,
 MinimumNodeCount = 3,
 MaximumNodeCount = 12,
 },new ContainerAppWorkloadProfile("My-MO-01","MemoryOptimized")
@@ -342,6 +343,7 @@ Value = "xxxxxxxxxxx",
 {
 new ContainerAppWorkloadProfile("My-GP-01","GeneralPurpose")
 {
+EnableFips = true,
 MinimumNodeCount = 3,
 MaximumNodeCount = 12,
 },new ContainerAppWorkloadProfile("My-MO-01","MemoryOptimized")

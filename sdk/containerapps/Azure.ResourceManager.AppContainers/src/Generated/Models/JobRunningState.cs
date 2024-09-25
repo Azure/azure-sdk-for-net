@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string RunningValue = "Running";
+        private const string ReadyValue = "Ready";
         private const string ProgressingValue = "Progressing";
         private const string SuspendedValue = "Suspended";
 
-        /// <summary> Running. </summary>
-        public static JobRunningState Running { get; } = new JobRunningState(RunningValue);
+        /// <summary> Ready. </summary>
+        public static JobRunningState Ready { get; } = new JobRunningState(ReadyValue);
         /// <summary> Progressing. </summary>
         public static JobRunningState Progressing { get; } = new JobRunningState(ProgressingValue);
         /// <summary> Suspended. </summary>
