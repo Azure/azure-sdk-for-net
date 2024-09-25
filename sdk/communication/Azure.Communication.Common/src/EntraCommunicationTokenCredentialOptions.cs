@@ -16,7 +16,7 @@ namespace Azure.Communication
         /// <summary>
         /// The initial token.
         /// </summary>
-        public string ResourceEndPoint { get; }
+        public string ResourceEndpoint { get; }
 
         /// <summary>
         /// Entra ID token credential
@@ -42,7 +42,7 @@ namespace Azure.Communication
             Argument.AssertNotNull(resourceEndpoint, nameof(resourceEndpoint));
             Argument.AssertNotNull(entraTokenCredential, nameof(entraTokenCredential));
 
-            this.ResourceEndPoint = resourceEndpoint;
+            this.ResourceEndpoint = resourceEndpoint;
             this.TokenCredential = entraTokenCredential;
             this.Scopes = scopes;
         }
