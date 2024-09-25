@@ -6,6 +6,7 @@ using Azure.Core.Pipeline;
 using System;
 using System.Collections.Concurrent;
 using System.Globalization;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault
@@ -114,12 +115,9 @@ namespace Azure.Security.KeyVault
                 message.Request.Content = content as RequestContent;
             }
 
+            string error = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "error");
             string authority = GetRequestAuthority(message.Request);
             string scope = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "resource");
-
-            string error = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "error");
-
-            string claims = getDecodedClaimsParameter(error, message.Response);
 
             if (scope != null)
             {
@@ -128,6 +126,15 @@ namespace Azure.Security.KeyVault
             else
             {
                 scope = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "scope");
+            }
+
+            // Handle CAE Challenges
+            string claims = getDecodedClaimsParameter(error, message.Response);
+            if (claims != null)
+            {
+                // Get the scope from the cache
+                s_challengeCache.TryGetValue(authority, out _challenge);
+                scope = _challenge.Scopes[0];
             }
 
             if (scope is null)
@@ -179,6 +186,81 @@ namespace Azure.Security.KeyVault
             }
 
             return true;
+        }
+
+        /// <inheritdoc />
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+            return ProcessAsyncInternal(message, pipeline, true);
+        }
+
+        /// <inheritdoc />
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+            ProcessAsyncInternal(message, pipeline, false).EnsureCompleted();
+        }
+
+        private async ValueTask ProcessAsyncInternal(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        {
+            if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
+            {
+                throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
+            }
+
+            if (async)
+            {
+                await AuthorizeRequestAsync(message).ConfigureAwait(false);
+                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+            }
+            else
+            {
+                AuthorizeRequest(message);
+                ProcessNext(message, pipeline);
+            }
+
+            // Check if we have received a challenge or we have not yet issued the first request.
+            if (message.Response.Status == (int)HttpStatusCode.Unauthorized && message.Response.Headers.Contains(HttpHeader.Names.WwwAuthenticate))
+            {
+                // Attempt to get the TokenRequestContext based on the challenge.
+                // If we fail to get the context, the challenge was not present or invalid.
+                // If we succeed in getting the context, authenticate the request and pass it up the policy chain.
+                if (async)
+                {
+                    if (await AuthorizeRequestOnChallengeAsync(message).ConfigureAwait(false))
+                    {
+                        await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    if (AuthorizeRequestOnChallenge(message))
+                    {
+                        ProcessNext(message, pipeline);
+                    }
+                }
+            }
+
+            // Handle the scenario in which we get a CAE challenge back.
+            if (message.Response.Status == (int)HttpStatusCode.Unauthorized
+                && message.Response.Headers.Contains(HttpHeader.Names.WwwAuthenticate)
+                && AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "claims") != null)
+            {
+                if (async)
+                {
+                    if (await AuthorizeRequestOnChallengeAsync(message).ConfigureAwait(false))
+                    {
+                        await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    if (AuthorizeRequestOnChallenge(message))
+                    {
+                        ProcessNext(message, pipeline);
+                    }
+                }
+            }
+            // If we get a second CAE challenge, an unlikely scenario, we do not attempt to re-authenticate.
         }
 
         internal class ChallengeParameters
