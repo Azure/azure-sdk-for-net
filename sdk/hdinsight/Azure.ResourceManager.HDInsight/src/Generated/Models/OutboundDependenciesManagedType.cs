@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static bool operator ==(OutboundDependenciesManagedType left, OutboundDependenciesManagedType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OutboundDependenciesManagedType"/> values are not the same. </summary>
         public static bool operator !=(OutboundDependenciesManagedType left, OutboundDependenciesManagedType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OutboundDependenciesManagedType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OutboundDependenciesManagedType"/>. </summary>
         public static implicit operator OutboundDependenciesManagedType(string value) => new OutboundDependenciesManagedType(value);
 
         /// <inheritdoc />
