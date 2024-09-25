@@ -13,7 +13,7 @@ namespace Azure.Communication
     /// <summary>
     /// Entra token credential
     /// </summary>
-    public class EntraTokenCredential : ICommunicationTokenCredential
+    internal sealed class EntraTokenCredential : ICommunicationTokenCredential
     {
         private HttpClient _httpClient;
         private string _resourceEndpoint;
@@ -27,7 +27,7 @@ namespace Azure.Communication
         public EntraTokenCredential(EntraCommunicationTokenCredentialOptions options)
         {
             this._tokenCredential = options.TokenCredential;
-            this._resourceEndpoint = options.ResourceEndPoint;
+            this._resourceEndpoint = options.ResourceEndpoint;
             this._scopes = options.Scopes;
 
             var pipeline = CreatePipelineFromOptions(options);
