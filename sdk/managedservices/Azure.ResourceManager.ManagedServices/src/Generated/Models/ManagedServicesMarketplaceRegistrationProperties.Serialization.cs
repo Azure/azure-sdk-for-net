@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ManagedServices.Models
 
         void IJsonModel<ManagedServicesMarketplaceRegistrationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesMarketplaceRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedServicesMarketplaceRegistrationProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("managedByTenantId"u8);
             writer.WriteStringValue(ManagedByTenantId);
             writer.WritePropertyName("authorizations"u8);
@@ -75,7 +83,6 @@ namespace Azure.ResourceManager.ManagedServices.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ManagedServicesMarketplaceRegistrationProperties IJsonModel<ManagedServicesMarketplaceRegistrationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
