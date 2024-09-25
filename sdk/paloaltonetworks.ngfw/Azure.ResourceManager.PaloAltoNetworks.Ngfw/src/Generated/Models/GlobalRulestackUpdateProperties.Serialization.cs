@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         void IJsonModel<GlobalRulestackUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(PanETag))
             {
                 writer.WritePropertyName("panEtag"u8);
@@ -86,7 +94,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         GlobalRulestackUpdateProperties IJsonModel<GlobalRulestackUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

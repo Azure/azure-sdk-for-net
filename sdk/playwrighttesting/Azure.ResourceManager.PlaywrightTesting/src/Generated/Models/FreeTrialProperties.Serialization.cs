@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
 
         void IJsonModel<FreeTrialProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FreeTrialProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FreeTrialProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W")
             {
                 writer.WritePropertyName("accountId"u8);
@@ -76,7 +84,6 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FreeTrialProperties IJsonModel<FreeTrialProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

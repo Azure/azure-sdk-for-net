@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         void IJsonModel<X509CredentialsUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<X509CredentialsUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(X509CredentialsUpdate)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(CertificateReference))
             {
                 writer.WritePropertyName("certificateReference"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         X509CredentialsUpdate IJsonModel<X509CredentialsUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
