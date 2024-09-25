@@ -21,97 +21,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<OAuth2AuthTypeWorkspaceConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<OAuth2AuthTypeWorkspaceConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OAuth2AuthTypeWorkspaceConnectionProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials, options);
             }
-            writer.WritePropertyName("authType"u8);
-            writer.WriteStringValue(AuthType.ToString());
-            if (Optional.IsDefined(Category))
-            {
-                writer.WritePropertyName("category"u8);
-                writer.WriteStringValue(Category.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(CreatedByWorkspaceArmId))
-            {
-                writer.WritePropertyName("createdByWorkspaceArmId"u8);
-                writer.WriteStringValue(CreatedByWorkspaceArmId);
-            }
-            if (Optional.IsDefined(ExpiryOn))
-            {
-                writer.WritePropertyName("expiryTime"u8);
-                writer.WriteStringValue(ExpiryOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(Group))
-            {
-                writer.WritePropertyName("group"u8);
-                writer.WriteStringValue(Group.Value.ToString());
-            }
-            if (Optional.IsDefined(IsSharedToAll))
-            {
-                writer.WritePropertyName("isSharedToAll"u8);
-                writer.WriteBooleanValue(IsSharedToAll.Value);
-            }
-            if (Optional.IsDefined(Target))
-            {
-                writer.WritePropertyName("target"u8);
-                writer.WriteStringValue(Target);
-            }
-            if (Optional.IsCollectionDefined(Metadata))
-            {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteStartObject();
-                foreach (var item in Metadata)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(SharedUserList))
-            {
-                writer.WritePropertyName("sharedUserList"u8);
-                writer.WriteStartArray();
-                foreach (var item in SharedUserList)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
-            }
-            if (Optional.IsDefined(ValueFormat))
-            {
-                writer.WritePropertyName("valueFormat"u8);
-                writer.WriteStringValue(ValueFormat.Value.ToString());
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         OAuth2AuthTypeWorkspaceConnectionProperties IJsonModel<OAuth2AuthTypeWorkspaceConnectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

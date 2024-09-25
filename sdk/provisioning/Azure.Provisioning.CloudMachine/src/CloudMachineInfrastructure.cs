@@ -104,7 +104,6 @@ public class CloudMachineInfrastructure : Infrastructure
         _serviceBusTopic_app = new($"{_name}_sb_topic_app", "2021-11-01")
         {
             Parent = _serviceBusNamespace,
-            // Name = "default",
             MaxMessageSizeInKilobytes = 256,
             DefaultMessageTimeToLive = new StringLiteral("P14D"),
             RequiresDuplicateDetection = false,
@@ -141,7 +140,7 @@ public class CloudMachineInfrastructure : Infrastructure
                     IdentityType = EventSubscriptionIdentityType.UserAssigned,
                     UserAssignedIdentity = _identity.Id
                 },
-                Destination = new EventHubEventSubscriptionDestination
+                Destination = new ServiceBusTopicEventSubscriptionDestination
                 {
                     ResourceId = _serviceBusTopic_main.Id
                 }
@@ -195,14 +194,17 @@ public class CloudMachineInfrastructure : Infrastructure
         Add(_serviceBusSubscription_app);
 
         // This is necessary until SystemTopic adds an AssignRole method.
-        var role = ServiceBusBuiltInRole.AzureServiceBusDataOwner;
-        RoleAssignment roleAssignment = new RoleAssignment(_eventGridTopic_Blobs.ResourceName + "_" + _identity.ResourceName + "_" + ServiceBusBuiltInRole.GetBuiltInRoleName(role));
-        roleAssignment.Name = BicepFunction.CreateGuid(_eventGridTopic_Blobs.Id, _identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()));
-        roleAssignment.Scope = new IdentifierExpression(_eventGridTopic_Blobs.ResourceName);
+        var role = ServiceBusBuiltInRole.AzureServiceBusDataSender;
+        RoleAssignment roleAssignment = new RoleAssignment(_serviceBusNamespace.ResourceName + "_" + _identity.ResourceName + "_" + ServiceBusBuiltInRole.GetBuiltInRoleName(role));
+        roleAssignment.Name = BicepFunction.CreateGuid(_serviceBusNamespace.Id, _identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()));
+        roleAssignment.Scope = new IdentifierExpression(_serviceBusNamespace.ResourceName);
         roleAssignment.PrincipalType = RoleManagementPrincipalType.ServicePrincipal;
         roleAssignment.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString());
         roleAssignment.PrincipalId = _identity.PrincipalId;
         Add(roleAssignment);
+        // the role assignment must exist before the system topic event subscription is created.
+        _systemTopicEventSubscription.DependsOn.Add(roleAssignment);
+
         Add(_systemTopicEventSubscription);
         Add(_eventGridTopic_Blobs);
 

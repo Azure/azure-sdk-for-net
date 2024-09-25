@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.NetworkFunction
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualHubId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -82,6 +83,7 @@ namespace Azure.ResourceManager.NetworkFunction
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.NetworkFunction.Models.IngestionPolicyPropertiesFormat IngestionPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkFunction.CollectorPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkFunction.CollectorPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkFunction.CollectorPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkFunction.CollectorPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkFunction.CollectorPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -195,6 +197,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         public EmissionPoliciesPropertiesFormat() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkFunction.Models.EmissionPolicyDestination> EmissionDestinations { get { throw null; } }
         public Azure.ResourceManager.NetworkFunction.Models.EmissionType? EmissionType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkFunction.Models.EmissionPoliciesPropertiesFormat System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkFunction.Models.EmissionPoliciesPropertiesFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkFunction.Models.EmissionPoliciesPropertiesFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkFunction.Models.EmissionPoliciesPropertiesFormat System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkFunction.Models.EmissionPoliciesPropertiesFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -205,6 +208,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     {
         public EmissionPolicyDestination() { }
         public Azure.ResourceManager.NetworkFunction.Models.EmissionDestinationType? DestinationType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkFunction.Models.EmissionPolicyDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkFunction.Models.EmissionPolicyDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkFunction.Models.EmissionPolicyDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkFunction.Models.EmissionPolicyDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkFunction.Models.EmissionPolicyDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -233,6 +237,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         public IngestionPolicyPropertiesFormat() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkFunction.Models.IngestionSourcesPropertiesFormat> IngestionSources { get { throw null; } }
         public Azure.ResourceManager.NetworkFunction.Models.IngestionType? IngestionType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkFunction.Models.IngestionPolicyPropertiesFormat System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkFunction.Models.IngestionPolicyPropertiesFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkFunction.Models.IngestionPolicyPropertiesFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkFunction.Models.IngestionPolicyPropertiesFormat System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkFunction.Models.IngestionPolicyPropertiesFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -244,6 +249,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         public IngestionSourcesPropertiesFormat() { }
         public string ResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkFunction.Models.IngestionSourceType? SourceType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkFunction.Models.IngestionSourcesPropertiesFormat System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkFunction.Models.IngestionSourcesPropertiesFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkFunction.Models.IngestionSourcesPropertiesFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkFunction.Models.IngestionSourcesPropertiesFormat System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkFunction.Models.IngestionSourcesPropertiesFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -288,6 +294,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     {
         public TagsObject() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkFunction.Models.TagsObject System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkFunction.Models.TagsObject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkFunction.Models.TagsObject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkFunction.Models.TagsObject System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkFunction.Models.TagsObject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

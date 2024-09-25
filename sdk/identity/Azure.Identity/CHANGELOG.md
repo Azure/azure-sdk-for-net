@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed the request sent in `AzurePipelinesCredential` so it doesn't result in a redirect response when an invalid system access token is provided.
+
 ### Other Changes
 
 ## 1.13.0-beta.2 (2024-09-17)

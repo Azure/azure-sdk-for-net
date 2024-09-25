@@ -19,13 +19,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         void IJsonModel<AzureArcKubernetesHelmApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesHelmApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureArcKubernetesHelmApplication)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ArtifactProfile))
             {
                 writer.WritePropertyName("artifactProfile"u8);
@@ -36,34 +45,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("deployParametersMappingRuleProfile"u8);
                 writer.WriteObjectValue(DeployParametersMappingRuleProfile, options);
             }
-            writer.WritePropertyName("artifactType"u8);
-            writer.WriteStringValue(ArtifactType.ToString());
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(DependsOnProfile))
-            {
-                writer.WritePropertyName("dependsOnProfile"u8);
-                writer.WriteObjectValue(DependsOnProfile, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         AzureArcKubernetesHelmApplication IJsonModel<AzureArcKubernetesHelmApplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
