@@ -547,11 +547,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<OperationStatusResult>> GetOperationStatuAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OperationStatusResult>> GetOperationStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = OperationStatusClientDiagnostics.CreateScope("MockableApiManagementSubscriptionResource.GetOperationStatu");
+            using var scope = OperationStatusClientDiagnostics.CreateScope("MockableApiManagementSubscriptionResource.GetOperationStatus");
             scope.Start();
             try
             {
@@ -587,11 +587,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<OperationStatusResult> GetOperationStatu(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<OperationStatusResult> GetOperationStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = OperationStatusClientDiagnostics.CreateScope("MockableApiManagementSubscriptionResource.GetOperationStatu");
+            using var scope = OperationStatusClientDiagnostics.CreateScope("MockableApiManagementSubscriptionResource.GetOperationStatus");
             scope.Start();
             try
             {

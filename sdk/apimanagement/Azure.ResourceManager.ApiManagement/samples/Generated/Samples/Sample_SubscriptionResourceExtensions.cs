@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         // Get operation status
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetOperationStatu_GetOperationStatus()
+        public async Task GetOperationStatus_GetOperationStatus()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetOperationStatus.json
             // this example is just showing the usage of "OperationStatus_Get" operation, for the dependent resources, they will have to be created separately.
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // invoke the operation
             AzureLocation location = new AzureLocation("testLocation");
             string operationId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
-            OperationStatusResult result = await subscriptionResource.GetOperationStatuAsync(location, operationId);
+            OperationStatusResult result = await subscriptionResource.GetOperationStatusAsync(location, operationId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
