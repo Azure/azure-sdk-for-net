@@ -86,7 +86,7 @@ namespace Azure.AI.Inference.Tests.Utilities
         public void ValidateResponseEvents(AbstractRecordedResponse response, bool traceEvents)
         {
             Activity activity = m_listeners.Single();
-            if (response.IsEmpty)
+            if (response == null)
             {
                 ValidateNoEventsWithName(GenAiChoice);
                 return;

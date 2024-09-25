@@ -201,7 +201,7 @@ namespace Azure.AI.Inference.Tests
             using var actListener = new ValidatingActivityListener();
             using var meterListener = new ValidatingMeterListener();
             using var scope = new OpenTelemetryScope(_requestOptions, _endpoint);
-            StreamingRecordedResponse resp = new(true);
+            StreamingRecordedResponse resp = null;
 
             var task = Task.Run(async () => {
                 var enumerator = SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
@@ -209,8 +209,9 @@ namespace Azure.AI.Inference.Tests
                         StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
                         scope,
                         ct);
-                await foreach (var val in enumerator)
+                await foreach (StreamingChatCompletionsUpdate val in enumerator)
                 {
+                    resp ??= new(true);
                     resp.Update(val);
                 }
                 });

@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Azure.AI.Inference.Telemetry;
 
 namespace Azure.AI.Inference
 {

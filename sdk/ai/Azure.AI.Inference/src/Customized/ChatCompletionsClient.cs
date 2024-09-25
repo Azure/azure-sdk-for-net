@@ -143,7 +143,7 @@ namespace Azure.AI.Inference
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
 
-            OpenTelemetryScope otel = new(chatCompletionsOptions, _endpoint, "ChatCompletionsClient.CompleteStreaming");
+            OpenTelemetryScope otel = new(chatCompletionsOptions, _endpoint);
             Response baseResponse = null;
             try
             {
@@ -201,7 +201,7 @@ namespace Azure.AI.Inference
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
 
-            OpenTelemetryScope otel = new OpenTelemetryScope(chatCompletionsOptions, _endpoint, "ChatCompletionsClient.CompleteStreaming");
+            OpenTelemetryScope otel = new OpenTelemetryScope(chatCompletionsOptions, _endpoint);
             Response baseResponse;
             try
             {

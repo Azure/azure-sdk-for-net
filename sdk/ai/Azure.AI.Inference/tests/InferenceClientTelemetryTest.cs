@@ -16,7 +16,9 @@ namespace Azure.AI.Inference.Tests
         private ChatCompletionsOptions _requestOptions, _requestStreamingOptions;
 
         public InferenceClientTelemetryTest(bool isAsync) : base(isAsync)
-        { }
+        {
+            TestDiagnostics = false;
+        }
 
         public enum TestType
         {

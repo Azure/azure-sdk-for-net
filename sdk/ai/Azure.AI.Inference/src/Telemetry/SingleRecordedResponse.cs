@@ -17,7 +17,6 @@ namespace Azure.AI.Inference.Telemetry
         /// <param name="traceContent">If true the messges and function names will be recorded.</param>
         /// <param name="response"></param>
         public SingleRecordedResponse(ChatCompletions response, bool traceContent) {
-            IsEmpty = false;
             Id = response.Id;
             Model = response.Model;
             PromptTokens = response.Usage.PromptTokens;

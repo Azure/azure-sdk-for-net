@@ -10,11 +10,9 @@ namespace Azure.AI.Inference.Telemetry
     {
         public string? Model { get; protected set; } = null;
         public string? Id { get; protected set; } = null;
-        public string FinishReason { get; protected set; } = "";
+        public string? FinishReason { get; protected set; } = null;
         public long? CompletionTokens { get; protected set; } = null;
         public long? PromptTokens { get; protected set; } = null;
-        public bool IsEmpty { get; protected set; } = true;
-
         
         /// <summary>
         /// Return the JSON serialized completion for event logging.

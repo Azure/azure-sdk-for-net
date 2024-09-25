@@ -18,7 +18,6 @@ namespace Azure.AI.Inference.Tests
             )
         {
             StreamingRecordedResponse resp = new(traceContent);
-            Assert.True(resp.IsEmpty);
             resp.Update(new(
                 id: "1",
                 model: "gpt-100o",
@@ -27,7 +26,6 @@ namespace Azure.AI.Inference.Tests
                 finishReason: CompletionsFinishReason.Stopped,
                 contentUpdate: "First"
             ));
-            Assert.False(resp.IsEmpty);
             resp.Update(new(
                 id: "2",
                 model: "gpt-100o",

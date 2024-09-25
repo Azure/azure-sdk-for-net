@@ -51,7 +51,6 @@ namespace Azure.AI.Inference.Tests
                 choices: choices,
                 serializedAdditionalRawData: new Dictionary<string, BinaryData>());
             var response = new SingleRecordedResponse(completions, traceContent);
-            Assert.False(response.IsEmpty);
             Assert.AreEqual("4567", response.Id);
             Assert.AreEqual(CompletionsFinishReason.Stopped.ToString(), response.FinishReason);
             Assert.AreEqual("Phi2000", response.Model);

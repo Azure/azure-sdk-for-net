@@ -28,7 +28,6 @@ namespace Azure.AI.Inference.Telemetry
 
         public void Update(StreamingChatCompletionsUpdate item)
         {
-            IsEmpty = false;
             Model = item.Model;
             Id = item.Id;
             if (item.FinishReason != null)

@@ -34,15 +34,13 @@ namespace Azure.AI.Inference.Telemetry
         private readonly Activity _activity;
         private readonly Stopwatch _duration;
         private readonly TagList _commonTags;
-        private readonly string _caller;
         private readonly bool _traceContent = AppContextSwitchHelper.GetConfigValue(
             TraceContentsSwitch,
             EnvironmentVariableTraceContents);
         private readonly bool _enableTelemetry = AppContextSwitchHelper.GetConfigValue(
             AppContextSwitch,
             EnvironmentVariableSwitchName);
-        private readonly DiagnosticListener m_source = null;
-        private readonly StreamingRecordedResponse m_recordedStreamingResponse;
+        private StreamingRecordedResponse _recordedStreamingResponse;
 
         /// <summary>
         /// Return the content of the message.
@@ -82,23 +80,15 @@ namespace Azure.AI.Inference.Telemetry
         /// </summary>
         /// <param name="requestOptions">The request options used in the call.</param>
         /// <param name="endpoint">The endpoint being called.</param>
-        /// <param name="caller">The calling method.</param>
-        public OpenTelemetryScope(ChatCompletionsOptions requestOptions, Uri endpoint, string caller=null)
+        public OpenTelemetryScope(ChatCompletionsOptions requestOptions, Uri endpoint)
         {
-            var activityName = requestOptions.Model == null ? "chat" : $"chat {requestOptions.Model}";
-            _activity = s_chatSource.CreateActivity(activityName, ActivityKind.Client);
-            _caller = caller;
-            if (!string.IsNullOrEmpty(caller))
-            {
-                m_source = new("Azure.AI.Inference");
-                m_source.Write($"{_caller}.Start", activityName);
-            }
             if (!_enableTelemetry)
                 return;
-            m_recordedStreamingResponse = new(_traceContent);
-            _activity?.Start();
+            var activityName = requestOptions.Model == null ? "chat" : $"chat {requestOptions.Model}";
+            _activity = s_chatSource.StartActivity(activityName, ActivityKind.Client);
             // Record the request to telemetry;
-            _commonTags = new TagList{
+            _commonTags = new TagList()
+            {
                 { GenAiSystemKey, GenAiSystemValue},
                 { GenAiResponseModelKey, requestOptions.Model},
                 { ServerAddressKey, endpoint.Host },
@@ -120,7 +110,7 @@ namespace Azure.AI.Inference.Telemetry
                 // Log all messages as the events.
                 foreach (ChatRequestMessage message in requestOptions.Messages)
                 {
-                    TagList requestTags = new() {
+                    ActivityTagsCollection requestTags = new() {
                     { GenAiSystemKey, GenAiSystemValue},
                     { GenAiEventContent, GetContent(message)}
                 };
@@ -128,7 +118,7 @@ namespace Azure.AI.Inference.Telemetry
                         new ActivityEvent(
                             $"gen_ai.{message.Role}.message",
                             default,
-                            new ActivityTagsCollection(requestTags)
+                            requestTags
                         )
                     );
                 }
@@ -145,13 +135,14 @@ namespace Azure.AI.Inference.Telemetry
         {
             if (!_enableTelemetry || item is not StreamingChatCompletionsUpdate)
                 return;
-            StreamingChatCompletionsUpdate castedItem = item as StreamingChatCompletionsUpdate;
-            m_recordedStreamingResponse.Update(castedItem);
+
+            _recordedStreamingResponse ??= new(_traceContent);
+            _recordedStreamingResponse.Update(item as StreamingChatCompletionsUpdate);
         }
 
         public void RecordStreamingResponse()
         {
-            RecordResponseInternal(m_recordedStreamingResponse);
+            RecordResponseInternal(_recordedStreamingResponse);
         }
 
         /// <summary>
@@ -182,10 +173,8 @@ namespace Azure.AI.Inference.Telemetry
         {
             if (!_enableTelemetry)
                 return;
-            if (!string.IsNullOrEmpty(_caller))
-                m_source.Write(_caller + ".Exception", exception);
             var errorType = type;
-            var tags = _commonTags;
+            TagList tags = _commonTags;
             tags.Add(ErrorTypeKey, errorType);
             s_duration.Record(_duration.Elapsed.TotalSeconds, tags);
             if (exception is Azure.RequestFailedException requestFailed)
@@ -202,7 +191,7 @@ namespace Azure.AI.Inference.Telemetry
         /// <param name="recordedResponse"></param>
         private void RecordResponseInternal(AbstractRecordedResponse recordedResponse)
         {
-            if (!_enableTelemetry || recordedResponse.IsEmpty)
+            if (!_enableTelemetry || recordedResponse == null)
                 return;
             TagList tags = _commonTags;
             // Find index of model tag.
@@ -237,7 +226,7 @@ namespace Azure.AI.Inference.Telemetry
             {
                 foreach (string choice in choices)
                 {
-                    TagList completionTags = new()
+                    ActivityTagsCollection completionTags = new()
                 {
                     { GenAiSystemKey, GenAiSystemValue},
                     { GenAiEventContent, JsonSerializer.Serialize(choice) }
@@ -245,7 +234,7 @@ namespace Azure.AI.Inference.Telemetry
                     _activity?.AddEvent(new ActivityEvent(
                             GenAiChoice,
                             default,
-                            new ActivityTagsCollection(completionTags)
+                            completionTags
                     ));
                 }
             }
@@ -261,7 +250,6 @@ namespace Azure.AI.Inference.Telemetry
         public void Dispose()
         {
             _activity?.Stop();
-            m_source?.Dispose();
         }
     }
 }
