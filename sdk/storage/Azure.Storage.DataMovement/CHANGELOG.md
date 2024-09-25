@@ -3,8 +3,10 @@
 ## 12.0.0-beta.6 (Unreleased)
 
 ### Features Added
+- Added support to disable checkpointing via `TransferCheckpointStoreOptions.Disabled`.
 
 ### Breaking Changes
+- [BREAKING CHANGE] Removed the constructor for `TransferCheckpointStoreOptions` and replaced with a static builder method `Local`.
 
 ### Bugs Fixed
 
