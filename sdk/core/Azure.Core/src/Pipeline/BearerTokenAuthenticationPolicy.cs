@@ -428,7 +428,7 @@ namespace Azure.Core.Pipeline
 
                 public bool IsCurrentContextMismatched(TokenRequestContext context) =>
                     (context.Scopes != null && !context.Scopes.AsSpan().SequenceEqual(CurrentContext.Scopes.AsSpan())) ||
-                    (context.Claims != null && !string.Equals(context.Claims, CurrentContext.Claims)) ||
+                    !string.Equals(context.Claims, CurrentContext.Claims) ||
                     (context.TenantId != null && !string.Equals(context.TenantId, CurrentContext.TenantId));
 
                 public bool IsBackgroundTokenAvailable(DateTimeOffset now) =>
