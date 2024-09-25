@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Kusto.Models
 
         void IJsonModel<ClusterMigrateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterMigrateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterMigrateContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("clusterResourceId"u8);
             writer.WriteStringValue(ClusterResourceId);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -43,7 +51,6 @@ namespace Azure.ResourceManager.Kusto.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ClusterMigrateContent IJsonModel<ClusterMigrateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
