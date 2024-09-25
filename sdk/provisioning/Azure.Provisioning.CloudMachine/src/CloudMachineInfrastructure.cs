@@ -84,8 +84,9 @@ public class CloudMachineInfrastructure : Infrastructure
             Parent = _serviceBusNamespace,
             Rights = [ServiceBusAccessRight.Listen, ServiceBusAccessRight.Send, ServiceBusAccessRight.Manage]
         };
-        _serviceBusTopic_main = new("cm_sb_topic_main", "2021-11-01")
+        _serviceBusTopic_main = new("cm_internal_topic", "2021-11-01")
         {
+            Name = "cm_internal_topic",
             Parent = _serviceBusNamespace,
             MaxMessageSizeInKilobytes = 256,
             DefaultMessageTimeToLive = new StringLiteral("P14D"),
@@ -94,7 +95,7 @@ public class CloudMachineInfrastructure : Infrastructure
             SupportOrdering = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _serviceBusSubscription_main = new("cm_sb_sub_main", "2021-11-01")
+        _serviceBusSubscription_main = new("cm_internal_subscription", "2021-11-01")
         {
             Parent = _serviceBusTopic_main,
             IsClientAffine = false,
@@ -107,8 +108,9 @@ public class CloudMachineInfrastructure : Infrastructure
             EnableBatchedOperations = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _serviceBusTopic_app = new("cm_sb_topic_app", "2021-11-01")
+        _serviceBusTopic_app = new("cm_default_topic", "2021-11-01")
         {
+            Name = "cm_default_topic",
             Parent = _serviceBusNamespace,
             MaxMessageSizeInKilobytes = 256,
             DefaultMessageTimeToLive = new StringLiteral("P14D"),
@@ -117,8 +119,9 @@ public class CloudMachineInfrastructure : Infrastructure
             SupportOrdering = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _serviceBusSubscription_app = new("cm_sb_sub_app", "2021-11-01")
+        _serviceBusSubscription_app = new("cm_default_subscription", "2021-11-01")
         {
+            Name = "cm_default_subscription",
             Parent = _serviceBusTopic_app,
             IsClientAffine = false,
             LockDuration = new StringLiteral("PT30S"),

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.Identity;
@@ -44,6 +45,8 @@ public partial class CloudMachineClient
     {
         Id = "CM";
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public CloudMachineProperties Properties => new CloudMachineProperties(this);
 
     public struct CloudMachineProperties
@@ -54,6 +57,8 @@ public partial class CloudMachineClient
         public Uri DefaultContainerUri => new Uri($"https://{_cm.Id}.blob.core.windows.net/default");
         public Uri BlobServiceUri => new Uri($"https://{_cm.Id}.blob.core.windows.net/");
         public Uri KeyVaultUri => new Uri($"https://{_cm.Id}.vault.azure.net/");
+
+        public string ServiceBusNamespace => $"{_cm.Id}.servicebus.windows.net";
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -63,4 +68,14 @@ public partial class CloudMachineClient
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override string ToString() => Id;
+}
+
+class ClientCache
+{
+    private readonly Dictionary<string, object> _clients = new Dictionary<string, object>();
+
+    public void Cache(string id, object client)
+    {
+
+    }
 }
