@@ -51,7 +51,7 @@ namespace Azure.Storage.Blobs
     }
     public partial class BlobClientOptions : Azure.Core.ClientOptions
     {
-        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2024_11_04) { }
+        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2025_01_05) { }
         public Azure.Storage.Blobs.Models.BlobAudience? Audience { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.CustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
@@ -522,6 +522,7 @@ namespace Azure.Storage.Blobs.Models
         public long BlobSequenceNumber { get { throw null; } }
         public Azure.Storage.Blobs.Models.BlobType BlobType { get { throw null; } }
         public string CacheControl { get { throw null; } }
+        public byte[] ContentCrc { get { throw null; } }
         public string ContentDisposition { get { throw null; } }
         public string ContentEncoding { get { throw null; } }
         public byte[] ContentHash { get { throw null; } }
@@ -567,6 +568,7 @@ namespace Azure.Storage.Blobs.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string ContentType { get { throw null; } }
         public Azure.Storage.Blobs.Models.BlobDownloadDetails Details { get { throw null; } }
+        public bool ExpectTrailingDetails { get { throw null; } }
         public void Dispose() { }
     }
     public partial class BlobDownloadOptions
@@ -588,6 +590,7 @@ namespace Azure.Storage.Blobs.Models
         internal BlobDownloadStreamingResult() { }
         public System.IO.Stream Content { get { throw null; } }
         public Azure.Storage.Blobs.Models.BlobDownloadDetails Details { get { throw null; } }
+        public bool ExpectTrailingDetails { get { throw null; } }
         public void Dispose() { }
     }
     public partial class BlobDownloadToOptions
@@ -1850,7 +1853,7 @@ namespace Azure.Storage.Blobs.Specialized
     }
     public partial class SpecializedBlobClientOptions : Azure.Storage.Blobs.BlobClientOptions
     {
-        public SpecializedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2024_11_04) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
+        public SpecializedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2025_01_05) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
         public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
     }
     public static partial class SpecializedBlobExtensions

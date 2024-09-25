@@ -251,7 +251,7 @@ namespace Azure.Storage.Shared
                     Length - Position,
                     bufferCount - (Position - offsetOfBuffer),
                     count - read);
-                Array.Copy(currentBuffer, Position - offsetOfBuffer, buffer, read, toCopy);
+                Array.Copy(currentBuffer, Position - offsetOfBuffer, buffer, offset + read, toCopy);
                 read += toCopy;
                 Position += toCopy;
             }
