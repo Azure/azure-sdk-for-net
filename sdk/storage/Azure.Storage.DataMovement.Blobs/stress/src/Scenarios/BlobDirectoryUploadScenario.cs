@@ -18,10 +18,12 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
     {
         public BlobDirectoryUploadScenario(
             Uri destinationBlobUri,
+            TransferManagerOptions transferManagerOptions,
+            DataTransferOptions dataTransferOptions,
             TokenCredential tokenCredential,
             Metrics metrics,
             string testRunId)
-            : base(destinationBlobUri, tokenCredential, metrics, testRunId)
+            : base(destinationBlobUri, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
         {
         }
 
@@ -61,21 +63,18 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
 
             // Upload
             Console.Out.WriteLine($"Starting transfer from {sourceResource.Uri.AbsoluteUri} to {destinationResource.Uri.AbsoluteUri}");
-            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, cancellationToken: cancellationToken);
 
-            /*
             await new TransferValidator()
             {
-                TransferManager = new(transferManagerOptions)
+                TransferManager = new(_transferManagerOptions)
             }.TransferAndVerifyAsync(
                 sourceResource,
                 destinationResource,
                 TransferValidator.GetLocalFileLister(disposingLocalDirectory.DirectoryPath),
                 TransferValidator.GetBlobLister(destinationContainerClient, default),
-                expectedTransfers,
-                options,
+                blobCount,
+                _dataTransferOptions,
                 cancellationToken);
-            */
         }
     }
 }

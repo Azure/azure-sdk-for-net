@@ -88,7 +88,7 @@ public class Program
                     testScenario = new BlobSingleUploadScenario(new Uri(blobEndpoint), transferManagerOptions, transferOptions, tokenCredential, metrics, guid);
                     break;
                 case TestScenarioName.UploadDirectoryBlockBlobTest:
-                    testScenario = new BlobDirectoryUploadScenario(new Uri(blobEndpoint), tokenCredential, metrics, guid);
+                    testScenario = new BlobDirectoryUploadScenario(new Uri(blobEndpoint), transferManagerOptions, transferOptions, tokenCredential, metrics, guid);
                     break;
                 default:
                     throw new Exception("No Scenario or Invalid scenario passed");

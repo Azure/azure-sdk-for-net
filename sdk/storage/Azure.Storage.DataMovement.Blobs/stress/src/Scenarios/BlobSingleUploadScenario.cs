@@ -16,8 +16,6 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
 {
     public class BlobSingleUploadScenario : BlobScenarioBase
     {
-        private TransferManagerOptions _transferManagerOptions;
-        private DataTransferOptions _dataTransferOptions;
         public BlobSingleUploadScenario(
             Uri destinationBlobUri,
             TransferManagerOptions transferManagerOptions,
@@ -25,10 +23,8 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             TokenCredential tokenCredential,
             Metrics metrics,
             string testRunId)
-            : base(destinationBlobUri, tokenCredential, metrics, testRunId)
+            : base(destinationBlobUri, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
         {
-            _transferManagerOptions = transferManagerOptions;
-            _dataTransferOptions = dataTransferOptions;
         }
 
         public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.UploadSingleBlockBlob;
@@ -37,6 +33,8 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
         {
             DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
             string destinationContainerName = ConfigurationHelper.Randomize("container");
+            BlobContainerClient destinationContainerClient = _destinationServiceClient.GetBlobContainerClient(destinationContainerName);
+            await destinationContainerClient.CreateIfNotExistsAsync();
             string blobName = ConfigurationHelper.Randomize("blob");
             var blobSize = 1024 * 1024 * 1024;
             var blockSize = 4 * 1024 * 1024;
@@ -62,41 +60,23 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                 BlobContainerName = destinationContainerName,
                 BlobName = blobName
             };
+            BlockBlobClient destinationBlob = destinationContainerClient.GetBlockBlobClient(blobName);
             Console.Out.WriteLine($"Creating destination storage resource from blob: {blobUriBuilder.ToUri().AbsoluteUri}");
             StorageResource destinationResource = _blobsStorageResourceProvider.FromBlob(blobUriBuilder.ToUri().AbsoluteUri);
 
             // Start Transfer
             TransferManager transferManager = new TransferManager(_transferManagerOptions);
             Console.Out.WriteLine($"Starting transfer from {sourceResource.Uri.AbsoluteUri} to {destinationResource.Uri.AbsoluteUri}");
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            await new TransferValidator()
+            {
+                TransferManager = new(_transferManagerOptions)
+            }.TransferAndVerifyAsync(
                 sourceResource,
                 destinationResource,
-                _dataTransferOptions,
+                (c) => Task.FromResult(File.OpenRead(sourceResource.Uri.AbsolutePath)),
+                destinationBlob.OpenReadAsync(default, cancellationToken),
+                options: _dataTransferOptions,
                 cancellationToken: cancellationToken);
-
-            // Wait for transfer to finish
-            await transfer.WaitForCompletionAsync(cancellationToken);
-            Console.Out.WriteLine($"Transfer completed successfully.");
-
-            // Verify / Assert - Download Destination Blob and verify
-            BlockBlobClient blockBlobClient = new BlockBlobClient(blobUriBuilder.ToUri(), _tokenCredential);
-            Console.Out.WriteLine($"Downloading blob to stream: {blockBlobClient.Uri.AbsoluteUri}");
-            using Stream targetStream = await blockBlobClient.OpenReadAsync(default, cancellationToken);
-
-            // Assert
-            Console.Out.WriteLine($"Verifying source and target stream match");
-            Console.Out.WriteLine($"Source Stream Length: {sourceStream.Length}");
-            Console.Out.WriteLine($"Target Stream Length: {targetStream.Length}");
-            Assert.AreEqual(sourceStream.Length, targetStream.Length);
-            if (sourceStream.Equals(targetStream))
-            {
-                Console.Out.WriteLine("Source and target stream match");
-            }
-            else
-            {
-                Console.Out.WriteLine("Source and target stream do not match");
-            }
-            //Assert.IsTrue(sourceStream.ToArray().SequenceEqual(targetStream.ToArray()));
         }
     }
 }

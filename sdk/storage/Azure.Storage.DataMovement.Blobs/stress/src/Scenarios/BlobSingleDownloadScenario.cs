@@ -16,10 +16,12 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
     {
         public BlobSingleDownloadScenario(
             Uri sourceBlobUri,
+            TransferManagerOptions transferManagerOptions,
+            DataTransferOptions dataTransferOptions,
             TokenCredential tokenCredential,
             Metrics metrics,
             string testRunId)
-            : base(sourceBlobUri, tokenCredential, metrics, testRunId)
+            : base(sourceBlobUri, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
         {
         }
 

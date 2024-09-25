@@ -35,25 +35,7 @@ spec:
           . /mnt/outputs/.env;
           export AZURE_HTTP_CLIENT_IMPLEMENTATION=com.azure.core.http.netty.NettyAsyncHttpClientProvider;
           echo "setting http client implementation to $AZURE_HTTP_CLIENT_IMPLEMENTATION";
-          java \
-            -Dotel.service.name={{ .Release.Name }}-{{ .Stress.BaseName }} \
-            -Dotel.traces.sampler=traceidratio \
-            -Dotel.traces.sampler.arg=0.001 \
-            -XX:InitialRAMPercentage=50 \
-            -XX:MaxRAMPercentage=50 \
-            -XX:+HeapDumpOnOutOfMemoryError \
-            -XX:HeapDumpPath="${DEBUG_SHARE}" \
-            -Dreactor.schedulers.defaultBoundedElasticSize={{ .Stress.parallelRuns }} \
-            -jar /app/azure-storage-blob-stress-1.0.0-beta.1-jar-with-dependencies.jar \
-            {{ .Stress.testScenario }} \
-            --parallel {{ .Stress.parallelRuns }} \
-            --duration {{ mul 60 .Stress.durationMin }} \
-            --size {{ .Stress.sizeBytes }} \
-            {{ ternary "--sync" "" .Stress.sync }} \
-            {{ ternary "--downloadFaults" "" (default false .Stress.downloadFaults) }} \
-            {{ ternary "--uploadFaults" "" (default false .Stress.uploadFaults) }} \
-            --warmup 0 \
-            2>&1 | tee -a "${DEBUG_SHARE}/{{ .Stress.testScenario }}-`date +%s`.log";
+          echo "dotnet run";
           code=$?;
           echo "before the kill command";
           kill `pidof http-fault-injector`;
