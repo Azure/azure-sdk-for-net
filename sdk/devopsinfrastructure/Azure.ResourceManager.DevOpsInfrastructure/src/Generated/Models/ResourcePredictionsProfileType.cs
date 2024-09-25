@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static bool operator ==(ResourcePredictionsProfileType left, ResourcePredictionsProfileType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourcePredictionsProfileType"/> values are not the same. </summary>
         public static bool operator !=(ResourcePredictionsProfileType left, ResourcePredictionsProfileType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResourcePredictionsProfileType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourcePredictionsProfileType"/>. </summary>
         public static implicit operator ResourcePredictionsProfileType(string value) => new ResourcePredictionsProfileType(value);
 
         /// <inheritdoc />

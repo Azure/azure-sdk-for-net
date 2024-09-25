@@ -45,7 +45,7 @@ namespace Azure.Analytics.Defender.Easm
         public static bool operator ==(DiscoverySourceKind left, DiscoverySourceKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiscoverySourceKind"/> values are not the same. </summary>
         public static bool operator !=(DiscoverySourceKind left, DiscoverySourceKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DiscoverySourceKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DiscoverySourceKind"/>. </summary>
         public static implicit operator DiscoverySourceKind(string value) => new DiscoverySourceKind(value);
 
         /// <inheritdoc />

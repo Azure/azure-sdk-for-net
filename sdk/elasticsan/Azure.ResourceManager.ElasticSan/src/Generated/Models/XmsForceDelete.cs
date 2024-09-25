@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public static bool operator ==(XmsForceDelete left, XmsForceDelete right) => left.Equals(right);
         /// <summary> Determines if two <see cref="XmsForceDelete"/> values are not the same. </summary>
         public static bool operator !=(XmsForceDelete left, XmsForceDelete right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="XmsForceDelete"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="XmsForceDelete"/>. </summary>
         public static implicit operator XmsForceDelete(string value) => new XmsForceDelete(value);
 
         /// <inheritdoc />
