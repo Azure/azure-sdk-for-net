@@ -79,7 +79,7 @@ namespace Azure.AI.Inference
             }
             int index = default;
             CompletionsFinishReason? finishReason = default;
-            ChatResponseMessage delta = default;
+            StreamingChatResponseMessageUpdate delta = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.AI.Inference
                 }
                 if (property.NameEquals("delta"u8))
                 {
-                    delta = ChatResponseMessage.DeserializeChatResponseMessage(property.Value, options);
+                    delta = StreamingChatResponseMessageUpdate.DeserializeStreamingChatResponseMessageUpdate(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

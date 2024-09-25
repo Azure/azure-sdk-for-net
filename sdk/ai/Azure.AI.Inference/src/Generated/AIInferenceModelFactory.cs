@@ -112,43 +112,6 @@ namespace Azure.AI.Inference
             return new ModelInfo(modelName, modelType, modelProviderName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.StreamingChatCompletionsUpdate"/>. </summary>
-        /// <param name="id"> A unique identifier associated with this chat completions response. </param>
-        /// <param name="created">
-        /// The first timestamp associated with generation activity for this completions response,
-        /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
-        /// </param>
-        /// <param name="model"> The model used for the chat completion. </param>
-        /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
-        /// <param name="choices">
-        /// An update to the collection of completion choices associated with this completions response.
-        /// Generally, `n` choices are generated per provided prompt with a default value of 1.
-        /// Token limits and other settings may limit the number of choices generated.
-        /// </param>
-        /// <returns> A new <see cref="Inference.StreamingChatCompletionsUpdate"/> instance for mocking. </returns>
-        public static StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id = null, DateTimeOffset created = default, string model = null, CompletionsUsage usage = null, IEnumerable<StreamingChatChoiceUpdate> choices = null)
-        {
-            choices ??= new List<StreamingChatChoiceUpdate>();
-
-            return new StreamingChatCompletionsUpdate(
-                id,
-                created,
-                model,
-                usage,
-                choices?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Inference.StreamingChatChoiceUpdate"/>. </summary>
-        /// <param name="index"> The ordered index associated with this chat completions choice. </param>
-        /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
-        /// <param name="delta"> An update to the chat message for a given chat completions prompt. </param>
-        /// <returns> A new <see cref="Inference.StreamingChatChoiceUpdate"/> instance for mocking. </returns>
-        public static StreamingChatChoiceUpdate StreamingChatChoiceUpdate(int index = default, CompletionsFinishReason? finishReason = null, ChatResponseMessage delta = null)
-        {
-            return new StreamingChatChoiceUpdate(index, finishReason, delta, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Inference.EmbeddingsResult"/>. </summary>
         /// <param name="id"> Unique identifier for the embeddings result. </param>
         /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
@@ -184,6 +147,67 @@ namespace Azure.AI.Inference
         public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
         {
             return new EmbeddingsUsage(promptTokens, totalTokens, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.StreamingChatCompletionsUpdate"/>. </summary>
+        /// <param name="id"> A unique identifier associated with this chat completions response. </param>
+        /// <param name="created">
+        /// The first timestamp associated with generation activity for this completions response,
+        /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
+        /// </param>
+        /// <param name="model"> The model used for the chat completion. </param>
+        /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
+        /// <param name="choices">
+        /// An update to the collection of completion choices associated with this completions response.
+        /// Generally, `n` choices are generated per provided prompt with a default value of 1.
+        /// Token limits and other settings may limit the number of choices generated.
+        /// </param>
+        /// <returns> A new <see cref="Inference.StreamingChatCompletionsUpdate"/> instance for mocking. </returns>
+        public static StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id = null, DateTimeOffset created = default, string model = null, CompletionsUsage usage = null, IEnumerable<StreamingChatChoiceUpdate> choices = null)
+        {
+            choices ??= new List<StreamingChatChoiceUpdate>();
+
+            return new StreamingChatCompletionsUpdate(
+                id,
+                created,
+                model,
+                usage,
+                choices?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.StreamingChatChoiceUpdate"/>. </summary>
+        /// <param name="index"> The ordered index associated with this chat completions choice. </param>
+        /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
+        /// <param name="delta"> An update to the chat message for a given chat completions prompt. </param>
+        /// <returns> A new <see cref="Inference.StreamingChatChoiceUpdate"/> instance for mocking. </returns>
+        public static StreamingChatChoiceUpdate StreamingChatChoiceUpdate(int index = default, CompletionsFinishReason? finishReason = null, StreamingChatResponseMessageUpdate delta = null)
+        {
+            return new StreamingChatChoiceUpdate(index, finishReason, delta, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.StreamingChatResponseMessageUpdate"/>. </summary>
+        /// <param name="role"> The chat role associated with the message. If present, should always be 'assistant'. </param>
+        /// <param name="content"> The content of the message. </param>
+        /// <param name="toolCalls">
+        /// The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat
+        /// completions request to resolve as configured.
+        /// </param>
+        /// <returns> A new <see cref="Inference.StreamingChatResponseMessageUpdate"/> instance for mocking. </returns>
+        public static StreamingChatResponseMessageUpdate StreamingChatResponseMessageUpdate(ChatRole? role = null, string content = null, IEnumerable<StreamingChatResponseToolCallUpdate> toolCalls = null)
+        {
+            toolCalls ??= new List<StreamingChatResponseToolCallUpdate>();
+
+            return new StreamingChatResponseMessageUpdate(role, content, toolCalls?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.StreamingChatResponseToolCallUpdate"/>. </summary>
+        /// <param name="id"> The ID of the tool call. </param>
+        /// <param name="function"> Updates to the function call requested by the AI model. </param>
+        /// <returns> A new <see cref="Inference.StreamingChatResponseToolCallUpdate"/> instance for mocking. </returns>
+        public static StreamingChatResponseToolCallUpdate StreamingChatResponseToolCallUpdate(string id = null, FunctionCall function = null)
+        {
+            return new StreamingChatResponseToolCallUpdate(id, function, serializedAdditionalRawData: null);
         }
     }
 }
