@@ -11,6 +11,7 @@ public class ClientCache
 {
     private readonly Dictionary<string, object> _clients = new Dictionary<string, object>();
 
+    // TODO: consider uisng ICLientCreator instead of Func
     public T Get<T>(string id, Func<T> value) where T: class
     {
         lock (_clients)

@@ -17,7 +17,7 @@ public static class StorageServices
             return container;
         });
 
-        if (name == default) name = "b" + Guid.NewGuid().ToString();
+        if (name == default) name = $"b{Guid.NewGuid()}";
 
         container.UploadBlob(name, BinaryData.FromObjectAsJson(json));
 

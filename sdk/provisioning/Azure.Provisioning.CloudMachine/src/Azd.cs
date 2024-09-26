@@ -100,7 +100,8 @@ internal static class Azd
         }
 
         using FileStream json = File.OpenRead(appsettings);
-        JsonElement je = JsonDocument.Parse(json).RootElement;
+        using JsonDocument jd = JsonDocument.Parse(json);
+        JsonElement je = jd.RootElement;
         // attempt to read CM configuration from existing configuration file
         if (je.TryGetProperty("CloudMachine"u8, out JsonElement cm))
         {
