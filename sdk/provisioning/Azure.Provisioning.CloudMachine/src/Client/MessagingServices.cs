@@ -12,7 +12,12 @@ public static class MessagingServices
     {
         ServiceBusSender sender = cm.ClientCache.Get("cm_default_topic", () =>
         {
-            ServiceBusClient sb = new(cm.Properties.ServiceBusNamespace, cm.Credential);
+            ServiceBusClient sb = cm.ClientCache.Get(cm.Properties.ServiceBusNamespace, () =>
+            {
+                ServiceBusClient sb = new(cm.Properties.ServiceBusNamespace, cm.Credential);
+                return sb;
+            });
+
             ServiceBusSender sender = sb.CreateSender("cm_default_topic");
             return sender;
         });
