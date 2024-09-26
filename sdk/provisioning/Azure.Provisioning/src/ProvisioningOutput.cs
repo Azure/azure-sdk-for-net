@@ -29,7 +29,7 @@ public class ProvisioningOutput : ProvisioningVariable
         : this(name, new TypeExpression(type)) { }
 
     /// <inheritdoc />
-    protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = default)
+    protected internal override IEnumerable<Statement> Compile()
     {
         OutputStatement stmt = BicepSyntax.Declare.Output(ResourceName, BicepType, Value.Compile());
         if (Description is not null) { stmt = stmt.Decorate("description", BicepSyntax.Value(Description)); }

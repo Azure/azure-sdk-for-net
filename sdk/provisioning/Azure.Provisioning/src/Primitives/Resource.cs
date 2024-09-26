@@ -105,7 +105,7 @@ public abstract class Resource(string resourceName, ResourceType resourceType, s
     }
 
     /// <inheritdoc />
-    protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = default)
+    protected internal override IEnumerable<Statement> Compile()
     {
         if (ExpressionOverride is not null)
         {

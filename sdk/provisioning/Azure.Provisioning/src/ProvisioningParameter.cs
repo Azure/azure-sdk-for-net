@@ -40,7 +40,7 @@ public class ProvisioningParameter : ProvisioningVariable
         : this(name, new TypeExpression(type)) { }
 
     /// <inheritdoc />
-    protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = default)
+    protected internal override IEnumerable<Statement> Compile()
     {
         ParameterStatement stmt = BicepSyntax.Declare.Param(ResourceName, BicepType, Value.Kind == BicepValueKind.Unset ? null : Value.Compile());
         if (IsSecure) { stmt = stmt.Decorate("secure"); }

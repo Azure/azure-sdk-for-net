@@ -124,14 +124,12 @@ public abstract class ProvisioningConstruct : Provisionable
     }
 
     /// <inheritdoc/>
-    protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = null) =>
-        [new ExprStatement(CompileProperties(context))];
+    protected internal override IEnumerable<Statement> Compile() =>
+        [new ExprStatement(CompileProperties())];
 
-    private protected Expression CompileProperties(ProvisioningContext? context = null)
+    private protected Expression CompileProperties()
     {
         if (ExpressionOverride is not null) { return ExpressionOverride; }
-
-        context ??= new();
 
         // Aggregate all the properties into a single nested dictionary
         Dictionary<string, object> body = [];
@@ -156,7 +154,7 @@ public abstract class ProvisioningConstruct : Provisionable
 
         // Collapse those nested dictionaries into nested ObjectExpressions,
         // compiling values along the way
-        ObjectExpression CompileValues(IDictionary<string, object> dict)
+        static ObjectExpression CompileValues(IDictionary<string, object> dict)
         {
             Dictionary<string, Expression> bicep = [];
             foreach (KeyValuePair<string, object> pair in dict)
@@ -171,7 +169,7 @@ public abstract class ProvisioningConstruct : Provisionable
                 }
                 else if (pair.Value is ProvisioningConstruct construct)
                 {
-                    IList<Statement> statements = [..construct.Compile(context)];
+                    IList<Statement> statements = [..construct.Compile()];
                     if (statements.Count != 1 || statements[0] is not ExprStatement expr)
                     {
                         throw new InvalidOperationException($"Expected a single expression statement for {pair.Key}.");

@@ -33,7 +33,7 @@ public class ModuleImport : NamedProvisioningConstruct
         ValidateProperties();
     }
 
-    protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = default)
+    protected internal override IEnumerable<Statement> Compile()
     {
         List<Statement> statements = [];
         Dictionary<string, Expression> properties = new() { { "name", _name.Compile() } };

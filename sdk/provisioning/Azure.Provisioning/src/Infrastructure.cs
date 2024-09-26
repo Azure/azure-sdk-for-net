@@ -117,40 +117,11 @@ public class Infrastructure(string name = "main") : Provisionable
     }
 
     /// <inheritdoc/>
-    protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = default)
-    {
-        context ??= new();
-        List<Statement> statements = [];
-        if (TargetScope is not null)
-        {
-            statements.Add(new TargetScopeStatement(TargetScope));
-        }
-
-        // Customize the resources before compiling them
-        IEnumerable<Provisionable> resources = GetResources();
-        foreach (InfrastructureResolver resolver in context.InfrastructureResolvers)
-        {
-            resources = resolver.ResolveResources(context, resources);
-        }
-
-        foreach (Provisionable resource in resources)
-        {
-            if (resource is ProvisioningConstruct construct)
-            {
-                statements.AddRange(construct.Compile(context));
-            }
-            else if (resource is Infrastructure nested)
-            {
-                // We'll eventually add support for auto module splitting and
-                // be able to do smart things here.  We're going to intentionally
-                // fail for now though so we have more flexibility in the future.
-                // We fail here instead of Add so folks have a chance to move it
-                // around between different Infrastructure classes if they want
-                throw new NotSupportedException($"Nested {nameof(Infrastructure)} is not currently supported.  Please build them separately and use {nameof(ModuleImport)} to link them together.");
-            }
-        }
-        return statements;
-    }
+    protected internal override IEnumerable<Statement> Compile() =>
+        // TODO: For now I'm letting this through in case someone calls Compile
+        // before Build while debugging.  We could also make it a little less
+        // friendly and more predictable by throwing here.
+        CompileInternal(context: null);
 
     /// <summary>
     /// Compile this infrastructure into a set of bicep modules.
@@ -163,7 +134,7 @@ public class Infrastructure(string name = "main") : Provisionable
         // modules at once and automatically splitting resources across them.
         context ??= new();
         Dictionary<string, IEnumerable<Statement>> modules = [];
-        modules.Add(Name, Compile(context));
+        modules.Add(Name, CompileInternal(context));
 
         // Optionally add any nested modules
         List<Infrastructure> nested = [];
@@ -173,10 +144,50 @@ public class Infrastructure(string name = "main") : Provisionable
         }
         foreach (Infrastructure infra in nested)
         {
-            modules.Add(infra.Name, infra.Compile(context));
+            modules.Add(infra.Name, infra.CompileInternal(context));
         }
 
         return modules;
+    }
+
+    /// <inheritdoc/>
+    private List<Statement> CompileInternal(ProvisioningContext? context)
+    {
+        List<Statement> statements = [];
+        if (TargetScope is not null)
+        {
+            statements.Add(new TargetScopeStatement(TargetScope));
+        }
+
+        IEnumerable<Provisionable> resources = GetResources();
+
+        // Optionally customize the resources with the extensibility hooks on
+        // ProvisioningContext.
+        if (context is not null)
+        {
+            foreach (InfrastructureResolver resolver in context.InfrastructureResolvers)
+            {
+                resources = resolver.ResolveResources(context, resources);
+            }
+        }
+
+        foreach (Provisionable resource in resources)
+        {
+            if (resource is ProvisioningConstruct construct)
+            {
+                statements.AddRange(construct.Compile());
+            }
+            else if (resource is Infrastructure nested)
+            {
+                // We'll eventually add support for auto module splitting and
+                // be able to do smart things here.  We're going to intentionally
+                // fail for now though so we have more flexibility in the future.
+                // We fail here instead of Add so folks have a chance to move it
+                // around between different Infrastructure classes if they want
+                throw new NotSupportedException($"Nested {nameof(Infrastructure)} is not currently supported.  Please build them separately and use {nameof(ModuleImport)} to link them together.");
+            }
+        }
+        return statements;
     }
 
     /// <summary>

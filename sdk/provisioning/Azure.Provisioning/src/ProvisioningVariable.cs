@@ -53,7 +53,7 @@ public class ProvisioningVariable : NamedProvisioningConstruct
         : this(name, new TypeExpression(type), value: null) { }
 
     /// <inheritdoc />
-    protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = default)
+    protected internal override IEnumerable<Statement> Compile()
     {
         // TODO: add the rest of https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/parameters#use-decorators?
         VariableStatement stmt = BicepSyntax.Declare.Var(ResourceName, Value.Compile());
