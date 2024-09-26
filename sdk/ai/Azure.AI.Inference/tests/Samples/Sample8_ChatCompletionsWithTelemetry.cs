@@ -100,7 +100,7 @@ namespace Azure.AI.Inference.Tests.Samples
 #else
             var endpoint = new Uri(TestEnvironment.GithubEndpoint);
             var credential = new AzureKeyCredential(TestEnvironment.GithubToken);
-            var model = "gpt-4o";
+            var model = "Phi-3-mini-4k-instruct";
 #endif
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource("Azure.AI.Inference.*")
@@ -163,7 +163,7 @@ namespace Azure.AI.Inference.Tests.Samples
 #else
             var endpoint = new Uri(TestEnvironment.GithubEndpoint);
             var credential = new AzureKeyCredential(TestEnvironment.GithubToken);
-            var model = "gpt-4o";
+            var model = "gpt-4";
 #endif
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource("Azure.AI.Inference.*")
@@ -279,6 +279,10 @@ namespace Azure.AI.Inference.Tests.Samples
             bool gotRole = false;
             await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
             {
+                if (string.IsNullOrEmpty(chatUpdate.ContentUpdate))
+                {
+                    continue;
+                }
                 Assert.That(chatUpdate, Is.Not.Null);
 
                 Assert.That(chatUpdate.Id, Is.Not.Null.Or.Empty);

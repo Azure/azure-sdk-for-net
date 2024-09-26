@@ -200,8 +200,8 @@ namespace Azure.AI.Inference.Telemetry
             if (objOldModel != null && !objOldModel.ToString().Equals(recordedResponse.Model))
             {
                 tags.Remove(new KeyValuePair<string, object> (GenAiResponseModelKey, objOldModel));
+                tags.Add(GenAiResponseModelKey, recordedResponse.Model);
             }
-            tags.Add(GenAiResponseModelKey, recordedResponse.Model);
             // Record duration metric
             s_duration.Record(_duration.Elapsed.TotalSeconds, tags);
             // Record input tokens
