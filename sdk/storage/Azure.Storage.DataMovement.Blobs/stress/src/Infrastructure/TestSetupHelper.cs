@@ -17,10 +17,10 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
 
         public static async Task<Stream> CreateLimitedMemoryStream(
             long size,
-            long maxMemory = DataMovementBlobStressConstants.MB * 100,
+            long maxMemory = Constants.MB * 100,
             CancellationToken cancellationToken = default)
         {
-            Stream stream =default;
+            Stream stream = default;
             if (size < maxMemory)
             {
                 var data = TestHelper.GetRandomBuffer(size);
@@ -30,7 +30,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             {
                 var path = Path.GetTempFileName();
                 stream = new TemporaryFileStream(path, FileMode.Create);
-                var bufferSize = 4 * DataMovementBlobStressConstants.KB;
+                var bufferSize = 4 * Constants.KB;
 
                 while (stream.Position + bufferSize < size)
                 {
@@ -57,8 +57,8 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
         public static async Task<StorageResource> GetTemporaryFileStorageResourceAsync(
             string prefixPath,
             string fileName = default,
-            int bufferSize = DataMovementBlobStressConstants.MB,
-            int fileSize = 4 * DataMovementBlobStressConstants.MB,
+            int bufferSize = Constants.MB,
+            int? fileSize = 4 * Constants.MB,
             CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(prefixPath))
@@ -68,7 +68,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             fileName ??= Randomize("file-");
 
             // Create new source file
-            using Stream originalStream = await CreateLimitedMemoryStream(fileSize, cancellationToken: cancellationToken);
+            using Stream originalStream = await CreateLimitedMemoryStream(fileSize.Value, cancellationToken: cancellationToken);
             string localSourceFile = Path.Combine(prefixPath, fileName);
             // create a new file and copy contents of stream into it, and then close the FileStream
             // so the StagedUploadAsync call is not prevented from reading using its FileStream.
@@ -87,13 +87,13 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
 
         public static async Task CreateLocalFilesToUploadAsync(
             string directoryPrefix,
-            int fileCount = 1,
-            int fileSize = DataMovementBlobStressConstants.KB * 4,
+            int? fileCount = 1,
+            int? fileSize = Constants.KB * 4,
             CancellationToken cancellationToken = default)
         {
             for (int i = 0; i < fileCount; i++)
             {
-                using Stream originalStream = await CreateLimitedMemoryStream(fileSize);
+                using Stream originalStream = await CreateLimitedMemoryStream(fileSize.Value);
                 string localSourceFile = Path.Combine(directoryPrefix, Randomize("file"));
                 // create a new file and copy contents of stream into it, and then close the FileStream
                 // so the StagedUploadAsync call is not prevented from reading using its FileStream.

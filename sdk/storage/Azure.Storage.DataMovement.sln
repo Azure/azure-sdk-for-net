@@ -23,6 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{C1C88D7D-2513-4A33-BB8B-11FCF2DE301A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common", "Azure.Storage.Common\src\Azure.Storage.Common.csproj", "{F0525DA8-1C9A-410E-A8B7-3E8D5C2CBA1A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{6FD52DD4-4D28-4713-BA0C-B3F71000E98D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +73,14 @@ Global
 		{C1C88D7D-2513-4A33-BB8B-11FCF2DE301A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1C88D7D-2513-4A33-BB8B-11FCF2DE301A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1C88D7D-2513-4A33-BB8B-11FCF2DE301A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0525DA8-1C9A-410E-A8B7-3E8D5C2CBA1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0525DA8-1C9A-410E-A8B7-3E8D5C2CBA1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0525DA8-1C9A-410E-A8B7-3E8D5C2CBA1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0525DA8-1C9A-410E-A8B7-3E8D5C2CBA1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FD52DD4-4D28-4713-BA0C-B3F71000E98D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FD52DD4-4D28-4713-BA0C-B3F71000E98D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FD52DD4-4D28-4713-BA0C-B3F71000E98D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FD52DD4-4D28-4713-BA0C-B3F71000E98D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -18,7 +18,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
         private int _blobSize;
         public BlobSingleUploadScenario(
             Uri destinationBlobUri,
-            int blobSize,
+            int? blobSize,
             TransferManagerOptions transferManagerOptions,
             DataTransferOptions dataTransferOptions,
             TokenCredential tokenCredential,
@@ -26,7 +26,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             string testRunId)
             : base(destinationBlobUri, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
         {
-            _blobSize = blobSize;
+            _blobSize = blobSize.HasValue ? blobSize.Value : 100;
         }
 
         public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.UploadSingleBlockBlob;
@@ -40,7 +40,6 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             string blobName = TestSetupHelper.Randomize("blob");
 
             // Create Local Source Storage Resource
-            Console.Out.WriteLine($"Creating temporary file storage resource from directory: {disposingLocalDirectory.DirectoryPath}");
             StorageResource sourceResource = await TestSetupHelper.GetTemporaryFileStorageResourceAsync(
                 disposingLocalDirectory.DirectoryPath,
                 fileName: blobName,
@@ -54,13 +53,9 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                 BlobName = blobName
             };
             BlockBlobClient destinationBlob = destinationContainerClient.GetBlockBlobClient(blobName);
-            Console.Out.WriteLine($"Creating destination storage resource from blob: {blobUriBuilder.ToUri().AbsoluteUri}");
             StorageResource destinationResource = _blobsStorageResourceProvider.FromBlob(blobUriBuilder.ToUri().AbsoluteUri);
 
             // Start Transfer
-            Console.Out.WriteLine($"Creating transferManager");
-            TransferManager transferManager = new TransferManager(_transferManagerOptions);
-            Console.Out.WriteLine($"Starting transfer from {sourceResource.Uri.AbsoluteUri} to {destinationResource.Uri.AbsoluteUri}");
             await new TransferValidator()
             {
                 TransferManager = new(_transferManagerOptions)

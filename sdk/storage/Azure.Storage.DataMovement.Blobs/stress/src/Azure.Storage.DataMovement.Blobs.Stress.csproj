@@ -33,6 +33,9 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="SharedSource\Azure.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(AzureStorageSharedSources)Constants.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="$(AzureStorageSharedTestSources)TemporaryFileStream.cs" LinkBase="SharedSource\Storage" />
   </ItemGroup>
   <ItemGroup>

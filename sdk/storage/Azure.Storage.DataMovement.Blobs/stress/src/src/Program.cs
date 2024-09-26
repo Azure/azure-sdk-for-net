@@ -52,7 +52,6 @@ public class Program
         // test scenario runs are run in parallel.
 
         TokenCredential tokenCredential = new DefaultAzureCredential();
-        Console.Out.WriteLine($"Retrieved Token Credential");
 
         using var cancellationSource = new CancellationTokenSource();
         var runDuration = TimeSpan.FromHours(1);
@@ -61,7 +60,6 @@ public class Program
         var metrics = new Metrics(appInsightsKey);
 
         using var azureEventListener = new AzureEventSourceListener((args, level) => metrics.Client.TrackTrace($"EventWritten: {args.ToString()} Level: {level}."), EventLevel.Warning);
-        Console.Out.WriteLine($"Started up Source Listener");
 
         try
         {
@@ -71,7 +69,6 @@ public class Program
             string guid = Guid.NewGuid().ToString();
 
             metrics.Client.TrackEvent("Starting a test run.");
-            Console.Out.WriteLine($"Starting test run...");
 
             TestScenarioBase testScenario = null;
             TransferManagerOptions transferManagerOptions = new TransferManagerOptions()
@@ -144,14 +141,12 @@ public class Program
         catch (Exception ex)
         {
             metrics.Client.TrackException(ex);
-            Console.Out.WriteLine($"Exception: {ex.StackTrace}");
         }
         finally
         {
             // We need to wait one minute after flushing the Application Insights client. The Application
             // Insights flush is non-deterministic, so we don't want to let the application close until
             // all telemetry has been sent.
-            Console.Out.WriteLine("Test run is ending with wait.");
             metrics.Client.Flush();
             await Task.Delay(60000).ConfigureAwait(false);
         }
@@ -183,21 +178,21 @@ public class Program
         public string Test { get; set; }
 
         [Option('s', "size", HelpText = "Size of each objects to transfer.")]
-        public int Size { get; set; }
+        public int? Size { get; set; }
 
         [Option('b', "blockSize", HelpText = "Size of the chunk/block size")]
-        public int BlockSize { get; set; }
+        public int? BlockSize { get; set; }
 
         [Option('i', "initialTransferSize", HelpText = "Initial transfer size.")]
-        public int InitialTransferSize { get; set; }
+        public int? InitialTransferSize { get; set; }
 
         [Option('c', "count", HelpText = "Number of objects to transfer.")]
-        public int Count { get; set; }
+        public int? Count { get; set; }
 
         [Option('d', "duration", HelpText = "Duration of the test run.")]
-        public int Duration { get; set; }
+        public int? Duration { get; set; }
 
         [Option('p', "parallel", HelpText = "Maximum concurrency.")]
-        public int Parallel { get; set; }
+        public int? Parallel { get; set; }
     }
 }

@@ -15,10 +15,10 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
 {
     public class BlobSingleDownloadScenario : BlobScenarioBase
     {
-        private int _blobSize;
+        private int? _blobSize;
         public BlobSingleDownloadScenario(
             Uri sourceBlobUri,
-            int blobSize,
+            int? blobSize,
             TransferManagerOptions transferManagerOptions,
             DataTransferOptions dataTransferOptions,
             TokenCredential tokenCredential,
@@ -54,7 +54,6 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
 
             // Start Transfer
             TransferManager transferManager = new TransferManager(_transferManagerOptions);
-            Console.Out.WriteLine($"Starting transfer from {sourceResource.Uri.AbsoluteUri} to {destinationResource.Uri.AbsoluteUri}");
             await new TransferValidator()
             {
                 TransferManager = new(_transferManagerOptions)

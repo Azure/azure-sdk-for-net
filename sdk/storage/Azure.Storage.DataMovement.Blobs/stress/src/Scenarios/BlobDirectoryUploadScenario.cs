@@ -13,12 +13,12 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
 {
     public class BlobDirectoryUploadScenario : BlobScenarioBase
     {
-        private int _blobSize;
+        private int? _blobSize;
         private int _blobCount;
         public BlobDirectoryUploadScenario(
             Uri destinationBlobUri,
-            int blobSize,
-            int blobCount,
+            int? blobSize,
+            int? blobCount,
             TransferManagerOptions transferManagerOptions,
             DataTransferOptions dataTransferOptions,
             TokenCredential tokenCredential,
@@ -27,7 +27,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             : base(destinationBlobUri, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
         {
             _blobSize = blobSize;
-            _blobCount = blobCount;
+            _blobCount = blobCount != default ? blobCount.Value : 50;
         }
 
         public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.UploadDirectoryBlockBlob;

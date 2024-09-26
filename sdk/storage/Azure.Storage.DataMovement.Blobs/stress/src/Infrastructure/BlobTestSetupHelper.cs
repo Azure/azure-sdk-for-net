@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             BlobContainerClient container,
             string pathPrefix,
             int blobCount = 2,
-            long objectLength = DataMovementBlobStressConstants.KB * 4,
+            long objectLength = Constants.KB * 4,
             CancellationToken cancellationToken = default)
         {
             for (int i = 0; i < blobCount; i++)
@@ -30,10 +30,10 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
 
         public static async Task CreateBlockBlobAsync(
             BlockBlobClient blockBlobClient,
-            long objectLength = DataMovementBlobStressConstants.KB * 4,
+            long? objectLength = Constants.KB * 4,
             CancellationToken cancellationToken = default)
         {
-            using Stream originalStream = await TestSetupHelper.CreateLimitedMemoryStream(objectLength, cancellationToken: cancellationToken);
+            using Stream originalStream = await TestSetupHelper.CreateLimitedMemoryStream(objectLength.Value, cancellationToken: cancellationToken);
             if (originalStream != default)
             {
                 await blockBlobClient.UploadAsync(originalStream, cancellationToken: cancellationToken);

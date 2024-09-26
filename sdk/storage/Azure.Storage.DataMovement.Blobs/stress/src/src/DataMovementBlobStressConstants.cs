@@ -5,12 +5,6 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
 {
     internal class DataMovementBlobStressConstants
     {
-        public const int KB = 1024;
-        public const int MB = KB * 1024;
-        public const int GB = MB * 1024;
-        public const long TB = GB * 1024L;
-        public const int Base16 = 16;
-
         public static partial class EnvironmentVariables
         {
             // Shared Resources
