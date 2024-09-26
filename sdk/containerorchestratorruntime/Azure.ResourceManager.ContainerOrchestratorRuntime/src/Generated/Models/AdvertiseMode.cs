@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ARPValue = "ARP";
-        private const string BGPValue = "BGP";
+        private const string ArpValue = "ARP";
+        private const string BgpValue = "BGP";
         private const string BothValue = "Both";
 
         /// <summary> ARP advertise mode. </summary>
-        public static AdvertiseMode ARP { get; } = new AdvertiseMode(ARPValue);
+        public static AdvertiseMode Arp { get; } = new AdvertiseMode(ArpValue);
         /// <summary> BGP advertise mode. </summary>
-        public static AdvertiseMode BGP { get; } = new AdvertiseMode(BGPValue);
+        public static AdvertiseMode Bgp { get; } = new AdvertiseMode(BgpValue);
         /// <summary> both ARP and BGP advertise mode. </summary>
         public static AdvertiseMode Both { get; } = new AdvertiseMode(BothValue);
         /// <summary> Determines if two <see cref="AdvertiseMode"/> values are the same. </summary>

@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             Argument.AssertNotNull(backingStorageClassName, nameof(backingStorageClassName));
 
             BackingStorageClassName = backingStorageClassName;
-            SCType = SCType.RWX;
+            ClassType = StorageClassType.Rwx;
         }
 
         /// <summary> Initializes a new instance of <see cref="RwxStorageClassTypeProperties"/>. </summary>
-        /// <param name="scType"> Type of the storage class. </param>
+        /// <param name="classType"> Type of the storage class. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="backingStorageClassName"> The backing storageclass used to create new storageclass. </param>
-        internal RwxStorageClassTypeProperties(SCType scType, IDictionary<string, BinaryData> serializedAdditionalRawData, string backingStorageClassName) : base(scType, serializedAdditionalRawData)
+        internal RwxStorageClassTypeProperties(StorageClassType classType, IDictionary<string, BinaryData> serializedAdditionalRawData, string backingStorageClassName) : base(classType, serializedAdditionalRawData)
         {
             BackingStorageClassName = backingStorageClassName;
-            SCType = scType;
+            ClassType = classType;
         }
 
         /// <summary> Initializes a new instance of <see cref="RwxStorageClassTypeProperties"/> for deserialization. </summary>

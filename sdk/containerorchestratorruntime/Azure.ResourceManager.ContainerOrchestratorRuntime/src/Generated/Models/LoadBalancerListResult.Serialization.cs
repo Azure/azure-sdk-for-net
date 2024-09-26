@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 
         void IJsonModel<LoadBalancerListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LoadBalancerListResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
             foreach (var item in Value)
@@ -53,7 +61,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         LoadBalancerListResult IJsonModel<LoadBalancerListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -76,7 +83,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             {
                 return null;
             }
-            IReadOnlyList<LoadBalancerData> value = default;
+            IReadOnlyList<ConnectedClusterLoadBalancerData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +91,10 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<LoadBalancerData> array = new List<LoadBalancerData>();
+                    List<ConnectedClusterLoadBalancerData> array = new List<ConnectedClusterLoadBalancerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancerData.DeserializeLoadBalancerData(item, options));
+                        array.Add(ConnectedClusterLoadBalancerData.DeserializeConnectedClusterLoadBalancerData(item, options));
                     }
                     value = array;
                     continue;

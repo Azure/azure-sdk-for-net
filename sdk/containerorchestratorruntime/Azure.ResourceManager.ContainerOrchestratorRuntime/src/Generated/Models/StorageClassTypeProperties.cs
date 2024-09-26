@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageClassTypeProperties"/>. </summary>
-        /// <param name="scType"> Type of the storage class. </param>
+        /// <param name="classType"> Type of the storage class. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageClassTypeProperties(SCType scType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageClassTypeProperties(StorageClassType classType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SCType = scType;
+            ClassType = classType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of the storage class. </summary>
-        internal SCType SCType { get; set; }
+        internal StorageClassType ClassType { get; set; }
     }
 }

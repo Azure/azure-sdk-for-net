@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <summary> Initializes a new instance of <see cref="LoadBalancerListResult"/>. </summary>
         /// <param name="value"> The LoadBalancer items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal LoadBalancerListResult(IEnumerable<LoadBalancerData> value)
+        internal LoadBalancerListResult(IEnumerable<ConnectedClusterLoadBalancerData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <param name="value"> The LoadBalancer items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadBalancerListResult(IReadOnlyList<LoadBalancerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LoadBalancerListResult(IReadOnlyList<ConnectedClusterLoadBalancerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         }
 
         /// <summary> The LoadBalancer items on this page. </summary>
-        public IReadOnlyList<LoadBalancerData> Value { get; }
+        public IReadOnlyList<ConnectedClusterLoadBalancerData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

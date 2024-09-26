@@ -21,25 +21,25 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             Argument.AssertNotNull(source, nameof(source));
 
             Source = source;
-            SCType = SCType.SMB;
+            ClassType = StorageClassType.Smb;
         }
 
         /// <summary> Initializes a new instance of <see cref="SmbStorageClassTypeProperties"/>. </summary>
-        /// <param name="scType"> Type of the storage class. </param>
+        /// <param name="classType"> Type of the storage class. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="source"> SMB Source. </param>
         /// <param name="subDir"> Sub directory under share. If the sub directory doesn't exist, driver will create it. </param>
         /// <param name="username"> Server username. </param>
         /// <param name="password"> Server password. </param>
         /// <param name="domain"> Server domain. </param>
-        internal SmbStorageClassTypeProperties(SCType scType, IDictionary<string, BinaryData> serializedAdditionalRawData, string source, string subDir, string username, string password, string domain) : base(scType, serializedAdditionalRawData)
+        internal SmbStorageClassTypeProperties(StorageClassType classType, IDictionary<string, BinaryData> serializedAdditionalRawData, string source, string subDir, string username, string password, string domain) : base(classType, serializedAdditionalRawData)
         {
             Source = source;
             SubDir = subDir;
             Username = username;
             Password = password;
             Domain = domain;
-            SCType = scType;
+            ClassType = classType;
         }
 
         /// <summary> Initializes a new instance of <see cref="SmbStorageClassTypeProperties"/> for deserialization. </summary>

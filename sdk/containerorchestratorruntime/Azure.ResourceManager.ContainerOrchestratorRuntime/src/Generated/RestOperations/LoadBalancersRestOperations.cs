@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="loadBalancerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LoadBalancerData>> GetAsync(string resourceUri, string loadBalancerName, CancellationToken cancellationToken = default)
+        public async Task<Response<ConnectedClusterLoadBalancerData>> GetAsync(string resourceUri, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 case 200:
                     {
-                        LoadBalancerData value = default;
+                        ConnectedClusterLoadBalancerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LoadBalancerData.DeserializeLoadBalancerData(document.RootElement);
+                        value = ConnectedClusterLoadBalancerData.DeserializeConnectedClusterLoadBalancerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LoadBalancerData)null, message.Response);
+                    return Response.FromValue((ConnectedClusterLoadBalancerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="loadBalancerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LoadBalancerData> Get(string resourceUri, string loadBalancerName, CancellationToken cancellationToken = default)
+        public Response<ConnectedClusterLoadBalancerData> Get(string resourceUri, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
@@ -188,19 +188,19 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 case 200:
                     {
-                        LoadBalancerData value = default;
+                        ConnectedClusterLoadBalancerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LoadBalancerData.DeserializeLoadBalancerData(document.RootElement);
+                        value = ConnectedClusterLoadBalancerData.DeserializeConnectedClusterLoadBalancerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LoadBalancerData)null, message.Response);
+                    return Response.FromValue((ConnectedClusterLoadBalancerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, string loadBalancerName, LoadBalancerData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, string loadBalancerName, ConnectedClusterLoadBalancerData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string loadBalancerName, LoadBalancerData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string loadBalancerName, ConnectedClusterLoadBalancerData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="loadBalancerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceUri, string loadBalancerName, LoadBalancerData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceUri, string loadBalancerName, ConnectedClusterLoadBalancerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="loadBalancerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string resourceUri, string loadBalancerName, LoadBalancerData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceUri, string loadBalancerName, ConnectedClusterLoadBalancerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));

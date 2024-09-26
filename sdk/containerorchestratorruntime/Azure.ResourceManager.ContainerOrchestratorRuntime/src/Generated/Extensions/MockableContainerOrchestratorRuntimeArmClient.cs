@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of BgpPeerResources in the ArmClient. </summary>
+        /// <summary> Gets a collection of ConnectedClusterBgpPeerResources in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of BgpPeerResources and their operations over a BgpPeerResource. </returns>
-        public virtual BgpPeerCollection GetBgpPeers(ResourceIdentifier scope)
+        /// <returns> An object representing collection of ConnectedClusterBgpPeerResources and their operations over a ConnectedClusterBgpPeerResource. </returns>
+        public virtual ConnectedClusterBgpPeerCollection GetConnectedClusterBgpPeers(ResourceIdentifier scope)
         {
-            return new BgpPeerCollection(Client, scope);
+            return new ConnectedClusterBgpPeerCollection(Client, scope);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BgpPeerResource"/></description>
+        /// <description><see cref="ConnectedClusterBgpPeerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="bgpPeerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bgpPeerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BgpPeerResource>> GetBgpPeerAsync(ResourceIdentifier scope, string bgpPeerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectedClusterBgpPeerResource>> GetConnectedClusterBgpPeerAsync(ResourceIdentifier scope, string bgpPeerName, CancellationToken cancellationToken = default)
         {
-            return await GetBgpPeers(scope).GetAsync(bgpPeerName, cancellationToken).ConfigureAwait(false);
+            return await GetConnectedClusterBgpPeers(scope).GetAsync(bgpPeerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BgpPeerResource"/></description>
+        /// <description><see cref="ConnectedClusterBgpPeerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -104,17 +104,17 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="bgpPeerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bgpPeerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BgpPeerResource> GetBgpPeer(ResourceIdentifier scope, string bgpPeerName, CancellationToken cancellationToken = default)
+        public virtual Response<ConnectedClusterBgpPeerResource> GetConnectedClusterBgpPeer(ResourceIdentifier scope, string bgpPeerName, CancellationToken cancellationToken = default)
         {
-            return GetBgpPeers(scope).Get(bgpPeerName, cancellationToken);
+            return GetConnectedClusterBgpPeers(scope).Get(bgpPeerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LoadBalancerResources in the ArmClient. </summary>
+        /// <summary> Gets a collection of ConnectedClusterLoadBalancerResources in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of LoadBalancerResources and their operations over a LoadBalancerResource. </returns>
-        public virtual LoadBalancerCollection GetLoadBalancers(ResourceIdentifier scope)
+        /// <returns> An object representing collection of ConnectedClusterLoadBalancerResources and their operations over a ConnectedClusterLoadBalancerResource. </returns>
+        public virtual ConnectedClusterLoadBalancerCollection GetConnectedClusterLoadBalancers(ResourceIdentifier scope)
         {
-            return new LoadBalancerCollection(Client, scope);
+            return new ConnectedClusterLoadBalancerCollection(Client, scope);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LoadBalancerResource"/></description>
+        /// <description><see cref="ConnectedClusterLoadBalancerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,9 +144,9 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LoadBalancerResource>> GetLoadBalancerAsync(ResourceIdentifier scope, string loadBalancerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectedClusterLoadBalancerResource>> GetConnectedClusterLoadBalancerAsync(ResourceIdentifier scope, string loadBalancerName, CancellationToken cancellationToken = default)
         {
-            return await GetLoadBalancers(scope).GetAsync(loadBalancerName, cancellationToken).ConfigureAwait(false);
+            return await GetConnectedClusterLoadBalancers(scope).GetAsync(loadBalancerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LoadBalancerResource"/></description>
+        /// <description><see cref="ConnectedClusterLoadBalancerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -176,17 +176,17 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LoadBalancerResource> GetLoadBalancer(ResourceIdentifier scope, string loadBalancerName, CancellationToken cancellationToken = default)
+        public virtual Response<ConnectedClusterLoadBalancerResource> GetConnectedClusterLoadBalancer(ResourceIdentifier scope, string loadBalancerName, CancellationToken cancellationToken = default)
         {
-            return GetLoadBalancers(scope).Get(loadBalancerName, cancellationToken);
+            return GetConnectedClusterLoadBalancers(scope).Get(loadBalancerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceResources in the ArmClient. </summary>
+        /// <summary> Gets a collection of ConnectedClusterServiceResources in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of ServiceResources and their operations over a ServiceResource. </returns>
-        public virtual ServiceResourceCollection GetServiceResources(ResourceIdentifier scope)
+        /// <returns> An object representing collection of ConnectedClusterServiceResources and their operations over a ConnectedClusterServiceResource. </returns>
+        public virtual ConnectedClusterServiceCollection GetConnectedClusterServices(ResourceIdentifier scope)
         {
-            return new ServiceResourceCollection(Client, scope);
+            return new ConnectedClusterServiceCollection(Client, scope);
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceResource"/></description>
+        /// <description><see cref="ConnectedClusterServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,9 +216,9 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceResource>> GetServiceResourceAsync(ResourceIdentifier scope, string serviceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectedClusterServiceResource>> GetConnectedClusterServiceAsync(ResourceIdentifier scope, string serviceName, CancellationToken cancellationToken = default)
         {
-            return await GetServiceResources(scope).GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetConnectedClusterServices(scope).GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceResource"/></description>
+        /// <description><see cref="ConnectedClusterServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -248,17 +248,17 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceResource> GetServiceResource(ResourceIdentifier scope, string serviceName, CancellationToken cancellationToken = default)
+        public virtual Response<ConnectedClusterServiceResource> GetConnectedClusterService(ResourceIdentifier scope, string serviceName, CancellationToken cancellationToken = default)
         {
-            return GetServiceResources(scope).Get(serviceName, cancellationToken);
+            return GetConnectedClusterServices(scope).Get(serviceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StorageClassResources in the ArmClient. </summary>
+        /// <summary> Gets a collection of ConnectedClusterStorageClassResources in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of StorageClassResources and their operations over a StorageClassResource. </returns>
-        public virtual StorageClassResourceCollection GetStorageClassResources(ResourceIdentifier scope)
+        /// <returns> An object representing collection of ConnectedClusterStorageClassResources and their operations over a ConnectedClusterStorageClassResource. </returns>
+        public virtual ConnectedClusterStorageClassCollection GetConnectedClusterStorageClasses(ResourceIdentifier scope)
         {
-            return new StorageClassResourceCollection(Client, scope);
+            return new ConnectedClusterStorageClassCollection(Client, scope);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="StorageClassResource"/></description>
+        /// <description><see cref="ConnectedClusterStorageClassResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,9 +288,9 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageClassName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StorageClassResource>> GetStorageClassResourceAsync(ResourceIdentifier scope, string storageClassName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectedClusterStorageClassResource>> GetConnectedClusterStorageClassAsync(ResourceIdentifier scope, string storageClassName, CancellationToken cancellationToken = default)
         {
-            return await GetStorageClassResources(scope).GetAsync(storageClassName, cancellationToken).ConfigureAwait(false);
+            return await GetConnectedClusterStorageClasses(scope).GetAsync(storageClassName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="StorageClassResource"/></description>
+        /// <description><see cref="ConnectedClusterStorageClassResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -320,57 +320,57 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageClassName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<StorageClassResource> GetStorageClassResource(ResourceIdentifier scope, string storageClassName, CancellationToken cancellationToken = default)
+        public virtual Response<ConnectedClusterStorageClassResource> GetConnectedClusterStorageClass(ResourceIdentifier scope, string storageClassName, CancellationToken cancellationToken = default)
         {
-            return GetStorageClassResources(scope).Get(storageClassName, cancellationToken);
+            return GetConnectedClusterStorageClasses(scope).Get(storageClassName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BgpPeerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BgpPeerResource.CreateResourceIdentifier" /> to create a <see cref="BgpPeerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ConnectedClusterBgpPeerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectedClusterBgpPeerResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedClusterBgpPeerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BgpPeerResource"/> object. </returns>
-        public virtual BgpPeerResource GetBgpPeerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConnectedClusterBgpPeerResource"/> object. </returns>
+        public virtual ConnectedClusterBgpPeerResource GetConnectedClusterBgpPeerResource(ResourceIdentifier id)
         {
-            BgpPeerResource.ValidateResourceId(id);
-            return new BgpPeerResource(Client, id);
+            ConnectedClusterBgpPeerResource.ValidateResourceId(id);
+            return new ConnectedClusterBgpPeerResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LoadBalancerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LoadBalancerResource.CreateResourceIdentifier" /> to create a <see cref="LoadBalancerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ConnectedClusterLoadBalancerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectedClusterLoadBalancerResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedClusterLoadBalancerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LoadBalancerResource"/> object. </returns>
-        public virtual LoadBalancerResource GetLoadBalancerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConnectedClusterLoadBalancerResource"/> object. </returns>
+        public virtual ConnectedClusterLoadBalancerResource GetConnectedClusterLoadBalancerResource(ResourceIdentifier id)
         {
-            LoadBalancerResource.ValidateResourceId(id);
-            return new LoadBalancerResource(Client, id);
+            ConnectedClusterLoadBalancerResource.ValidateResourceId(id);
+            return new ConnectedClusterLoadBalancerResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ConnectedClusterServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectedClusterServiceResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedClusterServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceResource"/> object. </returns>
-        public virtual ServiceResource GetServiceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConnectedClusterServiceResource"/> object. </returns>
+        public virtual ConnectedClusterServiceResource GetConnectedClusterServiceResource(ResourceIdentifier id)
         {
-            ServiceResource.ValidateResourceId(id);
-            return new ServiceResource(Client, id);
+            ConnectedClusterServiceResource.ValidateResourceId(id);
+            return new ConnectedClusterServiceResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageClassResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageClassResource.CreateResourceIdentifier" /> to create a <see cref="StorageClassResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ConnectedClusterStorageClassResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectedClusterStorageClassResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedClusterStorageClassResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageClassResource"/> object. </returns>
-        public virtual StorageClassResource GetStorageClassResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConnectedClusterStorageClassResource"/> object. </returns>
+        public virtual ConnectedClusterStorageClassResource GetConnectedClusterStorageClassResource(ResourceIdentifier id)
         {
-            StorageClassResource.ValidateResourceId(id);
-            return new StorageClassResource(Client, id);
+            ConnectedClusterStorageClassResource.ValidateResourceId(id);
+            return new ConnectedClusterStorageClassResource(Client, id);
         }
     }
 }

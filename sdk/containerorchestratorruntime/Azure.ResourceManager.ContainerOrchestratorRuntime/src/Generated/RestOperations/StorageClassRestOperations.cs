@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="storageClassName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageClassName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageClassResourceData>> GetAsync(string resourceUri, string storageClassName, CancellationToken cancellationToken = default)
+        public async Task<Response<ConnectedClusterStorageClassData>> GetAsync(string resourceUri, string storageClassName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(storageClassName, nameof(storageClassName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 case 200:
                     {
-                        StorageClassResourceData value = default;
+                        ConnectedClusterStorageClassData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StorageClassResourceData.DeserializeStorageClassResourceData(document.RootElement);
+                        value = ConnectedClusterStorageClassData.DeserializeConnectedClusterStorageClassData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StorageClassResourceData)null, message.Response);
+                    return Response.FromValue((ConnectedClusterStorageClassData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="storageClassName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageClassName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageClassResourceData> Get(string resourceUri, string storageClassName, CancellationToken cancellationToken = default)
+        public Response<ConnectedClusterStorageClassData> Get(string resourceUri, string storageClassName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(storageClassName, nameof(storageClassName));
@@ -188,19 +188,19 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 case 200:
                     {
-                        StorageClassResourceData value = default;
+                        ConnectedClusterStorageClassData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StorageClassResourceData.DeserializeStorageClassResourceData(document.RootElement);
+                        value = ConnectedClusterStorageClassData.DeserializeConnectedClusterStorageClassData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StorageClassResourceData)null, message.Response);
+                    return Response.FromValue((ConnectedClusterStorageClassData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, string storageClassName, StorageClassResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, string storageClassName, ConnectedClusterStorageClassData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string storageClassName, StorageClassResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string storageClassName, ConnectedClusterStorageClassData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="storageClassName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageClassName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceUri, string storageClassName, StorageClassResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceUri, string storageClassName, ConnectedClusterStorageClassData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(storageClassName, nameof(storageClassName));
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="storageClassName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageClassName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string resourceUri, string storageClassName, StorageClassResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceUri, string storageClassName, ConnectedClusterStorageClassData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(storageClassName, nameof(storageClassName));
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string resourceUri, string storageClassName, StorageClassResourcePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string resourceUri, string storageClassName, ConnectedClusterStorageClassPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceUri, string storageClassName, StorageClassResourcePatch patch)
+        internal HttpMessage CreateUpdateRequest(string resourceUri, string storageClassName, ConnectedClusterStorageClassPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="storageClassName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageClassName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string resourceUri, string storageClassName, StorageClassResourcePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string resourceUri, string storageClassName, ConnectedClusterStorageClassPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(storageClassName, nameof(storageClassName));
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="storageClassName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageClassName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string resourceUri, string storageClassName, StorageClassResourcePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string resourceUri, string storageClassName, ConnectedClusterStorageClassPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(storageClassName, nameof(storageClassName));

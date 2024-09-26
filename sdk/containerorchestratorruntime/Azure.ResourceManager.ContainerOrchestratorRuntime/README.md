@@ -1,6 +1,6 @@
-# Microsoft Azure ContainerOrchestratorRuntime management client library for .NET
+# Microsoft Azure Container Orchestrator Runtime management client library for .NET
 
-**[Describe the service briefly first.]**
+AKS on Azure Stack HCI 23H2 uses Azure Arc to create new Kubernetes clusters on Azure Stack HCI directly from Azure. It enables you to use familiar tools like the Azure portal, Azure CLI, and Azure Resource Manager templates to create and manage your Kubernetes clusters running on Azure Stack HCI. Since clusters are automatically connected to Arc when they are created, you can use your Microsoft Entra ID for connecting to your clusters from anywhere. This ensures your developers and application operators can provision and configure Kubernetes clusters in accordance with company policies.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -14,7 +14,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure ContainerOrchestratorRuntime management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Container Orchestrator Runtime management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.ContainerOrchestratorRuntime --prerelease

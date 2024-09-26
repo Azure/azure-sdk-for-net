@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="bgpPeerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bgpPeerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BgpPeerData>> GetAsync(string resourceUri, string bgpPeerName, CancellationToken cancellationToken = default)
+        public async Task<Response<ConnectedClusterBgpPeerData>> GetAsync(string resourceUri, string bgpPeerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(bgpPeerName, nameof(bgpPeerName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 case 200:
                     {
-                        BgpPeerData value = default;
+                        ConnectedClusterBgpPeerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BgpPeerData.DeserializeBgpPeerData(document.RootElement);
+                        value = ConnectedClusterBgpPeerData.DeserializeConnectedClusterBgpPeerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BgpPeerData)null, message.Response);
+                    return Response.FromValue((ConnectedClusterBgpPeerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="bgpPeerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bgpPeerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BgpPeerData> Get(string resourceUri, string bgpPeerName, CancellationToken cancellationToken = default)
+        public Response<ConnectedClusterBgpPeerData> Get(string resourceUri, string bgpPeerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(bgpPeerName, nameof(bgpPeerName));
@@ -188,19 +188,19 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 case 200:
                     {
-                        BgpPeerData value = default;
+                        ConnectedClusterBgpPeerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BgpPeerData.DeserializeBgpPeerData(document.RootElement);
+                        value = ConnectedClusterBgpPeerData.DeserializeConnectedClusterBgpPeerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BgpPeerData)null, message.Response);
+                    return Response.FromValue((ConnectedClusterBgpPeerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, string bgpPeerName, BgpPeerData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, string bgpPeerName, ConnectedClusterBgpPeerData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string bgpPeerName, BgpPeerData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string bgpPeerName, ConnectedClusterBgpPeerData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="bgpPeerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bgpPeerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceUri, string bgpPeerName, BgpPeerData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceUri, string bgpPeerName, ConnectedClusterBgpPeerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(bgpPeerName, nameof(bgpPeerName));
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="bgpPeerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bgpPeerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string resourceUri, string bgpPeerName, BgpPeerData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceUri, string bgpPeerName, ConnectedClusterBgpPeerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(bgpPeerName, nameof(bgpPeerName));

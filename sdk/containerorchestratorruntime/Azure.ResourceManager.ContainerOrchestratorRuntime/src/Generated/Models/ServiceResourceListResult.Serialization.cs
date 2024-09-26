@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 
         void IJsonModel<ServiceResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceResourceListResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
             foreach (var item in Value)
@@ -53,7 +61,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ServiceResourceListResult IJsonModel<ServiceResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -76,7 +83,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             {
                 return null;
             }
-            IReadOnlyList<ServiceResourceData> value = default;
+            IReadOnlyList<ConnectedClusterServiceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +91,10 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ServiceResourceData> array = new List<ServiceResourceData>();
+                    List<ConnectedClusterServiceData> array = new List<ConnectedClusterServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceResourceData.DeserializeServiceResourceData(item, options));
+                        array.Add(ConnectedClusterServiceData.DeserializeConnectedClusterServiceData(item, options));
                     }
                     value = array;
                     continue;

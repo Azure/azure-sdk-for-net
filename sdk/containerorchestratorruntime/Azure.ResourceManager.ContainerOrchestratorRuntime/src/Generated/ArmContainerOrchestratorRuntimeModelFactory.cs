@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmContainerOrchestratorRuntimeModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="ContainerOrchestratorRuntime.BgpPeerData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerOrchestratorRuntime.ConnectedClusterBgpPeerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <param name="peerAsn"> Peer ASN. </param>
         /// <param name="peerAddress"> Peer Address. </param>
         /// <param name="provisioningState"> Resource provision state. </param>
-        /// <returns> A new <see cref="ContainerOrchestratorRuntime.BgpPeerData"/> instance for mocking. </returns>
-        public static BgpPeerData BgpPeerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? myAsn = null, int? peerAsn = null, string peerAddress = null, ContainerOrchestratorProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="ContainerOrchestratorRuntime.ConnectedClusterBgpPeerData"/> instance for mocking. </returns>
+        public static ConnectedClusterBgpPeerData ConnectedClusterBgpPeerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? myAsn = null, int? peerAsn = null, string peerAddress = null, ContainerOrchestratorProvisioningState? provisioningState = null)
         {
-            return new BgpPeerData(
+            return new ConnectedClusterBgpPeerData(
                 id,
                 name,
                 resourceType,
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerOrchestratorRuntime.LoadBalancerData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerOrchestratorRuntime.ConnectedClusterLoadBalancerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <param name="advertiseMode"> Advertise Mode. </param>
         /// <param name="bgpPeers"> The list of BGP peers it should advertise to. Null or empty means to advertise to all peers. </param>
         /// <param name="provisioningState"> Resource provision state. </param>
-        /// <returns> A new <see cref="ContainerOrchestratorRuntime.LoadBalancerData"/> instance for mocking. </returns>
-        public static LoadBalancerData LoadBalancerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> addresses = null, IDictionary<string, string> serviceSelector = null, AdvertiseMode? advertiseMode = null, IEnumerable<string> bgpPeers = null, ContainerOrchestratorProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="ContainerOrchestratorRuntime.ConnectedClusterLoadBalancerData"/> instance for mocking. </returns>
+        public static ConnectedClusterLoadBalancerData ConnectedClusterLoadBalancerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> addresses = null, IDictionary<string, string> serviceSelector = null, AdvertiseMode? advertiseMode = null, IEnumerable<string> bgpPeers = null, ContainerOrchestratorProvisioningState? provisioningState = null)
         {
             addresses ??= new List<string>();
             serviceSelector ??= new Dictionary<string, string>();
             bgpPeers ??= new List<string>();
 
-            return new LoadBalancerData(
+            return new ConnectedClusterLoadBalancerData(
                 id,
                 name,
                 resourceType,
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerOrchestratorRuntime.ServiceResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerOrchestratorRuntime.ConnectedClusterServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="rpObjectId"> The object id of the service principal of the RP provisioned in the tenant. </param>
         /// <param name="provisioningState"> Resource provision state. </param>
-        /// <returns> A new <see cref="ContainerOrchestratorRuntime.ServiceResourceData"/> instance for mocking. </returns>
-        public static ServiceResourceData ServiceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? rpObjectId = null, ContainerOrchestratorProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="ContainerOrchestratorRuntime.ConnectedClusterServiceData"/> instance for mocking. </returns>
+        public static ConnectedClusterServiceData ConnectedClusterServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? rpObjectId = null, ContainerOrchestratorProvisioningState? provisioningState = null)
         {
-            return new ServiceResourceData(
+            return new ConnectedClusterServiceData(
                 id,
                 name,
                 resourceType,
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerOrchestratorRuntime.StorageClassResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerOrchestratorRuntime.ConnectedClusterStorageClassData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// The available derived classes include <see cref="BlobStorageClassTypeProperties"/>, <see cref="NativeStorageClassTypeProperties"/>, <see cref="NfsStorageClassTypeProperties"/>, <see cref="RwxStorageClassTypeProperties"/> and <see cref="SmbStorageClassTypeProperties"/>.
         /// </param>
         /// <param name="provisioningState"> Resource provision state. </param>
-        /// <returns> A new <see cref="ContainerOrchestratorRuntime.StorageClassResourceData"/> instance for mocking. </returns>
-        public static StorageClassResourceData StorageClassResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VolumeExpansion? allowVolumeExpansion = null, IEnumerable<string> mountOptions = null, string provisioner = null, VolumeBindingMode? volumeBindingMode = null, IEnumerable<StorageClassAccessMode> accessModes = null, DataResilienceTier? dataResilience = null, FailoverTier? failoverSpeed = null, IEnumerable<string> limitations = null, PerformanceTier? performance = null, long? priority = null, StorageClassTypeProperties typeProperties = null, ContainerOrchestratorProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="ContainerOrchestratorRuntime.ConnectedClusterStorageClassData"/> instance for mocking. </returns>
+        public static ConnectedClusterStorageClassData ConnectedClusterStorageClassData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VolumeExpansion? allowVolumeExpansion = null, IEnumerable<string> mountOptions = null, string provisioner = null, VolumeBindingMode? volumeBindingMode = null, IEnumerable<StorageClassAccessMode> accessModes = null, DataResilienceTier? dataResilience = null, FailoverTier? failoverSpeed = null, IEnumerable<string> limitations = null, PerformanceTier? performance = null, long? priority = null, StorageClassTypeProperties typeProperties = null, ContainerOrchestratorProvisioningState? provisioningState = null)
         {
             mountOptions ??= new List<string>();
             accessModes ??= new List<StorageClassAccessMode>();
             limitations ??= new List<string>();
 
-            return new StorageClassResourceData(
+            return new ConnectedClusterStorageClassData(
                 id,
                 name,
                 resourceType,

@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Tests.Tests
         public async Task CreateStorageClassAsync()
         {
             var nfsStorageClassTypeProperties = new NfsStorageClassTypeProperties("172.23.1.4", "/");
-            var storageClassData = new StorageClassResourceData
+            var storageClassData = new ConnectedClusterStorageClassData
             {
                 TypeProperties = nfsStorageClassTypeProperties
             };
-            var storageClassCollection = new StorageClassResourceCollection(Client, TestEnvironment.ConnectedCluster);
+            var storageClassCollection = new ConnectedClusterStorageClassCollection(Client, TestEnvironment.ConnectedCluster);
             await storageClassCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testsc", storageClassData);
         }
     }

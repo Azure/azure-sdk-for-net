@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         }
 
         /// <summary>
-        /// Gets a collection of BgpPeerResources in the ArmClient.
+        /// Gets a collection of ConnectedClusterBgpPeerResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetBgpPeers(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetConnectedClusterBgpPeers(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> An object representing collection of BgpPeerResources and their operations over a BgpPeerResource. </returns>
-        public static BgpPeerCollection GetBgpPeers(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> An object representing collection of ConnectedClusterBgpPeerResources and their operations over a ConnectedClusterBgpPeerResource. </returns>
+        public static ConnectedClusterBgpPeerCollection GetConnectedClusterBgpPeers(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetBgpPeers(scope);
+            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetConnectedClusterBgpPeers(scope);
         }
 
         /// <summary>
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BgpPeerResource"/></description>
+        /// <description><see cref="ConnectedClusterBgpPeerResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetBgpPeerAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetConnectedClusterBgpPeerAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="bgpPeerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bgpPeerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BgpPeerResource>> GetBgpPeerAsync(this ArmClient client, ResourceIdentifier scope, string bgpPeerName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConnectedClusterBgpPeerResource>> GetConnectedClusterBgpPeerAsync(this ArmClient client, ResourceIdentifier scope, string bgpPeerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableContainerOrchestratorRuntimeArmClient(client).GetBgpPeerAsync(scope, bgpPeerName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerOrchestratorRuntimeArmClient(client).GetConnectedClusterBgpPeerAsync(scope, bgpPeerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BgpPeerResource"/></description>
+        /// <description><see cref="ConnectedClusterBgpPeerResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetBgpPeer(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetConnectedClusterBgpPeer(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -110,29 +110,29 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="bgpPeerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bgpPeerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<BgpPeerResource> GetBgpPeer(this ArmClient client, ResourceIdentifier scope, string bgpPeerName, CancellationToken cancellationToken = default)
+        public static Response<ConnectedClusterBgpPeerResource> GetConnectedClusterBgpPeer(this ArmClient client, ResourceIdentifier scope, string bgpPeerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetBgpPeer(scope, bgpPeerName, cancellationToken);
+            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetConnectedClusterBgpPeer(scope, bgpPeerName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of LoadBalancerResources in the ArmClient.
+        /// Gets a collection of ConnectedClusterLoadBalancerResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetLoadBalancers(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetConnectedClusterLoadBalancers(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> An object representing collection of LoadBalancerResources and their operations over a LoadBalancerResource. </returns>
-        public static LoadBalancerCollection GetLoadBalancers(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> An object representing collection of ConnectedClusterLoadBalancerResources and their operations over a ConnectedClusterLoadBalancerResource. </returns>
+        public static ConnectedClusterLoadBalancerCollection GetConnectedClusterLoadBalancers(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetLoadBalancers(scope);
+            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetConnectedClusterLoadBalancers(scope);
         }
 
         /// <summary>
@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LoadBalancerResource"/></description>
+        /// <description><see cref="ConnectedClusterLoadBalancerResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetLoadBalancerAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetConnectedClusterLoadBalancerAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -167,11 +167,11 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="loadBalancerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<LoadBalancerResource>> GetLoadBalancerAsync(this ArmClient client, ResourceIdentifier scope, string loadBalancerName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConnectedClusterLoadBalancerResource>> GetConnectedClusterLoadBalancerAsync(this ArmClient client, ResourceIdentifier scope, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableContainerOrchestratorRuntimeArmClient(client).GetLoadBalancerAsync(scope, loadBalancerName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerOrchestratorRuntimeArmClient(client).GetConnectedClusterLoadBalancerAsync(scope, loadBalancerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -191,12 +191,12 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LoadBalancerResource"/></description>
+        /// <description><see cref="ConnectedClusterLoadBalancerResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetLoadBalancer(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetConnectedClusterLoadBalancer(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -206,29 +206,29 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="loadBalancerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<LoadBalancerResource> GetLoadBalancer(this ArmClient client, ResourceIdentifier scope, string loadBalancerName, CancellationToken cancellationToken = default)
+        public static Response<ConnectedClusterLoadBalancerResource> GetConnectedClusterLoadBalancer(this ArmClient client, ResourceIdentifier scope, string loadBalancerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetLoadBalancer(scope, loadBalancerName, cancellationToken);
+            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetConnectedClusterLoadBalancer(scope, loadBalancerName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of ServiceResources in the ArmClient.
+        /// Gets a collection of ConnectedClusterServiceResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetServiceResources(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetConnectedClusterServices(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> An object representing collection of ServiceResources and their operations over a ServiceResource. </returns>
-        public static ServiceResourceCollection GetServiceResources(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> An object representing collection of ConnectedClusterServiceResources and their operations over a ConnectedClusterServiceResource. </returns>
+        public static ConnectedClusterServiceCollection GetConnectedClusterServices(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetServiceResources(scope);
+            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetConnectedClusterServices(scope);
         }
 
         /// <summary>
@@ -248,12 +248,12 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceResource"/></description>
+        /// <description><see cref="ConnectedClusterServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetServiceResourceAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetConnectedClusterServiceAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -263,11 +263,11 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ServiceResource>> GetServiceResourceAsync(this ArmClient client, ResourceIdentifier scope, string serviceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConnectedClusterServiceResource>> GetConnectedClusterServiceAsync(this ArmClient client, ResourceIdentifier scope, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableContainerOrchestratorRuntimeArmClient(client).GetServiceResourceAsync(scope, serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerOrchestratorRuntimeArmClient(client).GetConnectedClusterServiceAsync(scope, serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -287,12 +287,12 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceResource"/></description>
+        /// <description><see cref="ConnectedClusterServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetServiceResource(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetConnectedClusterService(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -302,29 +302,29 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<ServiceResource> GetServiceResource(this ArmClient client, ResourceIdentifier scope, string serviceName, CancellationToken cancellationToken = default)
+        public static Response<ConnectedClusterServiceResource> GetConnectedClusterService(this ArmClient client, ResourceIdentifier scope, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetServiceResource(scope, serviceName, cancellationToken);
+            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetConnectedClusterService(scope, serviceName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of StorageClassResources in the ArmClient.
+        /// Gets a collection of ConnectedClusterStorageClassResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetStorageClassResources(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetConnectedClusterStorageClasses(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> An object representing collection of StorageClassResources and their operations over a StorageClassResource. </returns>
-        public static StorageClassResourceCollection GetStorageClassResources(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> An object representing collection of ConnectedClusterStorageClassResources and their operations over a ConnectedClusterStorageClassResource. </returns>
+        public static ConnectedClusterStorageClassCollection GetConnectedClusterStorageClasses(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetStorageClassResources(scope);
+            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetConnectedClusterStorageClasses(scope);
         }
 
         /// <summary>
@@ -344,12 +344,12 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="StorageClassResource"/></description>
+        /// <description><see cref="ConnectedClusterStorageClassResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetStorageClassResourceAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetConnectedClusterStorageClassAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -359,11 +359,11 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="storageClassName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageClassName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<StorageClassResource>> GetStorageClassResourceAsync(this ArmClient client, ResourceIdentifier scope, string storageClassName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConnectedClusterStorageClassResource>> GetConnectedClusterStorageClassAsync(this ArmClient client, ResourceIdentifier scope, string storageClassName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableContainerOrchestratorRuntimeArmClient(client).GetStorageClassResourceAsync(scope, storageClassName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerOrchestratorRuntimeArmClient(client).GetConnectedClusterStorageClassAsync(scope, storageClassName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -383,12 +383,12 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="StorageClassResource"/></description>
+        /// <description><see cref="ConnectedClusterStorageClassResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetStorageClassResource(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetConnectedClusterStorageClass(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -398,87 +398,87 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="storageClassName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageClassName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<StorageClassResource> GetStorageClassResource(this ArmClient client, ResourceIdentifier scope, string storageClassName, CancellationToken cancellationToken = default)
+        public static Response<ConnectedClusterStorageClassResource> GetConnectedClusterStorageClass(this ArmClient client, ResourceIdentifier scope, string storageClassName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetStorageClassResource(scope, storageClassName, cancellationToken);
+            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetConnectedClusterStorageClass(scope, storageClassName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BgpPeerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BgpPeerResource.CreateResourceIdentifier" /> to create a <see cref="BgpPeerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ConnectedClusterBgpPeerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectedClusterBgpPeerResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedClusterBgpPeerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetBgpPeerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetConnectedClusterBgpPeerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BgpPeerResource"/> object. </returns>
-        public static BgpPeerResource GetBgpPeerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConnectedClusterBgpPeerResource"/> object. </returns>
+        public static ConnectedClusterBgpPeerResource GetConnectedClusterBgpPeerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetBgpPeerResource(id);
+            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetConnectedClusterBgpPeerResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LoadBalancerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LoadBalancerResource.CreateResourceIdentifier" /> to create a <see cref="LoadBalancerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ConnectedClusterLoadBalancerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectedClusterLoadBalancerResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedClusterLoadBalancerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetLoadBalancerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetConnectedClusterLoadBalancerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LoadBalancerResource"/> object. </returns>
-        public static LoadBalancerResource GetLoadBalancerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConnectedClusterLoadBalancerResource"/> object. </returns>
+        public static ConnectedClusterLoadBalancerResource GetConnectedClusterLoadBalancerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetLoadBalancerResource(id);
+            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetConnectedClusterLoadBalancerResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ConnectedClusterServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectedClusterServiceResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedClusterServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetConnectedClusterServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceResource"/> object. </returns>
-        public static ServiceResource GetServiceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConnectedClusterServiceResource"/> object. </returns>
+        public static ConnectedClusterServiceResource GetConnectedClusterServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetServiceResource(id);
+            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetConnectedClusterServiceResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageClassResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageClassResource.CreateResourceIdentifier" /> to create a <see cref="StorageClassResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ConnectedClusterStorageClassResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectedClusterStorageClassResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedClusterStorageClassResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetStorageClassResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerOrchestratorRuntimeArmClient.GetConnectedClusterStorageClassResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StorageClassResource"/> object. </returns>
-        public static StorageClassResource GetStorageClassResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConnectedClusterStorageClassResource"/> object. </returns>
+        public static ConnectedClusterStorageClassResource GetConnectedClusterStorageClassResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetStorageClassResource(id);
+            return GetMockableContainerOrchestratorRuntimeArmClient(client).GetConnectedClusterStorageClassResource(id);
         }
     }
 }

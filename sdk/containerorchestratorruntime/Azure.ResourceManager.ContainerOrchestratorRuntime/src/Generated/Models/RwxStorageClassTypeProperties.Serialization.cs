@@ -19,33 +19,24 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 
         void IJsonModel<RwxStorageClassTypeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RwxStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RwxStorageClassTypeProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("backingStorageClassName"u8);
             writer.WriteStringValue(BackingStorageClassName);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(SCType.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         RwxStorageClassTypeProperties IJsonModel<RwxStorageClassTypeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +60,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 return null;
             }
             string backingStorageClassName = default;
-            SCType type = default;
+            StorageClassType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -81,7 +72,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new SCType(property.Value.GetString());
+                    type = new StorageClassType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

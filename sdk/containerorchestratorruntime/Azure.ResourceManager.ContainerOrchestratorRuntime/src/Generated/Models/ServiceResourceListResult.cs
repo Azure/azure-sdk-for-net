@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <summary> Initializes a new instance of <see cref="ServiceResourceListResult"/>. </summary>
         /// <param name="value"> The ServiceResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ServiceResourceListResult(IEnumerable<ServiceResourceData> value)
+        internal ServiceResourceListResult(IEnumerable<ConnectedClusterServiceData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <param name="value"> The ServiceResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceResourceListResult(IReadOnlyList<ServiceResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceResourceListResult(IReadOnlyList<ConnectedClusterServiceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         }
 
         /// <summary> The ServiceResource items on this page. </summary>
-        public IReadOnlyList<ServiceResourceData> Value { get; }
+        public IReadOnlyList<ConnectedClusterServiceData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

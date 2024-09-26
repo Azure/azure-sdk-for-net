@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceResourceData>> GetAsync(string resourceUri, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ConnectedClusterServiceData>> GetAsync(string resourceUri, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 case 200:
                     {
-                        ServiceResourceData value = default;
+                        ConnectedClusterServiceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceResourceData.DeserializeServiceResourceData(document.RootElement);
+                        value = ConnectedClusterServiceData.DeserializeConnectedClusterServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServiceResourceData)null, message.Response);
+                    return Response.FromValue((ConnectedClusterServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceResourceData> Get(string resourceUri, string serviceName, CancellationToken cancellationToken = default)
+        public Response<ConnectedClusterServiceData> Get(string resourceUri, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
@@ -188,19 +188,19 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 case 200:
                     {
-                        ServiceResourceData value = default;
+                        ConnectedClusterServiceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceResourceData.DeserializeServiceResourceData(document.RootElement);
+                        value = ConnectedClusterServiceData.DeserializeConnectedClusterServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServiceResourceData)null, message.Response);
+                    return Response.FromValue((ConnectedClusterServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, string serviceName, ServiceResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, string serviceName, ConnectedClusterServiceData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string serviceName, ServiceResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string serviceName, ConnectedClusterServiceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceResourceData>> CreateOrUpdateAsync(string resourceUri, string serviceName, ServiceResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ConnectedClusterServiceData>> CreateOrUpdateAsync(string resourceUri, string serviceName, ConnectedClusterServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
@@ -254,9 +254,9 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 case 200:
                 case 201:
                     {
-                        ServiceResourceData value = default;
+                        ConnectedClusterServiceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceResourceData.DeserializeServiceResourceData(document.RootElement);
+                        value = ConnectedClusterServiceData.DeserializeConnectedClusterServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceResourceData> CreateOrUpdate(string resourceUri, string serviceName, ServiceResourceData data, CancellationToken cancellationToken = default)
+        public Response<ConnectedClusterServiceData> CreateOrUpdate(string resourceUri, string serviceName, ConnectedClusterServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
@@ -284,9 +284,9 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 case 200:
                 case 201:
                     {
-                        ServiceResourceData value = default;
+                        ConnectedClusterServiceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceResourceData.DeserializeServiceResourceData(document.RootElement);
+                        value = ConnectedClusterServiceData.DeserializeConnectedClusterServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
