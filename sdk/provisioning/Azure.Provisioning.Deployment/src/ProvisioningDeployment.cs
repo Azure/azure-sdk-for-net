@@ -29,6 +29,11 @@ public class ProvisioningDeployment
     internal ProvisioningContext Context { get; }
 
     /// <summary>
+    /// Gets the options that were used to deploy the resources.
+    /// </summary>
+    internal ProvisioningDeploymentOptions DeploymentOptions { get; }
+
+    /// <summary>
     /// Gets the <see cref="ArmDeploymentResource"/> that was used to deploy
     /// the infrastructure template.
     /// </summary>
@@ -58,8 +63,11 @@ public class ProvisioningDeployment
     /// <summary>
     /// Creates a new <see cref="ProvisioningDeployment"/>.
     /// </summary>
-    /// <param name="context">
-    /// The provisioning context that was used to deploy the resources.
+    /// <param name="plan">
+    /// The provisioning plan that was used to deploy the resources.
+    /// </param>
+    /// <param name="options">
+    /// The options used to deploy the resources.
     /// </param>
     /// <param name="deployment">
     /// The <see cref="ArmDeploymentResource"/> that was used to deploy
@@ -71,9 +79,10 @@ public class ProvisioningDeployment
     /// <exception cref="ArgumentException">
     /// Thrown when the deployment resource doesn't have its Data populated.
     /// </exception>
-    internal ProvisioningDeployment(ProvisioningContext context, ArmDeploymentResource deployment, IReadOnlyDictionary<string, object?> outputs)
+    internal ProvisioningDeployment(ProvisioningPlan plan, ProvisioningDeploymentOptions options, ArmDeploymentResource deployment, IReadOnlyDictionary<string, object?> outputs)
     {
-        Context = context;
+        Context = plan.ProvisioningContext;
+        DeploymentOptions = options;
         Deployment = deployment.HasData ? deployment :
             throw new ArgumentException($"The {nameof(deployment)} must have its {nameof(ArmDeploymentResource.Data)} property set.", nameof(deployment));
         Outputs = outputs;
@@ -107,28 +116,8 @@ public class ProvisioningDeployment
         {
             throw new InvalidOperationException($"Cannot create a client because the deployment did not succeed: {Error}");
         }
-        credential ??= Context.DefaultClientCredential;
-        if (options is not null) { Context.ConfigureClientOptionsCallback?.Invoke(options); }
-        return resource.CreateClient(this, credential, options);
-    }
-
-    /// <summary>
-    /// Gets an output required to create a client from this resource.
-    /// </summary>
-    /// <typeparam name="T">The type of the output value.</typeparam>
-    /// <param name="resource">The deployed resource.</param>
-    /// <param name="parameterName">
-    /// The name of the parameter the resource is expecting.
-    /// </param>
-    /// <returns>The value of the output.</returns>
-    /// <exception cref="InvalidOperationException">
-    /// Thrown when no matching output is found.
-    /// </exception>
-    [EditorBrowsable(EditorBrowsableState.Never)] // TODO: We'll remove this when we make IClientCreator define the outputs
-    public T GetClientCreationOutput<T>(Resource resource, string parameterName)
-    {
-        string qualifiedName = $"{resource.ResourceName}_{parameterName}";
-        return (Outputs.TryGetValue(qualifiedName, out object? raw) && raw is T value) ? value :
-            throw new InvalidOperationException($"Could not find output value {qualifiedName} to construct {resource.GetType().Name} resource {resource.ResourceName}.");
+        credential ??= DeploymentOptions.DefaultClientCredential;
+        if (options is not null) { DeploymentOptions.ConfigureClientOptionsCallback?.Invoke(options); }
+        return resource.CreateClient(Outputs, credential, options);
     }
 }

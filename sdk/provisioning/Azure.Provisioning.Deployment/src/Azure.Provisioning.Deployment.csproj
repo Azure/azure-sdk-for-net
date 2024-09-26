@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Contains the core functionality for defining Azure infrastructure with dotnet code.</Description>
+    <Description>Contains the core functionality for deploying Azure infrastructure with dotnet code.</Description>
     <Version>1.0.0-beta.1</Version>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
@@ -14,6 +14,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="Azure.ResourceManager.Resources" />
   </ItemGroup>
+
 </Project>

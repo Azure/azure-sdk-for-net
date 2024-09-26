@@ -128,44 +128,20 @@ namespace Azure.Provisioning
     public partial class ProvisioningContext
     {
         public ProvisioningContext() { }
-        public Azure.ResourceManager.ArmClient ArmClient { get { throw null; } set { } }
-        public System.Action<Azure.Core.ClientOptions>? ConfigureClientOptionsCallback { get { throw null; } set { } }
-        public Azure.Core.TokenCredential DefaultArmCredential { get { throw null; } set { } }
-        public Azure.Core.TokenCredential DefaultClientCredential { get { throw null; } set { } }
-        public Azure.Core.TokenCredential? DefaultCredential { get { throw null; } set { } }
-        public System.Func<Azure.Core.TokenCredential> DefaultCredentialProvider { get { throw null; } set { } }
         public Azure.Provisioning.Infrastructure DefaultInfrastructure { get { throw null; } set { } }
         public System.Func<Azure.Provisioning.Infrastructure> DefaultInfrastructureProvider { get { throw null; } set { } }
-        public string? DefaultSubscriptionId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Provisioning.Primitives.InfrastructureResolver> InfrastructureResolvers { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Provisioning.Primitives.PropertyResolver> PropertyResolvers { get { throw null; } set { } }
         public static Azure.Provisioning.Primitives.ProvisioningContextProvider Provider { get { throw null; } set { } }
         public System.Random Random { get { throw null; } set { } }
     }
-    public partial class ProvisioningDeployment
-    {
-        internal ProvisioningDeployment() { }
-        public Azure.ResourceManager.Resources.ArmDeploymentResource Deployment { get { throw null; } }
-        public Azure.ResponseError? Error { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, object?> Outputs { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ResourcesProvisioningState? ProvisioningState { get { throw null; } }
-        public TClient CreateClient<TClient, TOptions>(Azure.Provisioning.Primitives.IClientCreator<TClient, TOptions> resource, Azure.Core.TokenCredential? credential = null, TOptions? options = null) where TOptions : Azure.Core.ClientOptions { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public T GetClientCreationOutput<T>(Azure.Provisioning.Primitives.Resource resource, string parameterName) { throw null; }
-    }
     public partial class ProvisioningPlan
     {
         internal ProvisioningPlan() { }
+        public Azure.Provisioning.Infrastructure Infrastructure { get { throw null; } }
+        public Azure.Provisioning.ProvisioningContext ProvisioningContext { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Compile() { throw null; }
-        public string CompileArmTemplate(string? optionalDirectoryPath = null) { throw null; }
-        public Azure.Provisioning.ProvisioningDeployment DeployToNewResourceGroup(string resourceGroupName, Azure.Core.AzureLocation location, Azure.ResourceManager.ArmClient? client = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<Azure.Provisioning.ProvisioningDeployment> DeployToNewResourceGroupAsync(string resourceGroupName, Azure.Core.AzureLocation location, Azure.ResourceManager.ArmClient? client = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public Azure.Provisioning.ProvisioningDeployment DeployToResourceGroup(string resourceGroupName, Azure.ResourceManager.ArmClient? client = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<Azure.Provisioning.ProvisioningDeployment> DeployToResourceGroupAsync(string resourceGroupName, Azure.ResourceManager.ArmClient? client = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Collections.Generic.IReadOnlyList<Azure.Provisioning.Primitives.BicepErrorMessage> Lint(string? optionalDirectoryPath = null) { throw null; }
         public System.Collections.Generic.IEnumerable<string> Save(string directoryPath) { throw null; }
-        public Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult ValidateInResourceGroup(string resourceGroupName, Azure.ResourceManager.ArmClient? client = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult> ValidateInResourceGroupAsync(string resourceGroupName, Azure.ResourceManager.ArmClient? client = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.Provisioning.Authorization
@@ -787,18 +763,6 @@ namespace Azure.Provisioning.Expressions
 }
 namespace Azure.Provisioning.Primitives
 {
-    public partial class BicepErrorMessage
-    {
-        internal BicepErrorMessage() { }
-        public string? Code { get { throw null; } }
-        public int? ColumnNumber { get { throw null; } }
-        public string? FilePath { get { throw null; } }
-        public bool? IsError { get { throw null; } }
-        public int? LineNumber { get { throw null; } }
-        public string? Message { get { throw null; } }
-        public string RawText { get { throw null; } }
-        public override string ToString() { throw null; }
-    }
     public partial class BicepLiteral : Azure.Provisioning.Primitives.NamedProvisioningConstruct
     {
         public BicepLiteral(string resourceName, params Azure.Provisioning.Expressions.Statement[] statements) : base (default(string), default(Azure.Provisioning.ProvisioningContext)) { }
@@ -813,6 +777,11 @@ namespace Azure.Provisioning.Primitives
         public string PropertyName { get { throw null; } }
         public override string ToString() { throw null; }
     }
+    public partial class ClientCreatorOutputResolver : Azure.Provisioning.Primitives.InfrastructureResolver
+    {
+        public ClientCreatorOutputResolver() { }
+        public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> ResolveResources(Azure.Provisioning.ProvisioningContext context, System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> resources) { throw null; }
+    }
     public partial class DynamicResourceNamePropertyResolver : Azure.Provisioning.Primitives.ResourceNamePropertyResolver
     {
         public DynamicResourceNamePropertyResolver() { }
@@ -824,9 +793,13 @@ namespace Azure.Provisioning.Primitives
         public FreshProvisioningContextProvider(System.Func<Azure.Provisioning.ProvisioningContext>? contextFactory = null) { }
         public override Azure.Provisioning.ProvisioningContext GetProvisioningContext() { throw null; }
     }
-    public partial interface IClientCreator<TClient, TOptions> where TOptions : Azure.Core.ClientOptions
+    public partial interface IClientCreator
     {
-        TClient CreateClient(Azure.Provisioning.ProvisioningDeployment deployment, Azure.Core.TokenCredential credential, TOptions? options = null);
+        System.Collections.Generic.IEnumerable<Azure.Provisioning.BicepOutput> GetOutputs();
+    }
+    public partial interface IClientCreator<TClient, TOptions> : Azure.Provisioning.Primitives.IClientCreator where TOptions : Azure.Core.ClientOptions
+    {
+        TClient CreateClient(System.Collections.Generic.IReadOnlyDictionary<string, object?> deploymentOutputs, Azure.Core.TokenCredential credential, TOptions? options = null);
     }
     public abstract partial class InfrastructureResolver
     {
