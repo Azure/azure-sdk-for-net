@@ -1,4 +1,5 @@
 # Microsoft Azure ComputeSchedule management client library for .NET
+
 Microsoft Azure ComputeSchedule allows customers to schedule one off operations on their virtual machines. These operations include:
 - Start
 - Deallocate
@@ -10,7 +11,6 @@ There are 2 groups of schedule type operations that customers can perform on the
 - `Execute Type Operations`: These type of operations allow clients to perform operations on their virtual machines immediately.
 
 Other operations include endpoints to get operation status on virtual machines, cancel operations scheduled on virtual machines and get errors that might have occured during operations.
-
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
