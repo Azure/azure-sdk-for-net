@@ -32,6 +32,7 @@ namespace Azure.Generator
         /// <inheritdoc/>
         public override HttpResponseApi CreateHttpResponse(ValueExpression original) => new AzureResponseProvider(original.As<Response>());
 
+        /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
         {
             if (inputType is InputPrimitiveType inputPrimitiveType)
