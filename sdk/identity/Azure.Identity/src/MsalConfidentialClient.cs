@@ -169,15 +169,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost);
-                if (uriBuilder.Path.EndsWith("/"))
-                {
-                    uriBuilder.Path = uriBuilder.Path + tenantId;
-                }
-                else
-                {
-                    uriBuilder.Path = uriBuilder.Path + "/" + tenantId;
-                }
+                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
 
@@ -221,15 +213,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost);
-                if (uriBuilder.Path.EndsWith("/"))
-                {
-                    uriBuilder.Path = uriBuilder.Path + tenantId;
-                }
-                else
-                {
-                    uriBuilder.Path = uriBuilder.Path + "/" + tenantId;
-                }
+                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
 
@@ -273,15 +257,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost);
-                if (uriBuilder.Path.EndsWith("/"))
-                {
-                    uriBuilder.Path = uriBuilder.Path + tenantId;
-                }
-                else
-                {
-                    uriBuilder.Path = uriBuilder.Path + "/" + tenantId;
-                }
+                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
 
@@ -325,15 +301,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost);
-                if (uriBuilder.Path.EndsWith("/"))
-                {
-                    uriBuilder.Path = uriBuilder.Path + tenantId;
-                }
-                else
-                {
-                    uriBuilder.Path = uriBuilder.Path + "/" + tenantId;
-                }
+                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
 
