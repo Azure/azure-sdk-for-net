@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         void IJsonModel<SessionHostAgentUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SessionHostAgentUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SessionHostAgentUpdateProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(UpdateType))
             {
                 writer.WritePropertyName("type"u8);
@@ -75,7 +83,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SessionHostAgentUpdateProperties IJsonModel<SessionHostAgentUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
