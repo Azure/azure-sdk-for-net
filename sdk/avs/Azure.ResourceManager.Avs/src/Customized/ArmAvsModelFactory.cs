@@ -229,15 +229,5 @@ namespace Azure.ResourceManager.Avs.Models
                 null
             );
         }
-        /// <summary> Initializes a new instance of <see cref="Models.CommonClusterProperties"/>. </summary>
-        /// <param name="clusterSize"> The cluster size. </param>
-        /// <param name="provisioningState"> The state of the cluster provisioning. </param>
-        /// <param name="clusterId"> The identity. </param>
-        /// <param name="hosts"> The hosts. </param>
-        /// <returns> A new <see cref="Models.CommonClusterProperties"/> instance for mocking. </returns>
-        public static CommonClusterProperties CommonClusterProperties(int? clusterSize = null, AvsPrivateCloudClusterProvisioningState? provisioningState = null, int? clusterId = null, IEnumerable<string> hosts = null)
-        {
-            throw new NotSupportedException("This method is obsolete.");
-        }
     }
 }
