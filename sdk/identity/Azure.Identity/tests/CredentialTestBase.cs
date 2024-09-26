@@ -423,7 +423,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task AuthorityHostConfigSupportsPath()
+        public async Task AuthorityHostConfigSupportsdStS()
         {
             // Configure the transport
             var token = Guid.NewGuid().ToString();
