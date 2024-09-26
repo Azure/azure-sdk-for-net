@@ -72,7 +72,7 @@ namespace Azure.Core.Pipeline
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
         protected virtual ValueTask AuthorizeRequestAsync(HttpMessage message)
         {
-            var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
+            var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId, isCaeEnabled: true);
             return AuthenticateAndAuthorizeRequestAsync(message, context);
         }
 
@@ -85,7 +85,7 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
         protected virtual void AuthorizeRequest(HttpMessage message)
         {
-            var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
+            var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId, isCaeEnabled: true);
             AuthenticateAndAuthorizeRequest(message, context);
         }
 

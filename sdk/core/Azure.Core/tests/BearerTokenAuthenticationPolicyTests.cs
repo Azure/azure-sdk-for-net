@@ -963,6 +963,7 @@ namespace Azure.Core.Tests
             {
                 claims = r.Claims;
                 Interlocked.Increment(ref callCount);
+                Assert.AreEqual(true, r.IsCaeEnabled);
 
                 return new(callCount.ToString(), DateTimeOffset.Now.AddHours(2));
             }, IsAsync);
