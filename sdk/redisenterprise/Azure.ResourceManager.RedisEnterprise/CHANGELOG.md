@@ -1,5 +1,17 @@
 # Release History
 
+## 1.2.0-beta.2 (Unreleased)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.2.0-beta.1 (2024-09-25)
 
 ### Features Added
@@ -11,23 +23,38 @@
   - Database has new properties: redisVersion, deferUpgrade and accessKeysAuthentication. 
 - Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 - Added experimental Bicep serialization.
+
 ### Other Changes
+
 - Upgraded Azure.Core from 1.37.0 to 1.43.0
 - Upgraded Azure.ResourceManager from 1.10.1 to 1.13.0
+
 ## 1.1.0 (2024-02-20)
+
 ### Features Added
+
 - Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Upgraded api-version tag from 'package-2022-01' to 'package-2024-02'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/ecc0170a2005f5f38231ae4dbba40594d3c00a04/specification/redisenterprise/resource-manager/readme.md
+
 ### Other Changes
+
 - Upgraded Azure.Core from 1.28.0 to 1.37.0
 - Upgraded Azure.ResourceManager from 1.4.0 to 1.10.1
+
 ## 1.1.0-beta.2 (2023-11-30)
+
 ### Features Added
+
 - Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
 ### Other Changes
+
 - Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
 ## 1.1.0-beta.1 (2023-05-31)
+
 ### Features Added
+
 - Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 - Updated api-version to `2023-03-01-preview`
 - Added operation Flush
@@ -36,7 +63,9 @@
 - Model Cluster has a new parameter identity
 - Model ClusterUpdate has a new parameter encryption
 - Model ClusterUpdate has a new parameter identity
+
 ### Other Changes
+
 - Upgraded dependent Azure.Core to 1.32.0.
 - Upgraded dependent Azure.ResourceManager to 1.6.0.
 - Model Database has a new parameter system_data
@@ -46,17 +75,24 @@
 - Model Resource has a new parameter system_data
 - Model TrackedResource has a new parameter system_data
 - Model Cluster has a new parameter system_data
+
 ## 1.0.1 (2023-02-20)
+
 ### Other Changes
+
 - Upgraded dependent `Azure.Core` to `1.28.0`.
 - Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
+
 ## 1.0.0 (2022-09-19)
+
 This release is the first stable release of the Redis Enterprise Management client library.
+
 ### Other Changes
+
 - Upgraded dependent `Azure.ResourceManager` to 1.3.1
 - Optimized the implementation of methods related to tag operations.
+
 ## 1.0.0-beta.2 (2022-08-29)
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
