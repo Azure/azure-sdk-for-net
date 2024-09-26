@@ -8,10 +8,17 @@ namespace Azure.CloudMachine;
 
 public static class MessagingServices
 {
-    public static string Send(this CloudMachineClient cm, object json)
+    public static void Send(this CloudMachineClient cm, object serializable)
     {
-        ServiceBusClient sb = new(cm.Properties.ServiceBusNamespace, cm.Credential);
-        ServiceBusSender sender = sb.CreateSender("cm_default_topic");
-        throw new NotImplementedException();
+        ServiceBusSender sender = cm.ClientCache.Get<ServiceBusSender>("cm_default_topic", () =>
+        {
+            ServiceBusClient sb = new(cm.Properties.ServiceBusNamespace, cm.Credential);
+            ServiceBusSender sender = sb.CreateSender("cm_default_topic");
+            return sender;
+        });
+
+        BinaryData serialized = BinaryData.FromObjectAsJson(serializable);
+        ServiceBusMessage message = new(serialized);
+        sender.SendMessageAsync(message);
     }
 }

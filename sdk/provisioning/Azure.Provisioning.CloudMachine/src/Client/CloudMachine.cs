@@ -47,6 +47,9 @@ public partial class CloudMachineClient
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
+    public ClientCache ClientCache { get; } = new ClientCache();
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public CloudMachineProperties Properties => new CloudMachineProperties(this);
 
     public struct CloudMachineProperties

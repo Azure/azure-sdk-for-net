@@ -40,4 +40,21 @@ public class CloudMachineTests
         });
         BinaryData downloaded = cm.Download(uploaded);
     }
+
+    [Ignore("no recordings yet")]
+    [Theory]
+    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "" }])]
+    public void Messaging(string[] args)
+    {
+        if (CloudMachineInfrastructure.Configure(args, (cmi) => {
+        })) return;
+
+        CloudMachineClient cm = new();
+        cm.Send(new
+        {
+            Foo = 5,
+            Bar = true
+        });
+    }
 }
