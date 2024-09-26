@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class CancelOperationsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsContent>
     {
-        public CancelOperationsContent(System.Collections.Generic.IEnumerable<string> operationIds, string correlationid) { }
-        public string Correlationid { get { throw null; } }
+        public CancelOperationsContent(System.Collections.Generic.IEnumerable<string> operationIds, string correlationId) { }
+        public string CorrelationId { get { throw null; } }
         public System.Collections.Generic.IList<string> OperationIds { get { throw null; } }
         Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class ExecuteDeallocateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteDeallocateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteDeallocateContent>
     {
-        public ExecuteDeallocateContent(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationid) { }
-        public string Correlationid { get { throw null; } }
+        public ExecuteDeallocateContent(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationId) { }
+        public string CorrelationId { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail ExecutionParameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ResourcesIds { get { throw null; } }
         Azure.ResourceManager.ComputeSchedule.Models.ExecuteDeallocateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteDeallocateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class ExecuteHibernateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteHibernateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteHibernateContent>
     {
-        public ExecuteHibernateContent(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationid) { }
-        public string Correlationid { get { throw null; } }
+        public ExecuteHibernateContent(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationId) { }
+        public string CorrelationId { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail ExecutionParameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ResourcesIds { get { throw null; } }
         Azure.ResourceManager.ComputeSchedule.Models.ExecuteHibernateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteHibernateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -123,8 +123,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class ExecuteStartContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteStartContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteStartContent>
     {
-        public ExecuteStartContent(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationid) { }
-        public string Correlationid { get { throw null; } }
+        public ExecuteStartContent(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationId) { }
+        public string CorrelationId { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail ExecutionParameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ResourcesIds { get { throw null; } }
         Azure.ResourceManager.ComputeSchedule.Models.ExecuteStartContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ExecuteStartContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -155,8 +155,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class GetOperationStatusContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.GetOperationStatusContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.GetOperationStatusContent>
     {
-        public GetOperationStatusContent(System.Collections.Generic.IEnumerable<string> operationIds, string correlationid) { }
-        public string Correlationid { get { throw null; } }
+        public GetOperationStatusContent(System.Collections.Generic.IEnumerable<string> operationIds, string correlationId) { }
+        public string CorrelationId { get { throw null; } }
         public System.Collections.Generic.IList<string> OperationIds { get { throw null; } }
         Azure.ResourceManager.ComputeSchedule.Models.GetOperationStatusContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.GetOperationStatusContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.GetOperationStatusContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -369,8 +369,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class SubmitDeallocateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitDeallocateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitDeallocateContent>
     {
-        public SubmitDeallocateContent(Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule schedule, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationid) { }
-        public string Correlationid { get { throw null; } }
+        public SubmitDeallocateContent(Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule schedule, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationId) { }
+        public string CorrelationId { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail ExecutionParameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ResourcesIds { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule Schedule { get { throw null; } }
@@ -382,8 +382,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class SubmitHibernateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitHibernateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitHibernateContent>
     {
-        public SubmitHibernateContent(Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule schedule, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationid) { }
-        public string Correlationid { get { throw null; } }
+        public SubmitHibernateContent(Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule schedule, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationId) { }
+        public string CorrelationId { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail ExecutionParameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ResourcesIds { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule Schedule { get { throw null; } }
@@ -395,8 +395,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class SubmitStartContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitStartContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.SubmitStartContent>
     {
-        public SubmitStartContent(Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule schedule, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationid) { }
-        public string Correlationid { get { throw null; } }
+        public SubmitStartContent(Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule schedule, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail executionParameters, Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources resources, string correlationId) { }
+        public string CorrelationId { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionExecutionParameterDetail ExecutionParameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ResourcesIds { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule Schedule { get { throw null; } }
