@@ -32,6 +32,8 @@
   .NET](https://learn.microsoft.com/dotnet/azure/sdk/logging).
   ([#45649](https://github.com/Azure/azure-sdk-for-net/pull/45649))
 
+* Improved the efficiency of `AzureEventSourceLogForwarder` by eliminating message formatting. ([#46202](https://github.com/Azure/azure-sdk-for-net/pull/46202))
+
 ## 1.3.0-beta.1 (2024-07-12)
 
 ### Bugs Fixed
