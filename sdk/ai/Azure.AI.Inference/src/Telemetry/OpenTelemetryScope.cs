@@ -230,7 +230,7 @@ namespace Azure.AI.Inference.Telemetry
                     ActivityTagsCollection completionTags = new()
                 {
                     { GenAiSystemKey, GenAiSystemValue},
-                    { GenAiEventContent, JsonSerializer.Serialize(choice) }
+                    { GenAiEventContent, choice }
                 };
                     _activity?.AddEvent(new ActivityEvent(
                             GenAiChoice,

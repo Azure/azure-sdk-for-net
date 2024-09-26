@@ -73,16 +73,6 @@ namespace Azure.AI.Inference.Tests.Utilities
                 }
         }
 
-        /// <summary>
-        /// Remove junk added adding string as a tag.
-        /// </summary>
-        /// <param name="value">The string to be cleaned.</param>
-        /// <returns></returns>
-        private static string CleanString(string value)
-        {
-            return value.Replace("\\u0022", "\"").Replace("\\\\n", "\\n").Replace("\\\\u", "\\u").Trim('\"');
-        }
-
         public void ValidateResponseEvents(AbstractRecordedResponse response, bool traceEvents)
         {
             Activity activity = m_listeners.Single();
@@ -101,7 +91,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             {
                 foreach (string v in response.GetSerializedCompletions())
                 {
-                    validChoices.Add(CleanString(v));
+                    validChoices.Add(v);
                 }
                 foreach (ActivityEvent evt in activity.Events)
                 {
@@ -111,7 +101,7 @@ namespace Azure.AI.Inference.Tests.Utilities
                     Assert.AreEqual(GenAiSystemKey, evt.Tags.ElementAt(0).Key);
                     Assert.AreEqual(GenAiSystemValue, evt.Tags.ElementAt(0).Value);
                     Assert.AreEqual(GenAiEventContent, evt.Tags.ElementAt(1).Key);
-                    Assert.That(validChoices.Contains(CleanString(evt.Tags.ElementAt(1).Value.ToString())));
+                    Assert.That(validChoices.Contains(evt.Tags.ElementAt(1).Value.ToString()));
                 }
             }
             else

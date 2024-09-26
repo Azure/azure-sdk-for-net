@@ -4,14 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Metrics;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Inference.Telemetry;
 using Azure.AI.Inference.Tests.Utilities;
-using Azure.Core;
 using Azure.Core.Sse;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
