@@ -63,7 +63,6 @@ public class Program
 
         try
         {
-            Console.Out.WriteLine($"opts.Test: {opts.Test}");
             TestScenarioName testScenarioName = StringToTestScenario(opts.Test);
             metrics.Client.Context.GlobalProperties["TestName"] = opts.Test;
             string guid = Guid.NewGuid().ToString();
