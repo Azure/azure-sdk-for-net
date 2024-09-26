@@ -43,6 +43,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             Console.Out.WriteLine($"Creating temporary file storage resource from directory: {disposingLocalDirectory.DirectoryPath}");
             StorageResource sourceResource = await TestSetupHelper.GetTemporaryFileStorageResourceAsync(
                 disposingLocalDirectory.DirectoryPath,
+                fileName: blobName,
                 fileSize: _blobSize,
                 cancellationToken: cancellationToken);
 
@@ -57,6 +58,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             StorageResource destinationResource = _blobsStorageResourceProvider.FromBlob(blobUriBuilder.ToUri().AbsoluteUri);
 
             // Start Transfer
+            Console.Out.WriteLine($"Creating transferManager");
             TransferManager transferManager = new TransferManager(_transferManagerOptions);
             Console.Out.WriteLine($"Starting transfer from {sourceResource.Uri.AbsoluteUri} to {destinationResource.Uri.AbsoluteUri}");
             await new TransferValidator()

@@ -65,6 +65,7 @@ public class Program
 
         try
         {
+            Console.Out.WriteLine($"opts.Test: {opts.Test}");
             TestScenarioName testScenarioName = StringToTestScenario(opts.Test);
             metrics.Client.Context.GlobalProperties["TestName"] = opts.Test;
             string guid = Guid.NewGuid().ToString();
@@ -128,7 +129,6 @@ public class Program
             }
 
             metrics.Client.TrackEvent("Test run is ending.");
-            Console.Out.WriteLine("Test run is ending.");
         }
         catch (TaskCanceledException)
         {
@@ -151,6 +151,7 @@ public class Program
             // We need to wait one minute after flushing the Application Insights client. The Application
             // Insights flush is non-deterministic, so we don't want to let the application close until
             // all telemetry has been sent.
+            Console.Out.WriteLine("Test run is ending with wait.");
             metrics.Client.Flush();
             await Task.Delay(60000).ConfigureAwait(false);
         }
