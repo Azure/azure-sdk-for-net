@@ -78,9 +78,8 @@ public partial class StaticSitePrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the StaticSitePrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the StaticSitePrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public StaticSitePrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/staticSites/privateEndpointConnections", resourceVersion, context)
+    public StaticSitePrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/staticSites/privateEndpointConnections", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _iPAddresses = BicepList<IPAddress>.DefineProperty(this, "IPAddresses", ["properties", "ipAddresses"]);

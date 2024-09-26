@@ -71,9 +71,8 @@ public partial class SenderUsername : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SenderUsername.</param>
     /// <param name="resourceVersion">Version of the SenderUsername.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SenderUsername(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Communication/emailServices/domains/senderUsernames", resourceVersion, context)
+    public SenderUsername(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Communication/emailServices/domains/senderUsernames", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["properties", "displayName"]);

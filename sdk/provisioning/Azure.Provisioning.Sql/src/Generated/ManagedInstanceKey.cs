@@ -85,9 +85,8 @@ public partial class ManagedInstanceKey : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedInstanceKey.</param>
     /// <param name="resourceVersion">Version of the ManagedInstanceKey.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedInstanceKey(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/keys", resourceVersion, context)
+    public ManagedInstanceKey(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/keys", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _serverKeyType = BicepValue<SqlServerKeyType>.DefineProperty(this, "ServerKeyType", ["properties", "serverKeyType"]);

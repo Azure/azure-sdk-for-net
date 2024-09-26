@@ -49,8 +49,15 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                infra.Add(storage);
+
                 BlobService blobs = new(nameof(blobs)) { Parent = storage, DependsOn = { storage } };
+                infra.Add(blobs);
+
+                return infra;
             })
         .Compare(
             """
@@ -89,9 +96,18 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                infra.Add(storage);
+
                 UserAssignedIdentity id = new(nameof(id));
-                storage.AssignRole(StorageBuiltInRole.StorageBlobDataReader, id);
+                infra.Add(id);
+
+                RoleAssignment role = storage.AssignRole(StorageBuiltInRole.StorageBlobDataReader, id);
+                infra.Add(role);
+
+                return infra;
             })
         .Compare(
             """
@@ -137,9 +153,18 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                infra.Add(storage);
+
                 UserAssignedIdentity id = new(nameof(id));
-                storage.AssignRole(StorageBuiltInRole.StorageBlobDataReader, RoleManagementPrincipalType.ServicePrincipal, id.PrincipalId);
+                infra.Add(id);
+
+                RoleAssignment role = storage.AssignRole(StorageBuiltInRole.StorageBlobDataReader, RoleManagementPrincipalType.ServicePrincipal, id.PrincipalId);
+                infra.Add(role);
+
+                return infra;
             })
         .Compare(
             """
@@ -185,9 +210,17 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                infra.Add(storage);
+
                 BlobService blobs = new(nameof(blobs)) { Parent = storage };
-                _ = new BicepOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri };
+                infra.Add(blobs);
+
+                infra.Add(new BicepOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri });
+
+                return infra;
             })
         .Compare(
             """
@@ -226,12 +259,15 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 BicepParameter storageAccountType =
                     new(nameof(storageAccountType), typeof(string))
                     {
                         Value = StorageSkuName.StandardLrs,
                         Description = "Storage Account type"
                     };
+                infra.Add(storageAccountType);
 
                 StorageAccount sa =
                     new(nameof(sa))
@@ -239,9 +275,12 @@ public class BasicStorageTests(bool async)
                         Sku = new StorageSku { Name = storageAccountType },
                         Kind = StorageKind.StorageV2
                     };
+                infra.Add(sa);
 
-                _ = new BicepOutput("storageAccountName", typeof(string)) { Value = sa.Name };
-                _ = new BicepOutput("storageAccountId", typeof(string)) { Value = sa.Id };
+                infra.Add(new BicepOutput("storageAccountName", typeof(string)) { Value = sa.Name });
+                infra.Add(new BicepOutput("storageAccountId", typeof(string)) { Value = sa.Id });
+
+                return infra;
             })
         .Compare(
             """
@@ -276,12 +315,15 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 BicepParameter containerName =
                     new(nameof(containerName), typeof(string))
                     {
                         Value = "mycontainer",
                         Description = "The container name."
                     };
+                infra.Add(containerName);
 
                 StorageAccount sa =
                     new(nameof(sa))
@@ -290,13 +332,20 @@ public class BasicStorageTests(bool async)
                         Kind = StorageKind.StorageV2,
                         AccessTier = StorageAccountAccessTier.Hot
                     };
+                infra.Add(sa);
+
                 BlobService blobs = new(nameof(blobs)) { Parent = sa };
+                infra.Add(blobs);
+
                 BlobContainer container =
                     new(nameof(container), StorageAccount.ResourceVersions.V2023_01_01)
                     {
                         Parent = blobs,
                         Name = containerName
                     };
+                infra.Add(container);
+
+                return infra;
             })
         .Compare(
             """
@@ -340,12 +389,15 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 BicepParameter storageAccountType =
                     new(nameof(storageAccountType), typeof(string))
                     {
                         Value = StorageSkuName.StandardLrs,
                         Description = "Storage Account type"
                     };
+                infra.Add(storageAccountType);
 
                 StorageAccount sa =
                     new(nameof(sa))
@@ -363,9 +415,12 @@ public class BasicStorageTests(bool async)
                                     }
                             }
                     };
+                infra.Add(sa);
 
-                _ = new BicepOutput("storageAccountName", typeof(string)) { Value = sa.Name };
-                _ = new BicepOutput("storageAccountId", typeof(string)) { Value = sa.Id };
+                infra.Add(new BicepOutput("storageAccountName", typeof(string)) { Value = sa.Name });
+                infra.Add(new BicepOutput("storageAccountId", typeof(string)) { Value = sa.Id });
+
+                return infra;
             })
         .Compare(
             """
@@ -410,6 +465,8 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 StorageAccount sa =
                     new(nameof(sa), StorageAccount.ResourceVersions.V2023_01_01)
                     {
@@ -417,13 +474,20 @@ public class BasicStorageTests(bool async)
                         Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
                         Kind = StorageKind.StorageV2
                     };
+                infra.Add(sa);
+
                 FileService files = new(nameof(files)) { Parent = sa };
+                infra.Add(files);
+
                 FileShare share =
                     new(nameof(share), StorageAccount.ResourceVersions.V2023_01_01)
                     {
                         Parent = files,
                         Name = "photos"
                     };
+                infra.Add(share);
+
+                return infra;
             })
         .Compare(
             """

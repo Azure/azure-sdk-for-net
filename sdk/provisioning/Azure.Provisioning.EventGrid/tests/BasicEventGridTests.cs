@@ -23,7 +23,10 @@ public class BasicEventGridTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 BicepParameter webhookUri = new(nameof(webhookUri), typeof(string));
+                infra.Add(webhookUri);
 
                 StorageAccount storage =
                     new(nameof(storage))
@@ -34,6 +37,8 @@ public class BasicEventGridTests(bool async)
                         AccessTier = StorageAccountAccessTier.Hot,
                         EnableHttpsTrafficOnly = true,
                     };
+                infra.Add(storage);
+
                 SystemTopic topic =
                     new(nameof(topic))
                     {
@@ -41,6 +46,8 @@ public class BasicEventGridTests(bool async)
                         Source = storage.Id,
                         TopicType = "Microsoft.Storage.StorageAccounts"
                     };
+                infra.Add(topic);
+
                 SystemTopicEventSubscription subscription =
                     new(nameof(subscription))
                     {
@@ -55,6 +62,9 @@ public class BasicEventGridTests(bool async)
                             }
                         }
                     };
+                infra.Add(subscription);
+
+                return infra;
             })
         .Compare(
             """

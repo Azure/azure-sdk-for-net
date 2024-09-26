@@ -82,9 +82,8 @@ public partial class MongoDBRoleDefinition : Resource
     /// </summary>
     /// <param name="resourceName">Name of the MongoDBRoleDefinition.</param>
     /// <param name="resourceVersion">Version of the MongoDBRoleDefinition.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public MongoDBRoleDefinition(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/mongodbRoleDefinitions", resourceVersion, context)
+    public MongoDBRoleDefinition(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/mongodbRoleDefinitions", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _databaseName = BicepValue<string>.DefineProperty(this, "DatabaseName", ["properties", "databaseName"]);

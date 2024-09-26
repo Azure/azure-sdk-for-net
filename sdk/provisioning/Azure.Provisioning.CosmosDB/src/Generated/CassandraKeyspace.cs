@@ -85,9 +85,8 @@ public partial class CassandraKeyspace : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CassandraKeyspace.</param>
     /// <param name="resourceVersion">Version of the CassandraKeyspace.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CassandraKeyspace(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces", resourceVersion, context)
+    public CassandraKeyspace(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

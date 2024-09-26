@@ -95,9 +95,8 @@ public partial class StorageAccountLocalUser : Resource
     /// </summary>
     /// <param name="resourceName">Name of the StorageAccountLocalUser.</param>
     /// <param name="resourceVersion">Version of the StorageAccountLocalUser.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public StorageAccountLocalUser(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/localUsers", resourceVersion, context)
+    public StorageAccountLocalUser(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Storage/storageAccounts/localUsers", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _hasSharedKey = BicepValue<bool>.DefineProperty(this, "HasSharedKey", ["properties", "hasSharedKey"]);

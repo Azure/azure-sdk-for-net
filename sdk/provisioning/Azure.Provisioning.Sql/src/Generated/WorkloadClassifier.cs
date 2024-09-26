@@ -82,9 +82,8 @@ public partial class WorkloadClassifier : Resource
     /// </summary>
     /// <param name="resourceName">Name of the WorkloadClassifier.</param>
     /// <param name="resourceVersion">Version of the WorkloadClassifier.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WorkloadClassifier(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/workloadGroups/workloadClassifiers", resourceVersion, context)
+    public WorkloadClassifier(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/databases/workloadGroups/workloadClassifiers", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _context = BicepValue<string>.DefineProperty(this, "Context", ["properties", "context"]);

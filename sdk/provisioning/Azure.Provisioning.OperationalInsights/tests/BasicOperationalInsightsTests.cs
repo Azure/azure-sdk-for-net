@@ -20,6 +20,8 @@ public class BasicOperationalInsightsTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 OperationalInsightsWorkspace workspace =
                     new(nameof(workspace))
                     {
@@ -29,6 +31,9 @@ public class BasicOperationalInsightsTests(bool async)
                         },
                         Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
                     };
+                infra.Add(workspace);
+
+                return infra;
             })
         .Compare(
             """

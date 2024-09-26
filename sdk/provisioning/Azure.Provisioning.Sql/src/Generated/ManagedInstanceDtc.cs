@@ -77,9 +77,8 @@ public partial class ManagedInstanceDtc : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedInstanceDtc.</param>
     /// <param name="resourceVersion">Version of the ManagedInstanceDtc.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedInstanceDtc(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/dtc", resourceVersion, context)
+    public ManagedInstanceDtc(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/dtc", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _dtcEnabled = BicepValue<bool>.DefineProperty(this, "DtcEnabled", ["properties", "dtcEnabled"]);

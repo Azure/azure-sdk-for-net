@@ -71,9 +71,8 @@ public partial class CosmosDBSqlContainerThroughputSetting : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CosmosDBSqlContainerThroughputSetting.</param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlContainerThroughputSetting.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CosmosDBSqlContainerThroughputSetting(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/throughputSettings", resourceVersion, context)
+    public CosmosDBSqlContainerThroughputSetting(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/throughputSettings", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

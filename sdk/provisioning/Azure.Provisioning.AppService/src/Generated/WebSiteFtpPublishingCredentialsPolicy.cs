@@ -59,9 +59,8 @@ public partial class WebSiteFtpPublishingCredentialsPolicy : Resource
     /// </summary>
     /// <param name="resourceName">Name of the WebSiteFtpPublishingCredentialsPolicy.</param>
     /// <param name="resourceVersion">Version of the WebSiteFtpPublishingCredentialsPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WebSiteFtpPublishingCredentialsPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/basicPublishingCredentialsPolicies", resourceVersion, context)
+    public WebSiteFtpPublishingCredentialsPolicy(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/basicPublishingCredentialsPolicies", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _allow = BicepValue<bool>.DefineProperty(this, "Allow", ["properties", "allow"]);

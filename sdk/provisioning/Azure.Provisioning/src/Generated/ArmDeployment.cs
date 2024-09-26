@@ -10,7 +10,6 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
-using Azure.ResourceManager.Resources.Models;
 using System;
 using System.ComponentModel;
 
@@ -62,9 +61,8 @@ public partial class ArmDeployment : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ArmDeployment.</param>
     /// <param name="resourceVersion">Version of the ArmDeployment.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ArmDeployment(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Resources/deployments", resourceVersion, context)
+    public ArmDeployment(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Resources/deployments", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);

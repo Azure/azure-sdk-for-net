@@ -20,18 +20,22 @@ public class BasicAppConfigurationTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 BicepParameter featureFlagKey =
                     new(nameof(featureFlagKey), typeof(string))
                     {
                         Value = "FeatureFlagSample",
                         Description = "Specifies the key of the feature flag."
                     };
+                infra.Add(featureFlagKey);
 
                 AppConfigurationStore configStore =
                     new(nameof(configStore), AppConfigurationStore.ResourceVersions.V2022_05_01)
                     {
                         SkuName = "Standard",
                     };
+                infra.Add(configStore);
 
                 BicepVariable flag =
                     new(nameof(flag), typeof(object))
@@ -44,6 +48,7 @@ public class BasicAppConfigurationTests(bool async)
                                 { "enabled", true }
                             }
                     };
+                infra.Add(flag);
 
                 AppConfigurationKeyValue featureFlag =
                     new(nameof(featureFlag), AppConfigurationKeyValue.ResourceVersions.V2022_05_01)
@@ -53,6 +58,9 @@ public class BasicAppConfigurationTests(bool async)
                         ContentType = "application/vnd.microsoft.appconfig.ff+json;charset=utf-8",
                         Value = BicepFunction.AsString(flag)
                     };
+                infra.Add(featureFlag);
+
+                return infra;
             })
         .Compare(
             """

@@ -184,9 +184,8 @@ public partial class BlobContainer : Resource
     /// </summary>
     /// <param name="resourceName">Name of the BlobContainer.</param>
     /// <param name="resourceVersion">Version of the BlobContainer.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public BlobContainer(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/blobServices/containers", resourceVersion, context)
+    public BlobContainer(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Storage/storageAccounts/blobServices/containers", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _defaultEncryptionScope = BicepValue<string>.DefineProperty(this, "DefaultEncryptionScope", ["properties", "defaultEncryptionScope"]);

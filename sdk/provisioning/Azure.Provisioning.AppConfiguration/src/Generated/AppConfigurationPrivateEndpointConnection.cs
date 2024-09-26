@@ -65,9 +65,8 @@ public partial class AppConfigurationPrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the AppConfigurationPrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the AppConfigurationPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public AppConfigurationPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.AppConfiguration/configurationStores/privateEndpointConnections", resourceVersion, context)
+    public AppConfigurationPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.AppConfiguration/configurationStores/privateEndpointConnections", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<AppConfigurationPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);

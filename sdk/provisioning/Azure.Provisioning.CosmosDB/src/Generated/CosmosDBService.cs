@@ -81,9 +81,8 @@ public partial class CosmosDBService : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CosmosDBService.</param>
     /// <param name="resourceVersion">Version of the CosmosDBService.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CosmosDBService(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/services", resourceVersion, context)
+    public CosmosDBService(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/services", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _instanceCount = BicepValue<int>.DefineProperty(this, "InstanceCount", ["properties", "instanceCount"]);

@@ -60,9 +60,8 @@ public partial class PostgreSqlFirewallRule : Resource
     /// </summary>
     /// <param name="resourceName">Name of the PostgreSqlFirewallRule.</param>
     /// <param name="resourceVersion">Version of the PostgreSqlFirewallRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlFirewallRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/firewallRules", resourceVersion, context)
+    public PostgreSqlFirewallRule(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/firewallRules", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _endIPAddress = BicepValue<IPAddress>.DefineProperty(this, "EndIPAddress", ["properties", "endIpAddress"], isRequired: true);

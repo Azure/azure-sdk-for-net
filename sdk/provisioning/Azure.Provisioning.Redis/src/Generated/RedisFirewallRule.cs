@@ -60,9 +60,8 @@ public partial class RedisFirewallRule : Resource
     /// </summary>
     /// <param name="resourceName">Name of the RedisFirewallRule.</param>
     /// <param name="resourceVersion">Version of the RedisFirewallRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public RedisFirewallRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Cache/redis/firewallRules", resourceVersion, context)
+    public RedisFirewallRule(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Cache/redis/firewallRules", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _endIP = BicepValue<IPAddress>.DefineProperty(this, "EndIP", ["properties", "endIP"], isRequired: true);

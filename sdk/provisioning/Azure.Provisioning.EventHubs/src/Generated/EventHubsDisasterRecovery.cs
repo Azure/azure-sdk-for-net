@@ -87,9 +87,8 @@ public partial class EventHubsDisasterRecovery : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EventHubsDisasterRecovery.</param>
     /// <param name="resourceVersion">Version of the EventHubsDisasterRecovery.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventHubsDisasterRecovery(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/disasterRecoveryConfigs", resourceVersion, context)
+    public EventHubsDisasterRecovery(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventHub/namespaces/disasterRecoveryConfigs", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _alternateName = BicepValue<string>.DefineProperty(this, "AlternateName", ["properties", "alternateName"]);

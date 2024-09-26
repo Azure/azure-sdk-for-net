@@ -70,9 +70,8 @@ public partial class TopicSpace : Resource
     /// </summary>
     /// <param name="resourceName">Name of the TopicSpace.</param>
     /// <param name="resourceVersion">Version of the TopicSpace.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public TopicSpace(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/topicSpaces", resourceVersion, context)
+    public TopicSpace(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/namespaces/topicSpaces", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);

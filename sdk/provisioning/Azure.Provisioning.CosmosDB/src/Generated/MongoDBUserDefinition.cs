@@ -86,9 +86,8 @@ public partial class MongoDBUserDefinition : Resource
     /// </summary>
     /// <param name="resourceName">Name of the MongoDBUserDefinition.</param>
     /// <param name="resourceVersion">Version of the MongoDBUserDefinition.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public MongoDBUserDefinition(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/mongodbUserDefinitions", resourceVersion, context)
+    public MongoDBUserDefinition(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/mongodbUserDefinitions", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _customData = BicepValue<string>.DefineProperty(this, "CustomData", ["properties", "customData"]);

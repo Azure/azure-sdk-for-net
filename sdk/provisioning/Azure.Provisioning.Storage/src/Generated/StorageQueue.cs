@@ -66,9 +66,8 @@ public partial class StorageQueue : Resource
     /// </summary>
     /// <param name="resourceName">Name of the StorageQueue.</param>
     /// <param name="resourceVersion">Version of the StorageQueue.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public StorageQueue(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/queueServices/queues", resourceVersion, context)
+    public StorageQueue(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Storage/storageAccounts/queueServices/queues", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _metadata = BicepDictionary<string>.DefineProperty(this, "Metadata", ["properties", "metadata"]);

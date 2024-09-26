@@ -12,33 +12,17 @@ namespace Azure.Provisioning.Primitives;
 /// <summary>
 /// A named Bicep entity, like a resource or parameter.
 /// </summary>
-public abstract class NamedProvisioningConstruct : ProvisioningConstruct
+public abstract class NamedProvisioningConstruct(string resourceName) : ProvisioningConstruct
 {
     /// <summary>
     /// Gets the the Bicep name of the resource.  This can be used to refer to
     /// the resource in expressions, but isn't the Azure name of the resource.
     /// </summary>
-    public string ResourceName { get; private set; }
-
-    public NamedProvisioningConstruct(string resourceName, ProvisioningContext? context = default)
-        : base(context)
-    {
-        ResourceName = resourceName;
-
-        // Named entities get added to the default infrastructure automatically
-        DefaultProvisioningContext.DefaultInfrastructure.Add(this);
-    }
+    public string ResourceName { get; private set; } = resourceName;
 }
 
-public abstract class ProvisioningConstruct(ProvisioningContext? context = default) : Provisionable
+public abstract class ProvisioningConstruct : Provisionable
 {
-    /// <summary>
-    /// Gets the default <see cref="ProvisioningContext"/> provided or obtained
-    /// at construction time.
-    /// </summary>
-    protected ProvisioningContext DefaultProvisioningContext { get; private set; } =
-        context ?? ProvisioningContext.Provider.GetProvisioningContext();
-
     /// <summary>
     /// Gets the parent infrastructure construct, if any.
     /// </summary>
@@ -106,7 +90,7 @@ public abstract class ProvisioningConstruct(ProvisioningContext? context = defau
     /// <inheritdoc/>
     protected internal override void Resolve(ProvisioningContext? context = null)
     {
-        context ??= DefaultProvisioningContext;
+        context ??= new();
         base.Resolve(context);
 
         // Resolve any property values
@@ -119,7 +103,7 @@ public abstract class ProvisioningConstruct(ProvisioningContext? context = defau
     /// <inheritdoc/>
     protected internal override void Validate(ProvisioningContext? context = null)
     {
-        context ??= DefaultProvisioningContext;
+        context ??= new();
         base.Validate(context);
     }
 
@@ -147,7 +131,7 @@ public abstract class ProvisioningConstruct(ProvisioningContext? context = defau
     {
         if (ExpressionOverride is not null) { return ExpressionOverride; }
 
-        context ??= DefaultProvisioningContext;
+        context ??= new();
 
         // Aggregate all the properties into a single nested dictionary
         Dictionary<string, object> body = [];

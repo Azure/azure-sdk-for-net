@@ -144,9 +144,8 @@ public partial class SiteSlotFunction : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SiteSlotFunction.</param>
     /// <param name="resourceVersion">Version of the SiteSlotFunction.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SiteSlotFunction(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/functions", resourceVersion, context)
+    public SiteSlotFunction(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/slots/functions", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _config = BicepValue<BinaryData>.DefineProperty(this, "Config", ["properties", "config"]);

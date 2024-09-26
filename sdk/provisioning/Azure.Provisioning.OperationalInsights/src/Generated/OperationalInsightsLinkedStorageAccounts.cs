@@ -59,9 +59,8 @@ public partial class OperationalInsightsLinkedStorageAccounts : Resource
     /// </summary>
     /// <param name="resourceName">Name of the OperationalInsightsLinkedStorageAccounts.</param>
     /// <param name="resourceVersion">Version of the OperationalInsightsLinkedStorageAccounts.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public OperationalInsightsLinkedStorageAccounts(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.OperationalInsights/workspaces/linkedStorageAccounts", resourceVersion ?? "2020-08-01", context)
+    public OperationalInsightsLinkedStorageAccounts(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.OperationalInsights/workspaces/linkedStorageAccounts", resourceVersion ?? "2020-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _dataSourceType = BicepValue<OperationalInsightsDataSourceType>.DefineProperty(this, "DataSourceType", ["properties", "dataSourceType"], isRequired: true);
@@ -76,6 +75,11 @@ public partial class OperationalInsightsLinkedStorageAccounts : Resource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-09-01.
+        /// </summary>
+        public static readonly string V2023_09_01 = "2023-09-01";
+
         /// <summary>
         /// 2020-08-01.
         /// </summary>

@@ -369,9 +369,8 @@ public partial class ContainerServiceAgentPool : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ContainerServiceAgentPool.</param>
     /// <param name="resourceVersion">Version of the ContainerServiceAgentPool.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerServiceAgentPool(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerService/managedClusters/agentPools", resourceVersion, context)
+    public ContainerServiceAgentPool(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ContainerService/managedClusters/agentPools", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _availabilityZones = BicepList<string>.DefineProperty(this, "AvailabilityZones", ["properties", "availabilityZones"]);

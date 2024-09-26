@@ -53,9 +53,8 @@ public partial class CassandraDataCenter : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CassandraDataCenter.</param>
     /// <param name="resourceVersion">Version of the CassandraDataCenter.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CassandraDataCenter(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/cassandraClusters/dataCenters", resourceVersion, context)
+    public CassandraDataCenter(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/cassandraClusters/dataCenters", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _properties = BicepValue<CassandraDataCenterProperties>.DefineProperty(this, "Properties", ["properties"]);

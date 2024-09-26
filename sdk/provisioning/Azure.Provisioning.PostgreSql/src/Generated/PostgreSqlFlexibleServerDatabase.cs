@@ -58,9 +58,8 @@ public partial class PostgreSqlFlexibleServerDatabase : Resource
     /// </summary>
     /// <param name="resourceName">Name of the PostgreSqlFlexibleServerDatabase.</param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerDatabase.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlFlexibleServerDatabase(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/databases", resourceVersion, context)
+    public PostgreSqlFlexibleServerDatabase(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/databases", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _charset = BicepValue<string>.DefineProperty(this, "Charset", ["properties", "charset"]);

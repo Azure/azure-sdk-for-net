@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Tests;
+using Microsoft.Win32;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.ContainerService.Tests;
@@ -21,9 +22,16 @@ public class BasicContainerServiceTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 BicepParameter dnsPrefix = new(nameof(dnsPrefix), typeof(string));
+                infra.Add(dnsPrefix);
+
                 BicepParameter linuxAdminUsername = new(nameof(linuxAdminUsername), typeof(string));
+                infra.Add(linuxAdminUsername);
+
                 BicepParameter sshRsaPublicKey = new(nameof(sshRsaPublicKey), typeof(string));
+                infra.Add(sshRsaPublicKey);
 
                 ContainerServiceManagedCluster aks =
                     new(nameof(aks))
@@ -52,6 +60,9 @@ public class BasicContainerServiceTests(bool async)
                             }
                         }
                     };
+                infra.Add(aks);
+
+                return infra;
             })
         .Compare(
             """

@@ -78,9 +78,8 @@ public partial class SiteSlotPrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SiteSlotPrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the SiteSlotPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SiteSlotPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/privateEndpointConnections", resourceVersion, context)
+    public SiteSlotPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/slots/privateEndpointConnections", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _iPAddresses = BicepList<IPAddress>.DefineProperty(this, "IPAddresses", ["properties", "ipAddresses"]);

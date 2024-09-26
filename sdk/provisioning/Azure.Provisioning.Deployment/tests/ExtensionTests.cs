@@ -18,10 +18,12 @@ internal class ExtensionTests(bool async)
     {
         if (SkipTools) { return; }
 
+        Infrastructure infra = new();
         StorageAccount resource = StorageResources.CreateAccount("storage");
+        infra.Add(resource);
 
         // Lint
-        ProvisioningPlan plan = resource.Build();
+        ProvisioningPlan plan = infra.Build();
         IReadOnlyList<BicepErrorMessage> messages = plan.Lint();
         Assert.AreEqual(0, messages.Count);
     }
@@ -31,10 +33,12 @@ internal class ExtensionTests(bool async)
     {
         if (SkipTools) { return; }
 
+        Infrastructure infra = new();
         BicepParameter param = new("endpoint", typeof(string));
+        infra.Add(param);
 
         // Lint
-        ProvisioningPlan plan = param.ParentInfrastructure!.Build();
+        ProvisioningPlan plan = infra.Build();
         IReadOnlyList<BicepErrorMessage> messages = plan.Lint();
 
         // Make sure it warns about the unused param
@@ -49,10 +53,12 @@ internal class ExtensionTests(bool async)
     {
         if (SkipTools) { return; }
 
+        Infrastructure infra = new();
         // Use a string as the default value for a param typed int
         BicepParameter param = new("bar", typeof(int)) { Value = "Hello, World." };
+        infra.Add(param);
 
-        ProvisioningPlan plan = param.ParentInfrastructure!.Build();
+        ProvisioningPlan plan = infra.Build();
         IReadOnlyList<BicepErrorMessage> messages = plan.Lint();
 
         // Ignore the "unused param" first warning and make sure we get a type error
@@ -67,9 +73,11 @@ internal class ExtensionTests(bool async)
     {
         if (SkipTools) { return; }
 
+        Infrastructure infra = new();
         StorageAccount resource = StorageResources.CreateAccount("storage");
+        infra.Add(resource);
 
-        ProvisioningPlan plan = resource.Build();
+        ProvisioningPlan plan = infra.Build();
         string arm = plan.CompileArmTemplate();
 
         // Trim to just the resources section so we don't get tripped up

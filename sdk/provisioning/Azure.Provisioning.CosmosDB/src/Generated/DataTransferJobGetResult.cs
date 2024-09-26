@@ -140,9 +140,8 @@ public partial class DataTransferJobGetResult : Resource
     /// </summary>
     /// <param name="resourceName">Name of the DataTransferJobGetResult.</param>
     /// <param name="resourceVersion">Version of the DataTransferJobGetResult.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public DataTransferJobGetResult(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/dataTransferJobs", resourceVersion, context)
+    public DataTransferJobGetResult(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/dataTransferJobs", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _properties = BicepValue<DataTransferJobProperties>.DefineProperty(this, "Properties", ["properties"], isRequired: true);

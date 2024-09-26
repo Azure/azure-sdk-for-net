@@ -71,9 +71,8 @@ public partial class CassandraViewThroughputSetting : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CassandraViewThroughputSetting.</param>
     /// <param name="resourceVersion">Version of the CassandraViewThroughputSetting.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CassandraViewThroughputSetting(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/views/throughputSettings", resourceVersion, context)
+    public CassandraViewThroughputSetting(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/views/throughputSettings", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

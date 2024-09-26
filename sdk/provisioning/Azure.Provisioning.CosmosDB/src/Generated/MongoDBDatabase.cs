@@ -78,9 +78,8 @@ public partial class MongoDBDatabase : Resource
     /// </summary>
     /// <param name="resourceName">Name of the MongoDBDatabase.</param>
     /// <param name="resourceVersion">Version of the MongoDBDatabase.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public MongoDBDatabase(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases", resourceVersion, context)
+    public MongoDBDatabase(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

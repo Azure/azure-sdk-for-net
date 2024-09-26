@@ -13,7 +13,7 @@ namespace Azure.Provisioning;
 /// Collect resources and other constructs like parameters together.
 /// </summary>
 /// <param name="name"></param>
-public class Infrastructure(string name) : Provisionable
+public class Infrastructure(string name = "main") : Provisionable
 {
     /// <summary>
     /// A friendly name that can also be used if compiling to a module.
@@ -96,7 +96,7 @@ public class Infrastructure(string name) : Provisionable
     /// <inheritdoc/>
     protected internal override void Validate(ProvisioningContext? context = null)
     {
-        context ??= ProvisioningContext.Provider.GetProvisioningContext();
+        context ??= new();
         base.Validate(context);
         foreach (Provisionable resource in GetResources()) { resource.Validate(context); }
     }
@@ -104,7 +104,7 @@ public class Infrastructure(string name) : Provisionable
     /// <inheritdoc/>
     protected internal override void Resolve(ProvisioningContext? context = default)
     {
-        context ??= ProvisioningContext.Provider.GetProvisioningContext();
+        context ??= new();
         base.Resolve(context);
 
         Provisionable[] cached = [.. GetResources()]; // Copy so Resolve can mutate
@@ -119,7 +119,7 @@ public class Infrastructure(string name) : Provisionable
     /// <inheritdoc/>
     protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = default)
     {
-        context ??= ProvisioningContext.Provider.GetProvisioningContext();
+        context ??= new();
         List<Statement> statements = [];
         if (TargetScope is not null)
         {
@@ -155,13 +155,13 @@ public class Infrastructure(string name) : Provisionable
     /// <summary>
     /// Compile this infrastructure into a set of bicep modules.
     /// </summary>
-    /// <param name="context">Provisioning context/</param>
+    /// <param name="context">Provisioning context.</param>
     /// <returns>Dictionary mapping module names to module definitions.</returns>
     protected internal IDictionary<string, IEnumerable<Statement>> CompileModules(ProvisioningContext? context = default)
     {
         // This API shape will eventually help us grow into compiling multiple
         // modules at once and automatically splitting resources across them.
-        context ??= ProvisioningContext.Provider.GetProvisioningContext();
+        context ??= new();
         Dictionary<string, IEnumerable<Statement>> modules = [];
         modules.Add(Name, Compile(context));
 
@@ -192,14 +192,9 @@ public class Infrastructure(string name) : Provisionable
     /// </returns>
     public virtual ProvisioningPlan Build(ProvisioningContext? context = default)
     {
-        context ??= ProvisioningContext.Provider.GetProvisioningContext();
+        context ??= new();
         Resolve(context);
         Validate(context);
-
-        // Reset the default infrastructure so the context can continue to be
-        // used for additional provisioning.
-        context.DefaultInfrastructure = context.DefaultInfrastructureProvider();
-
         return new ProvisioningPlan(this, context);
     }
 }

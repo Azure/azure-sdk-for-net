@@ -101,9 +101,8 @@ public partial class SqlServerSecurityAlertPolicy : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlServerSecurityAlertPolicy.</param>
     /// <param name="resourceVersion">Version of the SqlServerSecurityAlertPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerSecurityAlertPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/securityAlertPolicies", resourceVersion ?? "2021-11-01", context)
+    public SqlServerSecurityAlertPolicy(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/securityAlertPolicies", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _disabledAlerts = BicepList<string>.DefineProperty(this, "DisabledAlerts", ["properties", "disabledAlerts"]);

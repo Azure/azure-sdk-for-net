@@ -183,9 +183,8 @@ public partial class AppServiceCertificateOrder : Resource
     /// </summary>
     /// <param name="resourceName">Name of the AppServiceCertificateOrder.</param>
     /// <param name="resourceVersion">Version of the AppServiceCertificateOrder.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public AppServiceCertificateOrder(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.CertificateRegistration/certificateOrders", resourceVersion, context)
+    public AppServiceCertificateOrder(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.CertificateRegistration/certificateOrders", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

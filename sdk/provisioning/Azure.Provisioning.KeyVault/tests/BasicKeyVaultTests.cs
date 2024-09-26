@@ -20,28 +20,37 @@ public class BasicKeyVaultTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 BicepParameter skuName =
                     new(nameof(skuName), typeof(string))
                     {
                         Value = KeyVaultSkuName.Standard,
                         Description = "Vault type"
                     };
+                infra.Add(skuName);
+
                 BicepParameter secretValue =
                     new(nameof(secretValue), typeof(string))
                     {
                         Description = "Specifies the value of the secret that you want to create.",
                         IsSecure = true
                     };
+                infra.Add(secretValue);
+
                 BicepParameter objectId =
                     new(nameof(objectId), typeof(string))
                     {
                         Description = "Specifies the object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault."
                     };
+                infra.Add(objectId);
+
                 BicepVariable tenantId =
                     new(nameof(tenantId), typeof(string))
                     {
                         Value = BicepFunction.GetSubscription().TenantId
                     };
+                infra.Add(tenantId);
 
                 KeyVaultService kv =
                     new(nameof(kv))
@@ -75,6 +84,7 @@ public class BasicKeyVaultTests(bool async)
                                     }
                             }
                     };
+                infra.Add(kv);
 
                 KeyVaultSecret secret =
                     new(nameof(secret))
@@ -83,9 +93,12 @@ public class BasicKeyVaultTests(bool async)
                         Name = "myDarkNecessities",
                         Properties = new SecretProperties { Value = secretValue }
                     };
+                infra.Add(secret);
 
-                _ = new BicepOutput("name", typeof(string)) { Value = kv.Name };
-                _ = new BicepOutput("resourceId", typeof(string)) { Value = kv.Id };
+                infra.Add(new BicepOutput("name", typeof(string)) { Value = kv.Name });
+                infra.Add(new BicepOutput("resourceId", typeof(string)) { Value = kv.Id });
+
+                return infra;
             })
         .Compare(
             """

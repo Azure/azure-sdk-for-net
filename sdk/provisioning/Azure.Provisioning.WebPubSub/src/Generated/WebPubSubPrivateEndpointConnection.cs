@@ -71,9 +71,8 @@ public partial class WebPubSubPrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the WebPubSubPrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the WebPubSubPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WebPubSubPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.SignalRService/webPubSub/privateEndpointConnections", resourceVersion, context)
+    public WebPubSubPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.SignalRService/webPubSub/privateEndpointConnections", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<WebPubSubPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);

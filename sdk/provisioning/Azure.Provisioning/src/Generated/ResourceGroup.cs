@@ -70,9 +70,8 @@ public partial class ResourceGroup : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ResourceGroup.</param>
     /// <param name="resourceVersion">Version of the ResourceGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ResourceGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Resources/resourceGroups", resourceVersion, context)
+    public ResourceGroup(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Resources/resourceGroups", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

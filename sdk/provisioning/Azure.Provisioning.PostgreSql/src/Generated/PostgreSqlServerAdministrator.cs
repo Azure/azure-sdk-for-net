@@ -70,9 +70,8 @@ public partial class PostgreSqlServerAdministrator : Resource
     /// </summary>
     /// <param name="resourceName">Name of the PostgreSqlServerAdministrator.</param>
     /// <param name="resourceVersion">Version of the PostgreSqlServerAdministrator.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlServerAdministrator(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/administrators", resourceVersion, context)
+    public PostgreSqlServerAdministrator(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/administrators", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _administratorType = BicepValue<PostgreSqlAdministratorType>.DefineProperty(this, "AdministratorType", ["properties", "administratorType"]);

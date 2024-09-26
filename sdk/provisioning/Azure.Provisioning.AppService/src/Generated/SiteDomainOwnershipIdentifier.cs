@@ -58,9 +58,8 @@ public partial class SiteDomainOwnershipIdentifier : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SiteDomainOwnershipIdentifier.</param>
     /// <param name="resourceVersion">Version of the SiteDomainOwnershipIdentifier.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SiteDomainOwnershipIdentifier(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/domainOwnershipIdentifiers", resourceVersion, context)
+    public SiteDomainOwnershipIdentifier(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/domainOwnershipIdentifiers", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);

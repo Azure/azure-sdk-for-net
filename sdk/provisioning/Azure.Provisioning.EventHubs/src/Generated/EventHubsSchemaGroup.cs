@@ -90,9 +90,8 @@ public partial class EventHubsSchemaGroup : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EventHubsSchemaGroup.</param>
     /// <param name="resourceVersion">Version of the EventHubsSchemaGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventHubsSchemaGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/schemagroups", resourceVersion, context)
+    public EventHubsSchemaGroup(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventHub/namespaces/schemagroups", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _groupProperties = BicepDictionary<string>.DefineProperty(this, "GroupProperties", ["properties", "groupProperties"]);

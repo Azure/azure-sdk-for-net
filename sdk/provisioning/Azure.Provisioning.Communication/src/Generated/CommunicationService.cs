@@ -105,9 +105,8 @@ public partial class CommunicationService : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CommunicationService.</param>
     /// <param name="resourceVersion">Version of the CommunicationService.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CommunicationService(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Communication/communicationServices", resourceVersion, context)
+    public CommunicationService(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Communication/communicationServices", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

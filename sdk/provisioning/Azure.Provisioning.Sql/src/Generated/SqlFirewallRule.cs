@@ -55,9 +55,8 @@ public partial class SqlFirewallRule : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlFirewallRule.</param>
     /// <param name="resourceVersion">Version of the SqlFirewallRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlFirewallRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/firewallRules", resourceVersion, context)
+    public SqlFirewallRule(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/firewallRules", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _endIPAddress = BicepValue<string>.DefineProperty(this, "EndIPAddress", ["properties", "endIpAddress"]);

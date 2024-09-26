@@ -47,9 +47,8 @@ public partial class ManagedRestorableDroppedDbBackupShortTermRetentionPolicy : 
     /// </summary>
     /// <param name="resourceName">Name of the ManagedRestorableDroppedDbBackupShortTermRetentionPolicy.</param>
     /// <param name="resourceVersion">Version of the ManagedRestorableDroppedDbBackupShortTermRetentionPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/restorableDroppedDatabases/backupShortTermRetentionPolicies", resourceVersion, context)
+    public ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/restorableDroppedDatabases/backupShortTermRetentionPolicies", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _retentionDays = BicepValue<int>.DefineProperty(this, "RetentionDays", ["properties", "retentionDays"]);

@@ -79,9 +79,8 @@ public partial class NamespaceTopicEventSubscription : Resource
     /// </summary>
     /// <param name="resourceName">Name of the NamespaceTopicEventSubscription.</param>
     /// <param name="resourceVersion">Version of the NamespaceTopicEventSubscription.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public NamespaceTopicEventSubscription(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/topics/eventSubscriptions", resourceVersion, context)
+    public NamespaceTopicEventSubscription(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/namespaces/topics/eventSubscriptions", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _deliveryConfiguration = BicepValue<DeliveryConfiguration>.DefineProperty(this, "DeliveryConfiguration", ["properties", "deliveryConfiguration"]);

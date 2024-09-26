@@ -516,9 +516,8 @@ public partial class WebSiteSlotConfig : Resource
     /// </summary>
     /// <param name="resourceName">Name of the WebSiteSlotConfig.</param>
     /// <param name="resourceVersion">Version of the WebSiteSlotConfig.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WebSiteSlotConfig(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/config", resourceVersion, context)
+    public WebSiteSlotConfig(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/slots/config", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _acrUserManagedIdentityId = BicepValue<string>.DefineProperty(this, "AcrUserManagedIdentityId", ["properties", "acrUserManagedIdentityID"]);

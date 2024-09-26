@@ -86,9 +86,8 @@ public partial class EventHubsNetworkRuleSet : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EventHubsNetworkRuleSet.</param>
     /// <param name="resourceVersion">Version of the EventHubsNetworkRuleSet.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventHubsNetworkRuleSet(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/networkRuleSets", resourceVersion, context)
+    public EventHubsNetworkRuleSet(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventHub/namespaces/networkRuleSets", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _defaultAction = BicepValue<EventHubsNetworkRuleSetDefaultAction>.DefineProperty(this, "DefaultAction", ["properties", "defaultAction"]);

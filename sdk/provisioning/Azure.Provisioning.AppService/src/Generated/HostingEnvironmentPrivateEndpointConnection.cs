@@ -78,9 +78,8 @@ public partial class HostingEnvironmentPrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the HostingEnvironmentPrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the HostingEnvironmentPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public HostingEnvironmentPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/hostingEnvironments/privateEndpointConnections", resourceVersion, context)
+    public HostingEnvironmentPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/hostingEnvironments/privateEndpointConnections", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _iPAddresses = BicepList<IPAddress>.DefineProperty(this, "IPAddresses", ["properties", "ipAddresses"]);

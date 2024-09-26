@@ -64,9 +64,8 @@ public partial class ManagedInstanceServerTrustCertificate : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedInstanceServerTrustCertificate.</param>
     /// <param name="resourceVersion">Version of the ManagedInstanceServerTrustCertificate.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedInstanceServerTrustCertificate(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/serverTrustCertificates", resourceVersion, context)
+    public ManagedInstanceServerTrustCertificate(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/serverTrustCertificates", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _publicBlob = BicepValue<string>.DefineProperty(this, "PublicBlob", ["properties", "publicBlob"]);

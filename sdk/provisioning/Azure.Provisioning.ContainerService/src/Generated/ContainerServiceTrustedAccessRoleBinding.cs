@@ -68,9 +68,8 @@ public partial class ContainerServiceTrustedAccessRoleBinding : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ContainerServiceTrustedAccessRoleBinding.</param>
     /// <param name="resourceVersion">Version of the ContainerServiceTrustedAccessRoleBinding.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerServiceTrustedAccessRoleBinding(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings", resourceVersion, context)
+    public ContainerServiceTrustedAccessRoleBinding(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _roles = BicepList<string>.DefineProperty(this, "Roles", ["properties", "roles"], isRequired: true);

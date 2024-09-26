@@ -90,9 +90,8 @@ public partial class ContainerAppAuthConfig : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ContainerAppAuthConfig.</param>
     /// <param name="resourceVersion">Version of the ContainerAppAuthConfig.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerAppAuthConfig(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.App/containerApps/authConfigs", resourceVersion, context)
+    public ContainerAppAuthConfig(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.App/containerApps/authConfigs", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _encryptionSettings = BicepValue<EncryptionSettings>.DefineProperty(this, "EncryptionSettings", ["properties", "encryptionSettings"]);

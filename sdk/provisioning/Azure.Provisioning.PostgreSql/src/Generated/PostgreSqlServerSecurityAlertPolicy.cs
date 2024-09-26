@@ -93,9 +93,8 @@ public partial class PostgreSqlServerSecurityAlertPolicy : Resource
     /// </summary>
     /// <param name="resourceName">Name of the PostgreSqlServerSecurityAlertPolicy.</param>
     /// <param name="resourceVersion">Version of the PostgreSqlServerSecurityAlertPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlServerSecurityAlertPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/securityAlertPolicies", resourceVersion, context)
+    public PostgreSqlServerSecurityAlertPolicy(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/securityAlertPolicies", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _disabledAlerts = BicepList<string>.DefineProperty(this, "DisabledAlerts", ["properties", "disabledAlerts"]);

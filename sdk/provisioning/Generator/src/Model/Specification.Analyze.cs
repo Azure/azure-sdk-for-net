@@ -56,8 +56,14 @@ public abstract partial class Specification
                             }
 
                             // Sort all the properties with Name/required values first and output values last
-                            resource.Properties = [.. resource.Properties.OrderBy(p => (p.Name == "Name" ? 0 : p.IsReadOnly ? '3' : p.IsRequired ? '1' : '2') + p.Name)] ;
+                            resource.Properties = [.. resource.Properties.OrderBy(p => (p.Name == "Name" ? 0 : p.IsReadOnly ? '3' : p.IsRequired ? '1' : '2') + p.Name)];
                         });
+
+                    // Hack in a few special types
+                    if (resource.Name == "Generic")
+                    {
+                        GetOrCreateModelType(typeof(WritableSubResource), resource);
+                    }
 
                     MethodInfo? getKeys = resource.ArmType.GetMethod("GetKeys") ?? resource.ArmType.GetMethod("GetSharedKeys");
                     Type? keyType = getKeys?.ReturnType.GetGenericArguments()?[0];

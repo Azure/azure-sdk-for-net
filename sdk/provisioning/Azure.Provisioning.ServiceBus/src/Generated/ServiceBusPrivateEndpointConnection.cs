@@ -70,9 +70,8 @@ public partial class ServiceBusPrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ServiceBusPrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the ServiceBusPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ServiceBusPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/privateEndpointConnections", resourceVersion ?? "2024-01-01", context)
+    public ServiceBusPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ServiceBus/namespaces/privateEndpointConnections", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<ServiceBusPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);

@@ -12,7 +12,6 @@ using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Roles;
-using Azure.ResourceManager.Resources.Models;
 using System;
 using System.ComponentModel;
 using System.Net;
@@ -217,9 +216,8 @@ public partial class RedisResource : Resource
     /// </summary>
     /// <param name="resourceName">Name of the RedisResource.</param>
     /// <param name="resourceVersion">Version of the RedisResource.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public RedisResource(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Cache/redis", resourceVersion, context)
+    public RedisResource(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Cache/redis", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

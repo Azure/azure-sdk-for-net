@@ -516,9 +516,8 @@ public partial class WebSiteConfig : Resource
     /// </summary>
     /// <param name="resourceName">Name of the WebSiteConfig.</param>
     /// <param name="resourceVersion">Version of the WebSiteConfig.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WebSiteConfig(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/config", resourceVersion, context)
+    public WebSiteConfig(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/config", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _acrUserManagedIdentityId = BicepValue<string>.DefineProperty(this, "AcrUserManagedIdentityId", ["properties", "acrUserManagedIdentityID"]);

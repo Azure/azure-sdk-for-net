@@ -144,9 +144,8 @@ public partial class SiteFunction : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SiteFunction.</param>
     /// <param name="resourceVersion">Version of the SiteFunction.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SiteFunction(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/functions", resourceVersion, context)
+    public SiteFunction(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/functions", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _config = BicepValue<BinaryData>.DefineProperty(this, "Config", ["properties", "config"]);

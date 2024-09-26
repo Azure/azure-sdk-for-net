@@ -107,9 +107,8 @@ public partial class CommunicationDomain : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CommunicationDomain.</param>
     /// <param name="resourceVersion">Version of the CommunicationDomain.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CommunicationDomain(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Communication/emailServices/domains", resourceVersion, context)
+    public CommunicationDomain(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Communication/emailServices/domains", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

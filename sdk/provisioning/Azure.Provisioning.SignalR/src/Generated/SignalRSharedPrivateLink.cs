@@ -78,9 +78,8 @@ public partial class SignalRSharedPrivateLink : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SignalRSharedPrivateLink.</param>
     /// <param name="resourceVersion">Version of the SignalRSharedPrivateLink.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SignalRSharedPrivateLink(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.SignalRService/signalR/sharedPrivateLinkResources", resourceVersion, context)
+    public SignalRSharedPrivateLink(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.SignalRService/signalR/sharedPrivateLinkResources", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _groupId = BicepValue<string>.DefineProperty(this, "GroupId", ["properties", "groupId"]);

@@ -59,9 +59,8 @@ public partial class RedisPatchSchedule : Resource
     /// </summary>
     /// <param name="resourceName">Name of the RedisPatchSchedule.</param>
     /// <param name="resourceVersion">Version of the RedisPatchSchedule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public RedisPatchSchedule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Cache/redis/patchSchedules", resourceVersion, context)
+    public RedisPatchSchedule(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Cache/redis/patchSchedules", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _scheduleEntries = BicepList<RedisPatchScheduleSetting>.DefineProperty(this, "ScheduleEntries", ["properties", "scheduleEntries"], isRequired: true);

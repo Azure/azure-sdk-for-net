@@ -61,9 +61,8 @@ public partial class EventHubsNamespaceAuthorizationRule : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EventHubsNamespaceAuthorizationRule.</param>
     /// <param name="resourceVersion">Version of the EventHubsNamespaceAuthorizationRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventHubsNamespaceAuthorizationRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/authorizationRules", resourceVersion, context)
+    public EventHubsNamespaceAuthorizationRule(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventHub/namespaces/authorizationRules", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _rights = BicepList<EventHubsAccessRight>.DefineProperty(this, "Rights", ["properties", "rights"]);

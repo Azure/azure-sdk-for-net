@@ -67,9 +67,8 @@ public partial class CognitiveServicesAccountDeployment : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CognitiveServicesAccountDeployment.</param>
     /// <param name="resourceVersion">Version of the CognitiveServicesAccountDeployment.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CognitiveServicesAccountDeployment(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.CognitiveServices/accounts/deployments", resourceVersion, context)
+    public CognitiveServicesAccountDeployment(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.CognitiveServices/accounts/deployments", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _properties = BicepValue<CognitiveServicesAccountDeploymentProperties>.DefineProperty(this, "Properties", ["properties"]);

@@ -81,9 +81,8 @@ public partial class Subscription : Resource
     /// </summary>
     /// <param name="resourceName">Name of the Subscription.</param>
     /// <param name="resourceVersion">Version of the Subscription.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public Subscription(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Resources/subscriptions", resourceVersion, context)
+    public Subscription(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Resources/subscriptions", resourceVersion)
     {
         _authorizationSource = BicepValue<string>.DefineProperty(this, "AuthorizationSource", ["authorizationSource"], isOutput: true);
         _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["displayName"], isOutput: true);

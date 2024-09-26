@@ -65,9 +65,8 @@ public partial class WebSiteSlotPrivateAccess : Resource
     /// </summary>
     /// <param name="resourceName">Name of the WebSiteSlotPrivateAccess.</param>
     /// <param name="resourceVersion">Version of the WebSiteSlotPrivateAccess.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WebSiteSlotPrivateAccess(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/privateAccess", resourceVersion, context)
+    public WebSiteSlotPrivateAccess(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/slots/privateAccess", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _isEnabled = BicepValue<bool>.DefineProperty(this, "IsEnabled", ["properties", "enabled"]);

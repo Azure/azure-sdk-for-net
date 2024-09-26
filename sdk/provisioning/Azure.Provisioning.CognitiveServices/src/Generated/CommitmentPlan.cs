@@ -85,9 +85,8 @@ public partial class CommitmentPlan : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CommitmentPlan.</param>
     /// <param name="resourceVersion">Version of the CommitmentPlan.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CommitmentPlan(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.CognitiveServices/accounts/commitmentPlans", resourceVersion, context)
+    public CommitmentPlan(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.CognitiveServices/accounts/commitmentPlans", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);

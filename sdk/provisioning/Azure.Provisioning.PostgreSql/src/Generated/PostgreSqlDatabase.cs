@@ -59,9 +59,8 @@ public partial class PostgreSqlDatabase : Resource
     /// </summary>
     /// <param name="resourceName">Name of the PostgreSqlDatabase.</param>
     /// <param name="resourceVersion">Version of the PostgreSqlDatabase.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlDatabase(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/databases", resourceVersion, context)
+    public PostgreSqlDatabase(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/databases", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _charset = BicepValue<string>.DefineProperty(this, "Charset", ["properties", "charset"]);

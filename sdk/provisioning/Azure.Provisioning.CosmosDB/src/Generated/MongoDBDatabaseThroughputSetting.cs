@@ -71,9 +71,8 @@ public partial class MongoDBDatabaseThroughputSetting : Resource
     /// </summary>
     /// <param name="resourceName">Name of the MongoDBDatabaseThroughputSetting.</param>
     /// <param name="resourceVersion">Version of the MongoDBDatabaseThroughputSetting.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public MongoDBDatabaseThroughputSetting(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/throughputSettings", resourceVersion, context)
+    public MongoDBDatabaseThroughputSetting(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/throughputSettings", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

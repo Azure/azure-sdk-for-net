@@ -73,9 +73,8 @@ public partial class FileService : Resource
     /// </summary>
     /// <param name="resourceName">Name of the FileService.</param>
     /// <param name="resourceVersion">Version of the FileService.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public FileService(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/fileServices", resourceVersion ?? "2023-01-01", context)
+    public FileService(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Storage/storageAccounts/fileServices", resourceVersion ?? "2023-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], defaultValue: GetNameDefaultValue());
         _corsRules = BicepList<StorageCorsRule>.DefineProperty(this, "CorsRules", ["properties", "cors", "corsRules"]);

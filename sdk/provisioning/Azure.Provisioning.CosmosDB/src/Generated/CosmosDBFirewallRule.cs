@@ -66,9 +66,8 @@ public partial class CosmosDBFirewallRule : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CosmosDBFirewallRule.</param>
     /// <param name="resourceVersion">Version of the CosmosDBFirewallRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CosmosDBFirewallRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/mongoClusters/firewallRules", resourceVersion, context)
+    public CosmosDBFirewallRule(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/mongoClusters/firewallRules", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _endIPAddress = BicepValue<string>.DefineProperty(this, "EndIPAddress", ["properties", "endIpAddress"], isRequired: true);

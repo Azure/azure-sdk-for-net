@@ -158,9 +158,8 @@ public partial class ServiceBusNamespace : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ServiceBusNamespace.</param>
     /// <param name="resourceVersion">Version of the ServiceBusNamespace.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ServiceBusNamespace(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces", resourceVersion ?? "2017-04-01", context)
+    public ServiceBusNamespace(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ServiceBus/namespaces", resourceVersion ?? "2017-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

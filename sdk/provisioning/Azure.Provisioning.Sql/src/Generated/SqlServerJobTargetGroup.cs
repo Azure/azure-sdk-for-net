@@ -53,9 +53,8 @@ public partial class SqlServerJobTargetGroup : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlServerJobTargetGroup.</param>
     /// <param name="resourceVersion">Version of the SqlServerJobTargetGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerJobTargetGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/jobAgents/targetGroups", resourceVersion, context)
+    public SqlServerJobTargetGroup(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/jobAgents/targetGroups", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _members = BicepList<JobTarget>.DefineProperty(this, "Members", ["properties", "members"]);

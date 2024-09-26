@@ -126,9 +126,8 @@ public partial class SiteContainer : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SiteContainer.</param>
     /// <param name="resourceVersion">Version of the SiteContainer.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SiteContainer(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/sitecontainers", resourceVersion, context)
+    public SiteContainer(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/sitecontainers", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _authType = BicepValue<SiteContainerAuthType>.DefineProperty(this, "AuthType", ["properties", "authType"]);

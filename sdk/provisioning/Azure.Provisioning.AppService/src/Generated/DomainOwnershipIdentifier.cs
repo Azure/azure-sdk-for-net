@@ -58,9 +58,8 @@ public partial class DomainOwnershipIdentifier : Resource
     /// </summary>
     /// <param name="resourceName">Name of the DomainOwnershipIdentifier.</param>
     /// <param name="resourceVersion">Version of the DomainOwnershipIdentifier.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public DomainOwnershipIdentifier(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DomainRegistration/domains/domainOwnershipIdentifiers", resourceVersion, context)
+    public DomainOwnershipIdentifier(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DomainRegistration/domains/domainOwnershipIdentifiers", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);

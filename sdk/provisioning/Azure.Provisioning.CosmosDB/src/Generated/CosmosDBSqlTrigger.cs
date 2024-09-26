@@ -78,9 +78,8 @@ public partial class CosmosDBSqlTrigger : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CosmosDBSqlTrigger.</param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlTrigger.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CosmosDBSqlTrigger(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/triggers", resourceVersion, context)
+    public CosmosDBSqlTrigger(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/triggers", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

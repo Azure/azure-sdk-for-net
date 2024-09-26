@@ -94,9 +94,8 @@ public partial class TemplateSpec : Resource
     /// </summary>
     /// <param name="resourceName">Name of the TemplateSpec.</param>
     /// <param name="resourceVersion">Version of the TemplateSpec.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public TemplateSpec(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Resources/templateSpecs", resourceVersion, context)
+    public TemplateSpec(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Resources/templateSpecs", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

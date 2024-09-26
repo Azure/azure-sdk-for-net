@@ -70,9 +70,8 @@ public partial class AppServiceSourceControl : Resource
     /// </summary>
     /// <param name="resourceName">Name of the AppServiceSourceControl.</param>
     /// <param name="resourceVersion">Version of the AppServiceSourceControl.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public AppServiceSourceControl(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sourcecontrols", resourceVersion, context)
+    public AppServiceSourceControl(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sourcecontrols", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _expireOn = BicepValue<DateTimeOffset>.DefineProperty(this, "ExpireOn", ["properties", "expirationTime"]);

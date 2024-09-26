@@ -174,9 +174,8 @@ public partial class WebSiteExtension : Resource
     /// </summary>
     /// <param name="resourceName">Name of the WebSiteExtension.</param>
     /// <param name="resourceVersion">Version of the WebSiteExtension.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WebSiteExtension(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/siteextensions", resourceVersion, context)
+    public WebSiteExtension(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/siteextensions", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _authors = BicepList<string>.DefineProperty(this, "Authors", ["properties", "authors"], isOutput: true);

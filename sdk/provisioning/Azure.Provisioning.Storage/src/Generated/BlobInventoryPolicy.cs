@@ -60,9 +60,8 @@ public partial class BlobInventoryPolicy : Resource
     /// </summary>
     /// <param name="resourceName">Name of the BlobInventoryPolicy.</param>
     /// <param name="resourceVersion">Version of the BlobInventoryPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public BlobInventoryPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/inventoryPolicies", resourceVersion, context)
+    public BlobInventoryPolicy(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Storage/storageAccounts/inventoryPolicies", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _policySchema = BicepValue<BlobInventoryPolicySchema>.DefineProperty(this, "PolicySchema", ["properties", "policy"]);

@@ -89,9 +89,8 @@ public partial class StaticSiteCustomDomainOverview : Resource
     /// </summary>
     /// <param name="resourceName">Name of the StaticSiteCustomDomainOverview.</param>
     /// <param name="resourceVersion">Version of the StaticSiteCustomDomainOverview.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public StaticSiteCustomDomainOverview(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/staticSites/customDomains", resourceVersion, context)
+    public StaticSiteCustomDomainOverview(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/staticSites/customDomains", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);

@@ -20,30 +20,39 @@ public class BasicPostgreSqlTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 BicepParameter adminLogin =
                     new(nameof(adminLogin), typeof(string))
                     {
                         Description = "The administrator username of the server."
                     };
+                infra.Add(adminLogin);
+
                 BicepParameter adminPass =
                     new(nameof(adminPass), typeof(string))
                     {
                         Description = "The administrator password of the server.",
                         IsSecure = true
                     };
+                infra.Add(adminPass);
+
                 BicepParameter aadAdminName =
                     new(nameof(aadAdminName), typeof(string))
                     {
                         Description = "The AAD admin username."
                     };
+                infra.Add(aadAdminName);
+
                 BicepParameter aadAdminOid =
                     new(nameof(aadAdminOid), typeof(string))
                     {
                         Description = "The AAD admin Object ID."
                     };
+                infra.Add(aadAdminOid);
 
                 PostgreSqlFlexibleServer server =
-                    new(nameof(server))
+                    new(nameof(server), PostgreSqlFlexibleServer.ResourceVersions.V2022_12_01)
                     {
                         Sku =
                             new PostgreSqlFlexibleServerSku
@@ -78,6 +87,7 @@ public class BasicPostgreSqlTests(bool async)
                             Mode = PostgreSqlFlexibleServerHighAvailabilityMode.Disabled
                         }
                     };
+                infra.Add(server);
 
                 PostgreSqlFlexibleServerActiveDirectoryAdministrator admin =
                     new(nameof(admin), PostgreSqlFlexibleServer.ResourceVersions.V2022_12_01)
@@ -88,6 +98,9 @@ public class BasicPostgreSqlTests(bool async)
                         PrincipalName = aadAdminName,
                         PrincipalType = PostgreSqlFlexibleServerPrincipalType.ServicePrincipal
                     };
+                infra.Add(admin);
+
+                return infra;
             })
         .Compare(
             """

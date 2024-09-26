@@ -69,9 +69,8 @@ public partial class ManagementGroup : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagementGroup.</param>
     /// <param name="resourceVersion">Version of the ManagementGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagementGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Management/managementGroups", resourceVersion, context)
+    public ManagementGroup(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Management/managementGroups", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"]);
         _details = BicepValue<CreateManagementGroupDetails>.DefineProperty(this, "Details", ["properties", "details"]);

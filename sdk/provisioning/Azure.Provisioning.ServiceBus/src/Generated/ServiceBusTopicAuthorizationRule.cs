@@ -61,9 +61,8 @@ public partial class ServiceBusTopicAuthorizationRule : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ServiceBusTopicAuthorizationRule.</param>
     /// <param name="resourceVersion">Version of the ServiceBusTopicAuthorizationRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ServiceBusTopicAuthorizationRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/topics/authorizationRules", resourceVersion, context)
+    public ServiceBusTopicAuthorizationRule(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ServiceBus/namespaces/topics/authorizationRules", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _rights = BicepList<ServiceBusAccessRight>.DefineProperty(this, "Rights", ["properties", "rights"]);

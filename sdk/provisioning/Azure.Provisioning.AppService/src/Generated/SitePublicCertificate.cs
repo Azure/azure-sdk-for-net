@@ -70,9 +70,8 @@ public partial class SitePublicCertificate : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SitePublicCertificate.</param>
     /// <param name="resourceVersion">Version of the SitePublicCertificate.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SitePublicCertificate(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/publicCertificates", resourceVersion, context)
+    public SitePublicCertificate(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/publicCertificates", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _blob = BicepValue<BinaryData>.DefineProperty(this, "Blob", ["properties", "blob"]);

@@ -52,9 +52,8 @@ public partial class OutboundFirewallRule : Resource
     /// </summary>
     /// <param name="resourceName">Name of the OutboundFirewallRule.</param>
     /// <param name="resourceVersion">Version of the OutboundFirewallRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public OutboundFirewallRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/outboundFirewallRules", resourceVersion, context)
+    public OutboundFirewallRule(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/outboundFirewallRules", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);

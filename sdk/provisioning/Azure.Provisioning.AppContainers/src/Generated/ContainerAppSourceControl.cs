@@ -72,9 +72,8 @@ public partial class ContainerAppSourceControl : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ContainerAppSourceControl.</param>
     /// <param name="resourceVersion">Version of the ContainerAppSourceControl.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerAppSourceControl(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.App/containerApps/sourcecontrols", resourceVersion, context)
+    public ContainerAppSourceControl(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.App/containerApps/sourcecontrols", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _branch = BicepValue<string>.DefineProperty(this, "Branch", ["properties", "branch"]);

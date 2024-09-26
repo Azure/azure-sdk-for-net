@@ -60,9 +60,8 @@ public partial class CommitmentPlanAccountAssociation : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CommitmentPlanAccountAssociation.</param>
     /// <param name="resourceVersion">Version of the CommitmentPlanAccountAssociation.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CommitmentPlanAccountAssociation(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.CognitiveServices/commitmentPlans/accountAssociations", resourceVersion, context)
+    public CommitmentPlanAccountAssociation(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.CognitiveServices/commitmentPlans/accountAssociations", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _accountId = BicepValue<string>.DefineProperty(this, "AccountId", ["properties", "accountId"]);

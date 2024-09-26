@@ -92,9 +92,8 @@ public partial class ImmutabilityPolicy : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ImmutabilityPolicy.</param>
     /// <param name="resourceVersion">Version of the ImmutabilityPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ImmutabilityPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies", resourceVersion, context)
+    public ImmutabilityPolicy(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _allowProtectedAppendWrites = BicepValue<bool>.DefineProperty(this, "AllowProtectedAppendWrites", ["properties", "allowProtectedAppendWrites"]);

@@ -103,9 +103,8 @@ public partial class AseV3NetworkingConfiguration : Resource
     /// </summary>
     /// <param name="resourceName">Name of the AseV3NetworkingConfiguration.</param>
     /// <param name="resourceVersion">Version of the AseV3NetworkingConfiguration.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public AseV3NetworkingConfiguration(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/hostingEnvironments/configurations", resourceVersion, context)
+    public AseV3NetworkingConfiguration(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/hostingEnvironments/configurations", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _allowNewPrivateEndpointConnections = BicepValue<bool>.DefineProperty(this, "AllowNewPrivateEndpointConnections", ["properties", "allowNewPrivateEndpointConnections"]);

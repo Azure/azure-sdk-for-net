@@ -68,9 +68,8 @@ public partial class KeyVaultSecret : Resource
     /// </summary>
     /// <param name="resourceName">Name of the KeyVaultSecret.</param>
     /// <param name="resourceVersion">Version of the KeyVaultSecret.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public KeyVaultSecret(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.KeyVault/vaults/secrets", resourceVersion ?? "2019-09-01", context)
+    public KeyVaultSecret(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.KeyVault/vaults/secrets", resourceVersion ?? "2019-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _properties = BicepValue<SecretProperties>.DefineProperty(this, "Properties", ["properties"], isRequired: true);

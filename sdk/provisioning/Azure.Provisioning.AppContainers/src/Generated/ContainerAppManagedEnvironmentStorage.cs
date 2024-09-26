@@ -52,9 +52,8 @@ public partial class ContainerAppManagedEnvironmentStorage : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ContainerAppManagedEnvironmentStorage.</param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironmentStorage.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerAppManagedEnvironmentStorage(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.App/managedEnvironments/storages", resourceVersion, context)
+    public ContainerAppManagedEnvironmentStorage(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.App/managedEnvironments/storages", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _managedEnvironmentStorageAzureFile = BicepValue<ContainerAppAzureFileProperties>.DefineProperty(this, "ManagedEnvironmentStorageAzureFile", ["properties", "azureFile"]);

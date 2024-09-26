@@ -17,18 +17,16 @@ public class BicepOutput : BicepVariable
     /// </summary>
     /// <param name="name">Name of the output.</param>
     /// <param name="type">Type of the output.</param>
-    /// <param name="context">Optional provisioning context.</param>
-    public BicepOutput(string name, Expression type, ProvisioningContext? context = default)
-        : base(name, type, value: null, context) { }
+    public BicepOutput(string name, Expression type)
+        : base(name, type, value: null) { }
 
     /// <summary>
     /// Creates a new BicepOutput.
     /// </summary>
     /// <param name="name">Name of the output.</param>
     /// <param name="type">Type of the output.</param>
-    /// <param name="context">Optional provisioning context.</param>
-    public BicepOutput(string name, Type type, ProvisioningContext? context = default)
-        : this(name, new TypeExpression(type), context) { }
+    public BicepOutput(string name, Type type)
+        : this(name, new TypeExpression(type)) { }
 
     /// <inheritdoc />
     protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = default)

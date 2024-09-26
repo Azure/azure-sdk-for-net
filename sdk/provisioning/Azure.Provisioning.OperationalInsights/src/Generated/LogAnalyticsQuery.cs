@@ -113,9 +113,8 @@ public partial class LogAnalyticsQuery : Resource
     /// </summary>
     /// <param name="resourceName">Name of the LogAnalyticsQuery.</param>
     /// <param name="resourceVersion">Version of the LogAnalyticsQuery.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public LogAnalyticsQuery(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.OperationalInsights/queryPacks/queries", resourceVersion, context)
+    public LogAnalyticsQuery(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.OperationalInsights/queryPacks/queries", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _body = BicepValue<string>.DefineProperty(this, "Body", ["properties", "body"]);

@@ -188,9 +188,8 @@ public partial class PostgreSqlMigration : Resource
     /// </summary>
     /// <param name="resourceName">Name of the PostgreSqlMigration.</param>
     /// <param name="resourceVersion">Version of the PostgreSqlMigration.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlMigration(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/migrations", resourceVersion, context)
+    public PostgreSqlMigration(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/migrations", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

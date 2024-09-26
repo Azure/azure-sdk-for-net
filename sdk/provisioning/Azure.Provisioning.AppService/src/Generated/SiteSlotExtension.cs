@@ -131,9 +131,8 @@ public partial class SiteSlotExtension : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SiteSlotExtension.</param>
     /// <param name="resourceVersion">Version of the SiteSlotExtension.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SiteSlotExtension(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/extensions", resourceVersion, context)
+    public SiteSlotExtension(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/slots/extensions", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _connectionString = BicepValue<string>.DefineProperty(this, "ConnectionString", ["properties", "connectionString"]);

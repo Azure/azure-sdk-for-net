@@ -71,9 +71,8 @@ public partial class CassandraTableThroughputSetting : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CassandraTableThroughputSetting.</param>
     /// <param name="resourceVersion">Version of the CassandraTableThroughputSetting.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CassandraTableThroughputSetting(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables/throughputSettings", resourceVersion, context)
+    public CassandraTableThroughputSetting(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables/throughputSettings", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

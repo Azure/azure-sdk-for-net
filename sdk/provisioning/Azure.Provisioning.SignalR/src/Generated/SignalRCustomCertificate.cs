@@ -70,9 +70,8 @@ public partial class SignalRCustomCertificate : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SignalRCustomCertificate.</param>
     /// <param name="resourceVersion">Version of the SignalRCustomCertificate.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SignalRCustomCertificate(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.SignalRService/signalR/customCertificates", resourceVersion, context)
+    public SignalRCustomCertificate(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.SignalRService/signalR/customCertificates", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _keyVaultBaseUri = BicepValue<Uri>.DefineProperty(this, "KeyVaultBaseUri", ["properties", "keyVaultBaseUri"], isRequired: true);

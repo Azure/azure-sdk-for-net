@@ -66,9 +66,8 @@ public partial class RedisPrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the RedisPrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the RedisPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public RedisPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Cache/redis/privateEndpointConnections", resourceVersion, context)
+    public RedisPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Cache/redis/privateEndpointConnections", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _redisPrivateLinkServiceConnectionState = BicepValue<RedisPrivateLinkServiceConnectionState>.DefineProperty(this, "RedisPrivateLinkServiceConnectionState", ["properties", "privateLinkServiceConnectionState"]);

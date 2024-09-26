@@ -76,9 +76,8 @@ public partial class CaCertificate : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CaCertificate.</param>
     /// <param name="resourceVersion">Version of the CaCertificate.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CaCertificate(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/caCertificates", resourceVersion, context)
+    public CaCertificate(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/namespaces/caCertificates", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);

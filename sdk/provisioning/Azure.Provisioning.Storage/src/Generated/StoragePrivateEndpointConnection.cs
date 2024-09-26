@@ -66,9 +66,8 @@ public partial class StoragePrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the StoragePrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the StoragePrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public StoragePrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/privateEndpointConnections", resourceVersion, context)
+    public StoragePrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Storage/storageAccounts/privateEndpointConnections", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<StoragePrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);

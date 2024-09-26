@@ -61,9 +61,8 @@ public partial class StorageAccountManagementPolicy : Resource
     /// </summary>
     /// <param name="resourceName">Name of the StorageAccountManagementPolicy.</param>
     /// <param name="resourceVersion">Version of the StorageAccountManagementPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public StorageAccountManagementPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/managementPolicies", resourceVersion, context)
+    public StorageAccountManagementPolicy(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Storage/storageAccounts/managementPolicies", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], defaultValue: GetNameDefaultValue());
         _rules = BicepList<ManagementPolicyRule>.DefineProperty(this, "Rules", ["properties", "policy", "rules"]);

@@ -37,9 +37,8 @@ public class BicepVariable : NamedProvisioningConstruct
     /// <param name="name">Name of the variable.</param>
     /// <param name="type">Type of the variable.</param>
     /// <param name="value">Default value of the variable.</param>
-    /// <param name="context">Optional provisioning context.</param>
-    protected BicepVariable(string name, Expression type, BicepValue<object>? value, ProvisioningContext? context = default)
-        : base(name, context)
+    protected BicepVariable(string name, Expression type, BicepValue<object>? value)
+        : base(name)
     {
         BicepType = type;
         _value = BicepValue<object>.DefineProperty(this, nameof(Value), bicepPath: null, defaultValue: value);
@@ -50,9 +49,8 @@ public class BicepVariable : NamedProvisioningConstruct
     /// </summary>
     /// <param name="name">Name of the variable.</param>
     /// <param name="type">Type of the variable.</param>
-    /// <param name="context">Optional provisioning context.</param>
-    public BicepVariable(string name, Type type, ProvisioningContext? context = default)
-        : this(name, new TypeExpression(type), value: null, context) { }
+    public BicepVariable(string name, Type type)
+        : this(name, new TypeExpression(type), value: null) { }
 
     /// <inheritdoc />
     protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = default)

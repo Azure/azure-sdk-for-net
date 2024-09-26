@@ -95,9 +95,8 @@ public partial class ContainerAppConnectedEnvironmentDaprComponent : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ContainerAppConnectedEnvironmentDaprComponent.</param>
     /// <param name="resourceVersion">Version of the ContainerAppConnectedEnvironmentDaprComponent.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerAppConnectedEnvironmentDaprComponent(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.App/connectedEnvironments/daprComponents", resourceVersion, context)
+    public ContainerAppConnectedEnvironmentDaprComponent(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.App/connectedEnvironments/daprComponents", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _componentType = BicepValue<string>.DefineProperty(this, "ComponentType", ["properties", "componentType"]);

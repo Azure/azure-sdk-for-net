@@ -78,9 +78,8 @@ public partial class CosmosDBSqlStoredProcedure : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CosmosDBSqlStoredProcedure.</param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlStoredProcedure.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CosmosDBSqlStoredProcedure(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/storedProcedures", resourceVersion, context)
+    public CosmosDBSqlStoredProcedure(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/storedProcedures", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

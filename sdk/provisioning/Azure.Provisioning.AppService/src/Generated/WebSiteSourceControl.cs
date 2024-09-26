@@ -98,9 +98,8 @@ public partial class WebSiteSourceControl : Resource
     /// </summary>
     /// <param name="resourceName">Name of the WebSiteSourceControl.</param>
     /// <param name="resourceVersion">Version of the WebSiteSourceControl.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WebSiteSourceControl(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/sourcecontrols", resourceVersion, context)
+    public WebSiteSourceControl(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/sourcecontrols", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _branch = BicepValue<string>.DefineProperty(this, "Branch", ["properties", "branch"]);

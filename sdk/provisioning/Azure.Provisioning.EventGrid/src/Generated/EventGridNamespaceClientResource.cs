@@ -101,9 +101,8 @@ public partial class EventGridNamespaceClientResource : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EventGridNamespaceClientResource.</param>
     /// <param name="resourceVersion">Version of the EventGridNamespaceClientResource.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventGridNamespaceClientResource(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/clients", resourceVersion, context)
+    public EventGridNamespaceClientResource(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/namespaces/clients", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _attributes = BicepDictionary<BinaryData>.DefineProperty(this, "Attributes", ["properties", "attributes"]);

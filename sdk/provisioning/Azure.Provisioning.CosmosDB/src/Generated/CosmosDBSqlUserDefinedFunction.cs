@@ -78,9 +78,8 @@ public partial class CosmosDBSqlUserDefinedFunction : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CosmosDBSqlUserDefinedFunction.</param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlUserDefinedFunction.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CosmosDBSqlUserDefinedFunction(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/userDefinedFunctions", resourceVersion, context)
+    public CosmosDBSqlUserDefinedFunction(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/userDefinedFunctions", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

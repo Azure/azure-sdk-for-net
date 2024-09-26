@@ -209,9 +209,8 @@ public partial class SignalRService : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SignalRService.</param>
     /// <param name="resourceVersion">Version of the SignalRService.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SignalRService(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.SignalRService/signalR", resourceVersion, context)
+    public SignalRService(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.SignalRService/signalR", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

@@ -73,9 +73,8 @@ public partial class ManagementGroupSubscription : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagementGroupSubscription.</param>
     /// <param name="resourceVersion">Version of the ManagementGroupSubscription.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagementGroupSubscription(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Management/managementGroups/subscriptions", resourceVersion, context)
+    public ManagementGroupSubscription(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Management/managementGroups/subscriptions", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["properties", "displayName"], isOutput: true);

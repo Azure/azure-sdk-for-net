@@ -80,9 +80,8 @@ public partial class LogAnalyticsQueryPack : Resource
     /// </summary>
     /// <param name="resourceName">Name of the LogAnalyticsQueryPack.</param>
     /// <param name="resourceVersion">Version of the LogAnalyticsQueryPack.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public LogAnalyticsQueryPack(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.OperationalInsights/queryPacks", resourceVersion, context)
+    public LogAnalyticsQueryPack(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.OperationalInsights/queryPacks", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

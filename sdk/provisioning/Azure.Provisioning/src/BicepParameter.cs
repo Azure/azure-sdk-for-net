@@ -28,18 +28,16 @@ public class BicepParameter : BicepVariable
     /// </summary>
     /// <param name="name">Name of the parameter.</param>
     /// <param name="type">Type of the parameter.</param>
-    /// <param name="context">Optional provisioning context.</param>
-    public BicepParameter(string name, Expression type, ProvisioningContext? context = default)
-        : base(name, type, value: null, context) { }
+    public BicepParameter(string name, Expression type)
+        : base(name, type, value: null) { }
 
     /// <summary>
     /// Creates a new BicepParameter.
     /// </summary>
     /// <param name="name">Name of the parameter.</param>
     /// <param name="type">Type of the parameter.</param>
-    /// <param name="context">Optional provisioning context.</param>
-    public BicepParameter(string name, Type type, ProvisioningContext? context = default)
-        : this(name, new TypeExpression(type), context) { }
+    public BicepParameter(string name, Type type)
+        : this(name, new TypeExpression(type)) { }
 
     /// <inheritdoc />
     protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = default)

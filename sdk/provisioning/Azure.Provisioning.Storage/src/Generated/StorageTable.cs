@@ -62,9 +62,8 @@ public partial class StorageTable : Resource
     /// </summary>
     /// <param name="resourceName">Name of the StorageTable.</param>
     /// <param name="resourceVersion">Version of the StorageTable.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public StorageTable(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/tableServices/tables", resourceVersion, context)
+    public StorageTable(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Storage/storageAccounts/tableServices/tables", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _signedIdentifiers = BicepList<StorageTableSignedIdentifier>.DefineProperty(this, "SignedIdentifiers", ["properties", "signedIdentifiers"]);

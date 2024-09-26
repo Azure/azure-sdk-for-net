@@ -49,9 +49,8 @@ public partial class TagResource : Resource
     /// </summary>
     /// <param name="resourceName">Name of the TagResource.</param>
     /// <param name="resourceVersion">Version of the TagResource.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public TagResource(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Resources/tags", resourceVersion, context)
+    public TagResource(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Resources/tags", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _tagValues = BicepDictionary<string>.DefineProperty(this, "TagValues", ["properties", "tags"]);

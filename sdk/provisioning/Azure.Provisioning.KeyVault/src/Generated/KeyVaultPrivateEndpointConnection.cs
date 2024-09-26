@@ -85,9 +85,8 @@ public partial class KeyVaultPrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the KeyVaultPrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the KeyVaultPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public KeyVaultPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.KeyVault/vaults/privateEndpointConnections", resourceVersion, context)
+    public KeyVaultPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.KeyVault/vaults/privateEndpointConnections", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<KeyVaultPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);

@@ -71,9 +71,8 @@ public partial class EventGridTopicPrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EventGridTopicPrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the EventGridTopicPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventGridTopicPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/topics/privateEndpointConnections", resourceVersion, context)
+    public EventGridTopicPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/topics/privateEndpointConnections", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<EventGridPrivateEndpointConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);

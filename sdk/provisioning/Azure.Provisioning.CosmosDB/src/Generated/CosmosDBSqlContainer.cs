@@ -78,9 +78,8 @@ public partial class CosmosDBSqlContainer : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CosmosDBSqlContainer.</param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlContainer.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CosmosDBSqlContainer(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers", resourceVersion, context)
+    public CosmosDBSqlContainer(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

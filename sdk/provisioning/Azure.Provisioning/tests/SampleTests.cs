@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Provisioning.AppContainers;
+using Azure.Provisioning.Authorization;
 using Azure.Provisioning.ContainerRegistry;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.OperationalInsights;
@@ -31,12 +32,19 @@ internal class SampleTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 // Create a storage account and blob resources
                 StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                infra.Add(storage);
                 blobs = new(nameof(blobs)) { Parent = storage };
+                infra.Add(blobs);
 
                 // Grab the endpoint
                 endpoint = new BicepOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri };
+                infra.Add(endpoint);
+
+                return infra;
             })
         .Compare(
             """
@@ -90,14 +98,21 @@ internal class SampleTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 BicepParameter principalId = new(nameof(principalId), typeof(string)) { Value = "" };
+                infra.Add(principalId);
+
                 BicepParameter tags = new(nameof(tags), typeof(object)) { Value = new BicepDictionary<string>() };
+                infra.Add(tags);
 
                 UserAssignedIdentity mi =
                     new(nameof(mi))
                     {
                         Tags = tags,
                     };
+                infra.Add(mi);
+
                 ContainerRegistryService acr =
                     new(nameof(acr))
                     {
@@ -114,13 +129,19 @@ internal class SampleTests(bool async)
                                 }
                             }
                     };
-                acr.AssignRole(ContainerRegistryBuiltInRole.AcrPull, mi);
+                infra.Add(acr);
+
+                RoleAssignment pullAssignment = acr.AssignRole(ContainerRegistryBuiltInRole.AcrPull, mi);
+                infra.Add(pullAssignment);
+
                 OperationalInsightsWorkspace law =
                     new(nameof(law))
                     {
                         Sku = new OperationalInsightsWorkspaceSku() { Name = OperationalInsightsWorkspaceSkuName.PerGB2018 },
                         Tags = tags,
                     };
+                infra.Add(law);
+
                 ContainerAppManagedEnvironment cae =
                     new(nameof(cae))
                     {
@@ -144,7 +165,10 @@ internal class SampleTests(bool async)
                             },
                         Tags = tags,
                     };
-                cae.AssignRole(AppContainersBuiltInRole.Contributor, mi);
+                infra.Add(cae);
+
+                RoleAssignment contribAssignment = cae.AssignRole(AppContainersBuiltInRole.Contributor, mi);
+                infra.Add(contribAssignment);
 
                 // Hack in the Aspire Dashboard as a literal since there's no
                 // management plane library support for dotNetComponents yet
@@ -159,17 +183,20 @@ internal class SampleTests(bool async)
                                 new PropertyExpression("properties",
                                     new ObjectExpression(
                                         new PropertyExpression("componentType", new StringLiteral("AspireDashboard")))))));
+                infra.Add(aspireDashboard);
 
-                _ = new BicepOutput("MANAGED_IDENTITY_CLIENT_ID", typeof(string)) { Value = mi.ClientId };
-                _ = new BicepOutput("MANAGED_IDENTITY_NAME", typeof(string)) { Value = mi.Name };
-                _ = new BicepOutput("MANAGED_IDENTITY_PRINCIPAL_ID", typeof(string)) { Value = mi.PrincipalId };
-                _ = new BicepOutput("LOG_ANALYTICS_WORKSPACE_NAME", typeof(string)) { Value = law.Name };
-                _ = new BicepOutput("LOG_ANALYTICS_WORKSPACE_ID", typeof(string)) { Value = law.Id };
-                _ = new BicepOutput("AZURE_CONTAINER_REGISTRY_ENDPOINT", typeof(string)) { Value = acr.LoginServer };
-                _ = new BicepOutput("AZURE_CONTAINER_REGISTRY_MANAGED_IDENTITY_ID", typeof(string)) { Value = mi.Id };
-                _ = new BicepOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_NAME", typeof(string)) { Value = cae.Name };
-                _ = new BicepOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_ID", typeof(string)) { Value = cae.Id };
-                _ = new BicepOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN", typeof(string)) { Value = cae.DefaultDomain };
+                infra.Add(new BicepOutput("MANAGED_IDENTITY_CLIENT_ID", typeof(string)) { Value = mi.ClientId });
+                infra.Add(new BicepOutput("MANAGED_IDENTITY_NAME", typeof(string)) { Value = mi.Name });
+                infra.Add(new BicepOutput("MANAGED_IDENTITY_PRINCIPAL_ID", typeof(string)) { Value = mi.PrincipalId });
+                infra.Add(new BicepOutput("LOG_ANALYTICS_WORKSPACE_NAME", typeof(string)) { Value = law.Name });
+                infra.Add(new BicepOutput("LOG_ANALYTICS_WORKSPACE_ID", typeof(string)) { Value = law.Id });
+                infra.Add(new BicepOutput("AZURE_CONTAINER_REGISTRY_ENDPOINT", typeof(string)) { Value = acr.LoginServer });
+                infra.Add(new BicepOutput("AZURE_CONTAINER_REGISTRY_MANAGED_IDENTITY_ID", typeof(string)) { Value = mi.Id });
+                infra.Add(new BicepOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_NAME", typeof(string)) { Value = cae.Name });
+                infra.Add(new BicepOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_ID", typeof(string)) { Value = cae.Id });
+                infra.Add(new BicepOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN", typeof(string)) { Value = cae.DefaultDomain });
+
+                return infra;
             })
         .Compare(
             """
@@ -292,15 +319,14 @@ internal class SampleTests(bool async)
         await test.Define(
             ctx =>
             {
-                // Create a new resource group
-                ResourceGroup rg = new("rg-test", "2024-03-01");
-
                 // Create a new infra group scoped to our subscription and add
                 // the resource group
-                Infrastructure group = new("main") { TargetScope = "subscription" };
-                group.Add(rg);
+                Infrastructure infra = new() { TargetScope = "subscription" };
 
-                return group;
+                ResourceGroup rg = new("rg-test", "2024-03-01");
+                infra.Add(rg);
+
+                return infra;
             })
         .Compare(
             """

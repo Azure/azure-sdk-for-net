@@ -53,9 +53,8 @@ public partial class ManagedBackupShortTermRetentionPolicy : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedBackupShortTermRetentionPolicy.</param>
     /// <param name="resourceVersion">Version of the ManagedBackupShortTermRetentionPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedBackupShortTermRetentionPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/databases/backupShortTermRetentionPolicies", resourceVersion, context)
+    public ManagedBackupShortTermRetentionPolicy(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/databases/backupShortTermRetentionPolicies", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _retentionDays = BicepValue<int>.DefineProperty(this, "RetentionDays", ["properties", "retentionDays"]);

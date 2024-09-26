@@ -54,9 +54,8 @@ public partial class SearchPrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SearchPrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the SearchPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SearchPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Search/searchServices/privateEndpointConnections", resourceVersion, context)
+    public SearchPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Search/searchServices/privateEndpointConnections", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _properties = BicepValue<SearchServicePrivateEndpointConnectionProperties>.DefineProperty(this, "Properties", ["properties"]);

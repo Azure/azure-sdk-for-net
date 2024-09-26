@@ -16,9 +16,8 @@ namespace Azure.Provisioning.Primitives;
 /// <param name="resourceName">The friendly name of the resource.</param>
 /// <param name="resourceType">The type of the resource.</param>
 /// <param name="resourceVersion">The version of the resource.</param>
-/// <param name="context">Optional ProvisioningContext.</param>
-public abstract class Resource(string resourceName, ResourceType resourceType, string? resourceVersion = default, ProvisioningContext? context = default)
-    : NamedProvisioningConstruct(resourceName, context)
+public abstract class Resource(string resourceName, ResourceType resourceType, string? resourceVersion = default)
+    : NamedProvisioningConstruct(resourceName)
 {
     /// <summary>
     /// Gets the type of the resource.
@@ -71,11 +70,9 @@ public abstract class Resource(string resourceName, ResourceType resourceType, s
     /// <returns>
     /// A provisioning plan that can be saved as Bicep or deployed directly.
     /// </returns>
-    public virtual ProvisioningPlan Build(ProvisioningContext? context = default)
-    {
-        context ??= DefaultProvisioningContext;
-        return context.DefaultInfrastructure.Build(context);
-    }
+    public virtual ProvisioningPlan Build(ProvisioningContext? context = default) =>
+        ParentInfrastructure?.Build(context ?? new()) ??
+            throw new InvalidOperationException($"Cannot build a provisioning plan for {GetType().Name} resource {ResourceName} before it has been added to {nameof(Infrastructure)}.");
 
     /// <inheritdoc />
     protected internal override void Validate(ProvisioningContext? context = null)

@@ -133,9 +133,8 @@ public partial class OperationalInsightsCluster : Resource
     /// </summary>
     /// <param name="resourceName">Name of the OperationalInsightsCluster.</param>
     /// <param name="resourceVersion">Version of the OperationalInsightsCluster.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public OperationalInsightsCluster(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.OperationalInsights/clusters", resourceVersion ?? "2021-06-01", context)
+    public OperationalInsightsCluster(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.OperationalInsights/clusters", resourceVersion ?? "2021-06-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -161,6 +160,16 @@ public partial class OperationalInsightsCluster : Resource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-09-01.
+        /// </summary>
+        public static readonly string V2023_09_01 = "2023-09-01";
+
+        /// <summary>
+        /// 2022-10-01.
+        /// </summary>
+        public static readonly string V2022_10_01 = "2022-10-01";
+
         /// <summary>
         /// 2021-06-01.
         /// </summary>

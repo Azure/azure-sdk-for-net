@@ -85,9 +85,8 @@ public partial class StaticSiteBasicAuthProperty : Resource
     /// </summary>
     /// <param name="resourceName">Name of the StaticSiteBasicAuthProperty.</param>
     /// <param name="resourceVersion">Version of the StaticSiteBasicAuthProperty.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public StaticSiteBasicAuthProperty(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/staticSites/basicAuth", resourceVersion, context)
+    public StaticSiteBasicAuthProperty(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/staticSites/basicAuth", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _applicableEnvironmentsMode = BicepValue<string>.DefineProperty(this, "ApplicableEnvironmentsMode", ["properties", "applicableEnvironmentsMode"]);

@@ -158,9 +158,8 @@ public partial class KubernetesClusterExtension : Resource
     /// </summary>
     /// <param name="resourceName">Name of the KubernetesClusterExtension.</param>
     /// <param name="resourceVersion">Version of the KubernetesClusterExtension.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public KubernetesClusterExtension(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.KubernetesConfiguration/extensions", resourceVersion ?? "2023-05-01", context)
+    public KubernetesClusterExtension(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.KubernetesConfiguration/extensions", resourceVersion ?? "2023-05-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _aksAssignedIdentity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "AksAssignedIdentity", ["properties", "aksAssignedIdentity"]);

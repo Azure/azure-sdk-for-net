@@ -21,8 +21,13 @@ public class BasicEventHubsTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 BicepParameter hubName = new(nameof(hubName), typeof(string)) { Value = "orders" };
+                infra.Add(hubName);
+
                 BicepParameter groupName = new(nameof(groupName), typeof(string)) { Value = "managers" };
+                infra.Add(groupName);
 
                 EventHubsNamespace ns =
                     new(nameof(ns))
@@ -34,6 +39,7 @@ public class BasicEventHubsTests(bool async)
                             Capacity = 1
                         }
                     };
+                infra.Add(ns);
 
                 EventHub hub =
                     new(nameof(hub))
@@ -41,6 +47,7 @@ public class BasicEventHubsTests(bool async)
                         Parent = ns,
                         Name = hubName
                     };
+                infra.Add(hub);
 
                 EventHubsConsumerGroup group =
                     new(nameof(group))
@@ -49,6 +56,9 @@ public class BasicEventHubsTests(bool async)
                         Name = groupName,
                         UserMetadata = BinaryData.FromObjectAsJson(new { foo = 1, bar = "hello" }).ToString()
                     };
+                infra.Add(group);
+
+                return infra;
             })
         .Compare(
             """

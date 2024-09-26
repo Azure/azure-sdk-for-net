@@ -117,14 +117,13 @@ public class Resource(Specification spec, Type armType)
                     writer.WriteLine($"/// </summary>");
                     writer.WriteLine($"/// <param name=\"resourceName\">Name of the {Name}.</param>");
                     writer.WriteLine($"/// <param name=\"resourceVersion\">Version of the {Name}.</param>");
-                    writer.WriteLine($"/// <param name=\"context\">Provisioning context for this resource.</param>");
-                    writer.WriteLine($"public {Name}(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)");
+                    writer.WriteLine($"public {Name}(string resourceName, string? resourceVersion = default)");
                     writer.Write($"    : base(resourceName, \"{ResourceType}\", resourceVersion");
                     if (DefaultResourceVersion is not null)
                     {
                         writer.Write($" ?? \"{DefaultResourceVersion}\"");
                     }
-                    writer.WriteLine(", context)");
+                    writer.WriteLine(")");
                     using (writer.Scope("{", "}"))
                     {
                         foreach (Property property in Properties)

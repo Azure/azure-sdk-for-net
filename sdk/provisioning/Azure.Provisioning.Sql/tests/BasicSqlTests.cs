@@ -20,23 +20,30 @@ public class BasicSqlTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 BicepParameter dbName =
                     new(nameof(dbName), typeof(string))
                     {
                         Value = "SampleDB",
                         Description = "The name of the SQL Database."
                     };
+                infra.Add(dbName);
+
                 BicepParameter adminLogin =
                     new(nameof(adminLogin), typeof(string))
                     {
                         Description = "The administrator username of the SQL logical server."
                     };
+                infra.Add(adminLogin);
+
                 BicepParameter adminPass =
                     new(nameof(adminPass), typeof(string))
                     {
                         Description = "The administrator password of the SQL logical server.",
                         IsSecure = true
                     };
+                infra.Add(adminPass);
 
                 SqlServer sql =
                     new(nameof(sql))
@@ -44,6 +51,7 @@ public class BasicSqlTests(bool async)
                         AdministratorLogin = adminLogin,
                         AdministratorLoginPassword = adminPass
                     };
+                infra.Add(sql);
 
                 SqlDatabase db =
                     new(nameof(db))
@@ -52,6 +60,9 @@ public class BasicSqlTests(bool async)
                         Name = dbName,
                         Sku = new SqlSku { Name = "Standard", Tier = "Standard" }
                     };
+                infra.Add(db);
+
+                return infra;
             })
         .Compare(
             """

@@ -66,9 +66,8 @@ public partial class ContainerServiceMaintenanceConfiguration : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ContainerServiceMaintenanceConfiguration.</param>
     /// <param name="resourceVersion">Version of the ContainerServiceMaintenanceConfiguration.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerServiceMaintenanceConfiguration(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerService/managedClusters/maintenanceConfigurations", resourceVersion, context)
+    public ContainerServiceMaintenanceConfiguration(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ContainerService/managedClusters/maintenanceConfigurations", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _maintenanceWindow = BicepValue<ContainerServiceMaintenanceWindow>.DefineProperty(this, "MaintenanceWindow", ["properties", "maintenanceWindow"]);

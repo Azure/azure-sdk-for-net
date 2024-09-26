@@ -78,9 +78,8 @@ public partial class GraphResourceGetResult : Resource
     /// </summary>
     /// <param name="resourceName">Name of the GraphResourceGetResult.</param>
     /// <param name="resourceVersion">Version of the GraphResourceGetResult.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public GraphResourceGetResult(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/graphs", resourceVersion, context)
+    public GraphResourceGetResult(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/graphs", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

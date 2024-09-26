@@ -85,9 +85,8 @@ public partial class RedisLinkedServerWithProperty : Resource
     /// </summary>
     /// <param name="resourceName">Name of the RedisLinkedServerWithProperty.</param>
     /// <param name="resourceVersion">Version of the RedisLinkedServerWithProperty.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public RedisLinkedServerWithProperty(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Cache/redis/linkedServers", resourceVersion, context)
+    public RedisLinkedServerWithProperty(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Cache/redis/linkedServers", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _linkedRedisCacheId = BicepValue<ResourceIdentifier>.DefineProperty(this, "LinkedRedisCacheId", ["properties", "linkedRedisCacheId"], isRequired: true);

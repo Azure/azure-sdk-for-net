@@ -88,9 +88,8 @@ public partial class ServiceBusDisasterRecovery : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ServiceBusDisasterRecovery.</param>
     /// <param name="resourceVersion">Version of the ServiceBusDisasterRecovery.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ServiceBusDisasterRecovery(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs", resourceVersion, context)
+    public ServiceBusDisasterRecovery(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _alternateName = BicepValue<string>.DefineProperty(this, "AlternateName", ["properties", "alternateName"]);

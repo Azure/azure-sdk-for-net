@@ -65,9 +65,8 @@ public partial class EventGridNamespaceClientGroup : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EventGridNamespaceClientGroup.</param>
     /// <param name="resourceVersion">Version of the EventGridNamespaceClientGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventGridNamespaceClientGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/clientGroups", resourceVersion, context)
+    public EventGridNamespaceClientGroup(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/namespaces/clientGroups", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);

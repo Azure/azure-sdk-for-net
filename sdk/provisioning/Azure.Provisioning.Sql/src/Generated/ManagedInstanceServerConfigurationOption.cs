@@ -58,9 +58,8 @@ public partial class ManagedInstanceServerConfigurationOption : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedInstanceServerConfigurationOption.</param>
     /// <param name="resourceVersion">Version of the ManagedInstanceServerConfigurationOption.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedInstanceServerConfigurationOption(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/serverConfigurationOptions", resourceVersion, context)
+    public ManagedInstanceServerConfigurationOption(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/serverConfigurationOptions", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _serverConfigurationOptionValue = BicepValue<int>.DefineProperty(this, "ServerConfigurationOptionValue", ["properties", "serverConfigurationOptionValue"]);

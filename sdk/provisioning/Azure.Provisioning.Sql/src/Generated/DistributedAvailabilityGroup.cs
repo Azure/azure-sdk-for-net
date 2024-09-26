@@ -107,9 +107,8 @@ public partial class DistributedAvailabilityGroup : Resource
     /// </summary>
     /// <param name="resourceName">Name of the DistributedAvailabilityGroup.</param>
     /// <param name="resourceVersion">Version of the DistributedAvailabilityGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public DistributedAvailabilityGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/distributedAvailabilityGroups", resourceVersion, context)
+    public DistributedAvailabilityGroup(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/distributedAvailabilityGroups", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _primaryAvailabilityGroupName = BicepValue<string>.DefineProperty(this, "PrimaryAvailabilityGroupName", ["properties", "primaryAvailabilityGroupName"]);

@@ -64,9 +64,8 @@ public partial class SignalRCustomDomain : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SignalRCustomDomain.</param>
     /// <param name="resourceVersion">Version of the SignalRCustomDomain.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SignalRCustomDomain(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.SignalRService/signalR/customDomains", resourceVersion, context)
+    public SignalRCustomDomain(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.SignalRService/signalR/customDomains", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _domainName = BicepValue<string>.DefineProperty(this, "DomainName", ["properties", "domainName"], isRequired: true);

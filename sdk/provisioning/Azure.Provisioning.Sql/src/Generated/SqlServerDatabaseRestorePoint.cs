@@ -76,9 +76,8 @@ public partial class SqlServerDatabaseRestorePoint : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlServerDatabaseRestorePoint.</param>
     /// <param name="resourceVersion">Version of the SqlServerDatabaseRestorePoint.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerDatabaseRestorePoint(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/restorePoints", resourceVersion, context)
+    public SqlServerDatabaseRestorePoint(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/databases/restorePoints", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _earliestRestoreOn = BicepValue<DateTimeOffset>.DefineProperty(this, "EarliestRestoreOn", ["properties", "earliestRestoreDate"], isOutput: true);

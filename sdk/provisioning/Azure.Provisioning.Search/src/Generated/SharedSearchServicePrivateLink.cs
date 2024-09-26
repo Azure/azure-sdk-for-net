@@ -54,9 +54,8 @@ public partial class SharedSearchServicePrivateLink : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SharedSearchServicePrivateLink.</param>
     /// <param name="resourceVersion">Version of the SharedSearchServicePrivateLink.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SharedSearchServicePrivateLink(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Search/searchServices/sharedPrivateLinkResources", resourceVersion, context)
+    public SharedSearchServicePrivateLink(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Search/searchServices/sharedPrivateLinkResources", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _properties = BicepValue<SharedSearchServicePrivateLinkResourceProperties>.DefineProperty(this, "Properties", ["properties"]);

@@ -71,9 +71,8 @@ public partial class SlotConfigNames : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SlotConfigNames.</param>
     /// <param name="resourceVersion">Version of the SlotConfigNames.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SlotConfigNames(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/config", resourceVersion, context)
+    public SlotConfigNames(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/config", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _appSettingNames = BicepList<string>.DefineProperty(this, "AppSettingNames", ["properties", "appSettingNames"]);

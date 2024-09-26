@@ -71,9 +71,8 @@ public partial class SqlPrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlPrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the SqlPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/privateEndpointConnections", resourceVersion, context)
+    public SqlPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/privateEndpointConnections", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<SqlPrivateLinkServiceConnectionStateProperty>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);

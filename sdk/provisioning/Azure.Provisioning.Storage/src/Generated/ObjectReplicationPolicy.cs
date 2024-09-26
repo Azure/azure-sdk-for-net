@@ -79,9 +79,8 @@ public partial class ObjectReplicationPolicy : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ObjectReplicationPolicy.</param>
     /// <param name="resourceVersion">Version of the ObjectReplicationPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ObjectReplicationPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/objectReplicationPolicies", resourceVersion, context)
+    public ObjectReplicationPolicy(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Storage/storageAccounts/objectReplicationPolicies", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _destinationAccount = BicepValue<string>.DefineProperty(this, "DestinationAccount", ["properties", "destinationAccount"]);

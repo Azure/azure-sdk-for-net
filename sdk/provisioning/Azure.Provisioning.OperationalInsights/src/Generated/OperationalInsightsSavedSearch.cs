@@ -103,9 +103,8 @@ public partial class OperationalInsightsSavedSearch : Resource
     /// </summary>
     /// <param name="resourceName">Name of the OperationalInsightsSavedSearch.</param>
     /// <param name="resourceVersion">Version of the OperationalInsightsSavedSearch.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public OperationalInsightsSavedSearch(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.OperationalInsights/workspaces/savedSearches", resourceVersion, context)
+    public OperationalInsightsSavedSearch(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.OperationalInsights/workspaces/savedSearches", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _category = BicepValue<string>.DefineProperty(this, "Category", ["properties", "category"], isRequired: true);

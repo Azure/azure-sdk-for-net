@@ -78,9 +78,8 @@ public partial class GremlinDatabase : Resource
     /// </summary>
     /// <param name="resourceName">Name of the GremlinDatabase.</param>
     /// <param name="resourceVersion">Version of the GremlinDatabase.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public GremlinDatabase(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases", resourceVersion, context)
+    public GremlinDatabase(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

@@ -140,9 +140,8 @@ public partial class PolicyAssignment : Resource
     /// </summary>
     /// <param name="resourceName">Name of the PolicyAssignment.</param>
     /// <param name="resourceVersion">Version of the PolicyAssignment.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PolicyAssignment(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Authorization/policyAssignments", resourceVersion ?? "2024-04-01", context)
+    public PolicyAssignment(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Authorization/policyAssignments", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);

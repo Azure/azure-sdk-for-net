@@ -98,9 +98,8 @@ public partial class SiteVirtualNetworkConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SiteVirtualNetworkConnection.</param>
     /// <param name="resourceVersion">Version of the SiteVirtualNetworkConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SiteVirtualNetworkConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/virtualNetworkConnections", resourceVersion, context)
+    public SiteVirtualNetworkConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/virtualNetworkConnections", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _certBlob = BicepValue<string>.DefineProperty(this, "CertBlob", ["properties", "certBlob"]);

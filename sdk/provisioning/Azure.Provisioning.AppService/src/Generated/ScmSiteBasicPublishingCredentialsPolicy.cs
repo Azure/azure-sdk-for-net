@@ -59,9 +59,8 @@ public partial class ScmSiteBasicPublishingCredentialsPolicy : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ScmSiteBasicPublishingCredentialsPolicy.</param>
     /// <param name="resourceVersion">Version of the ScmSiteBasicPublishingCredentialsPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ScmSiteBasicPublishingCredentialsPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/basicPublishingCredentialsPolicies", resourceVersion, context)
+    public ScmSiteBasicPublishingCredentialsPolicy(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/basicPublishingCredentialsPolicies", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _allow = BicepValue<bool>.DefineProperty(this, "Allow", ["properties", "allow"]);

@@ -112,9 +112,8 @@ public partial class PostgreSqlFlexibleServerConfiguration : Resource
     /// </summary>
     /// <param name="resourceName">Name of the PostgreSqlFlexibleServerConfiguration.</param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerConfiguration.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlFlexibleServerConfiguration(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/configurations", resourceVersion, context)
+    public PostgreSqlFlexibleServerConfiguration(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/configurations", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _source = BicepValue<string>.DefineProperty(this, "Source", ["properties", "source"]);

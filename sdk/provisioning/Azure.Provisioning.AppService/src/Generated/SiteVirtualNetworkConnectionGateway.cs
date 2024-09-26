@@ -65,9 +65,8 @@ public partial class SiteVirtualNetworkConnectionGateway : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SiteVirtualNetworkConnectionGateway.</param>
     /// <param name="resourceVersion">Version of the SiteVirtualNetworkConnectionGateway.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SiteVirtualNetworkConnectionGateway(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/virtualNetworkConnections/gateways", resourceVersion, context)
+    public SiteVirtualNetworkConnectionGateway(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/virtualNetworkConnections/gateways", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);

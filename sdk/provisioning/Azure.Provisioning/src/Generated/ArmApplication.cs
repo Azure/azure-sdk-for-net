@@ -203,9 +203,8 @@ public partial class ArmApplication : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ArmApplication.</param>
     /// <param name="resourceVersion">Version of the ArmApplication.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ArmApplication(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Solutions/applications", resourceVersion ?? "2021-07-01", context)
+    public ArmApplication(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Solutions/applications", resourceVersion ?? "2021-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isRequired: true);

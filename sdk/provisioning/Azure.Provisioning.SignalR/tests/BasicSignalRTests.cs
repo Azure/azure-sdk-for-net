@@ -21,11 +21,14 @@ public class BasicSignalRTests(bool async)
         await test.Define(
             ctx =>
             {
-               BicepParameter endpointName =
+                Infrastructure infra = new();
+
+                BicepParameter endpointName =
                     new(nameof(endpointName), typeof(string))
                     {
                         Value = "mySignalRService.55e432ab-7428-3695-b637-de57b20d40e5"
                     };
+                infra.Add(endpointName);
 
                 SignalRService signalr =
                     new(nameof(signalr), "2022-02-01")
@@ -82,6 +85,9 @@ public class BasicSignalRTests(bool async)
                             }
                         }
                     };
+                infra.Add(signalr);
+
+                return infra;
             })
         .Compare(
             """

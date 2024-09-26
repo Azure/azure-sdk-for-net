@@ -175,9 +175,8 @@ public partial class FileShare : Resource
     /// </summary>
     /// <param name="resourceName">Name of the FileShare.</param>
     /// <param name="resourceVersion">Version of the FileShare.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public FileShare(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/fileServices/shares", resourceVersion, context)
+    public FileShare(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Storage/storageAccounts/fileServices/shares", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _accessTier = BicepValue<FileShareAccessTier>.DefineProperty(this, "AccessTier", ["properties", "accessTier"]);

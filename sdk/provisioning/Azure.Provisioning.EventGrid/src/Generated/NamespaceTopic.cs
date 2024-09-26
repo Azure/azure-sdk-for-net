@@ -73,9 +73,8 @@ public partial class NamespaceTopic : Resource
     /// </summary>
     /// <param name="resourceName">Name of the NamespaceTopic.</param>
     /// <param name="resourceVersion">Version of the NamespaceTopic.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public NamespaceTopic(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/topics", resourceVersion, context)
+    public NamespaceTopic(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/namespaces/topics", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _eventRetentionInDays = BicepValue<int>.DefineProperty(this, "EventRetentionInDays", ["properties", "eventRetentionInDays"]);

@@ -21,18 +21,22 @@ public class BasicAppContainersTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 BicepParameter containerImage =
                     new(nameof(containerImage), typeof(string))
                     {
                         Value = "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest",
                         Description = "Specifies the docker container image to deploy."
                     };
+                infra.Add(containerImage);
 
                 OperationalInsightsWorkspace logAnalytics =
                     new(nameof(logAnalytics))
                     {
                         Sku = new OperationalInsightsWorkspaceSku { Name = OperationalInsightsWorkspaceSkuName.PerGB2018 }
                     };
+                infra.Add(logAnalytics);
 
                 ContainerAppManagedEnvironment env =
                     new(nameof(env))
@@ -48,6 +52,7 @@ public class BasicAppContainersTests(bool async)
                                 }
                             },
                     };
+                infra.Add(env);
 
                 ContainerApp app =
                     new(nameof(app))
@@ -93,6 +98,9 @@ public class BasicAppContainersTests(bool async)
                                 }
                             }
                     };
+                infra.Add(app);
+
+                return infra;
             })
         .Compare(
             """

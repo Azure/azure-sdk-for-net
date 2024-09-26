@@ -227,9 +227,8 @@ public partial class AppServicePlan : Resource
     /// </summary>
     /// <param name="resourceName">Name of the AppServicePlan.</param>
     /// <param name="resourceVersion">Version of the AppServicePlan.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public AppServicePlan(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/serverfarms", resourceVersion, context)
+    public AppServicePlan(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/serverfarms", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

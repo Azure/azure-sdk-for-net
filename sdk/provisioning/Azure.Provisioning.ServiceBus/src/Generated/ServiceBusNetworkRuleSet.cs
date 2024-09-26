@@ -84,9 +84,8 @@ public partial class ServiceBusNetworkRuleSet : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ServiceBusNetworkRuleSet.</param>
     /// <param name="resourceVersion">Version of the ServiceBusNetworkRuleSet.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ServiceBusNetworkRuleSet(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/networkRuleSets", resourceVersion, context)
+    public ServiceBusNetworkRuleSet(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ServiceBus/namespaces/networkRuleSets", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _defaultAction = BicepValue<ServiceBusNetworkRuleSetDefaultAction>.DefineProperty(this, "DefaultAction", ["properties", "defaultAction"]);

@@ -21,6 +21,8 @@ public class BasicCognitiveServicesTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 CognitiveServicesAccount account =
                     new(nameof(account))
                     {
@@ -37,6 +39,9 @@ public class BasicCognitiveServicesTests(bool async)
                             DisableLocalAuth = true
                         }
                     };
+                infra.Add(account);
+
+                return infra;
             })
         .Compare(
             """

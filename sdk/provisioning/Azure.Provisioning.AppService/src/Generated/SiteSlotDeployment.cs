@@ -100,9 +100,8 @@ public partial class SiteSlotDeployment : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SiteSlotDeployment.</param>
     /// <param name="resourceVersion">Version of the SiteSlotDeployment.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SiteSlotDeployment(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/deployments", resourceVersion, context)
+    public SiteSlotDeployment(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/slots/deployments", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _author = BicepValue<string>.DefineProperty(this, "Author", ["properties", "author"]);

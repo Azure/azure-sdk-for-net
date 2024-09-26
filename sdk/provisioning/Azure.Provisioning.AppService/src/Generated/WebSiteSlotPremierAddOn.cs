@@ -95,9 +95,8 @@ public partial class WebSiteSlotPremierAddOn : Resource
     /// </summary>
     /// <param name="resourceName">Name of the WebSiteSlotPremierAddOn.</param>
     /// <param name="resourceVersion">Version of the WebSiteSlotPremierAddOn.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WebSiteSlotPremierAddOn(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/premieraddons", resourceVersion, context)
+    public WebSiteSlotPremierAddOn(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/slots/premieraddons", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

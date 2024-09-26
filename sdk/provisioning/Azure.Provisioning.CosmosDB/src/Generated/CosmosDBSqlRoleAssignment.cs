@@ -68,9 +68,8 @@ public partial class CosmosDBSqlRoleAssignment : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CosmosDBSqlRoleAssignment.</param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlRoleAssignment.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CosmosDBSqlRoleAssignment(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments", resourceVersion, context)
+    public CosmosDBSqlRoleAssignment(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _principalId = BicepValue<Guid>.DefineProperty(this, "PrincipalId", ["properties", "principalId"]);

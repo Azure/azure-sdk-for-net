@@ -78,9 +78,8 @@ public partial class WebPubSubSharedPrivateLink : Resource
     /// </summary>
     /// <param name="resourceName">Name of the WebPubSubSharedPrivateLink.</param>
     /// <param name="resourceVersion">Version of the WebPubSubSharedPrivateLink.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WebPubSubSharedPrivateLink(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources", resourceVersion, context)
+    public WebPubSubSharedPrivateLink(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _groupId = BicepValue<string>.DefineProperty(this, "GroupId", ["properties", "groupId"]);

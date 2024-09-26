@@ -89,9 +89,8 @@ public partial class ContainerRegistryAgentPool : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ContainerRegistryAgentPool.</param>
     /// <param name="resourceVersion">Version of the ContainerRegistryAgentPool.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerRegistryAgentPool(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerRegistry/registries/agentPools", resourceVersion ?? "2019-06-01-preview", context)
+    public ContainerRegistryAgentPool(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ContainerRegistry/registries/agentPools", resourceVersion ?? "2019-06-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

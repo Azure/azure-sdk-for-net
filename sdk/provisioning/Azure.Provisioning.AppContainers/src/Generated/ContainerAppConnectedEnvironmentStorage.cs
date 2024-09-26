@@ -52,9 +52,8 @@ public partial class ContainerAppConnectedEnvironmentStorage : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ContainerAppConnectedEnvironmentStorage.</param>
     /// <param name="resourceVersion">Version of the ContainerAppConnectedEnvironmentStorage.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerAppConnectedEnvironmentStorage(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.App/connectedEnvironments/storages", resourceVersion, context)
+    public ContainerAppConnectedEnvironmentStorage(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.App/connectedEnvironments/storages", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectedEnvironmentStorageAzureFile = BicepValue<ContainerAppAzureFileProperties>.DefineProperty(this, "ConnectedEnvironmentStorageAzureFile", ["properties", "azureFile"]);

@@ -52,9 +52,8 @@ public partial class IPv6FirewallRule : Resource
     /// </summary>
     /// <param name="resourceName">Name of the IPv6FirewallRule.</param>
     /// <param name="resourceVersion">Version of the IPv6FirewallRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public IPv6FirewallRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/ipv6FirewallRules", resourceVersion, context)
+    public IPv6FirewallRule(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/ipv6FirewallRules", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _endIPv6Address = BicepValue<string>.DefineProperty(this, "EndIPv6Address", ["properties", "endIPv6Address"]);

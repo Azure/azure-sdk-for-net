@@ -92,9 +92,8 @@ public partial class ManagedHsmPrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedHsmPrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the ManagedHsmPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedHsmPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.KeyVault/managedHSMs/privateEndpointConnections", resourceVersion, context)
+    public ManagedHsmPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.KeyVault/managedHSMs/privateEndpointConnections", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

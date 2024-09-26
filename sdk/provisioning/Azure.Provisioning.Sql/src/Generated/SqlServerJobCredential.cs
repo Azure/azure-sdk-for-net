@@ -58,9 +58,8 @@ public partial class SqlServerJobCredential : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlServerJobCredential.</param>
     /// <param name="resourceVersion">Version of the SqlServerJobCredential.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerJobCredential(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/jobAgents/credentials", resourceVersion, context)
+    public SqlServerJobCredential(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/jobAgents/credentials", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _password = BicepValue<string>.DefineProperty(this, "Password", ["properties", "password"]);

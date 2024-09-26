@@ -71,9 +71,8 @@ public partial class RedisCacheAccessPolicyAssignment : Resource
     /// </summary>
     /// <param name="resourceName">Name of the RedisCacheAccessPolicyAssignment.</param>
     /// <param name="resourceVersion">Version of the RedisCacheAccessPolicyAssignment.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public RedisCacheAccessPolicyAssignment(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Cache/redis/accessPolicyAssignments", resourceVersion, context)
+    public RedisCacheAccessPolicyAssignment(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Cache/redis/accessPolicyAssignments", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _accessPolicyName = BicepValue<string>.DefineProperty(this, "AccessPolicyName", ["properties", "accessPolicyName"]);

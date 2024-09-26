@@ -152,9 +152,8 @@ public partial class SystemTopicEventSubscription : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SystemTopicEventSubscription.</param>
     /// <param name="resourceVersion">Version of the SystemTopicEventSubscription.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SystemTopicEventSubscription(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/systemTopics/eventSubscriptions", resourceVersion ?? "2022-06-15", context)
+    public SystemTopicEventSubscription(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/systemTopics/eventSubscriptions", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _deadLetterDestination = BicepValue<DeadLetterDestination>.DefineProperty(this, "DeadLetterDestination", ["properties", "deadLetterDestination"]);

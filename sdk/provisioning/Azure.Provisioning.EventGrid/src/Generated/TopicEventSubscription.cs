@@ -152,9 +152,8 @@ public partial class TopicEventSubscription : Resource
     /// </summary>
     /// <param name="resourceName">Name of the TopicEventSubscription.</param>
     /// <param name="resourceVersion">Version of the TopicEventSubscription.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public TopicEventSubscription(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/topics/eventSubscriptions", resourceVersion, context)
+    public TopicEventSubscription(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/topics/eventSubscriptions", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _deadLetterDestination = BicepValue<DeadLetterDestination>.DefineProperty(this, "DeadLetterDestination", ["properties", "deadLetterDestination"]);

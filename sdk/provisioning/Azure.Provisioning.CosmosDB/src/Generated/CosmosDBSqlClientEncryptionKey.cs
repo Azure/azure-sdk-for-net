@@ -52,9 +52,8 @@ public partial class CosmosDBSqlClientEncryptionKey : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CosmosDBSqlClientEncryptionKey.</param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlClientEncryptionKey.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CosmosDBSqlClientEncryptionKey(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/clientEncryptionKeys", resourceVersion, context)
+    public CosmosDBSqlClientEncryptionKey(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/clientEncryptionKeys", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _resource = BicepValue<CosmosDBSqlClientEncryptionKeyResourceInfo>.DefineProperty(this, "Resource", ["properties", "resource"], isRequired: true);

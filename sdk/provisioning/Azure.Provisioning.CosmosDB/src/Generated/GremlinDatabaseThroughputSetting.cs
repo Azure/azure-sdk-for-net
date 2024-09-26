@@ -71,9 +71,8 @@ public partial class GremlinDatabaseThroughputSetting : Resource
     /// </summary>
     /// <param name="resourceName">Name of the GremlinDatabaseThroughputSetting.</param>
     /// <param name="resourceVersion">Version of the GremlinDatabaseThroughputSetting.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public GremlinDatabaseThroughputSetting(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/throughputSettings", resourceVersion, context)
+    public GremlinDatabaseThroughputSetting(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/throughputSettings", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

@@ -71,9 +71,8 @@ public partial class SignalRPrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SignalRPrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the SignalRPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SignalRPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.SignalRService/signalR/privateEndpointConnections", resourceVersion, context)
+    public SignalRPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.SignalRService/signalR/privateEndpointConnections", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<SignalRPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);

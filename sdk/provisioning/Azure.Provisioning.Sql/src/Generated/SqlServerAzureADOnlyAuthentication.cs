@@ -52,9 +52,8 @@ public partial class SqlServerAzureADOnlyAuthentication : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlServerAzureADOnlyAuthentication.</param>
     /// <param name="resourceVersion">Version of the SqlServerAzureADOnlyAuthentication.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerAzureADOnlyAuthentication(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/azureADOnlyAuthentications", resourceVersion, context)
+    public SqlServerAzureADOnlyAuthentication(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/azureADOnlyAuthentications", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _isAzureADOnlyAuthenticationEnabled = BicepValue<bool>.DefineProperty(this, "IsAzureADOnlyAuthenticationEnabled", ["properties", "azureADOnlyAuthentication"]);

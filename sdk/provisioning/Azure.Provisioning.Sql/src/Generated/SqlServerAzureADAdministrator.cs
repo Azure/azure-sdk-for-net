@@ -77,9 +77,8 @@ public partial class SqlServerAzureADAdministrator : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlServerAzureADAdministrator.</param>
     /// <param name="resourceVersion">Version of the SqlServerAzureADAdministrator.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerAzureADAdministrator(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/administrators", resourceVersion ?? "2021-11-01", context)
+    public SqlServerAzureADAdministrator(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/administrators", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true, defaultValue: GetNameDefaultValue());
         _administratorType = BicepValue<SqlAdministratorType>.DefineProperty(this, "AdministratorType", ["properties", "administratorType"]);

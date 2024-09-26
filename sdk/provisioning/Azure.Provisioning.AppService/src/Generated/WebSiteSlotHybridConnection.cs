@@ -88,9 +88,8 @@ public partial class WebSiteSlotHybridConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the WebSiteSlotHybridConnection.</param>
     /// <param name="resourceVersion">Version of the WebSiteSlotHybridConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WebSiteSlotHybridConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/hybridconnection", resourceVersion, context)
+    public WebSiteSlotHybridConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/slots/hybridconnection", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _biztalkUri = BicepValue<Uri>.DefineProperty(this, "BiztalkUri", ["properties", "biztalkUri"]);

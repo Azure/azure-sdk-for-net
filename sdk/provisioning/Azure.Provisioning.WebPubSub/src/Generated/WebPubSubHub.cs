@@ -53,9 +53,8 @@ public partial class WebPubSubHub : Resource
     /// </summary>
     /// <param name="resourceName">Name of the WebPubSubHub.</param>
     /// <param name="resourceVersion">Version of the WebPubSubHub.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WebPubSubHub(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.SignalRService/webPubSub/hubs", resourceVersion, context)
+    public WebPubSubHub(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.SignalRService/webPubSub/hubs", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _properties = BicepValue<WebPubSubHubProperties>.DefineProperty(this, "Properties", ["properties"], isRequired: true);

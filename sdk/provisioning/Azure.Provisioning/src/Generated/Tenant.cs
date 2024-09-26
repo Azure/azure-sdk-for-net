@@ -85,9 +85,8 @@ public partial class Tenant : Resource
     /// </summary>
     /// <param name="resourceName">Name of the Tenant.</param>
     /// <param name="resourceVersion">Version of the Tenant.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public Tenant(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Resources/tenants", resourceVersion, context)
+    public Tenant(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Resources/tenants", resourceVersion)
     {
         _country = BicepValue<string>.DefineProperty(this, "Country", ["country"], isOutput: true);
         _countryCode = BicepValue<string>.DefineProperty(this, "CountryCode", ["countryCode"], isOutput: true);

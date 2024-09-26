@@ -71,9 +71,8 @@ public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Reso
     /// </summary>
     /// <param name="resourceName">Name of the PostgreSqlFlexibleServerActiveDirectoryAdministrator.</param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerActiveDirectoryAdministrator.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlFlexibleServerActiveDirectoryAdministrator(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/administrators", resourceVersion, context)
+    public PostgreSqlFlexibleServerActiveDirectoryAdministrator(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/administrators", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _objectId = BicepValue<string>.DefineProperty(this, "ObjectId", ["properties", "objectId"], isOutput: true);

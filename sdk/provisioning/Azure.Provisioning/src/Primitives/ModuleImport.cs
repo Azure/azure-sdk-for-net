@@ -19,7 +19,7 @@ public class ModuleImport : NamedProvisioningConstruct
 
     public BicepDictionary<object> Parameters { get; }
 
-    public ModuleImport(string resourceName, BicepValue<string> path, ProvisioningContext? context = default) : base(resourceName, context)
+    public ModuleImport(string resourceName, BicepValue<string> path) : base(resourceName)
     {
         _name = BicepValue<string>.DefineProperty(this, nameof(Name), ["name"], isRequired: true);
         _path = BicepValue<string>.DefineProperty(this, nameof(Path), ["path"], defaultValue: path);
@@ -29,7 +29,6 @@ public class ModuleImport : NamedProvisioningConstruct
 
     protected internal override void Validate(ProvisioningContext? context = null)
     {
-        context ??= DefaultProvisioningContext;
         base.Validate(context);
         ValidateProperties();
     }

@@ -65,9 +65,8 @@ public partial class EmailService : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EmailService.</param>
     /// <param name="resourceVersion">Version of the EmailService.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EmailService(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Communication/emailServices", resourceVersion, context)
+    public EmailService(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Communication/emailServices", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

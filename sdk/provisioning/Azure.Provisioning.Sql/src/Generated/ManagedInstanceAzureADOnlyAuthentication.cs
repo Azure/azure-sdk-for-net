@@ -52,9 +52,8 @@ public partial class ManagedInstanceAzureADOnlyAuthentication : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedInstanceAzureADOnlyAuthentication.</param>
     /// <param name="resourceVersion">Version of the ManagedInstanceAzureADOnlyAuthentication.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedInstanceAzureADOnlyAuthentication(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/azureADOnlyAuthentications", resourceVersion, context)
+    public ManagedInstanceAzureADOnlyAuthentication(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/azureADOnlyAuthentications", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _isAzureADOnlyAuthenticationEnabled = BicepValue<bool>.DefineProperty(this, "IsAzureADOnlyAuthenticationEnabled", ["properties", "azureADOnlyAuthentication"]);

@@ -80,9 +80,8 @@ public partial class EventGridNamespacePermissionBinding : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EventGridNamespacePermissionBinding.</param>
     /// <param name="resourceVersion">Version of the EventGridNamespacePermissionBinding.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventGridNamespacePermissionBinding(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/permissionBindings", resourceVersion, context)
+    public EventGridNamespacePermissionBinding(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/namespaces/permissionBindings", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _clientGroupName = BicepValue<string>.DefineProperty(this, "ClientGroupName", ["properties", "clientGroupName"]);

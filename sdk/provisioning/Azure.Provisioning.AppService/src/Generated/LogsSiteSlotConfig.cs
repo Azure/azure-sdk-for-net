@@ -78,9 +78,8 @@ public partial class LogsSiteSlotConfig : Resource
     /// </summary>
     /// <param name="resourceName">Name of the LogsSiteSlotConfig.</param>
     /// <param name="resourceVersion">Version of the LogsSiteSlotConfig.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public LogsSiteSlotConfig(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/config", resourceVersion, context)
+    public LogsSiteSlotConfig(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/slots/config", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _applicationLogs = BicepValue<ApplicationLogsConfig>.DefineProperty(this, "ApplicationLogs", ["properties", "applicationLogs"]);

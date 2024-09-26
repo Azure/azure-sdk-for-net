@@ -52,9 +52,8 @@ public partial class ManagedTransparentDataEncryption : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedTransparentDataEncryption.</param>
     /// <param name="resourceVersion">Version of the ManagedTransparentDataEncryption.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedTransparentDataEncryption(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/databases/transparentDataEncryption", resourceVersion, context)
+    public ManagedTransparentDataEncryption(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/databases/transparentDataEncryption", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _state = BicepValue<TransparentDataEncryptionState>.DefineProperty(this, "State", ["properties", "state"]);

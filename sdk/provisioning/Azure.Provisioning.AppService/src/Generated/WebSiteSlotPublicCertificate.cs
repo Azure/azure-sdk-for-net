@@ -70,9 +70,8 @@ public partial class WebSiteSlotPublicCertificate : Resource
     /// </summary>
     /// <param name="resourceName">Name of the WebSiteSlotPublicCertificate.</param>
     /// <param name="resourceVersion">Version of the WebSiteSlotPublicCertificate.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WebSiteSlotPublicCertificate(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/publicCertificates", resourceVersion, context)
+    public WebSiteSlotPublicCertificate(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/slots/publicCertificates", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _blob = BicepValue<BinaryData>.DefineProperty(this, "Blob", ["properties", "blob"]);
