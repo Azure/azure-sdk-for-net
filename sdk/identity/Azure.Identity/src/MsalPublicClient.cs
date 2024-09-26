@@ -128,12 +128,10 @@ namespace Azure.Identity
             {
                 builder.WithClaims(claims);
             }
-            if (tenantId != null)
+
+            if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
-                {
-                    Path = TenantId ?? tenantId
-                };
+                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
 
@@ -195,12 +193,9 @@ namespace Azure.Identity
             // user authenticated to originally.
             var builder = client.AcquireTokenSilent(scopes, (AuthenticationAccount)record);
 
-            if (tenantId != null || record.TenantId != null)
+            if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
-                {
-                    Path = tenantId ?? record.TenantId
-                };
+                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
 
@@ -310,14 +305,13 @@ namespace Azure.Identity
             {
                 builder.WithLoginHint(loginHint);
             }
-            if (tenantId != null)
+
+            if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
-                {
-                    Path = tenantId
-                };
+                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
+
             if (browserOptions != null)
             {
                 if (browserOptions.UseEmbeddedWebView.HasValue)
@@ -359,10 +353,7 @@ namespace Azure.Identity
             }
             if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
-                {
-                    Path = tenantId
-                };
+                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
             return await builder.ExecuteAsync(async, cancellationToken)
@@ -409,10 +400,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(TenantId))
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
-                {
-                    Path = tenant
-                };
+                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(TenantId);
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
 

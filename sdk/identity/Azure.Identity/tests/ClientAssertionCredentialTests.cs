@@ -37,6 +37,7 @@ namespace Azure.Identity.Tests
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
                 MsalClient = config.MockConfidentialMsalClient,
+                AuthorityHost = config.AuthorityHost
             };
             if (config.Transport != null)
             {

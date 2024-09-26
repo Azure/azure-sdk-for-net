@@ -44,6 +44,7 @@ namespace Azure.Identity.Tests
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
                 MsalClient = config.MockConfidentialMsalClient,
                 OidcRequestUri = "https://dev.azure.com/myorg/myproject/_apis/serviceendpoint/endpoints?api-version=2.2.2",
+                AuthorityHost = config.AuthorityHost
             };
             if (config.Transport != null)
             {
