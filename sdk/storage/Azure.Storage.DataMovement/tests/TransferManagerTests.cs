@@ -11,14 +11,35 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Castle.Core.Resource;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 
 namespace Azure.Storage.DataMovement.Tests;
 
 public class TransferManagerTests
 {
+    private static (StepProcessor<TransferJobInternal> JobProcessor, StepProcessor<JobPartInternal> PartProcessor, StepProcessor<Func<Task>> ChunkProcessor) StepProcessors()
+        => (new(), new(), new());
+
+    private static (StorageResource Source, StorageResource Dest) GetBasicSetupResources(bool isContainer, Uri srcUri, Uri dstUri)
+    {
+        if (isContainer)
+        {
+            Mock<StorageResourceContainer> srcContainer = new(MockBehavior.Strict);
+            Mock<StorageResourceContainer> dstContainer = new(MockBehavior.Strict);
+            (srcContainer, dstContainer).BasicSetup(srcUri, dstUri);
+            return (srcContainer.Object, dstContainer.Object);
+        }
+        else
+        {
+            Mock<StorageResourceItem> srcItem = new(MockBehavior.Strict);
+            Mock<StorageResourceItem> dstItem = new(MockBehavior.Strict);
+            (srcItem, dstItem).BasicSetup(srcUri, dstUri);
+            return (srcItem.Object, dstItem.Object);
+        }
+    }
+
     [Test]
     public async Task BasicProcessorLifetime()
     {
@@ -64,9 +85,7 @@ public class TransferManagerTests
         Uri srcUri = new("file:///foo/bar");
         Uri dstUri = new("https://example.com/fizz/buzz");
 
-        StepProcessor<TransferJobInternal> jobsProcessor = new();
-        StepProcessor<JobPartInternal> partsProcessor = new();
-        StepProcessor<Func<Task>> chunksProcessor = new();
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
         JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
         Mock<TransferCheckpointer> checkpointer = new();
 
@@ -172,9 +191,7 @@ public class TransferManagerTests
         Uri srcUri = new("file:///foo/bar");
         Uri dstUri = new("https://example.com/fizz/buzz");
 
-        StepProcessor<TransferJobInternal> jobsProcessor = new();
-        StepProcessor<JobPartInternal> partsProcessor = new();
-        StepProcessor<Func<Task>> chunksProcessor = new();
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
         JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
         Mock<TransferCheckpointer> checkpointer = new();
 
@@ -260,38 +277,19 @@ public class TransferManagerTests
     [Combinatorial]
     public async Task TransferFailAtQueue(
         [Values(0, 1)] int failAt,
-        [Values(true, false)] bool IsContainer)
+        [Values(true, false)] bool isContainer)
     {
         Uri srcUri = new("file:///foo/bar");
         Uri dstUri = new("https://example.com/fizz/buzz");
 
-        StepProcessor<TransferJobInternal> jobsProcessor = new();
-        StepProcessor<JobPartInternal> partsProcessor = new();
-        StepProcessor<Func<Task>> chunksProcessor = new();
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
         Mock<JobBuilder> jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default))
         {
             CallBase = true,
         };
         Mock<TransferCheckpointer> checkpointer = new();
 
-        StorageResource srcResource;
-        StorageResource dstResource;
-        if (IsContainer)
-        {
-            Mock<StorageResourceContainer> srcContainer = new(MockBehavior.Strict);
-            Mock<StorageResourceContainer> dstContainer = new(MockBehavior.Strict);
-            (srcContainer, dstContainer).BasicSetup(srcUri, dstUri);
-            srcResource = srcContainer.Object;
-            dstResource = dstContainer.Object;
-        }
-        else
-        {
-            Mock<StorageResourceItem> srcItem = new(MockBehavior.Strict);
-            Mock<StorageResourceItem> dstItem = new(MockBehavior.Strict);
-            (srcItem, dstItem).BasicSetup(srcUri, dstUri);
-            srcResource = srcItem.Object;
-            dstResource = dstItem.Object;
-        }
+        (StorageResource srcResource, StorageResource dstResource) = GetBasicSetupResources(isContainer, srcUri, dstUri);
 
         Exception expectedException = new();
         switch (failAt)
@@ -330,35 +328,16 @@ public class TransferManagerTests
     }
 
     [Test]
-    public async Task TransferFailAtJobProcess([Values(true, false)] bool IsContainer)
+    public async Task TransferFailAtJobProcess([Values(true, false)] bool isContainer)
     {
         Uri srcUri = new("file:///foo/bar");
         Uri dstUri = new("https://example.com/fizz/buzz");
 
-        StepProcessor<TransferJobInternal> jobsProcessor = new();
-        StepProcessor<JobPartInternal> partsProcessor = new();
-        StepProcessor<Func<Task>> chunksProcessor = new();
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
         JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new(ClientOptions.Default));
         Mock<TransferCheckpointer> checkpointer = new(MockBehavior.Loose);
 
-        StorageResource srcResource;
-        StorageResource dstResource;
-        if (IsContainer)
-        {
-            Mock<StorageResourceContainer> srcContainer = new(MockBehavior.Strict);
-            Mock<StorageResourceContainer> dstContainer = new(MockBehavior.Strict);
-            (srcContainer, dstContainer).BasicSetup(srcUri, dstUri);
-            srcResource = srcContainer.Object;
-            dstResource = dstContainer.Object;
-        }
-        else
-        {
-            Mock<StorageResourceItem> srcItem = new(MockBehavior.Strict);
-            Mock<StorageResourceItem> dstItem = new(MockBehavior.Strict);
-            (srcItem, dstItem).BasicSetup(srcUri, dstUri);
-            srcResource = srcItem.Object;
-            dstResource = dstItem.Object;
-        }
+        (StorageResource srcResource, StorageResource dstResource) = GetBasicSetupResources(isContainer, srcUri, dstUri);
 
         await using TransferManager transferManager = new(
             jobsProcessor,
@@ -368,7 +347,6 @@ public class TransferManagerTests
             checkpointer.Object,
             default);
 
-        // inject failure now, after initial queue finished
         Exception expectedException = new();
         checkpointer.Setup(c => c.AddNewJobPartAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<Stream>(),
             It.IsAny<CancellationToken>())
@@ -381,11 +359,54 @@ public class TransferManagerTests
 
         DataTransfer transfer = await transferManager.StartTransferAsync(srcResource, dstResource);
         Assert.That(await jobsProcessor.TryStepAsync(), Is.True);
-        Assert.That(partsProcessor.ItemsInQueue, Is.Zero);
+        Assert.That(jobsProcessor.ItemsInQueue, Is.Zero);
+        Assert.That(partsProcessor.ItemsInQueue, Is.Zero); // because of failure
         // TODO Failures in processing job into job part(s) should surface errors (currently doesn't)
         //      Assert.That(transfer.TransferStatus.HasFailedItems);
         //      Assert.That(failures, Is.Not.Empty);
         // TODO determine checkpointer status of job parts
+        //      need checkpointer API refactor for this
+    }
+
+    [Test]
+    public async Task TransferFailAtPartProcess([Values(true, false)] bool isContainer)
+    {
+        Uri srcUri = new("file:///foo/bar");
+        Uri dstUri = new("https://example.com/fizz/buzz");
+
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new(ClientOptions.Default));
+        Mock<TransferCheckpointer> checkpointer = new(MockBehavior.Loose);
+
+        (StorageResource srcResource, StorageResource dstResource) = GetBasicSetupResources(isContainer, srcUri, dstUri);
+
+        await using TransferManager transferManager = new(
+            jobsProcessor,
+            partsProcessor,
+            chunksProcessor,
+            jobBuilder,
+            checkpointer.Object,
+            default);
+
+        // need to listen to events to get exception that takes place in processing
+        List<TransferItemFailedEventArgs> failures = new();
+        DataTransferOptions options = new();
+        options.ItemTransferFailed += e => { failures.Add(e); return Task.CompletedTask; };
+
+        DataTransfer transfer = await transferManager.StartTransferAsync(srcResource, dstResource);
+
+        Assert.That(await jobsProcessor.TryStepAsync(), Is.True);
+        Assert.That(jobsProcessor.ItemsInQueue, Is.Zero);
+        Assert.That(partsProcessor.ItemsInQueue, Is.AtLeast(1));
+
+        Assert.That(await partsProcessor.StepAll(), Is.AtLeast(1));
+        Assert.That(partsProcessor.ItemsInQueue, Is.Zero);
+        Assert.That(chunksProcessor.ItemsInQueue, Is.Zero); // because of failure
+
+        // TODO Failures in processing parts into chunks should surface errors (currently doesn't)
+        //      Assert.That(transfer.TransferStatus.HasFailedItems);
+        //      Assert.That(failures, Is.Not.Empty);
+        // TODO determine checkpointer status of job chunks
         //      need checkpointer API refactor for this
     }
 }
