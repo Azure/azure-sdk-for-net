@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         void IJsonModel<A2AVmDiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<A2AVmDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(A2AVmDiskDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("diskUri"u8);
             writer.WriteStringValue(DiskUri.AbsoluteUri);
             writer.WritePropertyName("recoveryAzureStorageAccountId"u8);
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         A2AVmDiskDetails IJsonModel<A2AVmDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
