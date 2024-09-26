@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="OpenAI" VersionOverride="2.0.0-*" />
+    <PackageReference Include="OpenAI" />
   </ItemGroup>
 
 </Project>
