@@ -22,7 +22,7 @@ public class BasicAppConfigurationTests(bool async)
             {
                 Infrastructure infra = new();
 
-                BicepParameter featureFlagKey =
+                ProvisioningParameter featureFlagKey =
                     new(nameof(featureFlagKey), typeof(string))
                     {
                         Value = "FeatureFlagSample",
@@ -37,7 +37,7 @@ public class BasicAppConfigurationTests(bool async)
                     };
                 infra.Add(configStore);
 
-                BicepVariable flag =
+                ProvisioningVariable flag =
                     new(nameof(flag), typeof(object))
                     {
                         Value =

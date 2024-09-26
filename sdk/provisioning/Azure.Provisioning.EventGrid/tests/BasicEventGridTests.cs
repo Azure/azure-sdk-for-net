@@ -25,7 +25,7 @@ public class BasicEventGridTests(bool async)
             {
                 Infrastructure infra = new();
 
-                BicepParameter webhookUri = new(nameof(webhookUri), typeof(string));
+                ProvisioningParameter webhookUri = new(nameof(webhookUri), typeof(string));
                 infra.Add(webhookUri);
 
                 StorageAccount storage =

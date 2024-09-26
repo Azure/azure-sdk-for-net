@@ -52,12 +52,12 @@ public class ProvisioningDeployment
     /// <summary>
     /// Gets a dictionary of template outputs from the deployment.  This is a
     /// simple name/value mapping.  You can also get the values directly from
-    /// any <see cref="BicepOutput"/> instances as they'll have been updated
+    /// any <see cref="ProvisioningOutput"/> instances as they'll have been updated
     /// after a successful deployment and carry additional information - like
     /// whether the value is considered secure.
     /// </summary>
     public IReadOnlyDictionary<string, object?> Outputs { get; }
-    // TODO: Do we want to replace this with IReadOnlyDict<string, BicepOutput>
+    // TODO: Do we want to replace this with IReadOnlyDict<string, ProvisioningOutput>
     // to make it harder to misuse?
 
     /// <summary>

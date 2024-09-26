@@ -34,7 +34,7 @@ internal class ExtensionTests(bool async)
         if (SkipTools) { return; }
 
         Infrastructure infra = new();
-        BicepParameter param = new("endpoint", typeof(string));
+        ProvisioningParameter param = new("endpoint", typeof(string));
         infra.Add(param);
 
         // Lint
@@ -55,7 +55,7 @@ internal class ExtensionTests(bool async)
 
         Infrastructure infra = new();
         // Use a string as the default value for a param typed int
-        BicepParameter param = new("bar", typeof(int)) { Value = "Hello, World." };
+        ProvisioningParameter param = new("bar", typeof(int)) { Value = "Hello, World." };
         infra.Add(param);
 
         ProvisioningPlan plan = infra.Build();

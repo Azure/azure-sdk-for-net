@@ -218,7 +218,7 @@ public class BasicStorageTests(bool async)
                 BlobService blobs = new(nameof(blobs)) { Parent = storage };
                 infra.Add(blobs);
 
-                infra.Add(new BicepOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri });
+                infra.Add(new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri });
 
                 return infra;
             })
@@ -261,7 +261,7 @@ public class BasicStorageTests(bool async)
             {
                 Infrastructure infra = new();
 
-                BicepParameter storageAccountType =
+                ProvisioningParameter storageAccountType =
                     new(nameof(storageAccountType), typeof(string))
                     {
                         Value = StorageSkuName.StandardLrs,
@@ -277,8 +277,8 @@ public class BasicStorageTests(bool async)
                     };
                 infra.Add(sa);
 
-                infra.Add(new BicepOutput("storageAccountName", typeof(string)) { Value = sa.Name });
-                infra.Add(new BicepOutput("storageAccountId", typeof(string)) { Value = sa.Id });
+                infra.Add(new ProvisioningOutput("storageAccountName", typeof(string)) { Value = sa.Name });
+                infra.Add(new ProvisioningOutput("storageAccountId", typeof(string)) { Value = sa.Id });
 
                 return infra;
             })
@@ -317,7 +317,7 @@ public class BasicStorageTests(bool async)
             {
                 Infrastructure infra = new();
 
-                BicepParameter containerName =
+                ProvisioningParameter containerName =
                     new(nameof(containerName), typeof(string))
                     {
                         Value = "mycontainer",
@@ -391,7 +391,7 @@ public class BasicStorageTests(bool async)
             {
                 Infrastructure infra = new();
 
-                BicepParameter storageAccountType =
+                ProvisioningParameter storageAccountType =
                     new(nameof(storageAccountType), typeof(string))
                     {
                         Value = StorageSkuName.StandardLrs,
@@ -417,8 +417,8 @@ public class BasicStorageTests(bool async)
                     };
                 infra.Add(sa);
 
-                infra.Add(new BicepOutput("storageAccountName", typeof(string)) { Value = sa.Name });
-                infra.Add(new BicepOutput("storageAccountId", typeof(string)) { Value = sa.Id });
+                infra.Add(new ProvisioningOutput("storageAccountName", typeof(string)) { Value = sa.Name });
+                infra.Add(new ProvisioningOutput("storageAccountId", typeof(string)) { Value = sa.Id });
 
                 return infra;
             })

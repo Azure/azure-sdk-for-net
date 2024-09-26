@@ -22,14 +22,14 @@ public class BasicPostgreSqlTests(bool async)
             {
                 Infrastructure infra = new();
 
-                BicepParameter adminLogin =
+                ProvisioningParameter adminLogin =
                     new(nameof(adminLogin), typeof(string))
                     {
                         Description = "The administrator username of the server."
                     };
                 infra.Add(adminLogin);
 
-                BicepParameter adminPass =
+                ProvisioningParameter adminPass =
                     new(nameof(adminPass), typeof(string))
                     {
                         Description = "The administrator password of the server.",
@@ -37,14 +37,14 @@ public class BasicPostgreSqlTests(bool async)
                     };
                 infra.Add(adminPass);
 
-                BicepParameter aadAdminName =
+                ProvisioningParameter aadAdminName =
                     new(nameof(aadAdminName), typeof(string))
                     {
                         Description = "The AAD admin username."
                     };
                 infra.Add(aadAdminName);
 
-                BicepParameter aadAdminOid =
+                ProvisioningParameter aadAdminOid =
                     new(nameof(aadAdminOid), typeof(string))
                     {
                         Description = "The AAD admin Object ID."

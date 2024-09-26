@@ -22,7 +22,7 @@ public class BasicCommunicationTests(bool async)
             {
                 Infrastructure infra = new();
 
-                BicepParameter location =
+                ProvisioningParameter location =
                     new(nameof(location), typeof(string))
                     {
                         Value = "global"

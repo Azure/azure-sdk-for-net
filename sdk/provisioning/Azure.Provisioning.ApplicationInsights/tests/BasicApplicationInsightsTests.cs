@@ -31,8 +31,8 @@ public class BasicApplicationInsightsTests(bool async)
                     };
                 infra.Add(appInsights);
 
-                infra.Add(new BicepOutput("appInsightsName", typeof(string)) { Value = appInsights.Name });
-                infra.Add(new BicepOutput("appInsightsKey", typeof(string)) { Value = appInsights.InstrumentationKey });
+                infra.Add(new ProvisioningOutput("appInsightsName", typeof(string)) { Value = appInsights.Name });
+                infra.Add(new ProvisioningOutput("appInsightsKey", typeof(string)) { Value = appInsights.InstrumentationKey });
 
                 return infra;
             })

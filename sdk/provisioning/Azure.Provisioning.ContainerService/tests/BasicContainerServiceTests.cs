@@ -24,13 +24,13 @@ public class BasicContainerServiceTests(bool async)
             {
                 Infrastructure infra = new();
 
-                BicepParameter dnsPrefix = new(nameof(dnsPrefix), typeof(string));
+                ProvisioningParameter dnsPrefix = new(nameof(dnsPrefix), typeof(string));
                 infra.Add(dnsPrefix);
 
-                BicepParameter linuxAdminUsername = new(nameof(linuxAdminUsername), typeof(string));
+                ProvisioningParameter linuxAdminUsername = new(nameof(linuxAdminUsername), typeof(string));
                 infra.Add(linuxAdminUsername);
 
-                BicepParameter sshRsaPublicKey = new(nameof(sshRsaPublicKey), typeof(string));
+                ProvisioningParameter sshRsaPublicKey = new(nameof(sshRsaPublicKey), typeof(string));
                 infra.Add(sshRsaPublicKey);
 
                 ContainerServiceManagedCluster aks =

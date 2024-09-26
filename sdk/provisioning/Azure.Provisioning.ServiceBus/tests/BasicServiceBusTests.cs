@@ -22,7 +22,7 @@ public class BasicServiceBusTests(bool async)
             {
                 Infrastructure infra = new();
 
-                BicepParameter queueName =
+                ProvisioningParameter queueName =
                     new(nameof(queueName), typeof(string))
                     {
                         Value = "orders",

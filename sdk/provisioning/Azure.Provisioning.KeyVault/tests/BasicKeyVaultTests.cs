@@ -22,7 +22,7 @@ public class BasicKeyVaultTests(bool async)
             {
                 Infrastructure infra = new();
 
-                BicepParameter skuName =
+                ProvisioningParameter skuName =
                     new(nameof(skuName), typeof(string))
                     {
                         Value = KeyVaultSkuName.Standard,
@@ -30,7 +30,7 @@ public class BasicKeyVaultTests(bool async)
                     };
                 infra.Add(skuName);
 
-                BicepParameter secretValue =
+                ProvisioningParameter secretValue =
                     new(nameof(secretValue), typeof(string))
                     {
                         Description = "Specifies the value of the secret that you want to create.",
@@ -38,14 +38,14 @@ public class BasicKeyVaultTests(bool async)
                     };
                 infra.Add(secretValue);
 
-                BicepParameter objectId =
+                ProvisioningParameter objectId =
                     new(nameof(objectId), typeof(string))
                     {
                         Description = "Specifies the object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault."
                     };
                 infra.Add(objectId);
 
-                BicepVariable tenantId =
+                ProvisioningVariable tenantId =
                     new(nameof(tenantId), typeof(string))
                     {
                         Value = BicepFunction.GetSubscription().TenantId
@@ -95,8 +95,8 @@ public class BasicKeyVaultTests(bool async)
                     };
                 infra.Add(secret);
 
-                infra.Add(new BicepOutput("name", typeof(string)) { Value = kv.Name });
-                infra.Add(new BicepOutput("resourceId", typeof(string)) { Value = kv.Id });
+                infra.Add(new ProvisioningOutput("name", typeof(string)) { Value = kv.Name });
+                infra.Add(new ProvisioningOutput("resourceId", typeof(string)) { Value = kv.Id });
 
                 return infra;
             })

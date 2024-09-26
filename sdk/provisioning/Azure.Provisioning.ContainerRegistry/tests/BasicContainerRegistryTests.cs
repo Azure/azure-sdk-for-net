@@ -32,7 +32,7 @@ public class BasicContainerRegistryTests(bool async)
                 registry.Tags.Add("container.registry", registry.Name);
                 infra.Add(registry);
 
-                infra.Add(new BicepOutput("registryLoginServer", typeof(string)) { Value = registry.LoginServer });
+                infra.Add(new ProvisioningOutput("registryLoginServer", typeof(string)) { Value = registry.LoginServer });
 
                 return infra;
             })

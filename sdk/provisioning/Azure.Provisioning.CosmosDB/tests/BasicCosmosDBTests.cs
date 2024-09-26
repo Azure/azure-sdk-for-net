@@ -23,10 +23,10 @@ public class BasicCosmosDBTests(bool async)
             {
                 Infrastructure infra = new();
 
-                BicepParameter dbName = new(nameof(dbName), typeof(string)) { Value = "orders" };
+                ProvisioningParameter dbName = new(nameof(dbName), typeof(string)) { Value = "orders" };
                 infra.Add(dbName);
 
-                BicepParameter containerName = new(nameof(containerName), typeof(string)) { Value = "products" };
+                ProvisioningParameter containerName = new(nameof(containerName), typeof(string)) { Value = "products" };
                 infra.Add(containerName);
 
                 CosmosDBAccount cosmos =
@@ -76,8 +76,8 @@ public class BasicCosmosDBTests(bool async)
                     };
                 infra.Add(container);
 
-                infra.Add(new BicepOutput("containerName", typeof(string)) { Value = container.Name });
-                infra.Add(new BicepOutput("containerId", typeof(string)) { Value = container.Id });
+                infra.Add(new ProvisioningOutput("containerName", typeof(string)) { Value = container.Name });
+                infra.Add(new ProvisioningOutput("containerId", typeof(string)) { Value = container.Id });
 
                 return infra;
             })

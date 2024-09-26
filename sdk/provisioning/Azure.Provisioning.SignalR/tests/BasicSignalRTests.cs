@@ -23,7 +23,7 @@ public class BasicSignalRTests(bool async)
             {
                 Infrastructure infra = new();
 
-                BicepParameter endpointName =
+                ProvisioningParameter endpointName =
                     new(nameof(endpointName), typeof(string))
                     {
                         Value = "mySignalRService.55e432ab-7428-3695-b637-de57b20d40e5"

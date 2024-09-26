@@ -26,7 +26,7 @@ internal class SampleTests(bool async)
     public async Task SimpleDeploy()
     {
         BlobService? blobs = null;
-        BicepOutput? endpoint = null;
+        ProvisioningOutput? endpoint = null;
 
         await using Trycep test = CreateBicepTest();
         await test.Define(
@@ -41,7 +41,7 @@ internal class SampleTests(bool async)
                 infra.Add(blobs);
 
                 // Grab the endpoint
-                endpoint = new BicepOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri };
+                endpoint = new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri };
                 infra.Add(endpoint);
 
                 return infra;
@@ -100,10 +100,10 @@ internal class SampleTests(bool async)
             {
                 Infrastructure infra = new();
 
-                BicepParameter principalId = new(nameof(principalId), typeof(string)) { Value = "" };
+                ProvisioningParameter principalId = new(nameof(principalId), typeof(string)) { Value = "" };
                 infra.Add(principalId);
 
-                BicepParameter tags = new(nameof(tags), typeof(object)) { Value = new BicepDictionary<string>() };
+                ProvisioningParameter tags = new(nameof(tags), typeof(object)) { Value = new BicepDictionary<string>() };
                 infra.Add(tags);
 
                 UserAssignedIdentity mi =
@@ -185,16 +185,16 @@ internal class SampleTests(bool async)
                                         new PropertyExpression("componentType", new StringLiteral("AspireDashboard")))))));
                 infra.Add(aspireDashboard);
 
-                infra.Add(new BicepOutput("MANAGED_IDENTITY_CLIENT_ID", typeof(string)) { Value = mi.ClientId });
-                infra.Add(new BicepOutput("MANAGED_IDENTITY_NAME", typeof(string)) { Value = mi.Name });
-                infra.Add(new BicepOutput("MANAGED_IDENTITY_PRINCIPAL_ID", typeof(string)) { Value = mi.PrincipalId });
-                infra.Add(new BicepOutput("LOG_ANALYTICS_WORKSPACE_NAME", typeof(string)) { Value = law.Name });
-                infra.Add(new BicepOutput("LOG_ANALYTICS_WORKSPACE_ID", typeof(string)) { Value = law.Id });
-                infra.Add(new BicepOutput("AZURE_CONTAINER_REGISTRY_ENDPOINT", typeof(string)) { Value = acr.LoginServer });
-                infra.Add(new BicepOutput("AZURE_CONTAINER_REGISTRY_MANAGED_IDENTITY_ID", typeof(string)) { Value = mi.Id });
-                infra.Add(new BicepOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_NAME", typeof(string)) { Value = cae.Name });
-                infra.Add(new BicepOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_ID", typeof(string)) { Value = cae.Id });
-                infra.Add(new BicepOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN", typeof(string)) { Value = cae.DefaultDomain });
+                infra.Add(new ProvisioningOutput("MANAGED_IDENTITY_CLIENT_ID", typeof(string)) { Value = mi.ClientId });
+                infra.Add(new ProvisioningOutput("MANAGED_IDENTITY_NAME", typeof(string)) { Value = mi.Name });
+                infra.Add(new ProvisioningOutput("MANAGED_IDENTITY_PRINCIPAL_ID", typeof(string)) { Value = mi.PrincipalId });
+                infra.Add(new ProvisioningOutput("LOG_ANALYTICS_WORKSPACE_NAME", typeof(string)) { Value = law.Name });
+                infra.Add(new ProvisioningOutput("LOG_ANALYTICS_WORKSPACE_ID", typeof(string)) { Value = law.Id });
+                infra.Add(new ProvisioningOutput("AZURE_CONTAINER_REGISTRY_ENDPOINT", typeof(string)) { Value = acr.LoginServer });
+                infra.Add(new ProvisioningOutput("AZURE_CONTAINER_REGISTRY_MANAGED_IDENTITY_ID", typeof(string)) { Value = mi.Id });
+                infra.Add(new ProvisioningOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_NAME", typeof(string)) { Value = cae.Name });
+                infra.Add(new ProvisioningOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_ID", typeof(string)) { Value = cae.Id });
+                infra.Add(new ProvisioningOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN", typeof(string)) { Value = cae.DefaultDomain });
 
                 return infra;
             })

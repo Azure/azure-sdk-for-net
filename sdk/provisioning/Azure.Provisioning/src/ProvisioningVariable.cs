@@ -12,7 +12,7 @@ namespace Azure.Provisioning;
 /// <summary>
 /// Represents a variable in a Bicep template.
 /// </summary>
-public class BicepVariable : NamedProvisioningConstruct
+public class ProvisioningVariable : NamedProvisioningConstruct
 {
     /// <summary>
     /// Gets or sets the value of the variable.
@@ -32,12 +32,12 @@ public class BicepVariable : NamedProvisioningConstruct
     public Expression BicepType { get; }
 
     /// <summary>
-    /// Creates a new BicepVariable.
+    /// Creates a new ProvisioningVariable.
     /// </summary>
     /// <param name="name">Name of the variable.</param>
     /// <param name="type">Type of the variable.</param>
     /// <param name="value">Default value of the variable.</param>
-    protected BicepVariable(string name, Expression type, BicepValue<object>? value)
+    protected ProvisioningVariable(string name, Expression type, BicepValue<object>? value)
         : base(name)
     {
         BicepType = type;
@@ -45,11 +45,11 @@ public class BicepVariable : NamedProvisioningConstruct
     }
 
     /// <summary>
-    /// Creates a new BicepVariable.
+    /// Creates a new ProvisioningVariable.
     /// </summary>
     /// <param name="name">Name of the variable.</param>
     /// <param name="type">Type of the variable.</param>
-    public BicepVariable(string name, Type type)
+    public ProvisioningVariable(string name, Type type)
         : this(name, new TypeExpression(type), value: null) { }
 
     /// <inheritdoc />

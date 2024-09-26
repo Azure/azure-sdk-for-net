@@ -22,7 +22,7 @@ public class BasicSqlTests(bool async)
             {
                 Infrastructure infra = new();
 
-                BicepParameter dbName =
+                ProvisioningParameter dbName =
                     new(nameof(dbName), typeof(string))
                     {
                         Value = "SampleDB",
@@ -30,14 +30,14 @@ public class BasicSqlTests(bool async)
                     };
                 infra.Add(dbName);
 
-                BicepParameter adminLogin =
+                ProvisioningParameter adminLogin =
                     new(nameof(adminLogin), typeof(string))
                     {
                         Description = "The administrator username of the SQL logical server."
                     };
                 infra.Add(adminLogin);
 
-                BicepParameter adminPass =
+                ProvisioningParameter adminPass =
                     new(nameof(adminPass), typeof(string))
                     {
                         Description = "The administrator password of the SQL logical server.",

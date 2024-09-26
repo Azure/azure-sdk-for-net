@@ -56,7 +56,7 @@ public class BasicAppServiceTests(bool async)
                     };
                 infra.Add(appInsights);
 
-                BicepVariable funcAppName =
+                ProvisioningVariable funcAppName =
                     new(nameof(funcAppName), typeof(string))
                     {
                         Value = BicepFunction.Concat("functionApp-", BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id))

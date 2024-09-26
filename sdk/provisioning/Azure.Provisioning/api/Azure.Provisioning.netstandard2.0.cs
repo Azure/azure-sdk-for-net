@@ -22,7 +22,7 @@ namespace Azure.Provisioning
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Provisioning.BicepDictionary<T> DefineProperty(Azure.Provisioning.Primitives.ProvisioningConstruct construct, string propertyName, string[]? bicepPath, bool isOutput = false, bool isRequired = false) { throw null; }
         public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, Azure.Provisioning.BicepValue<T>>> GetEnumerator() { throw null; }
-        public static implicit operator Azure.Provisioning.BicepDictionary<T> (Azure.Provisioning.BicepVariable reference) { throw null; }
+        public static implicit operator Azure.Provisioning.BicepDictionary<T> (Azure.Provisioning.ProvisioningVariable reference) { throw null; }
         public bool Remove(System.Collections.Generic.KeyValuePair<string, Azure.Provisioning.BicepValue<T>> item) { throw null; }
         public bool Remove(string key) { throw null; }
         void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, Azure.Provisioning.BicepValue>>.Add(System.Collections.Generic.KeyValuePair<string, Azure.Provisioning.BicepValue> item) { }
@@ -55,23 +55,10 @@ namespace Azure.Provisioning
         public System.Collections.Generic.IEnumerator<Azure.Provisioning.BicepValue<T>> GetEnumerator() { throw null; }
         public int IndexOf(Azure.Provisioning.BicepValue<T> item) { throw null; }
         public void Insert(int index, Azure.Provisioning.BicepValue<T> item) { }
-        public static implicit operator Azure.Provisioning.BicepList<T> (Azure.Provisioning.BicepVariable reference) { throw null; }
+        public static implicit operator Azure.Provisioning.BicepList<T> (Azure.Provisioning.ProvisioningVariable reference) { throw null; }
         public bool Remove(Azure.Provisioning.BicepValue<T> item) { throw null; }
         public void RemoveAt(int index) { }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class BicepOutput : Azure.Provisioning.BicepVariable
-    {
-        public BicepOutput(string name, Azure.Provisioning.Expressions.Expression type) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>)) { }
-        public BicepOutput(string name, System.Type type) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>)) { }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
-    }
-    public partial class BicepParameter : Azure.Provisioning.BicepVariable
-    {
-        public BicepParameter(string name, Azure.Provisioning.Expressions.Expression type) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>)) { }
-        public BicepParameter(string name, System.Type type) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>)) { }
-        public bool IsSecure { get { throw null; } set { } }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
     }
     public abstract partial class BicepValue
     {
@@ -97,19 +84,9 @@ namespace Azure.Provisioning
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Provisioning.BicepValue<T> DefineProperty(Azure.Provisioning.Primitives.ProvisioningConstruct construct, string propertyName, string[]? bicepPath, bool isOutput = false, bool isRequired = false, bool isSecure = false, Azure.Provisioning.BicepValue<T>? defaultValue = null) { throw null; }
         public static implicit operator Azure.Provisioning.BicepValue<System.String> (Azure.Provisioning.BicepValue<T> value) { throw null; }
-        public static implicit operator Azure.Provisioning.BicepValue<T> (Azure.Provisioning.BicepVariable reference) { throw null; }
         public static implicit operator Azure.Provisioning.BicepValue<T> (Azure.Provisioning.Expressions.Expression expression) { throw null; }
+        public static implicit operator Azure.Provisioning.BicepValue<T> (Azure.Provisioning.ProvisioningVariable reference) { throw null; }
         public static implicit operator Azure.Provisioning.BicepValue<T> (T value) { throw null; }
-    }
-    public partial class BicepVariable : Azure.Provisioning.Primitives.NamedProvisioningConstruct
-    {
-        protected BicepVariable(string name, Azure.Provisioning.Expressions.Expression type, Azure.Provisioning.BicepValue<object>? value) : base (default(string)) { }
-        public BicepVariable(string name, System.Type type) : base (default(string)) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public Azure.Provisioning.Expressions.Expression BicepType { get { throw null; } }
-        public string? Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<object> Value { get { throw null; } set { } }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
     }
     public partial class Infrastructure : Azure.Provisioning.Primitives.Provisionable
     {
@@ -132,6 +109,19 @@ namespace Azure.Provisioning
         public System.Collections.Generic.IList<Azure.Provisioning.Primitives.PropertyResolver> PropertyResolvers { get { throw null; } set { } }
         public System.Random Random { get { throw null; } set { } }
     }
+    public partial class ProvisioningOutput : Azure.Provisioning.ProvisioningVariable
+    {
+        public ProvisioningOutput(string name, Azure.Provisioning.Expressions.Expression type) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>)) { }
+        public ProvisioningOutput(string name, System.Type type) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>)) { }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
+    }
+    public partial class ProvisioningParameter : Azure.Provisioning.ProvisioningVariable
+    {
+        public ProvisioningParameter(string name, Azure.Provisioning.Expressions.Expression type) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>)) { }
+        public ProvisioningParameter(string name, System.Type type) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>)) { }
+        public bool IsSecure { get { throw null; } set { } }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
+    }
     public partial class ProvisioningPlan
     {
         internal ProvisioningPlan() { }
@@ -139,6 +129,16 @@ namespace Azure.Provisioning
         public Azure.Provisioning.ProvisioningContext ProvisioningContext { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Compile() { throw null; }
         public System.Collections.Generic.IEnumerable<string> Save(string directoryPath) { throw null; }
+    }
+    public partial class ProvisioningVariable : Azure.Provisioning.Primitives.NamedProvisioningConstruct
+    {
+        protected ProvisioningVariable(string name, Azure.Provisioning.Expressions.Expression type, Azure.Provisioning.BicepValue<object>? value) : base (default(string)) { }
+        public ProvisioningVariable(string name, System.Type type) : base (default(string)) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Provisioning.Expressions.Expression BicepType { get { throw null; } }
+        public string? Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<object> Value { get { throw null; } set { } }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
     }
 }
 namespace Azure.Provisioning.Authorization
@@ -787,7 +787,7 @@ namespace Azure.Provisioning.Primitives
     }
     public partial interface IClientCreator
     {
-        System.Collections.Generic.IEnumerable<Azure.Provisioning.BicepOutput> GetOutputs();
+        System.Collections.Generic.IEnumerable<Azure.Provisioning.ProvisioningOutput> GetOutputs();
     }
     public partial interface IClientCreator<TClient, TOptions> : Azure.Provisioning.Primitives.IClientCreator where TOptions : Azure.Core.ClientOptions
     {

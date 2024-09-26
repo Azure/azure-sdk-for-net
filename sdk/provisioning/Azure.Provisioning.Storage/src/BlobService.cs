@@ -22,9 +22,9 @@ public partial class BlobService
         new StringLiteral("default");
 
     /// <inheritdoc/>
-    IEnumerable<BicepOutput> IClientCreator.GetOutputs()
+    IEnumerable<ProvisioningOutput> IClientCreator.GetOutputs()
     {
-        yield return new BicepOutput($"{ResourceName}_endpoint", typeof(string))
+        yield return new ProvisioningOutput($"{ResourceName}_endpoint", typeof(string))
         {
             Value = Parent!.PrimaryEndpoints.Value!.BlobUri
         };

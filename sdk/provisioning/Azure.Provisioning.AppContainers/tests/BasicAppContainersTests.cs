@@ -23,7 +23,7 @@ public class BasicAppContainersTests(bool async)
             {
                 Infrastructure infra = new();
 
-                BicepParameter containerImage =
+                ProvisioningParameter containerImage =
                     new(nameof(containerImage), typeof(string))
                     {
                         Value = "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest",

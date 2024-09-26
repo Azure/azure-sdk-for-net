@@ -23,10 +23,10 @@ public class BasicEventHubsTests(bool async)
             {
                 Infrastructure infra = new();
 
-                BicepParameter hubName = new(nameof(hubName), typeof(string)) { Value = "orders" };
+                ProvisioningParameter hubName = new(nameof(hubName), typeof(string)) { Value = "orders" };
                 infra.Add(hubName);
 
-                BicepParameter groupName = new(nameof(groupName), typeof(string)) { Value = "managers" };
+                ProvisioningParameter groupName = new(nameof(groupName), typeof(string)) { Value = "managers" };
                 infra.Add(groupName);
 
                 EventHubsNamespace ns =

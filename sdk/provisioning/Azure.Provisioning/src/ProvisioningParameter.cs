@@ -10,11 +10,11 @@ namespace Azure.Provisioning;
 /// <summary>
 /// Represents a parameter in a Bicep template.
 /// </summary>
-public class BicepParameter : BicepVariable
+public class ProvisioningParameter : ProvisioningVariable
 {
     /// <summary>
     /// Gets or sets whether this parameter uses a secure value.  It will default
-    /// to secure if provided a <see cref="BicepVariable.Value"/> that is known to be secure.
+    /// to secure if provided a <see cref="ProvisioningVariable.Value"/> that is known to be secure.
     /// </summary>
     public bool IsSecure
     {
@@ -24,19 +24,19 @@ public class BicepParameter : BicepVariable
     private bool _isSecure = false;
 
     /// <summary>
-    /// Creates a new BicepParameter.
+    /// Creates a new ProvisioningParameter.
     /// </summary>
     /// <param name="name">Name of the parameter.</param>
     /// <param name="type">Type of the parameter.</param>
-    public BicepParameter(string name, Expression type)
+    public ProvisioningParameter(string name, Expression type)
         : base(name, type, value: null) { }
 
     /// <summary>
-    /// Creates a new BicepParameter.
+    /// Creates a new ProvisioningParameter.
     /// </summary>
     /// <param name="name">Name of the parameter.</param>
     /// <param name="type">Type of the parameter.</param>
-    public BicepParameter(string name, Type type)
+    public ProvisioningParameter(string name, Type type)
         : this(name, new TypeExpression(type)) { }
 
     /// <inheritdoc />

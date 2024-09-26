@@ -24,7 +24,7 @@ public interface IClientCreator
     /// <returns>
     /// The outputs required to construct a client for this resource.
     /// </returns>
-    public IEnumerable<BicepOutput> GetOutputs();
+    public IEnumerable<ProvisioningOutput> GetOutputs();
 }
 
 /// <summary>
@@ -81,7 +81,7 @@ public class ClientCreatorOutputResolver : InfrastructureResolver
             // Optionally add any outputs
             if (resource is IClientCreator creator)
             {
-                foreach (BicepOutput output in creator.GetOutputs())
+                foreach (ProvisioningOutput output in creator.GetOutputs())
                 {
                     yield return output;
                 }

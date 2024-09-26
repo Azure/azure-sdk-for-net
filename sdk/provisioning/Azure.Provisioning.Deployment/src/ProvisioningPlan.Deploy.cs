@@ -222,7 +222,7 @@ public static class ProvisioningPlanExtensions
         }
 
         // Patch up output references
-        foreach (BicepOutput output in plan.Infrastructure.GetResources().OfType<BicepOutput>())
+        foreach (ProvisioningOutput output in plan.Infrastructure.GetResources().OfType<ProvisioningOutput>())
         {
             if (outputs.TryGetValue(output.ResourceName, out object? value) &&
                 value is not null)
