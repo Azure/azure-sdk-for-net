@@ -10,7 +10,7 @@ public static class MessagingServices
 {
     public static void Send(this CloudMachineClient cm, object serializable)
     {
-        ServiceBusSender sender = cm.ClientCache.Get<ServiceBusSender>("cm_default_topic", () =>
+        ServiceBusSender sender = cm.ClientCache.Get("cm_default_topic", () =>
         {
             ServiceBusClient sb = new(cm.Properties.ServiceBusNamespace, cm.Credential);
             ServiceBusSender sender = sb.CreateSender("cm_default_topic");
