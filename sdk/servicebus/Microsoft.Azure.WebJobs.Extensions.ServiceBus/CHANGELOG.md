@@ -7,7 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-[BUG] GetProcessorCount for webjobs service bus extension does not override processor count for flex consumption #45970
+GetProcessorCount for webjobs service bus extension does not override processor count for flex consumption. (#45970)
 
 ### Other Changes
 
