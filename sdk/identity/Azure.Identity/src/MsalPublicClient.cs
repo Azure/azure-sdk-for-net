@@ -128,12 +128,18 @@ namespace Azure.Identity
             {
                 builder.WithClaims(claims);
             }
-            if (tenantId != null)
+
+            if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
+                UriBuilder uriBuilder = new UriBuilder(AuthorityHost);
+                if (uriBuilder.Path.EndsWith("/"))
                 {
-                    Path = TenantId ?? tenantId
-                };
+                    uriBuilder.Path = uriBuilder.Path + tenantId;
+                }
+                else
+                {
+                    uriBuilder.Path = uriBuilder.Path + "/" + tenantId;
+                }
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
 
@@ -195,12 +201,17 @@ namespace Azure.Identity
             // user authenticated to originally.
             var builder = client.AcquireTokenSilent(scopes, (AuthenticationAccount)record);
 
-            if (tenantId != null || record.TenantId != null)
+            if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
+                UriBuilder uriBuilder = new UriBuilder(AuthorityHost);
+                if (uriBuilder.Path.EndsWith("/"))
                 {
-                    Path = tenantId ?? record.TenantId
-                };
+                    uriBuilder.Path = uriBuilder.Path + tenantId;
+                }
+                else
+                {
+                    uriBuilder.Path = uriBuilder.Path + "/" + tenantId;
+                }
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
 
@@ -310,14 +321,21 @@ namespace Azure.Identity
             {
                 builder.WithLoginHint(loginHint);
             }
-            if (tenantId != null)
+
+            if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
+                UriBuilder uriBuilder = new UriBuilder(AuthorityHost);
+                if (uriBuilder.Path.EndsWith("/"))
                 {
-                    Path = tenantId
-                };
+                    uriBuilder.Path = uriBuilder.Path + tenantId;
+                }
+                else
+                {
+                    uriBuilder.Path = uriBuilder.Path + "/" + tenantId;
+                }
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
+
             if (browserOptions != null)
             {
                 if (browserOptions.UseEmbeddedWebView.HasValue)
@@ -359,10 +377,15 @@ namespace Azure.Identity
             }
             if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
+                UriBuilder uriBuilder = new UriBuilder(AuthorityHost);
+                if (uriBuilder.Path.EndsWith("/"))
                 {
-                    Path = tenantId
-                };
+                    uriBuilder.Path = uriBuilder.Path + tenantId;
+                }
+                else
+                {
+                    uriBuilder.Path = uriBuilder.Path + "/" + tenantId;
+                }
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
             return await builder.ExecuteAsync(async, cancellationToken)
@@ -409,10 +432,15 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(TenantId))
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
+                UriBuilder uriBuilder = new UriBuilder(AuthorityHost);
+                if (uriBuilder.Path.EndsWith("/"))
                 {
-                    Path = tenant
-                };
+                    uriBuilder.Path = uriBuilder.Path + TenantId;
+                }
+                else
+                {
+                    uriBuilder.Path = uriBuilder.Path + "/" + TenantId;
+                }
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
 
