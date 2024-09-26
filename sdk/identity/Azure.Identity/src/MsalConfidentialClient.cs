@@ -167,7 +167,19 @@ namespace Azure.Identity
                 .AcquireTokenForClient(scopes)
                 .WithSendX5C(_includeX5CClaimHeader);
 
-            AddTenantIdToBuilder(tenantId, builder);
+            if (!string.IsNullOrEmpty(tenantId))
+            {
+                UriBuilder uriBuilder = new UriBuilder(AuthorityHost);
+                if (uriBuilder.Path.EndsWith("/"))
+                {
+                    uriBuilder.Path = uriBuilder.Path + tenantId;
+                }
+                else
+                {
+                    uriBuilder.Path = uriBuilder.Path + "/" + tenantId;
+                }
+                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+            }
 
             if (!string.IsNullOrEmpty(claims))
             {
@@ -206,7 +218,21 @@ namespace Azure.Identity
             IConfidentialClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
 
             var builder = client.AcquireTokenSilent(scopes, account);
-            AddTenantIdToBuilder(tenantId, builder);
+
+            if (!string.IsNullOrEmpty(tenantId))
+            {
+                UriBuilder uriBuilder = new UriBuilder(AuthorityHost);
+                if (uriBuilder.Path.EndsWith("/"))
+                {
+                    uriBuilder.Path = uriBuilder.Path + tenantId;
+                }
+                else
+                {
+                    uriBuilder.Path = uriBuilder.Path + "/" + tenantId;
+                }
+                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+            }
+
             if (!string.IsNullOrEmpty(claims))
             {
                 builder.WithClaims(claims);

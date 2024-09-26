@@ -154,10 +154,6 @@
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.2.0" />
     <PackageReference Update="Microsoft.Identity.Client" Version="4.65.0" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.65.0" />
-    <!--
-      TODO: This package needs to be released as GA and arch-board approved before taking a dependency in any stable SDK library.
-      Currently, it is referencd by Azure.Identity.Broker which is still in beta
-    -->
     <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.65.0" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
