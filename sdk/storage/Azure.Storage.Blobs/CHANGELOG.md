@@ -3,13 +3,9 @@
 ## 12.23.0-beta.1 (Unreleased)
 
 ### Features Added
-- Added GenerateUserDelegationSasUri() for BlobBaseClient and BlobContainerClient
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for service version 2025-01-05.
+- Added GenerateUserDelegationSasUri() to BlobBaseClient and BlobContainerClient.
+- Added BlobErrorCode.BlobAccessTierNotSupportedForAccountType enum value.
 
 ## 12.22.0 (2024-09-18)
 
