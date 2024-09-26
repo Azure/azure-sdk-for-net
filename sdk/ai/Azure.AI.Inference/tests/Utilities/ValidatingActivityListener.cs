@@ -58,10 +58,10 @@ namespace Azure.AI.Inference.Tests.Utilities
                 Assert.IsNull(activity.GetTagItem(ServerPortKey));
             ValidateTag(activity, GenAiOperationNameKey, "chat");
             ValidateTag(activity, GenAiRequestMaxTokensKey, requestOptions.MaxTokens);
-            ValidateFloatTag(activity, GenAiRequestTemperatureKey, requestOptions.Temperature);
+            ValidateTag(activity, GenAiRequestTemperatureKey, requestOptions.Temperature);
             if (requestOptions.AdditionalProperties.TryGetValue("top_p", out BinaryData topP))
             {
-                ValidateFloatTag(activity, GenAiRequestTopPKey, JsonSerializer.Deserialize<float?>(topP));
+                ValidateTag(activity, GenAiRequestTopPKey, JsonSerializer.Deserialize<float?>(topP));
             }
             // Validate events
             if (traceEvents)
@@ -144,7 +144,7 @@ namespace Azure.AI.Inference.Tests.Utilities
 
         private static void ValidateEvent(Activity activity, string name, Dictionary<string, object> actuals)
         {
-            ActivityEvent expected = new ActivityEvent("None");
+            ActivityEvent expected = default;
             foreach (ActivityEvent evt in activity.Events)
             {
                 if (evt.Name == name)
@@ -153,7 +153,7 @@ namespace Azure.AI.Inference.Tests.Utilities
                     break;
                 }
             }
-            Assert.AreNotEqual(expected.Name, "None");
+            Assert.AreNotEqual(expected, default);
             Assert.Greater(expected.Timestamp, new DateTimeOffset(new DateTime(2024, 6, 1)));
             ValidateEventTags(expected.Tags, actuals);
         }
@@ -184,24 +184,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             else
             {
                 Assert.NotNull(activity.GetTagItem(key));
-                Assert.AreEqual(value.ToString(), activity.GetTagItem(key).ToString());
-            }
-        }
-
-        private static void ValidateFloatTag(Activity activity, string key, float? value)
-        {
-            if (!value.HasValue)
-            {
-                Assert.IsNull(activity.GetTagItem(key));
-            }
-            else
-            {
-                Assert.NotNull(activity.GetTagItem(key));
-                Assert.AreEqual(
-                    expected: float.Parse(value.ToString()),
-                    actual: float.Parse(activity.GetTagItem(key).ToString()),
-                    delta: 0.001
-                    );
+                Assert.AreEqual(value, activity.GetTagItem(key));
             }
         }
 
@@ -227,7 +210,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             foreach (KeyValuePair<string, object> actual in actuals)
             {
                 Assert.That(tags.ContainsKey(actual.Key));
-                Assert.AreEqual(tags[actual.Key].ToString(), actual.Value.ToString());
+                Assert.AreEqual(tags[actual.Key], actual.Value);
             }
         }
 
