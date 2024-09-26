@@ -4,7 +4,6 @@
 using Microsoft.Generator.CSharp.ClientModel.Providers;
 using Microsoft.Generator.CSharp.Expressions;
 using Microsoft.Generator.CSharp.Snippets;
-using System.ClientModel.Primitives;
 using static Microsoft.Generator.CSharp.Snippets.Snippet;
 
 namespace Azure.Generator.Providers
@@ -16,12 +15,11 @@ namespace Azure.Generator.Providers
         }
 
         public override ValueExpression CreateAsync(HttpResponseApi response)
-            => Static(AzureClientPlugin.Instance.TypeFactory.ClientResponseExceptionType).Invoke(nameof(CreateAsync), [response], true);
+            => New.Instance(AzureClientPlugin.Instance.TypeFactory.ClientResponseType, [response]);
 
-        public override ValueExpression FromResponse(ValueExpression valueExpression)
-            => Static(AzureClientPlugin.Instance.TypeFactory.ClientResponseType).Invoke(nameof(FromResponse), [valueExpression]);
+        public override ValueExpression FromResponse(ValueExpression valueExpression) => valueExpression;
 
-        public override ValueExpression FromValue(ValueExpression valueExpression, HttpResponseApi response)
+        public override ValueExpression FromValue(ValueExpression valueExpression, ClientResponseApi response)
             => Static(AzureClientPlugin.Instance.TypeFactory.ClientResponseType).Invoke(nameof(FromValue), [valueExpression, response]);
 
         public override ValueExpression FromValue<ValueType>(ValueExpression valueExpression, HttpResponseApi response)
