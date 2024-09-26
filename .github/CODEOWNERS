@@ -1046,7 +1046,9 @@
 # ServiceOwners:                                                   @tejasm-microsoft
 
 # PRLabel: %Recovery Services Backup
-/sdk/recoveryservices-backup/Azure.ResourceManager.*/              @Daya-Patil
+/sdk/recoveryservices-backup/Azure.ResourceManager.*/              @Daya-Patil @fakeUser1
+
+/sdk/PathDoesNotExist/              @JimSuplizio
 
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
@@ -1064,7 +1066,7 @@
 # ServiceOwners:                                                   @sunkun99
 
 # PRLabel: %Compute - Fleet
-/sdk/computefleet/                                                 @sahilarora92 @dhruvil009
+/sdk/computefleet/                                                 @sahilarora92 @dhruvil009 @fakeUser2
 
 # ServiceLabel: %Compute - Fleet
 # ServiceOwners:                                                   @sahilarora92 @dhruvil009
@@ -1074,7 +1076,7 @@
 /eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 /.github/workflows/                                                @Azure/azure-sdk-eng
-/.github/CODEOWNERS                                                @jsquire @Azure/azure-sdk-eng
+/.github/CODEOWNERS                                                @jsquire @Azure/azure-sdk-eng @fakeUser1
 /.config/1espt/                                                    @benbp @weshaggard
 
 # Add owners for notifications for specific pipelines
