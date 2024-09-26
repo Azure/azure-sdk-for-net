@@ -165,7 +165,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobDirectoryToDirectory_SmallSize(long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
             string sourceBlobDirectoryName = "sourceFolder";
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string sourceFolderPath = CreateRandomDirectory(testDirectory.DirectoryPath, sourceBlobDirectoryName);
@@ -210,7 +211,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobDirectoryToDirectory_LargeSize(long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
             string sourceBlobDirectoryName = "sourceFolder";
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string sourceFolderPath = CreateRandomDirectory(testDirectory.DirectoryPath, sourceBlobDirectoryName);
@@ -250,7 +252,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobDirectoryToDirectory_EmptyFolder()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             // Set up directory to upload
@@ -299,7 +302,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobDirectoryToDirectory_SingleFile()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             string sourceFolderName = "sourceFolder";
@@ -322,7 +326,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobDirectoryToDirectory_ManySubDirectories()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             string blobDirectoryName = "sourceFolder";
@@ -360,7 +365,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobDirectoryToDirectory_SubDirectoriesLevels(int level)
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             string sourceBlobDirectoryName = "sourceFolder";
@@ -390,7 +396,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobDirectoryToDirectory_OverwriteTrue()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             long size = Constants.KB;
@@ -437,7 +444,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobDirectoryToDirectory_OverwriteFalse()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             long size = Constants.KB;
@@ -487,11 +495,7 @@ namespace Azure.Storage.DataMovement.Tests
             long size = Constants.KB;
             int waitTimeInSec = 10;
             BlobServiceClient service = GetServiceClient_OAuth();
-            var containerName = GetNewContainerName();
-            await using DisposingContainer testContainer = await GetTestContainerAsync(
-                service,
-                containerName,
-                publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingContainer testContainer = await GetTestContainerAsync(service);
             string sourceBlobDirectoryName = "sourceFolder";
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string sourceFolderPath = CreateRandomDirectory(testDirectory.DirectoryPath, sourceBlobDirectoryName);
@@ -599,7 +603,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_AwaitCompletion()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
 
             // Create transfer to do a AwaitCompletion
             DataTransferOptions options = new DataTransferOptions();
@@ -625,7 +630,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_AwaitCompletion_Failed()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
 
             DataTransferOptions options = new DataTransferOptions()
             {
@@ -661,7 +667,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_AwaitCompletion_Skipped()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
 
             // Create transfer options with Skipping available
             DataTransferOptions options = new DataTransferOptions()
@@ -697,7 +704,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_EnsureCompleted()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
 
             // Create transfer to do a EnsureCompleted
             DataTransferOptions options = new DataTransferOptions();
@@ -724,7 +732,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_EnsureCompleted_Failed()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
 
             DataTransferOptions options = new DataTransferOptions()
             {
@@ -760,7 +769,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_EnsureCompleted_Skipped()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
 
             // Create transfer options with Skipping available
             DataTransferOptions options = new DataTransferOptions()
@@ -796,7 +806,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_EnsureCompleted_Failed_SmallChunks()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
 
