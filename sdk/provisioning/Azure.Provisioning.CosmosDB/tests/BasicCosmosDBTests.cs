@@ -90,7 +90,7 @@ public class BasicCosmosDBTests(bool async)
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource cosmos 'Microsoft.DocumentDB/databaseAccounts@2024-05-15-preview' = {
+            resource cosmos 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
               name: take('cosmos-${uniqueString(resourceGroup().id)}', 44)
               location: location
               properties: {

@@ -92,7 +92,7 @@ public partial class EncryptionScope : Resource
     /// <param name="resourceName">Name of the EncryptionScope.</param>
     /// <param name="resourceVersion">Version of the EncryptionScope.</param>
     public EncryptionScope(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/encryptionScopes", resourceVersion ?? "2023-01-01")
+        : base(resourceName, "Microsoft.Storage/storageAccounts/encryptionScopes", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _keyVaultProperties = BicepValue<EncryptionScopeKeyVaultProperties>.DefineProperty(this, "KeyVaultProperties", ["properties", "keyVaultProperties"]);

@@ -153,7 +153,7 @@ public partial class TopicEventSubscription : Resource
     /// <param name="resourceName">Name of the TopicEventSubscription.</param>
     /// <param name="resourceVersion">Version of the TopicEventSubscription.</param>
     public TopicEventSubscription(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventGrid/topics/eventSubscriptions", resourceVersion)
+        : base(resourceName, "Microsoft.EventGrid/topics/eventSubscriptions", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _deadLetterDestination = BicepValue<DeadLetterDestination>.DefineProperty(this, "DeadLetterDestination", ["properties", "deadLetterDestination"]);
@@ -170,6 +170,47 @@ public partial class TopicEventSubscription : Resource
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _topic = BicepValue<string>.DefineProperty(this, "Topic", ["properties", "topic"], isOutput: true);
         _parent = ResourceReference<EventGridTopic>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported TopicEventSubscription resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-06-01-preview.
+        /// </summary>
+        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
+
+        /// <summary>
+        /// 2022-06-15.
+        /// </summary>
+        public static readonly string V2022_06_15 = "2022-06-15";
+
+        /// <summary>
+        /// 2021-12-01.
+        /// </summary>
+        public static readonly string V2021_12_01 = "2021-12-01";
+
+        /// <summary>
+        /// 2020-06-01.
+        /// </summary>
+        public static readonly string V2020_06_01 = "2020-06-01";
+
+        /// <summary>
+        /// 2019-06-01.
+        /// </summary>
+        public static readonly string V2019_06_01 = "2019-06-01";
+
+        /// <summary>
+        /// 2019-01-01.
+        /// </summary>
+        public static readonly string V2019_01_01 = "2019-01-01";
+
+        /// <summary>
+        /// 2018-01-01.
+        /// </summary>
+        public static readonly string V2018_01_01 = "2018-01-01";
     }
 
     /// <summary>

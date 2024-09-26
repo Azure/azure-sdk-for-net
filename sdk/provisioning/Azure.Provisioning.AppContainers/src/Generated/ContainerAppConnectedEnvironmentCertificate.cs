@@ -66,7 +66,7 @@ public partial class ContainerAppConnectedEnvironmentCertificate : Resource
     /// <param name="resourceName">Name of the ContainerAppConnectedEnvironmentCertificate.</param>
     /// <param name="resourceVersion">Version of the ContainerAppConnectedEnvironmentCertificate.</param>
     public ContainerAppConnectedEnvironmentCertificate(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.App/connectedEnvironments/certificates", resourceVersion ?? "2023-05-01")
+        : base(resourceName, "Microsoft.App/connectedEnvironments/certificates", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

@@ -98,7 +98,7 @@ public partial class OperationalInsightsDataExport : Resource
     /// <param name="resourceName">Name of the OperationalInsightsDataExport.</param>
     /// <param name="resourceVersion">Version of the OperationalInsightsDataExport.</param>
     public OperationalInsightsDataExport(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.OperationalInsights/workspaces/dataExports", resourceVersion ?? "2020-08-01")
+        : base(resourceName, "Microsoft.OperationalInsights/workspaces/dataExports", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdDate"]);

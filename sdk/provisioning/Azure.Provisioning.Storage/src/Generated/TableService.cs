@@ -55,7 +55,7 @@ public partial class TableService : Resource
     /// <param name="resourceName">Name of the TableService.</param>
     /// <param name="resourceVersion">Version of the TableService.</param>
     public TableService(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/tableServices", resourceVersion ?? "2023-01-01")
+        : base(resourceName, "Microsoft.Storage/storageAccounts/tableServices", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _corsRules = BicepList<StorageCorsRule>.DefineProperty(this, "CorsRules", ["properties", "cors", "corsRules"]);

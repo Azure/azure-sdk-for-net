@@ -75,7 +75,7 @@ public class BasicContainerServiceTests(bool async)
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource aks 'Microsoft.ContainerService/managedClusters@2023-08-01' = {
+            resource aks 'Microsoft.ContainerService/managedClusters@2024-08-01' = {
               name: take('aks-${uniqueString(resourceGroup().id)}', 63)
               location: location
               properties: {

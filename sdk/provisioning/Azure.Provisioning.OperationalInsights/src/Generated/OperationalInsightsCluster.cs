@@ -134,7 +134,7 @@ public partial class OperationalInsightsCluster : Resource
     /// <param name="resourceName">Name of the OperationalInsightsCluster.</param>
     /// <param name="resourceVersion">Version of the OperationalInsightsCluster.</param>
     public OperationalInsightsCluster(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.OperationalInsights/clusters", resourceVersion ?? "2021-06-01")
+        : base(resourceName, "Microsoft.OperationalInsights/clusters", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

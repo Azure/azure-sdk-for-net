@@ -96,7 +96,7 @@ public partial class ContainerAppConnectedEnvironmentDaprComponent : Resource
     /// <param name="resourceName">Name of the ContainerAppConnectedEnvironmentDaprComponent.</param>
     /// <param name="resourceVersion">Version of the ContainerAppConnectedEnvironmentDaprComponent.</param>
     public ContainerAppConnectedEnvironmentDaprComponent(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.App/connectedEnvironments/daprComponents", resourceVersion)
+        : base(resourceName, "Microsoft.App/connectedEnvironments/daprComponents", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _componentType = BicepValue<string>.DefineProperty(this, "ComponentType", ["properties", "componentType"]);
@@ -110,6 +110,33 @@ public partial class ContainerAppConnectedEnvironmentDaprComponent : Resource
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<ContainerAppConnectedEnvironment>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported ContainerAppConnectedEnvironmentDaprComponent resource
+    /// versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-08-02-preview.
+        /// </summary>
+        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
+
+        /// <summary>
+        /// 2024-03-01.
+        /// </summary>
+        public static readonly string V2024_03_01 = "2024-03-01";
+
+        /// <summary>
+        /// 2023-05-01.
+        /// </summary>
+        public static readonly string V2023_05_01 = "2023-05-01";
+
+        /// <summary>
+        /// 2022-10-01.
+        /// </summary>
+        public static readonly string V2022_10_01 = "2022-10-01";
     }
 
     /// <summary>

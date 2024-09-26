@@ -80,7 +80,7 @@ public partial class CognitiveServicesCommitmentPlan : Resource
     /// <param name="resourceName">Name of the CognitiveServicesCommitmentPlan.</param>
     /// <param name="resourceVersion">Version of the CognitiveServicesCommitmentPlan.</param>
     public CognitiveServicesCommitmentPlan(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.CognitiveServices/commitmentPlans", resourceVersion ?? "2022-12-01")
+        : base(resourceName, "Microsoft.CognitiveServices/commitmentPlans", resourceVersion ?? "2024-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);

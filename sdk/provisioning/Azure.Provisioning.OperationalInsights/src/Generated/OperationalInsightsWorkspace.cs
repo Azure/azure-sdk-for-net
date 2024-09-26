@@ -153,7 +153,7 @@ public partial class OperationalInsightsWorkspace : Resource
     /// <param name="resourceName">Name of the OperationalInsightsWorkspace.</param>
     /// <param name="resourceVersion">Version of the OperationalInsightsWorkspace.</param>
     public OperationalInsightsWorkspace(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.OperationalInsights/workspaces", resourceVersion ?? "2022-10-01")
+        : base(resourceName, "Microsoft.OperationalInsights/workspaces", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

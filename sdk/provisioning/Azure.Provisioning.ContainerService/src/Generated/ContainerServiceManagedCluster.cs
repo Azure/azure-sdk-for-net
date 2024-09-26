@@ -344,7 +344,7 @@ public partial class ContainerServiceManagedCluster : Resource
     /// <param name="resourceName">Name of the ContainerServiceManagedCluster.</param>
     /// <param name="resourceVersion">Version of the ContainerServiceManagedCluster.</param>
     public ContainerServiceManagedCluster(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ContainerService/managedClusters", resourceVersion ?? "2023-08-01")
+        : base(resourceName, "Microsoft.ContainerService/managedClusters", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

@@ -53,13 +53,44 @@ public partial class ContainerAppManagedEnvironmentStorage : Resource
     /// <param name="resourceName">Name of the ContainerAppManagedEnvironmentStorage.</param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironmentStorage.</param>
     public ContainerAppManagedEnvironmentStorage(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.App/managedEnvironments/storages", resourceVersion)
+        : base(resourceName, "Microsoft.App/managedEnvironments/storages", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _managedEnvironmentStorageAzureFile = BicepValue<ContainerAppAzureFileProperties>.DefineProperty(this, "ManagedEnvironmentStorageAzureFile", ["properties", "azureFile"]);
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<ContainerAppManagedEnvironment>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported ContainerAppManagedEnvironmentStorage resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-08-02-preview.
+        /// </summary>
+        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
+
+        /// <summary>
+        /// 2024-03-01.
+        /// </summary>
+        public static readonly string V2024_03_01 = "2024-03-01";
+
+        /// <summary>
+        /// 2023-05-01.
+        /// </summary>
+        public static readonly string V2023_05_01 = "2023-05-01";
+
+        /// <summary>
+        /// 2022-10-01.
+        /// </summary>
+        public static readonly string V2022_10_01 = "2022-10-01";
+
+        /// <summary>
+        /// 2022-03-01.
+        /// </summary>
+        public static readonly string V2022_03_01 = "2022-03-01";
     }
 
     /// <summary>

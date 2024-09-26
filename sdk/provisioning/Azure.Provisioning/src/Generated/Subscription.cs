@@ -82,7 +82,7 @@ public partial class Subscription : Resource
     /// <param name="resourceName">Name of the Subscription.</param>
     /// <param name="resourceVersion">Version of the Subscription.</param>
     public Subscription(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Resources/subscriptions", resourceVersion)
+        : base(resourceName, "Microsoft.Resources/subscriptions", resourceVersion ?? "2019-10-01")
     {
         _authorizationSource = BicepValue<string>.DefineProperty(this, "AuthorizationSource", ["authorizationSource"], isOutput: true);
         _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["displayName"], isOutput: true);
@@ -93,6 +93,127 @@ public partial class Subscription : Resource
         _subscriptionPolicies = BicepValue<SubscriptionPolicies>.DefineProperty(this, "SubscriptionPolicies", ["subscriptionPolicies"], isOutput: true);
         _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"], isOutput: true);
         _tenantId = BicepValue<Guid>.DefineProperty(this, "TenantId", ["tenantId"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Supported Subscription resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2019-10-01.
+        /// </summary>
+        public static readonly string V2019_10_01 = "2019-10-01";
+
+        /// <summary>
+        /// 2019-09-01.
+        /// </summary>
+        public static readonly string V2019_09_01 = "2019-09-01";
+
+        /// <summary>
+        /// 2019-05-01.
+        /// </summary>
+        public static readonly string V2019_05_01 = "2019-05-01";
+
+        /// <summary>
+        /// 2019-04-01.
+        /// </summary>
+        public static readonly string V2019_04_01 = "2019-04-01";
+
+        /// <summary>
+        /// 2019-03-01.
+        /// </summary>
+        public static readonly string V2019_03_01 = "2019-03-01";
+
+        /// <summary>
+        /// 2018-11-01.
+        /// </summary>
+        public static readonly string V2018_11_01 = "2018-11-01";
+
+        /// <summary>
+        /// 2018-09-01.
+        /// </summary>
+        public static readonly string V2018_09_01 = "2018-09-01";
+
+        /// <summary>
+        /// 2018-08-01.
+        /// </summary>
+        public static readonly string V2018_08_01 = "2018-08-01";
+
+        /// <summary>
+        /// 2018-07-01.
+        /// </summary>
+        public static readonly string V2018_07_01 = "2018-07-01";
+
+        /// <summary>
+        /// 2018-05-01.
+        /// </summary>
+        public static readonly string V2018_05_01 = "2018-05-01";
+
+        /// <summary>
+        /// 2018-02-01.
+        /// </summary>
+        public static readonly string V2018_02_01 = "2018-02-01";
+
+        /// <summary>
+        /// 2018-01-01.
+        /// </summary>
+        public static readonly string V2018_01_01 = "2018-01-01";
+
+        /// <summary>
+        /// 2017-08-01.
+        /// </summary>
+        public static readonly string V2017_08_01 = "2017-08-01";
+
+        /// <summary>
+        /// 2017-06-01.
+        /// </summary>
+        public static readonly string V2017_06_01 = "2017-06-01";
+
+        /// <summary>
+        /// 2017-05-10.
+        /// </summary>
+        public static readonly string V2017_05_10 = "2017-05-10";
+
+        /// <summary>
+        /// 2017-05-01.
+        /// </summary>
+        public static readonly string V2017_05_01 = "2017-05-01";
+
+        /// <summary>
+        /// 2017-03-01.
+        /// </summary>
+        public static readonly string V2017_03_01 = "2017-03-01";
+
+        /// <summary>
+        /// 2016-09-01.
+        /// </summary>
+        public static readonly string V2016_09_01 = "2016-09-01";
+
+        /// <summary>
+        /// 2016-07-01.
+        /// </summary>
+        public static readonly string V2016_07_01 = "2016-07-01";
+
+        /// <summary>
+        /// 2016-06-01.
+        /// </summary>
+        public static readonly string V2016_06_01 = "2016-06-01";
+
+        /// <summary>
+        /// 2016-02-01.
+        /// </summary>
+        public static readonly string V2016_02_01 = "2016-02-01";
+
+        /// <summary>
+        /// 2015-11-01.
+        /// </summary>
+        public static readonly string V2015_11_01 = "2015-11-01";
+
+        /// <summary>
+        /// 2015-01-01.
+        /// </summary>
+        public static readonly string V2015_01_01 = "2015-01-01";
     }
 
     /// <summary>

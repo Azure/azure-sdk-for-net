@@ -115,7 +115,7 @@ public partial class MongoCluster : Resource
     /// <param name="resourceName">Name of the MongoCluster.</param>
     /// <param name="resourceVersion">Version of the MongoCluster.</param>
     public MongoCluster(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/mongoClusters", resourceVersion ?? "2023-03-01-preview")
+        : base(resourceName, "Microsoft.DocumentDB/mongoClusters", resourceVersion ?? "2024-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

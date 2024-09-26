@@ -73,7 +73,7 @@ public partial class ContainerAppSourceControl : Resource
     /// <param name="resourceName">Name of the ContainerAppSourceControl.</param>
     /// <param name="resourceVersion">Version of the ContainerAppSourceControl.</param>
     public ContainerAppSourceControl(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.App/containerApps/sourcecontrols", resourceVersion)
+        : base(resourceName, "Microsoft.App/containerApps/sourcecontrols", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _branch = BicepValue<string>.DefineProperty(this, "Branch", ["properties", "branch"]);
@@ -83,6 +83,37 @@ public partial class ContainerAppSourceControl : Resource
         _operationState = BicepValue<ContainerAppSourceControlOperationState>.DefineProperty(this, "OperationState", ["properties", "operationState"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<ContainerApp>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported ContainerAppSourceControl resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-08-02-preview.
+        /// </summary>
+        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
+
+        /// <summary>
+        /// 2024-03-01.
+        /// </summary>
+        public static readonly string V2024_03_01 = "2024-03-01";
+
+        /// <summary>
+        /// 2023-05-01.
+        /// </summary>
+        public static readonly string V2023_05_01 = "2023-05-01";
+
+        /// <summary>
+        /// 2022-10-01.
+        /// </summary>
+        public static readonly string V2022_10_01 = "2022-10-01";
+
+        /// <summary>
+        /// 2022-03-01.
+        /// </summary>
+        public static readonly string V2022_03_01 = "2022-03-01";
     }
 
     /// <summary>

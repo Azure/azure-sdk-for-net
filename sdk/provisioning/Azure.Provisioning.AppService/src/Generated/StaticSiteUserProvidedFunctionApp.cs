@@ -72,7 +72,7 @@ public partial class StaticSiteUserProvidedFunctionApp : Resource
     /// <param name="resourceName">Name of the StaticSiteUserProvidedFunctionApp.</param>
     /// <param name="resourceVersion">Version of the StaticSiteUserProvidedFunctionApp.</param>
     public StaticSiteUserProvidedFunctionApp(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/staticSites/userProvidedFunctionApps", resourceVersion ?? "2020-12-01")
+        : base(resourceName, "Microsoft.Web/staticSites/userProvidedFunctionApps", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _functionAppRegion = BicepValue<string>.DefineProperty(this, "FunctionAppRegion", ["properties", "functionAppRegion"]);

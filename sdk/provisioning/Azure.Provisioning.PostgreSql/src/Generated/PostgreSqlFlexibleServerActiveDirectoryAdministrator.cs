@@ -72,7 +72,7 @@ public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Reso
     /// <param name="resourceName">Name of the PostgreSqlFlexibleServerActiveDirectoryAdministrator.</param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerActiveDirectoryAdministrator.</param>
     public PostgreSqlFlexibleServerActiveDirectoryAdministrator(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/administrators", resourceVersion)
+        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/administrators", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _objectId = BicepValue<string>.DefineProperty(this, "ObjectId", ["properties", "objectId"], isOutput: true);
@@ -82,6 +82,28 @@ public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Reso
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<PostgreSqlFlexibleServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported PostgreSqlFlexibleServerActiveDirectoryAdministrator resource
+    /// versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-08-01.
+        /// </summary>
+        public static readonly string V2024_08_01 = "2024-08-01";
+
+        /// <summary>
+        /// 2022-12-01.
+        /// </summary>
+        public static readonly string V2022_12_01 = "2022-12-01";
+
+        /// <summary>
+        /// 2021-06-01.
+        /// </summary>
+        public static readonly string V2021_06_01 = "2021-06-01";
     }
 
     /// <summary>

@@ -65,7 +65,7 @@ public partial class KeyVaultService : Resource
     /// <param name="resourceName">Name of the KeyVaultService.</param>
     /// <param name="resourceVersion">Version of the KeyVaultService.</param>
     public KeyVaultService(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.KeyVault/vaults", resourceVersion ?? "2019-09-01")
+        : base(resourceName, "Microsoft.KeyVault/vaults", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

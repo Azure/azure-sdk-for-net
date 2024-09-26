@@ -113,7 +113,7 @@ public partial class PostgreSqlFlexibleServerConfiguration : Resource
     /// <param name="resourceName">Name of the PostgreSqlFlexibleServerConfiguration.</param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerConfiguration.</param>
     public PostgreSqlFlexibleServerConfiguration(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/configurations", resourceVersion)
+        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/configurations", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _source = BicepValue<string>.DefineProperty(this, "Source", ["properties", "source"]);
@@ -130,6 +130,27 @@ public partial class PostgreSqlFlexibleServerConfiguration : Resource
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _unit = BicepValue<string>.DefineProperty(this, "Unit", ["properties", "unit"], isOutput: true);
         _parent = ResourceReference<PostgreSqlFlexibleServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported PostgreSqlFlexibleServerConfiguration resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-08-01.
+        /// </summary>
+        public static readonly string V2024_08_01 = "2024-08-01";
+
+        /// <summary>
+        /// 2022-12-01.
+        /// </summary>
+        public static readonly string V2022_12_01 = "2022-12-01";
+
+        /// <summary>
+        /// 2021-06-01.
+        /// </summary>
+        public static readonly string V2021_06_01 = "2021-06-01";
     }
 
     /// <summary>

@@ -117,7 +117,7 @@ public class BasicKeyVaultTests(bool async)
 
             var tenantId = subscription().tenantId
 
-            resource kv 'Microsoft.KeyVault/vaults@2019-09-01' = {
+            resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
               name: take('kv-${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
@@ -149,7 +149,7 @@ public class BasicKeyVaultTests(bool async)
               }
             }
 
-            resource secret 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
+            resource secret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
               name: 'myDarkNecessities'
               properties: {
                 value: secretValue

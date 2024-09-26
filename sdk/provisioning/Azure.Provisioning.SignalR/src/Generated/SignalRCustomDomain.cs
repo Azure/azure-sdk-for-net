@@ -65,7 +65,7 @@ public partial class SignalRCustomDomain : Resource
     /// <param name="resourceName">Name of the SignalRCustomDomain.</param>
     /// <param name="resourceVersion">Version of the SignalRCustomDomain.</param>
     public SignalRCustomDomain(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.SignalRService/signalR/customDomains", resourceVersion)
+        : base(resourceName, "Microsoft.SignalRService/signalR/customDomains", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _domainName = BicepValue<string>.DefineProperty(this, "DomainName", ["properties", "domainName"], isRequired: true);
@@ -74,6 +74,42 @@ public partial class SignalRCustomDomain : Resource
         _provisioningState = BicepValue<SignalRProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<SignalRService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported SignalRCustomDomain resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-04-01-preview.
+        /// </summary>
+        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
+
+        /// <summary>
+        /// 2024-03-01.
+        /// </summary>
+        public static readonly string V2024_03_01 = "2024-03-01";
+
+        /// <summary>
+        /// 2023-02-01.
+        /// </summary>
+        public static readonly string V2023_02_01 = "2023-02-01";
+
+        /// <summary>
+        /// 2022-02-01.
+        /// </summary>
+        public static readonly string V2022_02_01 = "2022-02-01";
+
+        /// <summary>
+        /// 2021-10-01.
+        /// </summary>
+        public static readonly string V2021_10_01 = "2021-10-01";
+
+        /// <summary>
+        /// 2020-05-01.
+        /// </summary>
+        public static readonly string V2020_05_01 = "2020-05-01";
     }
 
     /// <summary>

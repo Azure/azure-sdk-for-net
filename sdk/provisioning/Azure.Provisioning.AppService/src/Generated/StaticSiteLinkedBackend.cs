@@ -77,7 +77,7 @@ public partial class StaticSiteLinkedBackend : Resource
     /// <param name="resourceName">Name of the StaticSiteLinkedBackend.</param>
     /// <param name="resourceVersion">Version of the StaticSiteLinkedBackend.</param>
     public StaticSiteLinkedBackend(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/staticSites/linkedBackends", resourceVersion ?? "2020-06-01")
+        : base(resourceName, "Microsoft.Web/staticSites/linkedBackends", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _backendResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "BackendResourceId", ["properties", "backendResourceId"]);

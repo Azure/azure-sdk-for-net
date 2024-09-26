@@ -151,7 +151,7 @@ public partial class ContainerApp : Resource
     /// <param name="resourceName">Name of the ContainerApp.</param>
     /// <param name="resourceVersion">Version of the ContainerApp.</param>
     public ContainerApp(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.App/containerApps", resourceVersion ?? "2023-05-01")
+        : base(resourceName, "Microsoft.App/containerApps", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

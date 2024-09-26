@@ -67,7 +67,7 @@ public partial class CassandraCluster : Resource
     /// <param name="resourceName">Name of the CassandraCluster.</param>
     /// <param name="resourceVersion">Version of the CassandraCluster.</param>
     public CassandraCluster(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/cassandraClusters", resourceVersion ?? "2021-10-15")
+        : base(resourceName, "Microsoft.DocumentDB/cassandraClusters", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

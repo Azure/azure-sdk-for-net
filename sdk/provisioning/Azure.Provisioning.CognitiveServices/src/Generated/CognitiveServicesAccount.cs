@@ -89,7 +89,7 @@ public partial class CognitiveServicesAccount : Resource
     /// <param name="resourceName">Name of the CognitiveServicesAccount.</param>
     /// <param name="resourceVersion">Version of the CognitiveServicesAccount.</param>
     public CognitiveServicesAccount(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.CognitiveServices/accounts", resourceVersion ?? "2022-12-01")
+        : base(resourceName, "Microsoft.CognitiveServices/accounts", resourceVersion ?? "2024-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

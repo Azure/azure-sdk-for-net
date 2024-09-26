@@ -69,7 +69,7 @@ public class BasicEventHubsTests(bool async)
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource ns 'Microsoft.EventHub/namespaces@2017-04-01' = {
+            resource ns 'Microsoft.EventHub/namespaces@2024-01-01' = {
               name: take('ns-${uniqueString(resourceGroup().id)}', 256)
               location: location
               sku: {

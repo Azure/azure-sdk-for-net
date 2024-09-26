@@ -64,7 +64,7 @@ internal class SampleTests(bool async)
               }
             }
 
-            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
+            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
               name: 'default'
               parent: storage
             }
@@ -238,7 +238,7 @@ internal class SampleTests(bool async)
               scope: acr
             }
 
-            resource law 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
+            resource law 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
               name: take('law-${uniqueString(resourceGroup().id)}', 63)
               location: location
               properties: {
@@ -249,7 +249,7 @@ internal class SampleTests(bool async)
               tags: tags
             }
 
-            resource cae 'Microsoft.App/managedEnvironments@2023-05-01' = {
+            resource cae 'Microsoft.App/managedEnvironments@2024-03-01' = {
               name: take('cae${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {

@@ -96,7 +96,7 @@ public partial class ContainerAppManagedEnvironmentDaprComponent : Resource
     /// <param name="resourceName">Name of the ContainerAppManagedEnvironmentDaprComponent.</param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironmentDaprComponent.</param>
     public ContainerAppManagedEnvironmentDaprComponent(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.App/managedEnvironments/daprComponents", resourceVersion ?? "2023-05-01")
+        : base(resourceName, "Microsoft.App/managedEnvironments/daprComponents", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _componentType = BicepValue<string>.DefineProperty(this, "ComponentType", ["properties", "componentType"]);

@@ -66,7 +66,7 @@ public partial class EventGridNamespaceClientGroup : Resource
     /// <param name="resourceName">Name of the EventGridNamespaceClientGroup.</param>
     /// <param name="resourceVersion">Version of the EventGridNamespaceClientGroup.</param>
     public EventGridNamespaceClientGroup(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/clientGroups", resourceVersion)
+        : base(resourceName, "Microsoft.EventGrid/namespaces/clientGroups", resourceVersion ?? "2024-06-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
@@ -75,6 +75,17 @@ public partial class EventGridNamespaceClientGroup : Resource
         _provisioningState = BicepValue<ClientGroupProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<EventGridNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported EventGridNamespaceClientGroup resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-06-01-preview.
+        /// </summary>
+        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
     }
 
     /// <summary>

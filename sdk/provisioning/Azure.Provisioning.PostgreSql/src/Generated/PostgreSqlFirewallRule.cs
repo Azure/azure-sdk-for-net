@@ -61,7 +61,7 @@ public partial class PostgreSqlFirewallRule : Resource
     /// <param name="resourceName">Name of the PostgreSqlFirewallRule.</param>
     /// <param name="resourceVersion">Version of the PostgreSqlFirewallRule.</param>
     public PostgreSqlFirewallRule(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/firewallRules", resourceVersion)
+        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/firewallRules", resourceVersion ?? "2017-12-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _endIPAddress = BicepValue<IPAddress>.DefineProperty(this, "EndIPAddress", ["properties", "endIpAddress"], isRequired: true);
@@ -69,6 +69,22 @@ public partial class PostgreSqlFirewallRule : Resource
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<PostgreSqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported PostgreSqlFirewallRule resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2017-12-01-preview.
+        /// </summary>
+        public static readonly string V2017_12_01_preview = "2017-12-01-preview";
+
+        /// <summary>
+        /// 2017-12-01.
+        /// </summary>
+        public static readonly string V2017_12_01 = "2017-12-01";
     }
 
     /// <summary>

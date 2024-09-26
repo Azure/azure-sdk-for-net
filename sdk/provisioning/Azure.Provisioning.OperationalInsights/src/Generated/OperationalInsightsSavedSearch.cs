@@ -104,7 +104,7 @@ public partial class OperationalInsightsSavedSearch : Resource
     /// <param name="resourceName">Name of the OperationalInsightsSavedSearch.</param>
     /// <param name="resourceVersion">Version of the OperationalInsightsSavedSearch.</param>
     public OperationalInsightsSavedSearch(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.OperationalInsights/workspaces/savedSearches", resourceVersion)
+        : base(resourceName, "Microsoft.OperationalInsights/workspaces/savedSearches", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _category = BicepValue<string>.DefineProperty(this, "Category", ["properties", "category"], isRequired: true);
@@ -118,6 +118,42 @@ public partial class OperationalInsightsSavedSearch : Resource
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<OperationalInsightsWorkspace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported OperationalInsightsSavedSearch resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2023-09-01.
+        /// </summary>
+        public static readonly string V2023_09_01 = "2023-09-01";
+
+        /// <summary>
+        /// 2022-10-01.
+        /// </summary>
+        public static readonly string V2022_10_01 = "2022-10-01";
+
+        /// <summary>
+        /// 2021-06-01.
+        /// </summary>
+        public static readonly string V2021_06_01 = "2021-06-01";
+
+        /// <summary>
+        /// 2020-10-01.
+        /// </summary>
+        public static readonly string V2020_10_01 = "2020-10-01";
+
+        /// <summary>
+        /// 2020-08-01.
+        /// </summary>
+        public static readonly string V2020_08_01 = "2020-08-01";
+
+        /// <summary>
+        /// 2015-03-20.
+        /// </summary>
+        public static readonly string V2015_03_20 = "2015-03-20";
     }
 
     /// <summary>

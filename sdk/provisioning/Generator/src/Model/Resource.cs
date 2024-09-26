@@ -16,6 +16,7 @@ public class Resource(Specification spec, Type armType)
         spec: spec)
 {
     public string? ResourceType { get; set; }
+    public string? ResourceNamespace { get; set; }
     public string? DefaultResourceVersion { get; set; }
     public IList<string>? ResourceVersions { get; set; }
     public NameRequirements? NameRequirements { get; set; }
@@ -30,8 +31,8 @@ public class Resource(Specification spec, Type armType)
     {
         base.Lint();
         //if (NameRequirements is null) { Warn($"{GetTypeReference()} has no {nameof(NameRequirements)}."); }
-        //if (ResourceVersions is null) { Warn($"{GetTypeReference()} has no {nameof(ResourceVersions)}."); }
-        //else if (DefaultResourceVersion is null) { Warn($"{GetTypeReference()} has no {nameof(DefaultResourceVersion)}."); }
+        if (DefaultResourceVersion is null) { Warn($"{ResourceType} has no {nameof(DefaultResourceVersion)}."); }
+        else if (ResourceVersions is null) { Warn($"{ResourceType} has no {nameof(ResourceVersions)}."); }
     }
 
     public override void Generate()

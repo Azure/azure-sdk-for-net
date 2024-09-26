@@ -102,7 +102,7 @@ public partial class ManagedDatabaseSecurityAlertPolicy : Resource
     /// <param name="resourceName">Name of the ManagedDatabaseSecurityAlertPolicy.</param>
     /// <param name="resourceVersion">Version of the ManagedDatabaseSecurityAlertPolicy.</param>
     public ManagedDatabaseSecurityAlertPolicy(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/databases/securityAlertPolicies", resourceVersion)
+        : base(resourceName, "Microsoft.Sql/managedInstances/databases/securityAlertPolicies", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _disabledAlerts = BicepList<string>.DefineProperty(this, "DisabledAlerts", ["properties", "disabledAlerts"]);
@@ -116,6 +116,22 @@ public partial class ManagedDatabaseSecurityAlertPolicy : Resource
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<ManagedDatabase>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported ManagedDatabaseSecurityAlertPolicy resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
     }
 
     /// <summary>

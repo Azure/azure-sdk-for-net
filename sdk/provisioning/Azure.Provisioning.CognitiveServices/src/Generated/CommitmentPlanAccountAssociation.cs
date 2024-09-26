@@ -61,7 +61,7 @@ public partial class CommitmentPlanAccountAssociation : Resource
     /// <param name="resourceName">Name of the CommitmentPlanAccountAssociation.</param>
     /// <param name="resourceVersion">Version of the CommitmentPlanAccountAssociation.</param>
     public CommitmentPlanAccountAssociation(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.CognitiveServices/commitmentPlans/accountAssociations", resourceVersion)
+        : base(resourceName, "Microsoft.CognitiveServices/commitmentPlans/accountAssociations", resourceVersion ?? "2024-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _accountId = BicepValue<string>.DefineProperty(this, "AccountId", ["properties", "accountId"]);
@@ -69,6 +69,27 @@ public partial class CommitmentPlanAccountAssociation : Resource
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<CognitiveServicesCommitmentPlan>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported CommitmentPlanAccountAssociation resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-10-01.
+        /// </summary>
+        public static readonly string V2024_10_01 = "2024-10-01";
+
+        /// <summary>
+        /// 2023-05-01.
+        /// </summary>
+        public static readonly string V2023_05_01 = "2023-05-01";
+
+        /// <summary>
+        /// 2022-12-01.
+        /// </summary>
+        public static readonly string V2022_12_01 = "2022-12-01";
     }
 
     /// <summary>

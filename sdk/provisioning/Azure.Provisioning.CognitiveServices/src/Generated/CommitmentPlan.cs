@@ -86,7 +86,7 @@ public partial class CommitmentPlan : Resource
     /// <param name="resourceName">Name of the CommitmentPlan.</param>
     /// <param name="resourceVersion">Version of the CommitmentPlan.</param>
     public CommitmentPlan(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.CognitiveServices/accounts/commitmentPlans", resourceVersion)
+        : base(resourceName, "Microsoft.CognitiveServices/accounts/commitmentPlans", resourceVersion ?? "2024-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
@@ -98,6 +98,52 @@ public partial class CommitmentPlan : Resource
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<CognitiveServicesAccount>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported CommitmentPlan resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-10-01.
+        /// </summary>
+        public static readonly string V2024_10_01 = "2024-10-01";
+
+        /// <summary>
+        /// 2023-05-01.
+        /// </summary>
+        public static readonly string V2023_05_01 = "2023-05-01";
+
+        /// <summary>
+        /// 2022-12-01.
+        /// </summary>
+        public static readonly string V2022_12_01 = "2022-12-01";
+
+        /// <summary>
+        /// 2022-10-01.
+        /// </summary>
+        public static readonly string V2022_10_01 = "2022-10-01";
+
+        /// <summary>
+        /// 2022-03-01.
+        /// </summary>
+        public static readonly string V2022_03_01 = "2022-03-01";
+
+        /// <summary>
+        /// 2021-10-01.
+        /// </summary>
+        public static readonly string V2021_10_01 = "2021-10-01";
+
+        /// <summary>
+        /// 2021-04-30.
+        /// </summary>
+        public static readonly string V2021_04_30 = "2021-04-30";
+
+        /// <summary>
+        /// 2017-04-18.
+        /// </summary>
+        public static readonly string V2017_04_18 = "2017-04-18";
     }
 
     /// <summary>

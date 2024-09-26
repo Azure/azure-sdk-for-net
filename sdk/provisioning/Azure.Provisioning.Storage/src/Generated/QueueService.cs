@@ -55,7 +55,7 @@ public partial class QueueService : Resource
     /// <param name="resourceName">Name of the QueueService.</param>
     /// <param name="resourceVersion">Version of the QueueService.</param>
     public QueueService(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/queueServices", resourceVersion ?? "2023-01-01")
+        : base(resourceName, "Microsoft.Storage/storageAccounts/queueServices", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _corsRules = BicepList<StorageCorsRule>.DefineProperty(this, "CorsRules", ["properties", "cors", "corsRules"]);

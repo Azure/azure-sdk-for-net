@@ -74,7 +74,7 @@ public partial class NamespaceTopic : Resource
     /// <param name="resourceName">Name of the NamespaceTopic.</param>
     /// <param name="resourceVersion">Version of the NamespaceTopic.</param>
     public NamespaceTopic(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/topics", resourceVersion)
+        : base(resourceName, "Microsoft.EventGrid/namespaces/topics", resourceVersion ?? "2024-06-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _eventRetentionInDays = BicepValue<int>.DefineProperty(this, "EventRetentionInDays", ["properties", "eventRetentionInDays"]);
@@ -84,6 +84,17 @@ public partial class NamespaceTopic : Resource
         _provisioningState = BicepValue<NamespaceTopicProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<EventGridNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported NamespaceTopic resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-06-01-preview.
+        /// </summary>
+        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
     }
 
     /// <summary>

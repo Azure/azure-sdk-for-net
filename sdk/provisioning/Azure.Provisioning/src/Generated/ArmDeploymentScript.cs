@@ -61,7 +61,7 @@ public partial class ArmDeploymentScript : Resource
     /// <param name="resourceName">Name of the ArmDeploymentScript.</param>
     /// <param name="resourceVersion">Version of the ArmDeploymentScript.</param>
     public ArmDeploymentScript(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Resources/deploymentScripts", resourceVersion)
+        : base(resourceName, "Microsoft.Resources/deploymentScripts", resourceVersion ?? "2023-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -69,6 +69,22 @@ public partial class ArmDeploymentScript : Resource
         _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Supported ArmDeploymentScript resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
+        /// <summary>
+        /// 2020-10-01.
+        /// </summary>
+        public static readonly string V2020_10_01 = "2020-10-01";
     }
 
     /// <summary>

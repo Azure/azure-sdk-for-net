@@ -88,7 +88,7 @@ public partial class StaticSiteDatabaseConnection : Resource
     /// <param name="resourceName">Name of the StaticSiteDatabaseConnection.</param>
     /// <param name="resourceVersion">Version of the StaticSiteDatabaseConnection.</param>
     public StaticSiteDatabaseConnection(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/staticSites/databaseConnections", resourceVersion ?? "2020-06-01")
+        : base(resourceName, "Microsoft.Web/staticSites/databaseConnections", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionIdentity = BicepValue<string>.DefineProperty(this, "ConnectionIdentity", ["properties", "connectionIdentity"]);

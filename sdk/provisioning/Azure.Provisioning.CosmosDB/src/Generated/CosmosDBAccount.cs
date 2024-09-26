@@ -381,7 +381,7 @@ public partial class CosmosDBAccount : Resource
     /// <param name="resourceName">Name of the CosmosDBAccount.</param>
     /// <param name="resourceVersion">Version of the CosmosDBAccount.</param>
     public CosmosDBAccount(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts", resourceVersion ?? "2024-05-15-preview")
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

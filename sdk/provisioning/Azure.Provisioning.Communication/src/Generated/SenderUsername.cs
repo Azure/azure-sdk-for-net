@@ -72,7 +72,7 @@ public partial class SenderUsername : Resource
     /// <param name="resourceName">Name of the SenderUsername.</param>
     /// <param name="resourceVersion">Version of the SenderUsername.</param>
     public SenderUsername(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Communication/emailServices/domains/senderUsernames", resourceVersion)
+        : base(resourceName, "Microsoft.Communication/emailServices/domains/senderUsernames", resourceVersion ?? "2023-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["properties", "displayName"]);
@@ -82,6 +82,27 @@ public partial class SenderUsername : Resource
         _provisioningState = BicepValue<CommunicationServiceProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<CommunicationDomain>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported SenderUsername resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2023-06-01-preview.
+        /// </summary>
+        public static readonly string V2023_06_01_preview = "2023-06-01-preview";
+
+        /// <summary>
+        /// 2023-04-01.
+        /// </summary>
+        public static readonly string V2023_04_01 = "2023-04-01";
+
+        /// <summary>
+        /// 2023-03-31.
+        /// </summary>
+        public static readonly string V2023_03_31 = "2023-03-31";
     }
 
     /// <summary>

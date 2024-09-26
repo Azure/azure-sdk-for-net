@@ -77,7 +77,7 @@ public class BasicStorageTests(bool async)
               }
             }
 
-            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
+            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
               name: 'default'
               parent: storage
               dependsOn: [
@@ -240,7 +240,7 @@ public class BasicStorageTests(bool async)
               }
             }
 
-            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
+            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
               name: 'default'
               parent: storage
             }
@@ -290,7 +290,7 @@ public class BasicStorageTests(bool async)
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource sa 'Microsoft.Storage/storageAccounts@2023-01-01' = {
+            resource sa 'Microsoft.Storage/storageAccounts@2024-01-01' = {
               name: take('sa${uniqueString(resourceGroup().id)}', 24)
               kind: 'StorageV2'
               location: location
@@ -355,7 +355,7 @@ public class BasicStorageTests(bool async)
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource sa 'Microsoft.Storage/storageAccounts@2023-01-01' = {
+            resource sa 'Microsoft.Storage/storageAccounts@2024-01-01' = {
               name: take('sa${uniqueString(resourceGroup().id)}', 24)
               kind: 'StorageV2'
               location: location
@@ -367,7 +367,7 @@ public class BasicStorageTests(bool async)
               }
             }
 
-            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
+            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
               name: 'default'
               parent: sa
             }
@@ -430,7 +430,7 @@ public class BasicStorageTests(bool async)
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource sa 'Microsoft.Storage/storageAccounts@2023-01-01' = {
+            resource sa 'Microsoft.Storage/storageAccounts@2024-01-01' = {
               name: take('sa${uniqueString(resourceGroup().id)}', 24)
               kind: 'Storage'
               location: location
@@ -500,7 +500,7 @@ public class BasicStorageTests(bool async)
               }
             }
 
-            resource files 'Microsoft.Storage/storageAccounts/fileServices@2023-01-01' = {
+            resource files 'Microsoft.Storage/storageAccounts/fileServices@2024-01-01' = {
               name: 'default'
               parent: sa
             }

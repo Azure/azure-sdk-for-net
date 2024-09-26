@@ -88,7 +88,7 @@ public partial class EventHubsDisasterRecovery : Resource
     /// <param name="resourceName">Name of the EventHubsDisasterRecovery.</param>
     /// <param name="resourceVersion">Version of the EventHubsDisasterRecovery.</param>
     public EventHubsDisasterRecovery(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/disasterRecoveryConfigs", resourceVersion)
+        : base(resourceName, "Microsoft.EventHub/namespaces/disasterRecoveryConfigs", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _alternateName = BicepValue<string>.DefineProperty(this, "AlternateName", ["properties", "alternateName"]);
@@ -100,6 +100,32 @@ public partial class EventHubsDisasterRecovery : Resource
         _role = BicepValue<EventHubsDisasterRecoveryRole>.DefineProperty(this, "Role", ["properties", "role"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<EventHubsNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported EventHubsDisasterRecovery resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2024-01-01.
+        /// </summary>
+        public static readonly string V2024_01_01 = "2024-01-01";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+
+        /// <summary>
+        /// 2017-04-01.
+        /// </summary>
+        public static readonly string V2017_04_01 = "2017-04-01";
     }
 
     /// <summary>

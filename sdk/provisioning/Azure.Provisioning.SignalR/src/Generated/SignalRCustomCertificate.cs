@@ -71,7 +71,7 @@ public partial class SignalRCustomCertificate : Resource
     /// <param name="resourceName">Name of the SignalRCustomCertificate.</param>
     /// <param name="resourceVersion">Version of the SignalRCustomCertificate.</param>
     public SignalRCustomCertificate(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.SignalRService/signalR/customCertificates", resourceVersion)
+        : base(resourceName, "Microsoft.SignalRService/signalR/customCertificates", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _keyVaultBaseUri = BicepValue<Uri>.DefineProperty(this, "KeyVaultBaseUri", ["properties", "keyVaultBaseUri"], isRequired: true);
@@ -81,6 +81,47 @@ public partial class SignalRCustomCertificate : Resource
         _provisioningState = BicepValue<SignalRProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<SignalRService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported SignalRCustomCertificate resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-04-01-preview.
+        /// </summary>
+        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
+
+        /// <summary>
+        /// 2024-03-01.
+        /// </summary>
+        public static readonly string V2024_03_01 = "2024-03-01";
+
+        /// <summary>
+        /// 2023-02-01.
+        /// </summary>
+        public static readonly string V2023_02_01 = "2023-02-01";
+
+        /// <summary>
+        /// 2022-02-01.
+        /// </summary>
+        public static readonly string V2022_02_01 = "2022-02-01";
+
+        /// <summary>
+        /// 2021-10-01.
+        /// </summary>
+        public static readonly string V2021_10_01 = "2021-10-01";
+
+        /// <summary>
+        /// 2020-05-01.
+        /// </summary>
+        public static readonly string V2020_05_01 = "2020-05-01";
+
+        /// <summary>
+        /// 2018-10-01.
+        /// </summary>
+        public static readonly string V2018_10_01 = "2018-10-01";
     }
 
     /// <summary>

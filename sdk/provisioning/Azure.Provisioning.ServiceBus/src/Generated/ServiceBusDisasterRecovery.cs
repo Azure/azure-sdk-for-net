@@ -89,7 +89,7 @@ public partial class ServiceBusDisasterRecovery : Resource
     /// <param name="resourceName">Name of the ServiceBusDisasterRecovery.</param>
     /// <param name="resourceVersion">Version of the ServiceBusDisasterRecovery.</param>
     public ServiceBusDisasterRecovery(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs", resourceVersion)
+        : base(resourceName, "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _alternateName = BicepValue<string>.DefineProperty(this, "AlternateName", ["properties", "alternateName"]);
@@ -101,6 +101,27 @@ public partial class ServiceBusDisasterRecovery : Resource
         _role = BicepValue<ServiceBusDisasterRecoveryRole>.DefineProperty(this, "Role", ["properties", "role"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<ServiceBusNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported ServiceBusDisasterRecovery resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-01-01.
+        /// </summary>
+        public static readonly string V2024_01_01 = "2024-01-01";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+
+        /// <summary>
+        /// 2017-04-01.
+        /// </summary>
+        public static readonly string V2017_04_01 = "2017-04-01";
     }
 
     /// <summary>

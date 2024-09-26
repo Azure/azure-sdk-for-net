@@ -53,13 +53,39 @@ public partial class IPv6FirewallRule : Resource
     /// <param name="resourceName">Name of the IPv6FirewallRule.</param>
     /// <param name="resourceVersion">Version of the IPv6FirewallRule.</param>
     public IPv6FirewallRule(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/ipv6FirewallRules", resourceVersion)
+        : base(resourceName, "Microsoft.Sql/servers/ipv6FirewallRules", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _endIPv6Address = BicepValue<string>.DefineProperty(this, "EndIPv6Address", ["properties", "endIPv6Address"]);
         _startIPv6Address = BicepValue<string>.DefineProperty(this, "StartIPv6Address", ["properties", "startIPv6Address"]);
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _parent = ResourceReference<SqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported IPv6FirewallRule resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+
+        /// <summary>
+        /// 2014-04-01.
+        /// </summary>
+        public static readonly string V2014_04_01 = "2014-04-01";
+
+        /// <summary>
+        /// 2014-01-01.
+        /// </summary>
+        public static readonly string V2014_01_01 = "2014-01-01";
     }
 
     /// <summary>

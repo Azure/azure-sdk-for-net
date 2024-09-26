@@ -77,7 +77,7 @@ public partial class SqlServerDatabaseRestorePoint : Resource
     /// <param name="resourceName">Name of the SqlServerDatabaseRestorePoint.</param>
     /// <param name="resourceVersion">Version of the SqlServerDatabaseRestorePoint.</param>
     public SqlServerDatabaseRestorePoint(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/restorePoints", resourceVersion)
+        : base(resourceName, "Microsoft.Sql/servers/databases/restorePoints", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _earliestRestoreOn = BicepValue<DateTimeOffset>.DefineProperty(this, "EarliestRestoreOn", ["properties", "earliestRestoreDate"], isOutput: true);
@@ -88,6 +88,37 @@ public partial class SqlServerDatabaseRestorePoint : Resource
         _restorePointType = BicepValue<RestorePointType>.DefineProperty(this, "RestorePointType", ["properties", "restorePointType"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<SqlDatabase>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported SqlServerDatabaseRestorePoint resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+
+        /// <summary>
+        /// 2015-01-01.
+        /// </summary>
+        public static readonly string V2015_01_01 = "2015-01-01";
+
+        /// <summary>
+        /// 2014-04-01.
+        /// </summary>
+        public static readonly string V2014_04_01 = "2014-04-01";
+
+        /// <summary>
+        /// 2014-01-01.
+        /// </summary>
+        public static readonly string V2014_01_01 = "2014-01-01";
     }
 
     /// <summary>

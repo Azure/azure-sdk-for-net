@@ -81,7 +81,7 @@ public partial class LogAnalyticsQueryPack : Resource
     /// <param name="resourceName">Name of the LogAnalyticsQueryPack.</param>
     /// <param name="resourceVersion">Version of the LogAnalyticsQueryPack.</param>
     public LogAnalyticsQueryPack(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.OperationalInsights/queryPacks", resourceVersion)
+        : base(resourceName, "Microsoft.OperationalInsights/queryPacks", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -92,6 +92,22 @@ public partial class LogAnalyticsQueryPack : Resource
         _provisioningState = BicepValue<string>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _queryPackId = BicepValue<Guid>.DefineProperty(this, "QueryPackId", ["properties", "queryPackId"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Supported LogAnalyticsQueryPack resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2023-09-01.
+        /// </summary>
+        public static readonly string V2023_09_01 = "2023-09-01";
+
+        /// <summary>
+        /// 2019-09-01.
+        /// </summary>
+        public static readonly string V2019_09_01 = "2019-09-01";
     }
 
     /// <summary>

@@ -125,7 +125,7 @@ public class BasicAppServiceTests(bool async)
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
+            resource storage 'Microsoft.Storage/storageAccounts@2024-01-01' = {
               name: take('storage${uniqueString(resourceGroup().id)}', 24)
               kind: 'Storage'
               location: location

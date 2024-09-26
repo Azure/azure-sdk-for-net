@@ -74,7 +74,7 @@ public partial class OperationalInsightsLinkedService : Resource
     /// <param name="resourceName">Name of the OperationalInsightsLinkedService.</param>
     /// <param name="resourceVersion">Version of the OperationalInsightsLinkedService.</param>
     public OperationalInsightsLinkedService(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.OperationalInsights/workspaces/linkedServices", resourceVersion ?? "2020-08-01")
+        : base(resourceName, "Microsoft.OperationalInsights/workspaces/linkedServices", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _provisioningState = BicepValue<OperationalInsightsLinkedServiceEntityStatus>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"]);

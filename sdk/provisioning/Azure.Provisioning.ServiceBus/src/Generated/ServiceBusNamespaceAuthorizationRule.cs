@@ -62,7 +62,7 @@ public partial class ServiceBusNamespaceAuthorizationRule : Resource
     /// <param name="resourceName">Name of the ServiceBusNamespaceAuthorizationRule.</param>
     /// <param name="resourceVersion">Version of the ServiceBusNamespaceAuthorizationRule.</param>
     public ServiceBusNamespaceAuthorizationRule(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/AuthorizationRules", resourceVersion)
+        : base(resourceName, "Microsoft.ServiceBus/namespaces/AuthorizationRules", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _rights = BicepList<ServiceBusAccessRight>.DefineProperty(this, "Rights", ["properties", "rights"]);
@@ -70,6 +70,27 @@ public partial class ServiceBusNamespaceAuthorizationRule : Resource
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<ServiceBusNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported ServiceBusNamespaceAuthorizationRule resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-01-01.
+        /// </summary>
+        public static readonly string V2024_01_01 = "2024-01-01";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+
+        /// <summary>
+        /// 2017-04-01.
+        /// </summary>
+        public static readonly string V2017_04_01 = "2017-04-01";
     }
 
     /// <summary>

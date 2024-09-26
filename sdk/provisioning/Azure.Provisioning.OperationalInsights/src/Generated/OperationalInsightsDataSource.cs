@@ -87,7 +87,7 @@ public partial class OperationalInsightsDataSource : Resource
     /// <param name="resourceName">Name of the OperationalInsightsDataSource.</param>
     /// <param name="resourceVersion">Version of the OperationalInsightsDataSource.</param>
     public OperationalInsightsDataSource(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.OperationalInsights/workspaces/dataSources", resourceVersion ?? "2020-08-01")
+        : base(resourceName, "Microsoft.OperationalInsights/workspaces/dataSources", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<OperationalInsightsDataSourceKind>.DefineProperty(this, "Kind", ["kind"], isRequired: true);
