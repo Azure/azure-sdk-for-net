@@ -35,37 +35,29 @@ using OpenTelemetry.Metrics;
 ```
 
 In this example, we will log metrics and events to console, to Azure Monitor using Application Insights and will use the Open Telemetry protocol to log data into Aspire Dashboard see the [installation instructions](https://learn.microsoft.com/dotnet/aspire/fundamentals/dashboard/standalone?tabs=bash). Data ingestion into Aspire Dashboard does not require Azure account.
-Now we will define the `endpoint`, `credential` and `model`. To log metrics and events to [Application Insights](https://learn.microsoft.com/azure/azure-monitor/app/app-insights-overview) we will need to get the connection string. Please open the Azure portal, create the Application Insights resource you wish to use for storing the telemetry. After that open the main page and find the "Connection String". It generally will have the format similar to "InstrumentationKey=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx;IngestionEndpoint=https://region-x.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/;ApplicationId=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx". In our code we will use the connection string from environment variable.
+Now we will define the `endpoint`, `credential` and `model`. To log metrics and events to [Application Insights](https://learn.microsoft.com/azure/azure-monitor/app/app-insights-overview) we will need to get the connection string. Please open the Azure portal, create the Application Insights resource you wish to use for storing the telemetry. After that open the main page and find the "Connection String". It generally will have the format similar to "InstrumentationKey=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx;IngestionEndpoint=https://region-x.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/;ApplicationId=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx". By the connection string is being red from the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable.
 ```C# Snippet:Azure_AI_Inference_TelemetrySyncScenario_variables
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("MODEL_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("GITHUB_TOKEN"));
 var model = System.Environment.GetEnvironmentVariable("MODEL_NAME");
-var appInsightsConn = System.Environment.GetEnvironmentVariable("APP_INSIGHTS_CONNECTION_STR");
 ```
 
-In this example we will take these values from the environment variables. To get the telemetry, we will need to listen to [ActivitySource](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#enriching-generic-http-activities-with-azure-request-identifiers) named `Azure.AI.Inference.ChatCompletionsClient`. To allow telemetry collection we will create the listeners `tracerProvider`, which will listen to activity and `meterProvider`, listening to meter. We will add console exporters to both providers with the line `AddConsoleExporter()` and monitor exporter for Application Insights export: `AddAzureMonitorMetricExporter`. 
+In this example we will take these values from the environment variables. To get the telemetry, we will need to listen to [ActivitySource](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#enriching-generic-http-activities-with-azure-request-identifiers) named `Azure.AI.Inference.*`. To allow telemetry collection we will create the listeners `tracerProvider`, which will listen to activity and `meterProvider`, listening to meter. We will add console exporters to both providers with the line `AddConsoleExporter()` and monitor exporter for Application Insights export: `AddAzureMonitorMetricExporter`. 
 
 ```C# Snippet:Azure_AI_Inference_TelemetrySyncScenario_providers
-const string ACTIVITY = "Azure.AI.Inference.ChatCompletionsClient";
 using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-    .AddSource(ACTIVITY)
+    .AddSource("Azure.AI.Inference.*")
     .ConfigureResource(r => r.AddService("MyServiceName"))
     .AddConsoleExporter()
-    .AddAzureMonitorTraceExporter(options =>
-    {
-        options.ConnectionString = appInsightsConn;
-    })
+    .AddAzureMonitorTraceExporter()
     .AddOtlpExporter()
     .Build();
 
 using var meterProvider = Sdk.CreateMeterProviderBuilder()
-    .AddMeter(ACTIVITY)
+    .AddMeter("Azure.AI.Inference.*")
     .ConfigureResource(r => r.AddService("MyServiceName"))
     .AddConsoleExporter()
-    .AddAzureMonitorMetricExporter(options =>
-    {
-        options.ConnectionString = appInsightsConn;
-    })
+    .AddAzureMonitorMetricExporter()
     .AddOtlpExporter()
     .Build();
 ```
@@ -101,18 +93,21 @@ On Windows CMD
 ```
 set AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE=1
 set AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED=1
+set APPLICATIONINSIGHTS_CONNECTION_STRING=InstrumentationKey=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx;IngestionEndpoint=https://region-x.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/;ApplicationId=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
 On PowerShell
 ```
 $env:AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE="1"
 $env:AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED="1"
+$env:APPLICATIONINSIGHTS_CONNECTION_STRING="InstrumentationKey=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx;IngestionEndpoint=https://region-x.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/;ApplicationId=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 ```
 
 On Bash
 ```bash
 export AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE=1
 export AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED=1
+export APPLICATIONINSIGHTS_CONNECTION_STRING="InstrumentationKey=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx;IngestionEndpoint=https://region-x.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/;ApplicationId=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 ```
 
 Now run the application from IDE, or use

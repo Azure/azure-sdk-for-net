@@ -38,36 +38,27 @@ namespace Azure.AI.Inference.Tests.Samples
             var endpoint = new Uri(System.Environment.GetEnvironmentVariable("MODEL_ENDPOINT"));
             var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("GITHUB_TOKEN"));
             var model = System.Environment.GetEnvironmentVariable("MODEL_NAME");
-            var appInsightsConn = System.Environment.GetEnvironmentVariable("APP_INSIGHTS_CONNECTION_STR");
 #else
 
             var endpoint = new Uri(TestEnvironment.GithubEndpoint);
             var credential = new AzureKeyCredential(TestEnvironment.GithubToken);
             var model = "gpt-4o";
-            var appInsightsConn = TestEnvironment.TestApplicationInsights;
 #endif
             #endregion
             #region Snippet:Azure_AI_Inference_TelemetrySyncScenario_providers
-            const string ACTIVITY = "Azure.AI.Inference.ChatCompletionsClient";
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                .AddSource(ACTIVITY)
+                .AddSource("Azure.AI.Inference.*")
                 .ConfigureResource(r => r.AddService("MyServiceName"))
                 .AddConsoleExporter()
-                .AddAzureMonitorTraceExporter(options =>
-                {
-                    options.ConnectionString = appInsightsConn;
-                })
+                .AddAzureMonitorTraceExporter()
                 .AddOtlpExporter()
                 .Build();
 
             using var meterProvider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(ACTIVITY)
+                .AddMeter("Azure.AI.Inference.*")
                 .ConfigureResource(r => r.AddService("MyServiceName"))
                 .AddConsoleExporter()
-                .AddAzureMonitorMetricExporter(options =>
-                {
-                    options.ConnectionString = appInsightsConn;
-                })
+                .AddAzureMonitorMetricExporter()
                 .AddOtlpExporter()
                 .Build();
             #endregion
@@ -106,32 +97,24 @@ namespace Azure.AI.Inference.Tests.Samples
             var endpoint = new Uri(System.Environment.GetEnvironmentVariable("MODEL_ENDPOINT"));
             var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("GITHUB_TOKEN"));
             var model = System.Environment.GetEnvironmentVariable("MODEL_NAME");
-            var appInsightsConn = System.Environment.GetEnvironmentVariable("APP_INSIGHTS_CONNECTION_STR");
 #else
             var endpoint = new Uri(TestEnvironment.GithubEndpoint);
             var credential = new AzureKeyCredential(TestEnvironment.GithubToken);
             var model = "gpt-4o";
-            var appInsightsConn = TestEnvironment.TestApplicationInsights;
 #endif
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                .AddSource(OpenTelemetryConstants.ClientName)
+                .AddSource("Azure.AI.Inference.*")
                 .ConfigureResource(r => r.AddService("MyServiceName"))
                 .AddConsoleExporter()
-                .AddAzureMonitorTraceExporter(options =>
-                {
-                    options.ConnectionString = appInsightsConn;
-                })
+                .AddAzureMonitorTraceExporter()
                 .AddOtlpExporter()
                 .Build();
 
             using var meterProvider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(OpenTelemetryConstants.ClientName)
+                .AddMeter("Azure.AI.Inference.*")
                 .ConfigureResource(r => r.AddService("MyServiceName"))
                 .AddConsoleExporter()
-                .AddAzureMonitorMetricExporter(options =>
-                {
-                    options.ConnectionString = appInsightsConn;
-                })
+                .AddAzureMonitorMetricExporter()
                 .AddOtlpExporter()
                 .Build();
 
@@ -148,11 +131,7 @@ namespace Azure.AI.Inference.Tests.Samples
                     new ChatRequestSystemMessage("You are a helpful assistant."),
                     new ChatRequestUserMessage("What is the capital of France?"),
                 },
-                Model = model,
-                //AdditionalProperties = {
-                //    { "stream_options", BinaryData.FromObjectAsJson(
-                //        new Dictionary<string, bool>(){{ "include_usage", true } }) }
-                //}
+                Model = model
             };
 
             // Call the enpoint and output the response.
@@ -181,32 +160,24 @@ namespace Azure.AI.Inference.Tests.Samples
             var endpoint = new Uri(System.Environment.GetEnvironmentVariable("MODEL_ENDPOINT"));
             var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("GITHUB_TOKEN"));
             var model = System.Environment.GetEnvironmentVariable("MODEL_NAME");
-            var appInsightsConn = System.Environment.GetEnvironmentVariable("APP_INSIGHTS_CONNECTION_STR");
 #else
             var endpoint = new Uri(TestEnvironment.GithubEndpoint);
             var credential = new AzureKeyCredential(TestEnvironment.GithubToken);
             var model = "gpt-4o";
-            var appInsightsConn = TestEnvironment.TestApplicationInsights;
 #endif
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                .AddSource(OpenTelemetryConstants.ClientName)
+                .AddSource("Azure.AI.Inference.*")
                 .ConfigureResource(r => r.AddService("MyServiceName"))
                 .AddConsoleExporter()
-                .AddAzureMonitorTraceExporter(options =>
-                {
-                    options.ConnectionString = appInsightsConn;
-                })
+                .AddAzureMonitorTraceExporter()
                 .AddOtlpExporter()
                 .Build();
 
             using var meterProvider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(OpenTelemetryConstants.ClientName)
+                .AddMeter("Azure.AI.Inference.*")
                 .ConfigureResource(r => r.AddService("MyServiceName"))
                 .AddConsoleExporter()
-                .AddAzureMonitorMetricExporter(options =>
-                {
-                    options.ConnectionString = appInsightsConn;
-                })
+                .AddAzureMonitorMetricExporter()
                 .AddOtlpExporter()
                 .Build();
 
@@ -243,32 +214,24 @@ namespace Azure.AI.Inference.Tests.Samples
             var endpoint = new Uri(System.Environment.GetEnvironmentVariable("MODEL_ENDPOINT"));
             var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("GITHUB_TOKEN"));
             var model = System.Environment.GetEnvironmentVariable("MODEL_NAME");
-            var appInsightsConn = System.Environment.GetEnvironmentVariable("APP_INSIGHTS_CONNECTION_STR");
 #else
             var endpoint = new Uri(TestEnvironment.GithubEndpoint);
             var credential = new AzureKeyCredential(TestEnvironment.GithubToken);
             var model = "mistral-small";
-            var appInsightsConn = TestEnvironment.TestApplicationInsights;
 #endif
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                .AddSource(OpenTelemetryConstants.ClientName)
+                .AddSource("Azure.AI.Inference.*")
                 .ConfigureResource(r => r.AddService("MyServiceName"))
                 .AddConsoleExporter()
-                .AddAzureMonitorTraceExporter(options =>
-                {
-                    options.ConnectionString = appInsightsConn;
-                })
+                .AddAzureMonitorTraceExporter()
                 .AddOtlpExporter()
                 .Build();
 
             using var meterProvider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(OpenTelemetryConstants.ClientName)
+                .AddMeter("Azure.AI.Inference.*")
                 .ConfigureResource(r => r.AddService("MyServiceName"))
                 .AddConsoleExporter()
-                .AddAzureMonitorMetricExporter(options =>
-                {
-                    options.ConnectionString = appInsightsConn;
-                })
+                .AddAzureMonitorMetricExporter()
                 .AddOtlpExporter()
                 .Build();
 
