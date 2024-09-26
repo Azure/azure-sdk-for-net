@@ -4,7 +4,7 @@
 
 ### Bugs Fixed
 
-- Updated to version 4.65.0 of Microsoft.Identity.Client to address a bug preventing the use of alternate authority types such as dStS ([4927](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/issues/4927)).
+- Updated to version 4.65.0 of Microsoft.Identity.Client to address a bug preventing the use of alternate authority types such as dStS ([4927](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/issues/4927)) .
 
 ## 1.12.0 (2024-06-17)
 
