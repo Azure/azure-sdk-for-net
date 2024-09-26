@@ -5,6 +5,8 @@
 ### Features Added
 
 ### Breaking Changes
+- Changed `FromContainer(string containerUri, BlobStorageResourceContainerOptions options = default)` to `FromContainer(Uri containerUri, BlobStorageResourceContainerOptions options = default)`
+- Changed `FromBlob(string blobUri, BlobStorageResourceOptions options = default)` to `FromBlob(Uri blobUri, BlobStorageResourceOptions options = default)`
 
 ### Bugs Fixed
 - Fixed bug where using OAuth would not preserve source properties to destination properties.
@@ -26,8 +28,6 @@
     - `BlobStorageResourceOptions.CacheControl`
     - `BlobStorageResourceOptions.Metadata`
 - Changed `BlobStorageResourceContainerOptions.BlobType` from `Azure.Storage.Blobs.Models.BlobType` to `DataTransferProperty<Azure.Storage.Blobs.Models.BlobType>`
-- Changed `FromContainer(string containerUri, BlobStorageResourceContainerOptions options = default)` to `FromContainer(Uri containerUri, BlobStorageResourceContainerOptions options = default)`
-- Changed `FromBlob(string blobUri, BlobStorageResourceOptions options = default)` to `FromBlob(Uri blobUri, BlobStorageResourceOptions options = default)`
 
 ## 12.0.0-beta.4 (2023-12-05)
 
