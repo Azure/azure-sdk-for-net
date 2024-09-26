@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WritePropertyName("resources"u8);
             writer.WriteObjectValue(Resources, options);
             writer.WritePropertyName("correlationid"u8);
-            writer.WriteStringValue(Correlationid);
+            writer.WriteStringValue(CorrelationId);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
