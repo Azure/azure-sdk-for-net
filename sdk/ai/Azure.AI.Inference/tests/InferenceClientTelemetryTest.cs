@@ -147,7 +147,7 @@ namespace Azure.AI.Inference.Tests
             {
                 Assert.That(ex is RequestFailedException, $"The exception was of wrong type {ex.GetType()}");
                 actListener.ValidateErrorTag("400", ex.Message);
-                meterListener.VaidateDuration(_requestStreamingOptions.Model, endpoint, "Azure.RequestFailedException");
+                meterListener.VaidateDuration(_requestStreamingOptions.Model, endpoint, "400");
             }
         }
 

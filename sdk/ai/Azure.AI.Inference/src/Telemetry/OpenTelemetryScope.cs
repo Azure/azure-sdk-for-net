@@ -10,6 +10,7 @@ using Azure.Core;
 using static Azure.AI.Inference.Telemetry.OpenTelemetryInternalConstants;
 using static Azure.AI.Inference.Telemetry.OpenTelemetryConstants;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Azure.AI.Inference.Telemetry
 {
@@ -174,13 +175,13 @@ namespace Azure.AI.Inference.Telemetry
             if (!_enableTelemetry)
                 return;
             var errorType = type;
-            TagList tags = _commonTags;
-            tags.Add(ErrorTypeKey, errorType);
-            s_duration.Record(_duration.Elapsed.TotalSeconds, tags);
             if (exception is Azure.RequestFailedException requestFailed)
             {
                 errorType = requestFailed.Status.ToString();
             }
+            TagList tags = _commonTags;
+            tags.Add(ErrorTypeKey, errorType);
+            s_duration.Record(_duration.Elapsed.TotalSeconds, tags);
             _activity?.SetTag(ErrorTypeKey, errorType);
             _activity?.SetStatus(ActivityStatusCode.Error, message);
         }
@@ -239,7 +240,7 @@ namespace Azure.AI.Inference.Telemetry
                 }
             }
             // Set activity tags
-            if (!string.IsNullOrEmpty(recordedResponse.FinishReason))
+            if (recordedResponse.FinishReason.Count > 0)
             {
                 _activity?.SetTag(GenAiResponseFinishReasonsKey, recordedResponse.FinishReason);
             }

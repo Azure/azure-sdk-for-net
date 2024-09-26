@@ -6,6 +6,7 @@ using System;
 using Azure.AI.Inference.Telemetry;
 using NUnit.Framework;
 using System.Text.Json;
+using Microsoft.VisualBasic;
 
 namespace Azure.AI.Inference.Tests
 {
@@ -29,13 +30,18 @@ namespace Azure.AI.Inference.Tests
             ChatRole[] roles = new ChatRole[] {
                 ChatRole.System, ChatRole.User, ChatRole.Assistant
             };
+            CompletionsFinishReason?[] finishReasons = new CompletionsFinishReason?[]{
+                CompletionsFinishReason.ContentFiltered,
+                null,
+                CompletionsFinishReason.Stopped
+            };
             List<ChatChoice> choices = new();
             for (int i = 0; i < 3; i++)
             {
                 choices.Add(
                     new ChatChoice(
                     index: i,
-                    finishReason: i==2? CompletionsFinishReason.Stopped:CompletionsFinishReason.ContentFiltered,
+                    finishReason: finishReasons[i],
                     message: new ChatResponseMessage(
                         role: roles[i],
                         content: messages[i]
@@ -52,7 +58,13 @@ namespace Azure.AI.Inference.Tests
                 serializedAdditionalRawData: new Dictionary<string, BinaryData>());
             var response = new SingleRecordedResponse(completions, traceContent);
             Assert.AreEqual("4567", response.Id);
-            Assert.AreEqual(CompletionsFinishReason.Stopped.ToString(), response.FinishReason);
+            CollectionAssert.AreEqual(
+                new List<string>()
+                {
+                        CompletionsFinishReason.ContentFiltered.ToString(),
+                        CompletionsFinishReason.Stopped.ToString()
+                },
+                response.FinishReason);
             Assert.AreEqual("Phi2000", response.Model);
             Assert.AreEqual(15, response.CompletionTokens);
             Assert.AreEqual(10, response.PromptTokens);
@@ -75,8 +87,10 @@ namespace Azure.AI.Inference.Tests
                     Assert.False(dtData.ContainsKey("message"));
                 }
                 Assert.That(dtData.ContainsKey("finish_reason"));
-                string stop = i == 2 ? CompletionsFinishReason.Stopped.ToString() : CompletionsFinishReason.ContentFiltered.ToString();
-                Assert.AreEqual(dtData["finish_reason"].ToString(), stop);
+                if (finishReasons[i].HasValue)
+                    Assert.AreEqual(dtData["finish_reason"].ToString(), finishReasons[i].ToString());
+                else
+                    Assert.IsNull(dtData["finish_reason"]);
                 Assert.That(dtData.ContainsKey("index"));
                 Assert.AreEqual(dtData["index"].ToString(), i.ToString());
             }
@@ -147,7 +161,15 @@ namespace Azure.AI.Inference.Tests
                 serializedAdditionalRawData: new Dictionary<string, BinaryData>());
             var response = new SingleRecordedResponse(completions, traceContent);
             Assert.AreEqual("12", response.Id);
-            Assert.AreEqual(CompletionsFinishReason.ContentFiltered.ToString(), response.FinishReason);
+            CollectionAssert.AreEqual(
+                new List<string>()
+                {
+                    CompletionsFinishReason.ToolCalls.ToString(),
+                    CompletionsFinishReason.ToolCalls.ToString(),
+                    CompletionsFinishReason.ContentFiltered.ToString()
+                },
+                response.FinishReason);
+
             Assert.AreEqual("Phi2001", response.Model);
             Assert.AreEqual(15, response.CompletionTokens);
             Assert.AreEqual(10, response.PromptTokens);
@@ -196,7 +218,7 @@ namespace Azure.AI.Inference.Tests
                 }
                 Assert.That(dtData.ContainsKey("finish_reason"));
                 string stop = i == 2 ? CompletionsFinishReason.ContentFiltered.ToString() : CompletionsFinishReason.ToolCalls.ToString();
-                Assert.AreEqual(dtData["finish_reason"].ToString(), stop);
+                Assert.AreEqual(stop, dtData["finish_reason"].ToString());
                 Assert.That(dtData.ContainsKey("index"));
                 Assert.AreEqual(dtData["index"].ToString(), i.ToString());
             }

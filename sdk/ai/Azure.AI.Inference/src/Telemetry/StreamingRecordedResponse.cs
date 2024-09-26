@@ -32,7 +32,7 @@ namespace Azure.AI.Inference.Telemetry
             Id = item.Id;
             if (item.FinishReason != null)
             {
-                FinishReason = item.FinishReason.ToString();
+                FinishReason.Add(item.FinishReason.ToString());
             }
             if (item.Usage != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.AI.Inference.Telemetry
         public override string[] GetSerializedCompletions() {
             
             var evt = new Dictionary<string, object> {
-                {"finish_reason", FinishReason },
+                {"finish_reason", FinishReason.Count > 0 ? FinishReason[0].ToString() : null },
                 {"index", 0},
             };
             var messageDict = new Dictionary<string, object>();

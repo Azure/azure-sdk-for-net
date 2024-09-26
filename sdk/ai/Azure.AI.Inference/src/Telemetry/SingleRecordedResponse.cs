@@ -28,11 +28,13 @@ namespace Azure.AI.Inference.Telemetry
             // For ChatCompletions we do not have single finish reason
             // we will take it from the last chat choice.
             if (response.Choices.Count > 0)
-                FinishReason = response.Choices[response.Choices.Count - 1].FinishReason.ToString();
+            
             foreach (ChatChoice choice in response.Choices)
             {
+                if (choice.FinishReason != null)
+                    FinishReason.Add(choice.FinishReason.ToString());
                 var evt = new Dictionary<string, object> {
-                    {"finish_reason", choice.FinishReason.ToString() ?? "" },
+                    {"finish_reason", choice.FinishReason?.ToString() },
                     {"index", choice.Index},
                 };
                 var messageDict = new Dictionary<string, object>();

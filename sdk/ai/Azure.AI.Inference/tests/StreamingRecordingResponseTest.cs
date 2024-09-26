@@ -17,13 +17,14 @@ namespace Azure.AI.Inference.Tests
             [Values(true, false)] bool traceContent
             )
         {
+            CompletionsFinishReason? nullVal = null;
             StreamingRecordedResponse resp = new(traceContent);
             resp.Update(new(
                 id: "1",
                 model: "gpt-100o",
                 created: DateTimeOffset.Now,
                 role: ChatRole.Assistant,
-                finishReason: CompletionsFinishReason.Stopped,
+                finishReason: nullVal,
                 contentUpdate: "First"
             ));
             resp.Update(new(
@@ -31,7 +32,7 @@ namespace Azure.AI.Inference.Tests
                 model: "gpt-100o",
                 created: DateTimeOffset.Now,
                 role: ChatRole.Assistant,
-                finishReason: CompletionsFinishReason.Stopped,
+                finishReason: nullVal,
                 contentUpdate: " second"
             ));
             resp.Update(new(
@@ -56,8 +57,10 @@ namespace Azure.AI.Inference.Tests
                     choices: new List<StreamingChatChoiceUpdate>()
                 ));
             }
-
-            Assert.AreEqual(resp.FinishReason, CompletionsFinishReason.Stopped.ToString());
+            CollectionAssert.AreEqual(
+                new List<string>() { CompletionsFinishReason.Stopped.ToString() },
+                resp.FinishReason
+                );
             Assert.AreEqual(resp.Model, "gpt-100o");
             Assert.AreEqual(resp.Id, withUsage?"4":"3");
 
@@ -89,12 +92,17 @@ namespace Azure.AI.Inference.Tests
         public void TestWithTools([Values(true, false)] bool traceContent)
         {
             StreamingRecordedResponse resp = new(traceContent);
-            resp.Update(getFuncPart("first", "func1", "{\"arg1\": 42}"));
-            resp.Update(getFuncPart(" second", "func2", "{\"arg1\": 42,"));
-            resp.Update(getFuncPart(" third", "func2", "\"arg2\": 43}"));
+            resp.Update(getFuncPart("first", "func1", "{\"arg1\": 42}", false));
+            resp.Update(getFuncPart(" second", "func2", "{\"arg1\": 42,", false));
+            resp.Update(getFuncPart(" third", "func2", "\"arg2\": 43}", true));
 
             Assert.AreEqual(resp.Id, "1");
-            Assert.AreEqual(resp.FinishReason, CompletionsFinishReason.ToolCalls.ToString());
+            CollectionAssert.AreEqual(
+                new List<string>() {
+                    CompletionsFinishReason.ToolCalls.ToString(),
+                },
+                resp.FinishReason
+                );
             Assert.AreEqual(resp.Model, "gpt-100o");
 
             string[] strSerialized = resp.GetSerializedCompletions();
@@ -131,7 +139,7 @@ namespace Azure.AI.Inference.Tests
         }
 
         #region Helpers
-        private static StreamingChatCompletionsUpdate getFuncPart(string content, string functionName, string argsUpdate)
+        private static StreamingChatCompletionsUpdate getFuncPart(string content, string functionName, string argsUpdate, bool isLast)
         {
             Dictionary<string, string> dtCalls =  new()
             {
@@ -140,13 +148,16 @@ namespace Azure.AI.Inference.Tests
             };
             Dictionary<string, object> dtToolCall=new() { { "function", dtCalls } };
 
+            CompletionsFinishReason? finishReason = null;
+            if (isLast)
+                finishReason = CompletionsFinishReason.ToolCalls;
             return new StreamingChatCompletionsUpdate(
                 id: "1",
                 model: "gpt-100o",
                 created: DateTimeOffset.Now,
                 role: ChatRole.Assistant,
                 contentUpdate: content,
-                finishReason: CompletionsFinishReason.ToolCalls,
+                finishReason: finishReason,
                 functionName: functionName,
                 functionArgumentsUpdate: argsUpdate,
                 toolCallUpdate: StreamingToolCallUpdate.DeserializeStreamingToolCallUpdate(
