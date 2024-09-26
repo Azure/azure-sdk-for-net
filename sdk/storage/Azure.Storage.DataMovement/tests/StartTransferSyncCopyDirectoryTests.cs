@@ -888,7 +888,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlobDirectoryToDirectoryAsync_DefaultProperties()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
             string sourceBlobPrefix = "sourceFolder";
             string destBlobPrefix = "destFolder";
 
@@ -924,7 +925,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlobDirectoryToDirectoryAsync_PropertiesPreserve()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
             string sourceBlobPrefix = "sourceFolder";
             string destBlobPrefix = "destFolder";
 
@@ -969,7 +971,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlobDirectoryToDirectoryAsync_PropertiesNoPreserve()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
             string sourceBlobPrefix = "sourceFolder";
             string destBlobPrefix = "destFolder";
 
@@ -1045,7 +1048,7 @@ namespace Azure.Storage.DataMovement.Tests
                 Assert.IsNull(destinationProperties.ContentEncoding);
                 Assert.IsNull(destinationProperties.ContentLanguage);
                 Assert.IsNull(destinationProperties.CacheControl);
-                Assert.AreEqual(AccessTier.Hot.ToString(), destinationProperties.AccessTier);
+                Assert.AreEqual(DefaultAccessTier.ToString(), destinationProperties.AccessTier);  // AccessTier is always preserved
                 Assert.Zero(destinationProperties.TagCount);
             }
         }
@@ -1055,7 +1058,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlobDirectoryToDirectoryAsync_SetProperties()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
             string sourceBlobPrefix = "sourceFolder";
             string destBlobPrefix = "destFolder";
 
