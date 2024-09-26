@@ -3,7 +3,8 @@
     <LangVersion>12</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
+    <ProjectReference Include="..\..\..\..\sdk\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
     <ProjectReference Include="..\src\Azure.Provisioning.CloudMachine.csproj" />
+    <PackageReference Include="System.Text.Json" VersionOverride="9.0.0-rc.1.24431.7"/>
   </ItemGroup>
 </Project>
