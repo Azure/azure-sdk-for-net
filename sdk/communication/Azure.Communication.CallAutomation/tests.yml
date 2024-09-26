@@ -5,7 +5,6 @@ extends:
   parameters:
     ServiceDirectory: communication
     Project: Azure.Communication.CallAutomation
-    UseFederatedAuth: true
     CloudConfig:
       Public:
         ServiceConnection: azure-sdk-tests
