@@ -20,56 +20,27 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         void IJsonModel<DataFlowSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DataFlowSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataFlowSource)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(SchemaLinkedService))
             {
                 writer.WritePropertyName("schemaLinkedService"u8);
                 JsonSerializer.Serialize(writer, SchemaLinkedService);
             }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(Dataset))
-            {
-                writer.WritePropertyName("dataset"u8);
-                writer.WriteObjectValue(Dataset, options);
-            }
-            if (Optional.IsDefined(LinkedService))
-            {
-                writer.WritePropertyName("linkedService"u8);
-                JsonSerializer.Serialize(writer, LinkedService);
-            }
-            if (Optional.IsDefined(Flowlet))
-            {
-                writer.WritePropertyName("flowlet"u8);
-                writer.WriteObjectValue(Flowlet, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         DataFlowSource IJsonModel<DataFlowSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

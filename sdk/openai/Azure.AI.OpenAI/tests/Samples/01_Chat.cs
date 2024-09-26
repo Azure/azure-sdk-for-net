@@ -27,7 +27,7 @@ public partial class AzureOpenAISamples
             [
                 // System messages represent instructions or other guidance about how the assistant should behave
                 new SystemChatMessage("You are a helpful assistant that talks like a pirate."),
-                // User messages represent user input, whether historical or the most recen tinput
+                // User messages represent user input, whether historical or the most recent input
                 new UserChatMessage("Hi, can you help me?"),
                 // Assistant messages in a request represent conversation history for responses
                 new AssistantChatMessage("Arrr! Of course, me hearty! What can I do for ye?"),
@@ -276,7 +276,9 @@ public partial class AzureOpenAISamples
                 functionArgumentBuildersByIndex[indexToIdPair.Key].ToString()));
         }
 
-        conversationMessages.Add(new AssistantChatMessage(toolCalls, contentBuilder.ToString()));
+        var assistantChatMessage = new AssistantChatMessage(toolCalls);
+        assistantChatMessage.Content.Add(ChatMessageContentPart.CreateTextPart(contentBuilder.ToString()));
+        conversationMessages.Add(assistantChatMessage);
 
         // Placeholder: each tool call must be resolved, like in the non-streaming case
         string GetToolCallOutput(ChatToolCall toolCall) => null;
