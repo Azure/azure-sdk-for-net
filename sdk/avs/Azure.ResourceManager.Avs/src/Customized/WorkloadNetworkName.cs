@@ -13,24 +13,31 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> The WorkloadNetworkName. </summary>
     public readonly partial struct WorkloadNetworkName : IEquatable<WorkloadNetworkName>
     {
+        [EditorBrowsable(EditorBrowsableState.Never)]
         private readonly string _value;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public WorkloadNetworkName(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        [EditorBrowsable(EditorBrowsableState.Never)]
         private const string DefaultValue = "default";
 
         /// <summary> default. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static WorkloadNetworkName Default { get; } = new WorkloadNetworkName(DefaultValue);
         /// <summary> Determines if two <see cref="WorkloadNetworkName"/> values are the same. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static bool operator ==(WorkloadNetworkName left, WorkloadNetworkName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkName"/> values are not the same. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static bool operator !=(WorkloadNetworkName left, WorkloadNetworkName right) => !left.Equals(right);
         /// <summary> Converts a string to a <see cref="WorkloadNetworkName"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static implicit operator WorkloadNetworkName(string value) => new WorkloadNetworkName(value);
 
         /// <inheritdoc />

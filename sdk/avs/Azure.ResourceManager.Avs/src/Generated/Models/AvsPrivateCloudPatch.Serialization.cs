@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -93,6 +98,11 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(DnsZoneType))
+            {
+                writer.WritePropertyName("dnsZoneType"u8);
+                writer.WriteStringValue(DnsZoneType.Value.ToString());
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -132,6 +142,7 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
+            AvsSku sku = default;
             ManagedServiceIdentity identity = default;
             AvsManagementCluster managementCluster = default;
             InternetConnectivityState? internet = default;
@@ -139,6 +150,7 @@ namespace Azure.ResourceManager.Avs.Models
             PrivateCloudAvailabilityProperties availability = default;
             CustomerManagedEncryption encryption = default;
             IList<string> extendedNetworkBlocks = default;
+            DnsZoneType? dnsZoneType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,6 +167,15 @@ namespace Azure.ResourceManager.Avs.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = AvsSku.DeserializeAvsSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -239,6 +260,15 @@ namespace Azure.ResourceManager.Avs.Models
                             extendedNetworkBlocks = array;
                             continue;
                         }
+                        if (property0.NameEquals("dnsZoneType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dnsZoneType = new DnsZoneType(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -250,6 +280,7 @@ namespace Azure.ResourceManager.Avs.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new AvsPrivateCloudPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
                 identity,
                 managementCluster,
                 internet,
@@ -257,6 +288,7 @@ namespace Azure.ResourceManager.Avs.Models
                 availability,
                 encryption,
                 extendedNetworkBlocks ?? new ChangeTrackingList<string>(),
+                dnsZoneType,
                 serializedAdditionalRawData);
         }
 

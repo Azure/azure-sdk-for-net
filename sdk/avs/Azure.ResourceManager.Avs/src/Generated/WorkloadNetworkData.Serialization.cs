@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
@@ -36,6 +37,14 @@ namespace Azure.ResourceManager.Avs
             }
 
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            writer.WriteEndObject();
         }
 
         WorkloadNetworkData IJsonModel<WorkloadNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -62,6 +71,7 @@ namespace Azure.ResourceManager.Avs
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            WorkloadNetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,13 +100,40 @@ namespace Azure.ResourceManager.Avs
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new WorkloadNetworkProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WorkloadNetworkData(id, name, type, systemData, serializedAdditionalRawData);
+            return new WorkloadNetworkData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkData>.Write(ModelReaderWriterOptions options)

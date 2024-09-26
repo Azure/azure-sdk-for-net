@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.Avs
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -76,6 +81,7 @@ namespace Azure.ResourceManager.Avs
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            CloudLinkProvisioningState? provisioningState = default;
             AvsCloudLinkStatus? status = default;
             ResourceIdentifier linkedCloud = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -115,6 +121,15 @@ namespace Azure.ResourceManager.Avs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new CloudLinkProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -147,6 +162,7 @@ namespace Azure.ResourceManager.Avs
                 name,
                 type,
                 systemData,
+                provisioningState,
                 status,
                 linkedCloud,
                 serializedAdditionalRawData);
