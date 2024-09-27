@@ -210,7 +210,7 @@ namespace Azure.Storage.DataMovement
             cancellationToken = LinkCancellation(cancellationToken);
             if (_checkpointer is DisabledTransferCheckpointer)
             {
-                throw Errors.CheckpointerDisabled();
+                throw Errors.CheckpointerDisabledMethod("ResumeAllTransfersAsync");
             }
 
             List<DataTransfer> transfers = new();
@@ -241,7 +241,7 @@ namespace Azure.Storage.DataMovement
             Argument.AssertNotNullOrWhiteSpace(transferId, nameof(transferId));
             if (_checkpointer is DisabledTransferCheckpointer)
             {
-                throw Errors.CheckpointerDisabled();
+                throw Errors.CheckpointerDisabledMethod("ResumeTransferAsync");
             }
 
             if (!await _checkpointer.IsResumableAsync(transferId, cancellationToken).ConfigureAwait(false))

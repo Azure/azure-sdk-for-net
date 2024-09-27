@@ -12,12 +12,12 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Whether checkpointing should be enabled or not.
         /// </summary>
-        public bool Enabled { get; private set; }
+        internal bool Enabled { get; private set; }
 
         /// <summary>
         /// The folder where the checkpoint information will be stored.
         /// </summary>
-        public string CheckpointerPath { get; private set; }
+        internal string CheckpointerPath { get; private set; }
 
         /// <summary>
         /// Sets the checkpoint options to disable transfer checkpointing.

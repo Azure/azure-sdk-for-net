@@ -131,5 +131,8 @@ namespace Azure.Storage
 
         public static InvalidOperationException CheckpointerDisabled()
             => new InvalidOperationException("The transfer checkpointer is disabled.");
+
+        public static InvalidOperationException CheckpointerDisabledMethod(string method)
+            => new InvalidOperationException($"Unable to perform {method}. The transfer checkpointer is disabled.");
     }
 }

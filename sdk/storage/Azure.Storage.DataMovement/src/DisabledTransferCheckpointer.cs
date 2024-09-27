@@ -13,12 +13,20 @@ namespace Azure.Storage.DataMovement
     {
         public DisabledTransferCheckpointer() { }
 
-        public override Task AddNewJobAsync(string transferId, StorageResource source, StorageResource destination, CancellationToken cancellationToken = default)
+        public override Task AddNewJobAsync(
+            string transferId,
+            StorageResource source,
+            StorageResource destination,
+            CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
 
-        public override Task AddNewJobPartAsync(string transferId, int partNumber, Stream headerStream, CancellationToken cancellationToken = default)
+        public override Task AddNewJobPartAsync(
+            string transferId,
+            int partNumber,
+            Stream headerStream,
+            CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
@@ -33,22 +41,38 @@ namespace Azure.Storage.DataMovement
             return Task.FromResult(new List<string>());
         }
 
-        public override Task<Stream> ReadJobPartPlanFileAsync(string transferId, int partNumber, int offset, int length, CancellationToken cancellationToken = default)
+        public override Task<Stream> ReadJobPartPlanFileAsync(
+            string transferId,
+            int partNumber,
+            int offset,
+            int length,
+            CancellationToken cancellationToken = default)
         {
             throw Errors.CheckpointerDisabled();
         }
 
-        public override Task<Stream> ReadJobPlanFileAsync(string transferId, int offset, int length, CancellationToken cancellationToken = default)
+        public override Task<Stream> ReadJobPlanFileAsync(
+            string transferId,
+            int offset,
+            int length,
+            CancellationToken cancellationToken = default)
         {
             throw Errors.CheckpointerDisabled();
         }
 
-        public override Task SetJobPartTransferStatusAsync(string transferId, int partNumber, DataTransferStatus status, CancellationToken cancellationToken = default)
+        public override Task SetJobPartTransferStatusAsync(
+            string transferId,
+            int partNumber,
+            DataTransferStatus status,
+            CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
 
-        public override Task SetJobTransferStatusAsync(string transferId, DataTransferStatus status, CancellationToken cancellationToken = default)
+        public override Task SetJobTransferStatusAsync(
+            string transferId,
+            DataTransferStatus status,
+            CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
@@ -58,7 +82,13 @@ namespace Azure.Storage.DataMovement
             return Task.FromResult(false);
         }
 
-        public override Task WriteToJobPlanFileAsync(string transferId, int fileOffset, byte[] buffer, int bufferOffset, int length, CancellationToken cancellationToken = default)
+        public override Task WriteToJobPlanFileAsync(
+            string transferId,
+            int fileOffset,
+            byte[] buffer,
+            int bufferOffset,
+            int length,
+            CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }

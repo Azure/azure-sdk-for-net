@@ -225,8 +225,6 @@ namespace Azure.Storage.DataMovement
     public partial class TransferCheckpointStoreOptions
     {
         internal TransferCheckpointStoreOptions() { }
-        public string CheckpointerPath { get { throw null; } }
-        public bool Enabled { get { throw null; } }
         public static Azure.Storage.DataMovement.TransferCheckpointStoreOptions Disabled() { throw null; }
         public static Azure.Storage.DataMovement.TransferCheckpointStoreOptions Local(string localCheckpointerPath) { throw null; }
     }
