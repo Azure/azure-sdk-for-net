@@ -11,12 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity"/>
-    <PackageReference Include="Azure.Messaging.ServiceBus"/>
-    <PackageReference Include="Azure.Provisioning.Storage" VersionOverride="1.0.0-alpha.20240918.3" />
-    <PackageReference Include="Azure.Provisioning.ServiceBus" VersionOverride="1.0.0-alpha.20240918.3" />
-    <PackageReference Include="Azure.Provisioning.EventGrid" VersionOverride="1.0.0-alpha.20240918.1" />
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.Messaging.ServiceBus" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" VersionOverride="8.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Provisioning.EventGrid\src\Azure.Provisioning.EventGrid.csproj" />
+    <ProjectReference Include="..\..\Azure.Provisioning.ServiceBus\src\Azure.Provisioning.ServiceBus.csproj" />
+    <ProjectReference Include="..\..\Azure.Provisioning.Storage\src\Azure.Provisioning.Storage.csproj" />
+  </ItemGroup>
 </Project>
