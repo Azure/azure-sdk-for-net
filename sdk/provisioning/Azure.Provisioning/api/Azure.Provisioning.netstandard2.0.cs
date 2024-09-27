@@ -95,7 +95,7 @@ namespace Azure.Provisioning
         public string? TargetScope { get { throw null; } set { } }
         public virtual void Add(Azure.Provisioning.Primitives.Provisionable resource) { }
         public virtual Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile() { throw null; }
         protected internal System.Collections.Generic.IDictionary<string, System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement>> CompileModules(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
         public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> GetResources() { throw null; }
         public virtual void Remove(Azure.Provisioning.Primitives.Provisionable resource) { }
@@ -113,14 +113,14 @@ namespace Azure.Provisioning
     {
         public ProvisioningOutput(string name, Azure.Provisioning.Expressions.Expression type) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>)) { }
         public ProvisioningOutput(string name, System.Type type) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>)) { }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile() { throw null; }
     }
     public partial class ProvisioningParameter : Azure.Provisioning.ProvisioningVariable
     {
         public ProvisioningParameter(string name, Azure.Provisioning.Expressions.Expression type) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>)) { }
         public ProvisioningParameter(string name, System.Type type) : base (default(string), default(Azure.Provisioning.Expressions.Expression), default(Azure.Provisioning.BicepValue<object>)) { }
         public bool IsSecure { get { throw null; } set { } }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile() { throw null; }
     }
     public partial class ProvisioningPlan
     {
@@ -138,7 +138,7 @@ namespace Azure.Provisioning
         public Azure.Provisioning.Expressions.Expression BicepType { get { throw null; } }
         public string? Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<object> Value { get { throw null; } set { } }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile() { throw null; }
     }
 }
 namespace Azure.Provisioning.Authorization
@@ -764,7 +764,7 @@ namespace Azure.Provisioning.Primitives
     {
         public BicepLiteral(string resourceName, params Azure.Provisioning.Expressions.Statement[] statements) : base (default(string)) { }
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.Statement> Statements { get { throw null; } }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile() { throw null; }
     }
     public partial class BicepValueReference
     {
@@ -813,7 +813,7 @@ namespace Azure.Provisioning.Primitives
         public Azure.Provisioning.BicepDictionary<object> Parameters { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Path { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Scope { get { throw null; } set { } }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile() { throw null; }
         protected internal override void Validate(Azure.Provisioning.ProvisioningContext? context = null) { }
     }
     public abstract partial class NamedProvisioningConstruct : Azure.Provisioning.Primitives.ProvisioningConstruct
@@ -834,7 +834,7 @@ namespace Azure.Provisioning.Primitives
     public abstract partial class Provisionable
     {
         internal Provisionable() { }
-        protected internal abstract System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile(Azure.Provisioning.ProvisioningContext? context = null);
+        protected internal abstract System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile();
         public virtual System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> GetResources() { throw null; }
         protected internal virtual void Resolve(Azure.Provisioning.ProvisioningContext? context = null) { }
         protected internal virtual void Validate(Azure.Provisioning.ProvisioningContext? context = null) { }
@@ -844,7 +844,7 @@ namespace Azure.Provisioning.Primitives
         protected ProvisioningConstruct() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.Infrastructure? ParentInfrastructure { get { throw null; } }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override System.Collections.Generic.IEnumerable<Azure.Provisioning.Primitives.Provisionable> GetResources() { throw null; }
         protected internal void OverrideWithExpression(Azure.Provisioning.Expressions.Expression reference) { }
@@ -861,7 +861,7 @@ namespace Azure.Provisioning.Primitives
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
         public string? ResourceVersion { get { throw null; } set { } }
         public virtual Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
-        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
+        protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.Statement> Compile() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         protected internal override void Validate(Azure.Provisioning.ProvisioningContext? context = null) { }
