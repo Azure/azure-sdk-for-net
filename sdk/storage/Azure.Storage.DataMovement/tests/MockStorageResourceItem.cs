@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    internal class MockStorageResource : StorageResourceItem
+    internal class MockStorageResourceItem : StorageResourceItem
     {
         private readonly Uri _uri;
         private readonly int _failAfter;
@@ -26,7 +26,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override long? Length { get; }
 
-        private MockStorageResource(long? length, Uri uri, int failAfter, DataTransferOrder transferOrder = DataTransferOrder.Sequential)
+        private MockStorageResourceItem(long? length, Uri uri, int failAfter, DataTransferOrder transferOrder = DataTransferOrder.Sequential)
         {
             Length = length;
             _uri = uri ?? new Uri("https://example.com");
@@ -34,14 +34,14 @@ namespace Azure.Storage.DataMovement.Tests
             TransferType = transferOrder;
         }
 
-        public static MockStorageResource MakeSourceResource(long length, Uri uri = default, int failAfter = int.MaxValue)
+        public static MockStorageResourceItem MakeSourceResource(long length, Uri uri = default, int failAfter = int.MaxValue)
         {
-            return new MockStorageResource(length, uri, failAfter);
+            return new MockStorageResourceItem(length, uri, failAfter);
         }
 
-        public static MockStorageResource MakeDestinationResource(Uri uri = default, DataTransferOrder transferOrder = DataTransferOrder.Sequential, int failAfter = int.MaxValue)
+        public static MockStorageResourceItem MakeDestinationResource(Uri uri = default, DataTransferOrder transferOrder = DataTransferOrder.Sequential, int failAfter = int.MaxValue)
         {
-            return new MockStorageResource(default, uri, failAfter, transferOrder);
+            return new MockStorageResourceItem(default, uri, failAfter, transferOrder);
         }
 
         protected internal override Task CompleteTransferAsync(
@@ -135,5 +135,36 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceItemProperties sourceProperties,
             CancellationToken cancellationToken = default)
             => Task.CompletedTask;
+
+        public static (StorageResourceItem Source, StorageResourceItem Destination) GetMockTransferResources(
+            TransferDirection transferDirection,
+            DataTransferOrder transferOrder = DataTransferOrder.Unordered,
+            long fileSize = 4L * Constants.KB,
+            int sourceFailAfter = int.MaxValue,
+            int destinationFailAfter = int.MaxValue)
+        {
+            Uri localUri = new(@"C:\Sample\test.txt");
+            Uri remoteUri = new("https://example.com");
+
+            StorageResourceItem sourceResource;
+            StorageResourceItem destinationResource;
+            if (transferDirection == TransferDirection.Copy)
+            {
+                sourceResource = MakeSourceResource(fileSize, uri: remoteUri, failAfter: sourceFailAfter);
+                destinationResource = MakeDestinationResource(uri: remoteUri, transferOrder: transferOrder, failAfter: destinationFailAfter);
+            }
+            else if (transferDirection == TransferDirection.Upload)
+            {
+                sourceResource = MakeSourceResource(fileSize, uri: localUri, failAfter: sourceFailAfter);
+                destinationResource = MakeDestinationResource(uri: remoteUri, transferOrder: transferOrder, failAfter: destinationFailAfter);
+            }
+            else // transferType == TransferDirection.Download
+            {
+                sourceResource = MakeSourceResource(fileSize, uri: remoteUri, failAfter: sourceFailAfter);
+                destinationResource = MakeDestinationResource(uri: localUri, transferOrder: transferOrder, failAfter: destinationFailAfter);
+            }
+
+            return (sourceResource, destinationResource);
+        }
     }
 }
