@@ -25,7 +25,7 @@ namespace Azure.Storage.Files.Shares
         public long? Quota => _response.Headers.TryGetValue("x-ms-share-quota", out long? value) ? value : null;
         /// <summary> Returns the current share provisioned ipos. </summary>
         public long? ProvisionedIops => _response.Headers.TryGetValue("x-ms-share-provisioned-iops", out long? value) ? value : null;
-        /// <summary> Returns the current share provisioned bandwidth in megabits per second. </summary>
+        /// <summary> Returns the current share provisioned bandwidth in mebibytes per second. </summary>
         public long? ProvisionedBandwidthMibps => _response.Headers.TryGetValue("x-ms-share-provisioned-bandwidth-mibps", out long? value) ? value : null;
         /// <summary> Return the calculated burst IOPS of the share. </summary>
         public long? IncludedBurstIops => _response.Headers.TryGetValue("x-ms-share-included-burst-iops", out long? value) ? value : null;
