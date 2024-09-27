@@ -7,3 +7,11 @@ matrix:
       testScenario: uploadsingleblockblob
       image: Dockerfile
       imageBuildDir: "../../../.."
+    uploaddirectoryblockBlob:
+      testScenario: uploaddirectoryblockBlob
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    downloadsingleblockblob:
+      testScenario: downloadsingleblockblob
+      image: Dockerfile
+      imageBuildDir: "../../../.."
