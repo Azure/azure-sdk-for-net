@@ -66,8 +66,6 @@ namespace Azure.Core.Sse
             {
                 // Always dispose the stream immediately once enumeration is complete for any reason
                 stream.Dispose();
-                // Record the telemetry and dispose the scope, if the scope is present.
-                scope?.RecordStreamingResponse();
                 scope?.Dispose();
             }
         }

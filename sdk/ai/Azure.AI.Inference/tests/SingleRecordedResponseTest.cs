@@ -6,7 +6,7 @@ using System;
 using Azure.AI.Inference.Telemetry;
 using NUnit.Framework;
 using System.Text.Json;
-using Microsoft.VisualBasic;
+using System.Text.Json.Nodes;
 
 namespace Azure.AI.Inference.Tests
 {
@@ -59,12 +59,8 @@ namespace Azure.AI.Inference.Tests
             var response = new SingleRecordedResponse(completions, traceContent);
             Assert.AreEqual("4567", response.Id);
             CollectionAssert.AreEqual(
-                new List<string>()
-                {
-                        CompletionsFinishReason.ContentFiltered.ToString(),
-                        CompletionsFinishReason.Stopped.ToString()
-                },
-                response.FinishReason);
+                new[] {"content_filter", null, "stop"},
+                response.FinishReasons);
             Assert.AreEqual("Phi2000", response.Model);
             Assert.AreEqual(15, response.CompletionTokens);
             Assert.AreEqual(10, response.PromptTokens);
@@ -73,26 +69,31 @@ namespace Azure.AI.Inference.Tests
             Assert.AreEqual(strSerializedString.Length, 3);
             for (int i = 0; i < strSerializedString.Length; i++)
             {
-                Dictionary<string, object> dtData = JsonSerializer.Deserialize<Dictionary<string, object>>(strSerializedString[i]);
+                var choiceEvent = JsonNode.Parse(strSerializedString[i]);
+                var message = choiceEvent["message"];
+                Assert.NotNull(message);
                 if (traceContent)
                 {
-                    Assert.That(dtData.ContainsKey("message"));
-                    Dictionary<string, object> messageDict = JsonSerializer.Deserialize<Dictionary<string, object>>(dtData["message"].ToString());
-                    Assert.That(messageDict.ContainsKey("content"));
-                    Assert.AreEqual(messageDict["content"].ToString(), messages[i]);
-                    Assert.That(!messageDict.ContainsKey("tool_calls"));
+                    Assert.NotNull(message["content"]);
+                    Assert.AreEqual(messages[i], message["content"].GetValue<string>());
+                    Assert.Null(message["tool_calls"]);
                 }
                 else
                 {
-                    Assert.False(dtData.ContainsKey("message"));
+                    Assert.Null(message["content"]);
                 }
-                Assert.That(dtData.ContainsKey("finish_reason"));
+
                 if (finishReasons[i].HasValue)
-                    Assert.AreEqual(dtData["finish_reason"].ToString(), finishReasons[i].ToString());
+                {
+                    Assert.AreEqual(finishReasons[i].ToString(), choiceEvent["finish_reason"].GetValue<string>());
+                }
                 else
-                    Assert.IsNull(dtData["finish_reason"]);
-                Assert.That(dtData.ContainsKey("index"));
-                Assert.AreEqual(dtData["index"].ToString(), i.ToString());
+                {
+                    Assert.IsNull(choiceEvent["finish_reason"]);
+                }
+
+                Assert.NotNull(choiceEvent["index"]);
+                Assert.AreEqual(i, choiceEvent["index"].GetValue<int>());
             }
         }
 
@@ -168,7 +169,7 @@ namespace Azure.AI.Inference.Tests
                     CompletionsFinishReason.ToolCalls.ToString(),
                     CompletionsFinishReason.ContentFiltered.ToString()
                 },
-                response.FinishReason);
+                response.FinishReasons);
 
             Assert.AreEqual("Phi2001", response.Model);
             Assert.AreEqual(15, response.CompletionTokens);
@@ -176,51 +177,66 @@ namespace Azure.AI.Inference.Tests
             var strSerializedString = response.GetSerializedCompletions();
             for (int i = 0; i < strSerializedString.Length; i++)
             {
-                Dictionary<string, object> dtData = JsonSerializer.Deserialize<Dictionary<string, object>>(strSerializedString[i]);
-                Dictionary<string, object> messageDict = traceContent || i==2? JsonSerializer.Deserialize<Dictionary<string, object>>(dtData["message"].ToString()):new();
-                if (traceContent || i == 2 )
+                var choiceEvent = JsonNode.Parse(strSerializedString[i]);
+                var message = choiceEvent["message"];
+                Assert.NotNull(message);
+                if (traceContent || i == 2)
                 {
-                    Assert.That(dtData.ContainsKey("message"));
                     if (traceContent)
                     {
-                        Assert.That(messageDict.ContainsKey("content"));
-                        Assert.AreEqual(messageDict["content"].ToString(), messages[i]);
+                        Assert.AreEqual(messages[i], message["content"].GetValue<string>());
                     }
                     else
                     {
-                        Assert.That(!messageDict.ContainsKey("content"));
+                        Assert.Null(message["content"]);
                     }
                 }
                 else
                 {
-                    Assert.That(!dtData.ContainsKey("message"));
+                    Assert.Null(message["content"]);
                 }
+
                 if (i != 2)
                 {
-                    Assert.That(!messageDict.ContainsKey("tool_calls"));
+                    Assert.Null(message["tool_calls"]);
                 }
                 else
                 {
-                    Assert.That(messageDict.ContainsKey("tool_calls"));
-                    List<Dictionary<string, object>> dtFnArgs = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(messageDict["tool_calls"].ToString());
+                    Assert.IsInstanceOf(typeof(JsonArray), message["tool_calls"]);
+                    JsonArray toolCallsArray = message["tool_calls"].AsArray();
+                    Assert.AreEqual(2, toolCallsArray.Count);
+
+                    Assert.AreEqual("4", toolCallsArray[0]["id"].GetValue<string>());
+                    Assert.AreEqual("5", toolCallsArray[1]["id"].GetValue<string>());
+
+                    Assert.AreEqual("func1", toolCallsArray[0]["function"]["name"].GetValue<string>());
+                    Assert.AreEqual("func1", toolCallsArray[1]["function"]["name"].GetValue<string>());
+
                     if (traceContent)
                     {
-                        Assert.AreEqual(dtFnArgs.Count, 2);
-                        Dictionary<string, object> params1 = new() { { "arg1", "gg" } };
-                        Assert.That(dtFnArgs[0]["arg1"].ToString().Equals(params1["arg1"]));
-                        params1 = new() { { "arg1", "gg" }, { "arg2", "432" } };
-                        Assert.That(dtFnArgs[1]["arg1"].ToString().Equals(params1["arg1"]) && dtFnArgs[1]["arg2"].ToString().Equals(params1["arg2"]));
+                        Assert.AreEqual("{\"arg1\": \"gg\"}", toolCallsArray[0]["function"]["arguments"].GetValue<string>());
+                        Assert.AreEqual("{\"arg1\": \"gg\",\"arg2\": 432}", toolCallsArray[1]["function"]["arguments"].GetValue<string>());
                     }
                     else
                     {
-                        Assert.AreEqual(dtFnArgs.Count, 0);
+                        Assert.Null(toolCallsArray[0]["function"]["arguments"]);
+                        Assert.Null(toolCallsArray[1]["function"]["arguments"]);
                     }
                 }
-                Assert.That(dtData.ContainsKey("finish_reason"));
-                string stop = i == 2 ? CompletionsFinishReason.ContentFiltered.ToString() : CompletionsFinishReason.ToolCalls.ToString();
-                Assert.AreEqual(stop, dtData["finish_reason"].ToString());
-                Assert.That(dtData.ContainsKey("index"));
-                Assert.AreEqual(dtData["index"].ToString(), i.ToString());
+
+                var finishReason = choiceEvent["finish_reason"];
+                Assert.NotNull(finishReason);
+                if (i == 2)
+                {
+                    Assert.AreEqual("content_filter", finishReason.GetValue<string>());
+                }
+                else
+                {
+                    Assert.AreEqual("tool_calls", finishReason.GetValue<string>());
+                }
+
+                Assert.NotNull(choiceEvent["index"]);
+                Assert.AreEqual(i, choiceEvent["index"].GetValue<int>());
             }
         }
     }

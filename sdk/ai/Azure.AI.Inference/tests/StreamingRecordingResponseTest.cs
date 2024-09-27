@@ -6,6 +6,7 @@ using Azure.AI.Inference.Telemetry;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Azure.AI.Inference.Tests
 {
@@ -57,10 +58,7 @@ namespace Azure.AI.Inference.Tests
                     choices: new List<StreamingChatChoiceUpdate>()
                 ));
             }
-            CollectionAssert.AreEqual(
-                new List<string>() { CompletionsFinishReason.Stopped.ToString() },
-                resp.FinishReason
-                );
+            CollectionAssert.AreEqual(new[] { "stop" }, resp.FinishReasons);
             Assert.AreEqual(resp.Model, "gpt-100o");
             Assert.AreEqual(resp.Id, withUsage?"4":"3");
 
@@ -69,100 +67,107 @@ namespace Azure.AI.Inference.Tests
 
             string[] strSerialized = resp.GetSerializedCompletions();
             Assert.AreEqual(strSerialized.Length, 1);
-            Dictionary<string, object> dtData = JsonSerializer.Deserialize<Dictionary<string, object>>(strSerialized[0]);
+
+            var choiceEvent = JsonNode.Parse(strSerialized[0]);
+            var message = choiceEvent["message"];
+            Assert.NotNull(message);
+
             if (traceContent)
             {
-                Assert.That(dtData.ContainsKey("message"));
-                Dictionary<string, object> messageDict = JsonSerializer.Deserialize<Dictionary<string, object>>(dtData["message"].ToString());
-                Assert.That(messageDict.ContainsKey("content"));
-                Assert.AreEqual(messageDict["content"].ToString(), "First second third");
-                Assert.That(!messageDict.ContainsKey("tool_calls"));
+                Assert.NotNull(message["content"]);
+                Assert.AreEqual("First second third", message["content"].GetValue<string>());
+                Assert.Null(message["tool_calls"]);
             }
             else
             {
-                Assert.False(dtData.ContainsKey("content"));
+                Assert.Null(message["content"]);
             }
-            Assert.That(dtData.ContainsKey("finish_reason"));
-            Assert.AreEqual(dtData["finish_reason"].ToString(), CompletionsFinishReason.Stopped.ToString());
-            Assert.That(dtData.ContainsKey("index"));
-            Assert.AreEqual(dtData["index"].ToString(), "0");
+
+            var finishReason = choiceEvent["finish_reason"];
+            Assert.NotNull(finishReason);
+            Assert.AreEqual("stop", finishReason.GetValue<string>());
+
+            Assert.NotNull(choiceEvent["index"]);
+            Assert.AreEqual(0, choiceEvent["index"].GetValue<int>());
         }
 
         [Test]
         public void TestWithTools([Values(true, false)] bool traceContent)
         {
             StreamingRecordedResponse resp = new(traceContent);
-            resp.Update(getFuncPart("first", "func1", "{\"arg1\": 42}", false));
-            resp.Update(getFuncPart(" second", "func2", "{\"arg1\": 42,", false));
-            resp.Update(getFuncPart(" third", "func2", "\"arg2\": 43}", true));
+            resp.Update(GetToolUpdate("first", "func1", "{\"arg1\": 42}", "tool_call_1", 0, false));
+            resp.Update(GetToolUpdate(" second", "func2", "{\"arg1\": 42,", "tool_call_2", 1, false));
+            resp.Update(GetToolUpdate(" third", "func2", "\"arg2\": 43}", "tool_call_2", 1, true));
 
             Assert.AreEqual(resp.Id, "1");
-            CollectionAssert.AreEqual(
-                new List<string>() {
-                    CompletionsFinishReason.ToolCalls.ToString(),
-                },
-                resp.FinishReason
-                );
+            CollectionAssert.AreEqual(new[] { "tool_calls" }, resp.FinishReasons);
             Assert.AreEqual(resp.Model, "gpt-100o");
 
             string[] strSerialized = resp.GetSerializedCompletions();
             Assert.AreEqual(strSerialized.Length, 1);
-            Dictionary<string, object> dtData = JsonSerializer.Deserialize<Dictionary<string, object>>(strSerialized[0]);
-            // Message
-            Assert.That(dtData.ContainsKey("message"));
-            Dictionary<string, object> messageDict = JsonSerializer.Deserialize<Dictionary<string, object>>(dtData["message"].ToString());
+
+            var choiceEvent = JsonNode.Parse(strSerialized[0]);
+            var message = choiceEvent["message"];
+            Assert.NotNull(message);
+
             if (traceContent)
             {
-                Assert.That(messageDict.ContainsKey("content"));
-                Assert.AreEqual(messageDict["content"].ToString(), "first second third");
+                Assert.AreEqual("first second third", message["content"].GetValue<string>());
             }
-            // Tools
-            Assert.That(messageDict.ContainsKey("tool_calls"));
-            List<Dictionary<string, object>> dtFnArgs = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(messageDict["tool_calls"].ToString());
+
+            Assert.NotNull(message["tool_calls"]);
+
+            Assert.IsInstanceOf(typeof(JsonArray), message["tool_calls"]);
+            JsonArray toolCallsArray = message["tool_calls"].AsArray();
+            Assert.AreEqual(2, toolCallsArray.Count);
+
+            Assert.AreEqual("tool_call_1", toolCallsArray[0]["id"].GetValue<string>());
+            Assert.AreEqual("tool_call_2", toolCallsArray[1]["id"].GetValue<string>());
+
+            Assert.AreEqual("func1", toolCallsArray[0]["function"]["name"].GetValue<string>());
+            Assert.AreEqual("func2", toolCallsArray[1]["function"]["name"].GetValue<string>());
+
             if (traceContent)
             {
-                Assert.AreEqual(dtFnArgs.Count, 2);
-                Dictionary<string, object> params1 = new() { { "arg1", "42" } };
-                Assert.That(dtFnArgs[0]["arg1"].ToString().Equals(params1["arg1"]));
-                params1 = new() { { "arg1", "42" }, { "arg2", "43" } };
-                Assert.That(dtFnArgs[1]["arg1"].ToString().Equals(params1["arg1"]) && dtFnArgs[1]["arg2"].ToString().Equals(params1["arg2"]));
+                Assert.AreEqual("{\"arg1\": 42}", toolCallsArray[0]["function"]["arguments"].GetValue<string>());
+                Assert.AreEqual("{\"arg1\": 42,\"arg2\": 43}", toolCallsArray[1]["function"]["arguments"].GetValue<string>());
             }
             else
             {
-                Assert.AreEqual(dtFnArgs.Count, 0);
+                Assert.Null(toolCallsArray[0]["function"]["arguments"]);
+                Assert.Null(toolCallsArray[1]["function"]["arguments"]);
             }
-            // Other fields.
-            Assert.That(dtData.ContainsKey("finish_reason"));
-            Assert.AreEqual(dtData["finish_reason"].ToString(), CompletionsFinishReason.ToolCalls.ToString());
-            Assert.That(dtData.ContainsKey("index"));
-            Assert.AreEqual(dtData["index"].ToString(), "0");
+
+            var finishReason = choiceEvent["finish_reason"];
+            Assert.NotNull(finishReason);
+            Assert.AreEqual("tool_calls", finishReason.GetValue<string>());
+
+            Assert.NotNull(choiceEvent["index"]);
+            Assert.AreEqual(0, choiceEvent["index"].GetValue<int>());
         }
 
         #region Helpers
-        private static StreamingChatCompletionsUpdate getFuncPart(string content, string functionName, string argsUpdate, bool isLast)
+        private static StreamingChatCompletionsUpdate GetToolUpdate(string content, string functionName, string argsUpdate, string toolCallId, int index, bool isLast)
         {
-            Dictionary<string, string> dtCalls =  new()
-            {
-                { "name", functionName },
-                { "arguments", argsUpdate }
-            };
-            Dictionary<string, object> dtToolCall=new() { { "function", dtCalls } };
+            var toolUpdate = new {
+                function = new {
+                    name = functionName,
+                    arguments = argsUpdate
+                },
+                type = "function",
+                id = toolCallId,
+                index = index };
 
-            CompletionsFinishReason? finishReason = null;
-            if (isLast)
-                finishReason = CompletionsFinishReason.ToolCalls;
             return new StreamingChatCompletionsUpdate(
                 id: "1",
                 model: "gpt-100o",
                 created: DateTimeOffset.Now,
                 role: ChatRole.Assistant,
                 contentUpdate: content,
-                finishReason: finishReason,
-                functionName: functionName,
-                functionArgumentsUpdate: argsUpdate,
-                toolCallUpdate: StreamingToolCallUpdate.DeserializeStreamingToolCallUpdate(
-                    JsonSerializer.SerializeToElement(dtToolCall)
-                )
+                finishReason: isLast ? CompletionsFinishReason.ToolCalls : (CompletionsFinishReason?) null,
+                functionName: null,
+                functionArgumentsUpdate: null,
+                toolCallUpdate: StreamingFunctionToolCallUpdate.DeserializeStreamingToolCallUpdate(JsonSerializer.SerializeToElement(toolUpdate))
             );
         }
         #endregion

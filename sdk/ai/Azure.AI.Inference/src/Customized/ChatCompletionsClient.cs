@@ -48,18 +48,18 @@ namespace Azure.AI.Inference
 
             using RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using OpenTelemetryScope otel = new OpenTelemetryScope(chatCompletionsOptions, _endpoint);
+            using OpenTelemetryScope otelScope = OpenTelemetryScope.Start(chatCompletionsOptions, _endpoint);
             Response response = null;
             ChatCompletions chatCompletions = null;
             try
             {
                 response = await CompleteAsync(content, extraParams?.ToString(), context).ConfigureAwait(false);
                 chatCompletions = ChatCompletions.FromResponse(response);
-                otel.RecordResponse(chatCompletions);
+                otelScope?.RecordResponse(chatCompletions);
             }
             catch (Exception ex)
             {
-                otel.RecordError(ex);
+                otelScope?.RecordError(ex);
                 throw;
             }
             return Response.FromValue(chatCompletions, response);
@@ -95,17 +95,17 @@ namespace Azure.AI.Inference
 
             using RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using OpenTelemetryScope otel = new OpenTelemetryScope(chatCompletionsOptions, _endpoint);
+            using OpenTelemetryScope otelScope = OpenTelemetryScope.Start(chatCompletionsOptions, _endpoint);
             Response response = null;
             ChatCompletions chatCompletions = null;
             try
             {
                 response = Complete(content, extraParams?.ToString(), context);
                 chatCompletions = ChatCompletions.FromResponse(response);
-                otel.RecordResponse(chatCompletions);
+                otelScope?.RecordResponse(chatCompletions);
             }
             catch (Exception ex) {
-                otel.RecordError(ex);
+                otelScope?.RecordError(ex);
                 throw;
             }
             return Response.FromValue(chatCompletions, response);
@@ -143,7 +143,7 @@ namespace Azure.AI.Inference
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
 
-            OpenTelemetryScope otel = new(chatCompletionsOptions, _endpoint);
+            OpenTelemetryScope otelScope = OpenTelemetryScope.Start(chatCompletionsOptions, _endpoint);
             Response baseResponse = null;
             try
             {
@@ -157,8 +157,8 @@ namespace Azure.AI.Inference
             }
             catch (Exception e)
             {
-                otel.RecordError(e);
-                otel.Dispose();
+                otelScope?.RecordError(e);
+                otelScope?.Dispose();
                 throw;
             }
             return StreamingResponse<StreamingChatCompletionsUpdate>.CreateFromResponse(
@@ -167,7 +167,7 @@ namespace Azure.AI.Inference
                     => SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
                         responseForEnumeration.ContentStream,
                         StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
-                        otel,
+                        otelScope,
                         cancellationToken
                         ));
         }
@@ -201,7 +201,7 @@ namespace Azure.AI.Inference
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
 
-            OpenTelemetryScope otel = new OpenTelemetryScope(chatCompletionsOptions, _endpoint);
+            OpenTelemetryScope otelScope = OpenTelemetryScope.Start(chatCompletionsOptions, _endpoint);
             Response baseResponse;
             try
             {
@@ -212,8 +212,8 @@ namespace Azure.AI.Inference
             }
             catch (Exception e)
             {
-                otel.RecordError(e);
-                otel.Dispose();
+                otelScope?.RecordError(e);
+                otelScope?.Dispose();
                 throw;
             }
             return StreamingResponse<StreamingChatCompletionsUpdate>.CreateFromResponse(
@@ -222,7 +222,7 @@ namespace Azure.AI.Inference
                     => SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
                         responseForEnumeration.ContentStream,
                         StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
-                        otel,
+                        otelScope,
                         cancellationToken
                         ));
         }

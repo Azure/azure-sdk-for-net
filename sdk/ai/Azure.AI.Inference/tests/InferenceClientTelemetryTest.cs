@@ -8,9 +8,12 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static Azure.AI.Inference.Telemetry.OpenTelemetryConstants;
+using static Azure.AI.Inference.Tests.Utilities.TelemetryUtils;
 
 namespace Azure.AI.Inference.Tests
 {
+    [NonParallelizable]
     public class InferenceClientTelemetryTest : RecordedTestBase<InferenceClientTestEnvironment>
     {
         private ChatCompletionsOptions _requestOptions, _requestStreamingOptions;
@@ -66,8 +69,8 @@ namespace Azure.AI.Inference.Tests
         {
             if (testType == TestType.Basic)
                 Assert.True(withUsage, "The Basic test cannot be without tag usage. Please correct the test.");
-            using var _ = new TestAppContextSwitch(OpenTelemetryConstants.AppContextSwitch, "true");
-            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableTraceContents, traceContent.ToString());
+            using var _ = ConfigureInstrumentation(true, traceContent);
+
             var endpoint = new Uri(TestEnvironment.GithubEndpoint);
             var client = CreateClient(endpoint);
             using var actListener = new ValidatingActivityListener();
@@ -93,22 +96,18 @@ namespace Azure.AI.Inference.Tests
                     }
                     break;
             }
-            // If we recorded response, the model tag may have changed and
-            // we have to set model according to response.
-            // For example, for gpt models the version is appended as a suffix.
+
             if (recordedResponse is StreamingRecordedResponse)
             {
-                _requestStreamingOptions.Model = recordedResponse.Model;
                 actListener.ValidateStartActivity(_requestStreamingOptions, endpoint, traceContent);
             }
             else
             {
-                _requestOptions.Model = recordedResponse.Model;
                 actListener.ValidateStartActivity(_requestOptions, endpoint, traceContent);
             }
             actListener.ValidateResponseEvents(recordedResponse, traceContent);
-            meterListener.ValidateTags(recordedResponse.Model, endpoint, withUsage);
-            meterListener.VaidateDuration(recordedResponse.Model, endpoint);
+            meterListener.ValidateTags(_requestOptions.Model, recordedResponse.Model, endpoint, withUsage);
+            meterListener.ValidateDuration(_requestOptions.Model, recordedResponse.Model, endpoint);
         }
 
         [RecordedTest]
@@ -116,7 +115,8 @@ namespace Azure.AI.Inference.Tests
         [TestCase(TestType.Streaming)]
         public async Task TestBadChatResponse(TestType testType)
         {
-            using var _ = new TestAppContextSwitch(OpenTelemetryConstants.AppContextSwitch, "true");
+            using var _ = ConfigureInstrumentation(true, false);
+
             var endpoint = new Uri(TestEnvironment.GithubEndpoint);
             var client = CreateClient(endpoint);
             using var actListener = new ValidatingActivityListener();
@@ -141,13 +141,12 @@ namespace Azure.AI.Inference.Tests
                     case TestType.Streaming: await client.CompleteStreamingAsync(_requestStreamingOptions);
                         break;
                 };
-                Assert.True(false, "The exception was not thrown.");
+                Assert.Fail("The exception was not thrown.");
             }
-            catch (Exception ex)
+            catch (RequestFailedException ex)
             {
-                Assert.That(ex is RequestFailedException, $"The exception was of wrong type {ex.GetType()}");
                 actListener.ValidateErrorTag("400", ex.Message);
-                meterListener.VaidateDuration(_requestStreamingOptions.Model, endpoint, "400");
+                meterListener.ValidateDuration(_requestStreamingOptions.Model, null, endpoint, "400");
             }
         }
 

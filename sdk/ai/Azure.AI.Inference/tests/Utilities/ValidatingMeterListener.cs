@@ -8,7 +8,7 @@ using System.Diagnostics.Metrics;
 using Azure.AI.Inference.Telemetry;
 using NUnit.Framework;
 
-using static Azure.AI.Inference.Telemetry.OpenTelemetryInternalConstants;
+using static Azure.AI.Inference.Telemetry.OpenTelemetryConstants;
 
 namespace Azure.AI.Inference.Tests.Utilities
 {
@@ -78,16 +78,24 @@ namespace Azure.AI.Inference.Tests.Utilities
         /// <param name="model">The model called.</param>
         /// <param name="endpoint">The endpoint called.</param>
         /// <returns></returns>
-        private static Dictionary<string, object> GetDefaultTags(string model, Uri endpoint)
+        private static Dictionary<string, object> GetDefaultTags(string requestModel, string responseModel, Uri endpoint)
         {
              var standardTags = new Dictionary<string, object>{
                 { GenAiSystemKey, GenAiSystemValue},
-                { GenAiResponseModelKey, model},
+                { GenAiRequestModelKey, requestModel},
                 { ServerAddressKey, endpoint.Host },
                 { GenAiOperationNameKey, "chat"}
             };
+
+            if (responseModel != null)
+            {
+                standardTags[GenAiResponseModelKey] = responseModel;
+            }
+
             if (endpoint.Port != 443)
-                standardTags.Add(ServerPortKey, endpoint.Port);
+            {
+                standardTags[ServerPortKey] = endpoint.Port;
+            }
             return standardTags;
         }
         /// <summary>
@@ -95,17 +103,17 @@ namespace Azure.AI.Inference.Tests.Utilities
         /// </summary>
         /// <param name="model">The model called.</param>
         /// <param name="endpoint">The endpoint called.</param>
-        public void ValidateTags(string model, Uri endpoint, bool metricsPresent)
+        public void ValidateTags(string requestModel, string responseModel, Uri endpoint, bool metricsPresent)
         {
             var lstExpected = new List<Dictionary<string, object>>();
             if (metricsPresent)
             {
                 // InputTags
-                Dictionary<string, object> input_tags = GetDefaultTags(model, endpoint);
+                Dictionary<string, object> input_tags = GetDefaultTags(requestModel, responseModel, endpoint);
                 input_tags.Add(GenAiUsageInputTokensKey, "input");
                 lstExpected.Add(input_tags);
                 // Output tags
-                Dictionary<string, object> output_tags = GetDefaultTags(model, endpoint);
+                Dictionary<string, object> output_tags = GetDefaultTags(requestModel, responseModel, endpoint);
                 output_tags.Add(GenAiUsageOutputTokensKey, "output");
                 lstExpected.Add(output_tags);
             }
@@ -117,11 +125,11 @@ namespace Azure.AI.Inference.Tests.Utilities
         /// </summary>
         /// <param name="model">The model to be called.</param>
         /// <param name="endpoint">The endpoint called.</param>
-        public void VaidateDuration(string model, Uri endpoint, string error=null)
+        public void ValidateDuration(string requestModel, string responseModel, Uri endpoint, string error=null)
         {
             var lstExpected = new List<Dictionary<string, object>>()
             {
-                GetDefaultTags(model, endpoint),
+                GetDefaultTags(requestModel, responseModel, endpoint),
             };
             if (error != null)
             {

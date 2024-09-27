@@ -10,7 +10,7 @@ using System.Text.Json;
 using Azure.AI.Inference.Telemetry;
 using NUnit.Framework;
 
-using static Azure.AI.Inference.Telemetry.OpenTelemetryInternalConstants;
+using static Azure.AI.Inference.Telemetry.OpenTelemetryConstants;
 
 namespace Azure.AI.Inference.Tests.Utilities
 {
@@ -44,13 +44,13 @@ namespace Azure.AI.Inference.Tests.Utilities
             m_activityListener.Dispose();
         }
 
-        public void ValidateStartActivity(ChatCompletionsOptions requestOptions, Uri endpoint, bool traceEvents)
+        public void ValidateStartActivity(ChatCompletionsOptions requestOptions, Uri endpoint, bool traceContent)
         {
             Activity activity = m_listeners.Single();
             Assert.NotNull(activity);
             // Validate all tags
             ValidateTag(activity, GenAiSystemKey, GenAiSystemValue);
-            ValidateTag(activity, GenAiResponseModelKey, requestOptions.Model);
+            ValidateTag(activity, GenAiRequestModelKey, requestOptions.Model);
             ValidateTag(activity, ServerAddressKey, endpoint.Host);
             if (endpoint.Port != 443)
                 ValidateTag(activity, ServerPortKey, endpoint.Port);
@@ -64,13 +64,7 @@ namespace Azure.AI.Inference.Tests.Utilities
                 ValidateTag(activity, GenAiRequestTopPKey, JsonSerializer.Deserialize<float?>(topP));
             }
             // Validate events
-            if (traceEvents)
-                ValidateChatMessageEvents(activity, requestOptions.Messages);
-            else
-                foreach (ChatRequestMessage message in requestOptions.Messages)
-                {
-                    ValidateNoEventsWithName($"gen_ai.{message.Role}.message");
-                }
+            ValidateChatMessageEvents(activity, requestOptions.Messages, traceContent);
         }
 
         public void ValidateResponseEvents(AbstractRecordedResponse response, bool traceEvents)
@@ -83,7 +77,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             }
             ValidateTag(activity, GenAiResponseIdKey, response.Id);
             ValidateTag(activity, GenAiResponseModelKey, response.Model);
-            ValidateTag(activity, GenAiResponseFinishReasonsKey, response.FinishReason);
+            ValidateTag(activity, GenAiResponseFinishReasonsKey, response.FinishReasons);
             ValidateIntTag(activity, GenAiUsageOutputTokensKey, response.CompletionTokens);
             ValidateIntTag(activity, GenAiUsageInputTokensKey, response.PromptTokens);
             var validChoices = new HashSet<string>();
@@ -148,7 +142,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             ValidateEventTags(expected.Tags, actuals);
         }
 
-        private static void ValidateChatMessageEvents(Activity activity, IList<ChatRequestMessage> messages)
+        private static void ValidateChatMessageEvents(Activity activity, IList<ChatRequestMessage> messages, bool traceContent)
         {
             Assert.NotNull(activity);
             foreach (ChatRequestMessage message in messages)
@@ -156,10 +150,9 @@ namespace Azure.AI.Inference.Tests.Utilities
                 ValidateEvent(
                     activity: activity,
                     name: $"gen_ai.{message.Role}.message",
-                    actuals: new Dictionary<string, object>()
-                    {
+                    actuals: new() {
                         { GenAiSystemKey, GenAiSystemValue},
-                        { GenAiEventContent, OpenTelemetryScope.GetContent(message)}
+                        { GenAiEventContent, traceContent ? GetContent(message) : null }
                     }
                 );
             }
@@ -167,15 +160,7 @@ namespace Azure.AI.Inference.Tests.Utilities
 
         private static void ValidateTag(Activity activity, string key, object value)
         {
-            if (string.IsNullOrEmpty(value?.ToString()))
-            {
-                Assert.IsNull(activity.GetTagItem(key));
-            }
-            else
-            {
-                Assert.NotNull(activity.GetTagItem(key));
-                Assert.AreEqual(value, activity.GetTagItem(key));
-            }
+            Assert.AreEqual(value, activity.GetTagItem(key));
         }
 
         private static void ValidateIntTag(Activity activity, string key, long? value)
@@ -207,6 +192,19 @@ namespace Azure.AI.Inference.Tests.Utilities
         public void VaidateTelemetryIsOff()
         {
             Assert.That(m_listeners.IsEmpty);
+        }
+
+        private static string GetContent(ChatRequestMessage message)
+        {
+            if (message is ChatRequestAssistantMessage assistantMessage)
+                return assistantMessage.Content;
+            if (message is ChatRequestSystemMessage systemMessage)
+                return systemMessage.Content;
+            if (message is ChatRequestToolMessage toolMessage)
+                return toolMessage.Content;
+            if (message is ChatRequestUserMessage userMessage)
+                return userMessage.Content;
+            return "";
         }
     }
 }

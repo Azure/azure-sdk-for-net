@@ -17,16 +17,24 @@ using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
 using Azure.AI.Inference.Telemetry;
+using static Azure.AI.Inference.Telemetry.OpenTelemetryConstants;
 
 namespace Azure.AI.Inference.Tests.Samples
 {
     public class Sample8_ChatCompletionsWithTelemetry : SamplesBase<InferenceClientTestEnvironment>
     {
         [SetUp]
-        public void Setup() {
-            // Switch on open telemetry
-            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableSwitchName, "1");
-            Environment.SetEnvironmentVariable(OpenTelemetryConstants.EnvironmentVariableTraceContents, "1");
+        public void Setup()
+        {
+            AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+            AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", true);
+        }
+
+        [TearDown]
+        public void CleanUp()
+        {
+            AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", false);
+            AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", false);
         }
 
         [Test]
