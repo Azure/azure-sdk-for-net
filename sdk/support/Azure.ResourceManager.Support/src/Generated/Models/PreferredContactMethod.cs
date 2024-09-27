@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Support.Models
         public static bool operator ==(PreferredContactMethod left, PreferredContactMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PreferredContactMethod"/> values are not the same. </summary>
         public static bool operator !=(PreferredContactMethod left, PreferredContactMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PreferredContactMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PreferredContactMethod"/>. </summary>
         public static implicit operator PreferredContactMethod(string value) => new PreferredContactMethod(value);
 
         /// <inheritdoc />
