@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator ==(EdgeOrderAddressValidationStatus left, EdgeOrderAddressValidationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeOrderAddressValidationStatus"/> values are not the same. </summary>
         public static bool operator !=(EdgeOrderAddressValidationStatus left, EdgeOrderAddressValidationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EdgeOrderAddressValidationStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeOrderAddressValidationStatus"/>. </summary>
         public static implicit operator EdgeOrderAddressValidationStatus(string value) => new EdgeOrderAddressValidationStatus(value);
 
         /// <inheritdoc />
