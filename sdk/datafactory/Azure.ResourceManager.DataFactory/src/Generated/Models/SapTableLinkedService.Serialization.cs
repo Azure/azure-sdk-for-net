@@ -330,11 +330,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("sncMode"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sncMode = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            DeserializeBoolValue(property0, ref sncMode);
                             continue;
                         }
                         if (property0.NameEquals("sncMyName"u8))
