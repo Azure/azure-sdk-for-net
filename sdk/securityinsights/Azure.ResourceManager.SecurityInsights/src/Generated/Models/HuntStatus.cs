@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(HuntStatus left, HuntStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HuntStatus"/> values are not the same. </summary>
         public static bool operator !=(HuntStatus left, HuntStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HuntStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HuntStatus"/>. </summary>
         public static implicit operator HuntStatus(string value) => new HuntStatus(value);
 
         /// <inheritdoc />
