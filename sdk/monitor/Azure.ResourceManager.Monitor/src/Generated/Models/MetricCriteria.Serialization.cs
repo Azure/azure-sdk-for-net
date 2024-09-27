@@ -19,45 +19,26 @@ namespace Azure.ResourceManager.Monitor.Models
 
         void IJsonModel<MetricCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MetricCriteria)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToString());
             writer.WritePropertyName("threshold"u8);
             writer.WriteNumberValue(Threshold);
-            writer.WritePropertyName("criterionType"u8);
-            writer.WriteStringValue(CriterionType.ToString());
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("metricName"u8);
-            writer.WriteStringValue(MetricName);
-            if (Optional.IsDefined(MetricNamespace))
-            {
-                writer.WritePropertyName("metricNamespace"u8);
-                writer.WriteStringValue(MetricNamespace);
-            }
-            writer.WritePropertyName("timeAggregation"u8);
-            writer.WriteStringValue(TimeAggregation.ToString());
-            if (Optional.IsCollectionDefined(Dimensions))
-            {
-                writer.WritePropertyName("dimensions"u8);
-                writer.WriteStartArray();
-                foreach (var item in Dimensions)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(SkipMetricValidation))
-            {
-                writer.WritePropertyName("skipMetricValidation"u8);
-                writer.WriteBooleanValue(SkipMetricValidation.Value);
-            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -70,7 +51,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         MetricCriteria IJsonModel<MetricCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

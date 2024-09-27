@@ -94,9 +94,8 @@ public partial class ContainerRegistryTaskRun : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ContainerRegistryTaskRun.</param>
     /// <param name="resourceVersion">Version of the ContainerRegistryTaskRun.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerRegistryTaskRun(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerRegistry/registries/taskRuns", resourceVersion ?? "2019-06-01-preview", context)
+    public ContainerRegistryTaskRun(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ContainerRegistry/registries/taskRuns", resourceVersion ?? "2019-06-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _forceUpdateTag = BicepValue<string>.DefineProperty(this, "ForceUpdateTag", ["properties", "forceUpdateTag"]);

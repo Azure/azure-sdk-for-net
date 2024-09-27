@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static bool operator ==(AppConfigurationProvisioningState left, AppConfigurationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppConfigurationProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(AppConfigurationProvisioningState left, AppConfigurationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppConfigurationProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppConfigurationProvisioningState"/>. </summary>
         public static implicit operator AppConfigurationProvisioningState(string value) => new AppConfigurationProvisioningState(value);
 
         /// <inheritdoc />

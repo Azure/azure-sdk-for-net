@@ -36,7 +36,7 @@ namespace Azure.AI.Vision.Face
         public static bool operator ==(FaceSessionStatus left, FaceSessionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FaceSessionStatus"/> values are not the same. </summary>
         public static bool operator !=(FaceSessionStatus left, FaceSessionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FaceSessionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FaceSessionStatus"/>. </summary>
         public static implicit operator FaceSessionStatus(string value) => new FaceSessionStatus(value);
 
         /// <inheritdoc />

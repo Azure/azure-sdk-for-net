@@ -180,7 +180,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                 Dimensions = 256
             };
             Embedding embedding = embeddingClient.GenerateEmbedding(input, embeddingsOptions);
-            return embedding.Vector;
+            return embedding.ToFloats();
         }
         #endregion
 

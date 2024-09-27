@@ -36,7 +36,7 @@ namespace Azure.Communication.Messages
         public static bool operator ==(CommunicationMessageKind left, CommunicationMessageKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunicationMessageKind"/> values are not the same. </summary>
         public static bool operator !=(CommunicationMessageKind left, CommunicationMessageKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CommunicationMessageKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CommunicationMessageKind"/>. </summary>
         public static implicit operator CommunicationMessageKind(string value) => new CommunicationMessageKind(value);
 
         /// <inheritdoc />

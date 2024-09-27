@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataBox.Models
 
         void IJsonModel<ImportDiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ImportDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ImportDiskDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("manifestFile"u8);
             writer.WriteStringValue(ManifestFile);
             writer.WritePropertyName("manifestHash"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.DataBox.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ImportDiskDetails IJsonModel<ImportDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

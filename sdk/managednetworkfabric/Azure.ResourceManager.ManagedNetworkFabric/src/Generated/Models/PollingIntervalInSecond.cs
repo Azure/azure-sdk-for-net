@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(PollingIntervalInSecond left, PollingIntervalInSecond right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PollingIntervalInSecond"/> values are not the same. </summary>
         public static bool operator !=(PollingIntervalInSecond left, PollingIntervalInSecond right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PollingIntervalInSecond"/>. </summary>
+        /// <summary> Converts a <see cref="int"/> to a <see cref="PollingIntervalInSecond"/>. </summary>
         public static implicit operator PollingIntervalInSecond(int value) => new PollingIntervalInSecond(value);
 
         /// <inheritdoc />

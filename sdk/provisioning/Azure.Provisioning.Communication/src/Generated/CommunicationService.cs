@@ -105,9 +105,8 @@ public partial class CommunicationService : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CommunicationService.</param>
     /// <param name="resourceVersion">Version of the CommunicationService.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CommunicationService(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Communication/communicationServices", resourceVersion, context)
+    public CommunicationService(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Communication/communicationServices", resourceVersion ?? "2023-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -122,6 +121,32 @@ public partial class CommunicationService : Resource
         _provisioningState = BicepValue<CommunicationServicesProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _version = BicepValue<string>.DefineProperty(this, "Version", ["properties", "version"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Supported CommunicationService resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2023-06-01-preview.
+        /// </summary>
+        public static readonly string V2023_06_01_preview = "2023-06-01-preview";
+
+        /// <summary>
+        /// 2023-04-01.
+        /// </summary>
+        public static readonly string V2023_04_01 = "2023-04-01";
+
+        /// <summary>
+        /// 2023-03-31.
+        /// </summary>
+        public static readonly string V2023_03_31 = "2023-03-31";
+
+        /// <summary>
+        /// 2020-08-20.
+        /// </summary>
+        public static readonly string V2020_08_20 = "2020-08-20";
     }
 
     /// <summary>

@@ -64,9 +64,8 @@ public partial class PostgreSqlPrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the PostgreSqlPrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the PostgreSqlPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/privateEndpointConnections", resourceVersion ?? "2018-06-01", context)
+    public PostgreSqlPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/privateEndpointConnections", resourceVersion ?? "2018-06-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<PostgreSqlPrivateLinkServiceConnectionStateProperty>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);

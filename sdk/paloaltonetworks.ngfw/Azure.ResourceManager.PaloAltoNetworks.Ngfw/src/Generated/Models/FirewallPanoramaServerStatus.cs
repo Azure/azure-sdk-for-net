@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static bool operator ==(FirewallPanoramaServerStatus left, FirewallPanoramaServerStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FirewallPanoramaServerStatus"/> values are not the same. </summary>
         public static bool operator !=(FirewallPanoramaServerStatus left, FirewallPanoramaServerStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FirewallPanoramaServerStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallPanoramaServerStatus"/>. </summary>
         public static implicit operator FirewallPanoramaServerStatus(string value) => new FirewallPanoramaServerStatus(value);
 
         /// <inheritdoc />

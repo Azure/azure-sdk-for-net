@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static bool operator ==(HybridComputeAccessMode left, HybridComputeAccessMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HybridComputeAccessMode"/> values are not the same. </summary>
         public static bool operator !=(HybridComputeAccessMode left, HybridComputeAccessMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HybridComputeAccessMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridComputeAccessMode"/>. </summary>
         public static implicit operator HybridComputeAccessMode(string value) => new HybridComputeAccessMode(value);
 
         /// <inheritdoc />

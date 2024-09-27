@@ -133,9 +133,8 @@ public partial class AppConfigurationStore : Resource
     /// </summary>
     /// <param name="resourceName">Name of the AppConfigurationStore.</param>
     /// <param name="resourceVersion">Version of the AppConfigurationStore.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public AppConfigurationStore(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.AppConfiguration/configurationStores", resourceVersion ?? "2019-10-01", context)
+    public AppConfigurationStore(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.AppConfiguration/configurationStores", resourceVersion ?? "2024-05-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

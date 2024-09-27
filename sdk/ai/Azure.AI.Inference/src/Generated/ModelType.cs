@@ -45,7 +45,7 @@ namespace Azure.AI.Inference
         public static bool operator ==(ModelType left, ModelType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ModelType"/> values are not the same. </summary>
         public static bool operator !=(ModelType left, ModelType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ModelType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ModelType"/>. </summary>
         public static implicit operator ModelType(string value) => new ModelType(value);
 
         /// <inheritdoc />

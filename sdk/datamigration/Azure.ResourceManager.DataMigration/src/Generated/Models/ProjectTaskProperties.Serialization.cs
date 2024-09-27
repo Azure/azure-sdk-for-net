@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         void IJsonModel<ProjectTaskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ProjectTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProjectTaskProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
             if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
@@ -79,7 +87,6 @@ namespace Azure.ResourceManager.DataMigration.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ProjectTaskProperties IJsonModel<ProjectTaskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

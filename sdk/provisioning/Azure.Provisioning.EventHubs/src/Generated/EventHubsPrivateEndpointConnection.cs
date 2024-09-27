@@ -70,9 +70,8 @@ public partial class EventHubsPrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EventHubsPrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the EventHubsPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventHubsPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/privateEndpointConnections", resourceVersion ?? "2024-01-01", context)
+    public EventHubsPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventHub/namespaces/privateEndpointConnections", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<EventHubsPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);

@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(WebAuthenticationType left, WebAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(WebAuthenticationType left, WebAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WebAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WebAuthenticationType"/>. </summary>
         public static implicit operator WebAuthenticationType(string value) => new WebAuthenticationType(value);
 
         /// <inheritdoc />

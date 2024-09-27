@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Kusto.Models
 
         void IJsonModel<DatabaseInviteFollowerResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseInviteFollowerResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatabaseInviteFollowerResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(GeneratedInvitation))
             {
                 writer.WritePropertyName("generatedInvitation"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.Kusto.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DatabaseInviteFollowerResult IJsonModel<DatabaseInviteFollowerResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

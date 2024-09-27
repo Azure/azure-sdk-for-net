@@ -113,9 +113,8 @@ public partial class BlobService : Resource
     /// </summary>
     /// <param name="resourceName">Name of the BlobService.</param>
     /// <param name="resourceVersion">Version of the BlobService.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public BlobService(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/blobServices", resourceVersion ?? "2023-01-01", context)
+    public BlobService(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Storage/storageAccounts/blobServices", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], defaultValue: GetNameDefaultValue());
         _changeFeed = BicepValue<BlobServiceChangeFeed>.DefineProperty(this, "ChangeFeed", ["properties", "changeFeed"]);

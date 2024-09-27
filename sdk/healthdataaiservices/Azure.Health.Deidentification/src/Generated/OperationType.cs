@@ -36,7 +36,7 @@ namespace Azure.Health.Deidentification
         public static bool operator ==(OperationType left, OperationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationType"/> values are not the same. </summary>
         public static bool operator !=(OperationType left, OperationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OperationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationType"/>. </summary>
         public static implicit operator OperationType(string value) => new OperationType(value);
 
         /// <inheritdoc />

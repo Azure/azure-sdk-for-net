@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator ==(FunctionAppRuntimeName left, FunctionAppRuntimeName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FunctionAppRuntimeName"/> values are not the same. </summary>
         public static bool operator !=(FunctionAppRuntimeName left, FunctionAppRuntimeName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FunctionAppRuntimeName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FunctionAppRuntimeName"/>. </summary>
         public static implicit operator FunctionAppRuntimeName(string value) => new FunctionAppRuntimeName(value);
 
         /// <inheritdoc />

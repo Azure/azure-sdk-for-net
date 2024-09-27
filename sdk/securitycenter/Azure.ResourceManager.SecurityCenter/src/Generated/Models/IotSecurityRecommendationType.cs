@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(IotSecurityRecommendationType left, IotSecurityRecommendationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotSecurityRecommendationType"/> values are not the same. </summary>
         public static bool operator !=(IotSecurityRecommendationType left, IotSecurityRecommendationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IotSecurityRecommendationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IotSecurityRecommendationType"/>. </summary>
         public static implicit operator IotSecurityRecommendationType(string value) => new IotSecurityRecommendationType(value);
 
         /// <inheritdoc />

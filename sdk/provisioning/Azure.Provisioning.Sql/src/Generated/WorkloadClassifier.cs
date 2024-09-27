@@ -82,9 +82,8 @@ public partial class WorkloadClassifier : Resource
     /// </summary>
     /// <param name="resourceName">Name of the WorkloadClassifier.</param>
     /// <param name="resourceVersion">Version of the WorkloadClassifier.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public WorkloadClassifier(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/workloadGroups/workloadClassifiers", resourceVersion, context)
+    public WorkloadClassifier(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/databases/workloadGroups/workloadClassifiers", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _context = BicepValue<string>.DefineProperty(this, "Context", ["properties", "context"]);
@@ -96,6 +95,22 @@ public partial class WorkloadClassifier : Resource
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<WorkloadGroup>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported WorkloadClassifier resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
     }
 
     /// <summary>

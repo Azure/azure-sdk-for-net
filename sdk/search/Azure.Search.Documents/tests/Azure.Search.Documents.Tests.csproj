@@ -28,7 +28,6 @@
  <!-- References required for sample snippet -->
   <ItemGroup>
     <PackageReference Include="Azure.AI.OpenAI" />
-    <ExcludeFromProjectReferenceToConversion Include="Azure.AI.OpenAI" />
   </ItemGroup>
 
   <!-- References required for test resource creation -->

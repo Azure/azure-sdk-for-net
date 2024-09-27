@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static bool operator ==(UpdateWebhookKey left, UpdateWebhookKey right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UpdateWebhookKey"/> values are not the same. </summary>
         public static bool operator !=(UpdateWebhookKey left, UpdateWebhookKey right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UpdateWebhookKey"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UpdateWebhookKey"/>. </summary>
         public static implicit operator UpdateWebhookKey(string value) => new UpdateWebhookKey(value);
 
         /// <inheritdoc />

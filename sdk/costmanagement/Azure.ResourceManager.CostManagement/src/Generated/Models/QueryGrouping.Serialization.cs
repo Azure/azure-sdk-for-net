@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         void IJsonModel<QueryGrouping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<QueryGrouping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(QueryGrouping)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ColumnType.ToString());
             writer.WritePropertyName("name"u8);
@@ -45,7 +53,6 @@ namespace Azure.ResourceManager.CostManagement.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         QueryGrouping IJsonModel<QueryGrouping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

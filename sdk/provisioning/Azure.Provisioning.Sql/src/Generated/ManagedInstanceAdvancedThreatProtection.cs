@@ -60,9 +60,8 @@ public partial class ManagedInstanceAdvancedThreatProtection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedInstanceAdvancedThreatProtection.</param>
     /// <param name="resourceVersion">Version of the ManagedInstanceAdvancedThreatProtection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedInstanceAdvancedThreatProtection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/advancedThreatProtectionSettings", resourceVersion ?? "2024-05-01-preview", context)
+    public ManagedInstanceAdvancedThreatProtection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/advancedThreatProtectionSettings", resourceVersion ?? "2024-05-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _state = BicepValue<AdvancedThreatProtectionState>.DefineProperty(this, "State", ["properties", "state"]);

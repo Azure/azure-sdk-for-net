@@ -74,9 +74,8 @@ public partial class EventHubsConsumerGroup : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EventHubsConsumerGroup.</param>
     /// <param name="resourceVersion">Version of the EventHubsConsumerGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventHubsConsumerGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/eventhubs/consumergroups", resourceVersion ?? "2024-01-01", context)
+    public EventHubsConsumerGroup(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventHub/namespaces/eventhubs/consumergroups", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _userMetadata = BicepValue<string>.DefineProperty(this, "UserMetadata", ["properties", "userMetadata"]);

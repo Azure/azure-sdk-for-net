@@ -100,9 +100,8 @@ public partial class JitRequest : Resource
     /// </summary>
     /// <param name="resourceName">Name of the JitRequest.</param>
     /// <param name="resourceVersion">Version of the JitRequest.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public JitRequest(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Solutions/jitRequests", resourceVersion ?? "2021-07-01", context)
+    public JitRequest(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Solutions/jitRequests", resourceVersion ?? "2021-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
