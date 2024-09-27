@@ -2827,7 +2827,7 @@ value = 3233500,
                 granularity = "minutely",
                 customInterval = 5,
                 stableTrendWindow = 10,
-                threshold = 0.99,
+                threshold = 0.9900000095367432,
                 period = 0,
             });
             Response response = client.DetectUnivariateChangePoint(content);
@@ -4137,7 +4137,7 @@ value = 3233500,
                 granularity = "minutely",
                 customInterval = 5,
                 stableTrendWindow = 10,
-                threshold = 0.99,
+                threshold = 0.9900000095367432,
                 period = 0,
             });
             Response response = await client.DetectUnivariateChangePointAsync(content);
@@ -5189,7 +5189,7 @@ Timestamp = DateTimeOffset.Parse("2017-01-02T04:05:00Z"),
                 CustomInterval = 5,
                 Period = 0,
                 StableTrendWindow = 10,
-                Threshold = (float)0.99,
+                Threshold = (float)0.9900000095367432,
             };
             Response<UnivariateChangePointDetectionResult> response = client.DetectUnivariateChangePoint(options);
         }
@@ -6237,7 +6237,7 @@ Timestamp = DateTimeOffset.Parse("2017-01-02T04:05:00Z"),
                 CustomInterval = 5,
                 Period = 0,
                 StableTrendWindow = 10,
-                Threshold = (float)0.99,
+                Threshold = (float)0.9900000095367432,
             };
             Response<UnivariateChangePointDetectionResult> response = await client.DetectUnivariateChangePointAsync(options);
         }
