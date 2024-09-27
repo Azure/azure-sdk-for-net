@@ -33,7 +33,7 @@ namespace Azure.Communication.PhoneNumbers
         public static bool operator ==(PhoneNumberType left, PhoneNumberType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PhoneNumberType"/> values are not the same. </summary>
         public static bool operator !=(PhoneNumberType left, PhoneNumberType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PhoneNumberType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PhoneNumberType"/>. </summary>
         public static implicit operator PhoneNumberType(string value) => new PhoneNumberType(value);
 
         /// <inheritdoc />

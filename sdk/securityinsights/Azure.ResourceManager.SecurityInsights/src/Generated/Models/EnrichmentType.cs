@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(EnrichmentType left, EnrichmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnrichmentType"/> values are not the same. </summary>
         public static bool operator !=(EnrichmentType left, EnrichmentType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EnrichmentType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EnrichmentType"/>. </summary>
         public static implicit operator EnrichmentType(string value) => new EnrichmentType(value);
 
         /// <inheritdoc />

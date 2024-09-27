@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator ==(AppServiceEnvironmentUpgradePreference left, AppServiceEnvironmentUpgradePreference right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppServiceEnvironmentUpgradePreference"/> values are not the same. </summary>
         public static bool operator !=(AppServiceEnvironmentUpgradePreference left, AppServiceEnvironmentUpgradePreference right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppServiceEnvironmentUpgradePreference"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServiceEnvironmentUpgradePreference"/>. </summary>
         public static implicit operator AppServiceEnvironmentUpgradePreference(string value) => new AppServiceEnvironmentUpgradePreference(value);
 
         /// <inheritdoc />

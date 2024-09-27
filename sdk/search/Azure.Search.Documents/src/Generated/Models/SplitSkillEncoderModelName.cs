@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(SplitSkillEncoderModelName left, SplitSkillEncoderModelName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SplitSkillEncoderModelName"/> values are not the same. </summary>
         public static bool operator !=(SplitSkillEncoderModelName left, SplitSkillEncoderModelName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SplitSkillEncoderModelName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SplitSkillEncoderModelName"/>. </summary>
         public static implicit operator SplitSkillEncoderModelName(string value) => new SplitSkillEncoderModelName(value);
 
         /// <inheritdoc />

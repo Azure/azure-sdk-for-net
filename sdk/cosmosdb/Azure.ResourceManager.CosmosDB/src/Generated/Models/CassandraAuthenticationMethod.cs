@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(CassandraAuthenticationMethod left, CassandraAuthenticationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CassandraAuthenticationMethod"/> values are not the same. </summary>
         public static bool operator !=(CassandraAuthenticationMethod left, CassandraAuthenticationMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CassandraAuthenticationMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CassandraAuthenticationMethod"/>. </summary>
         public static implicit operator CassandraAuthenticationMethod(string value) => new CassandraAuthenticationMethod(value);
 
         /// <inheritdoc />

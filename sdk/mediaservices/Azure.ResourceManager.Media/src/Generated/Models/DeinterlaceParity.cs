@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(DeinterlaceParity left, DeinterlaceParity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeinterlaceParity"/> values are not the same. </summary>
         public static bool operator !=(DeinterlaceParity left, DeinterlaceParity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeinterlaceParity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeinterlaceParity"/>. </summary>
         public static implicit operator DeinterlaceParity(string value) => new DeinterlaceParity(value);
 
         /// <inheritdoc />

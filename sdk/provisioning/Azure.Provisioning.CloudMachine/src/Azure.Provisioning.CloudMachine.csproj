@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>Azure.Provisioning.CloudMachine simplifies declarative resource provisioning in .NET.</Description>
@@ -11,9 +11,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Messaging.ServiceBus"/>
     <PackageReference Include="Azure.Provisioning.Storage" VersionOverride="1.0.0-alpha.20240918.3" />
     <PackageReference Include="Azure.Provisioning.ServiceBus" VersionOverride="1.0.0-alpha.20240918.3" />
     <PackageReference Include="Azure.Provisioning.EventGrid" VersionOverride="1.0.0-alpha.20240918.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" VersionOverride="8.0.0" />
   </ItemGroup>
 
 </Project>

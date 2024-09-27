@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static bool operator ==(DevOpsResourceStatus left, DevOpsResourceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevOpsResourceStatus"/> values are not the same. </summary>
         public static bool operator !=(DevOpsResourceStatus left, DevOpsResourceStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevOpsResourceStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevOpsResourceStatus"/>. </summary>
         public static implicit operator DevOpsResourceStatus(string value) => new DevOpsResourceStatus(value);
 
         /// <inheritdoc />

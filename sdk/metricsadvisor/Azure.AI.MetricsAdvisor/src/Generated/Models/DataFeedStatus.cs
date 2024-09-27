@@ -28,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator ==(DataFeedStatus left, DataFeedStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFeedStatus"/> values are not the same. </summary>
         public static bool operator !=(DataFeedStatus left, DataFeedStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataFeedStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFeedStatus"/>. </summary>
         public static implicit operator DataFeedStatus(string value) => new DataFeedStatus(value);
 
         /// <inheritdoc />

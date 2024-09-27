@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(RepairAction left, RepairAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RepairAction"/> values are not the same. </summary>
         public static bool operator !=(RepairAction left, RepairAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RepairAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RepairAction"/>. </summary>
         public static implicit operator RepairAction(string value) => new RepairAction(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator ==(ContainerRegistryTriggerStatus left, ContainerRegistryTriggerStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryTriggerStatus"/> values are not the same. </summary>
         public static bool operator !=(ContainerRegistryTriggerStatus left, ContainerRegistryTriggerStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerRegistryTriggerStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryTriggerStatus"/>. </summary>
         public static implicit operator ContainerRegistryTriggerStatus(string value) => new ContainerRegistryTriggerStatus(value);
 
         /// <inheritdoc />

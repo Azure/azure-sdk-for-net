@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static bool operator ==(MigrationConfigurationName left, MigrationConfigurationName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MigrationConfigurationName"/> values are not the same. </summary>
         public static bool operator !=(MigrationConfigurationName left, MigrationConfigurationName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MigrationConfigurationName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MigrationConfigurationName"/>. </summary>
         public static implicit operator MigrationConfigurationName(string value) => new MigrationConfigurationName(value);
 
         /// <inheritdoc />
