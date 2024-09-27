@@ -471,6 +471,52 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(actualToken1.Token, actualToken2.Token);
         }
 
+        [Test]
+        public async Task AuthorityHostConfigSupportsdStS()
+        {
+            // Configure the transport
+            var token = Guid.NewGuid().ToString();
+            TransportConfig transportConfig = new()
+            {
+                TokenFactory = req => token,
+                RequestValidator = req =>
+                {
+                    if (req.Content != null)
+                    {
+                        var stream = new MemoryStream();
+                        req.Content.WriteTo(stream, default);
+                        var content = new BinaryData(stream.ToArray()).ToString();
+                        var queryString = Uri.UnescapeDataString(content)
+                            .Split('&')
+                            .Select(q => q.Split('='))
+                            .ToDictionary(kvp => kvp[0], kvp => kvp[1]);
+                    }
+                }
+            };
+            var factory = MockTokenTransportFactory(transportConfig);
+            var mockTransport = new MockTransport(factory);
+
+            var config = new CommonCredentialTestConfig()
+            {
+                TransportConfig = transportConfig,
+                Transport = mockTransport,
+                TenantId = TenantId,
+                AuthorityHost = new("https://usnorth-passive-dsts.dsts.core.windows.net/dstsv2"),
+                RedirectUri = new Uri("http://localhost:8400/")
+            };
+            var credential = GetTokenCredential(config);
+            if (!CredentialTestHelpers.IsMsalCredential(credential))
+            {
+                Assert.Ignore("EnableCAE tests do not apply to the non-MSAL credentials.");
+            }
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+
+            // First call to populate the account record for confidential client creds
+            await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
+            var actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate), default);
+            Assert.AreEqual(token, actualToken.Token);
+        }
+
         public class MemoryTokenCache : UnsafeTokenCacheOptions
         {
             public ReadOnlyMemory<byte> Data { get; set; } = new ReadOnlyMemory<byte>();
