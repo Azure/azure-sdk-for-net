@@ -9,7 +9,7 @@ Azure.Provisioning.Deployment makes it easy to declaratively specify Azure infra
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.Deployment
+dotnet add package Azure.Provisioning.Deployment --prerelease
 ```
 
 ### Prerequisites
