@@ -6,7 +6,8 @@
 - Added support to disable checkpointing via `TransferCheckpointStoreOptions.Disabled`.
 
 ### Breaking Changes
-- [BREAKING CHANGE] Removed the constructor for `TransferCheckpointStoreOptions` and replaced with a static builder method `Local`.
+- Removed the constructor for `TransferCheckpointStoreOptions` and replaced with a static builder method `Local`.
+- Changed `TransferCheckpointStoreOptions.CheckpointerPath` to internal.
 
 ### Bugs Fixed
 

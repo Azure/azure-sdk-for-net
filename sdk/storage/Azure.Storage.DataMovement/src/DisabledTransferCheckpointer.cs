@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -48,7 +47,7 @@ namespace Azure.Storage.DataMovement
             int length,
             CancellationToken cancellationToken = default)
         {
-            throw Errors.CheckpointerDisabled();
+            throw Errors.CheckpointerDisabled("ReadJobPartPlanFileAsync");
         }
 
         public override Task<Stream> ReadJobPlanFileAsync(
@@ -57,7 +56,7 @@ namespace Azure.Storage.DataMovement
             int length,
             CancellationToken cancellationToken = default)
         {
-            throw Errors.CheckpointerDisabled();
+            throw Errors.CheckpointerDisabled("ReadJobPlanFileAsync");
         }
 
         public override Task SetJobPartTransferStatusAsync(
