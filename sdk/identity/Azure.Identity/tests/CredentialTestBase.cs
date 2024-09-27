@@ -474,7 +474,6 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthorityHostConfigSupportsdStS()
         {
-            bool isPubClient = false;
             // Configure the transport
             var token = Guid.NewGuid().ToString();
             TransportConfig transportConfig = new()
@@ -485,14 +484,7 @@ namespace Azure.Identity.Tests
                     if (req.Uri.Path.EndsWith("/token"))
                     {
                         Assert.AreEqual("usnorth-passive-dsts.dsts.core.windows.net", req.Uri.Host);
-                        if (isPubClient)
-                        {
-                            Assert.AreEqual($"/{TenantId}/oauth2/v2.0/token", req.Uri.Path);
-                        }
-                        else
-                        {
-                            Assert.AreEqual($"/dstsv2/{TenantId}/oauth2/v2.0/token", req.Uri.Path);
-                        }
+                        Assert.AreEqual($"/dstsv2/{TenantId}/oauth2/v2.0/token", req.Uri.Path);
                     }
                 }
             };
@@ -512,7 +504,7 @@ namespace Azure.Identity.Tests
             {
                 Assert.Ignore("AuthorityHostConfigSupportsdStS tests do not apply to the non-MSAL credentials.");
             }
-            transportConfig.IsPubClient = isPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
 
             // First call to populate the account record for confidential client creds
             await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);

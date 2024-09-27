@@ -40,11 +40,9 @@ namespace Azure.Identity
             string[] clientCapabilities =
                 enableCae ? cp1Capabilities : Array.Empty<string>();
 
-            var authorityUri = new UriBuilder(AuthorityHost.Scheme, AuthorityHost.Host, AuthorityHost.Port, TenantId ?? Constants.OrganizationsTenantId).Uri;
-
             PublicClientApplicationBuilder pubAppBuilder = PublicClientApplicationBuilder
                 .Create(ClientId)
-                .WithAuthority(authorityUri)
+                .WithAuthority(AuthorityHost.AbsoluteUri, TenantId ?? Constants.OrganizationsTenantId, false)
                 .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
                 .WithLogging(AzureIdentityEventSource.Singleton, enablePiiLogging: IsSupportLoggingEnabled);
 
