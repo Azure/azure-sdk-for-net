@@ -96,9 +96,8 @@ public partial class FailoverGroup : Resource
     /// </summary>
     /// <param name="resourceName">Name of the FailoverGroup.</param>
     /// <param name="resourceVersion">Version of the FailoverGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public FailoverGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/failoverGroups", resourceVersion ?? "2021-11-01", context)
+    public FailoverGroup(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/failoverGroups", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _failoverDatabases = BicepList<ResourceIdentifier>.DefineProperty(this, "FailoverDatabases", ["properties", "databases"]);

@@ -242,9 +242,8 @@ public partial class SearchService : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SearchService.</param>
     /// <param name="resourceVersion">Version of the SearchService.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SearchService(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Search/searchServices", resourceVersion ?? "2023-11-01", context)
+    public SearchService(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Search/searchServices", resourceVersion ?? "2023-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

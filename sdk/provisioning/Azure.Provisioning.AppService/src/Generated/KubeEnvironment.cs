@@ -131,9 +131,8 @@ public partial class KubeEnvironment : Resource
     /// </summary>
     /// <param name="resourceName">Name of the KubeEnvironment.</param>
     /// <param name="resourceVersion">Version of the KubeEnvironment.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public KubeEnvironment(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/kubeEnvironments", resourceVersion ?? "2021-03-01", context)
+    public KubeEnvironment(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/kubeEnvironments", resourceVersion ?? "2021-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

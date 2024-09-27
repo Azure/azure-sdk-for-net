@@ -26,8 +26,8 @@ internal static class Azd
         var cmid = ReadOrCreateCmid();
 
         // main.bicep
-        var location = new BicepParameter("location", typeof(string));
-        var principalId = new BicepParameter("principalId", typeof(string));
+        var location = new ProvisioningParameter("location", typeof(string));
+        var principalId = new ProvisioningParameter("principalId", typeof(string));
 
         ResourceGroup rg = new(nameof(rg), ResourceGroupVersion)
         {

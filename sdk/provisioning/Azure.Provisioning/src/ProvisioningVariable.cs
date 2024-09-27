@@ -12,7 +12,7 @@ namespace Azure.Provisioning;
 /// <summary>
 /// Represents a variable in a Bicep template.
 /// </summary>
-public class BicepVariable : NamedProvisioningConstruct
+public class ProvisioningVariable : NamedProvisioningConstruct
 {
     /// <summary>
     /// Gets or sets the value of the variable.
@@ -32,30 +32,28 @@ public class BicepVariable : NamedProvisioningConstruct
     public Expression BicepType { get; }
 
     /// <summary>
-    /// Creates a new BicepVariable.
+    /// Creates a new ProvisioningVariable.
     /// </summary>
     /// <param name="name">Name of the variable.</param>
     /// <param name="type">Type of the variable.</param>
     /// <param name="value">Default value of the variable.</param>
-    /// <param name="context">Optional provisioning context.</param>
-    protected BicepVariable(string name, Expression type, BicepValue<object>? value, ProvisioningContext? context = default)
-        : base(name, context)
+    protected ProvisioningVariable(string name, Expression type, BicepValue<object>? value)
+        : base(name)
     {
         BicepType = type;
         _value = BicepValue<object>.DefineProperty(this, nameof(Value), bicepPath: null, defaultValue: value);
     }
 
     /// <summary>
-    /// Creates a new BicepVariable.
+    /// Creates a new ProvisioningVariable.
     /// </summary>
     /// <param name="name">Name of the variable.</param>
     /// <param name="type">Type of the variable.</param>
-    /// <param name="context">Optional provisioning context.</param>
-    public BicepVariable(string name, Type type, ProvisioningContext? context = default)
-        : this(name, new TypeExpression(type), value: null, context) { }
+    public ProvisioningVariable(string name, Type type)
+        : this(name, new TypeExpression(type), value: null) { }
 
     /// <inheritdoc />
-    protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = default)
+    protected internal override IEnumerable<Statement> Compile()
     {
         // TODO: add the rest of https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/parameters#use-decorators?
         VariableStatement stmt = BicepSyntax.Declare.Var(ResourceName, Value.Compile());

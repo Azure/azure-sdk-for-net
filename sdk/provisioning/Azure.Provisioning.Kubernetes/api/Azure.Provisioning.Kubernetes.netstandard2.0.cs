@@ -2,7 +2,7 @@ namespace Azure.Provisioning.Kubernetes
 {
     public partial class ConnectedCluster : Azure.Provisioning.Primitives.Resource
     {
-        public ConnectedCluster(string resourceName, string? resourceVersion = null, Azure.Provisioning.ProvisioningContext? context = null) : base (default(string), default(Azure.Core.ResourceType), default(string), default(Azure.Provisioning.ProvisioningContext)) { }
+        public ConnectedCluster(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AgentPublicKeyCertificate { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> AgentVersion { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kubernetes.ConnectivityStatus> ConnectivityStatus { get { throw null; } }

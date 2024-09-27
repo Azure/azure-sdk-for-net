@@ -76,9 +76,8 @@ public partial class AuthorizationRoleDefinition : Resource
     /// </summary>
     /// <param name="resourceName">Name of the AuthorizationRoleDefinition.</param>
     /// <param name="resourceVersion">Version of the AuthorizationRoleDefinition.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public AuthorizationRoleDefinition(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Authorization/roleDefinitions", resourceVersion ?? "2022-04-01", context)
+    public AuthorizationRoleDefinition(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Authorization/roleDefinitions", resourceVersion ?? "2022-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true, defaultValue: GetNameDefaultValue());
         _assignableScopes = BicepList<string>.DefineProperty(this, "AssignableScopes", ["properties", "assignableScopes"]);

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Provisioning.AppContainers;
+using Azure.Provisioning.Authorization;
 using Azure.Provisioning.ContainerRegistry;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.OperationalInsights;
@@ -25,18 +26,25 @@ internal class SampleTests(bool async)
     public async Task SimpleDeploy()
     {
         BlobService? blobs = null;
-        BicepOutput? endpoint = null;
+        ProvisioningOutput? endpoint = null;
 
         await using Trycep test = CreateBicepTest();
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 // Create a storage account and blob resources
                 StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                infra.Add(storage);
                 blobs = new(nameof(blobs)) { Parent = storage };
+                infra.Add(blobs);
 
                 // Grab the endpoint
-                endpoint = new BicepOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri };
+                endpoint = new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri };
+                infra.Add(endpoint);
+
+                return infra;
             })
         .Compare(
             """
@@ -56,7 +64,7 @@ internal class SampleTests(bool async)
               }
             }
 
-            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
+            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
               name: 'default'
               parent: storage
             }
@@ -90,14 +98,21 @@ internal class SampleTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter principalId = new(nameof(principalId), typeof(string)) { Value = "" };
-                BicepParameter tags = new(nameof(tags), typeof(object)) { Value = new BicepDictionary<string>() };
+                Infrastructure infra = new();
+
+                ProvisioningParameter principalId = new(nameof(principalId), typeof(string)) { Value = "" };
+                infra.Add(principalId);
+
+                ProvisioningParameter tags = new(nameof(tags), typeof(object)) { Value = new BicepDictionary<string>() };
+                infra.Add(tags);
 
                 UserAssignedIdentity mi =
                     new(nameof(mi))
                     {
                         Tags = tags,
                     };
+                infra.Add(mi);
+
                 ContainerRegistryService acr =
                     new(nameof(acr))
                     {
@@ -114,13 +129,19 @@ internal class SampleTests(bool async)
                                 }
                             }
                     };
-                acr.AssignRole(ContainerRegistryBuiltInRole.AcrPull, mi);
+                infra.Add(acr);
+
+                RoleAssignment pullAssignment = acr.AssignRole(ContainerRegistryBuiltInRole.AcrPull, mi);
+                infra.Add(pullAssignment);
+
                 OperationalInsightsWorkspace law =
                     new(nameof(law))
                     {
                         Sku = new OperationalInsightsWorkspaceSku() { Name = OperationalInsightsWorkspaceSkuName.PerGB2018 },
                         Tags = tags,
                     };
+                infra.Add(law);
+
                 ContainerAppManagedEnvironment cae =
                     new(nameof(cae))
                     {
@@ -144,7 +165,10 @@ internal class SampleTests(bool async)
                             },
                         Tags = tags,
                     };
-                cae.AssignRole(AppContainersBuiltInRole.Contributor, mi);
+                infra.Add(cae);
+
+                RoleAssignment contribAssignment = cae.AssignRole(AppContainersBuiltInRole.Contributor, mi);
+                infra.Add(contribAssignment);
 
                 // Hack in the Aspire Dashboard as a literal since there's no
                 // management plane library support for dotNetComponents yet
@@ -159,17 +183,20 @@ internal class SampleTests(bool async)
                                 new PropertyExpression("properties",
                                     new ObjectExpression(
                                         new PropertyExpression("componentType", new StringLiteral("AspireDashboard")))))));
+                infra.Add(aspireDashboard);
 
-                _ = new BicepOutput("MANAGED_IDENTITY_CLIENT_ID", typeof(string)) { Value = mi.ClientId };
-                _ = new BicepOutput("MANAGED_IDENTITY_NAME", typeof(string)) { Value = mi.Name };
-                _ = new BicepOutput("MANAGED_IDENTITY_PRINCIPAL_ID", typeof(string)) { Value = mi.PrincipalId };
-                _ = new BicepOutput("LOG_ANALYTICS_WORKSPACE_NAME", typeof(string)) { Value = law.Name };
-                _ = new BicepOutput("LOG_ANALYTICS_WORKSPACE_ID", typeof(string)) { Value = law.Id };
-                _ = new BicepOutput("AZURE_CONTAINER_REGISTRY_ENDPOINT", typeof(string)) { Value = acr.LoginServer };
-                _ = new BicepOutput("AZURE_CONTAINER_REGISTRY_MANAGED_IDENTITY_ID", typeof(string)) { Value = mi.Id };
-                _ = new BicepOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_NAME", typeof(string)) { Value = cae.Name };
-                _ = new BicepOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_ID", typeof(string)) { Value = cae.Id };
-                _ = new BicepOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN", typeof(string)) { Value = cae.DefaultDomain };
+                infra.Add(new ProvisioningOutput("MANAGED_IDENTITY_CLIENT_ID", typeof(string)) { Value = mi.ClientId });
+                infra.Add(new ProvisioningOutput("MANAGED_IDENTITY_NAME", typeof(string)) { Value = mi.Name });
+                infra.Add(new ProvisioningOutput("MANAGED_IDENTITY_PRINCIPAL_ID", typeof(string)) { Value = mi.PrincipalId });
+                infra.Add(new ProvisioningOutput("LOG_ANALYTICS_WORKSPACE_NAME", typeof(string)) { Value = law.Name });
+                infra.Add(new ProvisioningOutput("LOG_ANALYTICS_WORKSPACE_ID", typeof(string)) { Value = law.Id });
+                infra.Add(new ProvisioningOutput("AZURE_CONTAINER_REGISTRY_ENDPOINT", typeof(string)) { Value = acr.LoginServer });
+                infra.Add(new ProvisioningOutput("AZURE_CONTAINER_REGISTRY_MANAGED_IDENTITY_ID", typeof(string)) { Value = mi.Id });
+                infra.Add(new ProvisioningOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_NAME", typeof(string)) { Value = cae.Name });
+                infra.Add(new ProvisioningOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_ID", typeof(string)) { Value = cae.Id });
+                infra.Add(new ProvisioningOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN", typeof(string)) { Value = cae.DefaultDomain });
+
+                return infra;
             })
         .Compare(
             """
@@ -211,7 +238,7 @@ internal class SampleTests(bool async)
               scope: acr
             }
 
-            resource law 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
+            resource law 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
               name: take('law-${uniqueString(resourceGroup().id)}', 63)
               location: location
               properties: {
@@ -222,7 +249,7 @@ internal class SampleTests(bool async)
               tags: tags
             }
 
-            resource cae 'Microsoft.App/managedEnvironments@2023-05-01' = {
+            resource cae 'Microsoft.App/managedEnvironments@2024-03-01' = {
               name: take('cae${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
@@ -292,15 +319,14 @@ internal class SampleTests(bool async)
         await test.Define(
             ctx =>
             {
-                // Create a new resource group
-                ResourceGroup rg = new("rg-test", "2024-03-01");
-
                 // Create a new infra group scoped to our subscription and add
                 // the resource group
-                Infrastructure group = new("main") { TargetScope = "subscription" };
-                group.Add(rg);
+                Infrastructure infra = new() { TargetScope = "subscription" };
 
-                return group;
+                ResourceGroup rg = new("rg-test", "2024-03-01");
+                infra.Add(rg);
+
+                return infra;
             })
         .Compare(
             """

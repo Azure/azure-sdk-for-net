@@ -10,28 +10,26 @@ namespace Azure.Provisioning;
 /// <summary>
 /// Represents an output in a Bicep template.
 /// </summary>
-public class BicepOutput : BicepVariable
+public class ProvisioningOutput : ProvisioningVariable
 {
     /// <summary>
-    /// Creates a new BicepOutput.
+    /// Creates a new ProvisioningOutput.
     /// </summary>
     /// <param name="name">Name of the output.</param>
     /// <param name="type">Type of the output.</param>
-    /// <param name="context">Optional provisioning context.</param>
-    public BicepOutput(string name, Expression type, ProvisioningContext? context = default)
-        : base(name, type, value: null, context) { }
+    public ProvisioningOutput(string name, Expression type)
+        : base(name, type, value: null) { }
 
     /// <summary>
-    /// Creates a new BicepOutput.
+    /// Creates a new ProvisioningOutput.
     /// </summary>
     /// <param name="name">Name of the output.</param>
     /// <param name="type">Type of the output.</param>
-    /// <param name="context">Optional provisioning context.</param>
-    public BicepOutput(string name, Type type, ProvisioningContext? context = default)
-        : this(name, new TypeExpression(type), context) { }
+    public ProvisioningOutput(string name, Type type)
+        : this(name, new TypeExpression(type)) { }
 
     /// <inheritdoc />
-    protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = default)
+    protected internal override IEnumerable<Statement> Compile()
     {
         OutputStatement stmt = BicepSyntax.Declare.Output(ResourceName, BicepType, Value.Compile());
         if (Description is not null) { stmt = stmt.Decorate("description", BicepSyntax.Value(Description)); }

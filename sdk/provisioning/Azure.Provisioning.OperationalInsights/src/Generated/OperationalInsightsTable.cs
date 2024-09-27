@@ -128,9 +128,8 @@ public partial class OperationalInsightsTable : Resource
     /// </summary>
     /// <param name="resourceName">Name of the OperationalInsightsTable.</param>
     /// <param name="resourceVersion">Version of the OperationalInsightsTable.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public OperationalInsightsTable(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.OperationalInsights/workspaces/tables", resourceVersion ?? "2022-10-01", context)
+    public OperationalInsightsTable(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.OperationalInsights/workspaces/tables", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _plan = BicepValue<OperationalInsightsTablePlan>.DefineProperty(this, "Plan", ["properties", "plan"]);
@@ -156,9 +155,9 @@ public partial class OperationalInsightsTable : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2023-01-01-preview.
+        /// 2023-09-01.
         /// </summary>
-        public static readonly string V2023_01_01_preview = "2023-01-01-preview";
+        public static readonly string V2023_09_01 = "2023-09-01";
 
         /// <summary>
         /// 2022-10-01.
