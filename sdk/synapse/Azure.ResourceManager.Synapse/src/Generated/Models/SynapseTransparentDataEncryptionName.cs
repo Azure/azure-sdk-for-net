@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SynapseTransparentDataEncryptionName left, SynapseTransparentDataEncryptionName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseTransparentDataEncryptionName"/> values are not the same. </summary>
         public static bool operator !=(SynapseTransparentDataEncryptionName left, SynapseTransparentDataEncryptionName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SynapseTransparentDataEncryptionName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SynapseTransparentDataEncryptionName"/>. </summary>
         public static implicit operator SynapseTransparentDataEncryptionName(string value) => new SynapseTransparentDataEncryptionName(value);
 
         /// <inheritdoc />

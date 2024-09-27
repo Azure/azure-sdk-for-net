@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static bool operator ==(ModelLifecycleStatus left, ModelLifecycleStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ModelLifecycleStatus"/> values are not the same. </summary>
         public static bool operator !=(ModelLifecycleStatus left, ModelLifecycleStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ModelLifecycleStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ModelLifecycleStatus"/>. </summary>
         public static implicit operator ModelLifecycleStatus(string value) => new ModelLifecycleStatus(value);
 
         /// <inheritdoc />

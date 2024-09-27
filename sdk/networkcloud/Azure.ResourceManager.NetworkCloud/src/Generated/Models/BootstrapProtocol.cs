@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(BootstrapProtocol left, BootstrapProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BootstrapProtocol"/> values are not the same. </summary>
         public static bool operator !=(BootstrapProtocol left, BootstrapProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BootstrapProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BootstrapProtocol"/>. </summary>
         public static implicit operator BootstrapProtocol(string value) => new BootstrapProtocol(value);
 
         /// <inheritdoc />

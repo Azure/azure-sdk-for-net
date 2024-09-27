@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(LogCollectionJobType left, LogCollectionJobType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogCollectionJobType"/> values are not the same. </summary>
         public static bool operator !=(LogCollectionJobType left, LogCollectionJobType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogCollectionJobType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogCollectionJobType"/>. </summary>
         public static implicit operator LogCollectionJobType(string value) => new LogCollectionJobType(value);
 
         /// <inheritdoc />

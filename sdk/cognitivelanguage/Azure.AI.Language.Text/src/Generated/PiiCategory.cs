@@ -546,7 +546,7 @@ namespace Azure.AI.Language.Text
         public static bool operator ==(PiiCategory left, PiiCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PiiCategory"/> values are not the same. </summary>
         public static bool operator !=(PiiCategory left, PiiCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PiiCategory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PiiCategory"/>. </summary>
         public static implicit operator PiiCategory(string value) => new PiiCategory(value);
 
         /// <inheritdoc />

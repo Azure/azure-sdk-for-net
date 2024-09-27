@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static bool operator ==(KubernetesConfigurationProvisioningState left, KubernetesConfigurationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubernetesConfigurationProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(KubernetesConfigurationProvisioningState left, KubernetesConfigurationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KubernetesConfigurationProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KubernetesConfigurationProvisioningState"/>. </summary>
         public static implicit operator KubernetesConfigurationProvisioningState(string value) => new KubernetesConfigurationProvisioningState(value);
 
         /// <inheritdoc />
