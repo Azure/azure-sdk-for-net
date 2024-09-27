@@ -131,7 +131,7 @@ internal class SampleTests(bool async)
                     };
                 infra.Add(acr);
 
-                RoleAssignment pullAssignment = acr.AssignRole(ContainerRegistryBuiltInRole.AcrPull, mi);
+                RoleAssignment pullAssignment = acr.CreateRoleAssignment(ContainerRegistryBuiltInRole.AcrPull, mi);
                 infra.Add(pullAssignment);
 
                 OperationalInsightsWorkspace law =
@@ -167,7 +167,7 @@ internal class SampleTests(bool async)
                     };
                 infra.Add(cae);
 
-                RoleAssignment contribAssignment = cae.AssignRole(AppContainersBuiltInRole.Contributor, mi);
+                RoleAssignment contribAssignment = cae.CreateRoleAssignment(AppContainersBuiltInRole.Contributor, mi);
                 infra.Add(contribAssignment);
 
                 // Hack in the Aspire Dashboard as a literal since there's no

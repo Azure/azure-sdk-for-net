@@ -104,7 +104,7 @@ public class BasicStorageTests(bool async)
                 UserAssignedIdentity id = new(nameof(id));
                 infra.Add(id);
 
-                RoleAssignment role = storage.AssignRole(StorageBuiltInRole.StorageBlobDataReader, id);
+                RoleAssignment role = storage.CreateRoleAssignment(StorageBuiltInRole.StorageBlobDataReader, id);
                 infra.Add(role);
 
                 return infra;
@@ -161,7 +161,7 @@ public class BasicStorageTests(bool async)
                 UserAssignedIdentity id = new(nameof(id));
                 infra.Add(id);
 
-                RoleAssignment role = storage.AssignRole(StorageBuiltInRole.StorageBlobDataReader, RoleManagementPrincipalType.ServicePrincipal, id.PrincipalId);
+                RoleAssignment role = storage.CreateRoleAssignment(StorageBuiltInRole.StorageBlobDataReader, RoleManagementPrincipalType.ServicePrincipal, id.PrincipalId, "custom");
                 infra.Add(role);
 
                 return infra;
@@ -189,7 +189,7 @@ public class BasicStorageTests(bool async)
               location: location
             }
 
-            resource storage_StorageBlobDataReader 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+            resource storage_StorageBlobDataReader_custom 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
               name: guid(storage.id, id.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1'))
               properties: {
                 principalId: id.properties.principalId

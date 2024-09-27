@@ -191,26 +191,19 @@ public class CloudMachineInfrastructure : Infrastructure
 
         Add(_identity);
         Add(_storage);
-        Add(_storage.AssignRole(StorageBuiltInRole.StorageBlobDataContributor, RoleManagementPrincipalType.User, PrincipalIdParameter));
-        Add(_storage.AssignRole(StorageBuiltInRole.StorageTableDataContributor, RoleManagementPrincipalType.User, PrincipalIdParameter));
+        Add(_storage.CreateRoleAssignment(StorageBuiltInRole.StorageBlobDataContributor, RoleManagementPrincipalType.User, PrincipalIdParameter));
+        Add(_storage.CreateRoleAssignment(StorageBuiltInRole.StorageTableDataContributor, RoleManagementPrincipalType.User, PrincipalIdParameter));
         Add(_container);
         Add(_blobs);
         Add(_serviceBusNamespace);
-        Add(_serviceBusNamespace.AssignRole(ServiceBusBuiltInRole.AzureServiceBusDataOwner, RoleManagementPrincipalType.User, PrincipalIdParameter));
+        Add(_serviceBusNamespace.CreateRoleAssignment(ServiceBusBuiltInRole.AzureServiceBusDataOwner, RoleManagementPrincipalType.User, PrincipalIdParameter));
         Add(_serviceBusNamespaceAuthorizationRule);
         Add(_serviceBusTopic_main);
         Add(_serviceBusTopic_app);
         Add(_serviceBusSubscription_main);
         Add(_serviceBusSubscription_app);
 
-        // This is necessary until SystemTopic adds an AssignRole method.
-        var role = ServiceBusBuiltInRole.AzureServiceBusDataSender;
-        RoleAssignment roleAssignment = new RoleAssignment(_serviceBusNamespace.ResourceName + "_" + _identity.ResourceName + "_" + ServiceBusBuiltInRole.GetBuiltInRoleName(role));
-        roleAssignment.Name = BicepFunction.CreateGuid(_serviceBusNamespace.Id, _identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()));
-        roleAssignment.Scope = new IdentifierExpression(_serviceBusNamespace.ResourceName);
-        roleAssignment.PrincipalType = RoleManagementPrincipalType.ServicePrincipal;
-        roleAssignment.RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString());
-        roleAssignment.PrincipalId = _identity.PrincipalId;
+        RoleAssignment roleAssignment = _serviceBusNamespace.CreateRoleAssignment(ServiceBusBuiltInRole.AzureServiceBusDataSender, _identity);
         Add(roleAssignment);
         // the role assignment must exist before the system topic event subscription is created.
         _systemTopicEventSubscription.DependsOn.Add(roleAssignment);
