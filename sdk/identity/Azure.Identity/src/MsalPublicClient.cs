@@ -347,6 +347,11 @@ namespace Azure.Identity
             {
                 builder.WithClaims(claims);
             }
+            if (!string.IsNullOrEmpty(TenantId))
+            {
+                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(TenantId);
+                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+            }
 
             return await builder.ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);

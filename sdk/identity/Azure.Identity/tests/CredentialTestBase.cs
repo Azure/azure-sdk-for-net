@@ -474,6 +474,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthorityHostConfigSupportsdStS()
         {
+            bool isPubClient = false;
             // Configure the transport
             var token = Guid.NewGuid().ToString();
             TransportConfig transportConfig = new()
@@ -481,15 +482,17 @@ namespace Azure.Identity.Tests
                 TokenFactory = req => token,
                 RequestValidator = req =>
                 {
-                    if (req.Content != null)
+                    if (req.Uri.Path.EndsWith("/token"))
                     {
-                        var stream = new MemoryStream();
-                        req.Content.WriteTo(stream, default);
-                        var content = new BinaryData(stream.ToArray()).ToString();
-                        var queryString = Uri.UnescapeDataString(content)
-                            .Split('&')
-                            .Select(q => q.Split('='))
-                            .ToDictionary(kvp => kvp[0], kvp => kvp[1]);
+                        Assert.AreEqual("usnorth-passive-dsts.dsts.core.windows.net", req.Uri.Host);
+                        if (isPubClient)
+                        {
+                            Assert.AreEqual($"/{TenantId}/oauth2/v2.0/token", req.Uri.Path);
+                        }
+                        else
+                        {
+                            Assert.AreEqual($"/dstsv2/{TenantId}/oauth2/v2.0/token", req.Uri.Path);
+                        }
                     }
                 }
             };
@@ -507,9 +510,9 @@ namespace Azure.Identity.Tests
             var credential = GetTokenCredential(config);
             if (!CredentialTestHelpers.IsMsalCredential(credential))
             {
-                Assert.Ignore("EnableCAE tests do not apply to the non-MSAL credentials.");
+                Assert.Ignore("AuthorityHostConfigSupportsdStS tests do not apply to the non-MSAL credentials.");
             }
-            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            transportConfig.IsPubClient = isPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
 
             // First call to populate the account record for confidential client creds
             await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
