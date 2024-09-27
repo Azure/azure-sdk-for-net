@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> AddressSpace contains an array of IP address ranges that can be used by subnets of the virtual network. </summary>
-    internal partial class AddressSpace
+    public partial class AddressSpace
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,18 +49,23 @@ namespace Azure.ResourceManager.Network.Models
         public AddressSpace()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
+            IpamPoolPrefixAllocations = new ChangeTrackingList<IpamPoolPrefixAllocation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AddressSpace"/>. </summary>
         /// <param name="addressPrefixes"> A list of address blocks reserved for this virtual network in CIDR notation. </param>
+        /// <param name="ipamPoolPrefixAllocations"> A list of IPAM Pools allocating IP address prefixes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AddressSpace(IList<string> addressPrefixes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AddressSpace(IList<string> addressPrefixes, IList<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AddressPrefixes = addressPrefixes;
+            IpamPoolPrefixAllocations = ipamPoolPrefixAllocations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
         public IList<string> AddressPrefixes { get; }
+        /// <summary> A list of IPAM Pools allocating IP address prefixes. </summary>
+        public IList<IpamPoolPrefixAllocation> IpamPoolPrefixAllocations { get; }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetsSecurityAdminRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerAdminRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerAdminRuleGet.json
             // this example is just showing the usage of "AdminRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetsSecurityDefaultAdminRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerDefaultAdminRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerDefaultAdminRuleGet.json
             // this example is just showing the usage of "AdminRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a default admin rule
+        // Create a admin rule with network group as source or destination
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_CreateADefaultAdminRule()
+        public async Task Update_CreateAAdminRuleWithNetworkGroupAsSourceOrDestination()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerDefaultAdminRulePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerAdminRulePut_NetworkGroupSource.json
             // this example is just showing the usage of "AdminRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -103,14 +103,42 @@ namespace Azure.ResourceManager.Network.Samples
             string networkManagerName = "testNetworkManager";
             string configurationName = "myTestSecurityConfig";
             string ruleCollectionName = "testRuleCollection";
-            string ruleName = "SampleDefaultAdminRule";
+            string ruleName = "SampleAdminRule";
             ResourceIdentifier baseAdminRuleResourceId = BaseAdminRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName, ruleCollectionName, ruleName);
             BaseAdminRuleResource baseAdminRule = client.GetBaseAdminRuleResource(baseAdminRuleResourceId);
 
             // invoke the operation
-            BaseAdminRuleData data = new NetworkDefaultAdminRule()
+            BaseAdminRuleData data = new NetworkAdminRule()
             {
-                Flag = "AllowVnetInbound",
+                Description = "This is Sample Admin Rule",
+                Protocol = SecurityConfigurationRuleProtocol.Tcp,
+                Sources =
+{
+new AddressPrefixItem()
+{
+AddressPrefix = "Internet",
+AddressPrefixType = AddressPrefixType.ServiceTag,
+}
+},
+                Destinations =
+{
+new AddressPrefixItem()
+{
+AddressPrefix = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkManagers/testNetworkManager/networkGroups/ng1",
+AddressPrefixType = AddressPrefixType.NetworkGroup,
+}
+},
+                SourcePortRanges =
+{
+"0-65535"
+},
+                DestinationPortRanges =
+{
+"22"
+},
+                Access = SecurityConfigurationRuleAccess.Deny,
+                Priority = 1,
+                Direction = SecurityConfigurationRuleDirection.Inbound,
             };
             ArmOperation<BaseAdminRuleResource> lro = await baseAdminRule.UpdateAsync(WaitUntil.Completed, data);
             BaseAdminRuleResource result = lro.Value;
@@ -127,7 +155,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateAnAdminRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerAdminRulePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerAdminRulePut.json
             // this example is just showing the usage of "AdminRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -194,7 +222,7 @@ AddressPrefixType = AddressPrefixType.IPPrefix,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeletesAnAdminRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerAdminRuleDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerAdminRuleDelete.json
             // this example is just showing the usage of "AdminRules_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

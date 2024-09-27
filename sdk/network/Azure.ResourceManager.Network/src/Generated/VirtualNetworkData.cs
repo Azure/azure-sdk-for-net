@@ -78,17 +78,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
         /// <summary> The AddressSpace that contains an array of IP address ranges that can be used by subnets. </summary>
-        internal AddressSpace AddressSpace { get; set; }
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> AddressPrefixes
-        {
-            get
-            {
-                if (AddressSpace is null)
-                    AddressSpace = new AddressSpace();
-                return AddressSpace.AddressPrefixes;
-            }
-        }
+        public AddressSpace AddressSpace { get; set; }
 
         /// <summary> The dhcpOptions that contains an array of DNS servers available to VMs deployed in the virtual network. </summary>
         internal DhcpOptions DhcpOptions { get; set; }

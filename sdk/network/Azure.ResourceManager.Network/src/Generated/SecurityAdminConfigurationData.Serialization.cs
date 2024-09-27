@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && Optional.IsDefined(CommonResourceType))
             {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(CommonResourceType);
             }
             if (options.Format != "W")
             {
@@ -69,6 +69,11 @@ namespace Azure.ResourceManager.Network
                     writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NetworkGroupAddressSpaceAggregationOption))
+            {
+                writer.WritePropertyName("networkGroupAddressSpaceAggregationOption"u8);
+                writer.WriteStringValue(NetworkGroupAddressSpaceAggregationOption.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -119,26 +124,23 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            ETag? etag = default;
+            string type = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType type0 = default;
             SystemData systemData = default;
             string description = default;
             IList<NetworkIntentPolicyBasedService> applyOnNetworkIntentPolicyBasedServices = default;
+            AddressSpaceAggregationOption? networkGroupAddressSpaceAggregationOption = default;
             NetworkProvisioningState? provisioningState = default;
             Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
+                if (property.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -153,7 +155,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ResourceType(property.Value.GetString());
+                    type0 = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))
@@ -193,6 +195,15 @@ namespace Azure.ResourceManager.Network
                             applyOnNetworkIntentPolicyBasedServices = array;
                             continue;
                         }
+                        if (property0.NameEquals("networkGroupAddressSpaceAggregationOption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkGroupAddressSpaceAggregationOption = new AddressSpaceAggregationOption(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -223,13 +234,14 @@ namespace Azure.ResourceManager.Network
             return new SecurityAdminConfigurationData(
                 id,
                 name,
-                type,
+                type0,
                 systemData,
                 description,
                 applyOnNetworkIntentPolicyBasedServices ?? new ChangeTrackingList<NetworkIntentPolicyBasedService>(),
+                networkGroupAddressSpaceAggregationOption,
                 provisioningState,
                 resourceGuid,
-                etag,
+                type,
                 serializedAdditionalRawData);
         }
 
