@@ -238,29 +238,29 @@ namespace Azure.Security.KeyVault
                         ProcessNext(message, pipeline);
                     }
                 }
-            }
 
-            // Handle the scenario in which we get a CAE challenge back.
-            if (message.Response.Status == (int)HttpStatusCode.Unauthorized
-                && message.Response.Headers.Contains(HttpHeader.Names.WwwAuthenticate)
-                && AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "claims") != null)
-            {
-                if (async)
+                // Handle the scenario in which we get a CAE challenge back.
+                if (message.Response.Status == (int)HttpStatusCode.Unauthorized
+                    && message.Response.Headers.Contains(HttpHeader.Names.WwwAuthenticate)
+                    && AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "claims") != null)
                 {
-                    if (await AuthorizeRequestOnChallengeAsync(message).ConfigureAwait(false))
+                    if (async)
                     {
-                        await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                        if (await AuthorizeRequestOnChallengeAsync(message).ConfigureAwait(false))
+                        {
+                            await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                        }
+                    }
+                    else
+                    {
+                        if (AuthorizeRequestOnChallenge(message))
+                        {
+                            ProcessNext(message, pipeline);
+                        }
                     }
                 }
-                else
-                {
-                    if (AuthorizeRequestOnChallenge(message))
-                    {
-                        ProcessNext(message, pipeline);
-                    }
-                }
+                // If we get a second CAE challenge, an unlikely scenario, we do not attempt to re-authenticate.
             }
-            // If we get a second CAE challenge, an unlikely scenario, we do not attempt to re-authenticate.
         }
 
         internal class ChallengeParameters
