@@ -25,7 +25,13 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             VirtualNetworkData vnetInput = new VirtualNetworkData()
             {
                 Location = resourceGroup.Data.Location,
-                AddressPrefixes = { "10.0.0.0/16", },
+                AddressSpace = new AddressSpace()
+                {
+                    AddressPrefixes =
+                    {
+                        "10.0.0.0/16"
+                    },
+                },
                 DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
                 Subnets = { new SubnetData() { Name = "mySubnet", AddressPrefix = "10.0.1.0/24" } }
             };
