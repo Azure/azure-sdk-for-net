@@ -80,7 +80,40 @@ namespace Azure.ResourceManager.Avs.Models
             identitySources ??= new List<SingleSignOnIdentitySource>();
             externalCloudLinks ??= new List<ResourceIdentifier>();
 
-            return new AvsPrivateCloudData(id, name, resourceType, systemData, tags, location, skuName != null ? new AvsSku(skuName) : null, identity, managementCluster, internet, identitySources?.ToList(), availability, encryption, new List<string>(), provisioningState, circuit, endpoints, networkBlock, managementNetwork, provisioningNetwork, vMotionNetwork, vCenterPassword, nsxtPassword, vCenterCertificateThumbprint, nsxtCertificateThumbprint, externalCloudLinks?.ToList(), secondaryCircuit, nsxPublicIPQuotaRaised, null, null, null);
+            return AvsPrivateCloudData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                sku: skuName != null ? new AvsSku(skuName) : null,
+                identity: identity,
+                managementCluster: managementCluster,
+                internet: internet,
+                identitySources: identitySources?.ToList(),
+                availability: availability,
+                encryption: encryption,
+                extendedNetworkBlocks: new List<string>(),
+                provisioningState: provisioningState,
+                circuit: circuit,
+                endpoints: endpoints,
+                networkBlock: networkBlock,
+                managementNetwork: managementNetwork,
+                provisioningNetwork: provisioningNetwork,
+                vMotionNetwork: vMotionNetwork,
+                vCenterPassword: vCenterPassword,
+                nsxtPassword: nsxtPassword,
+                vCenterCertificateThumbprint: vCenterCertificateThumbprint,
+                nsxtCertificateThumbprint: nsxtCertificateThumbprint,
+                externalCloudLinks: externalCloudLinks?.ToList(),
+                secondaryCircuit: secondaryCircuit,
+                nsxPublicIPQuotaRaised: nsxPublicIPQuotaRaised,
+                virtualNetworkId: null,
+                dnsZoneType: null
+            );
+
+            //externalCloudLinks?.ToList(), secondaryCircuit, nsxPublicIPQuotaRaised, null, null, null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudData"/>. </summary>
@@ -158,38 +191,37 @@ namespace Azure.ResourceManager.Avs.Models
             ExpressRouteCircuit secondaryCircuit,
             NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised)
         {
-            return new AvsPrivateCloudData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                sku != null ? new AvsSku(sku) : null,
-                identity,
-                managementCluster,
-                internet,
-                identitySources?.ToList(),
-                availability,
-                encryption,
-                extendedNetworkBlocks?.ToList(),
-                provisioningState,
-                circuit,
-                endpoints,
-                networkBlock,
-                managementNetwork,
-                provisioningNetwork,
-                vMotionNetwork,
-                vCenterPassword,
-                nsxtPassword,
-                vCenterCertificateThumbprint,
-                nsxtCertificateThumbprint,
-                externalCloudLinks?.ToList(),
-                secondaryCircuit,
-                nsxPublicIPQuotaRaised,
-                null,
-                null,
-                null
+            return AvsPrivateCloudData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                sku: sku != null ? new AvsSku(sku) : null,
+                identity: identity,
+                managementCluster: managementCluster,
+                internet: internet,
+                identitySources: identitySources?.ToList(),
+                availability: availability,
+                encryption: encryption,
+                extendedNetworkBlocks: extendedNetworkBlocks?.ToList(),
+                provisioningState: provisioningState,
+                circuit: circuit,
+                endpoints: endpoints,
+                networkBlock: networkBlock,
+                managementNetwork: managementNetwork,
+                provisioningNetwork: provisioningNetwork,
+                vMotionNetwork: vMotionNetwork,
+                vCenterPassword: vCenterPassword,
+                nsxtPassword: nsxtPassword,
+                vCenterCertificateThumbprint: vCenterCertificateThumbprint,
+                nsxtCertificateThumbprint: nsxtCertificateThumbprint,
+                externalCloudLinks: externalCloudLinks?.ToList(),
+                secondaryCircuit: secondaryCircuit,
+                nsxPublicIPQuotaRaised: nsxPublicIPQuotaRaised,
+                virtualNetworkId: null,
+                dnsZoneType: null
             );
         }
 
@@ -215,18 +247,17 @@ namespace Azure.ResourceManager.Avs.Models
             int? clusterId,
             IEnumerable<string> hosts)
         {
-            return new AvsPrivateCloudClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                sku != null ? new AvsSku(sku) : null,
-                clusterSize,
-                provisioningState,
-                clusterId,
-                hosts?.ToList(),
-                null,
-                null
+            return AvsPrivateCloudClusterData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                sku: sku != null ? new AvsSku(sku) : null,
+                clusterSize: clusterSize,
+                provisioningState: provisioningState,
+                clusterId: clusterId,
+                hosts: hosts?.ToList(),
+                vsanDatastoreName: null
             );
         }
         /// <summary> Initializes a new instance of <see cref="Models.CommonClusterProperties"/>. </summary>
@@ -237,7 +268,14 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.CommonClusterProperties"/> instance for mocking. </returns>
         public static CommonClusterProperties CommonClusterProperties(int? clusterSize = null, AvsPrivateCloudClusterProvisioningState? provisioningState = null, int? clusterId = null, IEnumerable<string> hosts = null)
         {
-            throw new NotSupportedException("This method is obsolete.");
+            hosts ??= new List<string>();
+
+            return CommonClusterProperties(
+                clusterSize: clusterSize,
+                provisioningState: provisioningState,
+                clusterId: clusterId,
+                hosts: hosts?.ToList()
+            );
         }
     }
 }

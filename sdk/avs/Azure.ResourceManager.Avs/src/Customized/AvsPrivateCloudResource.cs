@@ -51,7 +51,8 @@ namespace Azure.ResourceManager.Avs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<WorkloadNetworkResource> GetWorkloadNetwork(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException("This method is obsolete.");
+            // return GetWorkloadNetwork()
+            return GetWorkloadNetworks().Get(workloadNetworkName, cancellationToken);
         }
 
         /// <summary>
@@ -90,8 +91,7 @@ namespace Azure.ResourceManager.Avs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual WorkloadNetworkCollection GetWorkloadNetworks()
         {
-            // get all workload networks and send them all
-            throw new NotSupportedException("This method is obsolete.");
+            return GetCachedClient(client => new WorkloadNetworkCollection(client, Id));
         }
 
         /// <summary>
