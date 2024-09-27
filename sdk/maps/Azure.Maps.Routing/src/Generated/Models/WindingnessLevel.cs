@@ -36,7 +36,7 @@ namespace Azure.Maps.Routing
         public static bool operator ==(WindingnessLevel left, WindingnessLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WindingnessLevel"/> values are not the same. </summary>
         public static bool operator !=(WindingnessLevel left, WindingnessLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WindingnessLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WindingnessLevel"/>. </summary>
         public static implicit operator WindingnessLevel(string value) => new WindingnessLevel(value);
 
         /// <inheritdoc />
