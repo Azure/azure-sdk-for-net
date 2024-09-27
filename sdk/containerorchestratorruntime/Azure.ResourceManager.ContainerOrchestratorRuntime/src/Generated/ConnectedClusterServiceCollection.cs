@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_List</description>
+        /// <description>ServiceResource_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Services_List</description>
+        /// <description>ServiceResource_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

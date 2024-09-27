@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BgpPeers_List</description>
+        /// <description>BgpPeer_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BgpPeers_List</description>
+        /// <description>BgpPeer_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

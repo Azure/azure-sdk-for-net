@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_LoadBalancersGet()
         {
-            // Generated from example definition: specification/kubernetesruntime/resource-manager/Microsoft.KubernetesRuntime/stable/2024-03-01/examples/LoadBalancers_Get.json
+            // Generated from example definition: 2024-03-01/LoadBalancers_Get.json
             // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_LoadBalancersCreateOrUpdate()
         {
-            // Generated from example definition: specification/kubernetesruntime/resource-manager/Microsoft.KubernetesRuntime/stable/2024-03-01/examples/LoadBalancers_CreateOrUpdate.json
+            // Generated from example definition: 2024-03-01/LoadBalancers_CreateOrUpdate.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -68,15 +68,16 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
             // invoke the operation
             ConnectedClusterLoadBalancerData data = new ConnectedClusterLoadBalancerData()
             {
-                Addresses =
-{
+                Properties = new ConnectedClusterLoadBalancerProperties(new string[]
+            {
 "192.168.50.1/24","192.168.51.2-192.168.51.10"
-},
-                ServiceSelector =
+            }, AdvertiseMode.Arp)
+                {
+                    ServiceSelector =
 {
 ["app"] = "frontend",
 },
-                AdvertiseMode = AdvertiseMode.Arp,
+                },
             };
             ArmOperation<ConnectedClusterLoadBalancerResource> lro = await connectedClusterLoadBalancer.UpdateAsync(WaitUntil.Completed, data);
             ConnectedClusterLoadBalancerResource result = lro.Value;
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_LoadBalancersDelete()
         {
-            // Generated from example definition: specification/kubernetesruntime/resource-manager/Microsoft.KubernetesRuntime/stable/2024-03-01/examples/LoadBalancers_Delete.json
+            // Generated from example definition: 2024-03-01/LoadBalancers_Delete.json
             // this example is just showing the usage of "LoadBalancers_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

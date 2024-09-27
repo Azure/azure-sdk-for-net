@@ -37,84 +37,11 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(AllowVolumeExpansion))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("allowVolumeExpansion"u8);
-                writer.WriteStringValue(AllowVolumeExpansion.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsCollectionDefined(MountOptions))
-            {
-                writer.WritePropertyName("mountOptions"u8);
-                writer.WriteStartArray();
-                foreach (var item in MountOptions)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Provisioner))
-            {
-                writer.WritePropertyName("provisioner"u8);
-                writer.WriteStringValue(Provisioner);
-            }
-            if (Optional.IsDefined(VolumeBindingMode))
-            {
-                writer.WritePropertyName("volumeBindingMode"u8);
-                writer.WriteStringValue(VolumeBindingMode.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(AccessModes))
-            {
-                writer.WritePropertyName("accessModes"u8);
-                writer.WriteStartArray();
-                foreach (var item in AccessModes)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(DataResilience))
-            {
-                writer.WritePropertyName("dataResilience"u8);
-                writer.WriteStringValue(DataResilience.Value.ToString());
-            }
-            if (Optional.IsDefined(FailoverSpeed))
-            {
-                writer.WritePropertyName("failoverSpeed"u8);
-                writer.WriteStringValue(FailoverSpeed.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(Limitations))
-            {
-                writer.WritePropertyName("limitations"u8);
-                writer.WriteStartArray();
-                foreach (var item in Limitations)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Performance))
-            {
-                writer.WritePropertyName("performance"u8);
-                writer.WriteStringValue(Performance.Value.ToString());
-            }
-            if (Optional.IsDefined(Priority))
-            {
-                writer.WritePropertyName("priority"u8);
-                writer.WriteNumberValue(Priority.Value);
-            }
-            if (Optional.IsDefined(TypeProperties))
-            {
-                writer.WritePropertyName("typeProperties"u8);
-                writer.WriteObjectValue(TypeProperties, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
         ConnectedClusterStorageClassData IJsonModel<ConnectedClusterStorageClassData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -137,26 +64,24 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 return null;
             }
+            ConnectedClusterStorageClassProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            VolumeExpansion? allowVolumeExpansion = default;
-            IList<string> mountOptions = default;
-            string provisioner = default;
-            VolumeBindingMode? volumeBindingMode = default;
-            IList<StorageClassAccessMode> accessModes = default;
-            DataResilienceTier? dataResilience = default;
-            FailoverTier? failoverSpeed = default;
-            IList<string> limitations = default;
-            PerformanceTier? performance = default;
-            long? priority = default;
-            StorageClassTypeProperties typeProperties = default;
-            ContainerOrchestratorProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ConnectedClusterStorageClassProperties.DeserializeConnectedClusterStorageClassProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -181,137 +106,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("allowVolumeExpansion"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            allowVolumeExpansion = new VolumeExpansion(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("mountOptions"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            mountOptions = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioner"u8))
-                        {
-                            provisioner = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("volumeBindingMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            volumeBindingMode = new VolumeBindingMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("accessModes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<StorageClassAccessMode> array = new List<StorageClassAccessMode>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(new StorageClassAccessMode(item.GetString()));
-                            }
-                            accessModes = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("dataResilience"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dataResilience = new DataResilienceTier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("failoverSpeed"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            failoverSpeed = new FailoverTier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("limitations"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            limitations = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("performance"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            performance = new PerformanceTier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("priority"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            priority = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("typeProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            typeProperties = StorageClassTypeProperties.DeserializeStorageClassTypeProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ContainerOrchestratorProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -323,18 +117,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 name,
                 type,
                 systemData,
-                allowVolumeExpansion,
-                mountOptions ?? new ChangeTrackingList<string>(),
-                provisioner,
-                volumeBindingMode,
-                accessModes ?? new ChangeTrackingList<StorageClassAccessMode>(),
-                dataResilience,
-                failoverSpeed,
-                limitations ?? new ChangeTrackingList<string>(),
-                performance,
-                priority,
-                typeProperties,
-                provisioningState,
+                properties,
                 serializedAdditionalRawData);
         }
 

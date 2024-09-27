@@ -1,12 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ContainerOrchestratorRuntime.Models;
-using Azure.ResourceManager.Kubernetes;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Tests.Tests
@@ -25,7 +22,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Tests.Tests
             var nfsStorageClassTypeProperties = new NfsStorageClassTypeProperties("172.23.1.4", "/");
             var storageClassData = new ConnectedClusterStorageClassData
             {
-                TypeProperties = nfsStorageClassTypeProperties
+                Properties = new ConnectedClusterStorageClassProperties(nfsStorageClassTypeProperties)
             };
             var storageClassCollection = new ConnectedClusterStorageClassCollection(Client, TestEnvironment.ConnectedCluster);
             var storageClassResource = await storageClassCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testsc", storageClassData);

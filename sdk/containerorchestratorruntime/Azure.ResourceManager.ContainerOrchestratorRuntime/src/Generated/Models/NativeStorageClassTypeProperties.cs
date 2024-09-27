@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <summary> Initializes a new instance of <see cref="NativeStorageClassTypeProperties"/>. </summary>
         public NativeStorageClassTypeProperties()
         {
-            ClassType = StorageClassType.Native;
+            Type = StorageClassType.Native;
         }
 
         /// <summary> Initializes a new instance of <see cref="NativeStorageClassTypeProperties"/>. </summary>
-        /// <param name="classType"> Type of the storage class. </param>
+        /// <param name="type"> Type of the storage class. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NativeStorageClassTypeProperties(StorageClassType classType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(classType, serializedAdditionalRawData)
+        internal NativeStorageClassTypeProperties(StorageClassType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
         {
-            ClassType = classType;
+            Type = type;
         }
     }
 }

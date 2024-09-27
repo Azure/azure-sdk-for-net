@@ -37,29 +37,11 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(MyAsn))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("myAsn"u8);
-                writer.WriteNumberValue(MyAsn.Value);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(PeerAsn))
-            {
-                writer.WritePropertyName("peerAsn"u8);
-                writer.WriteNumberValue(PeerAsn.Value);
-            }
-            if (Optional.IsDefined(PeerAddress))
-            {
-                writer.WritePropertyName("peerAddress"u8);
-                writer.WriteStringValue(PeerAddress);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
         ConnectedClusterBgpPeerData IJsonModel<ConnectedClusterBgpPeerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -82,18 +64,24 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 return null;
             }
+            ConnectedClusterBgpPeerProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            int? myAsn = default;
-            int? peerAsn = default;
-            string peerAddress = default;
-            ContainerOrchestratorProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ConnectedClusterBgpPeerProperties.DeserializeConnectedClusterBgpPeerProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -118,50 +106,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("myAsn"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            myAsn = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("peerAsn"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            peerAsn = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("peerAddress"u8))
-                        {
-                            peerAddress = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ContainerOrchestratorProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -173,10 +117,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 name,
                 type,
                 systemData,
-                myAsn,
-                peerAsn,
-                peerAddress,
-                provisioningState,
+                properties,
                 serializedAdditionalRawData);
         }
 

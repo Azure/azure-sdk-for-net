@@ -37,50 +37,11 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Addresses))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("addresses"u8);
-                writer.WriteStartArray();
-                foreach (var item in Addresses)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsCollectionDefined(ServiceSelector))
-            {
-                writer.WritePropertyName("serviceSelector"u8);
-                writer.WriteStartObject();
-                foreach (var item in ServiceSelector)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(AdvertiseMode))
-            {
-                writer.WritePropertyName("advertiseMode"u8);
-                writer.WriteStringValue(AdvertiseMode.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(BgpPeers))
-            {
-                writer.WritePropertyName("bgpPeers"u8);
-                writer.WriteStartArray();
-                foreach (var item in BgpPeers)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
         ConnectedClusterLoadBalancerData IJsonModel<ConnectedClusterLoadBalancerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -103,19 +64,24 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 return null;
             }
+            ConnectedClusterLoadBalancerProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IList<string> addresses = default;
-            IDictionary<string, string> serviceSelector = default;
-            AdvertiseMode? advertiseMode = default;
-            IList<string> bgpPeers = default;
-            ContainerOrchestratorProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ConnectedClusterLoadBalancerProperties.DeserializeConnectedClusterLoadBalancerProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -140,78 +106,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("addresses"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            addresses = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceSelector"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            serviceSelector = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("advertiseMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            advertiseMode = new AdvertiseMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("bgpPeers"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            bgpPeers = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ContainerOrchestratorProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -223,11 +117,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 name,
                 type,
                 systemData,
-                addresses ?? new ChangeTrackingList<string>(),
-                serviceSelector ?? new ChangeTrackingDictionary<string, string>(),
-                advertiseMode,
-                bgpPeers ?? new ChangeTrackingList<string>(),
-                provisioningState,
+                properties,
                 serializedAdditionalRawData);
         }
 

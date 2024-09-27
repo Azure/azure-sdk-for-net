@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageClass_List</description>
+        /// <description>StorageClassResource_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageClass_List</description>
+        /// <description>StorageClassResource_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -61,19 +61,15 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="rpObjectId"> The object id of the service principal of the RP provisioned in the tenant. </param>
-        /// <param name="provisioningState"> Resource provision state. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? rpObjectId, ContainerOrchestratorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConnectedClusterServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectedClusterServiceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            RpObjectId = rpObjectId;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The object id of the service principal of the RP provisioned in the tenant. </summary>
-        public Guid? RpObjectId { get; }
-        /// <summary> Resource provision state. </summary>
-        public ContainerOrchestratorProvisioningState? ProvisioningState { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public ConnectedClusterServiceProperties Properties { get; set; }
     }
 }

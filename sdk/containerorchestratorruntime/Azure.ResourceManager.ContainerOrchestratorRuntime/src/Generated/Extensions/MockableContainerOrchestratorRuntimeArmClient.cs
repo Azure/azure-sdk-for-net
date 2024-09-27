@@ -37,24 +37,24 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ConnectedClusterBgpPeerResources in the ArmClient. </summary>
+        /// <summary> Gets a collection of ConnectedClusterStorageClassResources in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of ConnectedClusterBgpPeerResources and their operations over a ConnectedClusterBgpPeerResource. </returns>
-        public virtual ConnectedClusterBgpPeerCollection GetConnectedClusterBgpPeers(ResourceIdentifier scope)
+        /// <returns> An object representing collection of ConnectedClusterStorageClassResources and their operations over a ConnectedClusterStorageClassResource. </returns>
+        public virtual ConnectedClusterStorageClassCollection GetConnectedClusterStorageClasses(ResourceIdentifier scope)
         {
-            return new ConnectedClusterBgpPeerCollection(Client, scope);
+            return new ConnectedClusterStorageClassCollection(Client, scope);
         }
 
         /// <summary>
-        /// Get a BgpPeer
+        /// Get a StorageClassResource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BgpPeers_Get</description>
+        /// <description>StorageClass_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -62,31 +62,31 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterBgpPeerResource"/></description>
+        /// <description><see cref="ConnectedClusterStorageClassResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="bgpPeerName"> The name of the BgpPeer. </param>
+        /// <param name="storageClassName"> The name of the the storage class. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bgpPeerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="bgpPeerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageClassName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageClassName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ConnectedClusterBgpPeerResource>> GetConnectedClusterBgpPeerAsync(ResourceIdentifier scope, string bgpPeerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectedClusterStorageClassResource>> GetConnectedClusterStorageClassAsync(ResourceIdentifier scope, string storageClassName, CancellationToken cancellationToken = default)
         {
-            return await GetConnectedClusterBgpPeers(scope).GetAsync(bgpPeerName, cancellationToken).ConfigureAwait(false);
+            return await GetConnectedClusterStorageClasses(scope).GetAsync(storageClassName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get a BgpPeer
+        /// Get a StorageClassResource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}</description>
+        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BgpPeers_Get</description>
+        /// <description>StorageClass_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -94,19 +94,19 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterBgpPeerResource"/></description>
+        /// <description><see cref="ConnectedClusterStorageClassResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="bgpPeerName"> The name of the BgpPeer. </param>
+        /// <param name="storageClassName"> The name of the the storage class. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bgpPeerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="bgpPeerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageClassName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageClassName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ConnectedClusterBgpPeerResource> GetConnectedClusterBgpPeer(ResourceIdentifier scope, string bgpPeerName, CancellationToken cancellationToken = default)
+        public virtual Response<ConnectedClusterStorageClassResource> GetConnectedClusterStorageClass(ResourceIdentifier scope, string storageClassName, CancellationToken cancellationToken = default)
         {
-            return GetConnectedClusterBgpPeers(scope).Get(bgpPeerName, cancellationToken);
+            return GetConnectedClusterStorageClasses(scope).Get(storageClassName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ConnectedClusterLoadBalancerResources in the ArmClient. </summary>
@@ -181,6 +181,78 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
             return GetConnectedClusterLoadBalancers(scope).Get(loadBalancerName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ConnectedClusterBgpPeerResources in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of ConnectedClusterBgpPeerResources and their operations over a ConnectedClusterBgpPeerResource. </returns>
+        public virtual ConnectedClusterBgpPeerCollection GetConnectedClusterBgpPeers(ResourceIdentifier scope)
+        {
+            return new ConnectedClusterBgpPeerCollection(Client, scope);
+        }
+
+        /// <summary>
+        /// Get a BgpPeer
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BgpPeers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedClusterBgpPeerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="bgpPeerName"> The name of the BgpPeer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bgpPeerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bgpPeerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ConnectedClusterBgpPeerResource>> GetConnectedClusterBgpPeerAsync(ResourceIdentifier scope, string bgpPeerName, CancellationToken cancellationToken = default)
+        {
+            return await GetConnectedClusterBgpPeers(scope).GetAsync(bgpPeerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a BgpPeer
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/bgpPeers/{bgpPeerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BgpPeers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedClusterBgpPeerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="bgpPeerName"> The name of the BgpPeer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bgpPeerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bgpPeerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ConnectedClusterBgpPeerResource> GetConnectedClusterBgpPeer(ResourceIdentifier scope, string bgpPeerName, CancellationToken cancellationToken = default)
+        {
+            return GetConnectedClusterBgpPeers(scope).Get(bgpPeerName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ConnectedClusterServiceResources in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of ConnectedClusterServiceResources and their operations over a ConnectedClusterServiceResource. </returns>
@@ -253,88 +325,16 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
             return GetConnectedClusterServices(scope).Get(serviceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ConnectedClusterStorageClassResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of ConnectedClusterStorageClassResources and their operations over a ConnectedClusterStorageClassResource. </returns>
-        public virtual ConnectedClusterStorageClassCollection GetConnectedClusterStorageClasses(ResourceIdentifier scope)
-        {
-            return new ConnectedClusterStorageClassCollection(Client, scope);
-        }
-
         /// <summary>
-        /// Get a StorageClassResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageClass_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterStorageClassResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="storageClassName"> The name of the the storage class. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageClassName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storageClassName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ConnectedClusterStorageClassResource>> GetConnectedClusterStorageClassAsync(ResourceIdentifier scope, string storageClassName, CancellationToken cancellationToken = default)
-        {
-            return await GetConnectedClusterStorageClasses(scope).GetAsync(storageClassName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a StorageClassResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageClass_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterStorageClassResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="storageClassName"> The name of the the storage class. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageClassName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storageClassName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ConnectedClusterStorageClassResource> GetConnectedClusterStorageClass(ResourceIdentifier scope, string storageClassName, CancellationToken cancellationToken = default)
-        {
-            return GetConnectedClusterStorageClasses(scope).Get(storageClassName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ConnectedClusterBgpPeerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConnectedClusterBgpPeerResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedClusterBgpPeerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ConnectedClusterStorageClassResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectedClusterStorageClassResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedClusterStorageClassResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectedClusterBgpPeerResource"/> object. </returns>
-        public virtual ConnectedClusterBgpPeerResource GetConnectedClusterBgpPeerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConnectedClusterStorageClassResource"/> object. </returns>
+        public virtual ConnectedClusterStorageClassResource GetConnectedClusterStorageClassResource(ResourceIdentifier id)
         {
-            ConnectedClusterBgpPeerResource.ValidateResourceId(id);
-            return new ConnectedClusterBgpPeerResource(Client, id);
+            ConnectedClusterStorageClassResource.ValidateResourceId(id);
+            return new ConnectedClusterStorageClassResource(Client, id);
         }
 
         /// <summary>
@@ -350,6 +350,18 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ConnectedClusterBgpPeerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectedClusterBgpPeerResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedClusterBgpPeerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ConnectedClusterBgpPeerResource"/> object. </returns>
+        public virtual ConnectedClusterBgpPeerResource GetConnectedClusterBgpPeerResource(ResourceIdentifier id)
+        {
+            ConnectedClusterBgpPeerResource.ValidateResourceId(id);
+            return new ConnectedClusterBgpPeerResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ConnectedClusterServiceResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ConnectedClusterServiceResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedClusterServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -359,18 +371,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking
         {
             ConnectedClusterServiceResource.ValidateResourceId(id);
             return new ConnectedClusterServiceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ConnectedClusterStorageClassResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConnectedClusterStorageClassResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedClusterStorageClassResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectedClusterStorageClassResource"/> object. </returns>
-        public virtual ConnectedClusterStorageClassResource GetConnectedClusterStorageClassResource(ResourceIdentifier id)
-        {
-            ConnectedClusterStorageClassResource.ValidateResourceId(id);
-            return new ConnectedClusterStorageClassResource(Client, id);
         }
     }
 }

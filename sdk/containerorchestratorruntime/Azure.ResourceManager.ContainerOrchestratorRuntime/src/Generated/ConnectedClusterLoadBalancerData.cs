@@ -54,9 +54,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterLoadBalancerData"/>. </summary>
         public ConnectedClusterLoadBalancerData()
         {
-            Addresses = new ChangeTrackingList<string>();
-            ServiceSelector = new ChangeTrackingDictionary<string, string>();
-            BgpPeers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterLoadBalancerData"/>. </summary>
@@ -64,31 +61,15 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="addresses"> IP Range. </param>
-        /// <param name="serviceSelector"> A dynamic label mapping to select related services. For instance, if you want to create a load balancer only for services with label "a=b", then please specify {"a": "b"} in the field. </param>
-        /// <param name="advertiseMode"> Advertise Mode. </param>
-        /// <param name="bgpPeers"> The list of BGP peers it should advertise to. Null or empty means to advertise to all peers. </param>
-        /// <param name="provisioningState"> Resource provision state. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterLoadBalancerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> addresses, IDictionary<string, string> serviceSelector, AdvertiseMode? advertiseMode, IList<string> bgpPeers, ContainerOrchestratorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConnectedClusterLoadBalancerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectedClusterLoadBalancerProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Addresses = addresses;
-            ServiceSelector = serviceSelector;
-            AdvertiseMode = advertiseMode;
-            BgpPeers = bgpPeers;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> IP Range. </summary>
-        public IList<string> Addresses { get; }
-        /// <summary> A dynamic label mapping to select related services. For instance, if you want to create a load balancer only for services with label "a=b", then please specify {"a": "b"} in the field. </summary>
-        public IDictionary<string, string> ServiceSelector { get; }
-        /// <summary> Advertise Mode. </summary>
-        public AdvertiseMode? AdvertiseMode { get; set; }
-        /// <summary> The list of BGP peers it should advertise to. Null or empty means to advertise to all peers. </summary>
-        public IList<string> BgpPeers { get; }
-        /// <summary> Resource provision state. </summary>
-        public ContainerOrchestratorProvisioningState? ProvisioningState { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public ConnectedClusterLoadBalancerProperties Properties { get; set; }
     }
 }

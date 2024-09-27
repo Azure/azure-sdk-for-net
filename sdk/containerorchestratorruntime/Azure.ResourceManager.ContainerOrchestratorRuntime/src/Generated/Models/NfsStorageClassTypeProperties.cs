@@ -24,25 +24,25 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 
             Server = server;
             Share = share;
-            ClassType = StorageClassType.Nfs;
+            Type = StorageClassType.Nfs;
         }
 
         /// <summary> Initializes a new instance of <see cref="NfsStorageClassTypeProperties"/>. </summary>
-        /// <param name="classType"> Type of the storage class. </param>
+        /// <param name="type"> Type of the storage class. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="server"> NFS Server. </param>
         /// <param name="share"> NFS share. </param>
         /// <param name="subDir"> Sub directory under share. If the sub directory doesn't exist, driver will create it. </param>
         /// <param name="mountPermissions"> Mounted folder permissions. Default is 0. If set as non-zero, driver will perform `chmod` after mount. </param>
         /// <param name="onDelete"> The action to take when a NFS volume is deleted. Default is Delete. </param>
-        internal NfsStorageClassTypeProperties(StorageClassType classType, IDictionary<string, BinaryData> serializedAdditionalRawData, string server, string share, string subDir, string mountPermissions, NfsDirectoryActionOnVolumeDeletion? onDelete) : base(classType, serializedAdditionalRawData)
+        internal NfsStorageClassTypeProperties(StorageClassType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string server, string share, string subDir, string mountPermissions, NfsDirectoryActionOnVolumeDeletion? onDelete) : base(type, serializedAdditionalRawData)
         {
             Server = server;
             Share = share;
             SubDir = subDir;
             MountPermissions = mountPermissions;
             OnDelete = onDelete;
-            ClassType = classType;
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="NfsStorageClassTypeProperties"/> for deserialization. </summary>

@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.ContainerOrchestratorRuntime.Models;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ServicesGet()
         {
-            // Generated from example definition: specification/kubernetesruntime/resource-manager/Microsoft.KubernetesRuntime/stable/2024-03-01/examples/Services_Get.json
+            // Generated from example definition: 2024-03-01/Services_Get.json
             // this example is just showing the usage of "Services_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_ServicesCreateOrUpdate()
         {
-            // Generated from example definition: specification/kubernetesruntime/resource-manager/Microsoft.KubernetesRuntime/stable/2024-03-01/examples/Services_CreateOrUpdate.json
+            // Generated from example definition: 2024-03-01/Services_CreateOrUpdate.json
             // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,7 +66,10 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
             ConnectedClusterServiceResource connectedClusterService = client.GetConnectedClusterServiceResource(connectedClusterServiceResourceId);
 
             // invoke the operation
-            ConnectedClusterServiceData data = new ConnectedClusterServiceData();
+            ConnectedClusterServiceData data = new ConnectedClusterServiceData()
+            {
+                Properties = new ConnectedClusterServiceProperties(),
+            };
             ArmOperation<ConnectedClusterServiceResource> lro = await connectedClusterService.UpdateAsync(WaitUntil.Completed, data);
             ConnectedClusterServiceResource result = lro.Value;
 
@@ -81,7 +85,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_ServicesDelete()
         {
-            // Generated from example definition: specification/kubernetesruntime/resource-manager/Microsoft.KubernetesRuntime/stable/2024-03-01/examples/Services_Delete.json
+            // Generated from example definition: 2024-03-01/Services_Delete.json
             // this example is just showing the usage of "Services_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

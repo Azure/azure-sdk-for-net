@@ -61,27 +61,15 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="myAsn"> My ASN. </param>
-        /// <param name="peerAsn"> Peer ASN. </param>
-        /// <param name="peerAddress"> Peer Address. </param>
-        /// <param name="provisioningState"> Resource provision state. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterBgpPeerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? myAsn, int? peerAsn, string peerAddress, ContainerOrchestratorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConnectedClusterBgpPeerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectedClusterBgpPeerProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            MyAsn = myAsn;
-            PeerAsn = peerAsn;
-            PeerAddress = peerAddress;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> My ASN. </summary>
-        public int? MyAsn { get; set; }
-        /// <summary> Peer ASN. </summary>
-        public int? PeerAsn { get; set; }
-        /// <summary> Peer Address. </summary>
-        public string PeerAddress { get; set; }
-        /// <summary> Resource provision state. </summary>
-        public ContainerOrchestratorProvisioningState? ProvisioningState { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public ConnectedClusterBgpPeerProperties Properties { get; set; }
     }
 }

@@ -14,11 +14,11 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
     internal partial class UnknownStorageClassTypeProperties : StorageClassTypeProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownStorageClassTypeProperties"/>. </summary>
-        /// <param name="classType"> Type of the storage class. </param>
+        /// <param name="type"> Type of the storage class. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownStorageClassTypeProperties(StorageClassType classType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(classType, serializedAdditionalRawData)
+        internal UnknownStorageClassTypeProperties(StorageClassType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
         {
-            ClassType = classType;
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="UnknownStorageClassTypeProperties"/> for deserialization. </summary>

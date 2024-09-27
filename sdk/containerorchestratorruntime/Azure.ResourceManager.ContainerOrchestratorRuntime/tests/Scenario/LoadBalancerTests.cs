@@ -1,11 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.ContainerOrchestratorRuntime.Mocking;
 using Azure.ResourceManager.ContainerOrchestratorRuntime.Models;
 using Azure.ResourceManager.Kubernetes;
 using NUnit.Framework;
@@ -25,18 +22,21 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Tests.Tests
         {
             var connectedCluster = ConnectedClusterResource.CreateResourceIdentifier("b9e38f20-7c9c-4497-a25d-1a0c5eef2108", "xinyuhe-canary", "test-cluster-euap-arc");
             var loadBalancerCollection = new ConnectedClusterLoadBalancerCollection(Client, connectedCluster);
-            var loadBalancerData = new ConnectedClusterLoadBalancerData
+            var loadBalancerData = new ConnectedClusterLoadBalancerData()
             {
-                AdvertiseMode = AdvertiseMode.Arp
+                Properties = new ConnectedClusterLoadBalancerProperties(new System.Collections.Generic.List<string>(), AdvertiseMode.Arp)
             };
-            loadBalancerData.Addresses.Add("192.168.10.1/32");
+            loadBalancerData.Properties.Addresses.Add("192.168.10.1/32");
             var loadBalancerResource = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testlb", loadBalancerData);
             await loadBalancerResource.Value.DeleteAsync(WaitUntil.Completed);
             var bgpPeerData = new ConnectedClusterBgpPeerData
             {
-                MyAsn = 64000,
-                PeerAsn = 64001,
-                PeerAddress = "192.168.2.0"
+                Properties = new ConnectedClusterBgpPeerProperties
+                {
+                    MyAsn = 64000,
+                    PeerAsn = 64001,
+                    PeerAddress = "192.168.2.0"
+                }
             };
             var bgpPeerCollection = new ConnectedClusterBgpPeerCollection(Client, connectedCluster);
             var bgpPeerResource = await bgpPeerCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testpeer", bgpPeerData);

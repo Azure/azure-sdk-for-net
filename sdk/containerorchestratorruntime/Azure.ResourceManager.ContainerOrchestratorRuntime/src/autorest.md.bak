@@ -17,6 +17,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  flatten-models: false
 use-model-reader-writer: true
 use-write-core: true
 
@@ -28,10 +29,13 @@ rename-mapping:
   AdvertiseMode.ARP: Arp
   AdvertiseMode.BGP: Bgp
   BgpPeer: ConnectedClusterBgpPeer
+  BgpPeerProperties: ConnectedClusterBgpPeerProperties
   LoadBalancer: ConnectedClusterLoadBalancer
+  LoadBalancerProperties: ConnectedClusterLoadBalancerProperties
   ServiceResource: ConnectedClusterService
-  ServiceResource.properties.rpObjectId: -|uuid
+  ServiceProperties: ConnectedClusterServiceProperties
   StorageClassResource: ConnectedClusterStorageClass
+  StorageClassProperties: ConnectedClusterStorageClassProperties
   ProvisioningState: ContainerOrchestratorProvisioningState
   SCType: StorageClassType
   SCType.RWX: Rwx

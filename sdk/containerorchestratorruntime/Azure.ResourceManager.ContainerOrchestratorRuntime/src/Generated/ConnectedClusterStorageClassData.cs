@@ -54,9 +54,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterStorageClassData"/>. </summary>
         public ConnectedClusterStorageClassData()
         {
-            MountOptions = new ChangeTrackingList<string>();
-            AccessModes = new ChangeTrackingList<StorageClassAccessMode>();
-            Limitations = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterStorageClassData"/>. </summary>
@@ -64,67 +61,15 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="allowVolumeExpansion"> Volume can be expanded or not. </param>
-        /// <param name="mountOptions"> Additional mount options. </param>
-        /// <param name="provisioner"> Provisioner name. </param>
-        /// <param name="volumeBindingMode"> Binding mode of volumes: Immediate, WaitForFirstConsumer. </param>
-        /// <param name="accessModes"> The access mode: [ReadWriteOnce, ReadWriteMany] or [ReadWriteOnce]. </param>
-        /// <param name="dataResilience"> Allow single data node failure. </param>
-        /// <param name="failoverSpeed"> Failover speed: NA, Slow, Fast. </param>
-        /// <param name="limitations"> Limitations of the storage class. </param>
-        /// <param name="performance"> Performance tier. </param>
-        /// <param name="priority"> Selection priority when multiple storage classes meet the criteria. 0: Highest, -1: Never use. </param>
-        /// <param name="typeProperties">
-        /// Properties of the StorageClass
-        /// Please note <see cref="StorageClassTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BlobStorageClassTypeProperties"/>, <see cref="NativeStorageClassTypeProperties"/>, <see cref="NfsStorageClassTypeProperties"/>, <see cref="RwxStorageClassTypeProperties"/> and <see cref="SmbStorageClassTypeProperties"/>.
-        /// </param>
-        /// <param name="provisioningState"> Resource provision state. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterStorageClassData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VolumeExpansion? allowVolumeExpansion, IList<string> mountOptions, string provisioner, VolumeBindingMode? volumeBindingMode, IList<StorageClassAccessMode> accessModes, DataResilienceTier? dataResilience, FailoverTier? failoverSpeed, IList<string> limitations, PerformanceTier? performance, long? priority, StorageClassTypeProperties typeProperties, ContainerOrchestratorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConnectedClusterStorageClassData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectedClusterStorageClassProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            AllowVolumeExpansion = allowVolumeExpansion;
-            MountOptions = mountOptions;
-            Provisioner = provisioner;
-            VolumeBindingMode = volumeBindingMode;
-            AccessModes = accessModes;
-            DataResilience = dataResilience;
-            FailoverSpeed = failoverSpeed;
-            Limitations = limitations;
-            Performance = performance;
-            Priority = priority;
-            TypeProperties = typeProperties;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Volume can be expanded or not. </summary>
-        public VolumeExpansion? AllowVolumeExpansion { get; set; }
-        /// <summary> Additional mount options. </summary>
-        public IList<string> MountOptions { get; }
-        /// <summary> Provisioner name. </summary>
-        public string Provisioner { get; set; }
-        /// <summary> Binding mode of volumes: Immediate, WaitForFirstConsumer. </summary>
-        public VolumeBindingMode? VolumeBindingMode { get; set; }
-        /// <summary> The access mode: [ReadWriteOnce, ReadWriteMany] or [ReadWriteOnce]. </summary>
-        public IList<StorageClassAccessMode> AccessModes { get; }
-        /// <summary> Allow single data node failure. </summary>
-        public DataResilienceTier? DataResilience { get; set; }
-        /// <summary> Failover speed: NA, Slow, Fast. </summary>
-        public FailoverTier? FailoverSpeed { get; set; }
-        /// <summary> Limitations of the storage class. </summary>
-        public IList<string> Limitations { get; }
-        /// <summary> Performance tier. </summary>
-        public PerformanceTier? Performance { get; set; }
-        /// <summary> Selection priority when multiple storage classes meet the criteria. 0: Highest, -1: Never use. </summary>
-        public long? Priority { get; set; }
-        /// <summary>
-        /// Properties of the StorageClass
-        /// Please note <see cref="StorageClassTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BlobStorageClassTypeProperties"/>, <see cref="NativeStorageClassTypeProperties"/>, <see cref="NfsStorageClassTypeProperties"/>, <see cref="RwxStorageClassTypeProperties"/> and <see cref="SmbStorageClassTypeProperties"/>.
-        /// </summary>
-        public StorageClassTypeProperties TypeProperties { get; set; }
-        /// <summary> Resource provision state. </summary>
-        public ContainerOrchestratorProvisioningState? ProvisioningState { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public ConnectedClusterStorageClassProperties Properties { get; set; }
     }
 }

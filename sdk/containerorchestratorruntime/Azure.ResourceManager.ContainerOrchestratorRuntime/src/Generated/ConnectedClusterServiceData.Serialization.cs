@@ -37,19 +37,11 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RpObjectId))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("rpObjectId"u8);
-                writer.WriteStringValue(RpObjectId.Value);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
         ConnectedClusterServiceData IJsonModel<ConnectedClusterServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -72,16 +64,24 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             {
                 return null;
             }
+            ConnectedClusterServiceProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Guid? rpObjectId = default;
-            ContainerOrchestratorProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ConnectedClusterServiceProperties.DeserializeConnectedClusterServiceProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -106,36 +106,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("rpObjectId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            rpObjectId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ContainerOrchestratorProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -147,8 +117,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 name,
                 type,
                 systemData,
-                rpObjectId,
-                provisioningState,
+                properties,
                 serializedAdditionalRawData);
         }
 

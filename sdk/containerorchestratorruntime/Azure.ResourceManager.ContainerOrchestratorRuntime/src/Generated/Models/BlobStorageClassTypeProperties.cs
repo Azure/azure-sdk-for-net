@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 
             AzureStorageAccountName = azureStorageAccountName;
             AzureStorageAccountKey = azureStorageAccountKey;
-            ClassType = StorageClassType.Blob;
+            Type = StorageClassType.Blob;
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobStorageClassTypeProperties"/>. </summary>
-        /// <param name="classType"> Type of the storage class. </param>
+        /// <param name="type"> Type of the storage class. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureStorageAccountName"> Azure Storage Account Name. </param>
         /// <param name="azureStorageAccountKey"> Azure Storage Account Key. </param>
-        internal BlobStorageClassTypeProperties(StorageClassType classType, IDictionary<string, BinaryData> serializedAdditionalRawData, string azureStorageAccountName, string azureStorageAccountKey) : base(classType, serializedAdditionalRawData)
+        internal BlobStorageClassTypeProperties(StorageClassType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string azureStorageAccountName, string azureStorageAccountKey) : base(type, serializedAdditionalRawData)
         {
             AzureStorageAccountName = azureStorageAccountName;
             AzureStorageAccountKey = azureStorageAccountKey;
-            ClassType = classType;
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobStorageClassTypeProperties"/> for deserialization. </summary>

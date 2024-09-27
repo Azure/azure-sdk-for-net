@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
-    /// <summary>
-    /// The properties of storage class of the StorageClass
-    /// Please note <see cref="StorageClassTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="BlobStorageClassTypeProperties"/>, <see cref="NativeStorageClassTypeProperties"/>, <see cref="NfsStorageClassTypeProperties"/>, <see cref="RwxStorageClassTypeProperties"/> and <see cref="SmbStorageClassTypeProperties"/>.
-    /// </summary>
-    public abstract partial class StorageClassTypeProperties
+    /// <summary> Properties for the service resource. </summary>
+    public partial class ConnectedClusterServiceProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,23 +43,27 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StorageClassTypeProperties"/>. </summary>
-        protected StorageClassTypeProperties()
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterServiceProperties"/>. </summary>
+        public ConnectedClusterServiceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageClassTypeProperties"/>. </summary>
-        /// <param name="type"> Type of the storage class. </param>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterServiceProperties"/>. </summary>
+        /// <param name="rpObjectId"> The object id of the service principal of the RP provisioned in the tenant. </param>
+        /// <param name="provisioningState"> Resource provision state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageClassTypeProperties(StorageClassType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectedClusterServiceProperties(Guid? rpObjectId, ContainerOrchestratorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            RpObjectId = rpObjectId;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Type of the storage class. </summary>
-        internal StorageClassType Type { get; set; }
+        /// <summary> The object id of the service principal of the RP provisioned in the tenant. </summary>
+        public Guid? RpObjectId { get; }
+        /// <summary> Resource provision state. </summary>
+        public ContainerOrchestratorProvisioningState? ProvisioningState { get; }
     }
 }
