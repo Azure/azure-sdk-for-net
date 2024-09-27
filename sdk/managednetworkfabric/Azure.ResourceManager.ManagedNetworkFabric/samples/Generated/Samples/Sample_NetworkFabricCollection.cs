@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // invoke the operation
             string networkFabricName = "example-fabric";
-            NetworkFabricData data = new NetworkFabricData(new AzureLocation("eastuseuap"), "M4-A400-A100-C16-aa", new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/example-fabricController"), 8, "10.18.0.0/19", 29249, new TerminalServerConfiguration()
+            NetworkFabricData data = new NetworkFabricData(new AzureLocation("eastuseuap"), "M4-A400-A100-C16-aa", new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/example-fabricController"), 8, "10.18.0.0/19", 29249L, new TerminalServerConfiguration()
             {
                 PrimaryIPv4Prefix = "10.0.0.12/30",
                 PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                     SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                     Mtu = 1501,
                     VlanId = 3001,
-                    PeerAsn = 1235,
+                    PeerAsn = 1235L,
                     BfdConfiguration = new BfdConfiguration()
                     {
                         IntervalInMilliSeconds = 300,
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                     SecondaryIPv6Prefix = "2FFE:FFFF:0:CD30::ac/126",
                     Mtu = 1500,
                     VlanId = 3000,
-                    PeerAsn = 61234,
+                    PeerAsn = 61234L,
                     BfdConfiguration = new BfdConfiguration()
                     {
                         IntervalInMilliSeconds = 300,
