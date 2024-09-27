@@ -5,6 +5,7 @@ extern alias BaseShares;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
@@ -17,7 +18,11 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
         public static async Task<DisposingShare> CreateAsync(ShareClient share, IDictionary<string, string> metadata)
         {
-            await share.CreateIfNotExistsAsync(metadata: metadata);
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                Metadata = metadata
+            };
+            await share.CreateIfNotExistsAsync(options);
             return new DisposingShare(share);
         }
 
