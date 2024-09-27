@@ -183,17 +183,17 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
                     },
                     UpgradeMode = ApplicationRollingUpgradeMode.Monitored,
                 },
-                MinimumNodes = 1,
-                MaximumNodes = 3,
+                MinimumNodes = 1L,
+                MaximumNodes = 3L,
                 RemoveApplicationCapacity = false,
                 Metrics =
 {
 new ApplicationMetricDescription()
 {
 Name = "metric1",
-MaximumCapacity = 3,
-ReservationCapacity = 1,
-TotalApplicationCapacity = 5,
+MaximumCapacity = 3L,
+ReservationCapacity = 1L,
+TotalApplicationCapacity = 5L,
 }
 },
                 TypeName = "myAppType",
