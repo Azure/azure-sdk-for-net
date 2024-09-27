@@ -510,7 +510,7 @@ IsAutomaticUpgradeEnabled = true,
                     {
                         Capacity = 20,
                         MinCapacity = 10,
-                        MaxPricePerVm = (float)0.00865,
+                        MaxPricePerVm = (float)0.00865000020712614,
                         EvictionPolicy = ComputeFleetEvictionPolicy.Delete,
                         AllocationStrategy = SpotAllocationStrategy.PriceCapacityOptimized,
                         IsMaintainEnabled = true,
