@@ -254,8 +254,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     {
         public SignalRParameterAttribute() { }
     }
-    [Microsoft.Azure.WebJobs.Description.BindingAttribute]
-    [System.AttributeUsageAttribute(System.AttributeTargets.Parameter | System.AttributeTargets.ReturnValue)]
+    [Microsoft.Azure.WebJobs.Description.BindingAttribute(TriggerHandlesReturnValue=true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Parameter)]
     public partial class SignalRTriggerAttribute : System.Attribute
     {
         public SignalRTriggerAttribute() { }
