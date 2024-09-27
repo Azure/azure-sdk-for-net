@@ -359,5 +359,69 @@ namespace Azure.ResourceManager.Network.Tests
             await nicResponse.Value.DeleteAsync(WaitUntil.Completed);
             await putVnetResponse.Value.DeleteAsync(WaitUntil.Completed);
         }
+
+        [Test]
+        [RecordedTest]
+        public async Task VirtualNetworkIpamPoolTest()
+        {
+            string resourceGroupName = Recording.GenerateAssetName("csmrg");
+
+            string location = TestEnvironment.Location;
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
+            string vnetName = Recording.GenerateAssetName("azsmnet");
+            string subnetName = Recording.GenerateAssetName("azsmnet");
+
+            // Create network manager
+            string networkManagerName = Recording.GenerateAssetName("networkManager-");
+            var networkManager = await resourceGroup.CreateNetworkManagerAsync(
+                networkManagerName,
+                location,
+                new List<string> { _subscription.Data.Id },
+                new List<NetworkConfigurationDeploymentType> { });
+
+            var ipamPoolName = Recording.GenerateAssetName("ipamPool-");
+            var ipamPool = await resourceGroup.CreateIpamPoolAsync(networkManager, ipamPoolName, location, new List<string>() { "10.0.0.0/16" });
+
+            var vnet = new VirtualNetworkData()
+            {
+                Location = location,
+                AddressSpace = new AddressSpace(),
+                Subnets = { new SubnetData() { Name = subnetName } }
+            };
+
+            var ipamPoolPrefixAllocationRef = new IpamPoolPrefixAllocation()
+            {
+                Id = ipamPool.Id,
+                NumberOfIPAddresses = "16"
+            };
+
+            vnet.AddressSpace.IpamPoolPrefixAllocations.Add(ipamPoolPrefixAllocationRef);
+            vnet.Subnets.First().IpamPoolPrefixAllocations.Add(ipamPoolPrefixAllocationRef);
+
+            // Put Vnet
+            var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
+            var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
+            Response<VirtualNetworkResource> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();
+            ;
+            Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
+            Assert.AreEqual("10.0.0.0/28", putVnetResponse.Value.Data.AddressSpace.AddressPrefixes[0]);
+            Assert.AreEqual(1, putVnetResponse.Value.Data.AddressSpace.IpamPoolPrefixAllocations.Count);
+            Assert.AreEqual("10.0.0.0/28", putVnetResponse.Value.Data.AddressSpace.IpamPoolPrefixAllocations[0].AllocatedAddressPrefixes[0]);
+            Assert.AreEqual(ipamPool.Id.ToString(), putVnetResponse.Value.Data.AddressSpace.IpamPoolPrefixAllocations[0].Id.ToString());
+            Assert.AreEqual("10.0.0.0/28", putVnetResponse.Value.Data.Subnets[0].AddressPrefixes[0]);
+            Assert.AreEqual(1, putVnetResponse.Value.Data.Subnets[0].IpamPoolPrefixAllocations.Count);
+            Assert.AreEqual("10.0.0.0/28", putVnetResponse.Value.Data.Subnets[0].IpamPoolPrefixAllocations[0].AllocatedAddressPrefixes[0]);
+            Assert.AreEqual(ipamPool.Id.ToString(), putVnetResponse.Value.Data.Subnets[0].IpamPoolPrefixAllocations[0].Id.ToString());
+
+            Response <SubnetResource> getSubnetResponse = await putVnetResponse.Value.GetSubnets().GetAsync(subnetName);
+            Assert.AreEqual("10.0.0.0/28", getSubnetResponse.Value.Data.AddressPrefixes[0]);
+            Assert.AreEqual(1, getSubnetResponse.Value.Data.IpamPoolPrefixAllocations.Count);
+            Assert.AreEqual("10.0.0.0/28", getSubnetResponse.Value.Data.IpamPoolPrefixAllocations[0].AllocatedAddressPrefixes[0]);
+            Assert.AreEqual(ipamPool.Id.ToString(), getSubnetResponse.Value.Data.IpamPoolPrefixAllocations[0].Id.ToString());
+
+            // Delete Vnet, IpamPool, and NetworkManager
+            await putVnetResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await ipamPool.DeleteIpamPoolAsync(networkManager);
+        }
     }
 }
