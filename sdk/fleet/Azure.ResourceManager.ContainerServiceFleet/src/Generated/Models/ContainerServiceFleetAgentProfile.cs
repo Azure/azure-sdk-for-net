@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    /// <summary> The upgrade to apply to a ManagedCluster. </summary>
-    public partial class ContainerServiceFleetManagedClusterUpgradeSpec
+    /// <summary> Agent profile for the Fleet hub. </summary>
+    public partial class ContainerServiceFleetAgentProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +46,25 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/>. </summary>
-        /// <param name="upgradeType"> ManagedClusterUpgradeType is the type of upgrade to be applied. </param>
-        public ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType upgradeType)
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetAgentProfile"/>. </summary>
+        public ContainerServiceFleetAgentProfile()
         {
-            UpgradeType = upgradeType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/>. </summary>
-        /// <param name="upgradeType"> ManagedClusterUpgradeType is the type of upgrade to be applied. </param>
-        /// <param name="kubernetesVersion"> The Kubernetes version to upgrade the member clusters to. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetAgentProfile"/>. </summary>
+        /// <param name="subnetId"> The ID of the subnet which the Fleet hub node will join on startup. If this is not specified, a vnet and subnet will be generated and used. </param>
+        /// <param name="vmSize"> The virtual machine size of the Fleet hub. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType upgradeType, string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceFleetAgentProfile(ResourceIdentifier subnetId, string vmSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            UpgradeType = upgradeType;
-            KubernetesVersion = kubernetesVersion;
+            SubnetId = subnetId;
+            VmSize = vmSize;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/> for deserialization. </summary>
-        internal ContainerServiceFleetManagedClusterUpgradeSpec()
-        {
-        }
-
-        /// <summary> ManagedClusterUpgradeType is the type of upgrade to be applied. </summary>
-        public ContainerServiceFleetManagedClusterUpgradeType UpgradeType { get; set; }
-        /// <summary> The Kubernetes version to upgrade the member clusters to. </summary>
-        public string KubernetesVersion { get; set; }
+        /// <summary> The ID of the subnet which the Fleet hub node will join on startup. If this is not specified, a vnet and subnet will be generated and used. </summary>
+        public ResourceIdentifier SubnetId { get; set; }
+        /// <summary> The virtual machine size of the Fleet hub. </summary>
+        public string VmSize { get; set; }
     }
 }

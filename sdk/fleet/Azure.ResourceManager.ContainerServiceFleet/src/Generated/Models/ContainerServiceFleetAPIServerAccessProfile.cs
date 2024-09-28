@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    /// <summary> The upgrade to apply to a ManagedCluster. </summary>
-    public partial class ContainerServiceFleetManagedClusterUpgradeSpec
+    /// <summary> Access profile for the Fleet hub API server. </summary>
+    public partial class ContainerServiceFleetAPIServerAccessProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +46,29 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/>. </summary>
-        /// <param name="upgradeType"> ManagedClusterUpgradeType is the type of upgrade to be applied. </param>
-        public ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType upgradeType)
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetAPIServerAccessProfile"/>. </summary>
+        public ContainerServiceFleetAPIServerAccessProfile()
         {
-            UpgradeType = upgradeType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/>. </summary>
-        /// <param name="upgradeType"> ManagedClusterUpgradeType is the type of upgrade to be applied. </param>
-        /// <param name="kubernetesVersion"> The Kubernetes version to upgrade the member clusters to. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetAPIServerAccessProfile"/>. </summary>
+        /// <param name="enablePrivateCluster"> Whether to create the Fleet hub as a private cluster or not. </param>
+        /// <param name="enableVnetIntegration"> Whether to enable apiserver vnet integration for the Fleet hub or not. </param>
+        /// <param name="subnetId"> The subnet to be used when apiserver vnet integration is enabled. It is required when creating a new Fleet with BYO vnet. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType upgradeType, string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceFleetAPIServerAccessProfile(bool? enablePrivateCluster, bool? enableVnetIntegration, ResourceIdentifier subnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            UpgradeType = upgradeType;
-            KubernetesVersion = kubernetesVersion;
+            EnablePrivateCluster = enablePrivateCluster;
+            EnableVnetIntegration = enableVnetIntegration;
+            SubnetId = subnetId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/> for deserialization. </summary>
-        internal ContainerServiceFleetManagedClusterUpgradeSpec()
-        {
-        }
-
-        /// <summary> ManagedClusterUpgradeType is the type of upgrade to be applied. </summary>
-        public ContainerServiceFleetManagedClusterUpgradeType UpgradeType { get; set; }
-        /// <summary> The Kubernetes version to upgrade the member clusters to. </summary>
-        public string KubernetesVersion { get; set; }
+        /// <summary> Whether to create the Fleet hub as a private cluster or not. </summary>
+        public bool? EnablePrivateCluster { get; set; }
+        /// <summary> Whether to enable apiserver vnet integration for the Fleet hub or not. </summary>
+        public bool? EnableVnetIntegration { get; set; }
+        /// <summary> The subnet to be used when apiserver vnet integration is enabled. It is required when creating a new Fleet with BYO vnet. </summary>
+        public ResourceIdentifier SubnetId { get; set; }
     }
 }

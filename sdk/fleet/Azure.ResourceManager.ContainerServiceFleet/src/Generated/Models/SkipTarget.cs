@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    /// <summary> The upgrade to apply to a ManagedCluster. </summary>
-    public partial class ContainerServiceFleetManagedClusterUpgradeSpec
+    /// <summary> The definition of a single skip request. </summary>
+    public partial class SkipTarget
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +45,49 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/>. </summary>
-        /// <param name="upgradeType"> ManagedClusterUpgradeType is the type of upgrade to be applied. </param>
-        public ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType upgradeType)
+        /// <summary> Initializes a new instance of <see cref="SkipTarget"/>. </summary>
+        /// <param name="targetType"> The skip target type. </param>
+        /// <param name="name">
+        /// The skip target's name.
+        /// To skip a member/group/stage, use the member/group/stage's name;
+        /// Tp skip an after stage wait, use the parent stage's name.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public SkipTarget(TargetType targetType, string name)
         {
-            UpgradeType = upgradeType;
+            Argument.AssertNotNull(name, nameof(name));
+
+            TargetType = targetType;
+            Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/>. </summary>
-        /// <param name="upgradeType"> ManagedClusterUpgradeType is the type of upgrade to be applied. </param>
-        /// <param name="kubernetesVersion"> The Kubernetes version to upgrade the member clusters to. </param>
+        /// <summary> Initializes a new instance of <see cref="SkipTarget"/>. </summary>
+        /// <param name="targetType"> The skip target type. </param>
+        /// <param name="name">
+        /// The skip target's name.
+        /// To skip a member/group/stage, use the member/group/stage's name;
+        /// Tp skip an after stage wait, use the parent stage's name.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType upgradeType, string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SkipTarget(TargetType targetType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            UpgradeType = upgradeType;
-            KubernetesVersion = kubernetesVersion;
+            TargetType = targetType;
+            Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/> for deserialization. </summary>
-        internal ContainerServiceFleetManagedClusterUpgradeSpec()
+        /// <summary> Initializes a new instance of <see cref="SkipTarget"/> for deserialization. </summary>
+        internal SkipTarget()
         {
         }
 
-        /// <summary> ManagedClusterUpgradeType is the type of upgrade to be applied. </summary>
-        public ContainerServiceFleetManagedClusterUpgradeType UpgradeType { get; set; }
-        /// <summary> The Kubernetes version to upgrade the member clusters to. </summary>
-        public string KubernetesVersion { get; set; }
+        /// <summary> The skip target type. </summary>
+        public TargetType TargetType { get; }
+        /// <summary>
+        /// The skip target's name.
+        /// To skip a member/group/stage, use the member/group/stage's name;
+        /// Tp skip an after stage wait, use the parent stage's name.
+        /// </summary>
+        public string Name { get; }
     }
 }

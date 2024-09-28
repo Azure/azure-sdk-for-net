@@ -15,16 +15,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
-    public partial class ContainerServiceFleetData : IUtf8JsonSerializable, IJsonModel<ContainerServiceFleetData>
+    public partial class AutoUpgradeProfileData : IUtf8JsonSerializable, IJsonModel<AutoUpgradeProfileData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceFleetData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoUpgradeProfileData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ContainerServiceFleetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AutoUpgradeProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutoUpgradeProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceFleetData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoUpgradeProfileData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,24 +33,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -78,10 +60,25 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(HubProfile))
+            if (Optional.IsDefined(UpdateStrategyId))
             {
-                writer.WritePropertyName("hubProfile"u8);
-                writer.WriteObjectValue(HubProfile, options);
+                writer.WritePropertyName("updateStrategyId"u8);
+                writer.WriteStringValue(UpdateStrategyId);
+            }
+            if (Optional.IsDefined(Channel))
+            {
+                writer.WritePropertyName("channel"u8);
+                writer.WriteStringValue(Channel.Value.ToString());
+            }
+            if (Optional.IsDefined(NodeImageSelection))
+            {
+                writer.WritePropertyName("nodeImageSelection"u8);
+                writer.WriteObjectValue(NodeImageSelection, options);
+            }
+            if (Optional.IsDefined(Disabled))
+            {
+                writer.WritePropertyName("disabled"u8);
+                writer.WriteBooleanValue(Disabled.Value);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -102,19 +99,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             writer.WriteEndObject();
         }
 
-        ContainerServiceFleetData IJsonModel<ContainerServiceFleetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AutoUpgradeProfileData IJsonModel<AutoUpgradeProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutoUpgradeProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceFleetData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoUpgradeProfileData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContainerServiceFleetData(document.RootElement, options);
+            return DeserializeAutoUpgradeProfileData(document.RootElement, options);
         }
 
-        internal static ContainerServiceFleetData DeserializeContainerServiceFleetData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AutoUpgradeProfileData DeserializeAutoUpgradeProfileData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -123,15 +120,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 return null;
             }
             ETag? eTag = default;
-            ManagedServiceIdentity identity = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            FleetProvisioningState? provisioningState = default;
-            FleetHubProfile hubProfile = default;
+            AutoUpgradeProfileProvisioningState? provisioningState = default;
+            ResourceIdentifier updateStrategyId = default;
+            UpgradeChannel? channel = default;
+            AutoUpgradeNodeImageSelection nodeImageSelection = default;
+            bool? disabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,34 +140,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                         continue;
                     }
                     eTag = new ETag(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -212,16 +181,43 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             {
                                 continue;
                             }
-                            provisioningState = new FleetProvisioningState(property0.Value.GetString());
+                            provisioningState = new AutoUpgradeProfileProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("hubProfile"u8))
+                        if (property0.NameEquals("updateStrategyId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            hubProfile = FleetHubProfile.DeserializeFleetHubProfile(property0.Value, options);
+                            updateStrategyId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("channel"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            channel = new UpgradeChannel(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("nodeImageSelection"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            nodeImageSelection = AutoUpgradeNodeImageSelection.DeserializeAutoUpgradeNodeImageSelection(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("disabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            disabled = property0.Value.GetBoolean();
                             continue;
                         }
                     }
@@ -233,49 +229,49 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerServiceFleetData(
+            return new AutoUpgradeProfileData(
                 id,
                 name,
                 type,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 eTag,
-                identity,
                 provisioningState,
-                hubProfile,
+                updateStrategyId,
+                channel,
+                nodeImageSelection,
+                disabled,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ContainerServiceFleetData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AutoUpgradeProfileData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutoUpgradeProfileData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceFleetData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoUpgradeProfileData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ContainerServiceFleetData IPersistableModel<ContainerServiceFleetData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AutoUpgradeProfileData IPersistableModel<AutoUpgradeProfileData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutoUpgradeProfileData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeContainerServiceFleetData(document.RootElement, options);
+                        return DeserializeAutoUpgradeProfileData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceFleetData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoUpgradeProfileData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ContainerServiceFleetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AutoUpgradeProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

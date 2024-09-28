@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    /// <summary> The upgrade to apply to a ManagedCluster. </summary>
-    public partial class ContainerServiceFleetManagedClusterUpgradeSpec
+    /// <summary> The response of a AutoUpgradeProfile list operation. </summary>
+    internal partial class AutoUpgradeProfileListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +46,35 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/>. </summary>
-        /// <param name="upgradeType"> ManagedClusterUpgradeType is the type of upgrade to be applied. </param>
-        public ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType upgradeType)
+        /// <summary> Initializes a new instance of <see cref="AutoUpgradeProfileListResult"/>. </summary>
+        /// <param name="value"> The AutoUpgradeProfile items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AutoUpgradeProfileListResult(IEnumerable<AutoUpgradeProfileData> value)
         {
-            UpgradeType = upgradeType;
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/>. </summary>
-        /// <param name="upgradeType"> ManagedClusterUpgradeType is the type of upgrade to be applied. </param>
-        /// <param name="kubernetesVersion"> The Kubernetes version to upgrade the member clusters to. </param>
+        /// <summary> Initializes a new instance of <see cref="AutoUpgradeProfileListResult"/>. </summary>
+        /// <param name="value"> The AutoUpgradeProfile items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType upgradeType, string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutoUpgradeProfileListResult(IReadOnlyList<AutoUpgradeProfileData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            UpgradeType = upgradeType;
-            KubernetesVersion = kubernetesVersion;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/> for deserialization. </summary>
-        internal ContainerServiceFleetManagedClusterUpgradeSpec()
+        /// <summary> Initializes a new instance of <see cref="AutoUpgradeProfileListResult"/> for deserialization. </summary>
+        internal AutoUpgradeProfileListResult()
         {
         }
 
-        /// <summary> ManagedClusterUpgradeType is the type of upgrade to be applied. </summary>
-        public ContainerServiceFleetManagedClusterUpgradeType UpgradeType { get; set; }
-        /// <summary> The Kubernetes version to upgrade the member clusters to. </summary>
-        public string KubernetesVersion { get; set; }
+        /// <summary> The AutoUpgradeProfile items on this page. </summary>
+        public IReadOnlyList<AutoUpgradeProfileData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -15,20 +15,20 @@ using Azure.ResourceManager.ContainerServiceFleet.Models;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
-    internal partial class FleetMembersRestOperations
+    internal partial class AutoUpgradeProfilesRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of FleetMembersRestOperations. </summary>
+        /// <summary> Initializes a new instance of AutoUpgradeProfilesRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public FleetMembersRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public AutoUpgradeProfilesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
             uri.AppendPath(fleetName, true);
-            uri.AppendPath("/members", false);
+            uri.AppendPath("/autoUpgradeProfiles", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
             uri.AppendPath(fleetName, true);
-            uri.AppendPath("/members", false);
+            uri.AppendPath("/autoUpgradeProfiles", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             return message;
         }
 
-        /// <summary> List FleetMember resources by Fleet. </summary>
+        /// <summary> List AutoUpgradeProfile resources by Fleet. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContainerServiceFleetMemberListResult>> ListByFleetAsync(string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
+        public async Task<Response<AutoUpgradeProfileListResult>> ListByFleetAsync(string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 case 200:
                     {
-                        ContainerServiceFleetMemberListResult value = default;
+                        AutoUpgradeProfileListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ContainerServiceFleetMemberListResult.DeserializeContainerServiceFleetMemberListResult(document.RootElement);
+                        value = AutoUpgradeProfileListResult.DeserializeAutoUpgradeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
-        /// <summary> List FleetMember resources by Fleet. </summary>
+        /// <summary> List AutoUpgradeProfile resources by Fleet. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContainerServiceFleetMemberListResult> ListByFleet(string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
+        public Response<AutoUpgradeProfileListResult> ListByFleet(string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 case 200:
                     {
-                        ContainerServiceFleetMemberListResult value = default;
+                        AutoUpgradeProfileListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ContainerServiceFleetMemberListResult.DeserializeContainerServiceFleetMemberListResult(document.RootElement);
+                        value = AutoUpgradeProfileListResult.DeserializeAutoUpgradeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string autoUpgradeProfileName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -140,13 +140,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
             uri.AppendPath(fleetName, true);
-            uri.AppendPath("/members/", false);
-            uri.AppendPath(fleetMemberName, true);
+            uri.AppendPath("/autoUpgradeProfiles/", false);
+            uri.AppendPath(autoUpgradeProfileName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string fleetName, string autoUpgradeProfileName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
             uri.AppendPath(fleetName, true);
-            uri.AppendPath("/members/", false);
-            uri.AppendPath(fleetMemberName, true);
+            uri.AppendPath("/autoUpgradeProfiles/", false);
+            uri.AppendPath(autoUpgradeProfileName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -168,73 +168,73 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             return message;
         }
 
-        /// <summary> Get a FleetMember. </summary>
+        /// <summary> Get a AutoUpgradeProfile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
-        /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
+        /// <param name="autoUpgradeProfileName"> The name of the AutoUpgradeProfile resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContainerServiceFleetMemberData>> GetAsync(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="autoUpgradeProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="autoUpgradeProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AutoUpgradeProfileData>> GetAsync(string subscriptionId, string resourceGroupName, string fleetName, string autoUpgradeProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
-            Argument.AssertNotNullOrEmpty(fleetMemberName, nameof(fleetMemberName));
+            Argument.AssertNotNullOrEmpty(autoUpgradeProfileName, nameof(autoUpgradeProfileName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, fleetName, fleetMemberName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, fleetName, autoUpgradeProfileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ContainerServiceFleetMemberData value = default;
+                        AutoUpgradeProfileData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ContainerServiceFleetMemberData.DeserializeContainerServiceFleetMemberData(document.RootElement);
+                        value = AutoUpgradeProfileData.DeserializeAutoUpgradeProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ContainerServiceFleetMemberData)null, message.Response);
+                    return Response.FromValue((AutoUpgradeProfileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Get a FleetMember. </summary>
+        /// <summary> Get a AutoUpgradeProfile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
-        /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
+        /// <param name="autoUpgradeProfileName"> The name of the AutoUpgradeProfile resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContainerServiceFleetMemberData> Get(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="autoUpgradeProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="autoUpgradeProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AutoUpgradeProfileData> Get(string subscriptionId, string resourceGroupName, string fleetName, string autoUpgradeProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
-            Argument.AssertNotNullOrEmpty(fleetMemberName, nameof(fleetMemberName));
+            Argument.AssertNotNullOrEmpty(autoUpgradeProfileName, nameof(autoUpgradeProfileName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, fleetName, fleetMemberName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, fleetName, autoUpgradeProfileName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ContainerServiceFleetMemberData value = default;
+                        AutoUpgradeProfileData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ContainerServiceFleetMemberData.DeserializeContainerServiceFleetMemberData(document.RootElement);
+                        value = AutoUpgradeProfileData.DeserializeAutoUpgradeProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ContainerServiceFleetMemberData)null, message.Response);
+                    return Response.FromValue((AutoUpgradeProfileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, ContainerServiceFleetMemberData data, string ifMatch, string ifNoneMatch)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string autoUpgradeProfileName, AutoUpgradeProfileData data, string ifMatch, string ifNoneMatch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -244,13 +244,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
             uri.AppendPath(fleetName, true);
-            uri.AppendPath("/members/", false);
-            uri.AppendPath(fleetMemberName, true);
+            uri.AppendPath("/autoUpgradeProfiles/", false);
+            uri.AppendPath(autoUpgradeProfileName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, ContainerServiceFleetMemberData data, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string fleetName, string autoUpgradeProfileName, AutoUpgradeProfileData data, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -263,8 +263,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
             uri.AppendPath(fleetName, true);
-            uri.AppendPath("/members/", false);
-            uri.AppendPath(fleetMemberName, true);
+            uri.AppendPath("/autoUpgradeProfiles/", false);
+            uri.AppendPath(autoUpgradeProfileName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (ifMatch != null)
@@ -284,26 +284,26 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             return message;
         }
 
-        /// <summary> Create a FleetMember. </summary>
+        /// <summary> Create a AutoUpgradeProfile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
-        /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
+        /// <param name="autoUpgradeProfileName"> The name of the AutoUpgradeProfile resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
         /// <param name="ifNoneMatch"> The request should only proceed if no entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="fleetMemberName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, ContainerServiceFleetMemberData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="autoUpgradeProfileName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="autoUpgradeProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string fleetName, string autoUpgradeProfileName, AutoUpgradeProfileData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
-            Argument.AssertNotNullOrEmpty(fleetMemberName, nameof(fleetMemberName));
+            Argument.AssertNotNullOrEmpty(autoUpgradeProfileName, nameof(autoUpgradeProfileName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, fleetName, fleetMemberName, data, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, fleetName, autoUpgradeProfileName, data, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -315,26 +315,26 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
-        /// <summary> Create a FleetMember. </summary>
+        /// <summary> Create a AutoUpgradeProfile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
-        /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
+        /// <param name="autoUpgradeProfileName"> The name of the AutoUpgradeProfile resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
         /// <param name="ifNoneMatch"> The request should only proceed if no entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="fleetMemberName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, ContainerServiceFleetMemberData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="autoUpgradeProfileName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="autoUpgradeProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string fleetName, string autoUpgradeProfileName, AutoUpgradeProfileData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
-            Argument.AssertNotNullOrEmpty(fleetMemberName, nameof(fleetMemberName));
+            Argument.AssertNotNullOrEmpty(autoUpgradeProfileName, nameof(autoUpgradeProfileName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, fleetName, fleetMemberName, data, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, fleetName, autoUpgradeProfileName, data, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, ContainerServiceFleetMemberPatch patch, string ifMatch)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string autoUpgradeProfileName, string ifMatch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -356,119 +356,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
             uri.AppendPath(fleetName, true);
-            uri.AppendPath("/members/", false);
-            uri.AppendPath(fleetMemberName, true);
+            uri.AppendPath("/autoUpgradeProfiles/", false);
+            uri.AppendPath(autoUpgradeProfileName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, ContainerServiceFleetMemberPatch patch, string ifMatch)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
-            uri.AppendPath(fleetName, true);
-            uri.AppendPath("/members/", false);
-            uri.AppendPath(fleetMemberName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            if (ifMatch != null)
-            {
-                request.Headers.Add("If-Match", ifMatch);
-            }
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Update a FleetMember. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fleetName"> The name of the Fleet resource. </param>
-        /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="fleetMemberName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, ContainerServiceFleetMemberPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
-            Argument.AssertNotNullOrEmpty(fleetMemberName, nameof(fleetMemberName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, fleetName, fleetMemberName, patch, ifMatch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Update a FleetMember. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="fleetName"> The name of the Fleet resource. </param>
-        /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="fleetMemberName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, ContainerServiceFleetMemberPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
-            Argument.AssertNotNullOrEmpty(fleetMemberName, nameof(fleetMemberName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, fleetName, fleetMemberName, patch, ifMatch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, string ifMatch)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
-            uri.AppendPath(fleetName, true);
-            uri.AppendPath("/members/", false);
-            uri.AppendPath(fleetMemberName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, string ifMatch)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string fleetName, string autoUpgradeProfileName, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -481,8 +375,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
             uri.AppendPath(fleetName, true);
-            uri.AppendPath("/members/", false);
-            uri.AppendPath(fleetMemberName, true);
+            uri.AppendPath("/autoUpgradeProfiles/", false);
+            uri.AppendPath(autoUpgradeProfileName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (ifMatch != null)
@@ -494,27 +388,26 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             return message;
         }
 
-        /// <summary> Delete a FleetMember. </summary>
+        /// <summary> Delete a AutoUpgradeProfile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
-        /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
+        /// <param name="autoUpgradeProfileName"> The name of the AutoUpgradeProfile resource. </param>
         /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="autoUpgradeProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="autoUpgradeProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string fleetName, string autoUpgradeProfileName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
-            Argument.AssertNotNullOrEmpty(fleetMemberName, nameof(fleetMemberName));
+            Argument.AssertNotNullOrEmpty(autoUpgradeProfileName, nameof(autoUpgradeProfileName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, fleetName, fleetMemberName, ifMatch);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, fleetName, autoUpgradeProfileName, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -523,27 +416,26 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
-        /// <summary> Delete a FleetMember. </summary>
+        /// <summary> Delete a AutoUpgradeProfile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
-        /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
+        /// <param name="autoUpgradeProfileName"> The name of the AutoUpgradeProfile resource. </param>
         /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string fleetName, string fleetMemberName, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="autoUpgradeProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/> or <paramref name="autoUpgradeProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string fleetName, string autoUpgradeProfileName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
-            Argument.AssertNotNullOrEmpty(fleetMemberName, nameof(fleetMemberName));
+            Argument.AssertNotNullOrEmpty(autoUpgradeProfileName, nameof(autoUpgradeProfileName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, fleetName, fleetMemberName, ifMatch);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, fleetName, autoUpgradeProfileName, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -574,7 +466,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             return message;
         }
 
-        /// <summary> List FleetMember resources by Fleet. </summary>
+        /// <summary> List AutoUpgradeProfile resources by Fleet. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -582,7 +474,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContainerServiceFleetMemberListResult>> ListByFleetNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
+        public async Task<Response<AutoUpgradeProfileListResult>> ListByFleetNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -595,9 +487,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 case 200:
                     {
-                        ContainerServiceFleetMemberListResult value = default;
+                        AutoUpgradeProfileListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ContainerServiceFleetMemberListResult.DeserializeContainerServiceFleetMemberListResult(document.RootElement);
+                        value = AutoUpgradeProfileListResult.DeserializeAutoUpgradeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -605,7 +497,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
-        /// <summary> List FleetMember resources by Fleet. </summary>
+        /// <summary> List AutoUpgradeProfile resources by Fleet. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -613,7 +505,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContainerServiceFleetMemberListResult> ListByFleetNextPage(string nextLink, string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
+        public Response<AutoUpgradeProfileListResult> ListByFleetNextPage(string nextLink, string subscriptionId, string resourceGroupName, string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -626,9 +518,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 case 200:
                     {
-                        ContainerServiceFleetMemberListResult value = default;
+                        AutoUpgradeProfileListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ContainerServiceFleetMemberListResult.DeserializeContainerServiceFleetMemberListResult(document.RootElement);
+                        value = AutoUpgradeProfileListResult.DeserializeAutoUpgradeProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

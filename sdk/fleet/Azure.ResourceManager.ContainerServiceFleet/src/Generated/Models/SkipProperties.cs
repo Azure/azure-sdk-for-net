@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    /// <summary> The upgrade to apply to a ManagedCluster. </summary>
-    public partial class ContainerServiceFleetManagedClusterUpgradeSpec
+    /// <summary> The properties of a skip operation containing multiple skip requests. </summary>
+    public partial class SkipProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +46,31 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/>. </summary>
-        /// <param name="upgradeType"> ManagedClusterUpgradeType is the type of upgrade to be applied. </param>
-        public ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType upgradeType)
+        /// <summary> Initializes a new instance of <see cref="SkipProperties"/>. </summary>
+        /// <param name="targets"> The targets to skip. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targets"/> is null. </exception>
+        public SkipProperties(IEnumerable<SkipTarget> targets)
         {
-            UpgradeType = upgradeType;
+            Argument.AssertNotNull(targets, nameof(targets));
+
+            Targets = targets.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/>. </summary>
-        /// <param name="upgradeType"> ManagedClusterUpgradeType is the type of upgrade to be applied. </param>
-        /// <param name="kubernetesVersion"> The Kubernetes version to upgrade the member clusters to. </param>
+        /// <summary> Initializes a new instance of <see cref="SkipProperties"/>. </summary>
+        /// <param name="targets"> The targets to skip. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType upgradeType, string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SkipProperties(IList<SkipTarget> targets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            UpgradeType = upgradeType;
-            KubernetesVersion = kubernetesVersion;
+            Targets = targets;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/> for deserialization. </summary>
-        internal ContainerServiceFleetManagedClusterUpgradeSpec()
+        /// <summary> Initializes a new instance of <see cref="SkipProperties"/> for deserialization. </summary>
+        internal SkipProperties()
         {
         }
 
-        /// <summary> ManagedClusterUpgradeType is the type of upgrade to be applied. </summary>
-        public ContainerServiceFleetManagedClusterUpgradeType UpgradeType { get; set; }
-        /// <summary> The Kubernetes version to upgrade the member clusters to. </summary>
-        public string KubernetesVersion { get; set; }
+        /// <summary> The targets to skip. </summary>
+        public IList<SkipTarget> Targets { get; }
     }
 }

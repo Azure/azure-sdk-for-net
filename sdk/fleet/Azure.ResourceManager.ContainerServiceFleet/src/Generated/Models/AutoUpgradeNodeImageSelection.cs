@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    /// <summary> The upgrade to apply to a ManagedCluster. </summary>
-    public partial class ContainerServiceFleetManagedClusterUpgradeSpec
+    /// <summary> The node image upgrade to be applied to the target clusters in auto upgrade. </summary>
+    internal partial class AutoUpgradeNodeImageSelection
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +45,28 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/>. </summary>
-        /// <param name="upgradeType"> ManagedClusterUpgradeType is the type of upgrade to be applied. </param>
-        public ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType upgradeType)
+        /// <summary> Initializes a new instance of <see cref="AutoUpgradeNodeImageSelection"/>. </summary>
+        /// <param name="selectionType"> The node image upgrade type. </param>
+        public AutoUpgradeNodeImageSelection(AutoUpgradeNodeImageSelectionType selectionType)
         {
-            UpgradeType = upgradeType;
+            SelectionType = selectionType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/>. </summary>
-        /// <param name="upgradeType"> ManagedClusterUpgradeType is the type of upgrade to be applied. </param>
-        /// <param name="kubernetesVersion"> The Kubernetes version to upgrade the member clusters to. </param>
+        /// <summary> Initializes a new instance of <see cref="AutoUpgradeNodeImageSelection"/>. </summary>
+        /// <param name="selectionType"> The node image upgrade type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType upgradeType, string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutoUpgradeNodeImageSelection(AutoUpgradeNodeImageSelectionType selectionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            UpgradeType = upgradeType;
-            KubernetesVersion = kubernetesVersion;
+            SelectionType = selectionType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/> for deserialization. </summary>
-        internal ContainerServiceFleetManagedClusterUpgradeSpec()
+        /// <summary> Initializes a new instance of <see cref="AutoUpgradeNodeImageSelection"/> for deserialization. </summary>
+        internal AutoUpgradeNodeImageSelection()
         {
         }
 
-        /// <summary> ManagedClusterUpgradeType is the type of upgrade to be applied. </summary>
-        public ContainerServiceFleetManagedClusterUpgradeType UpgradeType { get; set; }
-        /// <summary> The Kubernetes version to upgrade the member clusters to. </summary>
-        public string KubernetesVersion { get; set; }
+        /// <summary> The node image upgrade type. </summary>
+        public AutoUpgradeNodeImageSelectionType SelectionType { get; set; }
     }
 }

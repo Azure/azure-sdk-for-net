@@ -13,15 +13,15 @@ using Azure.ResourceManager.ContainerServiceFleet.Models;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Samples
 {
-    public partial class Sample_FleetUpdateStrategyCollection
+    public partial class Sample_AutoUpgradeProfileCollection
     {
-        // List the FleetUpdateStrategy resources by fleet.
+        // Lists the AutoUpgradeProfile resources by fleet.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListTheFleetUpdateStrategyResourcesByFleet()
+        public async Task GetAll_ListsTheAutoUpgradeProfileResourcesByFleet()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/UpdateStrategies_ListByFleet.json
-            // this example is just showing the usage of "FleetUpdateStrategies_ListByFleet" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/AutoUpgradeProfiles_ListByFleet.json
+            // this example is just showing the usage of "AutoUpgradeProfiles_ListByFleet" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             ResourceIdentifier containerServiceFleetResourceId = ContainerServiceFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
             ContainerServiceFleetResource containerServiceFleet = client.GetContainerServiceFleetResource(containerServiceFleetResourceId);
 
-            // get the collection of this FleetUpdateStrategyResource
-            FleetUpdateStrategyCollection collection = containerServiceFleet.GetFleetUpdateStrategies();
+            // get the collection of this AutoUpgradeProfileResource
+            AutoUpgradeProfileCollection collection = containerServiceFleet.GetAutoUpgradeProfiles();
 
             // invoke the operation and iterate over the result
-            await foreach (FleetUpdateStrategyResource item in collection.GetAllAsync())
+            await foreach (AutoUpgradeProfileResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                FleetUpdateStrategyData resourceData = item.Data;
+                AutoUpgradeProfileData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // Get a FleetUpdateStrategy resource.
+        // Gets an AutoUpgradeProfile resource.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetAFleetUpdateStrategyResource()
+        public async Task Get_GetsAnAutoUpgradeProfileResource()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/UpdateStrategies_Get.json
-            // this example is just showing the usage of "FleetUpdateStrategies_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/AutoUpgradeProfiles_Get.json
+            // this example is just showing the usage of "AutoUpgradeProfiles_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -73,27 +73,27 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             ResourceIdentifier containerServiceFleetResourceId = ContainerServiceFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
             ContainerServiceFleetResource containerServiceFleet = client.GetContainerServiceFleetResource(containerServiceFleetResourceId);
 
-            // get the collection of this FleetUpdateStrategyResource
-            FleetUpdateStrategyCollection collection = containerServiceFleet.GetFleetUpdateStrategies();
+            // get the collection of this AutoUpgradeProfileResource
+            AutoUpgradeProfileCollection collection = containerServiceFleet.GetAutoUpgradeProfiles();
 
             // invoke the operation
-            string updateStrategyName = "strategy1";
-            FleetUpdateStrategyResource result = await collection.GetAsync(updateStrategyName);
+            string autoUpgradeProfileName = "autoupgradeprofile1";
+            AutoUpgradeProfileResource result = await collection.GetAsync(autoUpgradeProfileName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            FleetUpdateStrategyData resourceData = result.Data;
+            AutoUpgradeProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a FleetUpdateStrategy resource.
+        // Gets an AutoUpgradeProfile resource.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetAFleetUpdateStrategyResource()
+        public async Task Exists_GetsAnAutoUpgradeProfileResource()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/UpdateStrategies_Get.json
-            // this example is just showing the usage of "FleetUpdateStrategies_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/AutoUpgradeProfiles_Get.json
+            // this example is just showing the usage of "AutoUpgradeProfiles_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -108,23 +108,23 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             ResourceIdentifier containerServiceFleetResourceId = ContainerServiceFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
             ContainerServiceFleetResource containerServiceFleet = client.GetContainerServiceFleetResource(containerServiceFleetResourceId);
 
-            // get the collection of this FleetUpdateStrategyResource
-            FleetUpdateStrategyCollection collection = containerServiceFleet.GetFleetUpdateStrategies();
+            // get the collection of this AutoUpgradeProfileResource
+            AutoUpgradeProfileCollection collection = containerServiceFleet.GetAutoUpgradeProfiles();
 
             // invoke the operation
-            string updateStrategyName = "strategy1";
-            bool result = await collection.ExistsAsync(updateStrategyName);
+            string autoUpgradeProfileName = "autoupgradeprofile1";
+            bool result = await collection.ExistsAsync(autoUpgradeProfileName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a FleetUpdateStrategy resource.
+        // Gets an AutoUpgradeProfile resource.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetAFleetUpdateStrategyResource()
+        public async Task GetIfExists_GetsAnAutoUpgradeProfileResource()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/UpdateStrategies_Get.json
-            // this example is just showing the usage of "FleetUpdateStrategies_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/AutoUpgradeProfiles_Get.json
+            // this example is just showing the usage of "AutoUpgradeProfiles_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             ResourceIdentifier containerServiceFleetResourceId = ContainerServiceFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
             ContainerServiceFleetResource containerServiceFleet = client.GetContainerServiceFleetResource(containerServiceFleetResourceId);
 
-            // get the collection of this FleetUpdateStrategyResource
-            FleetUpdateStrategyCollection collection = containerServiceFleet.GetFleetUpdateStrategies();
+            // get the collection of this AutoUpgradeProfileResource
+            AutoUpgradeProfileCollection collection = containerServiceFleet.GetAutoUpgradeProfiles();
 
             // invoke the operation
-            string updateStrategyName = "strategy1";
-            NullableResponse<FleetUpdateStrategyResource> response = await collection.GetIfExistsAsync(updateStrategyName);
-            FleetUpdateStrategyResource result = response.HasValue ? response.Value : null;
+            string autoUpgradeProfileName = "autoupgradeprofile1";
+            NullableResponse<AutoUpgradeProfileResource> response = await collection.GetIfExistsAsync(autoUpgradeProfileName);
+            AutoUpgradeProfileResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -155,19 +155,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                FleetUpdateStrategyData resourceData = result.Data;
+                AutoUpgradeProfileData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
         }
 
-        // Create a FleetUpdateStrategy.
+        // Create an AutoUpgradeProfile.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAFleetUpdateStrategy()
+        public async Task CreateOrUpdate_CreateAnAutoUpgradeProfile()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/UpdateStrategies_CreateOrUpdate.json
-            // this example is just showing the usage of "FleetUpdateStrategies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/AutoUpgradeProfiles_CreateOrUpdate.json
+            // this example is just showing the usage of "AutoUpgradeProfiles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -182,31 +182,21 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             ResourceIdentifier containerServiceFleetResourceId = ContainerServiceFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
             ContainerServiceFleetResource containerServiceFleet = client.GetContainerServiceFleetResource(containerServiceFleetResourceId);
 
-            // get the collection of this FleetUpdateStrategyResource
-            FleetUpdateStrategyCollection collection = containerServiceFleet.GetFleetUpdateStrategies();
+            // get the collection of this AutoUpgradeProfileResource
+            AutoUpgradeProfileCollection collection = containerServiceFleet.GetAutoUpgradeProfiles();
 
             // invoke the operation
-            string updateStrategyName = "strartegy1";
-            FleetUpdateStrategyData data = new FleetUpdateStrategyData()
+            string autoUpgradeProfileName = "autoupgradeprofile1";
+            AutoUpgradeProfileData data = new AutoUpgradeProfileData()
             {
-                StrategyStages =
-{
-new ContainerServiceFleetUpdateStage("stage1")
-{
-Groups =
-{
-new ContainerServiceFleetUpdateGroup("group-a")
-},
-AfterStageWaitInSeconds = 3600,
-}
-},
+                Channel = UpgradeChannel.Stable,
             };
-            ArmOperation<FleetUpdateStrategyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, updateStrategyName, data);
-            FleetUpdateStrategyResource result = lro.Value;
+            ArmOperation<AutoUpgradeProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, data);
+            AutoUpgradeProfileResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            FleetUpdateStrategyData resourceData = result.Data;
+            AutoUpgradeProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
