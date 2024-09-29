@@ -19,7 +19,7 @@ namespace Azure.AI.Inference.Tests
             )
         {
             CompletionsFinishReason? nullVal = null;
-            StreamingRecordedResponse resp = new(traceContent);
+            ResponseBuffer resp = new(traceContent);
             resp.Update(new(
                 id: "1",
                 model: "gpt-100o",
@@ -58,17 +58,19 @@ namespace Azure.AI.Inference.Tests
                     choices: new List<StreamingChatChoiceUpdate>()
                 ));
             }
-            CollectionAssert.AreEqual(new[] { "stop" }, resp.FinishReasons);
-            Assert.AreEqual(resp.Model, "gpt-100o");
-            Assert.AreEqual(resp.Id, withUsage?"4":"3");
 
-            Assert.AreEqual(resp.CompletionTokens, withUsage ? 7 : null);
-            Assert.AreEqual(resp.PromptTokens, withUsage ? 3 : null);
+            RecordedResponse response = resp.ToResponse();
 
-            string[] strSerialized = resp.GetSerializedCompletions();
-            Assert.AreEqual(strSerialized.Length, 1);
+            CollectionAssert.AreEqual(new[] { "stop" }, response.FinishReasons);
+            Assert.AreEqual(response.Model, "gpt-100o");
+            Assert.AreEqual(response.Id, withUsage?"4":"3");
 
-            var choiceEvent = JsonNode.Parse(strSerialized[0]);
+            Assert.AreEqual(response.CompletionTokens, withUsage ? 7 : null);
+            Assert.AreEqual(response.PromptTokens, withUsage ? 3 : null);
+
+            Assert.AreEqual(1, response.Choices.Length);
+
+            var choiceEvent = JsonSerializer.SerializeToNode(response.Choices[0]);
             var message = choiceEvent["message"];
             Assert.NotNull(message);
 
@@ -94,19 +96,19 @@ namespace Azure.AI.Inference.Tests
         [Test]
         public void TestWithTools([Values(true, false)] bool traceContent)
         {
-            StreamingRecordedResponse resp = new(traceContent);
+            ResponseBuffer resp = new(traceContent);
             resp.Update(GetToolUpdate("first", "func1", "{\"arg1\": 42}", "tool_call_1", 0, false));
             resp.Update(GetToolUpdate(" second", "func2", "{\"arg1\": 42,", "tool_call_2", 1, false));
             resp.Update(GetToolUpdate(" third", "func2", "\"arg2\": 43}", "tool_call_2", 1, true));
 
-            Assert.AreEqual(resp.Id, "1");
-            CollectionAssert.AreEqual(new[] { "tool_calls" }, resp.FinishReasons);
-            Assert.AreEqual(resp.Model, "gpt-100o");
+            RecordedResponse response = resp.ToResponse();
+            Assert.AreEqual(response.Id, "1");
+            CollectionAssert.AreEqual(new[] { "tool_calls" }, response.FinishReasons);
+            Assert.AreEqual(response.Model, "gpt-100o");
 
-            string[] strSerialized = resp.GetSerializedCompletions();
-            Assert.AreEqual(strSerialized.Length, 1);
+            Assert.AreEqual(1, response.Choices.Length);
 
-            var choiceEvent = JsonNode.Parse(strSerialized[0]);
+            var choiceEvent = JsonSerializer.SerializeToNode(response.Choices[0]);
             var message = choiceEvent["message"];
             Assert.NotNull(message);
 
@@ -156,7 +158,8 @@ namespace Azure.AI.Inference.Tests
                 },
                 type = "function",
                 id = toolCallId,
-                index = index };
+                index
+            };
 
             return new StreamingChatCompletionsUpdate(
                 id: "1",
@@ -167,7 +170,7 @@ namespace Azure.AI.Inference.Tests
                 finishReason: isLast ? CompletionsFinishReason.ToolCalls : (CompletionsFinishReason?) null,
                 functionName: null,
                 functionArgumentsUpdate: null,
-                toolCallUpdate: StreamingFunctionToolCallUpdate.DeserializeStreamingToolCallUpdate(JsonSerializer.SerializeToElement(toolUpdate))
+                toolCallUpdate: StreamingToolCallUpdate.DeserializeStreamingToolCallUpdate(JsonSerializer.SerializeToElement(toolUpdate))
             );
         }
         #endregion

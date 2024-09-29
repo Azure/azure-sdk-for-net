@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 using Azure.AI.Inference.Telemetry;
 using NUnit.Framework;
 
@@ -17,6 +19,7 @@ namespace Azure.AI.Inference.Tests.Utilities
     [NonParallelizable]
     internal class ValidatingActivityListener : IDisposable
     {
+        private static readonly JsonSerializerOptions s_jsonOptions = new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
         private readonly ActivityListener m_activityListener;
         private readonly ConcurrentQueue<Activity> m_listeners = new();
 
@@ -67,60 +70,44 @@ namespace Azure.AI.Inference.Tests.Utilities
             ValidateChatMessageEvents(activity, requestOptions.Messages, traceContent);
         }
 
-        public void ValidateResponseEvents(AbstractRecordedResponse response, bool traceEvents)
+        public void ValidateResponse(RecordedResponse response, string errorType, string errorDescription)
         {
             Activity activity = m_listeners.Single();
+
+            List<ActivityEvent> actualChoices = activity.Events.Where(e => e.Name == GenAiChoice).ToList();
+
+            if (errorType != null)
+            {
+                ValidateError(activity, errorType, errorDescription);
+            }
+
             if (response == null)
             {
-                ValidateNoEventsWithName(GenAiChoice);
+                Assert.IsEmpty(actualChoices);
                 return;
             }
+
+            Assert.AreEqual(actualChoices.Count, actualChoices.Count);
             ValidateTag(activity, GenAiResponseIdKey, response.Id);
             ValidateTag(activity, GenAiResponseModelKey, response.Model);
             ValidateTag(activity, GenAiResponseFinishReasonsKey, response.FinishReasons);
             ValidateIntTag(activity, GenAiUsageOutputTokensKey, response.CompletionTokens);
             ValidateIntTag(activity, GenAiUsageInputTokensKey, response.PromptTokens);
-            var validChoices = new HashSet<string>();
-            if (traceEvents)
+
+            HashSet<string> expectedChoices = new HashSet<string>(response.Choices.Select(c => JsonSerializer.Serialize(c, options: s_jsonOptions)));
+            for (int i = 0; i < actualChoices.Count; i++)
             {
-                foreach (string v in response.GetSerializedCompletions())
-                {
-                    validChoices.Add(v);
-                }
-                foreach (ActivityEvent evt in activity.Events)
-                {
-                    if (evt.Name != GenAiChoice)
-                        continue;
-                    Assert.AreEqual(2, evt.Tags.Count());
-                    Assert.AreEqual(GenAiSystemKey, evt.Tags.ElementAt(0).Key);
-                    Assert.AreEqual(GenAiSystemValue, evt.Tags.ElementAt(0).Value);
-                    Assert.AreEqual(GenAiEventContent, evt.Tags.ElementAt(1).Key);
-                    Assert.That(validChoices.Contains(evt.Tags.ElementAt(1).Value.ToString()));
-                }
-            }
-            else
-            {
-                ValidateNoEventsWithName(GenAiChoice);
+                Assert.AreEqual(2, actualChoices[i].Tags.Count());
+                Assert.AreEqual(GenAiSystemValue, actualChoices[i].Tags.Single(kvp => kvp.Key == GenAiSystemKey).Value);
+
+                var content = actualChoices[i].Tags.Where(kvp => kvp.Key == GenAiEventContent);
+                Assert.AreEqual(1, content.Count());
+                TelemetryUtils.AssertChoiceEventsAreEqual(response.Choices[i], content.Single().Value.ToString());
             }
         }
 
-        private void ValidateNoEventsWithName(string name)
+        private void ValidateError(Activity activity, string errorType, string errorDescription)
         {
-            Activity activity = m_listeners.Single();
-            // Check that we do not have the actual completion events.
-            foreach (ActivityEvent evt in activity.Events)
-            {
-                if (evt.Name == name)
-                    Assert.That(evt.Name != name, $"The event {name} was found on activity.");
-            }
-        }
-
-        public void ValidateErrorTag(
-            string errorType,
-            string errorDescription
-            )
-        {
-            Activity activity = m_listeners.Single();
             Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
             Assert.AreEqual(errorDescription, activity.StatusDescription);
             ValidateTag(activity, ErrorTypeKey, errorType);
@@ -189,7 +176,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             }
         }
 
-        public void VaidateTelemetryIsOff()
+        public void ValidateTelemetryIsOff()
         {
             Assert.That(m_listeners.IsEmpty);
         }

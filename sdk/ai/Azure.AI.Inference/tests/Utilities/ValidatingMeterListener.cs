@@ -78,7 +78,7 @@ namespace Azure.AI.Inference.Tests.Utilities
         /// <param name="model">The model called.</param>
         /// <param name="endpoint">The endpoint called.</param>
         /// <returns></returns>
-        private static Dictionary<string, object> GetDefaultTags(string requestModel, string responseModel, Uri endpoint)
+        private static Dictionary<string, object> GetDefaultTags(string requestModel, string responseModel, Uri endpoint, string errorType)
         {
              var standardTags = new Dictionary<string, object>{
                 { GenAiSystemKey, GenAiSystemValue},
@@ -92,32 +92,40 @@ namespace Azure.AI.Inference.Tests.Utilities
                 standardTags[GenAiResponseModelKey] = responseModel;
             }
 
+            if (errorType != null)
+            {
+                standardTags[ErrorTypeKey] = errorType;
+            }
+
             if (endpoint.Port != 443)
             {
                 standardTags[ServerPortKey] = endpoint.Port;
             }
             return standardTags;
         }
+
+        public void ValidateUsageIsNotReported()
+        {
+            ValidateMetrics(GenAiClientTokenUsageMetricName, null, false);
+        }
+
         /// <summary>
         /// Validate Tag usage metrics.
         /// </summary>
         /// <param name="model">The model called.</param>
         /// <param name="endpoint">The endpoint called.</param>
-        public void ValidateTags(string requestModel, string responseModel, Uri endpoint, bool metricsPresent)
+        public void ValidateUsage(string requestModel, string responseModel, Uri endpoint)
         {
             var lstExpected = new List<Dictionary<string, object>>();
-            if (metricsPresent)
-            {
-                // InputTags
-                Dictionary<string, object> input_tags = GetDefaultTags(requestModel, responseModel, endpoint);
-                input_tags.Add(GenAiUsageInputTokensKey, "input");
-                lstExpected.Add(input_tags);
-                // Output tags
-                Dictionary<string, object> output_tags = GetDefaultTags(requestModel, responseModel, endpoint);
-                output_tags.Add(GenAiUsageOutputTokensKey, "output");
-                lstExpected.Add(output_tags);
-            }
-            ValidateMetrics(GenAiClientTokenUsageMetricName, lstExpected, metricsPresent);
+            // InputTags
+            Dictionary<string, object> input_tags = GetDefaultTags(requestModel, responseModel, endpoint, null);
+            input_tags.Add(GenAiUsageInputTokensKey, "input");
+            lstExpected.Add(input_tags);
+            // Output tags
+            Dictionary<string, object> output_tags = GetDefaultTags(requestModel, responseModel, endpoint, null);
+            output_tags.Add(GenAiUsageOutputTokensKey, "output");
+            lstExpected.Add(output_tags);
+            ValidateMetrics(GenAiClientTokenUsageMetricName, lstExpected, true);
         }
 
         /// <summary>
@@ -125,16 +133,12 @@ namespace Azure.AI.Inference.Tests.Utilities
         /// </summary>
         /// <param name="model">The model to be called.</param>
         /// <param name="endpoint">The endpoint called.</param>
-        public void ValidateDuration(string requestModel, string responseModel, Uri endpoint, string error=null)
+        public void ValidateDuration(string requestModel, string responseModel, Uri endpoint, string errorType)
         {
             var lstExpected = new List<Dictionary<string, object>>()
             {
-                GetDefaultTags(requestModel, responseModel, endpoint),
+                GetDefaultTags(requestModel, responseModel, endpoint, errorType),
             };
-            if (error != null)
-            {
-                lstExpected[0].Add(ErrorTypeKey, error);
-            }
             ValidateMetrics(GenAiClientOperationDurationMetricName, lstExpected, true);
         }
 
@@ -147,7 +151,7 @@ namespace Azure.AI.Inference.Tests.Utilities
         {
             if (metricsPresent)
             {
-                Assert.That(m_measurementTags.ContainsKey(metricsName), $"{metricsName} is absent in metrics tags.");
+                Assert.That(m_measurementTags.ContainsKey(metricsName), $"{metricsName} is not reported.");
             }
             else
             {
@@ -160,22 +164,22 @@ namespace Azure.AI.Inference.Tests.Utilities
             for (int i = 0; i < lstExpected.Count; i++)
             {
                 AssertDictEqual(lstExpected[i], lstActual[i]);
-                foreach (var metric in m_measurements[metricsName])
+                foreach (var measurement in m_measurements[metricsName])
                 {
-                    if (metricsName == GenAiClientOperationDurationMetricName)
+                    if (measurement is double d)
                     {
-                        Assert.Greater(double.Parse(metric.ToString()), 0);
+                        Assert.Greater(d, 0);
                     }
                     else
                     {
-                        Assert.Greater(long.Parse(metric.ToString()), 0);
+                        Assert.Greater((long)measurement, 0);
                     }
                 }
             }
         }
 
         /// <summary>
-        /// Check that two dictionaries are eqial.
+        /// Check that two dictionaries are equal.
         /// </summary>
         /// <param name="actual">The actual values.</param>
         /// <param name="expected">The expected values.</param>
@@ -189,7 +193,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             }
         }
 
-        public void VaidateMetricsAreOff()
+        public void ValidateMetricsAreOff()
         {
             Assert.That(m_measurements.IsEmpty);
             Assert.That(m_measurementTags.IsEmpty);

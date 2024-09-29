@@ -56,7 +56,7 @@ namespace Azure.AI.Inference.Tests
                 usage: usage,
                 choices: choices,
                 serializedAdditionalRawData: new Dictionary<string, BinaryData>());
-            var response = new SingleRecordedResponse(completions, traceContent);
+            var response = new RecordedResponse(completions, traceContent);
             Assert.AreEqual("4567", response.Id);
             CollectionAssert.AreEqual(
                 new[] {"content_filter", null, "stop"},
@@ -64,12 +64,11 @@ namespace Azure.AI.Inference.Tests
             Assert.AreEqual("Phi2000", response.Model);
             Assert.AreEqual(15, response.CompletionTokens);
             Assert.AreEqual(10, response.PromptTokens);
-            //Check the content
-            var strSerializedString = response.GetSerializedCompletions();
-            Assert.AreEqual(strSerializedString.Length, 3);
-            for (int i = 0; i < strSerializedString.Length; i++)
+
+            Assert.AreEqual(3, response.Choices.Length);
+            for (int i = 0; i < response.Choices.Length; i++)
             {
-                var choiceEvent = JsonNode.Parse(strSerializedString[i]);
+                var choiceEvent = JsonSerializer.SerializeToNode(response.Choices[i]);
                 var message = choiceEvent["message"];
                 Assert.NotNull(message);
                 if (traceContent)
@@ -160,7 +159,7 @@ namespace Azure.AI.Inference.Tests
                 usage: usage,
                 choices: choices,
                 serializedAdditionalRawData: new Dictionary<string, BinaryData>());
-            var response = new SingleRecordedResponse(completions, traceContent);
+            var response = new RecordedResponse(completions, traceContent);
             Assert.AreEqual("12", response.Id);
             CollectionAssert.AreEqual(
                 new List<string>()
@@ -174,10 +173,10 @@ namespace Azure.AI.Inference.Tests
             Assert.AreEqual("Phi2001", response.Model);
             Assert.AreEqual(15, response.CompletionTokens);
             Assert.AreEqual(10, response.PromptTokens);
-            var strSerializedString = response.GetSerializedCompletions();
-            for (int i = 0; i < strSerializedString.Length; i++)
+
+            for (int i = 0; i < response.Choices.Length; i++)
             {
-                var choiceEvent = JsonNode.Parse(strSerializedString[i]);
+                var choiceEvent = JsonSerializer.SerializeToNode(response.Choices[i]);
                 var message = choiceEvent["message"];
                 Assert.NotNull(message);
                 if (traceContent || i == 2)

@@ -10,6 +10,8 @@ using static Azure.AI.Inference.Telemetry.OpenTelemetryConstants;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Threading;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Azure.AI.Inference.Telemetry
 {
@@ -30,6 +32,7 @@ namespace Azure.AI.Inference.Telemetry
             GenAiClientOperationDurationMetricName, "s", "Measures GenAI operation duration.");
         private static readonly Histogram<long> s_tokens = s_meter.CreateHistogram<long>(
             GenAiClientTokenUsageMetricName, "{token}", "Measures the number of input and output token used.");
+        private static readonly JsonSerializerOptions s_jsonOptions = new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
 
         private readonly Activity _activity;
         private readonly Stopwatch _duration;
@@ -40,7 +43,8 @@ namespace Azure.AI.Inference.Telemetry
         private static bool s_enableTelemetry = AppContextSwitchHelper.GetConfigValue(
             EnableOpenTelemetrySwitch,
             EnableOpenTelemetryEnvironmentVariable);
-        private AbstractRecordedResponse _response;
+        private RecordedResponse _response;
+        private ResponseBuffer _buffer;
         private string _errorType;
         private Exception _exception;
 
@@ -101,7 +105,7 @@ namespace Azure.AI.Inference.Telemetry
         {
             if (s_enableTelemetry)
             {
-                _response = new SingleRecordedResponse(response, s_traceContent);
+                _response = new RecordedResponse(response, s_traceContent);
             }
         }
 
@@ -109,11 +113,8 @@ namespace Azure.AI.Inference.Telemetry
         {
             if (s_enableTelemetry && item is StreamingChatCompletionsUpdate streamingUpdate)
             {
-                _response ??= new StreamingRecordedResponse(s_traceContent);
-                if (_response is StreamingRecordedResponse streamingResponse)
-                {
-                    streamingResponse.Update(streamingUpdate);
-                }
+                _buffer ??= new ResponseBuffer(s_traceContent);
+                _buffer.Update(streamingUpdate);
             }
         }
 
@@ -125,9 +126,14 @@ namespace Azure.AI.Inference.Telemetry
         {
             if (s_enableTelemetry)
             {
-                _errorType = (e is RequestFailedException requestFailed)
-                    ? requestFailed.Status.ToString()
-                    : e?.GetType()?.FullName ?? "error";
+                if (e is RequestFailedException requestFailed && requestFailed.Status != 0)
+                {
+                    _errorType = requestFailed.Status.ToString();
+                }
+                else
+                {
+                    _errorType = e?.GetType()?.FullName ?? "error";
+                }
                 _exception = e;
             }
         }
@@ -194,15 +200,14 @@ namespace Azure.AI.Inference.Telemetry
             }
 
             // Record the event for each response
-            string[] choices = _response.GetSerializedCompletions();
-            if (s_traceContent)
+            if (_response.Choices != null)
             {
-                foreach (string choice in choices)
+                foreach (var choice in _response.Choices)
                 {
                     ActivityTagsCollection completionTags = new()
                     {
                         { GenAiSystemKey, GenAiSystemValue },
-                        { GenAiEventContent, choice }
+                        { GenAiEventContent, JsonSerializer.Serialize(choice, s_jsonOptions) }
                     };
                     _activity?.AddEvent(new ActivityEvent(GenAiChoice, tags: completionTags));
                 }
@@ -220,6 +225,7 @@ namespace Azure.AI.Inference.Telemetry
             // check if the scope has already ended
             if (s_enableTelemetry && Interlocked.Exchange(ref _hasEnded, 1) == 0)
             {
+                _response ??= _buffer?.ToResponse();
                 End();
                 _activity?.Dispose();
             }
@@ -242,7 +248,7 @@ namespace Azure.AI.Inference.Telemetry
             }
         }
 
-        private static bool IsResponseValid(AbstractRecordedResponse response)
+        private static bool IsResponseValid(RecordedResponse response)
         {
             return response != null && response.Id != null && response.FinishReasons != null;
         }

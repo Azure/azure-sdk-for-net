@@ -71,69 +71,6 @@ var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariabl
 var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
 ```
 
-## Tracing
-
-The Open Telemetry library provides tracing for Azure AI Inference client library for C#. Refer to Installation chapter above for installation instructions.
-
-### Setup
-To switch on the telemetry, we need to set environment variable `AZURE_INFERENCE_EXPERIMENTAL_ENABLE_OPEN_TELEMETRY` to "1" or "true" (case insensitive). The environment variable `AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED` controls whether the actual message contents will be included in the traces or not. By default, the message contents are not recorded. Set the value of the environment variable to "true" or "1" (case insensitive) for the message contents to be included as part of the trace. Any other value will cause the message contents not to be traced.
-
-### Trace Exporter(s)
-For the traces to be captured, you need to set up the applicable trace exporters. The chosen exporter will be based on where you want the traces to be output. In the example below we will export the traces to console, Azure Monitor and also will create an export through Open Telemetry protocol which can be used by Aspire Dashboard see the [installation instructions](https://learn.microsoft.com/dotnet/aspire/fundamentals/dashboard/standalone).
-Please refer to [this](https://learn.microsoft.com/azure/azure-monitor/app/create-workspace-resource) documentation for more information about how to create Azure Monitor resource. Configure the environment variable `APP_INSIGHTS_CONNECTION_STR` based on your Azure Monitor resource. 
-
-```C#
-const string ACTIVITY = "Azure.AI.Inference.ChatCompletionsClient";
-using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-    .AddSource(ACTIVITY)
-    .ConfigureResource(r => r.AddService("MyServiceName"))
-    .AddConsoleExporter()
-    .AddAzureMonitorTraceExporter(options =>
-    {
-        options.ConnectionString = appInsightsConn;
-    })
-    .AddOtlpExporter()
-    .Build();
-
-using var meterProvider = Sdk.CreateMeterProviderBuilder()
-    .AddMeter(ACTIVITY)
-    .ConfigureResource(r => r.AddService("MyServiceName"))
-    .AddConsoleExporter()
-    .AddAzureMonitorMetricExporter(options =>
-    {
-        options.ConnectionString = appInsightsConn;
-    })
-    .AddOtlpExporter()
-    .Build();
-```
-
-
-<!--
-### Create and authenticate a client directly, using Entra ID
-
-_Note: At the time of this package release, not all deployments support Entra ID authentication. For those who do, follow the instructions below._
-
-To use an Entra ID token credential, first install the [azure-identity](https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/identity/azure-identity) package:
-
-```python
-pip install azure.identity
-```
-
-You will need to provide the desired credential type obtained from that package. A common selection is [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/identity/azure-identity#defaultazurecredential) and it can be used as follows:
-
-```python
-from azure.ai.inference import ChatCompletionsClient
-from azure.identity import DefaultAzureCredential
-
-client = ChatCompletionsClient(
-    endpoint=endpoint,
-    credential=DefaultAzureCredential(exclude_interactive_browser_credential=False)
-)
-```
-
-During application development, you would typically set up the environment for authentication using Entra ID by first [Installing the Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli), running `az login` in your console window, then entering your credentials in the browser window that was opened. The call to `DefaultAzureCredential()` will then succeed. Setting `exclude_interactive_browser_credential=False` in that call will enable launching a browser window if the user isn't already logged in.
--->
-
 ### Get AI model information
 
 All clients provide a `get_model_info` method to retrive AI model information. This makes a REST call to the `/info` route on the provided endpoint, as documented in [the REST API reference](https://learn.microsoft.com/azure/ai-studio/reference/reference-model-inference-info).
@@ -391,6 +328,59 @@ To generate embeddings for additional phrases, simply call `client.embed` multip
 -->
 
 ## Troubleshooting
+
+### OpenTelemetry tracing and metrics
+
+The Open Telemetry library provides tracing for Azure AI Inference client library for C#. Refer to Installation chapter above for installation instructions.
+Please refer to [Azure SDK Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing)
+for general information on OpenTelemtery support in Azure client libraries.
+
+Distributed tracing and metrics with OpenTelemetry are supported in Azure AI Inference in experimental mode and can be enabled through either of these three steps:
+
+- Set the `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` environment variable to `true`.
+- Set the `Azure.Experimental.EnableActivitySource` context switch to `true`` in your application code
+
+Check out [OpenTelemetry .NET](https://opentelemetry.io/docs/languages/net/) and your observability provider documentation on how to configure OpenTelemetry.
+
+Refer to [Azure Monitor documentation](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable?tabs=aspnetcore) on how to use
+Azure Monitor OpenTelemetry Distro.
+
+> [!NOTE]
+> With Azure Monitor OpenTelemetry Distro, you only need to opt-into Azure SDK experimental telemetry features with one of the ways documented at
+> the beggining of this section.
+> The distro enables activity sources and meters for Azure AI Inference automatically.
+
+The following section provides an example on how to configure OpenTelemetry and enable Azure AI Inference tracing and metrics.
+
+#### Generic OpenTelemetry Configuration
+
+In this example we're going to export traces and metrics to console, and to the local [OTLP](https://opentelemetry.io/docs/specs/otel/protocol/) destination.
+[Aspire dashboard](https://learn.microsoft.com/dotnet/aspire/fundamentals/dashboard/standalone) can be used for local testing and exploration.
+
+```C# Azure_AI_Inference_EnableOpenTelemetry
+const string ACTIVITY = "Azure.AI.Inference.ChatCompletionsClient";
+using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+    .AddSource(ACTIVITY)
+    .ConfigureResource(r => r.AddService("MyServiceName"))
+    .AddConsoleExporter()
+    .AddAzureMonitorTraceExporter(options =>
+    {
+        options.ConnectionString = appInsightsConn;
+    })
+    .AddOtlpExporter()
+    .Build();
+
+using var meterProvider = Sdk.CreateMeterProviderBuilder()
+    .AddMeter(ACTIVITY)
+    .ConfigureResource(r => r.AddService("MyServiceName"))
+    .AddConsoleExporter()
+    .AddAzureMonitorMetricExporter(options =>
+    {
+        options.ConnectionString = appInsightsConn;
+    })
+    .AddOtlpExporter()
+    .Build();
+```
 
 ### Exceptions
 
