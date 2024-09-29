@@ -357,27 +357,28 @@ The following section provides an example on how to configure OpenTelemetry and 
 In this example we're going to export traces and metrics to console, and to the local [OTLP](https://opentelemetry.io/docs/specs/otel/protocol/) destination.
 [Aspire dashboard](https://learn.microsoft.com/dotnet/aspire/fundamentals/dashboard/standalone) can be used for local testing and exploration.
 
-```C# Azure_AI_Inference_EnableOpenTelemetry
-const string ACTIVITY = "Azure.AI.Inference.ChatCompletionsClient";
+```C# Snippet:Azure_AI_Inference_EnableOpenTelemetry
+// Enables experimental Azure SDK observability
+AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+
+// By default instrumentation captures chat messages without content
+// since content can be very verbose and have sensitive information.
+// The following AppContext switch enables content recording.
+AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", true);
+
 using var tracerProvider = Sdk.CreateTracerProviderBuilder()
-    .AddSource(ACTIVITY)
-    .ConfigureResource(r => r.AddService("MyServiceName"))
+    .AddHttpClientInstrumentation()
+    .AddSource("Azure.AI.Inference.*")
+    .ConfigureResource(r => r.AddService("sample"))
     .AddConsoleExporter()
-    .AddAzureMonitorTraceExporter(options =>
-    {
-        options.ConnectionString = appInsightsConn;
-    })
     .AddOtlpExporter()
     .Build();
 
 using var meterProvider = Sdk.CreateMeterProviderBuilder()
-    .AddMeter(ACTIVITY)
-    .ConfigureResource(r => r.AddService("MyServiceName"))
+    .AddHttpClientInstrumentation()
+    .AddMeter("Azure.AI.Inference.*")
+    .ConfigureResource(r => r.AddService("sample"))
     .AddConsoleExporter()
-    .AddAzureMonitorMetricExporter(options =>
-    {
-        options.ConnectionString = appInsightsConn;
-    })
     .AddOtlpExporter()
     .Build();
 ```

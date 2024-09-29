@@ -65,6 +65,10 @@ namespace Azure.AI.Inference.Telemetry
         {
             var activityName = requestOptions.Model == null ? "chat" : $"chat {requestOptions.Model}";
             _activity = s_chatSource.StartActivity(activityName, ActivityKind.Client);
+
+            // suppress nested client activities from generated code.
+            _activity?.SetCustomProperty("az.sdk.scope", bool.TrueString);
+
             // Record the request to telemetry;
             _commonTags = new TagList()
             {
@@ -90,9 +94,10 @@ namespace Azure.AI.Inference.Telemetry
             // Log all messages as the events.
             foreach (ChatRequestMessage message in requestOptions.Messages)
             {
+                object evnt = GetContent(message);
                 ActivityTagsCollection messageTags = new() {
                     { GenAiSystemKey, GenAiSystemValue},
-                    { GenAiEventContent, s_traceContent ? GetContent(message) : null }
+                    { GenAiEventContent, evnt != null ? JsonSerializer.Serialize(evnt) : null  }
                 };
                 _activity?.AddEvent(
                     new ActivityEvent(GetEventName(message), tags: messageTags)
@@ -260,17 +265,17 @@ namespace Azure.AI.Inference.Telemetry
         /// <param name="message"></param>
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
-        private static string GetContent(ChatRequestMessage message)
+        private static object GetContent(ChatRequestMessage message)
         {
             if (message is ChatRequestAssistantMessage assistantMessage)
-                return assistantMessage.Content;
+                return s_traceContent ? new { content = assistantMessage.Content } : null;
             if (message is ChatRequestSystemMessage systemMessage)
-                return systemMessage.Content;
+                return s_traceContent ? new { content = systemMessage.Content } : null;
             if (message is ChatRequestToolMessage toolMessage)
-                return toolMessage.Content;
+                return new { content = s_traceContent ? toolMessage.Content : null, id = toolMessage.ToolCallId };
             if (message is ChatRequestUserMessage userMessage)
-                return userMessage.Content;
-            return "";
+                return s_traceContent ? new { content = userMessage.Content } : null;
+            return null;
         }
 
         /// <summary>

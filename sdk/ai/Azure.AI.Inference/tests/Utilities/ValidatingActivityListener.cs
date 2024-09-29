@@ -113,20 +113,20 @@ namespace Azure.AI.Inference.Tests.Utilities
             ValidateTag(activity, ErrorTypeKey, errorType);
         }
 
-        private static void ValidateEvent(Activity activity, string name, Dictionary<string, object> actuals)
+        private static void ValidateEvent(Activity activity, string name, Dictionary<string, object> expected)
         {
-            ActivityEvent expected = default;
+            ActivityEvent actual = default;
             foreach (ActivityEvent evt in activity.Events)
             {
                 if (evt.Name == name)
                 {
-                    expected = evt;
+                    actual = evt;
                     break;
                 }
             }
-            Assert.AreNotEqual(expected, default);
-            Assert.Greater(expected.Timestamp, new DateTimeOffset(new DateTime(2024, 6, 1)));
-            ValidateEventTags(expected.Tags, actuals);
+            Assert.AreNotEqual(actual, default);
+            Assert.Greater(actual.Timestamp, new DateTimeOffset(new DateTime(2024, 6, 1)));
+            ValidateEventTags(actual.Tags, expected);
         }
 
         private static void ValidateChatMessageEvents(Activity activity, IList<ChatRequestMessage> messages, bool traceContent)
@@ -137,7 +137,7 @@ namespace Azure.AI.Inference.Tests.Utilities
                 ValidateEvent(
                     activity: activity,
                     name: $"gen_ai.{message.Role}.message",
-                    actuals: new() {
+                    expected: new() {
                         { GenAiSystemKey, GenAiSystemValue},
                         { GenAiEventContent, traceContent ? GetContent(message) : null }
                     }
@@ -184,13 +184,13 @@ namespace Azure.AI.Inference.Tests.Utilities
         private static string GetContent(ChatRequestMessage message)
         {
             if (message is ChatRequestAssistantMessage assistantMessage)
-                return assistantMessage.Content;
+                return $"{{\"content\":\"{assistantMessage.Content}\"}}";
             if (message is ChatRequestSystemMessage systemMessage)
-                return systemMessage.Content;
+                return $"{{\"content\":\"{systemMessage.Content}\"}}";
             if (message is ChatRequestToolMessage toolMessage)
-                return toolMessage.Content;
+                return $"{{\"content\":\"{toolMessage.Content},\"id\":\"{toolMessage.ToolCallId}\"}}";
             if (message is ChatRequestUserMessage userMessage)
-                return userMessage.Content;
+                return $"{{\"content\":\"{userMessage.Content}\"}}";
             return "";
         }
     }

@@ -36,7 +36,7 @@ namespace Azure.AI.Inference.Tests.Samples
         [SyncOnly]
         public void EnableOpenTelemetry()
         {
-            #region Snippet:Azure_AI_Inference_EnableOpenTelemetryScenario_variables
+            #region Snippet:Azure_AI_Inference_EnableOpenTelemetry_variables
 #if SNIPPET
             var endpoint = new Uri(System.Environment.GetEnvironmentVariable("MODEL_ENDPOINT"));
             var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("GITHUB_TOKEN"));
@@ -45,26 +45,37 @@ namespace Azure.AI.Inference.Tests.Samples
 
             var endpoint = new Uri(TestEnvironment.GithubEndpoint);
             var credential = new AzureKeyCredential(TestEnvironment.GithubToken);
-            var model = "gpt-4o";
+            //var model = "gpt-4o";
 #endif
             #endregion
-            #region Snippet:Azure_AI_Inference_EnableOpenTelemetryScenario_providers
+            #region Snippet:Azure_AI_Inference_EnableOpenTelemetry
+
+            // Enables experimental Azure SDK observability
+            AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+
+            // By default instrumentation captures chat messages without content
+            // since content can be very verbose and have sensitive information.
+            // The following AppContext switch enables content recording.
+            AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", true);
+
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddHttpClientInstrumentation()
                 .AddSource("Azure.AI.Inference.*")
-                .ConfigureResource(r => r.AddService("MyServiceName"))
+                .ConfigureResource(r => r.AddService("sample"))
                 .AddConsoleExporter()
                 .AddOtlpExporter()
                 .Build();
 
             using var meterProvider = Sdk.CreateMeterProviderBuilder()
+                .AddHttpClientInstrumentation()
                 .AddMeter("Azure.AI.Inference.*")
-                .ConfigureResource(r => r.AddService("MyServiceName"))
+                .ConfigureResource(r => r.AddService("sample"))
                 .AddConsoleExporter()
                 .AddOtlpExporter()
                 .Build();
             #endregion
             // Set up the parameters.
-            #region Snippet:Azure_AI_Inference_EnableOpenTelemetry
+            #region Snippet:Azure_AI_Inference_EnableOpenTelemetry_inference
             var client = new ChatCompletionsClient(
                 endpoint,
                 credential,
@@ -77,11 +88,11 @@ namespace Azure.AI.Inference.Tests.Samples
                     new ChatRequestSystemMessage("You are a helpful assistant."),
                     new ChatRequestUserMessage("What is the capital of France?"),
                 },
-                Model = model,
+                Model = null,
                 Temperature = 1,
                 MaxTokens = 1000
             };
-            // Call the enpoint and output the response.
+            // Call the endpoint and output the response.
             Response<ChatCompletions> response = client.Complete(requestOptions);
             Console.WriteLine(response.Value.Choices[0].Message.Content);
             #endregion
