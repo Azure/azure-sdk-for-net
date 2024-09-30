@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
         }
 
         [TestCase]
-        [Record]
+        [RecordedTest]
         public async Task CreateOrUpdate_ContainerGroupProfile_RegularPriority()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
         }
 
         [TestCase]
-        [Record]
+        [RecordedTest]
         public async Task CreateOrUpdate_ContainerGroupProfile_SpotPriority()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
         }
 
         [TestCase]
-        [Record]
+        [RecordedTest]
         public async Task CreateOrUpdate_ContainerGroupProfile_ConfidentialContainerGroup()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
         }
 
         [TestCase]
-        [Record]
+        [RecordedTest]
         public async Task Get_ContainerGroupProfile_RegularPriority()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
         }
 
         [TestCase]
-        [Record]
+        [RecordedTest]
         public async Task Get_ContainerGroupProfile_SpotPriority()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
         }
 
         [TestCase]
-        [Record]
+        [RecordedTest]
         public async Task Get_ContainerGroupProfile_ConfidentialContainerGroup()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
         }
 
         [TestCase]
-        [Record]
+        [RecordedTest]
         public async Task List_ContainerGroupProfile()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
         }
 
         [TestCase]
-        [Record]
+        [RecordedTest]
         public async Task ListBySubscription_ContainerGroupProfile()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
         }
 
         [TestCase]
-        [Record]
+        [RecordedTest]
         public async Task List_GetSpecifiedRevision()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
