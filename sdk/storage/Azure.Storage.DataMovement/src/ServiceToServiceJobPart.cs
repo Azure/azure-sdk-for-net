@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
@@ -140,6 +141,9 @@ namespace Azure.Storage.DataMovement
             StorageResourceItem destinationResource,
             long? length = default)
         {
+            Argument.AssertNotNull(sourceResource, nameof(sourceResource));
+            Argument.AssertNotNull(destinationResource, nameof(destinationResource));
+
             // Create Job Part file as we're initializing the job part
             ServiceToServiceJobPart part = new ServiceToServiceJobPart(
                 job: job,
