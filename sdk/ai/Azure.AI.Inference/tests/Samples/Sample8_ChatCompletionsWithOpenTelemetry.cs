@@ -45,7 +45,7 @@ namespace Azure.AI.Inference.Tests.Samples
 
             var endpoint = new Uri(TestEnvironment.GithubEndpoint);
             var credential = new AzureKeyCredential(TestEnvironment.GithubToken);
-            //var model = "gpt-4o";
+            var model = "gpt-4o";
 #endif
             #endregion
             #region Snippet:Azure_AI_Inference_EnableOpenTelemetry
@@ -88,7 +88,7 @@ namespace Azure.AI.Inference.Tests.Samples
                     new ChatRequestSystemMessage("You are a helpful assistant."),
                     new ChatRequestUserMessage("What is the capital of France?"),
                 },
-                Model = null,
+                Model = model,
                 Temperature = 1,
                 MaxTokens = 1000
             };

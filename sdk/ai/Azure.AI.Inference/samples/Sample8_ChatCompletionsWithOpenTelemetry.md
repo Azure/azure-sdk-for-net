@@ -89,7 +89,7 @@ var requestOptions = new ChatCompletionsOptions()
         new ChatRequestSystemMessage("You are a helpful assistant."),
         new ChatRequestUserMessage("What is the capital of France?"),
     },
-    Model = null,
+    Model = model,
     Temperature = 1,
     MaxTokens = 1000
 };
