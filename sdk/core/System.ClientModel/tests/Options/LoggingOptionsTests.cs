@@ -2,17 +2,23 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 using ClientModel.ReferenceClients;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
+using ILoggerFactory = Microsoft.Extensions.Logging.ILoggerFactory;
 
 namespace System.ClientModel.Tests.Options;
 
 public class LoggingOptionsTests
 {
     [Test]
-    public void CanUseHttpClientLoggingInsteadOfScmLogging()
+    public void CanUseHttpClientLoggingInsteadOfScmHttpLogging()
     {
         ServiceCollection services = new();
 
@@ -26,6 +32,8 @@ public class LoggingOptionsTests
 
         services.AddSingleton<RequestResponseClient>(serviceProvider =>
         {
+            // Configure client to use HttpClient logging instead of SCM HTTP logging.
+            // Preserve other SCM-based client logging.
             HttpClient httpClient = serviceProvider.GetRequiredService<HttpClient>();
             RequestResponseClientOptions options = serviceProvider.GetRequiredService<RequestResponseClientOptions>();
             options.Diagnostics.EnableHttpLogging = false;
@@ -33,4 +41,40 @@ public class LoggingOptionsTests
             return new RequestResponseClient(options);
         });
     }
+
+    [Test]
+    public void CanAddCustomHttpLogging_NoDI()
+    {
+        RequestResponseClientOptions options = new();
+        options.Diagnostics.AllowedHeaderNames.Add("my-safe-header");
+        options.HttpLoggingPolicy = new CustomHttpLoggingPolicy(options.Diagnostics);
+
+        RequestResponseClient client = new RequestResponseClient(options);
+    }
+
+    #region Helpers
+    public class CustomHttpLoggingPolicy : PipelinePolicy
+    {
+        private readonly ILogger _iLogger;
+
+        public CustomHttpLoggingPolicy(DiagnosticOptions options)
+        {
+            _iLogger = options.LoggerFactory?.CreateLogger("CustomHttpLoggingPolicy") ?? NullLogger.Instance;
+        }
+
+        public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+        {
+            ProcessNext(message, pipeline, currentIndex);
+
+            _iLogger.LogInformation("Response status code: {Status}", message.Response!.Status);
+        }
+
+        public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+        {
+            await ProcessNextAsync(message, pipeline, currentIndex);
+
+            _iLogger.LogInformation("Response status code: {Status}", message.Response!.Status);
+        }
+    }
+    #endregion
 }
