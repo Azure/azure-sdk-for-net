@@ -43,21 +43,6 @@ The package makes use of common Azure credential providers. To use credential pr
 dotnet add package Azure.Identity
 ```
 
-## \[Optional\] Tracking
-
-To enable telemetry, please install the Open telemetry package
-
-```dotnetcli
-dotnet add package OpenTelemetry.Exporter.Console
-dotnet add package OpenTelemetry.Exporter.OpenTelemetryProtocol
-```
-
-To enable the tracking in Azure Monitor, install Azure.Monitor.OpenTelemetry package.
-
-```dotnetcli
-dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore --prerelease
-```
-
 ## Key concepts
 
 ### Create and authenticate a client directly, using key
@@ -70,6 +55,32 @@ var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariabl
 
 var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
 ```
+
+<!--
+### Create and authenticate a client directly, using Entra ID
+
+_Note: At the time of this package release, not all deployments support Entra ID authentication. For those who do, follow the instructions below._
+
+To use an Entra ID token credential, first install the [azure-identity](https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/identity/azure-identity) package:
+
+```python
+pip install azure.identity
+```
+
+You will need to provide the desired credential type obtained from that package. A common selection is [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/identity/azure-identity#defaultazurecredential) and it can be used as follows:
+
+```python
+from azure.ai.inference import ChatCompletionsClient
+from azure.identity import DefaultAzureCredential
+
+client = ChatCompletionsClient(
+    endpoint=endpoint,
+    credential=DefaultAzureCredential(exclude_interactive_browser_credential=False)
+)
+```
+
+During application development, you would typically set up the environment for authentication using Entra ID by first [Installing the Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli), running `az login` in your console window, then entering your credentials in the browser window that was opened. The call to `DefaultAzureCredential()` will then succeed. Setting `exclude_interactive_browser_credential=False` in that call will enable launching a browser window if the user isn't already logged in.
+-->
 
 ### Get AI model information
 
@@ -329,7 +340,7 @@ To generate embeddings for additional phrases, simply call `client.embed` multip
 
 ## Troubleshooting
 
-### OpenTelemetry tracing and metrics
+### Observability with OpenTelemetry
 
 The Open Telemetry library provides tracing for Azure AI Inference client library for C#. Refer to Installation chapter above for installation instructions.
 Please refer to [Azure SDK Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing)
@@ -350,7 +361,8 @@ Azure Monitor OpenTelemetry Distro.
 > the beggining of this section.
 > The distro enables activity sources and meters for Azure AI Inference automatically.
 
-The following section provides an example on how to configure OpenTelemetry and enable Azure AI Inference tracing and metrics.
+The following section provides an example on how to configure OpenTelemetry and enable Azure AI Inference tracing and metrics if your
+OpenTelemtery distro does not include Azure AI Inference by default.
 
 #### Generic OpenTelemetry Configuration
 

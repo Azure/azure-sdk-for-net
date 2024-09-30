@@ -395,10 +395,6 @@
     <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="2.1.1" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.Inference.Tests'))">
-    <PackageReference Update="Azure.Monitor.OpenTelemetry.AspNetCore" Version="1.3.0-beta.1" />
-  </ItemGroup>
-
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20240919.1</TestProxyVersion>
   </PropertyGroup>
