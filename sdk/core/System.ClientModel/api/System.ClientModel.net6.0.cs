@@ -95,6 +95,7 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
+        public System.ClientModel.Primitives.DiagnosticOptions Diagnostics { get { throw null; } }
         public System.ClientModel.Primitives.PipelinePolicy? HttpLoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
@@ -244,6 +245,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class PipelineRequest : System.IDisposable
     {
         protected PipelineRequest() { }
+        public virtual string? ClientRequestId { get { throw null; } set { } }
         public System.ClientModel.BinaryContent? Content { get { throw null; } set { } }
         protected abstract System.ClientModel.BinaryContent? ContentCore { get; set; }
         public System.ClientModel.Primitives.PipelineRequestHeaders Headers { get { throw null; } }
@@ -268,6 +270,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
+        public virtual string? ClientRequestId { get { throw null; } set { } }
         public abstract System.BinaryData Content { get; }
         public abstract System.IO.Stream? ContentStream { get; set; }
         public System.ClientModel.Primitives.PipelineResponseHeaders Headers { get { throw null; } }

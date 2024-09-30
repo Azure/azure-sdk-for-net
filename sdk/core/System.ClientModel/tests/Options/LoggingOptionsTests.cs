@@ -43,8 +43,39 @@ public class LoggingOptionsTests
     }
 
     [Test]
-    public void CanAddCustomHttpLogging_NoDI()
+    public void CanReplaceScmLoggingWithCustomHttpLogging_NoDI()
     {
+        RequestResponseClientOptions options = new();
+        options.Diagnostics.AllowedHeaderNames.Add("my-safe-header");
+
+        // Replace the SCM HTTP logging policy with custom HTTP logging policy.
+        options.HttpLoggingPolicy = new CustomHttpLoggingPolicy(options.Diagnostics);
+
+        // The only HTTP logging this client will do is via the custom policy.
+        RequestResponseClient client = new RequestResponseClient(options);
+    }
+
+    [Test]
+    public void CanAddCustomHttpLoggingAndPreserveScmHttpLogging_NoDI()
+    {
+        RequestResponseClientOptions options = new();
+        options.Diagnostics.AllowedHeaderNames.Add("my-safe-header");
+
+        // Add custom HTTP logging to the pipeline, in addition to SCM HTTP logging.
+        options.AddPolicy(
+            new CustomHttpLoggingPolicy(options.Diagnostics),
+            PipelinePosition.BeforeTransport);
+
+        // This client will log HTTP details in both the SCM HTTP logging policy
+        // and the custom HTTP logging policy.
+        RequestResponseClient client = new RequestResponseClient(options);
+    }
+
+    [Test]
+    public void CanAddCustomHttpLogging_WithDI()
+    {
+        ServiceCollection services = new();
+
         RequestResponseClientOptions options = new();
         options.Diagnostics.AllowedHeaderNames.Add("my-safe-header");
         options.HttpLoggingPolicy = new CustomHttpLoggingPolicy(options.Diagnostics);
@@ -66,14 +97,14 @@ public class LoggingOptionsTests
         {
             ProcessNext(message, pipeline, currentIndex);
 
-            _iLogger.LogInformation("Response status code: {Status}", message.Response!.Status);
+            _iLogger.LogInformation("Response status code: {CorrelationId}, {Status}", message.Response!.ClientRequestId, message.Response!.Status);
         }
 
         public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         {
             await ProcessNextAsync(message, pipeline, currentIndex);
 
-            _iLogger.LogInformation("Response status code: {Status}", message.Response!.Status);
+            _iLogger.LogInformation("Response status code: {CorrelationId}, {Status}", message.Response!.ClientRequestId, message.Response!.Status);
         }
     }
     #endregion
