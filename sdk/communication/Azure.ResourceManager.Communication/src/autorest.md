@@ -19,6 +19,7 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 enable-bicep-serialization: true
+use-write-core: true
 
 override-operation-name:
   CommunicationServices_CheckNameAvailability: CheckCommunicationNameAvailability

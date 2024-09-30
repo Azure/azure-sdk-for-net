@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         void IJsonModel<DiagnosticCollectionConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticCollectionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DiagnosticCollectionConfig)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(IsDiagnosticsEventsEnabled))
             {
                 writer.WritePropertyName("isDiagnosticsEventsEnabled"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DiagnosticCollectionConfig IJsonModel<DiagnosticCollectionConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

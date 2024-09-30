@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
         public static bool operator ==(ManagementPartnerState left, ManagementPartnerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagementPartnerState"/> values are not the same. </summary>
         public static bool operator !=(ManagementPartnerState left, ManagementPartnerState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagementPartnerState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagementPartnerState"/>. </summary>
         public static implicit operator ManagementPartnerState(string value) => new ManagementPartnerState(value);
 
         /// <inheritdoc />

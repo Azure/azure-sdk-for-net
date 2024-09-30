@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static bool operator ==(OSDiskStorageAccountType left, OSDiskStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OSDiskStorageAccountType"/> values are not the same. </summary>
         public static bool operator !=(OSDiskStorageAccountType left, OSDiskStorageAccountType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OSDiskStorageAccountType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OSDiskStorageAccountType"/>. </summary>
         public static implicit operator OSDiskStorageAccountType(string value) => new OSDiskStorageAccountType(value);
 
         /// <inheritdoc />

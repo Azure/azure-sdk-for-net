@@ -65,9 +65,8 @@ public partial class AppConfigurationPrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the AppConfigurationPrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the AppConfigurationPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public AppConfigurationPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.AppConfiguration/configurationStores/privateEndpointConnections", resourceVersion, context)
+    public AppConfigurationPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.AppConfiguration/configurationStores/privateEndpointConnections", resourceVersion ?? "2024-05-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<AppConfigurationPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -76,6 +75,37 @@ public partial class AppConfigurationPrivateEndpointConnection : Resource
         _provisioningState = BicepValue<AppConfigurationProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<AppConfigurationStore>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported AppConfigurationPrivateEndpointConnection resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01.
+        /// </summary>
+        public static readonly string V2024_05_01 = "2024-05-01";
+
+        /// <summary>
+        /// 2023-03-01.
+        /// </summary>
+        public static readonly string V2023_03_01 = "2023-03-01";
+
+        /// <summary>
+        /// 2022-05-01.
+        /// </summary>
+        public static readonly string V2022_05_01 = "2022-05-01";
+
+        /// <summary>
+        /// 2020-06-01.
+        /// </summary>
+        public static readonly string V2020_06_01 = "2020-06-01";
+
+        /// <summary>
+        /// 2019-10-01.
+        /// </summary>
+        public static readonly string V2019_10_01 = "2019-10-01";
     }
 
     /// <summary>

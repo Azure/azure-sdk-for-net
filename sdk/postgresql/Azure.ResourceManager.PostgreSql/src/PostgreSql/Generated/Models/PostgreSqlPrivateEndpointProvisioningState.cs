@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static bool operator ==(PostgreSqlPrivateEndpointProvisioningState left, PostgreSqlPrivateEndpointProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlPrivateEndpointProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlPrivateEndpointProvisioningState left, PostgreSqlPrivateEndpointProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlPrivateEndpointProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlPrivateEndpointProvisioningState"/>. </summary>
         public static implicit operator PostgreSqlPrivateEndpointProvisioningState(string value) => new PostgreSqlPrivateEndpointProvisioningState(value);
 
         /// <inheritdoc />

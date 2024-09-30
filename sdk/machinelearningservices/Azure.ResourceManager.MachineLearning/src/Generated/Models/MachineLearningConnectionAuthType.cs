@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningConnectionAuthType left, MachineLearningConnectionAuthType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningConnectionAuthType"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningConnectionAuthType left, MachineLearningConnectionAuthType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningConnectionAuthType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningConnectionAuthType"/>. </summary>
         public static implicit operator MachineLearningConnectionAuthType(string value) => new MachineLearningConnectionAuthType(value);
 
         /// <inheritdoc />

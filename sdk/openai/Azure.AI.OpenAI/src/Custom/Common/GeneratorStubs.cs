@@ -9,11 +9,6 @@ namespace Azure.AI.OpenAI;
 [CodeGenModel("AzureContentFilterResultForPromptContentFilterResults")] internal partial class InternalAzureContentFilterResultForPromptContentFilterResults { }
 [CodeGenModel("AzureContentFilterResultForPromptContentFilterResultsError")] internal partial class InternalAzureContentFilterResultForPromptContentFilterResultsError { }
 [CodeGenModel("AzureContentFilterSeverityResultSeverity")] public readonly partial struct ContentFilterSeverity { }
-[CodeGenModel("AzureContentFilterSeverityResult")] public partial class ContentFilterSeverityResult
-{
-    [CodeGenMember("Severity")]
-    public ContentFilterSeverity Severity { get; }
-}
 [CodeGenModel("AzureContentFilterDetectionResult")] public partial class ContentFilterDetectionResult { }
 [CodeGenModel("AzureOpenAIChatErrorInnerError")] internal partial class InternalAzureOpenAIChatErrorInnerError { }
 [CodeGenModel("AzureOpenAIChatErrorInnerErrorCode")] internal readonly partial struct InternalAzureOpenAIChatErrorInnerErrorCode { }

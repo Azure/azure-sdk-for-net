@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static bool operator ==(LogsSendingStatus left, LogsSendingStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogsSendingStatus"/> values are not the same. </summary>
         public static bool operator !=(LogsSendingStatus left, LogsSendingStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogsSendingStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogsSendingStatus"/>. </summary>
         public static implicit operator LogsSendingStatus(string value) => new LogsSendingStatus(value);
 
         /// <inheritdoc />

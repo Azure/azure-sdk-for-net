@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> Persistence-related configuration for the RedisEnterprise database. </summary>
+    /// <summary> Persistence-related configuration for the Redis Enterprise database. </summary>
     public partial class RedisPersistenceSettings
     {
         /// <summary>
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisPersistenceSettings"/>. </summary>
-        /// <param name="isAofEnabled"> Sets whether AOF is enabled. </param>
-        /// <param name="isRdbEnabled"> Sets whether RDB is enabled. </param>
-        /// <param name="aofFrequency"> Sets the frequency at which data is written to disk. </param>
+        /// <param name="isAofEnabled"> Sets whether AOF is enabled. Note that at most one of AOF or RDB persistence may be enabled. </param>
+        /// <param name="isRdbEnabled"> Sets whether RDB is enabled. Note that at most one of AOF or RDB persistence may be enabled. </param>
+        /// <param name="aofFrequency"> Sets the frequency at which data is written to disk. Defaults to '1s', meaning 'every second'. Note that the 'always' setting is deprecated, because of its performance impact. </param>
         /// <param name="rdbFrequency"> Sets the frequency at which a snapshot of the database is created. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RedisPersistenceSettings(bool? isAofEnabled, bool? isRdbEnabled, PersistenceSettingAofFrequency? aofFrequency, PersistenceSettingRdbFrequency? rdbFrequency, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -65,13 +65,17 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Sets whether AOF is enabled. </summary>
+        /// <summary> Sets whether AOF is enabled. Note that at most one of AOF or RDB persistence may be enabled. </summary>
+        [WirePath("aofEnabled")]
         public bool? IsAofEnabled { get; set; }
-        /// <summary> Sets whether RDB is enabled. </summary>
+        /// <summary> Sets whether RDB is enabled. Note that at most one of AOF or RDB persistence may be enabled. </summary>
+        [WirePath("rdbEnabled")]
         public bool? IsRdbEnabled { get; set; }
-        /// <summary> Sets the frequency at which data is written to disk. </summary>
+        /// <summary> Sets the frequency at which data is written to disk. Defaults to '1s', meaning 'every second'. Note that the 'always' setting is deprecated, because of its performance impact. </summary>
+        [WirePath("aofFrequency")]
         public PersistenceSettingAofFrequency? AofFrequency { get; set; }
         /// <summary> Sets the frequency at which a snapshot of the database is created. </summary>
+        [WirePath("rdbFrequency")]
         public PersistenceSettingRdbFrequency? RdbFrequency { get; set; }
     }
 }

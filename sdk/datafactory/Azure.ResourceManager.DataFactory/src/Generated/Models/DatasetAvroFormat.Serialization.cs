@@ -20,25 +20,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         void IJsonModel<DatasetAvroFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DatasetAvroFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatasetAvroFormat)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(DatasetStorageFormatType);
-            if (Optional.IsDefined(Serializer))
-            {
-                writer.WritePropertyName("serializer"u8);
-                JsonSerializer.Serialize(writer, Serializer);
-            }
-            if (Optional.IsDefined(Deserializer))
-            {
-                writer.WritePropertyName("deserializer"u8);
-                JsonSerializer.Serialize(writer, Deserializer);
-            }
+            base.JsonModelWriteCore(writer, options);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -51,7 +48,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         DatasetAvroFormat IJsonModel<DatasetAvroFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

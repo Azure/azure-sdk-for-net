@@ -20,6 +20,8 @@ public class BasicRedisTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 RedisResource cache =
                     new(nameof(cache), "2020-06-01")
                     {
@@ -33,6 +35,9 @@ public class BasicRedisTests(bool async)
                                 Capacity = 1
                             },
                     };
+                infra.Add(cache);
+
+                return infra;
             })
         .Compare(
             """
@@ -40,17 +45,17 @@ public class BasicRedisTests(bool async)
             param location string = resourceGroup().location
 
             resource cache 'Microsoft.Cache/redis@2020-06-01' = {
-                name: take('cache-${uniqueString(resourceGroup().id)}', 63)
-                location: location
-                properties: {
-                    sku: {
-                        name: 'Standard'
-                        family: 'C'
-                        capacity: 1
-                    }
-                    enableNonSslPort: false
-                    minimumTlsVersion: '1.2'
+              name: take('cache-${uniqueString(resourceGroup().id)}', 63)
+              location: location
+              properties: {
+                sku: {
+                  name: 'Standard'
+                  family: 'C'
+                  capacity: 1
                 }
+                enableNonSslPort: false
+                minimumTlsVersion: '1.2'
+              }
             }
             """)
         .Lint()

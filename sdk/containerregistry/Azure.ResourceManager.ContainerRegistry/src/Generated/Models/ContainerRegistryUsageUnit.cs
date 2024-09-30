@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator ==(ContainerRegistryUsageUnit left, ContainerRegistryUsageUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryUsageUnit"/> values are not the same. </summary>
         public static bool operator !=(ContainerRegistryUsageUnit left, ContainerRegistryUsageUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerRegistryUsageUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryUsageUnit"/>. </summary>
         public static implicit operator ContainerRegistryUsageUnit(string value) => new ContainerRegistryUsageUnit(value);
 
         /// <inheritdoc />

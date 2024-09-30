@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Removed the `PopTokenRequestContext` type and added the proof of possession-related properties to `TokenRequestContext` in Azure.Core ([45134](https://github.com/Azure/azure-sdk-for-net/pull/45134)).
+
 ### Bugs Fixed
 
 ### Other Changes

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(TrackPropertyType left, TrackPropertyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrackPropertyType"/> values are not the same. </summary>
         public static bool operator !=(TrackPropertyType left, TrackPropertyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TrackPropertyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TrackPropertyType"/>. </summary>
         public static implicit operator TrackPropertyType(string value) => new TrackPropertyType(value);
 
         /// <inheritdoc />

@@ -55,31 +55,59 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="monitoringStatus"> Flag specifying if the resource monitoring is enabled or disabled. </param>
         /// <param name="elasticProperties"> Elastic cloud properties. </param>
         /// <param name="userInfo"> User information. </param>
+        /// <param name="planDetails"> Plan details of the monitor resource. </param>
+        /// <param name="version"> Version of elastic of the monitor resource. </param>
+        /// <param name="subscriptionState"> State of the Azure Subscription containing the monitor resource. </param>
+        /// <param name="saaSAzureSubscriptionStatus"> Status of Azure Subscription where Marketplace SaaS is located. </param>
+        /// <param name="sourceCampaignName"> Name of the marketing campaign. </param>
+        /// <param name="sourceCampaignId"> A unique identifier associated with the campaign. </param>
         /// <param name="liftrResourceCategory"></param>
         /// <param name="liftrResourcePreference"> The priority of the resource. </param>
+        /// <param name="generateApiKey"> Flag to determine if User API Key has to be generated and shared. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorProperties(ProvisioningState? provisioningState, MonitoringStatus? monitoringStatus, ElasticProperties elasticProperties, UserInfo userInfo, LiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorProperties(ProvisioningState? provisioningState, MonitoringStatus? monitoringStatus, ElasticProperties elasticProperties, UserInfo userInfo, PlanDetails planDetails, string version, string subscriptionState, string saaSAzureSubscriptionStatus, string sourceCampaignName, string sourceCampaignId, LiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, bool? generateApiKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             MonitoringStatus = monitoringStatus;
             ElasticProperties = elasticProperties;
             UserInfo = userInfo;
+            PlanDetails = planDetails;
+            Version = version;
+            SubscriptionState = subscriptionState;
+            SaaSAzureSubscriptionStatus = saaSAzureSubscriptionStatus;
+            SourceCampaignName = sourceCampaignName;
+            SourceCampaignId = sourceCampaignId;
             LiftrResourceCategory = liftrResourceCategory;
             LiftrResourcePreference = liftrResourcePreference;
+            GenerateApiKey = generateApiKey;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning state of the monitor resource. </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        public ProvisioningState? ProvisioningState { get; }
         /// <summary> Flag specifying if the resource monitoring is enabled or disabled. </summary>
         public MonitoringStatus? MonitoringStatus { get; set; }
         /// <summary> Elastic cloud properties. </summary>
         public ElasticProperties ElasticProperties { get; set; }
         /// <summary> User information. </summary>
         public UserInfo UserInfo { get; set; }
+        /// <summary> Plan details of the monitor resource. </summary>
+        public PlanDetails PlanDetails { get; set; }
+        /// <summary> Version of elastic of the monitor resource. </summary>
+        public string Version { get; set; }
+        /// <summary> State of the Azure Subscription containing the monitor resource. </summary>
+        public string SubscriptionState { get; set; }
+        /// <summary> Status of Azure Subscription where Marketplace SaaS is located. </summary>
+        public string SaaSAzureSubscriptionStatus { get; set; }
+        /// <summary> Name of the marketing campaign. </summary>
+        public string SourceCampaignName { get; set; }
+        /// <summary> A unique identifier associated with the campaign. </summary>
+        public string SourceCampaignId { get; set; }
         /// <summary> Gets the liftr resource category. </summary>
         public LiftrResourceCategory? LiftrResourceCategory { get; }
         /// <summary> The priority of the resource. </summary>
         public int? LiftrResourcePreference { get; }
+        /// <summary> Flag to determine if User API Key has to be generated and shared. </summary>
+        public bool? GenerateApiKey { get; set; }
     }
 }

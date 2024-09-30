@@ -92,9 +92,8 @@ public partial class InstancePool : Resource
     /// </summary>
     /// <param name="resourceName">Name of the InstancePool.</param>
     /// <param name="resourceVersion">Version of the InstancePool.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public InstancePool(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/instancePools", resourceVersion ?? "2021-11-01", context)
+    public InstancePool(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/instancePools", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

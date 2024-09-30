@@ -220,9 +220,8 @@ public partial class ManagedDatabase : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedDatabase.</param>
     /// <param name="resourceVersion">Version of the ManagedDatabase.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedDatabase(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/databases", resourceVersion ?? "2021-11-01", context)
+    public ManagedDatabase(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/databases", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

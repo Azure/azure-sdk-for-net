@@ -67,9 +67,8 @@ public partial class CognitiveServicesAccountDeployment : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CognitiveServicesAccountDeployment.</param>
     /// <param name="resourceVersion">Version of the CognitiveServicesAccountDeployment.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CognitiveServicesAccountDeployment(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.CognitiveServices/accounts/deployments", resourceVersion, context)
+    public CognitiveServicesAccountDeployment(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.CognitiveServices/accounts/deployments", resourceVersion ?? "2024-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _properties = BicepValue<CognitiveServicesAccountDeploymentProperties>.DefineProperty(this, "Properties", ["properties"]);
@@ -78,6 +77,52 @@ public partial class CognitiveServicesAccountDeployment : Resource
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<CognitiveServicesAccount>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported CognitiveServicesAccountDeployment resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-10-01.
+        /// </summary>
+        public static readonly string V2024_10_01 = "2024-10-01";
+
+        /// <summary>
+        /// 2023-05-01.
+        /// </summary>
+        public static readonly string V2023_05_01 = "2023-05-01";
+
+        /// <summary>
+        /// 2022-12-01.
+        /// </summary>
+        public static readonly string V2022_12_01 = "2022-12-01";
+
+        /// <summary>
+        /// 2022-10-01.
+        /// </summary>
+        public static readonly string V2022_10_01 = "2022-10-01";
+
+        /// <summary>
+        /// 2022-03-01.
+        /// </summary>
+        public static readonly string V2022_03_01 = "2022-03-01";
+
+        /// <summary>
+        /// 2021-10-01.
+        /// </summary>
+        public static readonly string V2021_10_01 = "2021-10-01";
+
+        /// <summary>
+        /// 2021-04-30.
+        /// </summary>
+        public static readonly string V2021_04_30 = "2021-04-30";
+
+        /// <summary>
+        /// 2017-04-18.
+        /// </summary>
+        public static readonly string V2017_04_18 = "2017-04-18";
     }
 
     /// <summary>

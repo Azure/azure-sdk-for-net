@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static bool operator ==(KubernetesOperator left, KubernetesOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubernetesOperator"/> values are not the same. </summary>
         public static bool operator !=(KubernetesOperator left, KubernetesOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KubernetesOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KubernetesOperator"/>. </summary>
         public static implicit operator KubernetesOperator(string value) => new KubernetesOperator(value);
 
         /// <inheritdoc />

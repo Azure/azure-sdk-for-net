@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Quota.Models
         public static bool operator ==(GroupQuotaEnvironmentType left, GroupQuotaEnvironmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GroupQuotaEnvironmentType"/> values are not the same. </summary>
         public static bool operator !=(GroupQuotaEnvironmentType left, GroupQuotaEnvironmentType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GroupQuotaEnvironmentType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GroupQuotaEnvironmentType"/>. </summary>
         public static implicit operator GroupQuotaEnvironmentType(string value) => new GroupQuotaEnvironmentType(value);
 
         /// <inheritdoc />

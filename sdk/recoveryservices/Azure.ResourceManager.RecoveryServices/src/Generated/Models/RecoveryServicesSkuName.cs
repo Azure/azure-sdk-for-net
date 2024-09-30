@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static bool operator ==(RecoveryServicesSkuName left, RecoveryServicesSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecoveryServicesSkuName"/> values are not the same. </summary>
         public static bool operator !=(RecoveryServicesSkuName left, RecoveryServicesSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RecoveryServicesSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryServicesSkuName"/>. </summary>
         public static implicit operator RecoveryServicesSkuName(string value) => new RecoveryServicesSkuName(value);
 
         /// <inheritdoc />

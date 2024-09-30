@@ -88,9 +88,8 @@ public partial class CognitiveServicesAccount : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CognitiveServicesAccount.</param>
     /// <param name="resourceVersion">Version of the CognitiveServicesAccount.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CognitiveServicesAccount(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.CognitiveServices/accounts", resourceVersion ?? "2022-12-01", context)
+    public CognitiveServicesAccount(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.CognitiveServices/accounts", resourceVersion ?? "2024-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -110,9 +109,9 @@ public partial class CognitiveServicesAccount : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-06-01-preview.
+        /// 2024-10-01.
         /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
+        public static readonly string V2024_10_01 = "2024-10-01";
 
         /// <summary>
         /// 2023-05-01.

@@ -153,9 +153,8 @@ public partial class ConnectedCluster : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ConnectedCluster.</param>
     /// <param name="resourceVersion">Version of the ConnectedCluster.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ConnectedCluster(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Kubernetes/connectedClusters", resourceVersion ?? "2024-01-01", context)
+    public ConnectedCluster(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Kubernetes/connectedClusters", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _agentPublicKeyCertificate = BicepValue<string>.DefineProperty(this, "AgentPublicKeyCertificate", ["properties", "agentPublicKeyCertificate"], isRequired: true);

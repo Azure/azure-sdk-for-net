@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(ApiType left, ApiType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiType"/> values are not the same. </summary>
         public static bool operator !=(ApiType left, ApiType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApiType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiType"/>. </summary>
         public static implicit operator ApiType(string value) => new ApiType(value);
 
         /// <inheritdoc />

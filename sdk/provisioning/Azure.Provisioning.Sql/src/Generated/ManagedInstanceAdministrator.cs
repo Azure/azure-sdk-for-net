@@ -70,9 +70,8 @@ public partial class ManagedInstanceAdministrator : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedInstanceAdministrator.</param>
     /// <param name="resourceVersion">Version of the ManagedInstanceAdministrator.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedInstanceAdministrator(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/administrators", resourceVersion ?? "2021-11-01", context)
+    public ManagedInstanceAdministrator(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/administrators", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _administratorType = BicepValue<ManagedInstanceAdministratorType>.DefineProperty(this, "AdministratorType", ["properties", "administratorType"]);

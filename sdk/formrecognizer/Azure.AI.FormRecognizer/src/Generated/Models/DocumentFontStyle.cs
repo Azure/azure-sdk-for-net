@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static bool operator ==(DocumentFontStyle left, DocumentFontStyle right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentFontStyle"/> values are not the same. </summary>
         public static bool operator !=(DocumentFontStyle left, DocumentFontStyle right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DocumentFontStyle"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentFontStyle"/>. </summary>
         public static implicit operator DocumentFontStyle(string value) => new DocumentFontStyle(value);
 
         /// <inheritdoc />

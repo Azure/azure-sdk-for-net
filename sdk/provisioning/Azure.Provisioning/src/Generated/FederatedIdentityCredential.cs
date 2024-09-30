@@ -65,9 +65,8 @@ public partial class FederatedIdentityCredential : Resource
     /// </summary>
     /// <param name="resourceName">Name of the FederatedIdentityCredential.</param>
     /// <param name="resourceVersion">Version of the FederatedIdentityCredential.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public FederatedIdentityCredential(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials", resourceVersion ?? "2023-01-31", context)
+    public FederatedIdentityCredential(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials", resourceVersion ?? "2023-01-31")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _audiences = BicepList<string>.DefineProperty(this, "Audiences", ["properties", "audiences"]);

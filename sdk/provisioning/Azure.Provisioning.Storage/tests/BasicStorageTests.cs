@@ -26,16 +26,16 @@ public class BasicStorageTests(bool async)
             param location string = resourceGroup().location
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: location
-                sku: {
-                    name: 'Standard_LRS'
-                }
-                properties: {
-                    allowBlobPublicAccess: false
-                    isHnsEnabled: true
-                }
+              name: take('storage${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: 'Standard_LRS'
+              }
+              properties: {
+                allowBlobPublicAccess: false
+                isHnsEnabled: true
+              }
             }
             """)
         .Lint()
@@ -49,8 +49,15 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                infra.Add(storage);
+
                 BlobService blobs = new(nameof(blobs)) { Parent = storage, DependsOn = { storage } };
+                infra.Add(blobs);
+
+                return infra;
             })
         .Compare(
             """
@@ -58,24 +65,24 @@ public class BasicStorageTests(bool async)
             param location string = resourceGroup().location
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: location
-                sku: {
-                    name: 'Standard_LRS'
-                }
-                properties: {
-                    allowBlobPublicAccess: false
-                    isHnsEnabled: true
-                }
+              name: take('storage${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: 'Standard_LRS'
+              }
+              properties: {
+                allowBlobPublicAccess: false
+                isHnsEnabled: true
+              }
             }
 
-            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
-                name: 'default'
-                parent: storage
-                dependsOn: [
-                    storage
-                ]
+            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
+              name: 'default'
+              parent: storage
+              dependsOn: [
+                storage
+              ]
             }
             """)
         .Lint(ignore: ["no-unnecessary-dependson"])
@@ -89,9 +96,18 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                infra.Add(storage);
+
                 UserAssignedIdentity id = new(nameof(id));
-                storage.AssignRole(StorageBuiltInRole.StorageBlobDataReader, id);
+                infra.Add(id);
+
+                RoleAssignment role = storage.AssignRole(StorageBuiltInRole.StorageBlobDataReader, id);
+                infra.Add(role);
+
+                return infra;
             })
         .Compare(
             """
@@ -99,31 +115,31 @@ public class BasicStorageTests(bool async)
             param location string = resourceGroup().location
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: location
-                sku: {
-                    name: 'Standard_LRS'
-                }
-                properties: {
-                    allowBlobPublicAccess: false
-                    isHnsEnabled: true
-                }
+              name: take('storage${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: 'Standard_LRS'
+              }
+              properties: {
+                allowBlobPublicAccess: false
+                isHnsEnabled: true
+              }
             }
 
             resource id 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-                name: take('id-${uniqueString(resourceGroup().id)}', 128)
-                location: location
+              name: take('id-${uniqueString(resourceGroup().id)}', 128)
+              location: location
             }
 
             resource storage_id_StorageBlobDataReader 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-                name: guid(storage.id, id.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1'))
-                properties: {
-                    principalId: id.properties.principalId
-                    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')
-                    principalType: 'ServicePrincipal'
-                }
-                scope: storage
+              name: guid(storage.id, id.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1'))
+              properties: {
+                principalId: id.properties.principalId
+                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')
+                principalType: 'ServicePrincipal'
+              }
+              scope: storage
             }
             """)
         .Lint()
@@ -137,9 +153,18 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                infra.Add(storage);
+
                 UserAssignedIdentity id = new(nameof(id));
-                storage.AssignRole(StorageBuiltInRole.StorageBlobDataReader, RoleManagementPrincipalType.ServicePrincipal, id.PrincipalId);
+                infra.Add(id);
+
+                RoleAssignment role = storage.AssignRole(StorageBuiltInRole.StorageBlobDataReader, RoleManagementPrincipalType.ServicePrincipal, id.PrincipalId);
+                infra.Add(role);
+
+                return infra;
             })
         .Compare(
             """
@@ -147,31 +172,31 @@ public class BasicStorageTests(bool async)
             param location string = resourceGroup().location
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: location
-                sku: {
-                    name: 'Standard_LRS'
-                }
-                properties: {
-                    allowBlobPublicAccess: false
-                    isHnsEnabled: true
-                }
+              name: take('storage${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: 'Standard_LRS'
+              }
+              properties: {
+                allowBlobPublicAccess: false
+                isHnsEnabled: true
+              }
             }
 
             resource id 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-                name: take('id-${uniqueString(resourceGroup().id)}', 128)
-                location: location
+              name: take('id-${uniqueString(resourceGroup().id)}', 128)
+              location: location
             }
 
             resource storage_StorageBlobDataReader 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-                name: guid(storage.id, id.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1'))
-                properties: {
-                    principalId: id.properties.principalId
-                    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')
-                    principalType: 'ServicePrincipal'
-                }
-                scope: storage
+              name: guid(storage.id, id.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1'))
+              properties: {
+                principalId: id.properties.principalId
+                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')
+                principalType: 'ServicePrincipal'
+              }
+              scope: storage
             }
             """)
         .Lint()
@@ -185,9 +210,17 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                infra.Add(storage);
+
                 BlobService blobs = new(nameof(blobs)) { Parent = storage };
-                _ = new BicepOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri };
+                infra.Add(blobs);
+
+                infra.Add(new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri });
+
+                return infra;
             })
         .Compare(
             """
@@ -195,21 +228,21 @@ public class BasicStorageTests(bool async)
             param location string = resourceGroup().location
 
             resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: location
-                sku: {
-                    name: 'Standard_LRS'
-                }
-                properties: {
-                    allowBlobPublicAccess: false
-                    isHnsEnabled: true
-                }
+              name: take('storage${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: 'Standard_LRS'
+              }
+              properties: {
+                allowBlobPublicAccess: false
+                isHnsEnabled: true
+              }
             }
 
-            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
-                name: 'default'
-                parent: storage
+            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
+              name: 'default'
+              parent: storage
             }
 
             output blobs_endpoint string = storage.properties.primaryEndpoints.blob
@@ -226,12 +259,15 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter storageAccountType =
+                Infrastructure infra = new();
+
+                ProvisioningParameter storageAccountType =
                     new(nameof(storageAccountType), typeof(string))
                     {
                         Value = StorageSkuName.StandardLrs,
                         Description = "Storage Account type"
                     };
+                infra.Add(storageAccountType);
 
                 StorageAccount sa =
                     new(nameof(sa))
@@ -239,9 +275,12 @@ public class BasicStorageTests(bool async)
                         Sku = new StorageSku { Name = storageAccountType },
                         Kind = StorageKind.StorageV2
                     };
+                infra.Add(sa);
 
-                _ = new BicepOutput("storageAccountName", typeof(string)) { Value = sa.Name };
-                _ = new BicepOutput("storageAccountId", typeof(string)) { Value = sa.Id };
+                infra.Add(new ProvisioningOutput("storageAccountName", typeof(string)) { Value = sa.Name });
+                infra.Add(new ProvisioningOutput("storageAccountId", typeof(string)) { Value = sa.Id });
+
+                return infra;
             })
         .Compare(
             """
@@ -251,13 +290,13 @@ public class BasicStorageTests(bool async)
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource sa 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('sa${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: location
-                sku: {
-                    name: storageAccountType
-                }
+            resource sa 'Microsoft.Storage/storageAccounts@2024-01-01' = {
+              name: take('sa${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: storageAccountType
+              }
             }
 
             output storageAccountName string = sa.name
@@ -276,12 +315,15 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter containerName =
+                Infrastructure infra = new();
+
+                ProvisioningParameter containerName =
                     new(nameof(containerName), typeof(string))
                     {
                         Value = "mycontainer",
                         Description = "The container name."
                     };
+                infra.Add(containerName);
 
                 StorageAccount sa =
                     new(nameof(sa))
@@ -290,13 +332,20 @@ public class BasicStorageTests(bool async)
                         Kind = StorageKind.StorageV2,
                         AccessTier = StorageAccountAccessTier.Hot
                     };
+                infra.Add(sa);
+
                 BlobService blobs = new(nameof(blobs)) { Parent = sa };
+                infra.Add(blobs);
+
                 BlobContainer container =
                     new(nameof(container), StorageAccount.ResourceVersions.V2023_01_01)
                     {
                         Parent = blobs,
                         Name = containerName
                     };
+                infra.Add(container);
+
+                return infra;
             })
         .Compare(
             """
@@ -306,26 +355,26 @@ public class BasicStorageTests(bool async)
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource sa 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('sa${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: location
-                sku: {
-                    name: 'Standard_LRS'
-                }
-                properties: {
-                    accessTier: 'Hot'
-                }
+            resource sa 'Microsoft.Storage/storageAccounts@2024-01-01' = {
+              name: take('sa${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: 'Standard_LRS'
+              }
+              properties: {
+                accessTier: 'Hot'
+              }
             }
 
-            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
-                name: 'default'
-                parent: sa
+            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
+              name: 'default'
+              parent: sa
             }
 
             resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = {
-                name: containerName
-                parent: blobs
+              name: containerName
+              parent: blobs
             }
             """)
         .Lint()
@@ -340,12 +389,15 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter storageAccountType =
+                Infrastructure infra = new();
+
+                ProvisioningParameter storageAccountType =
                     new(nameof(storageAccountType), typeof(string))
                     {
                         Value = StorageSkuName.StandardLrs,
                         Description = "Storage Account type"
                     };
+                infra.Add(storageAccountType);
 
                 StorageAccount sa =
                     new(nameof(sa))
@@ -363,9 +415,12 @@ public class BasicStorageTests(bool async)
                                     }
                             }
                     };
+                infra.Add(sa);
 
-                _ = new BicepOutput("storageAccountName", typeof(string)) { Value = sa.Name };
-                _ = new BicepOutput("storageAccountId", typeof(string)) { Value = sa.Id };
+                infra.Add(new ProvisioningOutput("storageAccountName", typeof(string)) { Value = sa.Name });
+                infra.Add(new ProvisioningOutput("storageAccountId", typeof(string)) { Value = sa.Id });
+
+                return infra;
             })
         .Compare(
             """
@@ -375,23 +430,23 @@ public class BasicStorageTests(bool async)
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource sa 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('sa${uniqueString(resourceGroup().id)}', 24)
-                kind: 'Storage'
-                location: location
-                sku: {
-                    name: storageAccountType
-                }
-                properties: {
-                    encryption: {
-                        services: {
-                            blob: {
-                                enabled: true
-                            }
-                        }
-                        keySource: 'Microsoft.Storage'
+            resource sa 'Microsoft.Storage/storageAccounts@2024-01-01' = {
+              name: take('sa${uniqueString(resourceGroup().id)}', 24)
+              kind: 'Storage'
+              location: location
+              sku: {
+                name: storageAccountType
+              }
+              properties: {
+                encryption: {
+                  services: {
+                    blob: {
+                      enabled: true
                     }
+                  }
+                  keySource: 'Microsoft.Storage'
                 }
+              }
             }
 
             output storageAccountName string = sa.name
@@ -410,6 +465,8 @@ public class BasicStorageTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 StorageAccount sa =
                     new(nameof(sa), StorageAccount.ResourceVersions.V2023_01_01)
                     {
@@ -417,33 +474,40 @@ public class BasicStorageTests(bool async)
                         Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
                         Kind = StorageKind.StorageV2
                     };
+                infra.Add(sa);
+
                 FileService files = new(nameof(files)) { Parent = sa };
+                infra.Add(files);
+
                 FileShare share =
                     new(nameof(share), StorageAccount.ResourceVersions.V2023_01_01)
                     {
                         Parent = files,
                         Name = "photos"
                     };
+                infra.Add(share);
+
+                return infra;
             })
         .Compare(
             """
             resource sa 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-                name: take('sa${uniqueString(resourceGroup().id)}', 24)
-                kind: 'StorageV2'
-                location: 'westus2'
-                sku: {
-                    name: 'Standard_LRS'
-                }
+              name: take('sa${uniqueString(resourceGroup().id)}', 24)
+              kind: 'StorageV2'
+              location: 'westus2'
+              sku: {
+                name: 'Standard_LRS'
+              }
             }
 
-            resource files 'Microsoft.Storage/storageAccounts/fileServices@2023-01-01' = {
-                name: 'default'
-                parent: sa
+            resource files 'Microsoft.Storage/storageAccounts/fileServices@2024-01-01' = {
+              name: 'default'
+              parent: sa
             }
 
             resource share 'Microsoft.Storage/storageAccounts/fileServices/shares@2023-01-01' = {
-                name: 'photos'
-                parent: files
+              name: 'photos'
+              parent: files
             }
             """)
         .Lint()

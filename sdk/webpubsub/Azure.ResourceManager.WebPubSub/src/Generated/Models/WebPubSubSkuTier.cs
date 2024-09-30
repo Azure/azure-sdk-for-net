@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static bool operator ==(WebPubSubSkuTier left, WebPubSubSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebPubSubSkuTier"/> values are not the same. </summary>
         public static bool operator !=(WebPubSubSkuTier left, WebPubSubSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WebPubSubSkuTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WebPubSubSkuTier"/>. </summary>
         public static implicit operator WebPubSubSkuTier(string value) => new WebPubSubSkuTier(value);
 
         /// <inheritdoc />

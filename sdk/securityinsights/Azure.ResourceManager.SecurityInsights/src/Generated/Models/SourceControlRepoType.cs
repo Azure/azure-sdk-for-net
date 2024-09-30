@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(SourceControlRepoType left, SourceControlRepoType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceControlRepoType"/> values are not the same. </summary>
         public static bool operator !=(SourceControlRepoType left, SourceControlRepoType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SourceControlRepoType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceControlRepoType"/>. </summary>
         public static implicit operator SourceControlRepoType(string value) => new SourceControlRepoType(value);
 
         /// <inheritdoc />

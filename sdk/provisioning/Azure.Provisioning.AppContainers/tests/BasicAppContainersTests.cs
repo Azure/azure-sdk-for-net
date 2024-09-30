@@ -21,18 +21,22 @@ public class BasicAppContainersTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter containerImage =
+                Infrastructure infra = new();
+
+                ProvisioningParameter containerImage =
                     new(nameof(containerImage), typeof(string))
                     {
                         Value = "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest",
                         Description = "Specifies the docker container image to deploy."
                     };
+                infra.Add(containerImage);
 
                 OperationalInsightsWorkspace logAnalytics =
                     new(nameof(logAnalytics))
                     {
                         Sku = new OperationalInsightsWorkspaceSku { Name = OperationalInsightsWorkspaceSkuName.PerGB2018 }
                     };
+                infra.Add(logAnalytics);
 
                 ContainerAppManagedEnvironment env =
                     new(nameof(env))
@@ -48,6 +52,7 @@ public class BasicAppContainersTests(bool async)
                                 }
                             },
                     };
+                infra.Add(env);
 
                 ContainerApp app =
                     new(nameof(app))
@@ -93,6 +98,9 @@ public class BasicAppContainersTests(bool async)
                                 }
                             }
                     };
+                infra.Add(app);
+
+                return infra;
             })
         .Compare(
             """
@@ -102,66 +110,66 @@ public class BasicAppContainersTests(bool async)
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
-                name: take('logAnalytics-${uniqueString(resourceGroup().id)}', 63)
-                location: location
-                properties: {
-                    sku: {
-                        name: 'PerGB2018'
-                    }
+            resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
+              name: take('logAnalytics-${uniqueString(resourceGroup().id)}', 63)
+              location: location
+              properties: {
+                sku: {
+                  name: 'PerGB2018'
                 }
+              }
             }
 
-            resource env 'Microsoft.App/managedEnvironments@2023-05-01' = {
-                name: take('env${uniqueString(resourceGroup().id)}', 24)
-                location: location
-                properties: {
-                    appLogsConfiguration: {
-                        destination: 'log-analytics'
-                        logAnalyticsConfiguration: {
-                            customerId: logAnalytics.properties.customerId
-                            sharedKey: logAnalytics.listKeys().primarySharedKey
-                        }
-                    }
+            resource env 'Microsoft.App/managedEnvironments@2024-03-01' = {
+              name: take('env${uniqueString(resourceGroup().id)}', 24)
+              location: location
+              properties: {
+                appLogsConfiguration: {
+                  destination: 'log-analytics'
+                  logAnalyticsConfiguration: {
+                    customerId: logAnalytics.properties.customerId
+                    sharedKey: logAnalytics.listKeys().primarySharedKey
+                  }
                 }
+              }
             }
 
-            resource app 'Microsoft.App/containerApps@2023-05-01' = {
-                name: take('app-${uniqueString(resourceGroup().id)}', 32)
-                location: location
-                properties: {
-                    configuration: {
-                        ingress: {
-                            external: true
-                            targetPort: 80
-                            traffic: [
-                                {
-                                    weight: 100
-                                    latestRevision: true
-                                }
-                            ]
-                            allowInsecure: false
-                        }
-                    }
-                    managedEnvironmentId: env.id
-                    template: {
-                        revisionSuffix: 'firstrevision'
-                        containers: [
-                            {
-                                image: containerImage
-                                name: 'test'
-                                resources: {
-                                    cpu: json('0.5')
-                                    memory: '1Gi'
-                                }
-                            }
-                        ]
-                        scale: {
-                            minReplicas: 1
-                            maxReplicas: 3
-                        }
-                    }
+            resource app 'Microsoft.App/containerApps@2024-03-01' = {
+              name: take('app-${uniqueString(resourceGroup().id)}', 32)
+              location: location
+              properties: {
+                configuration: {
+                  ingress: {
+                    external: true
+                    targetPort: 80
+                    traffic: [
+                      {
+                        weight: 100
+                        latestRevision: true
+                      }
+                    ]
+                    allowInsecure: false
+                  }
                 }
+                managedEnvironmentId: env.id
+                template: {
+                  revisionSuffix: 'firstrevision'
+                  containers: [
+                    {
+                      image: containerImage
+                      name: 'test'
+                      resources: {
+                        cpu: json('0.5')
+                        memory: '1Gi'
+                      }
+                    }
+                  ]
+                  scale: {
+                    minReplicas: 1
+                    maxReplicas: 3
+                  }
+                }
+              }
             }
             """)
         .Lint()
