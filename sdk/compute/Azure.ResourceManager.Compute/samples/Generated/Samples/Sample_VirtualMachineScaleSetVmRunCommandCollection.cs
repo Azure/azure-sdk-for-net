@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_VirtualMachineScaleSetVmRunCommandCollection
     {
-        // Create VirtualMachineScaleSet VM run command.
+        // List run commands in Vmss instance.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateVirtualMachineScaleSetVMRunCommand()
+        public async Task GetAll_ListRunCommandsInVmssInstance()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/runCommandExamples/VirtualMachineScaleSetVMRunCommand_CreateOrUpdate.json
-            // this example is just showing the usage of "VirtualMachineScaleSetVMRunCommands_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/runCommandExamples/VirtualMachineScaleSetVMRunCommand_List.json
+            // this example is just showing the usage of "VirtualMachineScaleSetVMRunCommands_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -40,43 +40,17 @@ namespace Azure.ResourceManager.Compute.Samples
             // get the collection of this VirtualMachineScaleSetVmRunCommandResource
             VirtualMachineScaleSetVmRunCommandCollection collection = virtualMachineScaleSetVm.GetVirtualMachineScaleSetVmRunCommands();
 
-            // invoke the operation
-            string runCommandName = "myRunCommand";
-            VirtualMachineRunCommandData data = new VirtualMachineRunCommandData(new AzureLocation("West US"))
+            // invoke the operation and iterate over the result
+            await foreach (VirtualMachineScaleSetVmRunCommandResource item in collection.GetAllAsync())
             {
-                Source = new VirtualMachineRunCommandScriptSource()
-                {
-                    ScriptUri = new Uri("https://mystorageaccount.blob.core.windows.net/scriptcontainer/MyScript.ps1"),
-                    ScriptUriManagedIdentity = new RunCommandManagedIdentity()
-                    {
-                        ObjectId = "4231e4d2-33e4-4e23-96b2-17888afa6072",
-                    },
-                },
-                Parameters =
-{
-new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("param2","value2")
-},
-                AsyncExecution = false,
-                RunAsUser = "user1",
-                RunAsPassword = "<runAsPassword>",
-                TimeoutInSeconds = 3600,
-                OutputBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/myscriptoutputcontainer/MyScriptoutput.txt"),
-                ErrorBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/mycontainer/MyScriptError.txt"),
-                OutputBlobManagedIdentity = new RunCommandManagedIdentity()
-                {
-                    ClientId = "22d35efb-0c99-4041-8c5b-6d24db33a69a",
-                },
-                ErrorBlobManagedIdentity = new RunCommandManagedIdentity(),
-                TreatFailureAsDeploymentFailure = true,
-            };
-            ArmOperation<VirtualMachineScaleSetVmRunCommandResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, runCommandName, data);
-            VirtualMachineScaleSetVmRunCommandResource result = lro.Value;
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VirtualMachineRunCommandData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualMachineRunCommandData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine($"Succeeded");
         }
 
         // Get VirtualMachineScaleSet VM run commands.
@@ -191,13 +165,13 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
             }
         }
 
-        // List run commands in Vmss instance.
+        // Create VirtualMachineScaleSet VM run command.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListRunCommandsInVmssInstance()
+        public async Task CreateOrUpdate_CreateVirtualMachineScaleSetVMRunCommand()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/runCommandExamples/VirtualMachineScaleSetVMRunCommand_List.json
-            // this example is just showing the usage of "VirtualMachineScaleSetVMRunCommands_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/runCommandExamples/VirtualMachineScaleSetVMRunCommand_CreateOrUpdate.json
+            // this example is just showing the usage of "VirtualMachineScaleSetVMRunCommands_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -216,17 +190,43 @@ new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("pa
             // get the collection of this VirtualMachineScaleSetVmRunCommandResource
             VirtualMachineScaleSetVmRunCommandCollection collection = virtualMachineScaleSetVm.GetVirtualMachineScaleSetVmRunCommands();
 
-            // invoke the operation and iterate over the result
-            await foreach (VirtualMachineScaleSetVmRunCommandResource item in collection.GetAllAsync())
+            // invoke the operation
+            string runCommandName = "myRunCommand";
+            VirtualMachineRunCommandData data = new VirtualMachineRunCommandData(new AzureLocation("West US"))
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualMachineRunCommandData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Source = new VirtualMachineRunCommandScriptSource()
+                {
+                    ScriptUri = new Uri("https://mystorageaccount.blob.core.windows.net/scriptcontainer/MyScript.ps1"),
+                    ScriptUriManagedIdentity = new RunCommandManagedIdentity()
+                    {
+                        ObjectId = "4231e4d2-33e4-4e23-96b2-17888afa6072",
+                    },
+                },
+                Parameters =
+{
+new RunCommandInputParameter("param1","value1"),new RunCommandInputParameter("param2","value2")
+},
+                AsyncExecution = false,
+                RunAsUser = "user1",
+                RunAsPassword = "<runAsPassword>",
+                TimeoutInSeconds = 3600,
+                OutputBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/myscriptoutputcontainer/MyScriptoutput.txt"),
+                ErrorBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/mycontainer/MyScriptError.txt"),
+                OutputBlobManagedIdentity = new RunCommandManagedIdentity()
+                {
+                    ClientId = "22d35efb-0c99-4041-8c5b-6d24db33a69a",
+                },
+                ErrorBlobManagedIdentity = new RunCommandManagedIdentity(),
+                TreatFailureAsDeploymentFailure = true,
+            };
+            ArmOperation<VirtualMachineScaleSetVmRunCommandResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, runCommandName, data);
+            VirtualMachineScaleSetVmRunCommandResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineRunCommandData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

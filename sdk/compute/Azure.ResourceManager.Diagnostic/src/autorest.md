@@ -9,8 +9,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 library-name: Compute
-namespace: Azure.ResourceManager.Compute
-require: D:\Azure\azure-rest-api-specs\specification\compute\Compute.Management\readme.md
+namespace: Azure.ResourceManager.Diagnostic
+require: D:\Azure\azure-rest-api-specs\specification\compute\Diagnostic.Management\readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
