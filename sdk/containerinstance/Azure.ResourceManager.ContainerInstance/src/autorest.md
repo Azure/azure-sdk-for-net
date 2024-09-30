@@ -19,6 +19,9 @@ modelerfour:
 use-model-reader-writer: true
 use-write-core: true
 
+# mgmt-debug:
+#  show-serialized-names: true
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'
@@ -107,4 +110,5 @@ rename-mapping:
   SecurityContextDefinition: ContainerSecurityContextDefinition
   SecurityContextCapabilitiesDefinition: ContainerSecurityContextCapabilitiesDefinition
   SecurityContextDefinition.privileged: IsPrivileged
+  ContainerGroupProperties.properties.osType: OperatingSystemType
 ```
