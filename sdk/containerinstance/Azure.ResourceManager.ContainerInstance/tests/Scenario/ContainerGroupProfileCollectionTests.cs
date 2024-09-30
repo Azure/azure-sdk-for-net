@@ -112,17 +112,17 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
             var containerGroupProfiles = rg.GetContainerGroupProfiles();
 
-            string containerGroupProfileName1 = Recording.GenerateAssetName("containergrpcgp");
+            string containerGroupProfileName1 = Recording.GenerateAssetName("containergrpcgp1");
             var containerGroupProfileData1 = CreateContainerGroupProfileData(containerGroupProfileName1, "Regular");
             ContainerGroupProfileResource containerGroupProfile1 = (await containerGroupProfiles.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupProfileName1, containerGroupProfileData1)).Value;
-            string containerGroupProfileName2 = Recording.GenerateAssetName("containergrpcgp");
+            string containerGroupProfileName2 = Recording.GenerateAssetName("containergrpcgp2");
             var containerGroupProfileData2 = CreateContainerGroupProfileData(containerGroupProfileName2, "Spot");
             ContainerGroupProfileResource containerGroupProfile2 = (await containerGroupProfiles.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupProfileName2, containerGroupProfileData2)).Value;
 
             AsyncPageable<ContainerGroupProfileResource> result = containerGroupProfiles.GetAllAsync();
-            ContainerGroupProfileResource containerGroupProfile1FromList = await result.FirstOrDefaultAsync(cg => cg.Data.Name.Equals(containerGroupProfileName1));
+            ContainerGroupProfileResource containerGroupProfile1FromList = await result.FirstOrDefaultAsync(cgp => cgp.Data.Name.Equals(containerGroupProfileName1));
             VerifyContainerGroupProfileProperties(containerGroupProfile1.Data, containerGroupProfile1FromList.Data);
-            ContainerGroupProfileResource containerGroupProfile2FromList = await result.FirstOrDefaultAsync(cg => cg.Data.Name.Equals(containerGroupProfileName2));
+            ContainerGroupProfileResource containerGroupProfile2FromList = await result.FirstOrDefaultAsync(cgp => cgp.Data.Name.Equals(containerGroupProfileName2));
             VerifyContainerGroupProfileProperties(containerGroupProfile2.Data, containerGroupProfile2FromList.Data);
         }
 
@@ -156,6 +156,25 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProfileProperties(containerGroupProfile2.Data, containerGroupProfile2FromList.Data);
             ContainerGroupProfileResource containerGroupProfile3FromList = await result.FirstOrDefaultAsync(cgp => cgp.Data.Name.Equals(containerGroupProfileName3));
             VerifyContainerGroupProfileProperties(containerGroupProfile3.Data, containerGroupProfile3FromList.Data);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task List_GetSpecifiedRevision()
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
+            string containerGroupProfileName = Recording.GenerateAssetName("containergrpcgp");
+            var containerGroupProfiles = rg.GetContainerGroupProfiles();
+
+            var containerGroupProfileData1 = CreateContainerGroupProfileData(containerGroupProfileName, "Regular", doNotProvideCommand: true);
+            ContainerGroupProfileResource containerGroupProfile = (await containerGroupProfiles.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupProfileName, containerGroupProfileData1)).Value;
+            var containerGroupProfileData2 = CreateContainerGroupProfileData(containerGroupProfileName, "Regular");
+            containerGroupProfile = (await containerGroupProfiles.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupProfileName, containerGroupProfileData2)).Value;
+
+            var containerGroupProfileRevisions = containerGroupProfile.GetContainerGroupProfileRevisions();
+            ContainerGroupProfileRevisionResource retreivedContainerGroupProfileRevision = await containerGroupProfileRevisions.GetAsync("2");
+            VerifyContainerGroupProfileProperties(containerGroupProfile.Data, retreivedContainerGroupProfileRevision.Data);
         }
     }
 }

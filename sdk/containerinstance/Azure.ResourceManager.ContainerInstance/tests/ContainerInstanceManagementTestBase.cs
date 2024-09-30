@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             }
         }
 
-        protected static ContainerGroupProfileData CreateContainerGroupProfileData(string containerGroupProfileName, string priority = null, bool isConfidentialSku = false, string ccepolicy = null, bool doNotEncrypt = false)
+        protected static ContainerGroupProfileData CreateContainerGroupProfileData(string containerGroupProfileName, string priority = null, bool isConfidentialSku = false, string ccepolicy = null, bool doNotEncrypt = false, bool doNotProvideCommand = false)
         {
             var containers = new ContainerInstanceContainer[]
             {
@@ -332,6 +332,42 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                 }
             };
 
+            var noCommandContainers = new ContainerInstanceContainer[]
+            {
+                new Models.ContainerInstanceContainer(
+                    name: containerGroupProfileName,
+                    image: "alpine",
+                    resources: new ContainerResourceRequirements(
+                        new ContainerResourceRequestsContent(
+                            memoryInGB: 1.5,
+                            cpu: 1.0))
+                )
+                {
+                    Ports =
+                    {
+                        new ContainerPort(80)
+                    },
+                    EnvironmentVariables =
+                    {
+                        new ContainerEnvironmentVariable("secretEnv")
+                        {
+                            SecureValue = "secretValue1"
+                        }
+                    },
+                    LivenessProbe = new ContainerProbe()
+                    {
+                        Exec = new ContainerExec()
+                        {
+                            Command =
+                            {
+                                "ls"
+                            }
+                        },
+                        PeriodInSeconds = 20,
+                    }
+                }
+            };
+
             var encryptionProps = doNotEncrypt ? null : new ContainerGroupEncryptionProperties(
                 vaultBaseUri: new Uri("https://cloudaci-cloudtest.vault.azure.net/"),
                 keyName: "testencryptionkey",
@@ -345,7 +381,6 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                     osType: ContainerInstanceOperatingSystemType.Linux)
                 {
                     RestartPolicy = ContainerGroupRestartPolicy.Never,
-                    //Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
                     InitContainers = {
                         new InitContainerDefinitionContent($"{containerGroupProfileName}init")
                         {
@@ -368,6 +403,44 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                     Sku = ContainerGroupSku.Standard
                 };
                 return priorityContainerGroupProfile;
+            }
+
+            if (doNotProvideCommand)
+            {
+                var noCommandContainerGroupProfile = new ContainerGroupProfileData(
+                location: "westus",
+                containers: noCommandContainers,
+                osType: ContainerInstanceOperatingSystemType.Linux)
+                {
+                    IPAddress = new ContainerGroupIPAddress(
+                        ports: new[] { new ContainerGroupPort(80) { Protocol = ContainerGroupNetworkProtocol.Tcp } },
+                        addressType: ContainerGroupIPAddressType.Public),
+                    RestartPolicy = ContainerGroupRestartPolicy.Never,
+                    Diagnostics = new ContainerGroupDiagnostics(
+                        logAnalytics: new ContainerGroupLogAnalytics(
+                            workspaceId: "workspaceid",
+                            workspaceKey: "workspacekey"), null),
+                    InitContainers = {
+                    new InitContainerDefinitionContent($"{containerGroupProfileName}init")
+                    {
+                        Image = "alpine",
+                        Command =
+                        {
+                            "/bin/sh", "-c", "sleep 5"
+                        },
+                        EnvironmentVariables =
+                        {
+                            new ContainerEnvironmentVariable("secretEnv")
+                            {
+                                SecureValue = "secretValue1"
+                            }
+                        },
+                    }
+                    },
+                    EncryptionProperties = encryptionProps,
+                    Sku = ContainerGroupSku.Standard
+                };
+                return noCommandContainerGroupProfile;
             }
 
             var confidentialComputeProperties = new ConfidentialComputeProperties();
