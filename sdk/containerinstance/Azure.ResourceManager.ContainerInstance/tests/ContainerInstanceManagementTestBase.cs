@@ -514,5 +514,10 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                 Assert.AreEqual(expected.InitContainers[0].SecurityContext?.IsPrivileged, actual.InitContainers[0].SecurityContext?.IsPrivileged);
             }
         }
+
+        protected void VerifyOperationCompletionStatus(bool operationCompleted)
+        {
+            Assert.IsTrue(operationCompleted);
+        }
     }
 }
