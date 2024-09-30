@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -37,6 +38,11 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Id))
             {
@@ -211,6 +217,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("adminState"u8);
                 writer.WriteStringValue(AdminState.Value.ToString());
             }
+            if (Optional.IsDefined(ResiliencyModel))
+            {
+                writer.WritePropertyName("resiliencyModel"u8);
+                writer.WriteStringValue(ResiliencyModel.Value.ToString());
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -252,6 +263,7 @@ namespace Azure.ResourceManager.Network
             }
             ExtendedLocation extendedLocation = default;
             ETag? etag = default;
+            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType? type = default;
@@ -282,6 +294,7 @@ namespace Azure.ResourceManager.Network
             bool? allowVirtualWanTraffic = default;
             bool? allowRemoteVnetTraffic = default;
             ExpressRouteGatewayAdminState? adminState = default;
+            ExpressRouteGatewayResiliencyModel? resiliencyModel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -302,6 +315,15 @@ namespace Azure.ResourceManager.Network
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -595,6 +617,15 @@ namespace Azure.ResourceManager.Network
                             adminState = new ExpressRouteGatewayAdminState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("resiliencyModel"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resiliencyModel = new ExpressRouteGatewayResiliencyModel(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -613,6 +644,7 @@ namespace Azure.ResourceManager.Network
                 serializedAdditionalRawData,
                 extendedLocation,
                 etag,
+                identity,
                 autoScaleConfiguration,
                 ipConfigurations ?? new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>(),
                 gatewayType,
@@ -637,7 +669,8 @@ namespace Azure.ResourceManager.Network
                 enableBgpRouteTranslationForNat,
                 allowVirtualWanTraffic,
                 allowRemoteVnetTraffic,
-                adminState);
+                adminState,
+                resiliencyModel);
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewayData>.Write(ModelReaderWriterOptions options)

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static bool operator ==(ImmutabilityState left, ImmutabilityState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImmutabilityState"/> values are not the same. </summary>
         public static bool operator !=(ImmutabilityState left, ImmutabilityState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ImmutabilityState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ImmutabilityState"/>. </summary>
         public static implicit operator ImmutabilityState(string value) => new ImmutabilityState(value);
 
         /// <inheritdoc />

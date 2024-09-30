@@ -15,8 +15,6 @@
 
   <ItemGroup Condition="'$(ProjectListOverrideFile)' == '' ">
     <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.*.Management.*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*mgmt*\**\*.csproj" />
-    <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\batch\Microsoft.Azure.Batch\**\*.csproj" />
-    <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\batch\Microsoft.Azure.Batch.*\**\*.csproj" />
     <!-- because this project is using the project below -->
     <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitivelanguage\Azure.AI.Language.QuestionAnswering\tests\Azure.AI.Language.QuestionAnswering.Tests.csproj" />
     <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\cognitiveservices\Knowledge.QnAMaker\**\*.csproj" />
@@ -71,11 +69,6 @@
     <ProjectsToRemove Include="@(ProjectReference)" Exclude="@(ProjectsToIncludeBySDKType)" />
     <ProjectReference Remove="@(ProjectsToRemove)" />
   </ItemGroup>
-
-  <Target Name="fuck" AfterTargets="rebuild">
-    <Message Text="References: $(MSBuildThisFileDirectory)" Importance="High"/>
-    <Message Text="@(ProjectReference)" Importance="High"/>
-  </Target>
 
   <Target Name="CheckProjects" AfterTargets="Build">
     <!-- If scope is set this likely came from a call to build.proj and in cases where there is only mgmt projects we don't want to error so skip this extra check -->

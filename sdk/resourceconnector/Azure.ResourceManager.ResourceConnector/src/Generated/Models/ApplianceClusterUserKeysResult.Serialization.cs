@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 
         void IJsonModel<ApplianceClusterUserKeysResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceClusterUserKeysResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplianceClusterUserKeysResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsCollectionDefined(ArtifactProfiles))
             {
                 writer.WritePropertyName("artifactProfiles"u8);
@@ -73,7 +81,6 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ApplianceClusterUserKeysResult IJsonModel<ApplianceClusterUserKeysResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

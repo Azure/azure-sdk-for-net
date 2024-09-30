@@ -13,7 +13,6 @@ using OpenAI.Embeddings;
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_05_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_05_01_Preview)]
     public partial class VectorSearchUsingReducedEmbeddings : SearchTestBase
     {
         public VectorSearchUsingReducedEmbeddings(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -82,7 +81,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Reduced_Vector_Search_Index
             string vectorSearchProfileName = "my-vector-profile";
             string vectorSearchHnswConfig = "my-hsnw-vector-config";
-            string deploymentId = "my-text-embedding-3-small";
+            string deploymentName = "my-text-embedding-3-small";
             int modelDimensions = 256; // Here's the reduced model dimensions
 
             string indexName = "hotel";
@@ -106,7 +105,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     {
                         new VectorSearchProfile(vectorSearchProfileName, vectorSearchHnswConfig)
                         {
-                            Vectorizer = "openai"
+                            VectorizerName = "openai"
                         }
                     },
                     Algorithms =
@@ -117,11 +116,11 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     {
                         new AzureOpenAIVectorizer("openai")
                         {
-                            AzureOpenAIParameters  = new AzureOpenAIParameters()
+                            Parameters  = new AzureOpenAIVectorizerParameters()
                             {
                                 ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
                                 ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
-                                DeploymentId = deploymentId,
+                                DeploymentName = deploymentName,
                                 ModelName = AzureOpenAIModelName.TextEmbedding3Small
                             }
                         }
@@ -181,7 +180,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                 Dimensions = 256
             };
             Embedding embedding = embeddingClient.GenerateEmbedding(input, embeddingsOptions);
-            return embedding.Vector;
+            return embedding.ToFloats();
         }
         #endregion
 

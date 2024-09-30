@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(MigrationRecoveryPointType left, MigrationRecoveryPointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MigrationRecoveryPointType"/> values are not the same. </summary>
         public static bool operator !=(MigrationRecoveryPointType left, MigrationRecoveryPointType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MigrationRecoveryPointType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MigrationRecoveryPointType"/>. </summary>
         public static implicit operator MigrationRecoveryPointType(string value) => new MigrationRecoveryPointType(value);
 
         /// <inheritdoc />

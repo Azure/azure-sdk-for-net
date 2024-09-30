@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Exposed 'DnsRecordType' property in DnsRecordData.cs and added factory method for DnsRecordData. Issue:https://github.com/Azure/azure-sdk-for-net/issues/45423
+
 ### Other Changes
 
 ## 1.2.0-beta.1 (2024-06-01)

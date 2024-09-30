@@ -10,6 +10,14 @@
 
 ### Other Changes
 
+- Improved the efficiency of `AzureEventSourceLogForwarder` by eliminating message formatting. ([#46202](https://github.com/Azure/azure-sdk-for-net/pull/46202))
+
+## 1.7.5 (2024-08-15)
+
+### Other Changes
+
+- Updated dependency `Azure.Core` to version `1.42.0`.
+
 ## 1.7.4 (2024-06-13)
 
 ### Other Changes

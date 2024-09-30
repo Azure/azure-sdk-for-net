@@ -53,6 +53,11 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteObjectValue(Threshold);
             }
+            if (Optional.IsDefined(FilterOverride))
+            {
+                writer.WritePropertyName("filterOverride"u8);
+                writer.WriteStringValue(FilterOverride);
+            }
             writer.WriteEndObject();
         }
 
@@ -70,6 +75,7 @@ namespace Azure.Search.Documents.Models
             double? oversampling = default;
             float? weight = default;
             VectorThreshold threshold = default;
+            string filterOverride = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))
@@ -136,6 +142,11 @@ namespace Azure.Search.Documents.Models
                     threshold = VectorThreshold.DeserializeVectorThreshold(property.Value);
                     continue;
                 }
+                if (property.NameEquals("filterOverride"u8))
+                {
+                    filterOverride = property.Value.GetString();
+                    continue;
+                }
             }
             return new VectorizableImageUrlQuery(
                 kind,
@@ -145,6 +156,7 @@ namespace Azure.Search.Documents.Models
                 oversampling,
                 weight,
                 threshold,
+                filterOverride,
                 url);
         }
 

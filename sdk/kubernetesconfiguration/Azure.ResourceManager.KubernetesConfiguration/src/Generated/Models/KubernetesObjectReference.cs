@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> Name of the object. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Namespace of the object. </summary>
+        [WirePath("namespace")]
         public string Namespace { get; }
     }
 }

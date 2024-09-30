@@ -21,32 +21,44 @@ namespace Azure.AI.OpenAI.Chat
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("content"u8);
-            writer.WriteStringValue(Content);
-            if (Optional.IsDefined(Title))
+            if (SerializedAdditionalRawData?.ContainsKey("content") != true)
+            {
+                writer.WritePropertyName("content"u8);
+                writer.WriteStringValue(Content);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("title") != true && Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Url))
+            if (SerializedAdditionalRawData?.ContainsKey("url") != true && Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url);
             }
-            if (Optional.IsDefined(Filepath))
+            if (SerializedAdditionalRawData?.ContainsKey("filepath") != true && Optional.IsDefined(Filepath))
             {
                 writer.WritePropertyName("filepath"u8);
                 writer.WriteStringValue(Filepath);
             }
-            if (Optional.IsDefined(ChunkId))
+            if (SerializedAdditionalRawData?.ContainsKey("chunk_id") != true && Optional.IsDefined(ChunkId))
             {
                 writer.WritePropertyName("chunk_id"u8);
                 writer.WriteStringValue(ChunkId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (SerializedAdditionalRawData?.ContainsKey("rerank_score") != true && Optional.IsDefined(RerankScore))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("rerank_score"u8);
+                writer.WriteNumberValue(RerankScore.Value);
+            }
+            if (SerializedAdditionalRawData != null)
+            {
+                foreach (var item in SerializedAdditionalRawData)
                 {
+                    if (ModelSerializationExtensions.IsSentinelValue(item.Value))
+                    {
+                        continue;
+                    }
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
@@ -86,6 +98,7 @@ namespace Azure.AI.OpenAI.Chat
             string url = default;
             string filepath = default;
             string chunkId = default;
+            double? rerankScore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,8 +128,18 @@ namespace Azure.AI.OpenAI.Chat
                     chunkId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("rerank_score"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rerankScore = property.Value.GetDouble();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
+                    rawDataDictionary ??= new Dictionary<string, BinaryData>();
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
@@ -127,6 +150,7 @@ namespace Azure.AI.OpenAI.Chat
                 url,
                 filepath,
                 chunkId,
+                rerankScore,
                 serializedAdditionalRawData);
         }
 

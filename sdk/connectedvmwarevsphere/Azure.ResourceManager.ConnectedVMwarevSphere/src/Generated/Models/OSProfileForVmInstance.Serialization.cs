@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         void IJsonModel<OSProfileForVmInstance>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<OSProfileForVmInstance>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OSProfileForVmInstance)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ComputerName))
             {
                 writer.WritePropertyName("computerName"u8);
@@ -71,6 +79,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("toolsVersion"u8);
                 writer.WriteStringValue(ToolsVersion);
             }
+            if (Optional.IsDefined(WindowsConfiguration))
+            {
+                writer.WritePropertyName("windowsConfiguration"u8);
+                writer.WriteObjectValue(WindowsConfiguration, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -86,7 +99,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         OSProfileForVmInstance IJsonModel<OSProfileForVmInstance>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -118,6 +130,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             string toolsRunningStatus = default;
             string toolsVersionStatus = default;
             string toolsVersion = default;
+            VMwareVmWindowsConfiguration windowsConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,6 +184,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     toolsVersion = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("windowsConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    windowsConfiguration = VMwareVmWindowsConfiguration.DeserializeVMwareVmWindowsConfiguration(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -187,6 +209,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 toolsRunningStatus,
                 toolsVersionStatus,
                 toolsVersion,
+                windowsConfiguration,
                 serializedAdditionalRawData);
         }
 

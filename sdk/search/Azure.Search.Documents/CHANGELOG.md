@@ -1,6 +1,6 @@
 # Release History
 
-## 11.6.0-beta.5 (Unreleased)
+## 11.7.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,52 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 11.7.0-beta.1 (2024-09-24)
+
+### Features Added
+- Added support for `VectorSearchCompression.TruncationDimension`, which allows specifying the number of dimensions to truncate vectors to.
+- Added support for `VectorQuery.FilterOverride`, which allows vector queries to override the broader `SearchOptions.Filter`, enabling more specific configurations for vector queries.
+- `SplitSkill` now supports tokenization.
+- `DocumentDebugInfo` is extended with vector scores for the results.
+
+## 11.6.0 (2024-07-17)
+
+### Features Added
+- Added support for `2024-07-01` service version.
+- `SemanticSearchOptions` now supports `SemanticQuery`, which allows for specifying a semantic query that is only used
+  for semantic reranking.
+- `VectorQuery` now supports `Oversampling` and `Weight`, which allows for specifying richer configurations on how
+  vector queries affect search results.
+- Added support for `VectorizableTextQuery`, which allows for passing a text-based query that is vectorized service-side
+  by `VectorSearchVectorizer`s configured on the index so that vectorization doesn't need to happen before querying.
+- Added support for "bring your own endpoint" with `VectorSearchVectorizer`, with implementations `AzureOpenAIVectorizer`
+  and `WebApiVectorizer`. This enables the service to use a user-provided configuration for vectorizing text, rather 
+  than requiring all client-side calls to vectorize before querying, allowing for easier standardization of vectorization.
+- Added support for compression with `VectorSearchCompression`, with implementations `BinaryQuantizationCompression`
+  and `ScalarQuantizationCompression`. This allows for reducing the size of vectors in the index, which can reduce
+  storage costs and improve querying performance.
+- Added support for `VectorEncodingFormat`, which allows for specifying the encoding format of the vector data.
+- Added support for `AzureOpenAIEmbeddingSkill`, which is a skill that uses the Azure OpenAI service to create text 
+  embeddings during indexing.
+- Added support for index projections with `SearchIndexerIndexProjection`, which allows for specifying how indexed 
+  documents are projected in the index (or indexes).
+- Added support for "narrow" types in `SearchFieldDataType`. This allows for specifying smaller types for vector fields
+  to reduce storage costs and improve querying performance.
+- Added support for `SearchIndexerDataIdentity`, which allows for specifying the identity for the data source for the 
+  indexer.
+- `SearchField` and `SearchableField` now support `IsStored` and `VectorEncodingFormat` configurations. `IsStored` allows
+  for specifying behaviors on how the index will retain vector data (enabling the ability to reduce storage costs), and
+  `VectorEncodingFormat` allows for specifying the encoding format of the vector data.
+- `OcrSkill` now supports `LineEnding`, which allows for specifying the line ending character used by the OCR skill.
+- `SplitSkill` now supports `MaximumPagesToTake` and `PageOverlapLength`, which allows for specifying how the split
+  skill behaves when splitting documents into pages.
+- `SearchServiceLimits` now supports `MaxStoragePerIndexInBytes`, which shows the maximum storage allowed per index.
+
+### Breaking Changes
+
+- All service concepts that have been in preview but not included in the `2024-07-01` GA have been removed. This
+  includes concepts such as index aliases, normalizers, Azure Machine Learning skills, hybrid search, and more.
 
 ## 11.6.0-beta.4 (2024-05-06)
 
@@ -356,5 +402,3 @@
 
 - Initial preview of the Azure.Search client library enabling you to query
   and update documents in search indexes.
-
-[net-guidelines-collection-properties]: https://docs.microsoft.com/dotnet/standard/design-guidelines/guidelines-for-collections#collection-properties-and-return-values

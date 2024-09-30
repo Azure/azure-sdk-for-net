@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string messageId = default;
             AcsEmailDeliveryReportStatus? status = default;
             AcsEmailDeliveryReportStatusDetails deliveryStatusDetails = default;
-            DateTimeOffset? deliveryAttemptTimeStamp = default;
+            DateTimeOffset? deliveryAttemptTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sender"u8))
@@ -61,13 +61,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     deliveryStatusDetails = AcsEmailDeliveryReportStatusDetails.DeserializeAcsEmailDeliveryReportStatusDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("deliveryAttemptTimeStamp"u8))
+                if (property.NameEquals("deliveryAttemptTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deliveryAttemptTimeStamp = property.Value.GetDateTimeOffset("O");
+                    deliveryAttemptTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
@@ -77,7 +77,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 messageId,
                 status,
                 deliveryStatusDetails,
-                deliveryAttemptTimeStamp);
+                deliveryAttemptTimestamp);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

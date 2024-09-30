@@ -2,6 +2,7 @@
 # is used when this pipeline is going to be generating and publishing daily dev builds.
 parameters:
   ServiceDirectory: ''
+  Condition: succeeded()
 steps:
 - ${{if ne(parameters.ServiceDirectory, '')}}:
   - task: Powershell@2
@@ -13,7 +14,7 @@ steps:
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
     displayName: Dump Package properties
-    condition: succeeded()
+    condition: ${{ parameters.Condition }}
 - pwsh: |
     $setDailyDevBuild = "false"
     if (('$(Build.Reason)' -eq 'Schedule') -and ('$(System.TeamProject)' -eq 'internal')) {
@@ -21,4 +22,4 @@ steps:
     }
     echo "##vso[task.setvariable variable=SetDevVersion]$setDailyDevBuild"
   displayName: "Setup Versioning Properties"
-  condition: and(succeeded(), eq(variables['SetDevVersion'], ''))
+  condition: and(${{ parameters.Condition }}, eq(variables['SetDevVersion'], ''))

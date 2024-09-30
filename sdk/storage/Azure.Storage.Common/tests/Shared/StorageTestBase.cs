@@ -17,6 +17,7 @@ using Azure.Storage.Tests.Shared;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 using Azure.Core.TestFramework.Models;
+using Newtonsoft.Json.Linq;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -40,11 +41,31 @@ namespace Azure.Storage.Test.Shared
         private const string CopySourceAuthorization = "x-ms-copy-source-authorization";
         private const string PreviousSnapshotUrl = "x-ms-previous-snapshot-url";
         private const string FileRenameSource = "x-ms-file-rename-source";
+        private const string SasVersion = "sv";
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode)
         {
             SanitizedQueryParameters.Add(SignatureQueryName);
+            IgnoredQueryParameters.Add(SasVersion);
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(CopySourceName)
+            {
+                Value = "sanitized-value",
+                Regex = "(?:[?&](sv)=)(?<date>[^&\\\"\\s\\n,\\\\]+)",
+                GroupForReplace = "date"
+            });
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(RenameSource)
+            {
+                Value = "sanitized-value",
+                Regex = "(?:[?&](sv)=)(?<date>[^&\\\"\\s\\n,\\\\]+)",
+                GroupForReplace = "date"
+            });
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(FileRenameSource)
+            {
+                Value = "sanitized-value",
+                Regex = "(?:[?&](sv)=)(?<date>[^&\\\"\\s\\n,\\\\]+)",
+                GroupForReplace = "date"
+            });
 
 #if NETFRAMEWORK
             // Uri uses different escaping for some special characters between .NET Framework and Core. Because the Test Proxy runs on .NET
@@ -385,18 +406,10 @@ namespace Azure.Storage.Test.Shared
                 return "auth token";
             }
 
-            tenantConfiguration ??= Tenants.TestConfigOAuth;
-
-            IConfidentialClientApplication application = ConfidentialClientApplicationBuilder.Create(tenantConfiguration.ActiveDirectoryApplicationId)
-                .WithAuthority(AzureCloudInstance.AzurePublic, tenantConfiguration.ActiveDirectoryTenantId)
-                .WithClientSecret(tenantConfiguration.ActiveDirectoryApplicationSecret)
-                .Build();
-
             scopes ??= new string[] { "https://storage.azure.com/.default" };
-
-            AcquireTokenForClientParameterBuilder result = application.AcquireTokenForClient(scopes);
-            AuthenticationResult authenticationResult = await result.ExecuteAsync();
-            return authenticationResult.AccessToken;
+            TokenRequestContext tokenRequestContext = new TokenRequestContext(scopes);
+            AccessToken accessToken = await TestEnvironment.Credential.GetTokenAsync(tokenRequestContext, CancellationToken.None);
+            return accessToken.Token;
         }
 
         public string CreateRandomDirectory(string parentPath, string directoryName = default)

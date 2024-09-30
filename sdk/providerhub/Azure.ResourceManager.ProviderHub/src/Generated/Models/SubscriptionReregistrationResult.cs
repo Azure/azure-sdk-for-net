@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static bool operator ==(SubscriptionReregistrationResult left, SubscriptionReregistrationResult right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SubscriptionReregistrationResult"/> values are not the same. </summary>
         public static bool operator !=(SubscriptionReregistrationResult left, SubscriptionReregistrationResult right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SubscriptionReregistrationResult"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SubscriptionReregistrationResult"/>. </summary>
         public static implicit operator SubscriptionReregistrationResult(string value) => new SubscriptionReregistrationResult(value);
 
         /// <inheritdoc />

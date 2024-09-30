@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -31,6 +32,11 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Id))
             {
@@ -79,6 +85,11 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("storageId"u8);
                 writer.WriteStringValue(StorageId);
+            }
+            if (Optional.IsDefined(EnabledFilteringCriteria))
+            {
+                writer.WritePropertyName("enabledFilteringCriteria"u8);
+                writer.WriteStringValue(EnabledFilteringCriteria);
             }
             if (Optional.IsDefined(Enabled))
             {
@@ -145,6 +156,7 @@ namespace Azure.ResourceManager.Network
                 return null;
             }
             ETag? etag = default;
+            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType? type = default;
@@ -153,6 +165,7 @@ namespace Azure.ResourceManager.Network
             ResourceIdentifier targetResourceId = default;
             Guid? targetResourceGuid = default;
             ResourceIdentifier storageId = default;
+            string enabledFilteringCriteria = default;
             bool? enabled = default;
             RetentionPolicyParameters retentionPolicy = default;
             FlowLogProperties format = default;
@@ -169,6 +182,15 @@ namespace Azure.ResourceManager.Network
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -253,6 +275,11 @@ namespace Azure.ResourceManager.Network
                             storageId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("enabledFilteringCriteria"u8))
+                        {
+                            enabledFilteringCriteria = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("enabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -315,9 +342,11 @@ namespace Azure.ResourceManager.Network
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 etag,
+                identity,
                 targetResourceId,
                 targetResourceGuid,
                 storageId,
+                enabledFilteringCriteria,
                 enabled,
                 retentionPolicy,
                 format,

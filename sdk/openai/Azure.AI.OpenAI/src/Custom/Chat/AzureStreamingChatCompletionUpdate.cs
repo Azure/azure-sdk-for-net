@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 #pragma warning disable AZC0112
 
-namespace Azure.AI.OpenAI;
+namespace Azure.AI.OpenAI.Chat;
 
 public static partial class AzureStreamingChatCompletionUpdateExtensions
 {
@@ -18,25 +18,25 @@ public static partial class AzureStreamingChatCompletionUpdateExtensions
         if (chatUpdate.Choices?.Count > 0)
         {
             return AdditionalPropertyHelpers.GetAdditionalProperty<AzureChatMessageContext>(
-                chatUpdate.Choices[0].Delta?._serializedAdditionalRawData,
+                chatUpdate.Choices[0].Delta?.SerializedAdditionalRawData,
                 "context");
         }
         return null;
     }
 
     [Experimental("AOAI001")]
-    public static ContentFilterResultForPrompt GetContentFilterResultForPrompt(this StreamingChatCompletionUpdate chatUpdate)
+    public static RequestContentFilterResult GetRequestContentFilterResult(this StreamingChatCompletionUpdate chatUpdate)
     {
-        return AdditionalPropertyHelpers.GetAdditionalListProperty<ContentFilterResultForPrompt>(
-            chatUpdate._serializedAdditionalRawData,
+        return AdditionalPropertyHelpers.GetAdditionalListProperty<RequestContentFilterResult>(
+            chatUpdate.SerializedAdditionalRawData,
             "prompt_filter_results")?[0];
     }
 
     [Experimental("AOAI001")]
-    public static ContentFilterResultForResponse GetContentFilterResultForResponse(this StreamingChatCompletionUpdate chatUpdate)
+    public static ResponseContentFilterResult GetResponseContentFilterResult(this StreamingChatCompletionUpdate chatUpdate)
     {
-        return AdditionalPropertyHelpers.GetAdditionalProperty<ContentFilterResultForResponse>(
-            chatUpdate?.Choices?.ElementAtOrDefault(0)?._serializedAdditionalRawData,
+        return AdditionalPropertyHelpers.GetAdditionalProperty<ResponseContentFilterResult>(
+            chatUpdate?.Choices?.ElementAtOrDefault(0)?.SerializedAdditionalRawData,
             "content_filter_results");
     }
 }

@@ -66,7 +66,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
                 Assert.Equal("Hello {customKey1} {customKey2} {customKey3} {customKey4} {customKey5} {customKey6} {customKey7} {customKey8} {customKey9} {customKey10} {customKey11}.", logDocument.Message);
             }
 
-            VerifyCustomProperties(logDocument);
+            Assert.Equal(logCategoryName, logDocument.Properties.First(p => p.Key == "CategoryName").Value);
+
+            VerifyCustomProperties(logDocument, 1);
             Assert.DoesNotContain(logDocument.Properties, x => x.Key == "{OriginalFormat}");
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
@@ -123,7 +125,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             Assert.Equal(typeof(System.Exception).FullName, exceptionDocument.ExceptionType);
             Assert.Equal("Test exception", exceptionDocument.ExceptionMessage);
 
-            VerifyCustomProperties(exceptionDocument);
+            Assert.Equal(logCategoryName, exceptionDocument.Properties.First(p => p.Key == "CategoryName").Value);
+
+            VerifyCustomProperties(exceptionDocument, 1);
             Assert.DoesNotContain(exceptionDocument.Properties, x => x.Key == "{OriginalFormat}");
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.

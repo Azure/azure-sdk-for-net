@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.DataLakeStore
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderData> TrustedIdProviders { get { throw null; } }
         public Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreTrustedIdProviderState? TrustedIdProviderState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleData> VirtualNetworkRules { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -121,6 +122,7 @@ namespace Azure.ResourceManager.DataLakeStore
         internal DataLakeStoreFirewallRuleData() { }
         public System.Net.IPAddress EndIPAddress { get { throw null; } }
         public System.Net.IPAddress StartIPAddress { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -167,6 +169,7 @@ namespace Azure.ResourceManager.DataLakeStore
     {
         internal DataLakeStoreTrustedIdProviderData() { }
         public System.Uri IdProvider { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -213,6 +216,7 @@ namespace Azure.ResourceManager.DataLakeStore
     {
         internal DataLakeStoreVirtualNetworkRuleData() { }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -300,6 +304,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountStatus? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountState? State { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountBasicData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountBasicData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountBasicData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountBasicData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountBasicData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -332,6 +337,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeStore.Models.TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent> TrustedIdProviders { get { throw null; } }
         public Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreTrustedIdProviderState? TrustedIdProviderState { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeStore.Models.VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent> VirtualNetworkRules { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -343,6 +349,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public DataLakeStoreAccountEncryptionConfig(Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountEncryptionConfigType configType) { }
         public Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountEncryptionConfigType ConfigType { get { throw null; } set { } }
         public Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountKeyVaultMetaInfo KeyVaultMetaInfo { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountEncryptionConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountEncryptionConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountEncryptionConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountEncryptionConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountEncryptionConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -360,6 +367,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public string EncryptionKeyName { get { throw null; } set { } }
         public string EncryptionKeyVersion { get { throw null; } set { } }
         public string KeyVaultResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountKeyVaultMetaInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountKeyVaultMetaInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountKeyVaultMetaInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountKeyVaultMetaInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountKeyVaultMetaInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -371,6 +379,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public DataLakeStoreAccountNameAvailabilityContent(string name, Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreResourceType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreResourceType ResourceType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -383,6 +392,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -402,6 +412,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeStore.Models.TrustedIdProviderForDataLakeStoreAccountUpdateContent> TrustedIdProviders { get { throw null; } }
         public Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreTrustedIdProviderState? TrustedIdProviderState { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeStore.Models.VirtualNetworkRuleForDataLakeStoreAccountUpdateContent> VirtualNetworkRules { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -435,6 +446,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public int? MaxAccountCount { get { throw null; } }
         public Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreSubscriptionState? State { get { throw null; } }
         public System.Guid? SubscriptionId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreCapabilityInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreCapabilityInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreCapabilityInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreCapabilityInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreCapabilityInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -471,6 +483,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public DataLakeStoreFirewallRuleCreateOrUpdateContent(System.Net.IPAddress startIPAddress, System.Net.IPAddress endIPAddress) { }
         public System.Net.IPAddress EndIPAddress { get { throw null; } }
         public System.Net.IPAddress StartIPAddress { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreFirewallRuleCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreFirewallRuleCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreFirewallRuleCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreFirewallRuleCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreFirewallRuleCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -482,6 +495,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public DataLakeStoreFirewallRulePatch() { }
         public System.Net.IPAddress EndIPAddress { get { throw null; } set { } }
         public System.Net.IPAddress StartIPAddress { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreFirewallRulePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreFirewallRulePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreFirewallRulePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreFirewallRulePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreFirewallRulePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -535,6 +549,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     {
         public DataLakeStoreTrustedIdProviderCreateOrUpdateContent(System.Uri idProvider) { }
         public System.Uri IdProvider { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreTrustedIdProviderCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreTrustedIdProviderCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreTrustedIdProviderCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreTrustedIdProviderCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreTrustedIdProviderCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -545,6 +560,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     {
         public DataLakeStoreTrustedIdProviderPatch() { }
         public System.Uri IdProvider { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreTrustedIdProviderPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreTrustedIdProviderPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreTrustedIdProviderPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreTrustedIdProviderPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreTrustedIdProviderPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -564,6 +580,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public int? Limit { get { throw null; } }
         public Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreUsageName Name { get { throw null; } }
         public Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreUsageUnit? Unit { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreUsage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreUsage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -575,6 +592,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         internal DataLakeStoreUsageName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreUsageName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreUsageName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreUsageName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreUsageName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreUsageName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -594,6 +612,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     {
         public DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent(Azure.Core.ResourceIdentifier subnetId) { }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -604,6 +623,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     {
         public DataLakeStoreVirtualNetworkRulePatch() { }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreVirtualNetworkRulePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreVirtualNetworkRulePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreVirtualNetworkRulePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreVirtualNetworkRulePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreVirtualNetworkRulePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -616,6 +636,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public System.Net.IPAddress EndIPAddress { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Net.IPAddress StartIPAddress { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -628,6 +649,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public System.Net.IPAddress EndIPAddress { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public System.Net.IPAddress StartIPAddress { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.FirewallRuleForDataLakeStoreAccountUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.FirewallRuleForDataLakeStoreAccountUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.FirewallRuleForDataLakeStoreAccountUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.FirewallRuleForDataLakeStoreAccountUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.FirewallRuleForDataLakeStoreAccountUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -649,6 +671,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent(string name, System.Uri idProvider) { }
         public System.Uri IdProvider { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -660,6 +683,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public TrustedIdProviderForDataLakeStoreAccountUpdateContent(string name) { }
         public System.Uri IdProvider { get { throw null; } set { } }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.TrustedIdProviderForDataLakeStoreAccountUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.TrustedIdProviderForDataLakeStoreAccountUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.TrustedIdProviderForDataLakeStoreAccountUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.TrustedIdProviderForDataLakeStoreAccountUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.TrustedIdProviderForDataLakeStoreAccountUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -671,6 +695,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent(string name, Azure.Core.ResourceIdentifier subnetId) { }
         public string Name { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -682,6 +707,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public VirtualNetworkRuleForDataLakeStoreAccountUpdateContent(string name) { }
         public string Name { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.VirtualNetworkRuleForDataLakeStoreAccountUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.VirtualNetworkRuleForDataLakeStoreAccountUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataLakeStore.Models.VirtualNetworkRuleForDataLakeStoreAccountUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataLakeStore.Models.VirtualNetworkRuleForDataLakeStoreAccountUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataLakeStore.Models.VirtualNetworkRuleForDataLakeStoreAccountUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

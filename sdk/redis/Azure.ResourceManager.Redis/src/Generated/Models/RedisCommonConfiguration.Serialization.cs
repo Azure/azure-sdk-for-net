@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Redis.Models
 
         void IJsonModel<RedisCommonConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RedisCommonConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RedisCommonConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(IsRdbBackupEnabled))
             {
                 writer.WritePropertyName("rdb-backup-enabled"u8);
@@ -87,6 +95,11 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("maxclients"u8);
                 writer.WriteStringValue(MaxClients);
             }
+            if (Optional.IsDefined(NotifyKeyspaceEvents))
+            {
+                writer.WritePropertyName("notify-keyspace-events"u8);
+                writer.WriteStringValue(NotifyKeyspaceEvents);
+            }
             if (options.Format != "W" && Optional.IsDefined(PreferredDataArchiveAuthMethod))
             {
                 writer.WritePropertyName("preferred-data-archive-auth-method"u8);
@@ -129,7 +142,6 @@ namespace Azure.ResourceManager.Redis.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         RedisCommonConfiguration IJsonModel<RedisCommonConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -164,6 +176,7 @@ namespace Azure.ResourceManager.Redis.Models
             string maxmemoryReserved = default;
             string maxmemoryDelta = default;
             string maxclients = default;
+            string notifyKeyspaceEvents = default;
             string preferredDataArchiveAuthMethod = default;
             string preferredDataPersistenceAuthMethod = default;
             string zonalConfiguration = default;
@@ -234,6 +247,11 @@ namespace Azure.ResourceManager.Redis.Models
                     maxclients = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("notify-keyspace-events"u8))
+                {
+                    notifyKeyspaceEvents = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("preferred-data-archive-auth-method"u8))
                 {
                     preferredDataArchiveAuthMethod = property.Value.GetString();
@@ -280,6 +298,7 @@ namespace Azure.ResourceManager.Redis.Models
                 maxmemoryReserved,
                 maxmemoryDelta,
                 maxclients,
+                notifyKeyspaceEvents,
                 preferredDataArchiveAuthMethod,
                 preferredDataPersistenceAuthMethod,
                 zonalConfiguration,
@@ -550,6 +569,29 @@ namespace Azure.ResourceManager.Redis.Models
                     else
                     {
                         builder.AppendLine($"'{MaxClients}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotifyKeyspaceEvents), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  notify-keyspace-events: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NotifyKeyspaceEvents))
+                {
+                    builder.Append("  notify-keyspace-events: ");
+                    if (NotifyKeyspaceEvents.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NotifyKeyspaceEvents}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NotifyKeyspaceEvents}'");
                     }
                 }
             }

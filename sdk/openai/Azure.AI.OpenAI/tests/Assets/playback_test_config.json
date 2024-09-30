@@ -6,8 +6,21 @@
     "resource_group": "Sanitized",
     "subscription_id": "Sanitized"
   },
+  "assistant": {
+    "deployment": "gpt-4o-mini"
+  },
   "audio": {
     "deployment": "whisper"
+  },
+  "chat": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "gpt-4o-0806"
+  },
+  "chat_with_async_filter": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "gpt-4o-mini-async-block-banana"
   },
   "embedding": {
     "deployment": "text-embedding-ada-002"
@@ -19,15 +32,22 @@
   "image": {
     "deployment": "dall-e-3"
   },
+  "rate_limited_chat": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "gpt-35-turbo-low-quota"
+  },
   "search": {
     "endpoint": "https://Sanitized.search.windows.net/",
     "key": "Sanitized",
-    "index": "openaiwikisearchindex"
+    "index": "openai-readmes-index"
   },
   "tts": {
     "deployment": "tts"
   },
   "vision": {
-    "deployment": "gpt-4-vision-preview"
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "gpt-4o-mini"
   }
 }

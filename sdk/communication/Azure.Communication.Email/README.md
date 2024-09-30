@@ -38,8 +38,7 @@ Alternatively, Email clients can also be authenticated using a valid token crede
 
 ```C# Snippet:Azure_Communication_Email_CreateEmailClientWithToken
 string endpoint = "<endpoint_url>";
-TokenCredential tokenCredential = new DefaultAzureCredential();
-tokenCredential = new DefaultAzureCredential();
+var tokenCredential = new DefaultAzureCredential();
 EmailClient emailClient = new EmailClient(new Uri(endpoint), tokenCredential);
 ```
 ## Examples
@@ -224,6 +223,50 @@ var contentType = MediaTypeNames.Text.Plain;
 
 var content = new BinaryData(System.IO.File.ReadAllBytes(filePath));
 var emailAttachment = new EmailAttachment(attachmentName, contentType, content);
+
+emailMessage.Attachments.Add(emailAttachment);
+
+try
+{
+    EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Completed, emailMessage);
+    Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+
+    /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+    string operationId = emailSendOperation.Id;
+    Console.WriteLine($"Email operation id = {operationId}");
+}
+catch ( RequestFailedException ex )
+{
+    /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+    Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+}
+```
+
+### Send email with inline attachments
+Azure Communication Services support sending inline attachments.
+Adding an optional `contentId` parameter to the `EmailAttachment` constructor will make the attachment an inline attachment.
+```C# Snippet:Azure_Communication_Email_Send_With_Inline_Attachments
+// Create the email content and reference any inline attachments.
+var emailContent = new EmailContent("This is the subject")
+{
+    PlainText = "This is the body",
+    Html = "<html><body>This is the html body<img src=\"cid:myInlineAttachmentContentId\"></body></html>"
+};
+
+// Create the EmailMessage
+var emailMessage = new EmailMessage(
+    senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+    recipientAddress: "<recipient email address>"
+    content: emailContent);
+
+var filePath = "<path to your file>";
+var attachmentName = "<name of your attachment>";
+var contentType = MediaTypeNames.Text.Plain;
+var contentId = "myInlineAttachmentContentId";
+
+var content = new BinaryData(System.IO.File.ReadAllBytes(filePath));
+var emailAttachment = new EmailAttachment(attachmentName, contentType, content);
+emailAttachment.ContentId = contentId;
 
 emailMessage.Attachments.Add(emailAttachment);
 

@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 using Azure.AI.OpenAI.Tests.Utils;
 
 namespace Azure.AI.OpenAI.Tests.Models;
@@ -21,7 +20,7 @@ public class BatchOptions
     public BinaryContent ToBinaryContent()
     {
         using MemoryStream stream = new MemoryStream();
-        JsonHelpers.Serialize(stream, this, JsonHelpers.OpenAIJsonOptions);
+        JsonSerializer.Serialize(stream, this, JsonOptions.OpenAIJsonOptions);
 
         stream.Seek(0, SeekOrigin.Begin);
         var data = BinaryData.FromStream(stream);

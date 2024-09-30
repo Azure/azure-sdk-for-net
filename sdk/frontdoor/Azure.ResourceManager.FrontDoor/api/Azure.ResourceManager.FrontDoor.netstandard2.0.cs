@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.FrontDoor
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.RoutingRuleData> RoutingRules { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData> RulesEngines { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.FrontDoorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.FrontDoorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -67,6 +68,7 @@ namespace Azure.ResourceManager.FrontDoor
         public Azure.ResourceManager.FrontDoor.Models.NetworkExperimentResourceState? ResourceState { get { throw null; } }
         public System.Uri ScriptFileUri { get { throw null; } }
         public string Status { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.FrontDoorExperimentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorExperimentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorExperimentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.FrontDoorExperimentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorExperimentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -157,6 +159,7 @@ namespace Azure.ResourceManager.FrontDoor
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState? EnabledState { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.NetworkExperimentResourceState? ResourceState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -250,6 +253,7 @@ namespace Azure.ResourceManager.FrontDoor
         public FrontDoorRulesEngineData() { }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.RulesEngineRule> Rules { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -305,6 +309,7 @@ namespace Azure.ResourceManager.FrontDoor
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.WebApplicationCustomRule> Rules { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> SecurityPolicyLinks { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorSkuName? SkuName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -362,6 +367,7 @@ namespace Azure.ResourceManager.FrontDoor
         public Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState? SessionAffinityEnabledState { get { throw null; } set { } }
         public int? SessionAffinityTtlInSeconds { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier WebApplicationFirewallPolicyLinkId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.FrontendEndpointData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontendEndpointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontendEndpointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.FrontendEndpointData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontendEndpointData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -483,6 +489,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public BackendPoolsSettings() { }
         public Azure.ResourceManager.FrontDoor.Models.EnforceCertificateNameCheckEnabledState? EnforceCertificateNameCheck { get { throw null; } set { } }
         public int? SendRecvTimeoutInSeconds { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.BackendPoolsSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.BackendPoolsSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.BackendPoolsSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.BackendPoolsSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.BackendPoolsSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -520,6 +527,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public string SecretName { get { throw null; } set { } }
         public string SecretVersion { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VaultId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.CustomHttpsConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.CustomHttpsConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.CustomHttpsConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.CustomHttpsConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.CustomHttpsConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -587,6 +595,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorCacheConfiguration CacheConfiguration { get { throw null; } set { } }
         public string CustomForwardingPath { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorForwardingProtocol? ForwardingProtocol { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.ForwardingConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ForwardingConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ForwardingConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.ForwardingConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.ForwardingConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -608,6 +617,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public Azure.Core.AzureLocation? PrivateLinkLocation { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateLinkResourceId { get { throw null; } set { } }
         public int? Weight { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorBackend System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorBackend>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorBackend>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorBackend System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorBackend>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -621,6 +631,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public Azure.Core.ResourceIdentifier HealthProbeSettingsId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LoadBalancingSettingsId { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorBackendPool System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorBackendPool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorBackendPool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorBackendPool System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorBackendPool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -634,6 +645,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public Azure.ResourceManager.FrontDoor.Models.DynamicCompressionEnabled? DynamicCompression { get { throw null; } set { } }
         public string QueryParameters { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorQuery? QueryParameterStripDirective { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorCacheConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorCacheConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorCacheConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorCacheConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorCacheConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -697,6 +709,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         public FrontDoorEndpointPurgeContent(System.Collections.Generic.IEnumerable<string> contentPaths) { }
         public System.Collections.Generic.IList<string> ContentPaths { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointPurgeContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointPurgeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointPurgeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointPurgeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointPurgeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -728,6 +741,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public FrontDoorExperimentEndpointProperties() { }
         public string Endpoint { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentEndpointProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentEndpointProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentEndpointProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentEndpointProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentEndpointProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -740,6 +754,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState? EnabledState { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -820,6 +835,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public string Path { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorProtocol? Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeSettingsData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeSettingsData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeSettingsData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeSettingsData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeSettingsData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -833,6 +849,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
         public int? SampleSize { get { throw null; } set { } }
         public int? SuccessfulSamplesRequired { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorLoadBalancingSettingsData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorLoadBalancingSettingsData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorLoadBalancingSettingsData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorLoadBalancingSettingsData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorLoadBalancingSettingsData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -844,6 +861,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public FrontDoorNameAvailabilityContent(string name, Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceType ResourceType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -856,6 +874,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public string Message { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityState? NameAvailability { get { throw null; } }
         public string Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -885,6 +904,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public FrontDoorNetworkExperimentProfilePatch() { }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState? EnabledState { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorNetworkExperimentProfilePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorNetworkExperimentProfilePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorNetworkExperimentProfilePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorNetworkExperimentProfilePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorNetworkExperimentProfilePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -992,6 +1012,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1069,6 +1090,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public FrontDoorTimeSeriesDataPoint() { }
         public System.DateTimeOffset? DateTimeUtc { get { throw null; } set { } }
         public float? Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesDataPoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesDataPoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesDataPoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesDataPoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesDataPoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1085,6 +1107,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesDataPoint> TimeSeriesData { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType? TimeSeriesType { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1150,6 +1173,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         public FrontDoorValidateCustomDomainContent(string hostName) { }
         public string HostName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorValidateCustomDomainContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorValidateCustomDomainContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorValidateCustomDomainContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorValidateCustomDomainContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorValidateCustomDomainContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1162,6 +1186,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public bool? IsCustomDomainValidated { get { throw null; } }
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorValidateCustomDomainResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorValidateCustomDomainResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorValidateCustomDomainResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorValidateCustomDomainResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorValidateCustomDomainResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1172,6 +1197,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         public FrontDoorWebApplicationFirewallPolicyGroupByVariable(Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName variableName) { }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName VariableName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariable System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariable>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariable>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariable System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariable>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1219,6 +1245,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         public FrontDoorWebApplicationFirewallPolicyPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1259,6 +1286,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public Azure.ResourceManager.FrontDoor.Models.PolicyRequestBodyCheck? RequestBodyCheck { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.WebApplicationFirewallScrubbingRules> ScrubbingRules { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.WebApplicationFirewallScrubbingState? State { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicySettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicySettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicySettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicySettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicySettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1343,6 +1371,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public float? DeltaPercent { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.LatencyMetric System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.LatencyMetric>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.LatencyMetric>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.LatencyMetric System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.LatencyMetric>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1361,6 +1390,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public System.Uri ScorecardEndpointA { get { throw null; } }
         public System.Uri ScorecardEndpointB { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.LatencyScorecard System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.LatencyScorecard>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.LatencyScorecard>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.LatencyScorecard System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.LatencyScorecard>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1393,6 +1423,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public Azure.ResourceManager.FrontDoor.Models.ManagedRuleEnabledState? DefaultState { get { throw null; } }
         public string Description { get { throw null; } }
         public string RuleId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.ManagedRuleDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.ManagedRuleDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1423,6 +1454,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusionMatchVariable MatchVariable { get { throw null; } set { } }
         public string Selector { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusionSelectorMatchOperator SelectorMatchOperator { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1477,6 +1509,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public string Description { get { throw null; } }
         public string RuleGroupName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.FrontDoor.Models.ManagedRuleDefinition> Rules { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.ManagedRuleGroupDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleGroupDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleGroupDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.ManagedRuleGroupDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleGroupDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1489,6 +1522,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusion> Exclusions { get { throw null; } }
         public string RuleGroupName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.ManagedRuleOverride> Rules { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.ManagedRuleGroupOverride System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleGroupOverride>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleGroupOverride>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.ManagedRuleGroupOverride System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleGroupOverride>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1502,6 +1536,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public Azure.ResourceManager.FrontDoor.Models.ManagedRuleEnabledState? EnabledState { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusion> Exclusions { get { throw null; } }
         public string RuleId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.ManagedRuleOverride System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleOverride>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleOverride>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.ManagedRuleOverride System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleOverride>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1516,6 +1551,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetActionType? RuleSetAction { get { throw null; } set { } }
         public string RuleSetType { get { throw null; } set { } }
         public string RuleSetVersion { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.ManagedRuleSet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.ManagedRuleSet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleSet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1549,6 +1585,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public string RuleSetId { get { throw null; } }
         public string RuleSetType { get { throw null; } }
         public string RuleSetVersion { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1638,6 +1675,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public string Description { get { throw null; } set { } }
         public string Endpoint { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType? EndpointType { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.PreconfiguredEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.PreconfiguredEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.PreconfiguredEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.PreconfiguredEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.PreconfiguredEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1653,6 +1691,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public string CustomQueryString { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectProtocol? RedirectProtocol { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectType? RedirectType { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.RedirectConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.RedirectConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.RedirectConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.RedirectConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.RedirectConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1662,6 +1701,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public abstract partial class RouteConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.RouteConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.RouteConfiguration>
     {
         protected RouteConfiguration() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.RouteConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.RouteConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.RouteConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.RouteConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.RouteConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1679,6 +1719,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public Azure.ResourceManager.FrontDoor.Models.RouteConfiguration RouteConfiguration { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RulesEngineId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier WebApplicationFirewallPolicyLinkId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.RoutingRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.RoutingRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.RoutingRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.RoutingRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.RoutingRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1731,6 +1772,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderAction> RequestHeaderActions { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderAction> ResponseHeaderActions { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.RouteConfiguration RouteConfigurationOverride { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.RulesEngineAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.RulesEngineAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.RulesEngineAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.RulesEngineAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.RulesEngineAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1743,6 +1785,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType HeaderActionType { get { throw null; } set { } }
         public string HeaderName { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1777,6 +1820,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public Azure.ResourceManager.FrontDoor.Models.RulesEngineOperator RulesEngineOperator { get { throw null; } set { } }
         public string Selector { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform> Transforms { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1868,6 +1912,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior? MatchProcessingBehavior { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public int Priority { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.RulesEngineRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.RulesEngineRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.RulesEngineRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.RulesEngineRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.RulesEngineRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1963,6 +2008,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public int? RateLimitDurationInMinutes { get { throw null; } set { } }
         public int? RateLimitThreshold { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType RuleType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.WebApplicationCustomRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.WebApplicationCustomRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.WebApplicationCustomRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.WebApplicationCustomRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.WebApplicationCustomRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1976,6 +2022,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public string Selector { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryMatchOperator SelectorMatchOperator { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.ScrubbingRuleEntryState? State { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.WebApplicationFirewallScrubbingRules System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.WebApplicationFirewallScrubbingRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.WebApplicationFirewallScrubbingRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.WebApplicationFirewallScrubbingRules System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.WebApplicationFirewallScrubbingRules>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2009,6 +2056,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator Operator { get { throw null; } set { } }
         public string Selector { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType> Transforms { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

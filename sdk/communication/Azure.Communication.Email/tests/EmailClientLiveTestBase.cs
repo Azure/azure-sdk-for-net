@@ -46,11 +46,10 @@ namespace Azure.Communication.Email.Tests
             }
             else
             {
+                tokenCredential = new DefaultAzureCredential();
                 #region Snippet:Azure_Communication_Email_CreateEmailClientWithToken
                 //@@ string endpoint = "<endpoint_url>";
-                //@@ TokenCredential tokenCredential = new DefaultAzureCredential();
-                /*@@*/
-                tokenCredential = new DefaultAzureCredential();
+                //@@ var tokenCredential = new DefaultAzureCredential();
                 //@@ EmailClient emailClient = new EmailClient(new Uri(endpoint), tokenCredential);
                 #endregion Snippet:Azure_Communication_Email_CreateEmailClientWithToken
             }

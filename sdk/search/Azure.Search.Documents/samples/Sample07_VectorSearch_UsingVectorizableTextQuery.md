@@ -11,7 +11,7 @@ We will create an instace of `SearchIndex` and define `Hotel` fields.
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingVectorizableTextQuery
 string vectorSearchProfileName = "my-vector-profile";
 string vectorSearchHnswConfig = "my-hsnw-vector-config";
-string deploymentId = "text-embedding-ada-002";
+string deploymentName = "text-embedding-ada-002";
 int modelDimensions = 1536;
 
 string indexName = "hotel";
@@ -32,7 +32,7 @@ SearchIndex searchIndex = new(indexName)
         {
             new VectorSearchProfile(vectorSearchProfileName, vectorSearchHnswConfig)
             {
-                Vectorizer = "openai"
+                VectorizerName = "openai"
             }
         },
         Algorithms =
@@ -43,11 +43,11 @@ SearchIndex searchIndex = new(indexName)
         {
             new AzureOpenAIVectorizer("openai")
             {
-                AzureOpenAIParameters  = new AzureOpenAIParameters()
+                Parameters  = new AzureOpenAIVectorizerParameters()
                 {
                     ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
                     ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
-                    DeploymentId = deploymentId,
+                    DeploymentName = deploymentName,
                     ModelName = AzureOpenAIModelName.TextEmbeddingAda002
                 }
             }
@@ -98,7 +98,7 @@ public static ReadOnlyMemory<float> GetEmbeddings(string input)
     EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("text-embedding-ada-002");
 
     Embedding embedding = embeddingClient.GenerateEmbedding(input);
-    return embedding.Vector;
+    return embedding.ToFloats();
 }
 ```
 

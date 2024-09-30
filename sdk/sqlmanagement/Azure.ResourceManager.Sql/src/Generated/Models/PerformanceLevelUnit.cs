@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(PerformanceLevelUnit left, PerformanceLevelUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PerformanceLevelUnit"/> values are not the same. </summary>
         public static bool operator !=(PerformanceLevelUnit left, PerformanceLevelUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PerformanceLevelUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PerformanceLevelUnit"/>. </summary>
         public static implicit operator PerformanceLevelUnit(string value) => new PerformanceLevelUnit(value);
 
         /// <inheritdoc />

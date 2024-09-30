@@ -4,7 +4,8 @@
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
-using OpenAI.FineTuning;
+using System.Text.Json;
+using Azure.AI.OpenAI.Utility;
 
 namespace Azure.AI.OpenAI.FineTuning;
 
@@ -38,43 +39,67 @@ internal partial class AzureFineTuningClient : FineTuningClient
         return ClientResult.FromResponse(response);
     }
 
-    public override ClientResult GetJobs(string after, int? limit, RequestOptions options)
+    public override CollectionResult GetJobs(string after, int? limit, RequestOptions options)
     {
-        using PipelineMessage message = CreateGetJobsRequestMessage(after, limit, options);
-        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        return new AzureCollectionResult<FineTuningJob, FineTuningJobCollectionPageToken>(
+            Pipeline,
+            options,
+            continuation => CreateGetJobsRequestMessage(continuation?.After ?? after, continuation?.Limit ?? limit, options),
+            page => TryGetLastId(page, out var nextId) ? FineTuningJobCollectionPageToken.FromOptions(limit, nextId) : null,
+            page => ModelReaderWriter.Read<InternalListPaginatedFineTuningJobsResponse>(page.GetRawResponse().Content).Data);
     }
 
-    public override async Task<ClientResult> GetJobsAsync(string after, int? limit, RequestOptions options)
+    public override AsyncCollectionResult GetJobsAsync(string after, int? limit, RequestOptions options)
     {
-        using PipelineMessage message = CreateGetJobsRequestMessage(after, limit, options);
-        PipelineResponse response = await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
-        return ClientResult.FromResponse(response);
+        return new AzureAsyncCollectionResult<FineTuningJob, FineTuningJobCollectionPageToken>(
+            Pipeline,
+            options,
+            continuation => CreateGetJobsRequestMessage(continuation?.After ?? after, continuation?.Limit ?? limit, options),
+            page => TryGetLastId(page, out var nextId) ? FineTuningJobCollectionPageToken.FromOptions(limit, nextId) : null,
+            page => ModelReaderWriter.Read<InternalListPaginatedFineTuningJobsResponse>(page.GetRawResponse().Content).Data,
+            options?.CancellationToken ?? default);
     }
 
-    public override ClientResult GetJobEvents(string fineTuningJobId, string after, int? limit, RequestOptions options)
+    public override CollectionResult GetJobEvents(string fineTuningJobId, string after, int? limit, RequestOptions options)
     {
-        using PipelineMessage message = CreateGetJobEventsRequestMessage(fineTuningJobId, after, limit, options);
-        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        return new AzureCollectionResult<FineTuningJobEvent, FineTuningJobEventCollectionPageToken>(
+            Pipeline,
+            options,
+            continuation => CreateGetFineTuningEventsRequest(fineTuningJobId, continuation?.After ?? after, continuation?.Limit ?? limit, options),
+            page => TryGetLastId(page, out var nextId) ? FineTuningJobEventCollectionPageToken.FromOptions(fineTuningJobId, limit, nextId) : null,
+            page => ModelReaderWriter.Read<InternalListFineTuningJobEventsResponse>(page.GetRawResponse().Content).Data);
     }
 
-    public override async Task<ClientResult> GetJobEventsAsync(string fineTuningJobId, string after, int? limit, RequestOptions options)
+    public override AsyncCollectionResult GetJobEventsAsync(string fineTuningJobId, string after, int? limit, RequestOptions options)
     {
-        using PipelineMessage message = CreateGetJobEventsRequestMessage(fineTuningJobId, after, limit, options);
-        PipelineResponse response = await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
-        return ClientResult.FromResponse(response);
+        return new AzureAsyncCollectionResult<FineTuningJobEvent, FineTuningJobEventCollectionPageToken>(
+            Pipeline,
+            options,
+            continuation => CreateGetFineTuningEventsRequest(fineTuningJobId, continuation?.After ?? after, continuation?.Limit ?? limit, options),
+            page => TryGetLastId(page, out var nextId) ? FineTuningJobEventCollectionPageToken.FromOptions(fineTuningJobId, limit, nextId) : null,
+            page => ModelReaderWriter.Read<InternalListFineTuningJobEventsResponse>(page.GetRawResponse().Content).Data,
+            options?.CancellationToken ?? default);
     }
 
-    public override ClientResult GetJobCheckpoints(string fineTuningJobId, string after, int? limit, RequestOptions options)
+    public override CollectionResult GetJobCheckpoints(string fineTuningJobId, string after, int? limit, RequestOptions options)
     {
-        using PipelineMessage message = CreateGetJobCheckpointsRequestMessage(fineTuningJobId, after, limit, options);
-        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        return new AzureCollectionResult<InternalFineTuningJobCheckpoint, FineTuningJobCheckpointCollectionPageToken>(
+            Pipeline,
+            options,
+            continuation => CreateGetFineTuningJobCheckpointsRequest(fineTuningJobId, continuation?.After ?? after, continuation?.Limit ?? limit, options),
+            page => TryGetLastId(page, out var nextId) ? FineTuningJobCheckpointCollectionPageToken.FromOptions(fineTuningJobId, limit, nextId) : null,
+            page => ModelReaderWriter.Read<InternalListFineTuningJobCheckpointsResponse>(page.GetRawResponse().Content).Data);
     }
 
-    public override async Task<ClientResult> GetJobCheckpointsAsync(string fineTuningJobId, string after, int? limit, RequestOptions options)
+    public override AsyncCollectionResult GetJobCheckpointsAsync(string fineTuningJobId, string after, int? limit, RequestOptions options)
     {
-        using PipelineMessage message = CreateGetJobCheckpointsRequestMessage(fineTuningJobId, after, limit, options);
-        PipelineResponse response = await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
-        return ClientResult.FromResponse(response);
+        return new AzureAsyncCollectionResult<InternalFineTuningJobCheckpoint, FineTuningJobCheckpointCollectionPageToken>(
+            Pipeline,
+            options,
+            continuation => CreateGetFineTuningJobCheckpointsRequest(fineTuningJobId, continuation?.After ?? after, continuation?.Limit ?? limit, options),
+            page => TryGetLastId(page, out var nextId) ? FineTuningJobCheckpointCollectionPageToken.FromOptions(fineTuningJobId, limit, nextId) : null,
+            page => ModelReaderWriter.Read<InternalListFineTuningJobCheckpointsResponse>(page.GetRawResponse().Content).Data,
+            options?.CancellationToken ?? default);
     }
 
     public override ClientResult CancelJob(string fineTuningJobId, RequestOptions options)
@@ -114,6 +139,14 @@ internal partial class AzureFineTuningClient : FineTuningClient
             .WithOptions(options)
             .Build();
 
+    private PipelineMessage CreateGetJobRequestMessage(string jobId, RequestOptions options)
+        => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
+            .WithMethod("GET")
+            .WithPath("fine_tuning", "jobs", jobId)
+            .WithAccept("application/json")
+            .WithOptions(options)
+            .Build();
+
     private PipelineMessage CreateGetJobsRequestMessage(string after, int? limit, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("GET")
@@ -124,28 +157,20 @@ internal partial class AzureFineTuningClient : FineTuningClient
             .WithOptions(options)
             .Build();
 
-    private PipelineMessage CreateGetJobRequestMessage(string jobId, RequestOptions options)
+    private new PipelineMessage CreateGetFineTuningEventsRequest(string fineTuningJobId, string after, int? limit, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("GET")
-            .WithPath("fine_tuning", "jobs", jobId)
-            .WithAccept("application/json")
-            .WithOptions(options)
-            .Build();
-
-    private PipelineMessage CreateGetJobEventsRequestMessage(string jobId, string after, int? limit, RequestOptions options)
-        => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
-            .WithMethod("GET")
-            .WithPath("fine_tuning", "jobs", jobId, "events")
+            .WithPath("fine_tuning", "jobs", fineTuningJobId, "events")
             .WithOptionalQueryParameter("after", after)
             .WithOptionalQueryParameter("limit", limit)
             .WithAccept("application/json")
             .WithOptions(options)
             .Build();
 
-    private PipelineMessage CreateGetJobCheckpointsRequestMessage(string jobId, string after, int? limit, RequestOptions options)
+    private new PipelineMessage CreateGetFineTuningJobCheckpointsRequest(string fineTuningJobId, string after, int? limit, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("GET")
-            .WithPath("fine_tuning", "jobs", jobId, "checkpoints")
+            .WithPath("fine_tuning", "jobs", fineTuningJobId, "checkpoints")
             .WithOptionalQueryParameter("after", after)
             .WithOptionalQueryParameter("limit", limit)
             .WithAccept("application/json")
@@ -168,4 +193,26 @@ internal partial class AzureFineTuningClient : FineTuningClient
             .WithClassifier(DeleteJobClassifier)
             .WithOptions(options)
             .Build();
+
+    private static bool TryGetLastId(ClientResult previous, out string lastId)
+    {
+        Argument.AssertNotNull(previous, nameof(previous));
+
+        using JsonDocument json = JsonDocument.Parse(previous.GetRawResponse().Content);
+        if (!json.RootElement.GetProperty("has_more"u8).GetBoolean())
+        {
+            lastId = null;
+            return false;
+        }
+
+        if (json?.RootElement.TryGetProperty("data", out JsonElement dataElement) == true
+            && dataElement.EnumerateArray().LastOrDefault().TryGetProperty("id", out JsonElement idElement) == true)
+        {
+            lastId = idElement.GetString();
+            return true;
+        }
+
+        lastId = null;
+        return false;
+    }
 }

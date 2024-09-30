@@ -13,20 +13,20 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class AIServicesVisionVectorizer : VectorSearchVectorizer
     {
         /// <summary> Initializes a new instance of <see cref="AIServicesVisionVectorizer"/>. </summary>
-        /// <param name="name"> The name to associate with this particular vectorization method. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public AIServicesVisionVectorizer(string name) : base(name)
+        /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorizerName"/> is null. </exception>
+        public AIServicesVisionVectorizer(string vectorizerName) : base(vectorizerName)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(vectorizerName, nameof(vectorizerName));
 
             Kind = VectorSearchVectorizerKind.AIServicesVision;
         }
 
         /// <summary> Initializes a new instance of <see cref="AIServicesVisionVectorizer"/>. </summary>
-        /// <param name="name"> The name to associate with this particular vectorization method. </param>
+        /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
         /// <param name="aiServicesVisionParameters"> Contains the parameters specific to AI Services Vision embedding vectorization. </param>
-        internal AIServicesVisionVectorizer(string name, VectorSearchVectorizerKind kind, AIServicesVisionParameters aiServicesVisionParameters) : base(name, kind)
+        internal AIServicesVisionVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, AIServicesVisionParameters aiServicesVisionParameters) : base(vectorizerName, kind)
         {
             AIServicesVisionParameters = aiServicesVisionParameters;
             Kind = kind;

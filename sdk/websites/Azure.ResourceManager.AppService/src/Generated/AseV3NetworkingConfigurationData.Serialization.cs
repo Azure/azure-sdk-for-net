@@ -122,6 +122,21 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("allowNewPrivateEndpointConnections"u8);
                 writer.WriteBooleanValue(AllowNewPrivateEndpointConnections.Value);
             }
+            if (Optional.IsDefined(IsFtpEnabled))
+            {
+                writer.WritePropertyName("ftpEnabled"u8);
+                writer.WriteBooleanValue(IsFtpEnabled.Value);
+            }
+            if (Optional.IsDefined(IsRemoteDebugEnabled))
+            {
+                writer.WritePropertyName("remoteDebugEnabled"u8);
+                writer.WriteBooleanValue(IsRemoteDebugEnabled.Value);
+            }
+            if (Optional.IsDefined(InboundIPAddressOverride))
+            {
+                writer.WritePropertyName("inboundIpAddressOverride"u8);
+                writer.WriteStringValue(InboundIPAddressOverride);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -171,6 +186,9 @@ namespace Azure.ResourceManager.AppService
             IReadOnlyList<IPAddress> externalInboundIPAddresses = default;
             IReadOnlyList<IPAddress> internalInboundIPAddresses = default;
             bool? allowNewPrivateEndpointConnections = default;
+            bool? ftpEnabled = default;
+            bool? remoteDebugEnabled = default;
+            string inboundIPAddressOverride = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -306,6 +324,29 @@ namespace Azure.ResourceManager.AppService
                             allowNewPrivateEndpointConnections = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("ftpEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ftpEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("remoteDebugEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            remoteDebugEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("inboundIpAddressOverride"u8))
+                        {
+                            inboundIPAddressOverride = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -325,6 +366,9 @@ namespace Azure.ResourceManager.AppService
                 externalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 internalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 allowNewPrivateEndpointConnections,
+                ftpEnabled,
+                remoteDebugEnabled,
+                inboundIPAddressOverride,
                 kind,
                 serializedAdditionalRawData);
         }
@@ -543,6 +587,61 @@ namespace Azure.ResourceManager.AppService
                     builder.Append("    allowNewPrivateEndpointConnections: ");
                     var boolValue = AllowNewPrivateEndpointConnections.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsFtpEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    ftpEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsFtpEnabled))
+                {
+                    builder.Append("    ftpEnabled: ");
+                    var boolValue = IsFtpEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRemoteDebugEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    remoteDebugEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsRemoteDebugEnabled))
+                {
+                    builder.Append("    remoteDebugEnabled: ");
+                    var boolValue = IsRemoteDebugEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InboundIPAddressOverride), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    inboundIpAddressOverride: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InboundIPAddressOverride))
+                {
+                    builder.Append("    inboundIpAddressOverride: ");
+                    if (InboundIPAddressOverride.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{InboundIPAddressOverride}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{InboundIPAddressOverride}'");
+                    }
                 }
             }
 

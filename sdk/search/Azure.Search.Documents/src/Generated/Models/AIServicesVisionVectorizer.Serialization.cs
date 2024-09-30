@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(AIServicesVisionParameters);
             }
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            writer.WriteStringValue(VectorizerName);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();

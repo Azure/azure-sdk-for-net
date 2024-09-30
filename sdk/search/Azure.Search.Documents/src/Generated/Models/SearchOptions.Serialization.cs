@@ -92,33 +92,6 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("scoringProfile"u8);
                 writer.WriteStringValue(ScoringProfile);
             }
-            if (Optional.IsDefined(SemanticQuery))
-            {
-                writer.WritePropertyName("semanticQuery"u8);
-                writer.WriteStringValue(SemanticQuery);
-            }
-            if (Optional.IsDefined(SemanticConfigurationName))
-            {
-                writer.WritePropertyName("semanticConfiguration"u8);
-                writer.WriteStringValue(SemanticConfigurationName);
-            }
-            if (Optional.IsDefined(SemanticErrorMode))
-            {
-                writer.WritePropertyName("semanticErrorHandling"u8);
-                writer.WriteStringValue(SemanticErrorMode.Value.ToString());
-            }
-            if (Optional.IsDefined(SemanticMaxWaitInMilliseconds))
-            {
-                if (SemanticMaxWaitInMilliseconds != null)
-                {
-                    writer.WritePropertyName("semanticMaxWaitInMilliseconds"u8);
-                    writer.WriteNumberValue(SemanticMaxWaitInMilliseconds.Value);
-                }
-                else
-                {
-                    writer.WriteNull("semanticMaxWaitInMilliseconds");
-                }
-            }
             if (Optional.IsDefined(Debug))
             {
                 writer.WritePropertyName("debug"u8);
@@ -149,11 +122,6 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("speller"u8);
                 writer.WriteStringValue(QuerySpeller.Value.ToString());
             }
-            if (Optional.IsDefined(QueryAnswerRaw))
-            {
-                writer.WritePropertyName("answers"u8);
-                writer.WriteStringValue(QueryAnswerRaw);
-            }
             if (Optional.IsDefined(SelectRaw))
             {
                 writer.WritePropertyName("select"u8);
@@ -168,6 +136,38 @@ namespace Azure.Search.Documents
             {
                 writer.WritePropertyName("top"u8);
                 writer.WriteNumberValue(Size.Value);
+            }
+            if (Optional.IsDefined(SemanticConfigurationName))
+            {
+                writer.WritePropertyName("semanticConfiguration"u8);
+                writer.WriteStringValue(SemanticConfigurationName);
+            }
+            if (Optional.IsDefined(SemanticErrorMode))
+            {
+                writer.WritePropertyName("semanticErrorHandling"u8);
+                writer.WriteStringValue(SemanticErrorMode.Value.ToString());
+            }
+            if (Optional.IsDefined(SemanticMaxWaitInMilliseconds))
+            {
+                if (SemanticMaxWaitInMilliseconds != null)
+                {
+                    writer.WritePropertyName("semanticMaxWaitInMilliseconds"u8);
+                    writer.WriteNumberValue(SemanticMaxWaitInMilliseconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("semanticMaxWaitInMilliseconds");
+                }
+            }
+            if (Optional.IsDefined(SemanticQuery))
+            {
+                writer.WritePropertyName("semanticQuery"u8);
+                writer.WriteStringValue(SemanticQuery);
+            }
+            if (Optional.IsDefined(QueryAnswerRaw))
+            {
+                writer.WritePropertyName("answers"u8);
+                writer.WriteStringValue(QueryAnswerRaw);
             }
             if (Optional.IsDefined(QueryCaptionRaw))
             {
@@ -221,20 +221,20 @@ namespace Azure.Search.Documents
             string sessionId = default;
             IList<string> scoringParameters = default;
             string scoringProfile = default;
-            string semanticQuery = default;
-            string semanticConfiguration = default;
-            SemanticErrorMode? semanticErrorHandling = default;
-            int? semanticMaxWaitInMilliseconds = default;
             QueryDebugMode? debug = default;
             string search = default;
             string searchFields = default;
             SearchMode? searchMode = default;
             QueryLanguage? queryLanguage = default;
             QuerySpellerType? speller = default;
-            string answers = default;
             string select = default;
             int? skip = default;
             int? top = default;
+            string semanticConfiguration = default;
+            SemanticErrorMode? semanticErrorHandling = default;
+            int? semanticMaxWaitInMilliseconds = default;
+            string semanticQuery = default;
+            string answers = default;
             string captions = default;
             string semanticFields = default;
             IList<VectorQuery> vectorQueries = default;
@@ -341,35 +341,6 @@ namespace Azure.Search.Documents
                     scoringProfile = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("semanticQuery"u8))
-                {
-                    semanticQuery = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("semanticConfiguration"u8))
-                {
-                    semanticConfiguration = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("semanticErrorHandling"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    semanticErrorHandling = new SemanticErrorMode(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("semanticMaxWaitInMilliseconds"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        semanticMaxWaitInMilliseconds = null;
-                        continue;
-                    }
-                    semanticMaxWaitInMilliseconds = property.Value.GetInt32();
-                    continue;
-                }
                 if (property.NameEquals("debug"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -416,11 +387,6 @@ namespace Azure.Search.Documents
                     speller = new QuerySpellerType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("answers"u8))
-                {
-                    answers = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("select"u8))
                 {
                     select = property.Value.GetString();
@@ -442,6 +408,40 @@ namespace Azure.Search.Documents
                         continue;
                     }
                     top = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("semanticConfiguration"u8))
+                {
+                    semanticConfiguration = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("semanticErrorHandling"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    semanticErrorHandling = new SemanticErrorMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("semanticMaxWaitInMilliseconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        semanticMaxWaitInMilliseconds = null;
+                        continue;
+                    }
+                    semanticMaxWaitInMilliseconds = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("semanticQuery"u8))
+                {
+                    semanticQuery = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("answers"u8))
+                {
+                    answers = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("captions"u8))
@@ -501,20 +501,20 @@ namespace Azure.Search.Documents
                 sessionId,
                 scoringParameters ?? new ChangeTrackingList<string>(),
                 scoringProfile,
-                semanticQuery,
-                semanticConfiguration,
-                semanticErrorHandling,
-                semanticMaxWaitInMilliseconds,
                 debug,
                 search,
                 searchFields,
                 searchMode,
                 queryLanguage,
                 speller,
-                answers,
                 select,
                 skip,
                 top,
+                semanticConfiguration,
+                semanticErrorHandling,
+                semanticMaxWaitInMilliseconds,
+                semanticQuery,
+                answers,
                 captions,
                 semanticFields,
                 vectorQueries ?? new ChangeTrackingList<VectorQuery>(),

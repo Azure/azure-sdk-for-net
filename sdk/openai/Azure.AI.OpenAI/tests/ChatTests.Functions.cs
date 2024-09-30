@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -6,18 +9,17 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Chat;
-using Azure.Core.TestFramework;
 using OpenAI.Chat;
+using OpenAI.TestFramework;
 
 namespace Azure.AI.OpenAI.Tests;
 
 public partial class ChatTests
 {
     [Obsolete]
-    private static readonly ChatFunction FUNCTION_TEMPERATURE = new(
-        "get_future_temperature",
-        "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
-        BinaryData.FromString(
+    private static readonly ChatFunction FUNCTION_TEMPERATURE = new("get_future_temperature") {
+        FunctionDescription = "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
+        FunctionParameters = BinaryData.FromString(
             """
             {
                 "type": "object",
@@ -32,7 +34,7 @@ public partial class ChatTests
                     }
                 }
             }
-            """));
+            """)};
 
     public enum FunctionCallTestType
     {
@@ -65,7 +67,7 @@ public partial class ChatTests
                 _ => throw new NotImplementedException(),
             },
             Functions = { FUNCTION_TEMPERATURE },
-            MaxTokens = 512,
+            MaxOutputTokenCount = 512,
         };
 
         ClientResult<ChatCompletion> response = await client.CompleteChatAsync(messages, requestOptions);
@@ -75,7 +77,7 @@ public partial class ChatTests
         Assert.IsNotNull(completion);
         Assert.That(completion.Id, Is.Not.Null.Or.Empty);
 
-        ContentFilterResultForPrompt filter = completion.GetContentFilterResultForPrompt();
+        RequestContentFilterResult filter = completion.GetRequestContentFilterResult();
         Assert.IsNotNull(filter);
         Assert.That(filter.SelfHarm, Is.Not.Null);
         Assert.That(filter.SelfHarm.Filtered, Is.False);
@@ -113,7 +115,8 @@ public partial class ChatTests
         Assert.That(completion.FunctionCall, Is.Not.Null);
         Assert.That(completion.FunctionCall.FunctionName, Is.EqualTo(FUNCTION_TEMPERATURE.FunctionName));
         Assert.That(completion.FunctionCall.FunctionArguments, Is.Not.Null);
-        var parsedArgs = JsonSerializer.Deserialize<TemperatureFunctionRequestArguments>(completion.FunctionCall.FunctionArguments, SERIALIZER_OPTIONS);
+        var parsedArgs = JsonSerializer.Deserialize<TemperatureFunctionRequestArguments>(completion.FunctionCall.FunctionArguments, SERIALIZER_OPTIONS)!;
+        Assert.That(parsedArgs, Is.Not.Null);
         Assert.That(parsedArgs.LocationName, Is.Not.Null.Or.Empty);
         Assert.That(parsedArgs.Date, Is.Not.Null.Or.Empty);
 
@@ -128,14 +131,14 @@ public partial class ChatTests
         requestOptions = new()
         {
             Functions = { FUNCTION_TEMPERATURE },
-            MaxTokens = requestOptions.MaxTokens,
+            MaxOutputTokenCount = 512,
         };
 
         completion = await client.CompleteChatAsync(messages, requestOptions);
         Assert.That(completion, Is.Not.Null);
         Assert.That(completion.FinishReason, Is.EqualTo(ChatFinishReason.Stop));
 
-        ContentFilterResultForResponse responseFilter = completion.GetContentFilterResultForResponse();
+        ResponseContentFilterResult responseFilter = completion.GetResponseContentFilterResult();
         Assert.That(responseFilter, Is.Not.Null);
         Assert.That(responseFilter.Hate, Is.Not.Null);
         Assert.That(responseFilter.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
@@ -157,7 +160,7 @@ public partial class ChatTests
         StringBuilder content = new();
         bool foundPromptFilter = false;
         bool foundResponseFilter = false;
-        string functionName = null;
+        string? functionName = null;
         StringBuilder functionArgs = new();
 
         ChatClient client = GetTestClient();
@@ -177,7 +180,7 @@ public partial class ChatTests
                 _ => throw new NotImplementedException(),
             },
             Functions = { FUNCTION_TEMPERATURE },
-            MaxTokens = 512,
+            MaxOutputTokenCount = 512,
         };
 
         Action<StreamingChatCompletionUpdate> validateUpdate = (update) =>
@@ -202,7 +205,7 @@ public partial class ChatTests
                 content.Append(part.Text);
             }
 
-            var promptFilter = update.GetContentFilterResultForPrompt();
+            var promptFilter = update.GetRequestContentFilterResult();
             if (!foundPromptFilter && promptFilter?.Hate != null)
             {
                 Assert.That(promptFilter.Hate.Filtered, Is.False);
@@ -210,7 +213,7 @@ public partial class ChatTests
                 foundPromptFilter = true;
             }
 
-            var responseFilter = update.GetContentFilterResultForResponse();
+            var responseFilter = update.GetResponseContentFilterResult();
             if (!foundResponseFilter && responseFilter?.Hate != null)
             {
                 Assert.That(responseFilter.Hate.Filtered, Is.False);
@@ -219,9 +222,7 @@ public partial class ChatTests
             }
         };
 
-        AsyncResultCollection<StreamingChatCompletionUpdate> response = SyncOrAsync(client,
-            c => c.CompleteChatStreaming(messages, requestOptions),
-            c => c.CompleteChatStreamingAsync(messages, requestOptions));
+        AsyncCollectionResult<StreamingChatCompletionUpdate> response = client.CompleteChatStreamingAsync(messages, requestOptions);
         Assert.That(response, Is.Not.Null);
 
         await foreach (StreamingChatCompletionUpdate update in response)
@@ -234,11 +235,12 @@ public partial class ChatTests
         if (functionCallType != FunctionCallTestType.None)
         {
             Assert.That(functionName, Is.Not.Null);
-            var parsedArgs = JsonSerializer.Deserialize<TemperatureFunctionRequestArguments>(functionArgs.ToString(), SERIALIZER_OPTIONS);
+            var parsedArgs = JsonSerializer.Deserialize<TemperatureFunctionRequestArguments>(functionArgs.ToString(), SERIALIZER_OPTIONS)!;
+            Assert.That(parsedArgs, Is.Not.Null);
             Assert.That(parsedArgs.LocationName, Is.Not.Null.Or.Empty);
             Assert.That(parsedArgs.Date, Is.Not.Null.Or.Empty);
 
-            // TODO FIXME: There isn't a clear or obvious way to pass the assitant function message back to the service, and the constructors that allow
+            // TODO FIXME: There isn't a clear or obvious way to pass the assistant function message back to the service, and the constructors that allow
             //             us manual control are internal. So let's use JSON.
             var converted = ModelReaderWriter.Read<ChatFunctionCall>(BinaryData.FromString(JsonSerializer.Serialize(new { name = functionName, arguments = functionArgs.ToString() })));
             messages.Add(new AssistantChatMessage(converted));
@@ -251,7 +253,7 @@ public partial class ChatTests
             requestOptions = new()
             {
                 Functions = { FUNCTION_TEMPERATURE },
-                MaxTokens = requestOptions.MaxTokens,
+                MaxOutputTokenCount = requestOptions.MaxOutputTokenCount,
             };
 
             content.Clear();
@@ -260,9 +262,7 @@ public partial class ChatTests
             functionName = null;
             functionArgs.Clear();
 
-            response = SyncOrAsync(client,
-                c => c.CompleteChatStreaming(messages, requestOptions),
-                c => c.CompleteChatStreamingAsync(messages, requestOptions));
+            response = client.CompleteChatStreamingAsync(messages, requestOptions);
             Assert.That(response, Is.Not.Null);
 
             await foreach (StreamingChatCompletionUpdate update in response)

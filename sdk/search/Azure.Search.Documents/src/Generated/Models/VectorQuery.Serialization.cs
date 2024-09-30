@@ -47,6 +47,11 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteObjectValue(Threshold);
             }
+            if (Optional.IsDefined(FilterOverride))
+            {
+                writer.WritePropertyName("filterOverride"u8);
+                writer.WriteStringValue(FilterOverride);
+            }
             writer.WriteEndObject();
         }
 

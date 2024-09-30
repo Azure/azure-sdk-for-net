@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(StorageAccountAccessType left, StorageAccountAccessType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageAccountAccessType"/> values are not the same. </summary>
         public static bool operator !=(StorageAccountAccessType left, StorageAccountAccessType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageAccountAccessType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageAccountAccessType"/>. </summary>
         public static implicit operator StorageAccountAccessType(string value) => new StorageAccountAccessType(value);
 
         /// <inheritdoc />

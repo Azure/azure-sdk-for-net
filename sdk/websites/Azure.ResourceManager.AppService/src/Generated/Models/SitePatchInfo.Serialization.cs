@@ -141,6 +141,11 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("lastModifiedTimeUtc"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
+            if (Optional.IsDefined(DnsConfiguration))
+            {
+                writer.WritePropertyName("dnsConfiguration"u8);
+                writer.WriteObjectValue(DnsConfiguration, options);
+            }
             if (Optional.IsDefined(SiteConfig))
             {
                 writer.WritePropertyName("siteConfig"u8);
@@ -344,6 +349,7 @@ namespace Azure.ResourceManager.AppService.Models
             bool? isXenon = default;
             bool? hyperV = default;
             DateTimeOffset? lastModifiedTimeUtc = default;
+            SiteDnsConfig dnsConfiguration = default;
             SiteConfigProperties siteConfig = default;
             IReadOnlyList<string> trafficManagerHostNames = default;
             bool? scmSiteAlsoStopped = default;
@@ -545,6 +551,15 @@ namespace Azure.ResourceManager.AppService.Models
                                 continue;
                             }
                             lastModifiedTimeUtc = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("dnsConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dnsConfiguration = SiteDnsConfig.DeserializeSiteDnsConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("siteConfig"u8))
@@ -800,6 +815,7 @@ namespace Azure.ResourceManager.AppService.Models
                 isXenon,
                 hyperV,
                 lastModifiedTimeUtc,
+                dnsConfiguration,
                 siteConfig,
                 trafficManagerHostNames ?? new ChangeTrackingList<string>(),
                 scmSiteAlsoStopped,
@@ -1199,6 +1215,21 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("    lastModifiedTimeUtc: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LastModifiedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    dnsConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DnsConfiguration))
+                {
+                    builder.Append("    dnsConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DnsConfiguration, options, 4, false, "    dnsConfiguration: ");
                 }
             }
 

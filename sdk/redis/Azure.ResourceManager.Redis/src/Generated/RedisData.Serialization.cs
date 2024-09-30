@@ -25,13 +25,22 @@ namespace Azure.ResourceManager.Redis
 
         void IJsonModel<RedisData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RedisData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RedisData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -46,39 +55,6 @@ namespace Azure.ResourceManager.Redis
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -137,6 +113,11 @@ namespace Azure.ResourceManager.Redis
             {
                 writer.WritePropertyName("updateChannel"u8);
                 writer.WriteStringValue(UpdateChannel.Value.ToString());
+            }
+            if (Optional.IsDefined(IsAccessKeyAuthenticationDisabled))
+            {
+                writer.WritePropertyName("disableAccessKeyAuthentication"u8);
+                writer.WriteBooleanValue(IsAccessKeyAuthenticationDisabled.Value);
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
@@ -213,22 +194,6 @@ namespace Azure.ResourceManager.Redis
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         RedisData IJsonModel<RedisData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -269,6 +234,7 @@ namespace Azure.ResourceManager.Redis
             RedisTlsVersion? minimumTlsVersion = default;
             RedisPublicNetworkAccess? publicNetworkAccess = default;
             UpdateChannel? updateChannel = default;
+            bool? disableAccessKeyAuthentication = default;
             RedisSku sku = default;
             ResourceIdentifier subnetId = default;
             IPAddress staticIP = default;
@@ -450,6 +416,15 @@ namespace Azure.ResourceManager.Redis
                             updateChannel = new UpdateChannel(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("disableAccessKeyAuthentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            disableAccessKeyAuthentication = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("sku"u8))
                         {
                             sku = RedisSku.DeserializeRedisSku(property0.Value, options);
@@ -585,6 +560,7 @@ namespace Azure.ResourceManager.Redis
                 minimumTlsVersion,
                 publicNetworkAccess,
                 updateChannel,
+                disableAccessKeyAuthentication,
                 sku,
                 subnetId,
                 staticIP,
@@ -943,6 +919,22 @@ namespace Azure.ResourceManager.Redis
                 {
                     builder.Append("    updateChannel: ");
                     builder.AppendLine($"'{UpdateChannel.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAccessKeyAuthenticationDisabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    disableAccessKeyAuthentication: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAccessKeyAuthenticationDisabled))
+                {
+                    builder.Append("    disableAccessKeyAuthentication: ");
+                    var boolValue = IsAccessKeyAuthenticationDisabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 

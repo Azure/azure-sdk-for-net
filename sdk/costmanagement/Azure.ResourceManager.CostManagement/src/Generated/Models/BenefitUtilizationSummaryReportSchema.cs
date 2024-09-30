@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(BenefitUtilizationSummaryReportSchema left, BenefitUtilizationSummaryReportSchema right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BenefitUtilizationSummaryReportSchema"/> values are not the same. </summary>
         public static bool operator !=(BenefitUtilizationSummaryReportSchema left, BenefitUtilizationSummaryReportSchema right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BenefitUtilizationSummaryReportSchema"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BenefitUtilizationSummaryReportSchema"/>. </summary>
         public static implicit operator BenefitUtilizationSummaryReportSchema(string value) => new BenefitUtilizationSummaryReportSchema(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public static bool operator ==(DataBoxValidationCategory left, DataBoxValidationCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxValidationCategory"/> values are not the same. </summary>
         public static bool operator !=(DataBoxValidationCategory left, DataBoxValidationCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataBoxValidationCategory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxValidationCategory"/>. </summary>
         public static implicit operator DataBoxValidationCategory(string value) => new DataBoxValidationCategory(value);
 
         /// <inheritdoc />

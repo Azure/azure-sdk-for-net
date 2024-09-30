@@ -85,24 +85,34 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Fully Qualified Arm id for network security perimeter profile access rule. </summary>
+        [WirePath("fullyQualifiedArmId")]
         public string FullyQualifiedArmId { get; set; }
         /// <summary> Name for nsp access rule. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> nsp access rule type. </summary>
+        [WirePath("type")]
         public string NetworkSecurityPerimeterProfileAccessRuleType { get; set; }
         /// <summary> NSP access rule direction. </summary>
+        [WirePath("properties.direction")]
         public NetworkSecurityPerimeterProfileAccessRuleDirection? Direction { get; set; }
         /// <summary> Address prefixes. </summary>
+        [WirePath("properties.addressPrefixes")]
         public IList<string> AddressPrefixes { get; }
         /// <summary> List of subscriptions. </summary>
+        [WirePath("properties.subscriptions")]
         public IList<WritableSubResource> Subscriptions { get; }
         /// <summary> Network security perimeters. </summary>
+        [WirePath("properties.networkSecurityPerimeters")]
         public IList<NetworkSecurityPerimeterInfo> NetworkSecurityPerimeters { get; }
         /// <summary> Fully qualified domain names. </summary>
+        [WirePath("properties.fullyQualifiedDomainNames")]
         public IList<string> FullyQualifiedDomainNames { get; }
         /// <summary> List of email addresses. </summary>
+        [WirePath("properties.emailAddresses")]
         public IList<string> EmailAddresses { get; }
         /// <summary> List of phone numbers. </summary>
+        [WirePath("properties.phoneNumbers")]
         public IList<string> PhoneNumbers { get; }
     }
 }

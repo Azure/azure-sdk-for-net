@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -150,6 +151,112 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SendingMetrics), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sendingMetrics: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SendingMetrics))
+                {
+                    builder.Append("  sendingMetrics: ");
+                    builder.AppendLine($"'{SendingMetrics.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReasonForMetricsStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  reasonForMetricsStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReasonForMetricsStatus))
+                {
+                    builder.Append("  reasonForMetricsStatus: ");
+                    if (ReasonForMetricsStatus.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ReasonForMetricsStatus}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ReasonForMetricsStatus}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SendingLogs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sendingLogs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SendingLogs))
+                {
+                    builder.Append("  sendingLogs: ");
+                    builder.AppendLine($"'{SendingLogs.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReasonForLogsStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  reasonForLogsStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReasonForLogsStatus))
+                {
+                    builder.Append("  reasonForLogsStatus: ");
+                    if (ReasonForLogsStatus.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ReasonForLogsStatus}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ReasonForLogsStatus}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<NewRelicResourceMonitorResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicResourceMonitorResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -158,6 +265,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NewRelicResourceMonitorResult)} does not support writing '{options.Format}' format.");
             }

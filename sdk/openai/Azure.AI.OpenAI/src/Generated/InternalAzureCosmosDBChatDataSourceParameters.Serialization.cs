@@ -21,37 +21,32 @@ namespace Azure.AI.OpenAI.Chat
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TopNDocuments))
+            if (SerializedAdditionalRawData?.ContainsKey("top_n_documents") != true && Optional.IsDefined(TopNDocuments))
             {
                 writer.WritePropertyName("top_n_documents"u8);
                 writer.WriteNumberValue(TopNDocuments.Value);
             }
-            if (Optional.IsDefined(InScope))
+            if (SerializedAdditionalRawData?.ContainsKey("in_scope") != true && Optional.IsDefined(InScope))
             {
                 writer.WritePropertyName("in_scope"u8);
                 writer.WriteBooleanValue(InScope.Value);
             }
-            if (Optional.IsDefined(Strictness))
+            if (SerializedAdditionalRawData?.ContainsKey("strictness") != true && Optional.IsDefined(Strictness))
             {
                 writer.WritePropertyName("strictness"u8);
                 writer.WriteNumberValue(Strictness.Value);
             }
-            if (Optional.IsDefined(RoleInformation))
-            {
-                writer.WritePropertyName("role_information"u8);
-                writer.WriteStringValue(RoleInformation);
-            }
-            if (Optional.IsDefined(MaxSearchQueries))
+            if (SerializedAdditionalRawData?.ContainsKey("max_search_queries") != true && Optional.IsDefined(MaxSearchQueries))
             {
                 writer.WritePropertyName("max_search_queries"u8);
                 writer.WriteNumberValue(MaxSearchQueries.Value);
             }
-            if (Optional.IsDefined(AllowPartialResult))
+            if (SerializedAdditionalRawData?.ContainsKey("allow_partial_result") != true && Optional.IsDefined(AllowPartialResult))
             {
                 writer.WritePropertyName("allow_partial_result"u8);
                 writer.WriteBooleanValue(AllowPartialResult.Value);
             }
-            if (Optional.IsCollectionDefined(_internalIncludeContexts))
+            if (SerializedAdditionalRawData?.ContainsKey("include_contexts") != true && Optional.IsCollectionDefined(_internalIncludeContexts))
             {
                 writer.WritePropertyName("include_contexts"u8);
                 writer.WriteStartArray();
@@ -61,22 +56,44 @@ namespace Azure.AI.OpenAI.Chat
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("container_name"u8);
-            writer.WriteStringValue(ContainerName);
-            writer.WritePropertyName("database_name"u8);
-            writer.WriteStringValue(DatabaseName);
-            writer.WritePropertyName("embedding_dependency"u8);
-            writer.WriteObjectValue<DataSourceVectorizer>(VectorizationSource, options);
-            writer.WritePropertyName("index_name"u8);
-            writer.WriteStringValue(IndexName);
-            writer.WritePropertyName("authentication"u8);
-            writer.WriteObjectValue<DataSourceAuthentication>(Authentication, options);
-            writer.WritePropertyName("fields_mapping"u8);
-            writer.WriteObjectValue<DataSourceFieldMappings>(FieldMappings, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (SerializedAdditionalRawData?.ContainsKey("container_name") != true)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("container_name"u8);
+                writer.WriteStringValue(ContainerName);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("database_name") != true)
+            {
+                writer.WritePropertyName("database_name"u8);
+                writer.WriteStringValue(DatabaseName);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("embedding_dependency") != true)
+            {
+                writer.WritePropertyName("embedding_dependency"u8);
+                writer.WriteObjectValue<DataSourceVectorizer>(VectorizationSource, options);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("index_name") != true)
+            {
+                writer.WritePropertyName("index_name"u8);
+                writer.WriteStringValue(IndexName);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("authentication") != true)
+            {
+                writer.WritePropertyName("authentication"u8);
+                writer.WriteObjectValue<DataSourceAuthentication>(Authentication, options);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("fields_mapping") != true)
+            {
+                writer.WritePropertyName("fields_mapping"u8);
+                writer.WriteObjectValue<DataSourceFieldMappings>(FieldMappings, options);
+            }
+            if (SerializedAdditionalRawData != null)
+            {
+                foreach (var item in SerializedAdditionalRawData)
                 {
+                    if (ModelSerializationExtensions.IsSentinelValue(item.Value))
+                    {
+                        continue;
+                    }
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
@@ -114,7 +131,6 @@ namespace Azure.AI.OpenAI.Chat
             int? topNDocuments = default;
             bool? inScope = default;
             int? strictness = default;
-            string roleInformation = default;
             int? maxSearchQueries = default;
             bool? allowPartialResult = default;
             IList<string> includeContexts = default;
@@ -153,11 +169,6 @@ namespace Azure.AI.OpenAI.Chat
                         continue;
                     }
                     strictness = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("role_information"u8))
-                {
-                    roleInformation = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("max_search_queries"u8))
@@ -224,6 +235,7 @@ namespace Azure.AI.OpenAI.Chat
                 }
                 if (options.Format != "W")
                 {
+                    rawDataDictionary ??= new Dictionary<string, BinaryData>();
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
@@ -232,7 +244,6 @@ namespace Azure.AI.OpenAI.Chat
                 topNDocuments,
                 inScope,
                 strictness,
-                roleInformation,
                 maxSearchQueries,
                 allowPartialResult,
                 includeContexts ?? new ChangeTrackingList<string>(),

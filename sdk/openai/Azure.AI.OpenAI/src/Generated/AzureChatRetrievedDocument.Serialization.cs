@@ -21,56 +21,69 @@ namespace Azure.AI.OpenAI.Chat
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("content"u8);
-            writer.WriteStringValue(Content);
-            if (Optional.IsDefined(Title))
+            if (SerializedAdditionalRawData?.ContainsKey("content") != true)
+            {
+                writer.WritePropertyName("content"u8);
+                writer.WriteStringValue(Content);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("title") != true && Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Url))
+            if (SerializedAdditionalRawData?.ContainsKey("url") != true && Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url);
             }
-            if (Optional.IsDefined(Filepath))
+            if (SerializedAdditionalRawData?.ContainsKey("filepath") != true && Optional.IsDefined(Filepath))
             {
                 writer.WritePropertyName("filepath"u8);
                 writer.WriteStringValue(Filepath);
             }
-            if (Optional.IsDefined(ChunkId))
+            if (SerializedAdditionalRawData?.ContainsKey("chunk_id") != true && Optional.IsDefined(ChunkId))
             {
                 writer.WritePropertyName("chunk_id"u8);
                 writer.WriteStringValue(ChunkId);
             }
-            writer.WritePropertyName("search_queries"u8);
-            writer.WriteStartArray();
-            foreach (var item in SearchQueries)
-            {
-                writer.WriteStringValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("data_source_index"u8);
-            writer.WriteNumberValue(DataSourceIndex);
-            if (Optional.IsDefined(OriginalSearchScore))
-            {
-                writer.WritePropertyName("original_search_score"u8);
-                writer.WriteNumberValue(OriginalSearchScore.Value);
-            }
-            if (Optional.IsDefined(RerankScore))
+            if (SerializedAdditionalRawData?.ContainsKey("rerank_score") != true && Optional.IsDefined(RerankScore))
             {
                 writer.WritePropertyName("rerank_score"u8);
                 writer.WriteNumberValue(RerankScore.Value);
             }
-            if (Optional.IsDefined(FilterReason))
+            if (SerializedAdditionalRawData?.ContainsKey("search_queries") != true)
+            {
+                writer.WritePropertyName("search_queries"u8);
+                writer.WriteStartArray();
+                foreach (var item in SearchQueries)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("data_source_index") != true)
+            {
+                writer.WritePropertyName("data_source_index"u8);
+                writer.WriteNumberValue(DataSourceIndex);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("original_search_score") != true && Optional.IsDefined(OriginalSearchScore))
+            {
+                writer.WritePropertyName("original_search_score"u8);
+                writer.WriteNumberValue(OriginalSearchScore.Value);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("filter_reason") != true && Optional.IsDefined(FilterReason))
             {
                 writer.WritePropertyName("filter_reason"u8);
-                writer.WriteStringValue(FilterReason);
+                writer.WriteStringValue(FilterReason.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (SerializedAdditionalRawData != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in SerializedAdditionalRawData)
                 {
+                    if (ModelSerializationExtensions.IsSentinelValue(item.Value))
+                    {
+                        continue;
+                    }
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
@@ -110,11 +123,11 @@ namespace Azure.AI.OpenAI.Chat
             string url = default;
             string filepath = default;
             string chunkId = default;
+            double? rerankScore = default;
             IReadOnlyList<string> searchQueries = default;
             int dataSourceIndex = default;
             double? originalSearchScore = default;
-            double? rerankScore = default;
-            string filterReason = default;
+            AzureChatRetrievedDocumentFilterReason? filterReason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,6 +157,15 @@ namespace Azure.AI.OpenAI.Chat
                     chunkId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("rerank_score"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rerankScore = property.Value.GetDouble();
+                    continue;
+                }
                 if (property.NameEquals("search_queries"u8))
                 {
                     List<string> array = new List<string>();
@@ -168,22 +190,18 @@ namespace Azure.AI.OpenAI.Chat
                     originalSearchScore = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("rerank_score"u8))
+                if (property.NameEquals("filter_reason"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rerankScore = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("filter_reason"u8))
-                {
-                    filterReason = property.Value.GetString();
+                    filterReason = new AzureChatRetrievedDocumentFilterReason(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
+                    rawDataDictionary ??= new Dictionary<string, BinaryData>();
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
@@ -194,10 +212,10 @@ namespace Azure.AI.OpenAI.Chat
                 url,
                 filepath,
                 chunkId,
+                rerankScore,
                 searchQueries,
                 dataSourceIndex,
                 originalSearchScore,
-                rerankScore,
                 filterReason,
                 serializedAdditionalRawData);
         }

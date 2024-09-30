@@ -33,7 +33,7 @@ namespace Azure.Search.Documents
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public SkillsetsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2024-05-01-preview")
+        public SkillsetsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2024-09-01-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -429,7 +429,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateResetSkillsRequest(string skillsetName, ResetSkillsOptions skillNames)
+        internal HttpMessage CreateResetSkillsRequest(string skillsetName, ResetSkillsOptions resetSkillsOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -444,28 +444,28 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(skillNames);
+            content.JsonWriter.WriteObjectValue(resetSkillsOptions);
             request.Content = content;
             return message;
         }
 
         /// <summary> Reset an existing skillset in a search service. </summary>
         /// <param name="skillsetName"> The name of the skillset to reset. </param>
-        /// <param name="skillNames"> The names of skills to reset. </param>
+        /// <param name="resetSkillsOptions"> The names of skills to reset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="skillNames"/> is null. </exception>
-        public async Task<Response> ResetSkillsAsync(string skillsetName, ResetSkillsOptions skillNames, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="resetSkillsOptions"/> is null. </exception>
+        public async Task<Response> ResetSkillsAsync(string skillsetName, ResetSkillsOptions resetSkillsOptions, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
             {
                 throw new ArgumentNullException(nameof(skillsetName));
             }
-            if (skillNames == null)
+            if (resetSkillsOptions == null)
             {
-                throw new ArgumentNullException(nameof(skillNames));
+                throw new ArgumentNullException(nameof(resetSkillsOptions));
             }
 
-            using var message = CreateResetSkillsRequest(skillsetName, skillNames);
+            using var message = CreateResetSkillsRequest(skillsetName, resetSkillsOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -478,21 +478,21 @@ namespace Azure.Search.Documents
 
         /// <summary> Reset an existing skillset in a search service. </summary>
         /// <param name="skillsetName"> The name of the skillset to reset. </param>
-        /// <param name="skillNames"> The names of skills to reset. </param>
+        /// <param name="resetSkillsOptions"> The names of skills to reset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="skillNames"/> is null. </exception>
-        public Response ResetSkills(string skillsetName, ResetSkillsOptions skillNames, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> or <paramref name="resetSkillsOptions"/> is null. </exception>
+        public Response ResetSkills(string skillsetName, ResetSkillsOptions resetSkillsOptions, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
             {
                 throw new ArgumentNullException(nameof(skillsetName));
             }
-            if (skillNames == null)
+            if (resetSkillsOptions == null)
             {
-                throw new ArgumentNullException(nameof(skillNames));
+                throw new ArgumentNullException(nameof(resetSkillsOptions));
             }
 
-            using var message = CreateResetSkillsRequest(skillsetName, skillNames);
+            using var message = CreateResetSkillsRequest(skillsetName, resetSkillsOptions);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

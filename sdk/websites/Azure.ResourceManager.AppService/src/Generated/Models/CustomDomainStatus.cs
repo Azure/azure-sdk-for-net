@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         private const string ReadyValue = "Ready";
         private const string FailedValue = "Failed";
         private const string DeletingValue = "Deleting";
+        private const string UnhealthyValue = "Unhealthy";
 
         /// <summary> RetrievingValidationToken. </summary>
         public static CustomDomainStatus RetrievingValidationToken { get; } = new CustomDomainStatus(RetrievingValidationTokenValue);
@@ -41,11 +42,13 @@ namespace Azure.ResourceManager.AppService.Models
         public static CustomDomainStatus Failed { get; } = new CustomDomainStatus(FailedValue);
         /// <summary> Deleting. </summary>
         public static CustomDomainStatus Deleting { get; } = new CustomDomainStatus(DeletingValue);
+        /// <summary> Unhealthy. </summary>
+        public static CustomDomainStatus Unhealthy { get; } = new CustomDomainStatus(UnhealthyValue);
         /// <summary> Determines if two <see cref="CustomDomainStatus"/> values are the same. </summary>
         public static bool operator ==(CustomDomainStatus left, CustomDomainStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CustomDomainStatus"/> values are not the same. </summary>
         public static bool operator !=(CustomDomainStatus left, CustomDomainStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CustomDomainStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomDomainStatus"/>. </summary>
         public static implicit operator CustomDomainStatus(string value) => new CustomDomainStatus(value);
 
         /// <inheritdoc />

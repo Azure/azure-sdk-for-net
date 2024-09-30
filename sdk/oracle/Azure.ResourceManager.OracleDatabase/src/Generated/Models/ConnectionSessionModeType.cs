@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(ConnectionSessionModeType left, ConnectionSessionModeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectionSessionModeType"/> values are not the same. </summary>
         public static bool operator !=(ConnectionSessionModeType left, ConnectionSessionModeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConnectionSessionModeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionSessionModeType"/>. </summary>
         public static implicit operator ConnectionSessionModeType(string value) => new ConnectionSessionModeType(value);
 
         /// <inheritdoc />

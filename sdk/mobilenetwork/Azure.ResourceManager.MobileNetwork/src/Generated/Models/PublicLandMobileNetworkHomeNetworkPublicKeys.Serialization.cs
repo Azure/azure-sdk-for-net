@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -127,6 +129,67 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new PublicLandMobileNetworkHomeNetworkPublicKeys(profileA ?? new ChangeTrackingList<HomeNetworkPublicKey>(), profileB ?? new ChangeTrackingList<HomeNetworkPublicKey>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProfileA), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  profileA: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ProfileA))
+                {
+                    if (ProfileA.Any())
+                    {
+                        builder.Append("  profileA: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ProfileA)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  profileA: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProfileB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  profileB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ProfileB))
+                {
+                    if (ProfileB.Any())
+                    {
+                        builder.Append("  profileB: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ProfileB)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  profileB: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PublicLandMobileNetworkHomeNetworkPublicKeys>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PublicLandMobileNetworkHomeNetworkPublicKeys>)this).GetFormatFromOptions(options) : options.Format;
@@ -135,6 +198,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PublicLandMobileNetworkHomeNetworkPublicKeys)} does not support writing '{options.Format}' format.");
             }

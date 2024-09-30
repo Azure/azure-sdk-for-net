@@ -195,10 +195,10 @@ namespace Azure.Storage.DataMovement
     {
         protected StorageResourceItemProperties() { }
         public StorageResourceItemProperties(long? resourceLength, Azure.ETag? eTag, System.DateTimeOffset? lastModifiedTime, System.Collections.Generic.Dictionary<string, object> properties) { }
-        public Azure.ETag? ETag { get { throw null; } }
-        public System.DateTimeOffset? LastModifiedTime { get { throw null; } }
-        public System.Collections.Generic.Dictionary<string, object> RawProperties { get { throw null; } }
-        public long? ResourceLength { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedTime { get { throw null; } set { } }
+        public System.Collections.Generic.Dictionary<string, object> RawProperties { get { throw null; } set { } }
+        public long? ResourceLength { get { throw null; } set { } }
     }
     public abstract partial class StorageResourceProvider
     {
@@ -224,8 +224,9 @@ namespace Azure.Storage.DataMovement
     }
     public partial class TransferCheckpointStoreOptions
     {
-        public TransferCheckpointStoreOptions(string localCheckpointerPath) { }
-        public string CheckpointerPath { get { throw null; } }
+        internal TransferCheckpointStoreOptions() { }
+        public static Azure.Storage.DataMovement.TransferCheckpointStoreOptions Disabled() { throw null; }
+        public static Azure.Storage.DataMovement.TransferCheckpointStoreOptions Local(string localCheckpointerPath) { throw null; }
     }
     public partial class TransferItemCompletedEventArgs : Azure.Storage.DataMovement.DataTransferEventArgs
     {

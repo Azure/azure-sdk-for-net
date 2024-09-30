@@ -30,8 +30,9 @@ namespace Azure.Search.Documents.Models
         /// Please note <see cref="VectorThreshold"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchScoreThreshold"/> and <see cref="VectorSimilarityThreshold"/>.
         /// </param>
+        /// <param name="filterOverride"> The OData filter expression to apply to this specific vector query. If no filter expression is defined at the vector level, the expression defined in the top level filter parameter is used instead. </param>
         /// <param name="url"> The URL of an image to be vectorized to perform a vector search query. </param>
-        internal VectorizableImageUrlQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, Uri url) : base(kind, kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, threshold)
+        internal VectorizableImageUrlQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, Uri url) : base(kind, kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, threshold, filterOverride)
         {
             Url = url;
             Kind = kind;

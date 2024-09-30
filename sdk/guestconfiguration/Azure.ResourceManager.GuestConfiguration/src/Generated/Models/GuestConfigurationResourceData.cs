@@ -70,14 +70,19 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> ARM resource id of the guest configuration assignment. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> Name of the guest configuration assignment. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Region where the VM is located. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> The type of the resource. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; }
         /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
+        [WirePath("systemData")]
         public SystemData SystemData { get; }
     }
 }

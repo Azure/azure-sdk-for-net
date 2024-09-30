@@ -94,6 +94,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> CreationData to be used to specify the source agent pool resource ID to create this snapshot. </summary>
         internal ContainerServiceCreationData CreationData { get; set; }
         /// <summary> This is the ARM ID of the source object to be used to create the target object. </summary>
+        [WirePath("properties.creationData.sourceResourceId")]
         public ResourceIdentifier CreationDataSourceResourceId
         {
             get => CreationData is null ? default : CreationData.SourceResourceId;
@@ -106,18 +107,25 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> The type of a snapshot. The default is NodePool. </summary>
+        [WirePath("properties.snapshotType")]
         public SnapshotType? SnapshotType { get; set; }
         /// <summary> The version of Kubernetes. </summary>
+        [WirePath("properties.kubernetesVersion")]
         public string KubernetesVersion { get; }
         /// <summary> The version of node image. </summary>
+        [WirePath("properties.nodeImageVersion")]
         public string NodeImageVersion { get; }
         /// <summary> The operating system type. The default is Linux. </summary>
+        [WirePath("properties.osType")]
         public ContainerServiceOSType? OSType { get; }
         /// <summary> Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows. </summary>
+        [WirePath("properties.osSku")]
         public ContainerServiceOSSku? OSSku { get; }
         /// <summary> The size of the VM. </summary>
+        [WirePath("properties.vmSize")]
         public string VmSize { get; }
         /// <summary> Whether to use a FIPS-enabled OS. </summary>
+        [WirePath("properties.enableFIPS")]
         public bool? EnableFips { get; }
     }
 }

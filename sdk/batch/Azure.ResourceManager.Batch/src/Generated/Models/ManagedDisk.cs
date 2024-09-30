@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> The ManagedDisk. </summary>
-    internal partial class ManagedDisk
+    public partial class ManagedDisk
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,14 +52,29 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedDisk"/>. </summary>
         /// <param name="storageAccountType"> The storage account type for use in creating data disks or OS disk. </param>
+        /// <param name="securityProfile"> Specifies the security profile settings for the managed disk. **Note**: It can only be set for Confidential VMs and is required when using Confidential VMs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDisk(BatchStorageAccountType? storageAccountType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedDisk(BatchStorageAccountType? storageAccountType, VmDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageAccountType = storageAccountType;
+            SecurityProfile = securityProfile;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The storage account type for use in creating data disks or OS disk. </summary>
         public BatchStorageAccountType? StorageAccountType { get; set; }
+        /// <summary> Specifies the security profile settings for the managed disk. **Note**: It can only be set for Confidential VMs and is required when using Confidential VMs. </summary>
+        internal VmDiskSecurityProfile SecurityProfile { get; set; }
+        /// <summary> Specifies the EncryptionType of the managed disk. It is set to VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob. **Note**: It can be set for only Confidential VMs and required when using Confidential VMs. </summary>
+        public BatchSecurityEncryptionType? SecurityEncryptionType
+        {
+            get => SecurityProfile is null ? default : SecurityProfile.SecurityEncryptionType;
+            set
+            {
+                if (SecurityProfile is null)
+                    SecurityProfile = new VmDiskSecurityProfile();
+                SecurityProfile.SecurityEncryptionType = value;
+            }
+        }
     }
 }

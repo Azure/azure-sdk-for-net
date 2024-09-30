@@ -1,14 +1,33 @@
 # Release History
 
-## 12.0.0-beta.5 (Unreleased)
+## 12.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+- Changed `FromContainer(string containerUri, BlobStorageResourceContainerOptions options = default)` to `FromContainer(Uri containerUri, BlobStorageResourceContainerOptions options = default)`
+- Changed `FromBlob(string blobUri, BlobStorageResourceOptions options = default)` to `FromBlob(Uri blobUri, BlobStorageResourceOptions options = default)`
 
 ### Bugs Fixed
+- Fixed bug where using OAuth would not preserve source properties to destination properties.
 
 ### Other Changes
+
+## 12.0.0-beta.5 (2024-07-16)
+
+### Features Added
+- Added ability to preserve Blob Metadata and properties on Blob to Blob copy.
+- Added ability to preserve Blob Type on Blob Container to Blob Container copy.
+
+### Breaking Changes
+- Changed `BlobStorageResourceOptions` members to be wrapped by `DataTransferProperty` type to allow preserving. The following members are affected:
+    - `BlobStorageResourceOptions.ContentType`
+    - `BlobStorageResourceOptions.ContentLanguage`
+    - `BlobStorageResourceOptions.ContentEncoding`
+    - `BlobStorageResourceOptions.ContentDisposition`
+    - `BlobStorageResourceOptions.CacheControl`
+    - `BlobStorageResourceOptions.Metadata`
+- Changed `BlobStorageResourceContainerOptions.BlobType` from `Azure.Storage.Blobs.Models.BlobType` to `DataTransferProperty<Azure.Storage.Blobs.Models.BlobType>`
 
 ## 12.0.0-beta.4 (2023-12-05)
 

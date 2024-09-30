@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public static bool operator ==(DataReplicationTestFailoverState left, DataReplicationTestFailoverState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataReplicationTestFailoverState"/> values are not the same. </summary>
         public static bool operator !=(DataReplicationTestFailoverState left, DataReplicationTestFailoverState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataReplicationTestFailoverState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataReplicationTestFailoverState"/>. </summary>
         public static implicit operator DataReplicationTestFailoverState(string value) => new DataReplicationTestFailoverState(value);
 
         /// <inheritdoc />

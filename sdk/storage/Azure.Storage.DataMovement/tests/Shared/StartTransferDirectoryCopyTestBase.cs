@@ -122,6 +122,7 @@ namespace Azure.Storage.DataMovement.Tests
             long? objectLength = null,
             string objectName = null,
             Stream contents = default,
+            TransferPropertiesTestType propertiesType = default,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -952,5 +953,91 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
         }
         #endregion
+
+        #region Properties
+        private async Task CopyRemoteObjects_VerifyProperties(
+            TSourceContainerClient sourceContainer,
+            TDestinationContainerClient destinationContainer,
+            TransferPropertiesTestType propertiesType)
+        {
+            // Arrange
+            int size = Constants.KB;
+            string sourcePrefix = "sourceFolder";
+            string destPrefix = "destFolder";
+            await CreateDirectoryInSourceAsync(sourceContainer, sourcePrefix);
+            string itemName1 = string.Join("/", sourcePrefix, GetNewObjectName());
+            string itemName2 = string.Join("/", sourcePrefix, GetNewObjectName());
+            await CreateObjectInSourceAsync(sourceContainer, size, itemName1, propertiesType: propertiesType);
+            await CreateObjectInSourceAsync(sourceContainer, size, itemName2, propertiesType: propertiesType);
+
+            string subDirName = string.Join("/", sourcePrefix, "bar");
+            await CreateDirectoryInSourceAsync(sourceContainer, subDirName);
+            string itemName3 = string.Join("/", subDirName, GetNewObjectName());
+            await CreateObjectInSourceAsync(sourceContainer, size, itemName3, propertiesType: propertiesType);
+
+            string subDirName2 = string.Join("/", sourcePrefix, "pik");
+            await CreateDirectoryInSourceAsync(sourceContainer, subDirName2);
+            string itemName4 = string.Join("/", subDirName2, GetNewObjectName());
+            await CreateObjectInSourceAsync(sourceContainer, size, itemName4, propertiesType: propertiesType);
+
+            await CreateDirectoryInDestinationAsync(destinationContainer, destPrefix);
+
+            // Create storage resource containers
+            StorageResourceContainer sourceResource =
+                GetSourceStorageResourceContainer(sourceContainer, sourcePrefix);
+            StorageResourceContainer destinationResource =
+                GetDestinationStorageResourceContainer(destinationContainer, destPrefix, propertiesType);
+
+            // Create Transfer Manager
+            DataTransferOptions options = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options).ConfigureAwait(false);
+
+            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                tokenSource.Token);
+
+            // Verify completion
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            await testEventsRaised.AssertContainerCompletedCheck(4);
+
+            // Assert
+            await VerifyResultsAsync(
+                sourceContainer,
+                sourcePrefix,
+                destinationContainer,
+                destPrefix,
+                propertiesType);
+        }
+
+        [Test]
+        [TestCase((int) TransferPropertiesTestType.Default)]
+        [TestCase((int) TransferPropertiesTestType.Preserve)]
+        [TestCase((int) TransferPropertiesTestType.NoPreserve)]
+        [TestCase((int) TransferPropertiesTestType.NewProperties)]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task CopyRemoteObjects_VerifyProperties(int propertiesType)
+        {
+            // Arrange
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
+
+            // Act
+            await CopyRemoteObjects_VerifyProperties(
+                source.Container,
+                destination.Container,
+                (TransferPropertiesTestType) propertiesType).ConfigureAwait(false);
+        }
+        #endregion Properties
     }
 }
