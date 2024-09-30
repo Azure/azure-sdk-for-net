@@ -4,33 +4,12 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
+    [CodeGenSerialization(nameof(Iso), "iso")]
     public partial class AddressCountryRegion
     {
-        internal static AddressCountryRegion DeserializeAddressCountryRegion(JsonElement element)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string iso = default;
-            string name = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("iso"u8))
-                {
-                    iso = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new AddressCountryRegion(iso, name);
-        }
     }
 }
