@@ -11,13 +11,18 @@ using Azure.Provisioning.Resources;
 using Azure.Provisioning.Roles;
 using Azure.Provisioning.ServiceBus;
 using Azure.Provisioning.Storage;
+using System.Collections.Generic;
+using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CloudMachine;
 
 public class CloudMachineInfrastructure : Infrastructure
 {
+    private List<Provisionable> _resources = new();
     private readonly string _cmid;
-    private UserAssignedIdentity _identity;
+
+    // Sharing this as internal for now. TODO: Utilize a resolver or something else more idiomatic to get the identity for add-ons.
+    internal UserAssignedIdentity _identity;
     private StorageAccount _storage;
     private BlobService _blobs;
     private BlobContainer _container;
@@ -29,6 +34,15 @@ public class CloudMachineInfrastructure : Infrastructure
     private ServiceBusSubscription _serviceBusSubscription_app;
     private SystemTopic _eventGridTopic_Blobs;
     private SystemTopicEventSubscription _systemTopicEventSubscription;
+
+    /// <summary>
+    /// Adds a provisionable construct to this Infrastructure.
+    /// </summary>
+    /// <param name="resource"></param>
+    public void AddResource(NamedProvisioningConstruct resource)
+    {
+        _resources.Add(resource);
+    }
 
     /// <summary>
     /// The common principalId parameter.
@@ -50,6 +64,10 @@ public class CloudMachineInfrastructure : Infrastructure
         _cmid = cloudMachineId;
         _identity = new("cm_identity");
         _identity.Name = _cmid;
+
+        // Add the identity's id as an output for add-ons to consume.
+        Add(new ProvisioningOutput($"cm_managed_identity_id", typeof(string)) { Value = _identity.Id });
+
         ManagedServiceIdentity managedServiceIdentity = new()
         {
             ManagedServiceIdentityType = ManagedServiceIdentityType.UserAssigned,
@@ -221,6 +239,12 @@ public class CloudMachineInfrastructure : Infrastructure
         // Placeholders for now.
         Add(new ProvisioningOutput($"storage_name", typeof(string)) { Value = _storage.Name });
         Add(new ProvisioningOutput($"servicebus_name", typeof(string)) { Value = _serviceBusNamespace.Name });
+
+        // Add any add-on resources to the infrastructure.
+        foreach (Provisionable resource in _resources)
+        {
+            Add(resource);
+        }
 
         return base.Build(context);
     }

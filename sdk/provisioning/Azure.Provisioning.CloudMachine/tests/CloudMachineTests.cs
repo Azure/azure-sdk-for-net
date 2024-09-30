@@ -17,10 +17,13 @@ public class CloudMachineTests
     public void Configure(string[] args)
     {
         if (CloudMachineInfrastructure.Configure(args, (cmi) => {
+            cmi.AddKeyVault();
         })) return;
 
         CloudMachineClient cm = new();
         Console.WriteLine(cm.Id);
+
+        var kvClient = cm.GetKeyVaultSecretClient();
     }
 
     [Ignore("no recordings yet")]
