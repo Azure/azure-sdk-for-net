@@ -26,7 +26,6 @@
 		<PackageReference Include="Microsoft.Azure.WebJobs" />
 		<PackageReference Include="Microsoft.IdentityModel.Tokens" />
 		<PackageReference Include="Microsoft.Extensions.Azure" />
-		<PackageReference Include="System.IdentityModel.Tokens.Jwt" />
 	</ItemGroup>
 
 	<ItemGroup>
