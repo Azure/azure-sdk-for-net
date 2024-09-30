@@ -20,7 +20,7 @@ public class LoggingOptionsTests
         services.AddHttpClient();
 
         // see https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.dependencyinjection.httpclientloggingservicecollectionextensions.addextendedhttpclientlogging?view=net-8.0
-        services.AddExtendedHttpClientLogging();
+        //services.AddExtendedHttpClientLogging();
 
         services.AddOptions<RequestResponseClientOptions>();
 
