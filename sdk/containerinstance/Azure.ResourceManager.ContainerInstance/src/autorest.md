@@ -110,5 +110,5 @@ rename-mapping:
   SecurityContextDefinition: ContainerSecurityContextDefinition
   SecurityContextCapabilitiesDefinition: ContainerSecurityContextCapabilitiesDefinition
   SecurityContextDefinition.privileged: IsPrivileged
-  ContainerGroupProperties.properties.osType: OperatingSystemType
+  ContainerGroupProperties.properties.osType: ContainerGroupOsType
 ```

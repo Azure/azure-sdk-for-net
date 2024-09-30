@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteObjectValue(IPAddress, options);
             }
-            if (Optional.IsDefined(OperatingSystemType))
+            if (Optional.IsDefined(ContainerGroupOSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OperatingSystemType.Value.ToString());
+                writer.WriteStringValue(ContainerGroupOSType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Volumes))
             {

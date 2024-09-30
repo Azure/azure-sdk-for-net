@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         ///
         /// </param>
         /// <param name="ipAddress"> The IP address type of the container group. </param>
-        /// <param name="operatingSystemType"> The operating system type required by the containers in the container group. </param>
+        /// <param name="containerGroupOSType"> The operating system type required by the containers in the container group. </param>
         /// <param name="volumes"> The list of volumes that can be mounted by containers in this container group. </param>
         /// <param name="instanceView"> The instance view of the container group. Only valid in response. </param>
         /// <param name="diagnosticsLogAnalytics"> The diagnostic information for a container group. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="isCreatedFromStandbyPool"> The flag indicating whether the container group is created by standby pool. </param>
         /// <param name="zones"> The zones for the container group. </param>
         /// <returns> A new <see cref="ContainerInstance.ContainerGroupData"/> instance for mocking. </returns>
-        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string provisioningState = null, IEnumerable<ContainerInstanceContainer> containers = null, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = null, ContainerGroupRestartPolicy? restartPolicy = null, ContainerGroupIPAddress ipAddress = null, ContainerInstanceOperatingSystemType? operatingSystemType = null, IEnumerable<ContainerVolume> volumes = null, ContainerGroupInstanceView instanceView = null, ContainerGroupLogAnalytics diagnosticsLogAnalytics = null, IEnumerable<ContainerGroupSubnetId> subnetIds = null, ContainerGroupDnsConfiguration dnsConfig = null, ContainerGroupSku? sku = null, ContainerGroupEncryptionProperties encryptionProperties = null, IEnumerable<InitContainerDefinitionContent> initContainers = null, IEnumerable<DeploymentExtensionSpec> extensions = null, string confidentialComputeCcePolicy = null, ContainerGroupPriority? priority = null, ContainerGroupProfileReferenceDefinition containerGroupProfile = null, StandbyPoolProfileDefinition standbyPoolProfile = null, bool? isCreatedFromStandbyPool = null, IEnumerable<string> zones = null)
+        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string provisioningState = null, IEnumerable<ContainerInstanceContainer> containers = null, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = null, ContainerGroupRestartPolicy? restartPolicy = null, ContainerGroupIPAddress ipAddress = null, ContainerInstanceOperatingSystemType? containerGroupOSType = null, IEnumerable<ContainerVolume> volumes = null, ContainerGroupInstanceView instanceView = null, ContainerGroupLogAnalytics diagnosticsLogAnalytics = null, IEnumerable<ContainerGroupSubnetId> subnetIds = null, ContainerGroupDnsConfiguration dnsConfig = null, ContainerGroupSku? sku = null, ContainerGroupEncryptionProperties encryptionProperties = null, IEnumerable<InitContainerDefinitionContent> initContainers = null, IEnumerable<DeploymentExtensionSpec> extensions = null, string confidentialComputeCcePolicy = null, ContainerGroupPriority? priority = null, ContainerGroupProfileReferenceDefinition containerGroupProfile = null, StandbyPoolProfileDefinition standbyPoolProfile = null, bool? isCreatedFromStandbyPool = null, IEnumerable<string> zones = null)
         {
             tags ??= new Dictionary<string, string>();
             containers ??= new List<ContainerInstanceContainer>();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 imageRegistryCredentials?.ToList(),
                 restartPolicy,
                 ipAddress,
-                operatingSystemType,
+                containerGroupOSType,
                 volumes?.ToList(),
                 instanceView,
                 diagnosticsLogAnalytics != null ? new ContainerGroupDiagnostics(diagnosticsLogAnalytics, serializedAdditionalRawData: null) : null,
