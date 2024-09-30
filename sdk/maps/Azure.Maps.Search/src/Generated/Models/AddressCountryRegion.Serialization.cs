@@ -11,30 +11,6 @@ namespace Azure.Maps.Search.Models
 {
     public partial class AddressCountryRegion
     {
-        internal static AddressCountryRegion DeserializeAddressCountryRegion(JsonElement element)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string iso = default;
-            string name = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("ISO"u8))
-                {
-                    iso = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new AddressCountryRegion(iso, name);
-        }
-
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AddressCountryRegion FromResponse(Response response)
