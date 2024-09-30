@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Nginx.Models
         public static bool operator ==(ActivationState left, ActivationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ActivationState"/> values are not the same. </summary>
         public static bool operator !=(ActivationState left, ActivationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ActivationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ActivationState"/>. </summary>
         public static implicit operator ActivationState(string value) => new ActivationState(value);
 
         /// <inheritdoc />

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Nginx.Models
 
         void IJsonModel<WebApplicationFirewallStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebApplicationFirewallStatus)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(AttackSignaturesPackage))
             {
                 writer.WritePropertyName("attackSignaturesPackage"u8);
@@ -61,7 +69,6 @@ namespace Azure.ResourceManager.Nginx.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WebApplicationFirewallStatus IJsonModel<WebApplicationFirewallStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

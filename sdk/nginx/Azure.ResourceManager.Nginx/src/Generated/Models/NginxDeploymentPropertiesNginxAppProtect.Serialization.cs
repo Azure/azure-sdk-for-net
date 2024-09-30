@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Nginx.Models
 
         void IJsonModel<NginxDeploymentPropertiesNginxAppProtect>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentPropertiesNginxAppProtect>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NginxDeploymentPropertiesNginxAppProtect)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("webApplicationFirewallSettings"u8);
             writer.WriteObjectValue(WebApplicationFirewallSettings, options);
             if (options.Format != "W" && Optional.IsDefined(WebApplicationFirewallStatus))
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.Nginx.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NginxDeploymentPropertiesNginxAppProtect IJsonModel<NginxDeploymentPropertiesNginxAppProtect>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
