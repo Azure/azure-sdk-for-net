@@ -212,11 +212,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var credential = EventHubsTestEnvironment.Instance.Credential;
 
             var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            var eventHubName = "fake";
+            var eventHubName = eventHubScope.EventHubName;
             var consumerGroup = "$Default";
 
             var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
-            var blobContainerName = "fake";
+            var blobContainerName = storageScope.ContainerName;
 #endif
 
             var blobUriBuilder = new BlobUriBuilder(new Uri(storageAccountEndpoint))

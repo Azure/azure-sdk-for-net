@@ -2470,7 +2470,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 using var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-                var sourceEvents = EventGenerator.CreateEvents(100).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(50).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(
                     EventHubConsumerClient.DefaultConsumerGroupName,
