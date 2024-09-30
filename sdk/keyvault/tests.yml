@@ -11,7 +11,7 @@ extends:
     SupportedClouds: 'Public,UsGov,Canary'
     CloudConfig:
       Public:
-        ServiceConnection: azure-sdk-tests-tme
+        ServiceConnection: azure-sdk-tests-tme-manual
         SubscriptionConfigurationFilePaths:
           - eng/common/TestResources/sub-config/AzurePublicTME.json
         ${{ if not(contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
