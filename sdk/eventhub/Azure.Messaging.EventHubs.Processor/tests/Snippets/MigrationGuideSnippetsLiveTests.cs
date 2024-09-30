@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = "fake-hub";
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
-            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
+            var storageAccountEndpoint = $"https://{ StorageTestEnvironment.Instance.StorageAccountName }.blob.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}";
             var blobContainerName = storageScope.ContainerName;
 #endif
 
