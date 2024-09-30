@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 ComputeDeploymentThreshold = new ValidationThreshold(ValidationThresholdGrouping.PerCluster, ValidationThresholdType.PercentSuccess, 90),
                 ComputeRackDefinitions =
                 {
-                 new NetworkCloudRackDefinition(new ResourceIdentifier(TestEnvironment.SubnetId), "b37m15r1", new ResourceIdentifier("/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/rackSkus/VLab1_4_Compute_DellR750_3C2M_sim"))
+                 new NetworkCloudRackDefinition(new ResourceIdentifier(TestEnvironment.SubnetId), "b37m15r1", new ResourceIdentifier("/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/rackSkus/VLab1_4_Compute_DellR750_2C2M_sim"))
                     {
                         BareMetalMachineConfigurationData =
                         {
@@ -61,17 +61,12 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                                 MachineDetails = "extraDetails",
                                 MachineName = "compute2",
                             },
-                            new BareMetalMachineConfiguration(createCreds,"AA:BB:CC:DD:EE:F0","00:BB:CC:DD:EE:F0",3,"BM1219XX0")
-                            {
-                                MachineDetails = "extraDetails",
-                                MachineName = "compute3",
-                            },
-                            new BareMetalMachineConfiguration(createCreds,"AA:BB:CC:DD:EE:01","00:BB:CC:DD:EE:01",4,"BM1219YY1")
+                            new BareMetalMachineConfiguration(createCreds,"AA:BB:CC:DD:EE:01","00:BB:CC:DD:EE:01",3,"BM1219YY1")
                             {
                                 MachineDetails = "extraDetails",
                                 MachineName = "control1",
                             },
-                            new BareMetalMachineConfiguration(createCreds,"AA:BB:CC:DD:EE:F1","00:BB:CC:DD:EE:F1",5,"BM1219XX1")
+                            new BareMetalMachineConfiguration(createCreds,"AA:BB:CC:DD:EE:F1","00:BB:CC:DD:EE:F1",4,"BM1219XX1")
                             {
                                 MachineDetails = "extraDetails",
                                 MachineName = "control2",
