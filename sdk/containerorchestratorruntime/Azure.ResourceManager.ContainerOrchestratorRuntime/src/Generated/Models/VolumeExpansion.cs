@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static bool operator ==(VolumeExpansion left, VolumeExpansion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VolumeExpansion"/> values are not the same. </summary>
         public static bool operator !=(VolumeExpansion left, VolumeExpansion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VolumeExpansion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VolumeExpansion"/>. </summary>
         public static implicit operator VolumeExpansion(string value) => new VolumeExpansion(value);
 
         /// <inheritdoc />

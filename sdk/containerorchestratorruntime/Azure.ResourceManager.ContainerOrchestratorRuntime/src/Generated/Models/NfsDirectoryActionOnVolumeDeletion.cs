@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static bool operator ==(NfsDirectoryActionOnVolumeDeletion left, NfsDirectoryActionOnVolumeDeletion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NfsDirectoryActionOnVolumeDeletion"/> values are not the same. </summary>
         public static bool operator !=(NfsDirectoryActionOnVolumeDeletion left, NfsDirectoryActionOnVolumeDeletion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NfsDirectoryActionOnVolumeDeletion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NfsDirectoryActionOnVolumeDeletion"/>. </summary>
         public static implicit operator NfsDirectoryActionOnVolumeDeletion(string value) => new NfsDirectoryActionOnVolumeDeletion(value);
 
         /// <inheritdoc />

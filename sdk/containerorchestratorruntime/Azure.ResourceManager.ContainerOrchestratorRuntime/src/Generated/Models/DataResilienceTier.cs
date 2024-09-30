@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static bool operator ==(DataResilienceTier left, DataResilienceTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataResilienceTier"/> values are not the same. </summary>
         public static bool operator !=(DataResilienceTier left, DataResilienceTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataResilienceTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataResilienceTier"/>. </summary>
         public static implicit operator DataResilienceTier(string value) => new DataResilienceTier(value);
 
         /// <inheritdoc />

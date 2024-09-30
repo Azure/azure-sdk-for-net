@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static bool operator ==(VolumeBindingMode left, VolumeBindingMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VolumeBindingMode"/> values are not the same. </summary>
         public static bool operator !=(VolumeBindingMode left, VolumeBindingMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VolumeBindingMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VolumeBindingMode"/>. </summary>
         public static implicit operator VolumeBindingMode(string value) => new VolumeBindingMode(value);
 
         /// <inheritdoc />

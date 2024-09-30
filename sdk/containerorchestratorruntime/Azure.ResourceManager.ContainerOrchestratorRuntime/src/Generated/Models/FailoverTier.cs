@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static bool operator ==(FailoverTier left, FailoverTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FailoverTier"/> values are not the same. </summary>
         public static bool operator !=(FailoverTier left, FailoverTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FailoverTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FailoverTier"/>. </summary>
         public static implicit operator FailoverTier(string value) => new FailoverTier(value);
 
         /// <inheritdoc />

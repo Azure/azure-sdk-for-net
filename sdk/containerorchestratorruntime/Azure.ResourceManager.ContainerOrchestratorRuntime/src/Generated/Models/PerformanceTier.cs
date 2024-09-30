@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static bool operator ==(PerformanceTier left, PerformanceTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PerformanceTier"/> values are not the same. </summary>
         public static bool operator !=(PerformanceTier left, PerformanceTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PerformanceTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PerformanceTier"/>. </summary>
         public static implicit operator PerformanceTier(string value) => new PerformanceTier(value);
 
         /// <inheritdoc />

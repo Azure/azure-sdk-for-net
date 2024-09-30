@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static bool operator ==(AdvertiseMode left, AdvertiseMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AdvertiseMode"/> values are not the same. </summary>
         public static bool operator !=(AdvertiseMode left, AdvertiseMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AdvertiseMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AdvertiseMode"/>. </summary>
         public static implicit operator AdvertiseMode(string value) => new AdvertiseMode(value);
 
         /// <inheritdoc />

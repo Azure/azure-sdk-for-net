@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static bool operator ==(ContainerOrchestratorProvisioningState left, ContainerOrchestratorProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerOrchestratorProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ContainerOrchestratorProvisioningState left, ContainerOrchestratorProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerOrchestratorProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerOrchestratorProvisioningState"/>. </summary>
         public static implicit operator ContainerOrchestratorProvisioningState(string value) => new ContainerOrchestratorProvisioningState(value);
 
         /// <inheritdoc />
