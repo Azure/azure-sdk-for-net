@@ -357,14 +357,14 @@ Refer to [Azure Monitor documentation](https://learn.microsoft.com/azure/azure-m
 Azure Monitor OpenTelemetry Distro.
 
 > [!NOTE]
-> With Azure Monitor OpenTelemetry Distro, you only need to opt-into Azure SDK experimental telemetry features with one of the ways documented at
+> With the Azure Monitor OpenTelemetry Distro, you only need to opt-into Azure SDK experimental telemetry features with one of the ways documented at
 > the beggining of this section.
 > The distro enables activity sources and meters for Azure AI Inference automatically.
 
 The following section provides an example on how to configure OpenTelemetry and enable Azure AI Inference tracing and metrics if your
 OpenTelemtery distro does not include Azure AI Inference by default.
 
-#### Generic OpenTelemetry Configuration
+#### Generic OpenTelemetry configuration
 
 In this example we're going to export traces and metrics to console, and to the local [OTLP](https://opentelemetry.io/docs/specs/otel/protocol/) destination.
 [Aspire dashboard](https://learn.microsoft.com/dotnet/aspire/fundamentals/dashboard/standalone) can be used for local testing and exploration.
