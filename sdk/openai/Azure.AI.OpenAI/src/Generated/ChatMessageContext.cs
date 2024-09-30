@@ -11,7 +11,7 @@ namespace Azure.AI.OpenAI.Chat
     /// An additional property, added to chat completion response messages, produced by the Azure OpenAI service when using
     /// extension behavior. This includes intent and citation information from the On Your Data feature.
     /// </summary>
-    public partial class AzureChatMessageContext
+    public partial class ChatMessageContext
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -44,30 +44,28 @@ namespace Azure.AI.OpenAI.Chat
         /// </para>
         /// </summary>
         internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
-        /// <summary> Initializes a new instance of <see cref="AzureChatMessageContext"/>. </summary>
-        internal AzureChatMessageContext()
+        /// <summary> Initializes a new instance of <see cref="ChatMessageContext"/>. </summary>
+        internal ChatMessageContext()
         {
-            Citations = new ChangeTrackingList<AzureChatCitation>();
+            Citations = new ChangeTrackingList<ChatCitation>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureChatMessageContext"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageContext"/>. </summary>
         /// <param name="intent"> The detected intent from the chat history, which is used to carry conversation context between interactions. </param>
         /// <param name="citations"> The citations produced by the data retrieval. </param>
-        /// <param name="allRetrievedDocuments"> Summary information about documents retrieved by the data retrieval operation. </param>
+        /// <param name="retrievedDocuments"> Summary information about documents retrieved by the data retrieval operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureChatMessageContext(string intent, IReadOnlyList<AzureChatCitation> citations, AzureChatRetrievedDocument allRetrievedDocuments, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatMessageContext(string intent, IReadOnlyList<ChatCitation> citations, ChatRetrievedDocument retrievedDocuments, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Intent = intent;
             Citations = citations;
-            AllRetrievedDocuments = allRetrievedDocuments;
+            RetrievedDocuments = retrievedDocuments;
             SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The detected intent from the chat history, which is used to carry conversation context between interactions. </summary>
         public string Intent { get; }
         /// <summary> The citations produced by the data retrieval. </summary>
-        public IReadOnlyList<AzureChatCitation> Citations { get; }
-        /// <summary> Summary information about documents retrieved by the data retrieval operation. </summary>
-        public AzureChatRetrievedDocument AllRetrievedDocuments { get; }
+        public IReadOnlyList<ChatCitation> Citations { get; }
     }
 }

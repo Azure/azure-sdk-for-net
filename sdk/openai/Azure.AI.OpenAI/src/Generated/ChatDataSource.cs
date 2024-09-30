@@ -12,10 +12,10 @@ namespace Azure.AI.OpenAI.Chat
     /// This will be used by a chat completions request that should use Azure OpenAI chat extensions to augment the
     /// response behavior.
     /// The use of this configuration is compatible only with Azure OpenAI.
-    /// Please note <see cref="AzureChatDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureCosmosDBChatDataSource"/>, <see cref="AzureSearchChatDataSource"/>, <see cref="ElasticsearchChatDataSource"/>, <see cref="MongoDBChatDataSource"/> and <see cref="PineconeChatDataSource"/>.
+    /// Please note <see cref="ChatDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="CosmosChatDataSource"/>, <see cref="AzureSearchChatDataSource"/>, <see cref="ElasticsearchChatDataSource"/>, <see cref="MongoDBChatDataSource"/> and <see cref="PineconeChatDataSource"/>.
     /// </summary>
-    public abstract partial class AzureChatDataSource
+    public abstract partial class ChatDataSource
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,15 +48,15 @@ namespace Azure.AI.OpenAI.Chat
         /// </para>
         /// </summary>
         internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
-        /// <summary> Initializes a new instance of <see cref="AzureChatDataSource"/>. </summary>
-        protected AzureChatDataSource()
+        /// <summary> Initializes a new instance of <see cref="ChatDataSource"/>. </summary>
+        protected ChatDataSource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureChatDataSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatDataSource"/>. </summary>
         /// <param name="type"> The differentiating type identifier for the data source. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureChatDataSource(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatDataSource(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             SerializedAdditionalRawData = serializedAdditionalRawData;

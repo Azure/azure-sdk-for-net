@@ -8,7 +8,8 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.OpenAI.Chat;
 
 [CodeGenModel("AzureSearchChatDataSource")]
-public partial class AzureSearchChatDataSource : AzureChatDataSource
+[Experimental("AOAI001")]
+public partial class AzureSearchChatDataSource : ChatDataSource
 {
     [CodeGenMember("Parameters")]
     internal InternalAzureSearchChatDataSourceParameters InternalParameters { get; }
@@ -63,17 +64,17 @@ public partial class AzureSearchChatDataSource : AzureChatDataSource
     }
 
     /// <inheritdoc cref="InternalAzureSearchChatDataSourceParameters.AllowPartialResult"/>
-    public bool? AllowPartialResult
+    public bool? AllowPartialResults
     {
         get => InternalParameters.AllowPartialResult;
         set => InternalParameters.AllowPartialResult = value;
     }
 
-    /// <inheritdoc cref="InternalAzureSearchChatDataSourceParameters.OutputContextFlags"/>
-    public DataSourceOutputContexts? OutputContextFlags
+    /// <inheritdoc cref="InternalAzureSearchChatDataSourceParameters.OutputContexts"/>
+    public DataSourceOutputContexts? OutputContexts
     {
-        get => InternalParameters.OutputContextFlags;
-        set => InternalParameters.OutputContextFlags = value;
+        get => InternalParameters.OutputContexts;
+        set => InternalParameters.OutputContexts = value;
     }
 
     /// <inheritdoc cref="InternalAzureSearchChatDataSourceParameters.FieldMappings"/>

@@ -222,8 +222,8 @@ namespace Azure.AI.OpenAI.Tests
 
                     StreamingChatToolCallUpdate toolUpdate = update.ToolCallUpdates[0];
                     Assert.That(toolUpdate.Index, Is.EqualTo(0));
-                    Assert.That(toolUpdate.Id, Is.Null.Or.Not.Empty);
-                    toolId ??= toolUpdate.Id;
+                    Assert.That(toolUpdate.ToolCallId, Is.Null.Or.Not.Empty);
+                    toolId ??= toolUpdate.ToolCallId;
                     Assert.That(toolUpdate.FunctionName, Is.Null.Or.EqualTo(TOOL_TEMPERATURE.FunctionName));
                     toolName ??= toolUpdate.FunctionName;
 
@@ -284,7 +284,7 @@ namespace Azure.AI.OpenAI.Tests
                             ChatToolCall.CreateFunctionToolCall(
                                 toolId,
                                 toolName,
-                                toolArgs.ToString()
+                                BinaryData.FromString(toolArgs.ToString())
                             )
                         ]
                     )
