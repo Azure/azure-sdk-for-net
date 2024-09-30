@@ -342,7 +342,7 @@ To generate embeddings for additional phrases, simply call `client.embed` multip
 
 ### Observability with OpenTelemetry
 
-The Open Telemetry library provides tracing for Azure AI Inference client library for C#. Refer to Installation chapter above for installation instructions.
+The Open Telemetry library provides tracing for Azure AI Inference client library for C#. Refer to the Installation chapter above for installation instructions.
 Please refer to [Azure SDK Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing)
 for general information on OpenTelemtery support in Azure client libraries.
 
