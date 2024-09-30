@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         void IJsonModel<ForceLinkContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ForceLinkContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ForceLinkContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("groupNickname"u8);
             writer.WriteStringValue(GroupNickname);
             writer.WritePropertyName("linkedDatabases"u8);
@@ -50,7 +58,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ForceLinkContent IJsonModel<ForceLinkContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

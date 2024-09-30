@@ -59,9 +59,8 @@ public partial class ManagedLedgerDigestUpload : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedLedgerDigestUpload.</param>
     /// <param name="resourceVersion">Version of the ManagedLedgerDigestUpload.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedLedgerDigestUpload(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/databases/ledgerDigestUploads", resourceVersion ?? "2024-05-01-preview", context)
+    public ManagedLedgerDigestUpload(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/databases/ledgerDigestUploads", resourceVersion ?? "2024-05-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _digestStorageEndpoint = BicepValue<string>.DefineProperty(this, "DigestStorageEndpoint", ["properties", "digestStorageEndpoint"]);

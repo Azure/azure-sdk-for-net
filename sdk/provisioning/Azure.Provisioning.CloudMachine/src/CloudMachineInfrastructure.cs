@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.CloudMachine;
+using System.IO;
+using System;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.EventGrid;
 using Azure.Provisioning.Expressions;
@@ -13,7 +16,7 @@ namespace Azure.Provisioning.CloudMachine;
 
 public class CloudMachineInfrastructure : Infrastructure
 {
-    private readonly string _name;
+    private readonly string _cmid;
     private UserAssignedIdentity _identity;
     private StorageAccount _storage;
     private BlobService _blobs;
@@ -30,56 +33,60 @@ public class CloudMachineInfrastructure : Infrastructure
     /// <summary>
     /// The common principalId parameter.
     /// </summary>
-    public BicepParameter PrincipalIdParameter => new BicepParameter("principalId", typeof(string));
+    public ProvisioningParameter PrincipalIdParameter => new ProvisioningParameter("principalId", typeof(string));
 
-    /// <summary>
-    /// The common principalType parameter.
-    /// </summary>
-    public BicepParameter PrincipalTypeParameter => new BicepParameter("principalType", typeof(string));
+    ///// <summary>
+    ///// The common principalType parameter.
+    ///// </summary>
+    //public ProvisioningParameter PrincipalTypeParameter => new BicepParameter("principalType", typeof(string));
 
-    /// <summary>
-    /// The common principalName parameter.
-    /// </summary>
-    public BicepParameter PrincipalNameParameter => new BicepParameter("principalName", typeof(string));
+    ///// <summary>
+    ///// The common principalName parameter.
+    ///// </summary>
+    //public ProvisioningParameter PrincipalNameParameter => new BicepParameter("principalName", typeof(string));
 
-    public CloudMachineInfrastructure(string name = "cm") : base(name!)
+    public CloudMachineInfrastructure(string cloudMachineId) : base("cm")
     {
-        _name = name ?? "cm";
-        _identity = new($"{_name}_identity");
+        _cmid = cloudMachineId;
+        _identity = new("cm_identity");
+        _identity.Name = _cmid;
         ManagedServiceIdentity managedServiceIdentity = new()
         {
             ManagedServiceIdentityType = ManagedServiceIdentityType.UserAssigned,
             UserAssignedIdentities = { { BicepFunction.Interpolate($"{_identity.Id}").Compile().ToString(), new UserAssignedIdentityDetails() } }
         };
 
-        _storage = StorageResources.CreateAccount($"{_name}_sa");
+        _storage = StorageResources.CreateAccount($"cm_sa");
         _storage.Identity = managedServiceIdentity;
+        _storage.Name = _cmid;
 
-        _blobs = new($"{_name}_blobs")
+        _blobs = new("cm_blobs")
         {
             Parent = _storage,
         };
-        _container = new BlobContainer($"{_name}_container", "2023-01-01")
+        _container = new BlobContainer("cm_container", "2023-01-01")
         {
             Parent = _blobs,
             Name = "default"
         };
 
-        _serviceBusNamespace = new($"{_name}_sb")
+        _serviceBusNamespace = new("cm_sb")
         {
             Sku = new ServiceBusSku
             {
                 Name = ServiceBusSkuName.Standard,
                 Tier = ServiceBusSkuTier.Standard
             },
+            Name = _cmid,
         };
-        _serviceBusNamespaceAuthorizationRule = new($"{_name}_sb_auth_rule", "2021-11-01")
+        _serviceBusNamespaceAuthorizationRule = new($"cm_sb_auth_rule", "2021-11-01")
         {
             Parent = _serviceBusNamespace,
             Rights = [ServiceBusAccessRight.Listen, ServiceBusAccessRight.Send, ServiceBusAccessRight.Manage]
         };
-        _serviceBusTopic_main = new($"{_name}_sb_topic_main", "2021-11-01")
+        _serviceBusTopic_main = new("cm_internal_topic", "2021-11-01")
         {
+            Name = "cm_internal_topic",
             Parent = _serviceBusNamespace,
             MaxMessageSizeInKilobytes = 256,
             DefaultMessageTimeToLive = new StringLiteral("P14D"),
@@ -88,7 +95,7 @@ public class CloudMachineInfrastructure : Infrastructure
             SupportOrdering = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _serviceBusSubscription_main = new($"{_name}_sb_sub_main", "2021-11-01")
+        _serviceBusSubscription_main = new("cm_internal_subscription", "2021-11-01")
         {
             Parent = _serviceBusTopic_main,
             IsClientAffine = false,
@@ -101,8 +108,9 @@ public class CloudMachineInfrastructure : Infrastructure
             EnableBatchedOperations = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _serviceBusTopic_app = new($"{_name}_sb_topic_app", "2021-11-01")
+        _serviceBusTopic_app = new("cm_default_topic", "2021-11-01")
         {
+            Name = "cm_default_topic",
             Parent = _serviceBusNamespace,
             MaxMessageSizeInKilobytes = 256,
             DefaultMessageTimeToLive = new StringLiteral("P14D"),
@@ -111,8 +119,9 @@ public class CloudMachineInfrastructure : Infrastructure
             SupportOrdering = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _serviceBusSubscription_app = new($"{_name}_sb_sub_app", "2021-11-01")
+        _serviceBusSubscription_app = new("cm_default_subscription", "2021-11-01")
         {
+            Name = "cm_default_subscription",
             Parent = _serviceBusTopic_app,
             IsClientAffine = false,
             LockDuration = new StringLiteral("PT30S"),
@@ -124,13 +133,14 @@ public class CloudMachineInfrastructure : Infrastructure
             EnableBatchedOperations = true,
             Status = ServiceBusMessagingEntityStatus.Active
         };
-        _eventGridTopic_Blobs = new($"{_name}_eg_blob", "2022-06-15")
+        _eventGridTopic_Blobs = new("cm_eg_blob", "2022-06-15")
         {
             TopicType = "Microsoft.Storage.StorageAccounts",
             Source = _storage.Id,
-            Identity = managedServiceIdentity
+            Identity = managedServiceIdentity,
+            Name = _cmid
         };
-        _systemTopicEventSubscription = new($"{_name}_eg_blob_sub", "2022-06-15")
+        _systemTopicEventSubscription = new($"cm_eg_blob_sub", "2022-06-15")
         {
             Parent = _eventGridTopic_Blobs,
             DeliveryWithResourceIdentity = new DeliveryWithResourceIdentity
@@ -169,15 +179,15 @@ public class CloudMachineInfrastructure : Infrastructure
         // Always add a default location parameter.
         // azd assumes there will be a location parameter for every module.
         // The Infrastructure location resolver will resolve unset Location properties to this parameter.
-        Add(new BicepParameter("location", typeof(string))
+        Add(new ProvisioningParameter("location", typeof(string))
         {
             Description = "The location for the resource(s) to be deployed.",
             Value = BicepFunction.GetResourceGroup().Location
         });
 
         Add(PrincipalIdParameter);
-        Add(PrincipalTypeParameter);
-        Add(PrincipalNameParameter);
+        //Add(PrincipalTypeParameter);
+        //Add(PrincipalNameParameter);
 
         Add(_identity);
         Add(_storage);
@@ -209,9 +219,29 @@ public class CloudMachineInfrastructure : Infrastructure
         Add(_eventGridTopic_Blobs);
 
         // Placeholders for now.
-        Add(new BicepOutput($"storage_name", typeof(string)) { Value = _storage.Name });
-        Add(new BicepOutput($"servicebus_name", typeof(string)) { Value = _serviceBusNamespace.Name });
+        Add(new ProvisioningOutput($"storage_name", typeof(string)) { Value = _storage.Name });
+        Add(new ProvisioningOutput($"servicebus_name", typeof(string)) { Value = _serviceBusNamespace.Name });
 
         return base.Build(context);
+    }
+
+    public static bool Configure(string[] args, Action<CloudMachineInfrastructure>? configure = default)
+    {
+        if (args.Length < 1 || args[0] != "--init")
+        {
+            return false;
+        }
+
+        string cmid = Azd.ReadOrCreateCmid();
+
+        CloudMachineInfrastructure cmi = new(cmid);
+        if (configure != default)
+        {
+            configure(cmi);
+        }
+
+        string infraDirectory = Path.Combine(".", "infra");
+        Azd.Init(infraDirectory, cmi);
+        return true;
     }
 }

@@ -172,9 +172,8 @@ public partial class RoleAssignmentScheduleRequest : Resource
     /// </summary>
     /// <param name="resourceName">Name of the RoleAssignmentScheduleRequest.</param>
     /// <param name="resourceVersion">Version of the RoleAssignmentScheduleRequest.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public RoleAssignmentScheduleRequest(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Authorization/roleAssignmentScheduleRequests", resourceVersion ?? "2020-10-01", context)
+    public RoleAssignmentScheduleRequest(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Authorization/roleAssignmentScheduleRequests", resourceVersion ?? "2020-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _condition = BicepValue<string>.DefineProperty(this, "Condition", ["properties", "condition"]);

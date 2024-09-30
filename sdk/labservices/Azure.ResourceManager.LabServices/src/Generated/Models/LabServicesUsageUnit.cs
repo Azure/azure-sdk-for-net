@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public static bool operator ==(LabServicesUsageUnit left, LabServicesUsageUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LabServicesUsageUnit"/> values are not the same. </summary>
         public static bool operator !=(LabServicesUsageUnit left, LabServicesUsageUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LabServicesUsageUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LabServicesUsageUnit"/>. </summary>
         public static implicit operator LabServicesUsageUnit(string value) => new LabServicesUsageUnit(value);
 
         /// <inheritdoc />

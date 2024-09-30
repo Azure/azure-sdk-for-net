@@ -13,7 +13,6 @@ using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Roles;
-using Azure.ResourceManager.Resources.Models;
 using System;
 using System.ComponentModel;
 
@@ -344,9 +343,8 @@ public partial class ContainerServiceManagedCluster : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ContainerServiceManagedCluster.</param>
     /// <param name="resourceVersion">Version of the ContainerServiceManagedCluster.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerServiceManagedCluster(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerService/managedClusters", resourceVersion ?? "2023-08-01", context)
+    public ContainerServiceManagedCluster(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ContainerService/managedClusters", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -403,9 +401,14 @@ public partial class ContainerServiceManagedCluster : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-07-02-preview.
+        /// 2024-08-02-preview.
         /// </summary>
-        public static readonly string V2024_07_02_preview = "2024-07-02-preview";
+        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
+
+        /// <summary>
+        /// 2024-08-01.
+        /// </summary>
+        public static readonly string V2024_08_01 = "2024-08-01";
 
         /// <summary>
         /// 2024-07-01.

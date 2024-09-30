@@ -64,9 +64,8 @@ public partial class SqlServerJob : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlServerJob.</param>
     /// <param name="resourceVersion">Version of the SqlServerJob.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerJob(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/jobAgents/jobs", resourceVersion ?? "2021-11-01", context)
+    public SqlServerJob(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/jobAgents/jobs", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);

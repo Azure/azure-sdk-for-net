@@ -242,9 +242,8 @@ public partial class ApplicationInsightsComponent : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ApplicationInsightsComponent.</param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsComponent.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ApplicationInsightsComponent(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Insights/components", resourceVersion ?? "2020-02-02", context)
+    public ApplicationInsightsComponent(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Insights/components", resourceVersion ?? "2020-02-02")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isRequired: true);

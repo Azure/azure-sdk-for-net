@@ -19,66 +19,27 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         void IJsonModel<StreamInputProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StreamInputProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StreamInputProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Datasource))
             {
                 writer.WritePropertyName("datasource"u8);
                 writer.WriteObjectValue(Datasource, options);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(InputPropertiesType);
-            if (Optional.IsDefined(Serialization))
-            {
-                writer.WritePropertyName("serialization"u8);
-                writer.WriteObjectValue(Serialization, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Diagnostics))
-            {
-                writer.WritePropertyName("diagnostics"u8);
-                writer.WriteObjectValue(Diagnostics, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
-            if (Optional.IsDefined(Compression))
-            {
-                writer.WritePropertyName("compression"u8);
-                writer.WriteObjectValue(Compression, options);
-            }
-            if (Optional.IsDefined(PartitionKey))
-            {
-                writer.WritePropertyName("partitionKey"u8);
-                writer.WriteStringValue(PartitionKey);
-            }
-            if (Optional.IsDefined(WatermarkSettings))
-            {
-                writer.WritePropertyName("watermarkSettings"u8);
-                writer.WriteObjectValue(WatermarkSettings, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         StreamInputProperties IJsonModel<StreamInputProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

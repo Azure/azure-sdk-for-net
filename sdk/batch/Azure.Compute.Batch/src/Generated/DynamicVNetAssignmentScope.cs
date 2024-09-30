@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(DynamicVNetAssignmentScope left, DynamicVNetAssignmentScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynamicVNetAssignmentScope"/> values are not the same. </summary>
         public static bool operator !=(DynamicVNetAssignmentScope left, DynamicVNetAssignmentScope right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DynamicVNetAssignmentScope"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DynamicVNetAssignmentScope"/>. </summary>
         public static implicit operator DynamicVNetAssignmentScope(string value) => new DynamicVNetAssignmentScope(value);
 
         /// <inheritdoc />

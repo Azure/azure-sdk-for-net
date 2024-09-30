@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator ==(AvailabilityStrategy left, AvailabilityStrategy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvailabilityStrategy"/> values are not the same. </summary>
         public static bool operator !=(AvailabilityStrategy left, AvailabilityStrategy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AvailabilityStrategy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvailabilityStrategy"/>. </summary>
         public static implicit operator AvailabilityStrategy(string value) => new AvailabilityStrategy(value);
 
         /// <inheritdoc />

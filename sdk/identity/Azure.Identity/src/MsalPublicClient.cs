@@ -40,11 +40,9 @@ namespace Azure.Identity
             string[] clientCapabilities =
                 enableCae ? cp1Capabilities : Array.Empty<string>();
 
-            var authorityUri = new UriBuilder(AuthorityHost.Scheme, AuthorityHost.Host, AuthorityHost.Port, TenantId ?? Constants.OrganizationsTenantId).Uri;
-
             PublicClientApplicationBuilder pubAppBuilder = PublicClientApplicationBuilder
                 .Create(ClientId)
-                .WithAuthority(authorityUri)
+                .WithAuthority(AuthorityHost.AbsoluteUri, TenantId ?? Constants.OrganizationsTenantId, false)
                 .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline))
                 .WithLogging(AzureIdentityEventSource.Singleton, enablePiiLogging: IsSupportLoggingEnabled);
 
@@ -124,10 +122,7 @@ namespace Azure.Identity
             }
             if (tenantId != null)
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
-                {
-                    Path = TenantId ?? tenantId
-                };
+                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
 
@@ -183,10 +178,7 @@ namespace Azure.Identity
 
             if (tenantId != null || record.TenantId != null)
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
-                {
-                    Path = tenantId ?? record.TenantId
-                };
+                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId ?? record.TenantId);
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
 
@@ -288,10 +280,7 @@ namespace Azure.Identity
             }
             if (tenantId != null)
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
-                {
-                    Path = tenantId
-                };
+                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
             if (browserOptions != null)
@@ -333,10 +322,7 @@ namespace Azure.Identity
             }
             if (!string.IsNullOrEmpty(tenantId))
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
-                {
-                    Path = tenantId
-                };
+                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(tenantId);
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
             return await builder.ExecuteAsync(async, cancellationToken)
@@ -358,6 +344,11 @@ namespace Azure.Identity
             if (!string.IsNullOrEmpty(claims))
             {
                 builder.WithClaims(claims);
+            }
+            if (!string.IsNullOrEmpty(TenantId))
+            {
+                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(TenantId);
+                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
 
             return await builder.ExecuteAsync(async, cancellationToken)
@@ -383,10 +374,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(TenantId))
             {
-                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
-                {
-                    Path = tenant
-                };
+                UriBuilder uriBuilder = BuildTenantIdWithAuthorityHost(TenantId);
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
 

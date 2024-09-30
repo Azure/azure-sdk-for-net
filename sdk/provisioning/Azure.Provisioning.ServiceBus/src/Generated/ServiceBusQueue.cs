@@ -201,9 +201,8 @@ public partial class ServiceBusQueue : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ServiceBusQueue.</param>
     /// <param name="resourceVersion">Version of the ServiceBusQueue.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ServiceBusQueue(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/queues", resourceVersion ?? "2024-01-01", context)
+    public ServiceBusQueue(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ServiceBus/namespaces/queues", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _autoDeleteOnIdle = BicepValue<TimeSpan>.DefineProperty(this, "AutoDeleteOnIdle", ["properties", "autoDeleteOnIdle"]);

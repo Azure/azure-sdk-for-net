@@ -48,7 +48,7 @@ namespace Azure.Security.KeyVault.Storage.Models
         public static bool operator ==(DeletionRecoveryLevel left, DeletionRecoveryLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeletionRecoveryLevel"/> values are not the same. </summary>
         public static bool operator !=(DeletionRecoveryLevel left, DeletionRecoveryLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeletionRecoveryLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeletionRecoveryLevel"/>. </summary>
         public static implicit operator DeletionRecoveryLevel(string value) => new DeletionRecoveryLevel(value);
 
         /// <inheritdoc />

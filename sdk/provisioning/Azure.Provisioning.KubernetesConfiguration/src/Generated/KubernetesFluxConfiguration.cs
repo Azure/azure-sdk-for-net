@@ -155,9 +155,8 @@ public partial class KubernetesFluxConfiguration : Resource
     /// </summary>
     /// <param name="resourceName">Name of the KubernetesFluxConfiguration.</param>
     /// <param name="resourceVersion">Version of the KubernetesFluxConfiguration.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public KubernetesFluxConfiguration(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.KubernetesConfiguration/fluxConfigurations", resourceVersion ?? "2023-05-01", context)
+    public KubernetesFluxConfiguration(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.KubernetesConfiguration/fluxConfigurations", resourceVersion ?? "2023-05-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _azureBlob = BicepValue<KubernetesAzureBlob>.DefineProperty(this, "AzureBlob", ["properties", "azureBlob"]);

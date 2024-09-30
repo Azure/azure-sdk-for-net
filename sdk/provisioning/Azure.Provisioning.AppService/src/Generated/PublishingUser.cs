@@ -76,9 +76,8 @@ public partial class PublishingUser : Resource
     /// </summary>
     /// <param name="resourceName">Name of the PublishingUser.</param>
     /// <param name="resourceVersion">Version of the PublishingUser.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PublishingUser(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/publishingUsers", resourceVersion ?? "2023-12-01", context)
+    public PublishingUser(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/publishingUsers", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
@@ -96,6 +95,11 @@ public partial class PublishingUser : Resource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-04-01.
+        /// </summary>
+        public static readonly string V2024_04_01 = "2024-04-01";
+
         /// <summary>
         /// 2023-12-01.
         /// </summary>

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(ConnectionTlsAuthenticationType left, ConnectionTlsAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectionTlsAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(ConnectionTlsAuthenticationType left, ConnectionTlsAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConnectionTlsAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionTlsAuthenticationType"/>. </summary>
         public static implicit operator ConnectionTlsAuthenticationType(string value) => new ConnectionTlsAuthenticationType(value);
 
         /// <inheritdoc />

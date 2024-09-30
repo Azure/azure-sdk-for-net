@@ -7,7 +7,6 @@ using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
-using Azure.ResourceManager.Resources.Models;
 using System;
 
 namespace Azure.Provisioning.Resources;

@@ -1,14 +1,10 @@
 # Release History
 
-## 2.0.0-beta.4 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 2.0.0-beta.4 (2024-09-30)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fix the issue where `Iso` is always `null` in the `GetReverseGeocoding` response
 
 ## 2.0.0-beta.3 (2024-09-23)
 
