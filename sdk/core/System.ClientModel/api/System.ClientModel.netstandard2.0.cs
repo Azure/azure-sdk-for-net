@@ -95,6 +95,7 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
+        public System.ClientModel.Primitives.PipelinePolicy? HttpLoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
@@ -124,6 +125,17 @@ namespace System.ClientModel.Primitives
         protected CollectionResult() { }
         public abstract System.ClientModel.ContinuationToken? GetContinuationToken(System.ClientModel.ClientResult page);
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult> GetRawPages();
+    }
+    public partial class DiagnosticOptions
+    {
+        public DiagnosticOptions() { }
+        public System.Collections.Generic.IList<string> AllowedHeaderNames { get { throw null; } }
+        public System.Collections.Generic.IList<string> AllowedQueryParameters { get { throw null; } }
+        public bool? EnableHttpContentLogging { get { throw null; } set { } }
+        public bool? EnableHttpLogging { get { throw null; } set { } }
+        public bool? EnableLogging { get { throw null; } set { } }
+        public int? HttpContentSizeLimit { get { throw null; } set { } }
+        public Microsoft.Extensions.Logging.ILoggerFactory? LoggerFactory { get { throw null; } set { } }
     }
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
     {

@@ -45,6 +45,15 @@ public class ClientPipelineOptions
     }
 
     /// <summary>
+    /// TBD.
+    /// </summary>
+    public PipelinePolicy? HttpLoggingPolicy
+    {
+        get => throw new NotImplementedException();
+        set => throw new NotImplementedException();
+    }
+
+    /// <summary>
     /// Gets or sets the <see cref="PipelineTransport"/> to be used by the
     /// <see cref="ClientPipeline"/> for sending and receiving HTTP messages.
     /// </summary>
