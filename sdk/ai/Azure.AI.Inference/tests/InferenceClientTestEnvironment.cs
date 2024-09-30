@@ -14,7 +14,6 @@ namespace Azure.AI.Inference.Tests
         public string AoaiEndpoint => GetRecordedVariable("AOAI_CHAT_COMPLETIONS_ENDPOINT");
         public string AoaiKey => GetRecordedVariable("AOAI_CHAT_COMPLETIONS_KEY");
         public string TestImageJpgInputPath => GetRecordedVariable("AZUREAI_TEST_IMAGE_JPG_INPUT_PATH");
-        public string TestApplicationInsights => GetRecordedVariable("APP_INSIGHTS_CONNECTION_STR");
         // Add other client paramters here as above.
     }
 }
