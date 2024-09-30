@@ -41,11 +41,8 @@ namespace Azure.ResourceManager.ContainerInstance
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ContainerInstanceOperatingSystemType OSType
         {
-            get => OperatingSystemType == null ? null : new ContainerInstanceOperatingSystemType(OperatingSystemType.Value.ToString());
-            set
-            {
-                OperatingSystemType = value == null ? null : new ContainerInstanceOperatingSystemType(value.ToString());
-            }
+            get => OperatingSystemType is null ? null : OperatingSystemType.Value;
+            set => OperatingSystemType = value;
         }
     }
 }
