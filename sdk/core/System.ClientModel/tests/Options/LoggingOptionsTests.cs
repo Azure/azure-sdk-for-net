@@ -2,15 +2,10 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using ClientModel.Tests;
-using ClientModel.Tests.Mocks;
-using NUnit.Framework;
-using ClientModel.ReferenceClients;
 using System.Net.Http;
+using ClientModel.ReferenceClients;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Http;
+using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Options;
 
@@ -24,8 +19,18 @@ public class LoggingOptionsTests
         // see https://learn.microsoft.com/en-us/dotnet/core/extensions/httpclient-factory
         services.AddHttpClient();
 
-        HttpClient httpClient = new HttpClient();
+        // see https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.dependencyinjection.httpclientloggingservicecollectionextensions.addextendedhttpclientlogging?view=net-8.0
+        services.AddExtendedHttpClientLogging();
 
-        RequestResponseClient client = new();
+        services.AddOptions<RequestResponseClientOptions>();
+
+        services.AddSingleton<RequestResponseClient>(serviceProvider =>
+        {
+            HttpClient httpClient = serviceProvider.GetRequiredService<HttpClient>();
+            RequestResponseClientOptions options = serviceProvider.GetRequiredService<RequestResponseClientOptions>();
+            options.Diagnostics.EnableHttpLogging = false;
+            options.Transport = new HttpClientPipelineTransport(httpClient);
+            return new RequestResponseClient(options);
+        });
     }
 }

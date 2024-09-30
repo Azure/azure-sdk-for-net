@@ -17,6 +17,12 @@ public class RequestResponseClient
     private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
 
+    public RequestResponseClient(RequestResponseClientOptions? options = default)
+        : this(new Uri("https://www.example.com"), new ApiKeyCredential("fake_key"))
+    {
+        // Provided to make test illustrations simpler - not typical for a client implementation
+    }
+
     public RequestResponseClient(Uri endpoint, ApiKeyCredential credential, RequestResponseClientOptions? options = default)
     {
         Argument.AssertNotNull(endpoint, nameof(endpoint));
