@@ -6,12 +6,12 @@
     </Description>
     <AssemblyTitle>Azure.AI.OpenAI Client Library</AssemblyTitle>
     <VersionPrefix>2.0.0</VersionPrefix>
-    <VersionSuffix>beta.4</VersionSuffix>
+    <VersionSuffix>beta.6</VersionSuffix>
     <PackageTags>Microsoft Azure OpenAI</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <NoWarn>$(NoWarn);CS1591;AZC0012;AZC0102;CS8002;CS0436;AZC0112</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;AZC0012;AZC0102;CS8002;CS0436;AZC0112;OPENAI001</NoWarn>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>preview</LangVersion>
     <Nullable>disable</Nullable>
@@ -57,7 +57,7 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="OpenAI" VersionOverride="2.0.0-beta.10" />
+        <PackageReference Include="OpenAI" />
       </ItemGroup>
     </Otherwise>
   </Choose>

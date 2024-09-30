@@ -107,11 +107,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string AttributeDbRedisDatabaseIndex = "db.redis.database_index";
         public const string AttributeDbMongoDbCollection = "db.mongodb.collection";
 
-        public const string AttributeRpcMethod = "rpc.method";
-        public const string AttributeRpcStatus = "rpc.grpc.status_code";
-        public const string AttributeRpcService = "rpc.service";
-        public const string AttributeRpcSystem = "rpc.system";
-
         public const string AttributeMessageType = "message.type";
         public const string AttributeMessageId = "message.id";
         public const string AttributeMessageCompressedSize = "message.compressed_size";

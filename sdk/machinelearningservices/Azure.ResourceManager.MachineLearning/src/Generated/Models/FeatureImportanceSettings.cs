@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The mode of operation for computing feature importance. </summary>
+        [WirePath("mode")]
         public FeatureImportanceMode? Mode { get; set; }
         /// <summary> The name of the target column within the input data asset. </summary>
+        [WirePath("targetColumn")]
         public string TargetColumn { get; set; }
     }
 }

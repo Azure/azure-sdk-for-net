@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlMigrationSubState left, PostgreSqlMigrationSubState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationSubState"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlMigrationSubState left, PostgreSqlMigrationSubState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlMigrationSubState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlMigrationSubState"/>. </summary>
         public static implicit operator PostgreSqlMigrationSubState(string value) => new PostgreSqlMigrationSubState(value);
 
         /// <inheritdoc />

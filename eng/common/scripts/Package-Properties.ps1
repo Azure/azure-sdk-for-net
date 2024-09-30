@@ -15,6 +15,9 @@ class PackageProps
     [boolean]$IsNewSdk
     [string]$ArtifactName
     [string]$ReleaseStatus
+    # was this package purely included because other packages included it as an AdditionalValidationPackage?
+    [boolean]$IncludedForValidation
+    # does this package include other packages that we should trigger validation for?
     [string[]]$AdditionalValidationPackages
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory)
@@ -38,6 +41,7 @@ class PackageProps
         $this.Version = $version
         $this.DirectoryPath = $directoryPath
         $this.ServiceDirectory = $serviceDirectory
+        $this.IncludedForValidation = $false
 
         if (Test-Path (Join-Path $directoryPath "README.md"))
         {
@@ -119,7 +123,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     foreach ($pkg in $allPackageProperties)
     {
         $pkgDirectory = Resolve-Path "$($pkg.DirectoryPath)"
-        $lookupKey = ($pkg.DirectoryPath).Replace($RepoRoot, "").SubString(1)
+        $lookupKey = ($pkg.DirectoryPath).Replace($RepoRoot, "").TrimStart('\/')
         $lookup[$lookupKey] = $pkg
 
         foreach ($file in $targetedFiles)
@@ -132,21 +136,25 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                 if ($pkg.AdditionalValidationPackages) {
                     $additionalValidationPackages += $pkg.AdditionalValidationPackages
                 }
+
+                # avoid adding the same package multiple times
+                break
             }
         }
     }
 
     foreach ($addition in $additionalValidationPackages) {
-        $key = $addition.Replace($RepoRoot, "").SubString(1)
+        $key = $addition.Replace($RepoRoot, "").TrimStart('\/')
 
         if ($lookup[$key]) {
+            $lookup[$key].IncludedForValidation = $true
             $packagesWithChanges += $lookup[$key]
         }
     }
 
     if ($AdditionalValidationPackagesFromPackageSetFn -and (Test-Path "Function:$AdditionalValidationPackagesFromPackageSetFn"))
     {
-        $packagesWithChanges += &$AdditionalValidationPackagesFromPackageSetFn $packagesWithChanges $diff
+        $packagesWithChanges += &$AdditionalValidationPackagesFromPackageSetFn $packagesWithChanges $diff $allPackageProperties
     }
 
     return $packagesWithChanges

@@ -67,12 +67,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the service resource id. </summary>
+        [WirePath("serviceResourceId")]
         public ResourceIdentifier ServiceResourceId { get; set; }
         /// <summary> Gets or sets the spark enabled. </summary>
+        [WirePath("sparkEnabled")]
         public bool? SparkEnabled { get; set; }
         /// <summary> Type of a managed network Outbound Rule of a machine learning workspace. </summary>
+        [WirePath("sparkStatus")]
         public OutboundRuleStatus? SparkStatus { get; set; }
         /// <summary> Gets or sets the subresource target. </summary>
+        [WirePath("subresourceTarget")]
         public string SubresourceTarget { get; set; }
     }
 }

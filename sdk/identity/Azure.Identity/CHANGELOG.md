@@ -1,10 +1,22 @@
 # Release History
 
-## 1.13.0-beta.2 (Unreleased)
+## 1.13.0-beta.3 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed the request sent in `AzurePipelinesCredential` so it doesn't result in a redirect response when an invalid system access token is provided.
+- Updated to version 4.65.0 of Microsoft.Identity.Client to address a bug preventing the use of alternate authority types such as dStS ([4927](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/issues/4927)) .
+
+### Other Changes
+
+## 1.13.0-beta.2 (2024-09-17)
+
+### Features Added
+- `ManagedIdentityCredential` now supports specifying a user-assigned managed identity by object ID.
 
 ### Bugs Fixed
 - If `DefaultAzureCredential` attempts to authenticate with the `MangagedIdentityCredential` and it receives either a failed response that is not json, it will now fall through to the next credential in the chain. [#45184](https://github.com/Azure/azure-sdk-for-net/issues/45184)

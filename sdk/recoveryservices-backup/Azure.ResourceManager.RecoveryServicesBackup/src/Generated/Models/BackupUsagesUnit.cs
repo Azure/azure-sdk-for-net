@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(BackupUsagesUnit left, BackupUsagesUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupUsagesUnit"/> values are not the same. </summary>
         public static bool operator !=(BackupUsagesUnit left, BackupUsagesUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackupUsagesUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupUsagesUnit"/>. </summary>
         public static implicit operator BackupUsagesUnit(string value) => new BackupUsagesUnit(value);
 
         /// <inheritdoc />

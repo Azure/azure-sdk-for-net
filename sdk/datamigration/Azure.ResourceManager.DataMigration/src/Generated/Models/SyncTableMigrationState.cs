@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(SyncTableMigrationState left, SyncTableMigrationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyncTableMigrationState"/> values are not the same. </summary>
         public static bool operator !=(SyncTableMigrationState left, SyncTableMigrationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SyncTableMigrationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SyncTableMigrationState"/>. </summary>
         public static implicit operator SyncTableMigrationState(string value) => new SyncTableMigrationState(value);
 
         /// <inheritdoc />

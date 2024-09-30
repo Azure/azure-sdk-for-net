@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,25 +20,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<DockerCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DockerCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DockerCredential)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Password))
-            {
-                if (Password != null)
-                {
-                    writer.WritePropertyName("password"u8);
-                    writer.WriteStringValue(Password);
-                }
-                else
-                {
-                    writer.WriteNull("password");
-                }
-            }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(UserName))
             {
                 if (UserName != null)
@@ -50,24 +48,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("userName");
                 }
             }
-            writer.WritePropertyName("credentialType"u8);
-            writer.WriteStringValue(CredentialType.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(Password))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                if (Password != null)
                 {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WritePropertyName("password"u8);
+                    writer.WriteStringValue(Password);
+                }
+                else
+                {
+                    writer.WriteNull("password");
                 }
             }
-            writer.WriteEndObject();
         }
 
         DockerCredential IJsonModel<DockerCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -90,23 +82,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string password = default;
             string userName = default;
+            string password = default;
             DataReferenceCredentialType credentialType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("password"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        password = null;
-                        continue;
-                    }
-                    password = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("userName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -115,6 +97,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     userName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("password"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        password = null;
+                        continue;
+                    }
+                    password = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("credentialType"u8))
@@ -128,7 +120,80 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DockerCredential(credentialType, serializedAdditionalRawData, password, userName);
+            return new DockerCredential(credentialType, serializedAdditionalRawData, userName, password);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserName))
+                {
+                    builder.Append("  userName: ");
+                    if (UserName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Password), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  password: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Password))
+                {
+                    builder.Append("  password: ");
+                    if (Password.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Password}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Password}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CredentialType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  credentialType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  credentialType: ");
+                builder.AppendLine($"'{CredentialType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<DockerCredential>.Write(ModelReaderWriterOptions options)
@@ -139,6 +204,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DockerCredential)} does not support writing '{options.Format}' format.");
             }

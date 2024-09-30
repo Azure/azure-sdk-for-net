@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(FrontDoorWebApplicationFirewallPolicyMode left, FrontDoorWebApplicationFirewallPolicyMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorWebApplicationFirewallPolicyMode"/> values are not the same. </summary>
         public static bool operator !=(FrontDoorWebApplicationFirewallPolicyMode left, FrontDoorWebApplicationFirewallPolicyMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FrontDoorWebApplicationFirewallPolicyMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorWebApplicationFirewallPolicyMode"/>. </summary>
         public static implicit operator FrontDoorWebApplicationFirewallPolicyMode(string value) => new FrontDoorWebApplicationFirewallPolicyMode(value);
 
         /// <inheritdoc />

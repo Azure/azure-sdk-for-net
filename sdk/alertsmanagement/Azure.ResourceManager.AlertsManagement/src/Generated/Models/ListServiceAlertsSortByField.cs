@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static bool operator ==(ListServiceAlertsSortByField left, ListServiceAlertsSortByField right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ListServiceAlertsSortByField"/> values are not the same. </summary>
         public static bool operator !=(ListServiceAlertsSortByField left, ListServiceAlertsSortByField right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ListServiceAlertsSortByField"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ListServiceAlertsSortByField"/>. </summary>
         public static implicit operator ListServiceAlertsSortByField(string value) => new ListServiceAlertsSortByField(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static bool operator ==(SystemServiceType left, SystemServiceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SystemServiceType"/> values are not the same. </summary>
         public static bool operator !=(SystemServiceType left, SystemServiceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SystemServiceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SystemServiceType"/>. </summary>
         public static implicit operator SystemServiceType(string value) => new SystemServiceType(value);
 
         /// <inheritdoc />

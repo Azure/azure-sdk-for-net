@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.BotService.Models
 
         void IJsonModel<FacebookChannelProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FacebookChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FacebookChannelProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(VerifyToken))
             {
                 writer.WritePropertyName("verifyToken"u8);
@@ -70,7 +78,6 @@ namespace Azure.ResourceManager.BotService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FacebookChannelProperties IJsonModel<FacebookChannelProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

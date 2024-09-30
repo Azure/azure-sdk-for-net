@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +21,21 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         void IJsonModel<CredentialResults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CredentialResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CredentialResults)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(HybridConnectionConfig))
             {
                 writer.WritePropertyName("hybridConnectionConfig"u8);
@@ -56,7 +66,6 @@ namespace Azure.ResourceManager.Kubernetes.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CredentialResults IJsonModel<CredentialResults>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -117,6 +126,59 @@ namespace Azure.ResourceManager.Kubernetes.Models
             return new CredentialResults(hybridConnectionConfig, kubeconfigs ?? new ChangeTrackingList<CredentialResult>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HybridConnectionConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hybridConnectionConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HybridConnectionConfig))
+                {
+                    builder.Append("  hybridConnectionConfig: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, HybridConnectionConfig, options, 2, false, "  hybridConnectionConfig: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kubeconfigs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kubeconfigs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Kubeconfigs))
+                {
+                    if (Kubeconfigs.Any())
+                    {
+                        builder.Append("  kubeconfigs: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Kubeconfigs)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  kubeconfigs: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CredentialResults>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CredentialResults>)this).GetFormatFromOptions(options) : options.Format;
@@ -125,6 +187,8 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CredentialResults)} does not support writing '{options.Format}' format.");
             }

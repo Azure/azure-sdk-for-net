@@ -1,14 +1,16 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.0-beta.4 (2024-09-30)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fix the issue that Python can't use return to ack message.
+
+## 1.0.0-beta.3 (2024-09-24)
+
+### Bugs Fixed
+
+- Fix the bug that identity based negotiation result is not correct
 
 ## 1.0.0-beta.2 (2024-09-02)
 

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,29 +20,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<TextClassificationMultilabel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TextClassificationMultilabel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TextClassificationMultilabel)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(PrimaryMetric))
             {
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
-            }
-            if (Optional.IsDefined(FeaturizationSettings))
-            {
-                if (FeaturizationSettings != null)
-                {
-                    writer.WritePropertyName("featurizationSettings"u8);
-                    writer.WriteObjectValue(FeaturizationSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("featurizationSettings");
-                }
             }
             if (Optional.IsDefined(LimitSettings))
             {
@@ -53,6 +51,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("limitSettings");
+                }
+            }
+            if (Optional.IsDefined(FeaturizationSettings))
+            {
+                if (FeaturizationSettings != null)
+                {
+                    writer.WritePropertyName("featurizationSettings"u8);
+                    writer.WriteObjectValue(FeaturizationSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("featurizationSettings");
                 }
             }
             if (Optional.IsDefined(ValidationData))
@@ -67,43 +77,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationData");
                 }
             }
-            if (Optional.IsDefined(LogVerbosity))
-            {
-                writer.WritePropertyName("logVerbosity"u8);
-                writer.WriteStringValue(LogVerbosity.Value.ToString());
-            }
-            if (Optional.IsDefined(TargetColumnName))
-            {
-                if (TargetColumnName != null)
-                {
-                    writer.WritePropertyName("targetColumnName"u8);
-                    writer.WriteStringValue(TargetColumnName);
-                }
-                else
-                {
-                    writer.WriteNull("targetColumnName");
-                }
-            }
-            writer.WritePropertyName("taskType"u8);
-            writer.WriteStringValue(TaskType.ToString());
-            writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue(TrainingData, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         TextClassificationMultilabel IJsonModel<TextClassificationMultilabel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -127,13 +100,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             ClassificationMultilabelPrimaryMetric? primaryMetric = default;
-            NlpVerticalFeaturizationSettings featurizationSettings = default;
             NlpVerticalLimitSettings limitSettings = default;
+            NlpVerticalFeaturizationSettings featurizationSettings = default;
             MachineLearningTableJobInput validationData = default;
-            MachineLearningLogVerbosity? logVerbosity = default;
-            string targetColumnName = default;
             TaskType taskType = default;
+            MachineLearningLogVerbosity? logVerbosity = default;
             MachineLearningTableJobInput trainingData = default;
+            string targetColumnName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,16 +120,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     primaryMetric = new ClassificationMultilabelPrimaryMetric(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("featurizationSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        featurizationSettings = null;
-                        continue;
-                    }
-                    featurizationSettings = NlpVerticalFeaturizationSettings.DeserializeNlpVerticalFeaturizationSettings(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("limitSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -165,6 +128,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     limitSettings = NlpVerticalLimitSettings.DeserializeNlpVerticalLimitSettings(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("featurizationSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        featurizationSettings = null;
+                        continue;
+                    }
+                    featurizationSettings = NlpVerticalFeaturizationSettings.DeserializeNlpVerticalFeaturizationSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationData"u8))
@@ -177,6 +150,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("taskType"u8))
+                {
+                    taskType = new TaskType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("logVerbosity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -184,6 +162,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     logVerbosity = new MachineLearningLogVerbosity(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("trainingData"u8))
+                {
+                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetColumnName"u8))
@@ -196,16 +179,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     targetColumnName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("taskType"u8))
-                {
-                    taskType = new TaskType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("trainingData"u8))
-                {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -213,15 +186,158 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new TextClassificationMultilabel(
-                logVerbosity,
-                targetColumnName,
                 taskType,
+                logVerbosity,
                 trainingData,
+                targetColumnName,
                 serializedAdditionalRawData,
                 primaryMetric,
-                featurizationSettings,
                 limitSettings,
+                featurizationSettings,
                 validationData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryMetric), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  primaryMetric: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryMetric))
+                {
+                    builder.Append("  primaryMetric: ");
+                    builder.AppendLine($"'{PrimaryMetric.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LimitSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  limitSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LimitSettings))
+                {
+                    builder.Append("  limitSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LimitSettings, options, 2, false, "  limitSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("FeaturizationDatasetLanguage", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  featurizationSettings: ");
+                builder.AppendLine("{");
+                builder.Append("    datasetLanguage: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(FeaturizationSettings))
+                {
+                    builder.Append("  featurizationSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FeaturizationSettings, options, 2, false, "  featurizationSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidationData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  validationData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ValidationData))
+                {
+                    builder.Append("  validationData: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ValidationData, options, 2, false, "  validationData: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TaskType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  taskType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  taskType: ");
+                builder.AppendLine($"'{TaskType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogVerbosity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logVerbosity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogVerbosity))
+                {
+                    builder.Append("  logVerbosity: ");
+                    builder.AppendLine($"'{LogVerbosity.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrainingData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  trainingData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TrainingData))
+                {
+                    builder.Append("  trainingData: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TrainingData, options, 2, false, "  trainingData: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetColumnName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetColumnName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetColumnName))
+                {
+                    builder.Append("  targetColumnName: ");
+                    if (TargetColumnName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TargetColumnName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TargetColumnName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<TextClassificationMultilabel>.Write(ModelReaderWriterOptions options)
@@ -232,6 +348,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TextClassificationMultilabel)} does not support writing '{options.Format}' format.");
             }

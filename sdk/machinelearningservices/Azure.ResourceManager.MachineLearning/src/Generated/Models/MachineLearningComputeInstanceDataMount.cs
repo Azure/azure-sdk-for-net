@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceDataMount"/>. </summary>
-        public MachineLearningComputeInstanceDataMount()
+        internal MachineLearningComputeInstanceDataMount()
         {
         }
 
@@ -55,20 +55,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="sourceType"> Data source type. </param>
         /// <param name="mountName"> name of the ComputeInstance data mount. </param>
         /// <param name="mountAction"> Mount Action. </param>
-        /// <param name="mountMode"> Mount Mode. </param>
         /// <param name="createdBy"> who this data mount created by. </param>
         /// <param name="mountPath"> Path of this data mount. </param>
         /// <param name="mountState"> Mount state. </param>
         /// <param name="mountedOn"> The time when the disk mounted. </param>
         /// <param name="error"> Error of this data mount. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningComputeInstanceDataMount(string source, MachineLearningSourceType? sourceType, string mountName, MachineLearningMountAction? mountAction, MountMode? mountMode, string createdBy, string mountPath, MachineLearningMountState? mountState, DateTimeOffset? mountedOn, string error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningComputeInstanceDataMount(string source, MachineLearningSourceType? sourceType, string mountName, MachineLearningMountAction? mountAction, string createdBy, string mountPath, MachineLearningMountState? mountState, DateTimeOffset? mountedOn, string error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Source = source;
             SourceType = sourceType;
             MountName = mountName;
             MountAction = mountAction;
-            MountMode = mountMode;
             CreatedBy = createdBy;
             MountPath = mountPath;
             MountState = mountState;
@@ -78,24 +76,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Source of the ComputeInstance data mount. </summary>
-        public string Source { get; set; }
+        [WirePath("source")]
+        public string Source { get; }
         /// <summary> Data source type. </summary>
-        public MachineLearningSourceType? SourceType { get; set; }
+        [WirePath("sourceType")]
+        public MachineLearningSourceType? SourceType { get; }
         /// <summary> name of the ComputeInstance data mount. </summary>
-        public string MountName { get; set; }
+        [WirePath("mountName")]
+        public string MountName { get; }
         /// <summary> Mount Action. </summary>
-        public MachineLearningMountAction? MountAction { get; set; }
-        /// <summary> Mount Mode. </summary>
-        public MountMode? MountMode { get; set; }
+        [WirePath("mountAction")]
+        public MachineLearningMountAction? MountAction { get; }
         /// <summary> who this data mount created by. </summary>
-        public string CreatedBy { get; set; }
+        [WirePath("createdBy")]
+        public string CreatedBy { get; }
         /// <summary> Path of this data mount. </summary>
-        public string MountPath { get; set; }
+        [WirePath("mountPath")]
+        public string MountPath { get; }
         /// <summary> Mount state. </summary>
-        public MachineLearningMountState? MountState { get; set; }
+        [WirePath("mountState")]
+        public MachineLearningMountState? MountState { get; }
         /// <summary> The time when the disk mounted. </summary>
-        public DateTimeOffset? MountedOn { get; set; }
+        [WirePath("mountedOn")]
+        public DateTimeOffset? MountedOn { get; }
         /// <summary> Error of this data mount. </summary>
-        public string Error { get; set; }
+        [WirePath("error")]
+        public string Error { get; }
     }
 }

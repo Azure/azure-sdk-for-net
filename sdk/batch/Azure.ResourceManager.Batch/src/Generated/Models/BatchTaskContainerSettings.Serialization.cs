@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Batch.Models
 
         void IJsonModel<BatchTaskContainerSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BatchTaskContainerSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchTaskContainerSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ContainerRunOptions))
             {
                 writer.WritePropertyName("containerRunOptions"u8);
@@ -43,6 +51,16 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("workingDirectory"u8);
                 writer.WriteStringValue(WorkingDirectory.Value.ToSerialString());
             }
+            if (Optional.IsCollectionDefined(ContainerHostBatchBindMounts))
+            {
+                writer.WritePropertyName("containerHostBatchBindMounts"u8);
+                writer.WriteStartArray();
+                foreach (var item in ContainerHostBatchBindMounts)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -58,7 +76,6 @@ namespace Azure.ResourceManager.Batch.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BatchTaskContainerSettings IJsonModel<BatchTaskContainerSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -85,6 +102,7 @@ namespace Azure.ResourceManager.Batch.Models
             string imageName = default;
             BatchVmContainerRegistry registry = default;
             BatchContainerWorkingDirectory? workingDirectory = default;
+            IList<ContainerHostBatchBindMountEntry> containerHostBatchBindMounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,13 +135,33 @@ namespace Azure.ResourceManager.Batch.Models
                     workingDirectory = property.Value.GetString().ToBatchContainerWorkingDirectory();
                     continue;
                 }
+                if (property.NameEquals("containerHostBatchBindMounts"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ContainerHostBatchBindMountEntry> array = new List<ContainerHostBatchBindMountEntry>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ContainerHostBatchBindMountEntry.DeserializeContainerHostBatchBindMountEntry(item, options));
+                    }
+                    containerHostBatchBindMounts = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BatchTaskContainerSettings(containerRunOptions, imageName, registry, workingDirectory, serializedAdditionalRawData);
+            return new BatchTaskContainerSettings(
+                containerRunOptions,
+                imageName,
+                registry,
+                workingDirectory,
+                containerHostBatchBindMounts ?? new ChangeTrackingList<ContainerHostBatchBindMountEntry>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchTaskContainerSettings>.Write(ModelReaderWriterOptions options)

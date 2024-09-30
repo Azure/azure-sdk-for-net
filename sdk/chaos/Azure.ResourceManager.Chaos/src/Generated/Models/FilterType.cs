@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Chaos.Models
         public static bool operator ==(FilterType left, FilterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FilterType"/> values are not the same. </summary>
         public static bool operator !=(FilterType left, FilterType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FilterType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FilterType"/>. </summary>
         public static implicit operator FilterType(string value) => new FilterType(value);
 
         /// <inheritdoc />

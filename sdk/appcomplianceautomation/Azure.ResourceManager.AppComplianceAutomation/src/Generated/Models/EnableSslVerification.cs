@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static bool operator ==(EnableSslVerification left, EnableSslVerification right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnableSslVerification"/> values are not the same. </summary>
         public static bool operator !=(EnableSslVerification left, EnableSslVerification right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EnableSslVerification"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EnableSslVerification"/>. </summary>
         public static implicit operator EnableSslVerification(string value) => new EnableSslVerification(value);
 
         /// <inheritdoc />

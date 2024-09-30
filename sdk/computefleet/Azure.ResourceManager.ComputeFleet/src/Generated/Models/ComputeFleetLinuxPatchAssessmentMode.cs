@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(ComputeFleetLinuxPatchAssessmentMode left, ComputeFleetLinuxPatchAssessmentMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeFleetLinuxPatchAssessmentMode"/> values are not the same. </summary>
         public static bool operator !=(ComputeFleetLinuxPatchAssessmentMode left, ComputeFleetLinuxPatchAssessmentMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeFleetLinuxPatchAssessmentMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetLinuxPatchAssessmentMode"/>. </summary>
         public static implicit operator ComputeFleetLinuxPatchAssessmentMode(string value) => new ComputeFleetLinuxPatchAssessmentMode(value);
 
         /// <inheritdoc />

@@ -21,14 +21,12 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             string transferId = GetNewTransferId();
-            TransferManager transferManager = new();
 
             // Act
-            DataTransfer transfer = new DataTransfer(id: transferId, transferManager: transferManager);
+            DataTransfer transfer = new DataTransfer(id: transferId);
 
             // Assert
             Assert.AreEqual(transferId, transfer.Id);
-            Assert.AreEqual(transferManager, transfer.TransferManager);
             Assert.IsFalse(transfer.HasCompleted);
         }
 
@@ -44,17 +42,14 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             string transferId = GetNewTransferId();
-            TransferManager transferManager = new();
 
             // Act
             DataTransfer transfer = new DataTransfer(
                 id: transferId,
-                transferManager: transferManager,
                 status: new DataTransferStatus(status, hasFailedItems, false));
 
             // Assert
             Assert.AreEqual(transferId, transfer.Id);
-            Assert.AreEqual(transferManager, transfer.TransferManager);
             Assert.IsFalse(transfer.HasCompleted);
         }
 
@@ -70,17 +65,14 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             string transferId = GetNewTransferId();
-            TransferManager transferManager = new();
 
             // Act
             DataTransfer transfer = new DataTransfer(
                 id: transferId,
-                transferManager: transferManager,
                 status: new DataTransferStatus(state, hasFailedItems, hasSkippedItems));
 
             // Assert
             Assert.AreEqual(transferId, transfer.Id);
-            Assert.AreEqual(transferManager, transfer.TransferManager);
             Assert.IsTrue(transfer.HasCompleted);
         }
 
@@ -89,11 +81,9 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             string transferId = GetNewTransferId();
-            TransferManager transferManager = new();
 
             DataTransfer transfer = new DataTransfer(
                 id: transferId,
-                transferManager: transferManager,
                 status: SuccessfulCompletedStatus);
 
             // Act
@@ -101,7 +91,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.AreEqual(transferId, transfer.Id);
-            Assert.AreEqual(transferManager, transfer.TransferManager);
             Assert.IsTrue(transfer.HasCompleted);
         }
 
@@ -113,7 +102,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             DataTransfer transfer = new DataTransfer(
                 id: transferId,
-                transferManager: new(),
                 status: QueuedStatus);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(1));
 
@@ -128,11 +116,9 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             string transferId = GetNewTransferId();
-            TransferManager transferManager = new();
 
             DataTransfer transfer = new DataTransfer(
                 id: transferId,
-                transferManager: transferManager,
                 status: SuccessfulCompletedStatus);
 
             // Act
@@ -140,7 +126,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.AreEqual(transferId, transfer.Id);
-            Assert.AreEqual(transferManager, transfer.TransferManager);
             Assert.IsTrue(transfer.HasCompleted);
         }
 
@@ -152,7 +137,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             DataTransfer transfer = new DataTransfer(
                 id: transferId,
-                transferManager: new(),
                 status: QueuedStatus);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(1));
 
@@ -169,7 +153,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             DataTransfer transfer = new DataTransfer(
                 id: transferId,
-                transferManager: new(),
                 status: InProgressStatus);
 
             // Act
@@ -207,7 +190,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             DataTransfer transfer = new DataTransfer(
                 id: transferId,
-                transferManager: new(),
                 status: originalStatus);
 
             Assert.AreEqual(originalStatus, transfer.TransferStatus);
@@ -223,7 +205,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             DataTransfer transfer = new DataTransfer(
                 id: transferId,
-                transferManager: new(),
                 status: InProgressStatus);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(1));
 

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static bool operator ==(GuestConfigurationProvisioningState left, GuestConfigurationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GuestConfigurationProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(GuestConfigurationProvisioningState left, GuestConfigurationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GuestConfigurationProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GuestConfigurationProvisioningState"/>. </summary>
         public static implicit operator GuestConfigurationProvisioningState(string value) => new GuestConfigurationProvisioningState(value);
 
         /// <inheritdoc />

@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Create incidents from alerts triggered by this analytics rule. </summary>
+        [WirePath("createIncident")]
         public bool IsIncidentCreated { get; set; }
         /// <summary> Set how the alerts that are triggered by this analytics rule, are grouped into incidents. </summary>
+        [WirePath("groupingConfiguration")]
         public SecurityInsightsGroupingConfiguration GroupingConfiguration { get; set; }
     }
 }

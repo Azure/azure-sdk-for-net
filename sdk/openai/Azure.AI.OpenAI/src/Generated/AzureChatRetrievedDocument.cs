@@ -63,23 +63,23 @@ namespace Azure.AI.OpenAI.Chat
         /// <param name="url"> The URL of the citation. </param>
         /// <param name="filepath"> The file path for the citation. </param>
         /// <param name="chunkId"> The chunk ID for the citation. </param>
+        /// <param name="rerankScore"> The rerank score for the retrieval. </param>
         /// <param name="searchQueries"> The search queries executed to retrieve documents. </param>
         /// <param name="dataSourceIndex"> The index of the data source used for retrieval. </param>
         /// <param name="originalSearchScore"> The original search score for the retrieval. </param>
-        /// <param name="rerankScore"> The rerank score for the retrieval. </param>
         /// <param name="filterReason"> If applicable, an indication of why the document was filtered. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureChatRetrievedDocument(string content, string title, string url, string filepath, string chunkId, IReadOnlyList<string> searchQueries, int dataSourceIndex, double? originalSearchScore, double? rerankScore, AzureChatRetrievedDocumentFilterReason? filterReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureChatRetrievedDocument(string content, string title, string url, string filepath, string chunkId, double? rerankScore, IReadOnlyList<string> searchQueries, int dataSourceIndex, double? originalSearchScore, AzureChatRetrievedDocumentFilterReason? filterReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Content = content;
             Title = title;
             Url = url;
             Filepath = filepath;
             ChunkId = chunkId;
+            RerankScore = rerankScore;
             SearchQueries = searchQueries;
             DataSourceIndex = dataSourceIndex;
             OriginalSearchScore = originalSearchScore;
-            RerankScore = rerankScore;
             FilterReason = filterReason;
             SerializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -99,14 +99,14 @@ namespace Azure.AI.OpenAI.Chat
         public string Filepath { get; }
         /// <summary> The chunk ID for the citation. </summary>
         public string ChunkId { get; }
+        /// <summary> The rerank score for the retrieval. </summary>
+        public double? RerankScore { get; }
         /// <summary> The search queries executed to retrieve documents. </summary>
         public IReadOnlyList<string> SearchQueries { get; }
         /// <summary> The index of the data source used for retrieval. </summary>
         public int DataSourceIndex { get; }
         /// <summary> The original search score for the retrieval. </summary>
         public double? OriginalSearchScore { get; }
-        /// <summary> The rerank score for the retrieval. </summary>
-        public double? RerankScore { get; }
         /// <summary> If applicable, an indication of why the document was filtered. </summary>
         public AzureChatRetrievedDocumentFilterReason? FilterReason { get; }
     }

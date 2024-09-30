@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string DeletingValue = "Deleting";
         private const string RunningValue = "Running";
         private const string RestartingValue = "Restarting";
-        private const string ResizingValue = "Resizing";
         private const string JobRunningValue = "JobRunning";
         private const string SettingUpValue = "SettingUp";
         private const string SetupFailedValue = "SetupFailed";
@@ -49,8 +48,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningComputeInstanceState Running { get; } = new MachineLearningComputeInstanceState(RunningValue);
         /// <summary> Restarting. </summary>
         public static MachineLearningComputeInstanceState Restarting { get; } = new MachineLearningComputeInstanceState(RestartingValue);
-        /// <summary> Resizing. </summary>
-        public static MachineLearningComputeInstanceState Resizing { get; } = new MachineLearningComputeInstanceState(ResizingValue);
         /// <summary> JobRunning. </summary>
         public static MachineLearningComputeInstanceState JobRunning { get; } = new MachineLearningComputeInstanceState(JobRunningValue);
         /// <summary> SettingUp. </summary>
@@ -75,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningComputeInstanceState left, MachineLearningComputeInstanceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningComputeInstanceState"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningComputeInstanceState left, MachineLearningComputeInstanceState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningComputeInstanceState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningComputeInstanceState"/>. </summary>
         public static implicit operator MachineLearningComputeInstanceState(string value) => new MachineLearningComputeInstanceState(value);
 
         /// <inheritdoc />

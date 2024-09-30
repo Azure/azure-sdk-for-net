@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The password name. </summary>
+        [WirePath("name")]
         public ContainerRegistryPasswordName? Name { get; }
         /// <summary> The password value. </summary>
+        [WirePath("value")]
         public string Value { get; }
     }
 }

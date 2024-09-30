@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,32 +20,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<ServerlessEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ServerlessEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServerlessEndpointProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("authMode"u8);
-            writer.WriteStringValue(AuthMode.ToString());
-            if (Optional.IsDefined(ContentSafety))
+            if (Optional.IsDefined(ModelSettings))
             {
-                if (ContentSafety != null)
+                if (ModelSettings != null)
                 {
-                    writer.WritePropertyName("contentSafety"u8);
-                    writer.WriteObjectValue(ContentSafety, options);
+                    writer.WritePropertyName("modelSettings"u8);
+                    writer.WriteObjectValue(ModelSettings, options);
                 }
                 else
                 {
-                    writer.WriteNull("contentSafety");
+                    writer.WriteNull("modelSettings");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(EndpointState))
-            {
-                writer.WritePropertyName("endpointState"u8);
-                writer.WriteStringValue(EndpointState.Value.ToString());
-            }
+            writer.WritePropertyName("authMode"u8);
+            writer.WriteStringValue(AuthMode.ToString());
             if (options.Format != "W" && Optional.IsDefined(InferenceEndpoint))
             {
                 if (InferenceEndpoint != null)
@@ -56,6 +60,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("inferenceEndpoint");
                 }
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndpointState))
+            {
+                writer.WritePropertyName("endpointState"u8);
+                writer.WriteStringValue(EndpointState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionId))
             {
@@ -69,22 +83,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("marketplaceSubscriptionId");
                 }
             }
-            if (Optional.IsDefined(ModelSettings))
+            if (Optional.IsDefined(ContentSafety))
             {
-                if (ModelSettings != null)
+                if (ContentSafety != null)
                 {
-                    writer.WritePropertyName("modelSettings"u8);
-                    writer.WriteObjectValue(ModelSettings, options);
+                    writer.WritePropertyName("contentSafety"u8);
+                    writer.WriteObjectValue(ContentSafety, options);
                 }
                 else
                 {
-                    writer.WriteNull("modelSettings");
+                    writer.WriteNull("contentSafety");
                 }
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,7 +110,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ServerlessEndpointProperties IJsonModel<ServerlessEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -124,39 +132,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            ServerlessInferenceEndpointAuthMode authMode = default;
-            ContentSafety contentSafety = default;
-            ServerlessEndpointState? endpointState = default;
-            ServerlessInferenceEndpoint inferenceEndpoint = default;
-            string marketplaceSubscriptionId = default;
             ModelSettings modelSettings = default;
+            ServerlessInferenceEndpointAuthMode authMode = default;
+            ServerlessInferenceEndpoint inferenceEndpoint = default;
             MachineLearningEndpointProvisioningState? provisioningState = default;
+            ServerlessEndpointState? endpointState = default;
+            string marketplaceSubscriptionId = default;
+            ContentSafety contentSafety = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("modelSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        modelSettings = null;
+                        continue;
+                    }
+                    modelSettings = ModelSettings.DeserializeModelSettings(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("authMode"u8))
                 {
                     authMode = new ServerlessInferenceEndpointAuthMode(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("contentSafety"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        contentSafety = null;
-                        continue;
-                    }
-                    contentSafety = ContentSafety.DeserializeContentSafety(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("endpointState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    endpointState = new ServerlessEndpointState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("inferenceEndpoint"u8))
@@ -169,6 +168,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     inferenceEndpoint = ServerlessInferenceEndpoint.DeserializeServerlessInferenceEndpoint(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new MachineLearningEndpointProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("endpointState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endpointState = new ServerlessEndpointState(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("marketplaceSubscriptionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -179,23 +196,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     marketplaceSubscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modelSettings"u8))
+                if (property.NameEquals("contentSafety"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        modelSettings = null;
+                        contentSafety = null;
                         continue;
                     }
-                    modelSettings = ModelSettings.DeserializeModelSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new MachineLearningEndpointProvisioningState(property.Value.GetString());
+                    contentSafety = ContentSafety.DeserializeContentSafety(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -205,14 +213,145 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new ServerlessEndpointProperties(
-                authMode,
-                contentSafety,
-                endpointState,
-                inferenceEndpoint,
-                marketplaceSubscriptionId,
                 modelSettings,
+                authMode,
+                inferenceEndpoint,
                 provisioningState,
+                endpointState,
+                marketplaceSubscriptionId,
+                contentSafety,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ModelId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  modelSettings: ");
+                builder.AppendLine("{");
+                builder.Append("    modelId: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ModelSettings))
+                {
+                    builder.Append("  modelSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ModelSettings, options, 2, false, "  modelSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  authMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  authMode: ");
+                builder.AppendLine($"'{AuthMode.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InferenceEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  inferenceEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InferenceEndpoint))
+                {
+                    builder.Append("  inferenceEndpoint: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, InferenceEndpoint, options, 2, false, "  inferenceEndpoint: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("  provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endpointState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndpointState))
+                {
+                    builder.Append("  endpointState: ");
+                    builder.AppendLine($"'{EndpointState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MarketplaceSubscriptionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  marketplaceSubscriptionId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MarketplaceSubscriptionId))
+                {
+                    builder.Append("  marketplaceSubscriptionId: ");
+                    if (MarketplaceSubscriptionId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MarketplaceSubscriptionId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MarketplaceSubscriptionId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ContentSafetyStatus", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  contentSafety: ");
+                builder.AppendLine("{");
+                builder.Append("    contentSafetyStatus: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ContentSafety))
+                {
+                    builder.Append("  contentSafety: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ContentSafety, options, 2, false, "  contentSafety: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ServerlessEndpointProperties>.Write(ModelReaderWriterOptions options)
@@ -223,6 +362,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServerlessEndpointProperties)} does not support writing '{options.Format}' format.");
             }

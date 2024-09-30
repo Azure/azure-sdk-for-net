@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. </summary>
+        [WirePath("sasUrlSettingName")]
         public string SasUrlSettingName { get; set; }
     }
 }

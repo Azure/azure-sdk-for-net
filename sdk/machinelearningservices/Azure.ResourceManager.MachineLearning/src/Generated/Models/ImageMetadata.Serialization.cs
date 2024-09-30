@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<ImageMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ImageMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ImageMetadata)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(CurrentImageVersion))
             {
                 writer.WritePropertyName("currentImageVersion"u8);
@@ -40,11 +49,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("isLatestOsImageVersion"u8);
                 writer.WriteBooleanValue(IsLatestOSImageVersion.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(OSPatchingStatus))
-            {
-                writer.WritePropertyName("osPatchingStatus"u8);
-                writer.WriteObjectValue(OSPatchingStatus, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ImageMetadata IJsonModel<ImageMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -87,7 +90,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string currentImageVersion = default;
             string latestImageVersion = default;
             bool? isLatestOSImageVersion = default;
-            OSPatchingStatus osPatchingStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,22 +113,90 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     isLatestOSImageVersion = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("osPatchingStatus"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    osPatchingStatus = OSPatchingStatus.DeserializeOSPatchingStatus(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ImageMetadata(currentImageVersion, latestImageVersion, isLatestOSImageVersion, osPatchingStatus, serializedAdditionalRawData);
+            return new ImageMetadata(currentImageVersion, latestImageVersion, isLatestOSImageVersion, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentImageVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  currentImageVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CurrentImageVersion))
+                {
+                    builder.Append("  currentImageVersion: ");
+                    if (CurrentImageVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CurrentImageVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CurrentImageVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LatestImageVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  latestImageVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LatestImageVersion))
+                {
+                    builder.Append("  latestImageVersion: ");
+                    if (LatestImageVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LatestImageVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LatestImageVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLatestOSImageVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isLatestOsImageVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsLatestOSImageVersion))
+                {
+                    builder.Append("  isLatestOsImageVersion: ");
+                    var boolValue = IsLatestOSImageVersion.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ImageMetadata>.Write(ModelReaderWriterOptions options)
@@ -137,6 +207,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ImageMetadata)} does not support writing '{options.Format}' format.");
             }

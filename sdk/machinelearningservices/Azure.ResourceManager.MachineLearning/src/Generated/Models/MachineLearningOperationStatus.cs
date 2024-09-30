@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string StartFailedValue = "StartFailed";
         private const string StopFailedValue = "StopFailed";
         private const string RestartFailedValue = "RestartFailed";
-        private const string ResizeFailedValue = "ResizeFailed";
         private const string ReimageFailedValue = "ReimageFailed";
         private const string DeleteFailedValue = "DeleteFailed";
 
@@ -44,8 +43,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningOperationStatus StopFailed { get; } = new MachineLearningOperationStatus(StopFailedValue);
         /// <summary> RestartFailed. </summary>
         public static MachineLearningOperationStatus RestartFailed { get; } = new MachineLearningOperationStatus(RestartFailedValue);
-        /// <summary> ResizeFailed. </summary>
-        public static MachineLearningOperationStatus ResizeFailed { get; } = new MachineLearningOperationStatus(ResizeFailedValue);
         /// <summary> ReimageFailed. </summary>
         public static MachineLearningOperationStatus ReimageFailed { get; } = new MachineLearningOperationStatus(ReimageFailedValue);
         /// <summary> DeleteFailed. </summary>
@@ -54,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningOperationStatus left, MachineLearningOperationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningOperationStatus"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningOperationStatus left, MachineLearningOperationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningOperationStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningOperationStatus"/>. </summary>
         public static implicit operator MachineLearningOperationStatus(string value) => new MachineLearningOperationStatus(value);
 
         /// <inheritdoc />

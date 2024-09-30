@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +21,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<ForecastingSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ForecastingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ForecastingSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(CountryOrRegionForHolidays))
             {
                 if (CountryOrRegionForHolidays != null)
@@ -38,54 +48,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("countryOrRegionForHolidays");
                 }
             }
-            if (Optional.IsDefined(CvStepSize))
+            if (Optional.IsDefined(TimeColumnName))
             {
-                if (CvStepSize != null)
+                if (TimeColumnName != null)
                 {
-                    writer.WritePropertyName("cvStepSize"u8);
-                    writer.WriteNumberValue(CvStepSize.Value);
+                    writer.WritePropertyName("timeColumnName"u8);
+                    writer.WriteStringValue(TimeColumnName);
                 }
                 else
                 {
-                    writer.WriteNull("cvStepSize");
+                    writer.WriteNull("timeColumnName");
                 }
-            }
-            if (Optional.IsDefined(FeatureLags))
-            {
-                writer.WritePropertyName("featureLags"u8);
-                writer.WriteStringValue(FeatureLags.Value.ToString());
-            }
-            if (Optional.IsDefined(ForecastHorizon))
-            {
-                writer.WritePropertyName("forecastHorizon"u8);
-                writer.WriteObjectValue(ForecastHorizon, options);
-            }
-            if (Optional.IsDefined(Frequency))
-            {
-                if (Frequency != null)
-                {
-                    writer.WritePropertyName("frequency"u8);
-                    writer.WriteStringValue(Frequency);
-                }
-                else
-                {
-                    writer.WriteNull("frequency");
-                }
-            }
-            if (Optional.IsDefined(Seasonality))
-            {
-                writer.WritePropertyName("seasonality"u8);
-                writer.WriteObjectValue(Seasonality, options);
-            }
-            if (Optional.IsDefined(ShortSeriesHandlingConfig))
-            {
-                writer.WritePropertyName("shortSeriesHandlingConfig"u8);
-                writer.WriteStringValue(ShortSeriesHandlingConfig.Value.ToString());
-            }
-            if (Optional.IsDefined(TargetAggregateFunction))
-            {
-                writer.WritePropertyName("targetAggregateFunction"u8);
-                writer.WriteStringValue(TargetAggregateFunction.Value.ToString());
             }
             if (Optional.IsDefined(TargetLags))
             {
@@ -111,17 +84,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("targetRollingWindowSize");
                 }
             }
-            if (Optional.IsDefined(TimeColumnName))
+            if (Optional.IsDefined(ForecastHorizon))
             {
-                if (TimeColumnName != null)
-                {
-                    writer.WritePropertyName("timeColumnName"u8);
-                    writer.WriteStringValue(TimeColumnName);
-                }
-                else
-                {
-                    writer.WriteNull("timeColumnName");
-                }
+                writer.WritePropertyName("forecastHorizon"u8);
+                writer.WriteObjectValue(ForecastHorizon, options);
             }
             if (Optional.IsCollectionDefined(TimeSeriesIdColumnNames))
             {
@@ -140,10 +106,54 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("timeSeriesIdColumnNames");
                 }
             }
+            if (Optional.IsDefined(Frequency))
+            {
+                if (Frequency != null)
+                {
+                    writer.WritePropertyName("frequency"u8);
+                    writer.WriteStringValue(Frequency);
+                }
+                else
+                {
+                    writer.WriteNull("frequency");
+                }
+            }
+            if (Optional.IsDefined(FeatureLags))
+            {
+                writer.WritePropertyName("featureLags"u8);
+                writer.WriteStringValue(FeatureLags.Value.ToString());
+            }
+            if (Optional.IsDefined(Seasonality))
+            {
+                writer.WritePropertyName("seasonality"u8);
+                writer.WriteObjectValue(Seasonality, options);
+            }
+            if (Optional.IsDefined(ShortSeriesHandlingConfig))
+            {
+                writer.WritePropertyName("shortSeriesHandlingConfig"u8);
+                writer.WriteStringValue(ShortSeriesHandlingConfig.Value.ToString());
+            }
             if (Optional.IsDefined(UseStl))
             {
                 writer.WritePropertyName("useStl"u8);
                 writer.WriteStringValue(UseStl.Value.ToString());
+            }
+            if (Optional.IsDefined(TargetAggregateFunction))
+            {
+                writer.WritePropertyName("targetAggregateFunction"u8);
+                writer.WriteStringValue(TargetAggregateFunction.Value.ToString());
+            }
+            if (Optional.IsDefined(CvStepSize))
+            {
+                if (CvStepSize != null)
+                {
+                    writer.WritePropertyName("cvStepSize"u8);
+                    writer.WriteNumberValue(CvStepSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("cvStepSize");
+                }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -160,7 +170,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ForecastingSettings IJsonModel<ForecastingSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -184,18 +193,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string countryOrRegionForHolidays = default;
-            int? cvStepSize = default;
-            MachineLearningFeatureLag? featureLags = default;
-            ForecastHorizon forecastHorizon = default;
-            string frequency = default;
-            ForecastingSeasonality seasonality = default;
-            MachineLearningShortSeriesHandlingConfiguration? shortSeriesHandlingConfig = default;
-            TargetAggregationFunction? targetAggregateFunction = default;
+            string timeColumnName = default;
             TargetLags targetLags = default;
             TargetRollingWindowSize targetRollingWindowSize = default;
-            string timeColumnName = default;
+            ForecastHorizon forecastHorizon = default;
             IList<string> timeSeriesIdColumnNames = default;
+            string frequency = default;
+            MachineLearningFeatureLag? featureLags = default;
+            ForecastingSeasonality seasonality = default;
+            MachineLearningShortSeriesHandlingConfiguration? shortSeriesHandlingConfig = default;
             MachineLearningUseStl? useStl = default;
+            TargetAggregationFunction? targetAggregateFunction = default;
+            int? cvStepSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,69 +219,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     countryOrRegionForHolidays = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cvStepSize"u8))
+                if (property.NameEquals("timeColumnName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        cvStepSize = null;
+                        timeColumnName = null;
                         continue;
                     }
-                    cvStepSize = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("featureLags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    featureLags = new MachineLearningFeatureLag(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("forecastHorizon"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    forecastHorizon = ForecastHorizon.DeserializeForecastHorizon(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("frequency"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        frequency = null;
-                        continue;
-                    }
-                    frequency = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("seasonality"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    seasonality = ForecastingSeasonality.DeserializeForecastingSeasonality(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("shortSeriesHandlingConfig"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    shortSeriesHandlingConfig = new MachineLearningShortSeriesHandlingConfiguration(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("targetAggregateFunction"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetAggregateFunction = new TargetAggregationFunction(property.Value.GetString());
+                    timeColumnName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("targetLags"u8))
@@ -295,14 +249,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     targetRollingWindowSize = TargetRollingWindowSize.DeserializeTargetRollingWindowSize(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("timeColumnName"u8))
+                if (property.NameEquals("forecastHorizon"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        timeColumnName = null;
                         continue;
                     }
-                    timeColumnName = property.Value.GetString();
+                    forecastHorizon = ForecastHorizon.DeserializeForecastHorizon(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("timeSeriesIdColumnNames"u8))
@@ -320,6 +273,43 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     timeSeriesIdColumnNames = array;
                     continue;
                 }
+                if (property.NameEquals("frequency"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        frequency = null;
+                        continue;
+                    }
+                    frequency = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("featureLags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    featureLags = new MachineLearningFeatureLag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("seasonality"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    seasonality = ForecastingSeasonality.DeserializeForecastingSeasonality(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("shortSeriesHandlingConfig"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    shortSeriesHandlingConfig = new MachineLearningShortSeriesHandlingConfiguration(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("useStl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -327,6 +317,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     useStl = new MachineLearningUseStl(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetAggregateFunction"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetAggregateFunction = new TargetAggregationFunction(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("cvStepSize"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        cvStepSize = null;
+                        continue;
+                    }
+                    cvStepSize = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -337,19 +346,274 @@ namespace Azure.ResourceManager.MachineLearning.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new ForecastingSettings(
                 countryOrRegionForHolidays,
-                cvStepSize,
-                featureLags,
-                forecastHorizon,
-                frequency,
-                seasonality,
-                shortSeriesHandlingConfig,
-                targetAggregateFunction,
+                timeColumnName,
                 targetLags,
                 targetRollingWindowSize,
-                timeColumnName,
+                forecastHorizon,
                 timeSeriesIdColumnNames ?? new ChangeTrackingList<string>(),
+                frequency,
+                featureLags,
+                seasonality,
+                shortSeriesHandlingConfig,
                 useStl,
+                targetAggregateFunction,
+                cvStepSize,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CountryOrRegionForHolidays), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  countryOrRegionForHolidays: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CountryOrRegionForHolidays))
+                {
+                    builder.Append("  countryOrRegionForHolidays: ");
+                    if (CountryOrRegionForHolidays.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CountryOrRegionForHolidays}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CountryOrRegionForHolidays}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeColumnName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timeColumnName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimeColumnName))
+                {
+                    builder.Append("  timeColumnName: ");
+                    if (TimeColumnName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TimeColumnName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TimeColumnName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetLags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetLags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetLags))
+                {
+                    builder.Append("  targetLags: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TargetLags, options, 2, false, "  targetLags: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetRollingWindowSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetRollingWindowSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetRollingWindowSize))
+                {
+                    builder.Append("  targetRollingWindowSize: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TargetRollingWindowSize, options, 2, false, "  targetRollingWindowSize: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ForecastHorizon), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  forecastHorizon: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ForecastHorizon))
+                {
+                    builder.Append("  forecastHorizon: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ForecastHorizon, options, 2, false, "  forecastHorizon: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeSeriesIdColumnNames), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timeSeriesIdColumnNames: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(TimeSeriesIdColumnNames))
+                {
+                    if (TimeSeriesIdColumnNames.Any())
+                    {
+                        builder.Append("  timeSeriesIdColumnNames: ");
+                        builder.AppendLine("[");
+                        foreach (var item in TimeSeriesIdColumnNames)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Frequency), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  frequency: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Frequency))
+                {
+                    builder.Append("  frequency: ");
+                    if (Frequency.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Frequency}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Frequency}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FeatureLags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  featureLags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FeatureLags))
+                {
+                    builder.Append("  featureLags: ");
+                    builder.AppendLine($"'{FeatureLags.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Seasonality), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  seasonality: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Seasonality))
+                {
+                    builder.Append("  seasonality: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Seasonality, options, 2, false, "  seasonality: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShortSeriesHandlingConfig), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  shortSeriesHandlingConfig: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ShortSeriesHandlingConfig))
+                {
+                    builder.Append("  shortSeriesHandlingConfig: ");
+                    builder.AppendLine($"'{ShortSeriesHandlingConfig.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UseStl), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  useStl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UseStl))
+                {
+                    builder.Append("  useStl: ");
+                    builder.AppendLine($"'{UseStl.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetAggregateFunction), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetAggregateFunction: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetAggregateFunction))
+                {
+                    builder.Append("  targetAggregateFunction: ");
+                    builder.AppendLine($"'{TargetAggregateFunction.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CvStepSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cvStepSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CvStepSize))
+                {
+                    builder.Append("  cvStepSize: ");
+                    builder.AppendLine($"{CvStepSize.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ForecastingSettings>.Write(ModelReaderWriterOptions options)
@@ -360,6 +624,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ForecastingSettings)} does not support writing '{options.Format}' format.");
             }

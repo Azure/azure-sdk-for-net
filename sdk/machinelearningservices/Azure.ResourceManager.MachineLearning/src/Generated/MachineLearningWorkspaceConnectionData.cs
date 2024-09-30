@@ -87,6 +87,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Please note <see cref="MachineLearningWorkspaceConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AadAuthTypeWorkspaceConnectionProperties"/>, <see cref="AccessKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="AccountKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="ApiKeyAuthWorkspaceConnectionProperties"/>, <see cref="CustomKeysWorkspaceConnectionProperties"/>, <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="OAuth2AuthTypeWorkspaceConnectionProperties"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/>, <see cref="ServicePrincipalAuthTypeWorkspaceConnectionProperties"/> and <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
         /// </summary>
+        [WirePath("properties")]
         public MachineLearningWorkspaceConnectionProperties Properties { get; set; }
     }
 }

@@ -122,7 +122,7 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// <param name="credential"> The API key to authenticate with the service. </param>
     /// <param name="options"> The options to configure the client. </param>
     public AzureOpenAIClient(Uri endpoint, AzureKeyCredential credential, AzureOpenAIClientOptions options)
-        : this(CreatePipeline(credential?.Key, options), endpoint, options)
+        : this(CreatePipeline(new ApiKeyCredential(credential?.Key), options), endpoint, options)
     {
     }
 
@@ -192,6 +192,7 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// </summary>
     /// <param name="deploymentName"> The model deployment name to use for the new client's audio operations. </param>
     /// <returns> A new <see cref="BatchClient"/> instance. </returns>
+    [Experimental("OPENAI001")]
     public BatchClient GetBatchClient(string deploymentName)
         => new AzureBatchClient(Pipeline, deploymentName, _endpoint, _options);
 
@@ -200,6 +201,7 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// method that accepts a model deployment name, instead.
     /// </remarks>
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [Experimental("OPENAI001")]
     public override BatchClient GetBatchClient() => GetBatchClient(deploymentName: null);
 
     /// <summary>
@@ -229,6 +231,7 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// Gets a new <see cref="FineTuningClient"/> instance configured for fine-tuning operation use with the Azure OpenAI service.
     /// </summary>
     /// <returns> A new <see cref="FineTuningClient"/> instance. </returns>
+    [Experimental("OPENAI001")]
     public override FineTuningClient GetFineTuningClient()
         => new AzureFineTuningClient(Pipeline, _endpoint, _options);
 
