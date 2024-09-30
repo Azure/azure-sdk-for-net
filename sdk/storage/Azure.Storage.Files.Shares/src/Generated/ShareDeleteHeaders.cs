@@ -18,9 +18,9 @@ namespace Azure.Storage.Files.Shares
         }
         /// <summary> Indicates the version of the File service used to execute the request. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
-        /// <summary> The "live share" portion of the data that the customer will be billed for in the soft-deleted capacity (logical storage size). </summary>
-        public long? XMsShareUsageBytes => _response.Headers.TryGetValue("x-ms-share-usage-bytes", out long? value) ? value : null;
-        /// <summary> The snapshot share portion of the data that the customer will be billed for in the soft-deleted capacity (this is the delta, or "physical storage size"). </summary>
-        public long? XMsShareSnapshotUsageBytes => _response.Headers.TryGetValue("x-ms-share-snapshot-usage-bytes", out long? value) ? value : null;
+        /// <summary> Returned only for provisioned v2 file shares. Returns an approximate used storage size of the share, in bytes. </summary>
+        public long? XMsFileShareUsageBytes => _response.Headers.TryGetValue("x-ms-file-share-usage-bytes", out long? value) ? value : null;
+        /// <summary> Returned only for provisioned v2 file shares. Returns an approximate used snapshot storage size of the share, in bytes. </summary>
+        public long? XMsFileShareSnapshotUsageBytes => _response.Headers.TryGetValue("x-ms-file-share-snapshot-usage-bytes", out long? value) ? value : null;
     }
 }
