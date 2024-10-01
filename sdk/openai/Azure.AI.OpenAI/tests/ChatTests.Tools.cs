@@ -228,7 +228,10 @@ namespace Azure.AI.OpenAI.Tests
                     toolName ??= toolUpdate.FunctionName;
 
                     Assert.That(toolUpdate.FunctionArgumentsUpdate, Is.Not.Null);
-                    toolArgs.Append(toolUpdate.FunctionArgumentsUpdate);
+                    if (!toolUpdate.FunctionArgumentsUpdate.ToMemory().IsEmpty)
+                    {
+                        toolArgs.Append(toolUpdate.FunctionArgumentsUpdate.ToString());
+                    }
                 }
 
                 foreach (var part in update.ContentUpdate)

@@ -194,7 +194,10 @@ public partial class ChatTests
                 functionName ??= update.FunctionCallUpdate.FunctionName; 
 
                 Assert.That(update.FunctionCallUpdate.FunctionArgumentsUpdate, Is.Not.Null);
-                functionArgs.Append(update.FunctionCallUpdate.FunctionArgumentsUpdate);
+                if (!update.FunctionCallUpdate.FunctionArgumentsUpdate.ToMemory().IsEmpty)
+                {
+                    functionArgs.Append(update.FunctionCallUpdate.FunctionArgumentsUpdate.ToString());
+                }
             }
 
             foreach (var part in update.ContentUpdate)
