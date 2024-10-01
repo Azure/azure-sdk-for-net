@@ -819,7 +819,7 @@ namespace Azure.Provisioning.Primitives
     public abstract partial class NamedProvisioningConstruct : Azure.Provisioning.Primitives.ProvisioningConstruct
     {
         protected NamedProvisioningConstruct(string resourceName) { }
-        public string ResourceName { get { throw null; } }
+        public string ResourceName { get { throw null; } set { } }
     }
     public partial class OrderingInfrastructureResolver : Azure.Provisioning.Primitives.InfrastructureResolver
     {

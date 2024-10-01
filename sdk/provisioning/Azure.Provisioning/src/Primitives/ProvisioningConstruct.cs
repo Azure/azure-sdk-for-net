@@ -15,10 +15,11 @@ namespace Azure.Provisioning.Primitives;
 public abstract class NamedProvisioningConstruct(string resourceName) : ProvisioningConstruct
 {
     /// <summary>
-    /// Gets the the Bicep name of the resource.  This can be used to refer to
-    /// the resource in expressions, but isn't the Azure name of the resource.
+    /// Gets or sets the the Bicep name of the resource.  This can be used to
+    /// refer to the resource in expressions, but isn't the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
     /// </summary>
-    public string ResourceName { get; private set; } = resourceName;
+    public string ResourceName { get; set; } = resourceName;
 }
 
 public abstract class ProvisioningConstruct : Provisionable
