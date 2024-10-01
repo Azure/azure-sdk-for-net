@@ -1,16 +1,17 @@
 # Microsoft Azure terraform management client library for .NET
 
-**[Describe the service briefly first.]**
+The Azure Terraform Export API aims to export existing Azure resources into its equivalent Terraform configurations,
+for either azurerm provider or azapi provider. It is equivalent to ARM Template Export API for Terraform.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
-    - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
-    - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
-    - HTTP pipeline with custom policies.
-    - Better error-handling.
-    - Support uniform telemetry across all languages.
+- Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
+- Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
+- HTTP pipeline with custom policies.
+- Better error-handling.
+- Support uniform telemetry across all languages.
 
-## Getting started 
+## Getting started
 
 ### Install the package
 
@@ -22,7 +23,7 @@ dotnet add package Azure.ResourceManager.Terraform --prerelease
 
 ### Prerequisites
 
-* You must have an [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
+- You must have an [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
 ### Authenticate the Client
 
@@ -43,12 +44,13 @@ Documentation is available to help you learn how to use this package:
 ## Examples
 
 Code samples for using the management library for .NET can be found in the following locations
+
 - [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
 
 ## Troubleshooting
 
--   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
--   Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
+- File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
+- Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
 
 ## Next steps
 
