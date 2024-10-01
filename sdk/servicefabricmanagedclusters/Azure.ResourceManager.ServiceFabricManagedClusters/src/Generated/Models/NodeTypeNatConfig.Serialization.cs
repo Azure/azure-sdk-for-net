@@ -5,26 +5,15 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class NodeTypeNatConfig : IUtf8JsonSerializable, IJsonModel<NodeTypeNatConfig>
+    public partial class NodeTypeNatConfig : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NodeTypeNatConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<NodeTypeNatConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeNatConfig>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(NodeTypeNatConfig)} does not support writing '{format}' format.");
-            }
-
             writer.WriteStartObject();
             if (Optional.IsDefined(BackendPort))
             {
@@ -41,40 +30,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("frontendPortRangeEnd"u8);
                 writer.WriteNumberValue(FrontendPortRangeEnd.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
-        NodeTypeNatConfig IJsonModel<NodeTypeNatConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static NodeTypeNatConfig DeserializeNodeTypeNatConfig(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeNatConfig>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(NodeTypeNatConfig)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNodeTypeNatConfig(document.RootElement, options);
-        }
-
-        internal static NodeTypeNatConfig DeserializeNodeTypeNatConfig(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -82,8 +42,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             int? backendPort = default;
             int? frontendPortRangeStart = default;
             int? frontendPortRangeEnd = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backendPort"u8))
@@ -113,44 +71,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     frontendPortRangeEnd = property.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NodeTypeNatConfig(backendPort, frontendPortRangeStart, frontendPortRangeEnd, serializedAdditionalRawData);
+            return new NodeTypeNatConfig(backendPort, frontendPortRangeStart, frontendPortRangeEnd);
         }
-
-        BinaryData IPersistableModel<NodeTypeNatConfig>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeNatConfig>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(NodeTypeNatConfig)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NodeTypeNatConfig IPersistableModel<NodeTypeNatConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeNatConfig>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNodeTypeNatConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NodeTypeNatConfig)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NodeTypeNatConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

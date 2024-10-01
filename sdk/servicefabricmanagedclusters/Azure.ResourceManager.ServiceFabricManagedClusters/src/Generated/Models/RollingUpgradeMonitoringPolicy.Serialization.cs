@@ -6,25 +6,15 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class RollingUpgradeMonitoringPolicy : IUtf8JsonSerializable, IJsonModel<RollingUpgradeMonitoringPolicy>
+    public partial class RollingUpgradeMonitoringPolicy : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RollingUpgradeMonitoringPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<RollingUpgradeMonitoringPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RollingUpgradeMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(RollingUpgradeMonitoringPolicy)} does not support writing '{format}' format.");
-            }
-
             writer.WriteStartObject();
             writer.WritePropertyName("failureAction"u8);
             writer.WriteStringValue(FailureAction.ToString());
@@ -38,40 +28,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStringValue(UpgradeTimeout, "c");
             writer.WritePropertyName("upgradeDomainTimeout"u8);
             writer.WriteStringValue(UpgradeDomainTimeout, "c");
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
-        RollingUpgradeMonitoringPolicy IJsonModel<RollingUpgradeMonitoringPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static RollingUpgradeMonitoringPolicy DeserializeRollingUpgradeMonitoringPolicy(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RollingUpgradeMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(RollingUpgradeMonitoringPolicy)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRollingUpgradeMonitoringPolicy(document.RootElement, options);
-        }
-
-        internal static RollingUpgradeMonitoringPolicy DeserializeRollingUpgradeMonitoringPolicy(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -82,8 +43,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             TimeSpan healthCheckRetryTimeout = default;
             TimeSpan upgradeTimeout = default;
             TimeSpan upgradeDomainTimeout = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failureAction"u8))
@@ -116,51 +75,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     upgradeDomainTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RollingUpgradeMonitoringPolicy(
                 failureAction,
                 healthCheckWaitDuration,
                 healthCheckStableDuration,
                 healthCheckRetryTimeout,
                 upgradeTimeout,
-                upgradeDomainTimeout,
-                serializedAdditionalRawData);
+                upgradeDomainTimeout);
         }
-
-        BinaryData IPersistableModel<RollingUpgradeMonitoringPolicy>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RollingUpgradeMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(RollingUpgradeMonitoringPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RollingUpgradeMonitoringPolicy IPersistableModel<RollingUpgradeMonitoringPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RollingUpgradeMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRollingUpgradeMonitoringPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RollingUpgradeMonitoringPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RollingUpgradeMonitoringPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

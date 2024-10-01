@@ -8,16 +8,14 @@ azure-arm: true
 csharp: true
 library-name: ServiceFabricManagedClusters
 namespace: Azure.ResourceManager.ServiceFabricManagedClusters
-
-require:  https://github.com/Azure/azure-rest-api-specs/blob/5539bbe1f023b10ffa3b61c9106cb8d34a27038e/specification/servicefabricmanagedclusters/resource-manager/readme.md
+require:  https://github.com/Azure/azure-rest-api-specs/blob/e79d9ef3e065f2dcb6bd1db51e29c62a99dff5cb/specification/servicefabricmanagedclusters/resource-manager/readme.md
 
 input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/5539bbe1f023b10ffa3b61c9106cb8d34a27038e/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/managedcluster.json
-- https://github.com/Azure/azure-rest-api-specs/blob/5539bbe1f023b10ffa3b61c9106cb8d34a27038e/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/nodetype.json
-- https://github.com/Azure/azure-rest-api-specs/blob/5539bbe1f023b10ffa3b61c9106cb8d34a27038e/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/nodetype.json
+- https://github.com/Azure/azure-rest-api-specs/blob/e79d9ef3e065f2dcb6bd1db51e29c62a99dff5cb/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/managedcluster.json
+- https://github.com/Azure/azure-rest-api-specs/blob/e79d9ef3e065f2dcb6bd1db51e29c62a99dff5cb/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/nodetype.json
+- https://github.com/Azure/azure-rest-api-specs/blob/e79d9ef3e065f2dcb6bd1db51e29c62a99dff5cb/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-06-01-preview/managedapplication.json
 
-tag: package-2024-04
-
+tag: package-2024-06-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -26,7 +24,6 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-use-model-reader-writer: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -77,12 +74,12 @@ acronym-mapping:
   SSD: Ssd
 
 override-operation-name:
-  managedAzResiliencyStatus_Get: GetManagedAzResiliencyStatus
+  managedAzResiliencyStatus_get: GetManagedAzResiliencyStatus
   NodeTypeSkus_List: GetAvailableSkus
   managedUnsupportedVMSizes_Get: GetManagedUnsupportedVmSize
   managedUnsupportedVMSizes_List: GetManagedUnsupportedVmSizes
   ManagedClusterVersion_GetByEnvironment: GetManagedClusterVersionByEnvironment
-  managedMaintenanceWindowStatus_Get: GetManagedMaintenanceWindowStatus
+  managedAzResiliencyStatus_Get: GetManagedAzResiliencyStatus
 
 rename-mapping:
   ApplicationResource: ServiceFabricManagedApplication
@@ -103,7 +100,6 @@ rename-mapping:
   ManagedCluster.properties.ipv4Address: -|ip-address
   ManagedCluster.properties.ipv6Address: -|ip-address
   ManagedCluster.properties.zonalResiliency: HasZoneResiliency
-  ManagedCluster.properties.enableHttpGatewayExclusiveAuthMode: IsHttpGatewayExclusiveAuthModeEnabled
   Subnet: ManagedClusterSubnet
   Subnet.enableIpv6: IsIPv6Enabled
   Subnet.networkSecurityGroupId: -|arm-id
@@ -111,13 +107,9 @@ rename-mapping:
   ClientCertificate: ManagedClusterClientCertificate
   ClientCertificate.thumbprint: -|any
   ClientCertificate.issuerThumbprint: -|any
-  ClusterHealthPolicy: ManagedClusterHealthPolicy
-  ClusterMonitoringPolicy: ManagedClusterMonitoringPolicy
   ClusterState: ServiceFabricManagedClusterState
   ClusterUpgradeCadence: ManagedClusterUpgradeCadence
-  ClusterUpgradeDeltaHealthPolicy: ManagedClusterUpgradeDeltaHealthPolicy
   ClusterUpgradeMode: ManagedClusterUpgradeMode
-  ClusterUpgradePolicy: ManagedClusterUpgradePolicy
   SettingsSectionDescription: ClusterFabricSettingsSection
   SettingsParameterDescription: ClusterFabricSettingsParameterDescription
   IpTag: ManagedClusterIPTag
@@ -134,7 +126,6 @@ rename-mapping:
   NodeType.properties.enableEncryptionAtHost: IsEncryptionAtHostEnabled
   NodeType.properties.enableOverProvisioning: IsOverProvisioningEnabled
   NodeType.properties.multiplePlacementGroups: HasMultiplePlacementGroups
-  NodeType.properties.enableNodePublicIPv6: IsNodePublicIPv6Enabled
   VmssDataDisk: NodeTypeVmssDataDisk
   VmssDataDisk.diskSizeGB: DiskSizeInGB
   VmssExtension: NodeTypeVmssExtension
@@ -181,13 +172,6 @@ rename-mapping:
   ResourceAzStatus.resourceType: -|resource-type
   SecurityType: ServiceFabricManagedClusterSecurityType
   UpdateType: ServiceFabricManagedClusterUpdateType
-  IpConfiguration: ServiceFabricManagedClusterIPConfiguration
-  IpConfigurationPublicIPAddressConfiguration: ServiceFabricManagedClusterPublicIPAddressConfiguration
-  ManagedMaintenanceWindowStatus.lastWindowStatusUpdateAtUTC: LastWindowStatusUpdatedOn
-  ManagedMaintenanceWindowStatus.lastWindowStartTimeUTC: LastWindowStartOn
-  ManagedMaintenanceWindowStatus.lastWindowEndTimeUTC: LastWindowEndOn
-  PrivateIPAddressVersion: ServiceFabricManagedClusterPrivateIPAddressVersion
-  PublicIPAddressVersion: ServiceFabricManagedClusterPublicIPAddressVersion
 
 suppress-abstract-base-class:
 - ManagedServiceProperties

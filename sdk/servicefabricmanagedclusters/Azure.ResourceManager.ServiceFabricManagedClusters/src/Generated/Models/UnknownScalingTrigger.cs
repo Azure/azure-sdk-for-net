@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Unknown version of ScalingTrigger. </summary>
@@ -15,15 +12,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownScalingTrigger"/>. </summary>
         /// <param name="kind"> Specifies the trigger associated with this scaling policy. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownScalingTrigger(ServiceScalingTriggerKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
+        internal UnknownScalingTrigger(ServiceScalingTriggerKind kind) : base(kind)
         {
             Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownScalingTrigger"/> for deserialization. </summary>
-        internal UnknownScalingTrigger()
-        {
         }
     }
 }

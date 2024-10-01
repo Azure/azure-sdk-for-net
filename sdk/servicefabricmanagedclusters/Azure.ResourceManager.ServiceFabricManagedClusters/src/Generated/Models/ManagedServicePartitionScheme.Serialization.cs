@@ -5,63 +5,23 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    [PersistableModelProxy(typeof(UnknownPartition))]
-    public partial class ManagedServicePartitionScheme : IUtf8JsonSerializable, IJsonModel<ManagedServicePartitionScheme>
+    public partial class ManagedServicePartitionScheme : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServicePartitionScheme>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<ManagedServicePartitionScheme>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicePartitionScheme>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ManagedServicePartitionScheme)} does not support writing '{format}' format.");
-            }
-
             writer.WriteStartObject();
             writer.WritePropertyName("partitionScheme"u8);
             writer.WriteStringValue(PartitionScheme.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
-        ManagedServicePartitionScheme IJsonModel<ManagedServicePartitionScheme>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static ManagedServicePartitionScheme DeserializeManagedServicePartitionScheme(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicePartitionScheme>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ManagedServicePartitionScheme)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedServicePartitionScheme(document.RootElement, options);
-        }
-
-        internal static ManagedServicePartitionScheme DeserializeManagedServicePartitionScheme(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,43 +30,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Named": return NamedPartitionScheme.DeserializeNamedPartitionScheme(element, options);
-                    case "Singleton": return SingletonPartitionScheme.DeserializeSingletonPartitionScheme(element, options);
-                    case "UniformInt64Range": return UniformInt64RangePartitionScheme.DeserializeUniformInt64RangePartitionScheme(element, options);
+                    case "Named": return NamedPartitionScheme.DeserializeNamedPartitionScheme(element);
+                    case "Singleton": return SingletonPartitionScheme.DeserializeSingletonPartitionScheme(element);
+                    case "UniformInt64Range": return UniformInt64RangePartitionScheme.DeserializeUniformInt64RangePartitionScheme(element);
                 }
             }
-            return UnknownPartition.DeserializeUnknownPartition(element, options);
+            return UnknownPartition.DeserializeUnknownPartition(element);
         }
-
-        BinaryData IPersistableModel<ManagedServicePartitionScheme>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicePartitionScheme>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(ManagedServicePartitionScheme)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ManagedServicePartitionScheme IPersistableModel<ManagedServicePartitionScheme>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicePartitionScheme>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeManagedServicePartitionScheme(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ManagedServicePartitionScheme)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ManagedServicePartitionScheme>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,84 +5,21 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    internal partial class NodeTypeListResult : IUtf8JsonSerializable, IJsonModel<NodeTypeListResult>
+    internal partial class NodeTypeListResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NodeTypeListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<NodeTypeListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        internal static NodeTypeListResult DeserializeNodeTypeListResult(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeListResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(NodeTypeListResult)} does not support writing '{format}' format.");
-            }
-
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(NextLink))
-            {
-                writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
-        }
-
-        NodeTypeListResult IJsonModel<NodeTypeListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeListResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(NodeTypeListResult)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNodeTypeListResult(document.RootElement, options);
-        }
-
-        internal static NodeTypeListResult DeserializeNodeTypeListResult(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<ServiceFabricManagedNodeTypeData> value = default;
             string nextLink = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -94,7 +31,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ServiceFabricManagedNodeTypeData> array = new List<ServiceFabricManagedNodeTypeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricManagedNodeTypeData.DeserializeServiceFabricManagedNodeTypeData(item, options));
+                        array.Add(ServiceFabricManagedNodeTypeData.DeserializeServiceFabricManagedNodeTypeData(item));
                     }
                     value = array;
                     continue;
@@ -104,44 +41,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NodeTypeListResult(value ?? new ChangeTrackingList<ServiceFabricManagedNodeTypeData>(), nextLink, serializedAdditionalRawData);
+            return new NodeTypeListResult(value ?? new ChangeTrackingList<ServiceFabricManagedNodeTypeData>(), nextLink);
         }
-
-        BinaryData IPersistableModel<NodeTypeListResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeListResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(NodeTypeListResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NodeTypeListResult IPersistableModel<NodeTypeListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeListResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNodeTypeListResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NodeTypeListResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NodeTypeListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

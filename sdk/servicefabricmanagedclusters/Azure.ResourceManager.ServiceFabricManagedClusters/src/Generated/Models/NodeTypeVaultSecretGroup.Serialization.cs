@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,18 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class NodeTypeVaultSecretGroup : IUtf8JsonSerializable, IJsonModel<NodeTypeVaultSecretGroup>
+    public partial class NodeTypeVaultSecretGroup : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NodeTypeVaultSecretGroup>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<NodeTypeVaultSecretGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeVaultSecretGroup>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(NodeTypeVaultSecretGroup)} does not support writing '{format}' format.");
-            }
-
             writer.WriteStartObject();
             writer.WritePropertyName("sourceVault"u8);
             JsonSerializer.Serialize(writer, SourceVault);
@@ -33,51 +23,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartArray();
             foreach (var item in VaultCertificates)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
-        NodeTypeVaultSecretGroup IJsonModel<NodeTypeVaultSecretGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static NodeTypeVaultSecretGroup DeserializeNodeTypeVaultSecretGroup(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeVaultSecretGroup>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(NodeTypeVaultSecretGroup)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNodeTypeVaultSecretGroup(document.RootElement, options);
-        }
-
-        internal static NodeTypeVaultSecretGroup DeserializeNodeTypeVaultSecretGroup(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             WritableSubResource sourceVault = default;
             IList<NodeTypeVaultCertificate> vaultCertificates = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceVault"u8))
@@ -90,49 +49,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<NodeTypeVaultCertificate> array = new List<NodeTypeVaultCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeTypeVaultCertificate.DeserializeNodeTypeVaultCertificate(item, options));
+                        array.Add(NodeTypeVaultCertificate.DeserializeNodeTypeVaultCertificate(item));
                     }
                     vaultCertificates = array;
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NodeTypeVaultSecretGroup(sourceVault, vaultCertificates, serializedAdditionalRawData);
+            return new NodeTypeVaultSecretGroup(sourceVault, vaultCertificates);
         }
-
-        BinaryData IPersistableModel<NodeTypeVaultSecretGroup>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeVaultSecretGroup>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(NodeTypeVaultSecretGroup)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NodeTypeVaultSecretGroup IPersistableModel<NodeTypeVaultSecretGroup>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeVaultSecretGroup>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNodeTypeVaultSecretGroup(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NodeTypeVaultSecretGroup)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NodeTypeVaultSecretGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

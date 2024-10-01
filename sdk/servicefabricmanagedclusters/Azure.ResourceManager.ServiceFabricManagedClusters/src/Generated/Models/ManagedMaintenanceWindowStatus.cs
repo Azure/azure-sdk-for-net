@@ -6,45 +6,12 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Describes the maintenance window status of the Service Fabric Managed Cluster. </summary>
     public partial class ManagedMaintenanceWindowStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ManagedMaintenanceWindowStatus"/>. </summary>
         internal ManagedMaintenanceWindowStatus()
         {
@@ -55,20 +22,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="isRegionReady"> Indicates if the region is ready to configure maintenance windows. </param>
         /// <param name="isWindowActive"> If maintenance window is active. </param>
         /// <param name="canApplyUpdates"> If updates can be applied. </param>
-        /// <param name="lastWindowStatusUpdatedOn"> Last window update time in UTC. </param>
-        /// <param name="lastWindowStartOn"> Last window start time in UTC. </param>
-        /// <param name="lastWindowEndOn"> Last window end time in UTC. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedMaintenanceWindowStatus(bool? isWindowEnabled, bool? isRegionReady, bool? isWindowActive, bool? canApplyUpdates, DateTimeOffset? lastWindowStatusUpdatedOn, DateTimeOffset? lastWindowStartOn, DateTimeOffset? lastWindowEndOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="lastWindowStatusUpdateAtUTC"> Last window update time in UTC. </param>
+        /// <param name="lastWindowStartTimeUTC"> Last window start time in UTC. </param>
+        /// <param name="lastWindowEndTimeUTC"> Last window end time in UTC. </param>
+        internal ManagedMaintenanceWindowStatus(bool? isWindowEnabled, bool? isRegionReady, bool? isWindowActive, bool? canApplyUpdates, DateTimeOffset? lastWindowStatusUpdateAtUTC, DateTimeOffset? lastWindowStartTimeUTC, DateTimeOffset? lastWindowEndTimeUTC)
         {
             IsWindowEnabled = isWindowEnabled;
             IsRegionReady = isRegionReady;
             IsWindowActive = isWindowActive;
             CanApplyUpdates = canApplyUpdates;
-            LastWindowStatusUpdatedOn = lastWindowStatusUpdatedOn;
-            LastWindowStartOn = lastWindowStartOn;
-            LastWindowEndOn = lastWindowEndOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            LastWindowStatusUpdateAtUTC = lastWindowStatusUpdateAtUTC;
+            LastWindowStartTimeUTC = lastWindowStartTimeUTC;
+            LastWindowEndTimeUTC = lastWindowEndTimeUTC;
         }
 
         /// <summary> If maintenance window is enabled on this cluster. </summary>
@@ -80,10 +45,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> If updates can be applied. </summary>
         public bool? CanApplyUpdates { get; }
         /// <summary> Last window update time in UTC. </summary>
-        public DateTimeOffset? LastWindowStatusUpdatedOn { get; }
+        public DateTimeOffset? LastWindowStatusUpdateAtUTC { get; }
         /// <summary> Last window start time in UTC. </summary>
-        public DateTimeOffset? LastWindowStartOn { get; }
+        public DateTimeOffset? LastWindowStartTimeUTC { get; }
         /// <summary> Last window end time in UTC. </summary>
-        public DateTimeOffset? LastWindowEndOn { get; }
+        public DateTimeOffset? LastWindowEndTimeUTC { get; }
     }
 }

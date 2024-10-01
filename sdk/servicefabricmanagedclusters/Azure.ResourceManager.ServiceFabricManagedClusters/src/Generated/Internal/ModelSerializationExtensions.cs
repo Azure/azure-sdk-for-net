@@ -167,15 +167,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             writer.WriteNumberValue(value.ToUnixTimeSeconds());
         }
 
-        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value, ModelReaderWriterOptions options = null)
+        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value)
         {
             switch (value)
             {
                 case null:
                     writer.WriteNullValue();
-                    break;
-                case IJsonModel<T> jsonModel:
-                    jsonModel.Write(writer, options ?? WireOptions);
                     break;
                 case IUtf8JsonSerializable serializable:
                     serializable.Write(writer);
@@ -231,7 +228,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     foreach (var pair in enumerable)
                     {
                         writer.WritePropertyName(pair.Key);
-                        writer.WriteObjectValue<object>(pair.Value, options);
+                        writer.WriteObjectValue<object>(pair.Value);
                     }
                     writer.WriteEndObject();
                     break;
@@ -239,7 +236,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     writer.WriteStartArray();
                     foreach (var item in objectEnumerable)
                     {
-                        writer.WriteObjectValue<object>(item, options);
+                        writer.WriteObjectValue<object>(item);
                     }
                     writer.WriteEndArray();
                     break;
@@ -251,9 +248,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        public static void WriteObjectValue(this Utf8JsonWriter writer, object value, ModelReaderWriterOptions options = null)
+        public static void WriteObjectValue(this Utf8JsonWriter writer, object value)
         {
-            writer.WriteObjectValue<object>(value, options);
+            writer.WriteObjectValue<object>(value);
         }
 
         internal static class TypeFormatters

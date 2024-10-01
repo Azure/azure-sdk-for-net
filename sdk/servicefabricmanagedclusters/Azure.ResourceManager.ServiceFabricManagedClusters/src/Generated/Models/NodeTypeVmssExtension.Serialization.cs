@@ -6,25 +6,16 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class NodeTypeVmssExtension : IUtf8JsonSerializable, IJsonModel<NodeTypeVmssExtension>
+    public partial class NodeTypeVmssExtension : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NodeTypeVmssExtension>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<NodeTypeVmssExtension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeVmssExtension>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(NodeTypeVmssExtension)} does not support writing '{format}' format.");
-            }
-
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -80,11 +71,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
-            }
             if (Optional.IsDefined(IsAutomaticUpgradeEnabled))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
@@ -101,40 +87,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
-        NodeTypeVmssExtension IJsonModel<NodeTypeVmssExtension>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static NodeTypeVmssExtension DeserializeNodeTypeVmssExtension(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeVmssExtension>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(NodeTypeVmssExtension)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNodeTypeVmssExtension(document.RootElement, options);
-        }
-
-        internal static NodeTypeVmssExtension DeserializeNodeTypeVmssExtension(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -151,8 +108,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             string provisioningState = default;
             bool? enableAutomaticUpgrade = default;
             IList<VmssExtensionSetupOrder> setupOrder = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -261,12 +216,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     }
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new NodeTypeVmssExtension(
                 name,
                 publisher,
@@ -279,39 +229,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 provisionAfterExtensions ?? new ChangeTrackingList<string>(),
                 provisioningState,
                 enableAutomaticUpgrade,
-                setupOrder ?? new ChangeTrackingList<VmssExtensionSetupOrder>(),
-                serializedAdditionalRawData);
+                setupOrder ?? new ChangeTrackingList<VmssExtensionSetupOrder>());
         }
-
-        BinaryData IPersistableModel<NodeTypeVmssExtension>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeVmssExtension>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(NodeTypeVmssExtension)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NodeTypeVmssExtension IPersistableModel<NodeTypeVmssExtension>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NodeTypeVmssExtension>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNodeTypeVmssExtension(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NodeTypeVmssExtension)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NodeTypeVmssExtension>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

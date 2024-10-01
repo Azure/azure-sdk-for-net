@@ -5,31 +5,20 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ApplicationUpgradePolicy : IUtf8JsonSerializable, IJsonModel<ApplicationUpgradePolicy>
+    public partial class ApplicationUpgradePolicy : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationUpgradePolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<ApplicationUpgradePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ApplicationUpgradePolicy)} does not support writing '{format}' format.");
-            }
-
             writer.WriteStartObject();
             if (Optional.IsDefined(ApplicationHealthPolicy))
             {
                 writer.WritePropertyName("applicationHealthPolicy"u8);
-                writer.WriteObjectValue(ApplicationHealthPolicy, options);
+                writer.WriteObjectValue(ApplicationHealthPolicy);
             }
             if (Optional.IsDefined(ForceRestart))
             {
@@ -39,7 +28,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(RollingUpgradeMonitoringPolicy))
             {
                 writer.WritePropertyName("rollingUpgradeMonitoringPolicy"u8);
-                writer.WriteObjectValue(RollingUpgradeMonitoringPolicy, options);
+                writer.WriteObjectValue(RollingUpgradeMonitoringPolicy);
             }
             if (Optional.IsDefined(InstanceCloseDelayDurationInSeconds))
             {
@@ -61,40 +50,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("recreateApplication"u8);
                 writer.WriteBooleanValue(RecreateApplication.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
-        ApplicationUpgradePolicy IJsonModel<ApplicationUpgradePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static ApplicationUpgradePolicy DeserializeApplicationUpgradePolicy(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ApplicationUpgradePolicy)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApplicationUpgradePolicy(document.RootElement, options);
-        }
-
-        internal static ApplicationUpgradePolicy DeserializeApplicationUpgradePolicy(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -106,8 +66,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             RollingUpgradeMode? upgradeMode = default;
             long? upgradeReplicaSetCheckTimeout = default;
             bool? recreateApplication = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationHealthPolicy"u8))
@@ -116,7 +74,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    applicationHealthPolicy = ApplicationHealthPolicy.DeserializeApplicationHealthPolicy(property.Value, options);
+                    applicationHealthPolicy = ApplicationHealthPolicy.DeserializeApplicationHealthPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("forceRestart"u8))
@@ -134,7 +92,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    rollingUpgradeMonitoringPolicy = RollingUpgradeMonitoringPolicy.DeserializeRollingUpgradeMonitoringPolicy(property.Value, options);
+                    rollingUpgradeMonitoringPolicy = RollingUpgradeMonitoringPolicy.DeserializeRollingUpgradeMonitoringPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceCloseDelayDuration"u8))
@@ -173,12 +131,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     recreateApplication = property.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationUpgradePolicy(
                 applicationHealthPolicy,
                 forceRestart,
@@ -186,39 +139,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 instanceCloseDelayDuration,
                 upgradeMode,
                 upgradeReplicaSetCheckTimeout,
-                recreateApplication,
-                serializedAdditionalRawData);
+                recreateApplication);
         }
-
-        BinaryData IPersistableModel<ApplicationUpgradePolicy>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationUpgradePolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ApplicationUpgradePolicy IPersistableModel<ApplicationUpgradePolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeApplicationUpgradePolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationUpgradePolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ApplicationUpgradePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

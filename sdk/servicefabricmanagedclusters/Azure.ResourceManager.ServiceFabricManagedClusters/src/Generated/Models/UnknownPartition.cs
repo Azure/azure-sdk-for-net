@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Unknown version of Partition. </summary>
@@ -15,15 +12,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPartition"/>. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownPartition(PartitionScheme partitionScheme, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(partitionScheme, serializedAdditionalRawData)
+        internal UnknownPartition(PartitionScheme partitionScheme) : base(partitionScheme)
         {
             PartitionScheme = partitionScheme;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownPartition"/> for deserialization. </summary>
-        internal UnknownPartition()
-        {
         }
     }
 }

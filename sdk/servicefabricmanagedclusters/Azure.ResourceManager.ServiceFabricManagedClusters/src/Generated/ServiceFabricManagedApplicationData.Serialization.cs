@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -15,18 +13,10 @@ using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    public partial class ServiceFabricManagedApplicationData : IUtf8JsonSerializable, IJsonModel<ServiceFabricManagedApplicationData>
+    public partial class ServiceFabricManagedApplicationData : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricManagedApplicationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<ServiceFabricManagedApplicationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedApplicationData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ServiceFabricManagedApplicationData)} does not support writing '{format}' format.");
-            }
-
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -46,33 +36,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
-            }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
@@ -92,7 +57,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
-                writer.WriteObjectValue(UpgradePolicy, options);
+                writer.WriteObjectValue(UpgradePolicy);
             }
             if (Optional.IsCollectionDefined(ManagedIdentities))
             {
@@ -100,45 +65,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in ManagedIdentities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
-        ServiceFabricManagedApplicationData IJsonModel<ServiceFabricManagedApplicationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static ServiceFabricManagedApplicationData DeserializeServiceFabricManagedApplicationData(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedApplicationData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ServiceFabricManagedApplicationData)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeServiceFabricManagedApplicationData(document.RootElement, options);
-        }
-
-        internal static ServiceFabricManagedApplicationData DeserializeServiceFabricManagedApplicationData(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -155,8 +91,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             IDictionary<string, string> parameters = default;
             ApplicationUpgradePolicy upgradePolicy = default;
             IList<ApplicationUserAssignedIdentityInfo> managedIdentities = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -250,7 +184,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            upgradePolicy = ApplicationUpgradePolicy.DeserializeApplicationUpgradePolicy(property0.Value, options);
+                            upgradePolicy = ApplicationUpgradePolicy.DeserializeApplicationUpgradePolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managedIdentities"u8))
@@ -262,7 +196,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<ApplicationUserAssignedIdentityInfo> array = new List<ApplicationUserAssignedIdentityInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationUserAssignedIdentityInfo.DeserializeApplicationUserAssignedIdentityInfo(item, options));
+                                array.Add(ApplicationUserAssignedIdentityInfo.DeserializeApplicationUserAssignedIdentityInfo(item));
                             }
                             managedIdentities = array;
                             continue;
@@ -270,12 +204,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     }
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceFabricManagedApplicationData(
                 id,
                 name,
@@ -288,39 +217,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 version,
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
                 upgradePolicy,
-                managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentityInfo>(),
-                serializedAdditionalRawData);
+                managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentityInfo>());
         }
-
-        BinaryData IPersistableModel<ServiceFabricManagedApplicationData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedApplicationData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(ServiceFabricManagedApplicationData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ServiceFabricManagedApplicationData IPersistableModel<ServiceFabricManagedApplicationData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedApplicationData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeServiceFabricManagedApplicationData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServiceFabricManagedApplicationData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ServiceFabricManagedApplicationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,45 +6,12 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Specifies a metric to load balance a service during runtime. </summary>
     public partial class ManagedServiceLoadMetric
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ManagedServiceLoadMetric"/>. </summary>
         /// <param name="name"> The name of the metric. If the service chooses to report load during runtime, the load metric name should match the name that is specified in Name exactly. Note that metric names are case sensitive. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -61,20 +28,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="primaryDefaultLoad"> Used only for Stateful services. The default amount of load, as a number, that this service creates for this metric when it is a Primary replica. </param>
         /// <param name="secondaryDefaultLoad"> Used only for Stateful services. The default amount of load, as a number, that this service creates for this metric when it is a Secondary replica. </param>
         /// <param name="defaultLoad"> Used only for Stateless services. The default amount of load, as a number, that this service creates for this metric. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedServiceLoadMetric(string name, ManagedServiceLoadMetricWeight? weight, int? primaryDefaultLoad, int? secondaryDefaultLoad, int? defaultLoad, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedServiceLoadMetric(string name, ManagedServiceLoadMetricWeight? weight, int? primaryDefaultLoad, int? secondaryDefaultLoad, int? defaultLoad)
         {
             Name = name;
             Weight = weight;
             PrimaryDefaultLoad = primaryDefaultLoad;
             SecondaryDefaultLoad = secondaryDefaultLoad;
             DefaultLoad = defaultLoad;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedServiceLoadMetric"/> for deserialization. </summary>
-        internal ManagedServiceLoadMetric()
-        {
         }
 
         /// <summary> The name of the metric. If the service chooses to report load during runtime, the load metric name should match the name that is specified in Name exactly. Note that metric names are case sensitive. </summary>

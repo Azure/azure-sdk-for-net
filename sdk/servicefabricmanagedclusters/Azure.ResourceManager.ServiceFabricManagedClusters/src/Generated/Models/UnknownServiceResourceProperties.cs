@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
@@ -24,7 +23,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </param>
         /// <param name="defaultMoveCost"> Specifies the move cost for the service. </param>
         /// <param name="scalingPolicies"> Scaling policies for this service. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
         /// <param name="serviceKind"> The kind of service (Stateless or Stateful). </param>
         /// <param name="serviceTypeName"> The name of the service type. </param>
@@ -40,14 +38,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// When removing serviceDnsName, removed name may temporarily be resolvable. Do not rely on the name being unresolvable.
         ///
         /// </param>
-        internal UnknownServiceResourceProperties(string placementConstraints, IList<ManagedServiceCorrelation> correlationScheme, IList<ManagedServiceLoadMetric> serviceLoadMetrics, IList<ManagedServicePlacementPolicy> servicePlacementPolicies, ServiceFabricManagedServiceMoveCost? defaultMoveCost, IList<ManagedServiceScalingPolicy> scalingPolicies, IDictionary<string, BinaryData> serializedAdditionalRawData, string provisioningState, ServiceKind serviceKind, string serviceTypeName, ManagedServicePartitionScheme partitionDescription, ManagedServicePackageActivationMode? servicePackageActivationMode, string serviceDnsName) : base(placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost, scalingPolicies, serializedAdditionalRawData, provisioningState, serviceKind, serviceTypeName, partitionDescription, servicePackageActivationMode, serviceDnsName)
+        internal UnknownServiceResourceProperties(string placementConstraints, IList<ManagedServiceCorrelation> correlationScheme, IList<ManagedServiceLoadMetric> serviceLoadMetrics, IList<ManagedServicePlacementPolicy> servicePlacementPolicies, ServiceFabricManagedServiceMoveCost? defaultMoveCost, IList<ManagedServiceScalingPolicy> scalingPolicies, string provisioningState, ServiceKind serviceKind, string serviceTypeName, ManagedServicePartitionScheme partitionDescription, ManagedServicePackageActivationMode? servicePackageActivationMode, string serviceDnsName) : base(placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost, scalingPolicies, provisioningState, serviceKind, serviceTypeName, partitionDescription, servicePackageActivationMode, serviceDnsName)
         {
             ServiceKind = serviceKind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownServiceResourceProperties"/> for deserialization. </summary>
-        internal UnknownServiceResourceProperties()
-        {
         }
     }
 }
