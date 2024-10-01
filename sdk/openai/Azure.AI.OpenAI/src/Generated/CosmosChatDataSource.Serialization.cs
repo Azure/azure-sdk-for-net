@@ -10,14 +10,14 @@ using System.Text.Json;
 
 namespace Azure.AI.OpenAI.Chat
 {
-    public partial class AzureCosmosDBChatDataSource : IJsonModel<AzureCosmosDBChatDataSource>
+    public partial class CosmosChatDataSource : IJsonModel<CosmosChatDataSource>
     {
-        void IJsonModel<AzureCosmosDBChatDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CosmosChatDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureCosmosDBChatDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosChatDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureCosmosDBChatDataSource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosChatDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,19 +53,19 @@ namespace Azure.AI.OpenAI.Chat
             writer.WriteEndObject();
         }
 
-        AzureCosmosDBChatDataSource IJsonModel<AzureCosmosDBChatDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CosmosChatDataSource IJsonModel<CosmosChatDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureCosmosDBChatDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosChatDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureCosmosDBChatDataSource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosChatDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureCosmosDBChatDataSource(document.RootElement, options);
+            return DeserializeCosmosChatDataSource(document.RootElement, options);
         }
 
-        internal static AzureCosmosDBChatDataSource DeserializeAzureCosmosDBChatDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CosmosChatDataSource DeserializeCosmosChatDataSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,46 +96,46 @@ namespace Azure.AI.OpenAI.Chat
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AzureCosmosDBChatDataSource(type, serializedAdditionalRawData, parameters);
+            return new CosmosChatDataSource(type, serializedAdditionalRawData, parameters);
         }
 
-        BinaryData IPersistableModel<AzureCosmosDBChatDataSource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CosmosChatDataSource>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureCosmosDBChatDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosChatDataSource>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureCosmosDBChatDataSource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosChatDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AzureCosmosDBChatDataSource IPersistableModel<AzureCosmosDBChatDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CosmosChatDataSource IPersistableModel<CosmosChatDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureCosmosDBChatDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosChatDataSource>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAzureCosmosDBChatDataSource(document.RootElement, options);
+                        return DeserializeCosmosChatDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureCosmosDBChatDataSource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosChatDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AzureCosmosDBChatDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CosmosChatDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The result to deserialize the model from. </param>
-        internal static new AzureCosmosDBChatDataSource FromResponse(PipelineResponse response)
+        internal static new CosmosChatDataSource FromResponse(PipelineResponse response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAzureCosmosDBChatDataSource(document.RootElement);
+            return DeserializeCosmosChatDataSource(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="BinaryContent"/>. </summary>

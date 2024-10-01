@@ -9,7 +9,7 @@ using System.Linq;
 namespace Azure.AI.OpenAI.Chat
 {
     /// <summary> The AzureChatMessageContextAllRetrievedDocuments. </summary>
-    public partial class AzureChatRetrievedDocument
+    public partial class ChatRetrievedDocument
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -42,12 +42,12 @@ namespace Azure.AI.OpenAI.Chat
         /// </para>
         /// </summary>
         internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
-        /// <summary> Initializes a new instance of <see cref="AzureChatRetrievedDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatRetrievedDocument"/>. </summary>
         /// <param name="content"> The content of the citation. </param>
         /// <param name="searchQueries"> The search queries executed to retrieve documents. </param>
         /// <param name="dataSourceIndex"> The index of the data source used for retrieval. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="searchQueries"/> is null. </exception>
-        internal AzureChatRetrievedDocument(string content, IEnumerable<string> searchQueries, int dataSourceIndex)
+        internal ChatRetrievedDocument(string content, IEnumerable<string> searchQueries, int dataSourceIndex)
         {
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNull(searchQueries, nameof(searchQueries));
@@ -57,11 +57,11 @@ namespace Azure.AI.OpenAI.Chat
             DataSourceIndex = dataSourceIndex;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureChatRetrievedDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatRetrievedDocument"/>. </summary>
         /// <param name="content"> The content of the citation. </param>
         /// <param name="title"> The title for the citation. </param>
-        /// <param name="url"> The URL of the citation. </param>
-        /// <param name="filepath"> The file path for the citation. </param>
+        /// <param name="uri"> The URL of the citation. </param>
+        /// <param name="filePath"> The file path for the citation. </param>
         /// <param name="chunkId"> The chunk ID for the citation. </param>
         /// <param name="rerankScore"> The rerank score for the retrieval. </param>
         /// <param name="searchQueries"> The search queries executed to retrieve documents. </param>
@@ -69,12 +69,12 @@ namespace Azure.AI.OpenAI.Chat
         /// <param name="originalSearchScore"> The original search score for the retrieval. </param>
         /// <param name="filterReason"> If applicable, an indication of why the document was filtered. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureChatRetrievedDocument(string content, string title, string url, string filepath, string chunkId, double? rerankScore, IReadOnlyList<string> searchQueries, int dataSourceIndex, double? originalSearchScore, AzureChatRetrievedDocumentFilterReason? filterReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatRetrievedDocument(string content, string title, Uri uri, string filePath, string chunkId, double? rerankScore, IReadOnlyList<string> searchQueries, int dataSourceIndex, double? originalSearchScore, ChatDocumentFilterReason? filterReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Content = content;
             Title = title;
-            Url = url;
-            Filepath = filepath;
+            Uri = uri;
+            FilePath = filePath;
             ChunkId = chunkId;
             RerankScore = rerankScore;
             SearchQueries = searchQueries;
@@ -84,8 +84,8 @@ namespace Azure.AI.OpenAI.Chat
             SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureChatRetrievedDocument"/> for deserialization. </summary>
-        internal AzureChatRetrievedDocument()
+        /// <summary> Initializes a new instance of <see cref="ChatRetrievedDocument"/> for deserialization. </summary>
+        internal ChatRetrievedDocument()
         {
         }
 
@@ -93,10 +93,6 @@ namespace Azure.AI.OpenAI.Chat
         public string Content { get; }
         /// <summary> The title for the citation. </summary>
         public string Title { get; }
-        /// <summary> The URL of the citation. </summary>
-        public string Url { get; }
-        /// <summary> The file path for the citation. </summary>
-        public string Filepath { get; }
         /// <summary> The chunk ID for the citation. </summary>
         public string ChunkId { get; }
         /// <summary> The rerank score for the retrieval. </summary>
@@ -108,6 +104,6 @@ namespace Azure.AI.OpenAI.Chat
         /// <summary> The original search score for the retrieval. </summary>
         public double? OriginalSearchScore { get; }
         /// <summary> If applicable, an indication of why the document was filtered. </summary>
-        public AzureChatRetrievedDocumentFilterReason? FilterReason { get; }
+        public ChatDocumentFilterReason? FilterReason { get; }
     }
 }

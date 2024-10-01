@@ -10,14 +10,14 @@ using System.Text.Json;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ContentFilterProtectedMaterialCitedResult : IJsonModel<ContentFilterProtectedMaterialCitedResult>
+    public partial class ContentFilterProtectedMaterialCitationResult : IJsonModel<ContentFilterProtectedMaterialCitationResult>
     {
-        void IJsonModel<ContentFilterProtectedMaterialCitedResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContentFilterProtectedMaterialCitationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContentFilterProtectedMaterialCitedResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContentFilterProtectedMaterialCitationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentFilterProtectedMaterialCitedResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentFilterProtectedMaterialCitationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -26,10 +26,10 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("license"u8);
                 writer.WriteStringValue(License);
             }
-            if (SerializedAdditionalRawData?.ContainsKey("URL") != true && Optional.IsDefined(URL))
+            if (SerializedAdditionalRawData?.ContainsKey("URL") != true && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("URL"u8);
-                writer.WriteStringValue(URL.AbsoluteUri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (SerializedAdditionalRawData != null)
             {
@@ -53,19 +53,19 @@ namespace Azure.AI.OpenAI
             writer.WriteEndObject();
         }
 
-        ContentFilterProtectedMaterialCitedResult IJsonModel<ContentFilterProtectedMaterialCitedResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContentFilterProtectedMaterialCitationResult IJsonModel<ContentFilterProtectedMaterialCitationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContentFilterProtectedMaterialCitedResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContentFilterProtectedMaterialCitationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentFilterProtectedMaterialCitedResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentFilterProtectedMaterialCitationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContentFilterProtectedMaterialCitedResult(document.RootElement, options);
+            return DeserializeContentFilterProtectedMaterialCitationResult(document.RootElement, options);
         }
 
-        internal static ContentFilterProtectedMaterialCitedResult DeserializeContentFilterProtectedMaterialCitedResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContentFilterProtectedMaterialCitationResult DeserializeContentFilterProtectedMaterialCitationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -100,46 +100,46 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContentFilterProtectedMaterialCitedResult(license, url, serializedAdditionalRawData);
+            return new ContentFilterProtectedMaterialCitationResult(license, url, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ContentFilterProtectedMaterialCitedResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContentFilterProtectedMaterialCitationResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContentFilterProtectedMaterialCitedResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContentFilterProtectedMaterialCitationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContentFilterProtectedMaterialCitedResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentFilterProtectedMaterialCitationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ContentFilterProtectedMaterialCitedResult IPersistableModel<ContentFilterProtectedMaterialCitedResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContentFilterProtectedMaterialCitationResult IPersistableModel<ContentFilterProtectedMaterialCitationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContentFilterProtectedMaterialCitedResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContentFilterProtectedMaterialCitationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeContentFilterProtectedMaterialCitedResult(document.RootElement, options);
+                        return DeserializeContentFilterProtectedMaterialCitationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentFilterProtectedMaterialCitedResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentFilterProtectedMaterialCitationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ContentFilterProtectedMaterialCitedResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContentFilterProtectedMaterialCitationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The result to deserialize the model from. </param>
-        internal static ContentFilterProtectedMaterialCitedResult FromResponse(PipelineResponse response)
+        internal static ContentFilterProtectedMaterialCitationResult FromResponse(PipelineResponse response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeContentFilterProtectedMaterialCitedResult(document.RootElement);
+            return DeserializeContentFilterProtectedMaterialCitationResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="BinaryContent"/>. </summary>

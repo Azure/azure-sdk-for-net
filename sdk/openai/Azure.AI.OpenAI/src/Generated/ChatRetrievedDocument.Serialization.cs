@@ -10,14 +10,14 @@ using System.Text.Json;
 
 namespace Azure.AI.OpenAI.Chat
 {
-    public partial class AzureChatRetrievedDocument : IJsonModel<AzureChatRetrievedDocument>
+    public partial class ChatRetrievedDocument : IJsonModel<ChatRetrievedDocument>
     {
-        void IJsonModel<AzureChatRetrievedDocument>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ChatRetrievedDocument>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureChatRetrievedDocument>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChatRetrievedDocument>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureChatRetrievedDocument)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatRetrievedDocument)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,15 +31,15 @@ namespace Azure.AI.OpenAI.Chat
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (SerializedAdditionalRawData?.ContainsKey("url") != true && Optional.IsDefined(Url))
+            if (SerializedAdditionalRawData?.ContainsKey("url") != true && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (SerializedAdditionalRawData?.ContainsKey("filepath") != true && Optional.IsDefined(Filepath))
+            if (SerializedAdditionalRawData?.ContainsKey("filepath") != true && Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("filepath"u8);
-                writer.WriteStringValue(Filepath);
+                writer.WriteStringValue(FilePath);
             }
             if (SerializedAdditionalRawData?.ContainsKey("chunk_id") != true && Optional.IsDefined(ChunkId))
             {
@@ -98,19 +98,19 @@ namespace Azure.AI.OpenAI.Chat
             writer.WriteEndObject();
         }
 
-        AzureChatRetrievedDocument IJsonModel<AzureChatRetrievedDocument>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ChatRetrievedDocument IJsonModel<ChatRetrievedDocument>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureChatRetrievedDocument>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChatRetrievedDocument>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureChatRetrievedDocument)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatRetrievedDocument)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureChatRetrievedDocument(document.RootElement, options);
+            return DeserializeChatRetrievedDocument(document.RootElement, options);
         }
 
-        internal static AzureChatRetrievedDocument DeserializeAzureChatRetrievedDocument(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ChatRetrievedDocument DeserializeChatRetrievedDocument(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -120,14 +120,14 @@ namespace Azure.AI.OpenAI.Chat
             }
             string content = default;
             string title = default;
-            string url = default;
+            Uri url = default;
             string filepath = default;
             string chunkId = default;
             double? rerankScore = default;
             IReadOnlyList<string> searchQueries = default;
             int dataSourceIndex = default;
             double? originalSearchScore = default;
-            AzureChatRetrievedDocumentFilterReason? filterReason = default;
+            ChatDocumentFilterReason? filterReason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,11 @@ namespace Azure.AI.OpenAI.Chat
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("filepath"u8))
@@ -196,7 +200,7 @@ namespace Azure.AI.OpenAI.Chat
                     {
                         continue;
                     }
-                    filterReason = new AzureChatRetrievedDocumentFilterReason(property.Value.GetString());
+                    filterReason = new ChatDocumentFilterReason(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -206,7 +210,7 @@ namespace Azure.AI.OpenAI.Chat
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AzureChatRetrievedDocument(
+            return new ChatRetrievedDocument(
                 content,
                 title,
                 url,
@@ -220,43 +224,43 @@ namespace Azure.AI.OpenAI.Chat
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AzureChatRetrievedDocument>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ChatRetrievedDocument>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureChatRetrievedDocument>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChatRetrievedDocument>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureChatRetrievedDocument)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatRetrievedDocument)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AzureChatRetrievedDocument IPersistableModel<AzureChatRetrievedDocument>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ChatRetrievedDocument IPersistableModel<ChatRetrievedDocument>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureChatRetrievedDocument>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChatRetrievedDocument>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAzureChatRetrievedDocument(document.RootElement, options);
+                        return DeserializeChatRetrievedDocument(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureChatRetrievedDocument)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatRetrievedDocument)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AzureChatRetrievedDocument>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ChatRetrievedDocument>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The result to deserialize the model from. </param>
-        internal static AzureChatRetrievedDocument FromResponse(PipelineResponse response)
+        internal static ChatRetrievedDocument FromResponse(PipelineResponse response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAzureChatRetrievedDocument(document.RootElement);
+            return DeserializeChatRetrievedDocument(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="BinaryContent"/>. </summary>
