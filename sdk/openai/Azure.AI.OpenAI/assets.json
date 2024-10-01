@@ -1,6 +1,6 @@
 {
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
-  "TagPrefix": "dotnet.azure/openai/Azure.AI.OpenAI",
-  "Tag": "dotnet.azure/openai/Azure.AI.OpenAI_d6a0747f18"
+  "TagPrefix": "net/openai/Azure.AI.OpenAI",
+  "Tag": "net/openai/Azure.AI.OpenAI_d6a0747f18"
 }
