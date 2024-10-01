@@ -3384,7 +3384,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual Response<DataLakeFileReadStreamingResult> ReadStreaming(
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadStreaming)}");
 
@@ -3433,7 +3433,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<DataLakeFileReadStreamingResult>> ReadStreamingAsync(
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadStreaming)}");
 
@@ -3486,7 +3486,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual Response<DataLakeFileReadStreamingResult> ReadStreaming(
-            DataLakeFileReadOptions options = default,
+            DataLakeFileReadOptions options,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadStreaming)}");
@@ -3540,7 +3540,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<DataLakeFileReadStreamingResult>> ReadStreamingAsync(
-            DataLakeFileReadOptions options = default,
+            DataLakeFileReadOptions options,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadStreaming)}");
@@ -3679,7 +3679,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual Response<DataLakeFileReadResult> ReadContent(
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadContent)}");
 
@@ -3728,7 +3728,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<DataLakeFileReadResult>> ReadContentAsync(
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadContent)}");
 
@@ -3781,7 +3781,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual Response<DataLakeFileReadResult> ReadContent(
-            DataLakeFileReadOptions options = default,
+            DataLakeFileReadOptions options,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadContent)}");
@@ -3835,7 +3835,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<DataLakeFileReadResult>> ReadContentAsync(
-            DataLakeFileReadOptions options = default,
+            DataLakeFileReadOptions options,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadContent)}");
