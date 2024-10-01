@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI.Chat
 {
     /// <summary> The AzureChatMessageContextCitation. </summary>
-    public partial class AzureChatCitation
+    public partial class ChatCitation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -41,37 +41,37 @@ namespace Azure.AI.OpenAI.Chat
         /// </para>
         /// </summary>
         internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
-        /// <summary> Initializes a new instance of <see cref="AzureChatCitation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCitation"/>. </summary>
         /// <param name="content"> The content of the citation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        internal AzureChatCitation(string content)
+        internal ChatCitation(string content)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureChatCitation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCitation"/>. </summary>
         /// <param name="content"> The content of the citation. </param>
         /// <param name="title"> The title for the citation. </param>
-        /// <param name="url"> The URL of the citation. </param>
-        /// <param name="filepath"> The file path for the citation. </param>
+        /// <param name="uri"> The URL of the citation. </param>
+        /// <param name="filePath"> The file path for the citation. </param>
         /// <param name="chunkId"> The chunk ID for the citation. </param>
         /// <param name="rerankScore"> The rerank score for the retrieval. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureChatCitation(string content, string title, string url, string filepath, string chunkId, double? rerankScore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatCitation(string content, string title, Uri uri, string filePath, string chunkId, double? rerankScore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Content = content;
             Title = title;
-            Url = url;
-            Filepath = filepath;
+            Uri = uri;
+            FilePath = filePath;
             ChunkId = chunkId;
             RerankScore = rerankScore;
             SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureChatCitation"/> for deserialization. </summary>
-        internal AzureChatCitation()
+        /// <summary> Initializes a new instance of <see cref="ChatCitation"/> for deserialization. </summary>
+        internal ChatCitation()
         {
         }
 
@@ -79,10 +79,6 @@ namespace Azure.AI.OpenAI.Chat
         public string Content { get; }
         /// <summary> The title for the citation. </summary>
         public string Title { get; }
-        /// <summary> The URL of the citation. </summary>
-        public string Url { get; }
-        /// <summary> The file path for the citation. </summary>
-        public string Filepath { get; }
         /// <summary> The chunk ID for the citation. </summary>
         public string ChunkId { get; }
         /// <summary> The rerank score for the retrieval. </summary>

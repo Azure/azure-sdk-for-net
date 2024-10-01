@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI
 {
     /// <summary> The AzureContentFilterResultForChoiceProtectedMaterialCodeCitation. </summary>
-    public partial class ContentFilterProtectedMaterialCitedResult
+    public partial class ContentFilterProtectedMaterialCitationResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -41,25 +41,23 @@ namespace Azure.AI.OpenAI
         /// </para>
         /// </summary>
         internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
-        /// <summary> Initializes a new instance of <see cref="ContentFilterProtectedMaterialCitedResult"/>. </summary>
-        internal ContentFilterProtectedMaterialCitedResult()
+        /// <summary> Initializes a new instance of <see cref="ContentFilterProtectedMaterialCitationResult"/>. </summary>
+        internal ContentFilterProtectedMaterialCitationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentFilterProtectedMaterialCitedResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterProtectedMaterialCitationResult"/>. </summary>
         /// <param name="license"> The name or identifier of the license associated with the detection. </param>
-        /// <param name="url"> The URL associated with the license. </param>
+        /// <param name="uri"> The URL associated with the license. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContentFilterProtectedMaterialCitedResult(string license, Uri url, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContentFilterProtectedMaterialCitationResult(string license, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             License = license;
-            URL = url;
+            Uri = uri;
             SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name or identifier of the license associated with the detection. </summary>
         public string License { get; }
-        /// <summary> The URL associated with the license. </summary>
-        public Uri URL { get; }
     }
 }

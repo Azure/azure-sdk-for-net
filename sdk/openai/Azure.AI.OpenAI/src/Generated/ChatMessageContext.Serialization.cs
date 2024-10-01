@@ -10,14 +10,14 @@ using System.Text.Json;
 
 namespace Azure.AI.OpenAI.Chat
 {
-    public partial class AzureChatMessageContext : IJsonModel<AzureChatMessageContext>
+    public partial class ChatMessageContext : IJsonModel<ChatMessageContext>
     {
-        void IJsonModel<AzureChatMessageContext>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ChatMessageContext>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureChatMessageContext>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChatMessageContext>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureChatMessageContext)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatMessageContext)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,10 +36,10 @@ namespace Azure.AI.OpenAI.Chat
                 }
                 writer.WriteEndArray();
             }
-            if (SerializedAdditionalRawData?.ContainsKey("all_retrieved_documents") != true && Optional.IsDefined(AllRetrievedDocuments))
+            if (SerializedAdditionalRawData?.ContainsKey("all_retrieved_documents") != true && Optional.IsDefined(RetrievedDocuments))
             {
                 writer.WritePropertyName("all_retrieved_documents"u8);
-                writer.WriteObjectValue(AllRetrievedDocuments, options);
+                writer.WriteObjectValue<ChatRetrievedDocument>(RetrievedDocuments, options);
             }
             if (SerializedAdditionalRawData != null)
             {
@@ -63,19 +63,19 @@ namespace Azure.AI.OpenAI.Chat
             writer.WriteEndObject();
         }
 
-        AzureChatMessageContext IJsonModel<AzureChatMessageContext>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ChatMessageContext IJsonModel<ChatMessageContext>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureChatMessageContext>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChatMessageContext>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureChatMessageContext)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatMessageContext)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureChatMessageContext(document.RootElement, options);
+            return DeserializeChatMessageContext(document.RootElement, options);
         }
 
-        internal static AzureChatMessageContext DeserializeAzureChatMessageContext(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ChatMessageContext DeserializeChatMessageContext(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -84,8 +84,8 @@ namespace Azure.AI.OpenAI.Chat
                 return null;
             }
             string intent = default;
-            IReadOnlyList<AzureChatCitation> citations = default;
-            AzureChatRetrievedDocument allRetrievedDocuments = default;
+            IReadOnlyList<ChatCitation> citations = default;
+            ChatRetrievedDocument allRetrievedDocuments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,10 +101,10 @@ namespace Azure.AI.OpenAI.Chat
                     {
                         continue;
                     }
-                    List<AzureChatCitation> array = new List<AzureChatCitation>();
+                    List<ChatCitation> array = new List<ChatCitation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureChatCitation.DeserializeAzureChatCitation(item, options));
+                        array.Add(ChatCitation.DeserializeChatCitation(item, options));
                     }
                     citations = array;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.AI.OpenAI.Chat
                     {
                         continue;
                     }
-                    allRetrievedDocuments = AzureChatRetrievedDocument.DeserializeAzureChatRetrievedDocument(property.Value, options);
+                    allRetrievedDocuments = ChatRetrievedDocument.DeserializeChatRetrievedDocument(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,46 +125,46 @@ namespace Azure.AI.OpenAI.Chat
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AzureChatMessageContext(intent, citations ?? new ChangeTrackingList<AzureChatCitation>(), allRetrievedDocuments, serializedAdditionalRawData);
+            return new ChatMessageContext(intent, citations ?? new ChangeTrackingList<ChatCitation>(), allRetrievedDocuments, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AzureChatMessageContext>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ChatMessageContext>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureChatMessageContext>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChatMessageContext>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureChatMessageContext)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatMessageContext)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AzureChatMessageContext IPersistableModel<AzureChatMessageContext>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ChatMessageContext IPersistableModel<ChatMessageContext>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureChatMessageContext>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChatMessageContext>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAzureChatMessageContext(document.RootElement, options);
+                        return DeserializeChatMessageContext(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureChatMessageContext)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatMessageContext)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AzureChatMessageContext>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ChatMessageContext>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The result to deserialize the model from. </param>
-        internal static AzureChatMessageContext FromResponse(PipelineResponse response)
+        internal static ChatMessageContext FromResponse(PipelineResponse response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAzureChatMessageContext(document.RootElement);
+            return DeserializeChatMessageContext(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="BinaryContent"/>. </summary>
