@@ -172,8 +172,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             var containerGroupProfileData2 = CreateContainerGroupProfileData(containerGroupProfileName, "Regular");
             containerGroupProfile = (await containerGroupProfiles.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupProfileName, containerGroupProfileData2)).Value;
 
-            var containerGroupProfileRevisions = containerGroupProfile.GetContainerGroupProfileRevisions();
-            ContainerGroupProfileRevisionResource retreivedContainerGroupProfileRevision = await containerGroupProfileRevisions.GetAsync("2");
+            ContainerGroupProfileRevisionResource retreivedContainerGroupProfileRevision = await containerGroupProfile.GetContainerGroupProfileRevisionAsync("2");
             VerifyContainerGroupProfileProperties(containerGroupProfile.Data, retreivedContainerGroupProfileRevision.Data);
         }
     }
