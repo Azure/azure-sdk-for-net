@@ -1,6 +1,6 @@
 # Release History
 
-## 2.0.0 (2024-10-01)
+## 2.0.0 (2024-09-30)
 
 This update marks the first stable library version for `Azure.AI.OpenAI`. It snaps its dependency to `OpenAI`'s matched `2.0.0` stable version and targets the latest Azure OpenAI Service stable `api-version` label of `2024-06-01`. As a GA label, the `2.0.0` stable version exposes a subset of preview features, with preview library labels continuing to support preview features.
 
