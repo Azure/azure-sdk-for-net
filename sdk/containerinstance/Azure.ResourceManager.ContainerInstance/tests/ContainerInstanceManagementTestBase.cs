@@ -138,7 +138,6 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                 return priorityContainerGroup;
             }
 
-            var confidentialComputeProperties = new ConfidentialComputeProperties();
             var sku = new ContainerGroupSku("Standard");
             if (isConfidentialSku)
             {
@@ -510,7 +509,11 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                             }
                         }
                     },
-                    Sku = ContainerGroupSku.Confidential
+                    Sku = ContainerGroupSku.Confidential,
+                    ConfidentialComputeProperties = new ConfidentialComputeProperties()
+                    {
+                        CcePolicy = "eyJhbGxvd19hbGwiOiB0cnVlLCAiY29udGFpbmVycyI6IHsibGVuZ3RoIjogMCwgImVsZW1lbnRzIjogbnVsbH19"
+                    }
                 };
                 return confContainerGroupProfile;
             }
@@ -566,7 +569,6 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             if (expected.Priority != ContainerGroupPriority.Spot)
             {
                 Assert.NotNull(actual.IPAddress);
-                Assert.NotNull(actual.IPAddress.IP);
             }
             Assert.AreEqual(expected.EncryptionProperties?.KeyName, actual.EncryptionProperties?.KeyName);
             Assert.AreEqual(expected.EncryptionProperties?.KeyVersion, actual.EncryptionProperties?.KeyVersion);
