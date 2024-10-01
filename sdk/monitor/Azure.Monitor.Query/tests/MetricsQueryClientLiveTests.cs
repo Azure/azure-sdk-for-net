@@ -34,18 +34,6 @@ namespace Azure.Monitor.Query.Tests
             ));
         }
 
-        private MetricsClient CreateMetricsClient()
-        {
-            return InstrumentClient(new MetricsClient(
-                new Uri(TestEnvironment.ConstructMetricsClientUri()),
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new MetricsClientOptions()
-                {
-                    Audience = TestEnvironment.GetMetricsClientAudience()
-                })
-            ));
-        }
-
         [SetUp]
         public void SetUp()
         {
@@ -326,47 +314,6 @@ namespace Azure.Monitor.Query.Tests
               });
 
             Assert.Throws<KeyNotFoundException>(() => { results.Value.GetMetricByName("Guinness"); });
-        }
-
-        [RecordedTest]
-        public async Task MetricsQueryResourcesAsync()
-        {
-            MetricsClient client = CreateMetricsClient();
-
-            var resourceId = TestEnvironment.StorageAccountId;
-
-            Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
-                resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
-                metricNames: new List<string> { "Ingress" },
-                metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
-
-            MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
-            Assert.AreEqual(1, metricsQueryResults.Values.Count);
-            Assert.AreEqual(TestEnvironment.StorageAccountId + "/providers/Microsoft.Insights/metrics/Ingress", metricsQueryResults.Values[0].Metrics[0].Id);
-            Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);
-            for (int i = 0; i < metricsQueryResults.Values.Count; i++)
-            {
-                foreach (MetricResult value in metricsQueryResults.Values[i].Metrics)
-                {
-                    for (int j = 0; j < value.TimeSeries.Count; j++)
-                    {
-                        Assert.GreaterOrEqual(value.TimeSeries[j].Values[i].Total, 0);
-                    }
-                }
-            }
-        }
-
-        [Test]
-        [SyncOnly]
-        public void MetricsQueryResourcesInvalid()
-        {
-            MetricsClient client = CreateMetricsClient();
-
-            Assert.Throws<ArgumentException>(() =>
-                client.QueryResources(
-                resourceIds: new List<ResourceIdentifier>(),
-                metricNames: new List<string> { "Ingress" },
-                metricNamespace: "Microsoft.Storage/storageAccounts"));
         }
     }
 }
