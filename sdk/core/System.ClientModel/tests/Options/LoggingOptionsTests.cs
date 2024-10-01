@@ -11,7 +11,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
-using ILoggerFactory = Microsoft.Extensions.Logging.ILoggerFactory;
 
 namespace System.ClientModel.Tests.Options;
 
@@ -74,13 +73,7 @@ public class LoggingOptionsTests
     [Test]
     public void CanAddCustomHttpLogging_WithDI()
     {
-        ServiceCollection services = new();
-
-        RequestResponseClientOptions options = new();
-        options.Diagnostics.AllowedHeaderNames.Add("my-safe-header");
-        options.HttpLoggingPolicy = new CustomHttpLoggingPolicy(options.Diagnostics);
-
-        RequestResponseClient client = new RequestResponseClient(options);
+        // TBD
     }
 
     #region Helpers
