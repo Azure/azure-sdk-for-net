@@ -164,6 +164,10 @@ public class BasicStorageTests(bool async)
                 RoleAssignment role = storage.CreateRoleAssignment(StorageBuiltInRole.StorageBlobDataReader, RoleManagementPrincipalType.ServicePrincipal, id.PrincipalId, "custom");
                 infra.Add(role);
 
+                role = storage.CreateRoleAssignment(StorageBuiltInRole.StorageBlobDataContributor, RoleManagementPrincipalType.ServicePrincipal, id.PrincipalId);
+                role.ResourceName = "storage_writer";
+                infra.Add(role);
+
                 return infra;
             })
         .Compare(
@@ -194,6 +198,16 @@ public class BasicStorageTests(bool async)
               properties: {
                 principalId: id.properties.principalId
                 roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')
+                principalType: 'ServicePrincipal'
+              }
+              scope: storage
+            }
+
+            resource storage_writer 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+              name: guid(storage.id, id.properties.principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'))
+              properties: {
+                principalId: id.properties.principalId
+                roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')
                 principalType: 'ServicePrincipal'
               }
               scope: storage
