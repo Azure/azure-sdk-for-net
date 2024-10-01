@@ -123,9 +123,8 @@ public partial class KubernetesSourceControlConfiguration : Resource
     /// </summary>
     /// <param name="resourceName">Name of the KubernetesSourceControlConfiguration.</param>
     /// <param name="resourceVersion">Version of the KubernetesSourceControlConfiguration.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public KubernetesSourceControlConfiguration(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.KubernetesConfiguration/sourceControlConfigurations", resourceVersion ?? "2023-05-01", context)
+    public KubernetesSourceControlConfiguration(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.KubernetesConfiguration/sourceControlConfigurations", resourceVersion ?? "2023-05-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _configurationProtectedSettings = BicepDictionary<string>.DefineProperty(this, "ConfigurationProtectedSettings", ["properties", "configurationProtectedSettings"]);

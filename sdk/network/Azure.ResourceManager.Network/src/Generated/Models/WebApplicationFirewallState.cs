@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(WebApplicationFirewallState left, WebApplicationFirewallState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationFirewallState"/> values are not the same. </summary>
         public static bool operator !=(WebApplicationFirewallState left, WebApplicationFirewallState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WebApplicationFirewallState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WebApplicationFirewallState"/>. </summary>
         public static implicit operator WebApplicationFirewallState(string value) => new WebApplicationFirewallState(value);
 
         /// <inheritdoc />

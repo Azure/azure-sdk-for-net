@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator ==(HciClusterStatus left, HciClusterStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciClusterStatus"/> values are not the same. </summary>
         public static bool operator !=(HciClusterStatus left, HciClusterStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HciClusterStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HciClusterStatus"/>. </summary>
         public static implicit operator HciClusterStatus(string value) => new HciClusterStatus(value);
 
         /// <inheritdoc />

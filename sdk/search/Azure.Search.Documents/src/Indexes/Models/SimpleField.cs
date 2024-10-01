@@ -59,6 +59,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </remarks>
         public bool IsSortable { get; set; }
 
+        /// <summary>
+        /// The name of the normalizer to use for the field.
+        /// This option can be used only with fields with filterable, sortable, or facetable enabled. Once the normalizer is chosen, it cannot be changed for the field.
+        /// Must be null for complex fields.
+        /// </summary>
+        public LexicalNormalizerName? NormalizerName { get; set; }
+
         /// <inheritdoc/>
         private protected override void Save(SearchField field)
         {
@@ -67,6 +74,7 @@ namespace Azure.Search.Documents.Indexes.Models
             field.IsFilterable = IsFilterable;
             field.IsFacetable = IsFacetable;
             field.IsSortable = IsSortable;
+            field.NormalizerName = NormalizerName;
 
             // Use a SearchableField instead, which will override this property.
             // The service will return Searchable == false for all non-searchable simple types.

@@ -79,8 +79,8 @@ namespace Azure.Storage.DataMovement.Tests
             string sourcePath = CheckpointerTesting.DefaultWebSourcePath,
             string destinationPath = CheckpointerTesting.DefaultWebDestinationPath)
         {
-            StorageResource source = MockStorageResource.MakeSourceResource(10, uri: new(sourcePath));
-            StorageResource destination = MockStorageResource.MakeDestinationResource(uri: new(destinationPath));
+            StorageResource source = MockStorageResourceItem.MakeSourceResource(10, uri: new(sourcePath));
+            StorageResource destination = MockStorageResourceItem.MakeDestinationResource(uri: new(destinationPath));
 
             await transferCheckpointer.AddNewJobAsync(transferId, source, destination);
         }

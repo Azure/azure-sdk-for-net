@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator ==(MySqlFlexibleServerConfigurationSource left, MySqlFlexibleServerConfigurationSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlFlexibleServerConfigurationSource"/> values are not the same. </summary>
         public static bool operator !=(MySqlFlexibleServerConfigurationSource left, MySqlFlexibleServerConfigurationSource right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerConfigurationSource"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerConfigurationSource"/>. </summary>
         public static implicit operator MySqlFlexibleServerConfigurationSource(string value) => new MySqlFlexibleServerConfigurationSource(value);
 
         /// <inheritdoc />

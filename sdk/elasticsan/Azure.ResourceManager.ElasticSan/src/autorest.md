@@ -9,7 +9,7 @@ csharp: true
 library-name: ElasticSan
 namespace: Azure.ResourceManager.ElasticSan
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/afa158ef56a05f6603924f4a493817cec332b113/specification/elasticsan/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/262a9d16d94c3448fc7f37c840757f6e74acf7de/specification/elasticsan/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -19,6 +19,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+use-write-core: true
 
 format-by-name-rules:
   'tenantId': 'uuid'

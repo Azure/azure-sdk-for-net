@@ -84,9 +84,8 @@ public partial class ManagedInstanceEncryptionProtector : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedInstanceEncryptionProtector.</param>
     /// <param name="resourceVersion">Version of the ManagedInstanceEncryptionProtector.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedInstanceEncryptionProtector(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/encryptionProtector", resourceVersion, context)
+    public ManagedInstanceEncryptionProtector(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/encryptionProtector", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _isAutoRotationEnabled = BicepValue<bool>.DefineProperty(this, "IsAutoRotationEnabled", ["properties", "autoRotationEnabled"]);
@@ -98,6 +97,22 @@ public partial class ManagedInstanceEncryptionProtector : Resource
         _thumbprint = BicepValue<string>.DefineProperty(this, "Thumbprint", ["properties", "thumbprint"], isOutput: true);
         _uri = BicepValue<Uri>.DefineProperty(this, "Uri", ["properties", "uri"], isOutput: true);
         _parent = ResourceReference<ManagedInstance>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported ManagedInstanceEncryptionProtector resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
     }
 
     /// <summary>

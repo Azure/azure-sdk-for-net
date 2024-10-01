@@ -21,7 +21,7 @@ public abstract class Provisionable
     /// be the object itself for everything but <see cref="Infrastructure"/>.
     /// </summary>
     /// <returns>Any resources represented by this object.</returns>
-    protected internal virtual IEnumerable<Provisionable> GetResources() { yield return this; }
+    public virtual IEnumerable<Provisionable> GetResources() { yield return this; }
 
     /// <summary>
     /// Resolve any resources or properties that were not explicitly specified.
@@ -38,7 +38,6 @@ public abstract class Provisionable
     /// <summary>
     /// Compile the resource into a set of Bicep statements.
     /// </summary>
-    /// <param name="context">Optional <see cref="ProvisioningContext"/>.</param>
     /// <returns>Bicep representation of the resource.</returns>
-    protected internal abstract IEnumerable<Statement> Compile(ProvisioningContext? context = default);
+    protected internal abstract IEnumerable<Statement> Compile();
 }

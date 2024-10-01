@@ -108,7 +108,7 @@ public static ReadOnlyMemory<float> GetEmbeddings(string input)
         Dimensions = 256
     };
     Embedding embedding = embeddingClient.GenerateEmbedding(input, embeddingsOptions);
-    return embedding.Vector;
+    return embedding.ToFloats();
 }
 ```
 

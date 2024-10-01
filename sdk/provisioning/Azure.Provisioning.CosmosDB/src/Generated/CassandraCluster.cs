@@ -66,9 +66,8 @@ public partial class CassandraCluster : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CassandraCluster.</param>
     /// <param name="resourceVersion">Version of the CassandraCluster.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CassandraCluster(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/cassandraClusters", resourceVersion ?? "2021-10-15", context)
+    public CassandraCluster(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/cassandraClusters", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -85,9 +84,14 @@ public partial class CassandraCluster : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-15-preview.
+        /// 2024-09-01-preview.
         /// </summary>
-        public static readonly string V2024_05_15_preview = "2024-05-15-preview";
+        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
+
+        /// <summary>
+        /// 2024-08-15.
+        /// </summary>
+        public static readonly string V2024_08_15 = "2024-08-15";
 
         /// <summary>
         /// 2024-05-15.

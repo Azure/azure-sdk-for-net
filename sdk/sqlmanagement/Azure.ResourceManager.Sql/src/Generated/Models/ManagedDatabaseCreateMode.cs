@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(ManagedDatabaseCreateMode left, ManagedDatabaseCreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedDatabaseCreateMode"/> values are not the same. </summary>
         public static bool operator !=(ManagedDatabaseCreateMode left, ManagedDatabaseCreateMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedDatabaseCreateMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedDatabaseCreateMode"/>. </summary>
         public static implicit operator ManagedDatabaseCreateMode(string value) => new ManagedDatabaseCreateMode(value);
 
         /// <inheritdoc />

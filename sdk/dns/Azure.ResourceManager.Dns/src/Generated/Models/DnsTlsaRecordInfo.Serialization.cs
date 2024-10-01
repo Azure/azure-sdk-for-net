@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Dns.Models
 
         void IJsonModel<DnsTlsaRecordInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DnsTlsaRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DnsTlsaRecordInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
@@ -61,7 +69,6 @@ namespace Azure.ResourceManager.Dns.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DnsTlsaRecordInfo IJsonModel<DnsTlsaRecordInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

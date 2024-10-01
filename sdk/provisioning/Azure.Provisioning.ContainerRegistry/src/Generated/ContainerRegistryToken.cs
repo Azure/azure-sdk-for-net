@@ -79,9 +79,8 @@ public partial class ContainerRegistryToken : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ContainerRegistryToken.</param>
     /// <param name="resourceVersion">Version of the ContainerRegistryToken.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerRegistryToken(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerRegistry/registries/tokens", resourceVersion ?? "2023-07-01", context)
+    public ContainerRegistryToken(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ContainerRegistry/registries/tokens", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _credentials = BicepValue<ContainerRegistryTokenCredentials>.DefineProperty(this, "Credentials", ["properties", "credentials"]);

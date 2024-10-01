@@ -366,7 +366,7 @@ namespace Azure.Storage.Blobs.Models
         public static bool operator ==(BlobErrorCode left, BlobErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobErrorCode"/> values are not the same. </summary>
         public static bool operator !=(BlobErrorCode left, BlobErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BlobErrorCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BlobErrorCode"/>. </summary>
         public static implicit operator BlobErrorCode(string value) => new BlobErrorCode(value);
 
         /// <inheritdoc />

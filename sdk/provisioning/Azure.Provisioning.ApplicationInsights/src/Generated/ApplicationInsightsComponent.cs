@@ -242,9 +242,8 @@ public partial class ApplicationInsightsComponent : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ApplicationInsightsComponent.</param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsComponent.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ApplicationInsightsComponent(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Insights/components", resourceVersion ?? "2020-02-02", context)
+    public ApplicationInsightsComponent(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Insights/components", resourceVersion ?? "2020-02-02")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isRequired: true);
@@ -337,11 +336,30 @@ public partial class ApplicationInsightsComponent : Resource
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
     public RoleAssignment AssignRole(ApplicationInsightsBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{identity.ResourceName}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}_{ResourceName}")
+        new($"{ResourceName}_{identity.ResourceName}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}")
         {
+            Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
             Scope = new IdentifierExpression(ResourceName),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
+        };
+
+    /// <summary>
+    /// Assign a role to a principal that grants access to this
+    /// ApplicationInsightsComponent.
+    /// </summary>
+    /// <param name="role">The role to grant.</param>
+    /// <param name="principalType">The type of the principal to assign to.</param>
+    /// <param name="principalId">The principal to assign to.</param>
+    /// <returns>The <see cref="RoleAssignment"/>.</returns>
+    public RoleAssignment AssignRole(ApplicationInsightsBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
+        new($"{ResourceName}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}")
+        {
+            Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
+            Scope = new IdentifierExpression(ResourceName),
+            PrincipalType = principalType,
+            RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
+            PrincipalId = principalId
         };
 }

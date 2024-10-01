@@ -66,9 +66,8 @@ public partial class ManagedHsm : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedHsm.</param>
     /// <param name="resourceVersion">Version of the ManagedHsm.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedHsm(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.KeyVault/managedHSMs", resourceVersion ?? "2023-07-01", context)
+    public ManagedHsm(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.KeyVault/managedHSMs", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

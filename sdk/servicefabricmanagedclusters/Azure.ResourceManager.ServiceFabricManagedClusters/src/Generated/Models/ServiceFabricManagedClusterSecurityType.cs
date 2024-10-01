@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator ==(ServiceFabricManagedClusterSecurityType left, ServiceFabricManagedClusterSecurityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedClusterSecurityType"/> values are not the same. </summary>
         public static bool operator !=(ServiceFabricManagedClusterSecurityType left, ServiceFabricManagedClusterSecurityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceFabricManagedClusterSecurityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedClusterSecurityType"/>. </summary>
         public static implicit operator ServiceFabricManagedClusterSecurityType(string value) => new ServiceFabricManagedClusterSecurityType(value);
 
         /// <inheritdoc />

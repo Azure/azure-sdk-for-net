@@ -21,17 +21,11 @@ public class BasicWebPubSubTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "WebPubSub location."
-                    };
+                Infrastructure infra = new();
 
                 WebPubSubService webpubsub =
                     new(nameof(webpubsub), "2021-10-01")
                     {
-                        Location = location,
                         Sku =
                             new BillingInfoSku
                             {
@@ -76,67 +70,71 @@ public class BasicWebPubSubTests(bool async)
                         },
                         IsClientCertEnabled = false
                     };
+
+                infra.Add(webpubsub);
+
+                return infra;
             })
         .Compare(
             """
-            @description('WebPubSub location.')
+            @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
             resource webpubsub 'Microsoft.SignalRService/webPubSub@2021-10-01' = {
-                name: take('webpubsub-${uniqueString(resourceGroup().id)}', 63)
-                location: location
-                identity: {
-                    type: 'None'
+              name: take('webpubsub-${uniqueString(resourceGroup().id)}', 63)
+              location: location
+              identity: {
+                type: 'None'
+              }
+              properties: {
+                disableAadAuth: false
+                tls: {
+                  clientCertEnabled: false
                 }
-                properties: {
-                    disableAadAuth: false
-                    tls: {
-                        clientCertEnabled: false
+                disableLocalAuth: false
+                liveTraceConfiguration: {
+                  enabled: 'false'
+                  categories: [
+                    {
+                      name: 'ConnectivityLogs'
+                      enabled: 'false'
                     }
-                    disableLocalAuth: false
-                    liveTraceConfiguration: {
-                        enabled: 'false'
-                        categories: [
-                            {
-                                name: 'ConnectivityLogs'
-                                enabled: 'false'
-                            }
-                            {
-                                name: 'MessagingLogs'
-                                enabled: 'false'
-                            }
-                        ]
+                    {
+                      name: 'MessagingLogs'
+                      enabled: 'false'
                     }
-                    networkACLs: {
-                        defaultAction: 'Deny'
-                        publicNetwork: {
-                            allow: [
-                                'ServerConnection'
-                                'ClientConnection'
-                                'RESTAPI'
-                                'Trace'
-                            ]
-                        }
-                    }
-                    publicNetworkAccess: 'Enabled'
-                    resourceLogConfiguration: {
-                        categories: [
-                            {
-                                name: 'ConnectivityLogs'
-                                enabled: 'true'
-                            }
-                            {
-                                name: 'MessagingLogs'
-                                enabled: 'true'
-                            }
-                        ]
-                    }
+                  ]
                 }
-                sku: {
-                    name: 'Free_F1'
-                    tier: 'Free'
-                    capacity: 1
+                networkACLs: {
+                  defaultAction: 'Deny'
+                  publicNetwork: {
+                    allow: [
+                      'ServerConnection'
+                      'ClientConnection'
+                      'RESTAPI'
+                      'Trace'
+                    ]
+                  }
                 }
+                publicNetworkAccess: 'Enabled'
+                resourceLogConfiguration: {
+                  categories: [
+                    {
+                      name: 'ConnectivityLogs'
+                      enabled: 'true'
+                    }
+                    {
+                      name: 'MessagingLogs'
+                      enabled: 'true'
+                    }
+                  ]
+                }
+              }
+              sku: {
+                name: 'Free_F1'
+                tier: 'Free'
+                capacity: 1
+              }
             }
             """)
         .Lint()

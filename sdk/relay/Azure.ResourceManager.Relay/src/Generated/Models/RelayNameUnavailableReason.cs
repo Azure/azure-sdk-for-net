@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Relay.Models
         public static bool operator ==(RelayNameUnavailableReason left, RelayNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RelayNameUnavailableReason"/> values are not the same. </summary>
         public static bool operator !=(RelayNameUnavailableReason left, RelayNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RelayNameUnavailableReason"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RelayNameUnavailableReason"/>. </summary>
         public static implicit operator RelayNameUnavailableReason(string value) => new RelayNameUnavailableReason(value);
 
         /// <inheritdoc />

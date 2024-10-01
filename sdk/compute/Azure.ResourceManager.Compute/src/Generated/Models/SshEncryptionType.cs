@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(SshEncryptionType left, SshEncryptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SshEncryptionType"/> values are not the same. </summary>
         public static bool operator !=(SshEncryptionType left, SshEncryptionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SshEncryptionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SshEncryptionType"/>. </summary>
         public static implicit operator SshEncryptionType(string value) => new SshEncryptionType(value);
 
         /// <inheritdoc />

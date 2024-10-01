@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static bool operator ==(NodeImageSelectionType left, NodeImageSelectionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NodeImageSelectionType"/> values are not the same. </summary>
         public static bool operator !=(NodeImageSelectionType left, NodeImageSelectionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NodeImageSelectionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NodeImageSelectionType"/>. </summary>
         public static implicit operator NodeImageSelectionType(string value) => new NodeImageSelectionType(value);
 
         /// <inheritdoc />

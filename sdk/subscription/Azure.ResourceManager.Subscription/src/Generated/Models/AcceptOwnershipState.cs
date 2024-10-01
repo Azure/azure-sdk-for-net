@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Subscription.Models
         public static bool operator ==(AcceptOwnershipState left, AcceptOwnershipState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AcceptOwnershipState"/> values are not the same. </summary>
         public static bool operator !=(AcceptOwnershipState left, AcceptOwnershipState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AcceptOwnershipState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AcceptOwnershipState"/>. </summary>
         public static implicit operator AcceptOwnershipState(string value) => new AcceptOwnershipState(value);
 
         /// <inheritdoc />

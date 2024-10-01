@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(FileShareRestoreType left, FileShareRestoreType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FileShareRestoreType"/> values are not the same. </summary>
         public static bool operator !=(FileShareRestoreType left, FileShareRestoreType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FileShareRestoreType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FileShareRestoreType"/>. </summary>
         public static implicit operator FileShareRestoreType(string value) => new FileShareRestoreType(value);
 
         /// <inheritdoc />

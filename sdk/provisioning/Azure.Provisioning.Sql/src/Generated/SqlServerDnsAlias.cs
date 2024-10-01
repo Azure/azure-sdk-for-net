@@ -52,9 +52,8 @@ public partial class SqlServerDnsAlias : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlServerDnsAlias.</param>
     /// <param name="resourceVersion">Version of the SqlServerDnsAlias.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerDnsAlias(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/dnsAliases", resourceVersion ?? "2021-11-01", context)
+    public SqlServerDnsAlias(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/dnsAliases", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _azureDnsRecord = BicepValue<string>.DefineProperty(this, "AzureDnsRecord", ["properties", "azureDnsRecord"], isOutput: true);

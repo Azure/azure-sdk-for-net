@@ -3,6 +3,7 @@
 
 using Microsoft.Generator.CSharp;
 using Microsoft.Generator.CSharp.ClientModel;
+using System;
 using System.ComponentModel.Composition;
 
 namespace Azure.Generator;
@@ -14,12 +15,22 @@ namespace Azure.Generator;
 [ExportMetadata("PluginName", nameof(AzureClientPlugin))]
 public class AzureClientPlugin : ClientModelPlugin
 {
+    private static AzureClientPlugin? _instance;
+    internal static AzureClientPlugin Instance => _instance ?? throw new InvalidOperationException("AzureClientPlugin is not loaded.");
+
+    /// <inheritdoc/>
+    public override AzureTypeFactory TypeFactory { get; }
+
     /// <summary>
     /// The Azure client plugin to generate the Azure client SDK.
     /// </summary>
     /// <param name="context"></param>
     [ImportingConstructor]
-    public AzureClientPlugin(GeneratorContext context) : base(context) { }
+    public AzureClientPlugin(GeneratorContext context) : base(context)
+    {
+        TypeFactory = new AzureTypeFactory();
+        _instance = this;
+    }
 
     /// <summary>
     /// Customize the generation output for Azure client SDK.

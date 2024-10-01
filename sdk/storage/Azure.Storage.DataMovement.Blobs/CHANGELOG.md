@@ -5,6 +5,8 @@
 ### Features Added
 
 ### Breaking Changes
+- Changed `FromContainer(string containerUri, BlobStorageResourceContainerOptions options = default)` to `FromContainer(Uri containerUri, BlobStorageResourceContainerOptions options = default)`
+- Changed `FromBlob(string blobUri, BlobStorageResourceOptions options = default)` to `FromBlob(Uri blobUri, BlobStorageResourceOptions options = default)`
 
 ### Bugs Fixed
 - Fixed bug where using OAuth would not preserve source properties to destination properties.

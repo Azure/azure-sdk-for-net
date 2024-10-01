@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static bool operator ==(ServiceBusMinimumTlsVersion left, ServiceBusMinimumTlsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceBusMinimumTlsVersion"/> values are not the same. </summary>
         public static bool operator !=(ServiceBusMinimumTlsVersion left, ServiceBusMinimumTlsVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceBusMinimumTlsVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceBusMinimumTlsVersion"/>. </summary>
         public static implicit operator ServiceBusMinimumTlsVersion(string value) => new ServiceBusMinimumTlsVersion(value);
 
         /// <inheritdoc />

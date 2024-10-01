@@ -52,9 +52,8 @@ public partial class SqlAgentConfiguration : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlAgentConfiguration.</param>
     /// <param name="resourceVersion">Version of the SqlAgentConfiguration.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlAgentConfiguration(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/sqlAgent", resourceVersion ?? "2021-11-01", context)
+    public SqlAgentConfiguration(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/sqlAgent", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _state = BicepValue<SqlAgentConfigurationPropertiesState>.DefineProperty(this, "State", ["properties", "state"]);
