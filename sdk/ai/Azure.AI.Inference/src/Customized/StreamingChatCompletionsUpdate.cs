@@ -152,7 +152,8 @@ namespace Azure.AI.Inference
             CompletionsFinishReason? finishReason = null,
             string functionName = null,
             string functionArgumentsUpdate = null,
-            StreamingToolCallUpdate toolCallUpdate = null)
+            StreamingToolCallUpdate toolCallUpdate = null,
+            CompletionsUsage usage = null)
         {
             Id = id;
             Model = model;
@@ -164,6 +165,7 @@ namespace Azure.AI.Inference
             FunctionName = functionName;
             FunctionArgumentsUpdate = functionArgumentsUpdate;
             ToolCallUpdate = toolCallUpdate;
+            Usage = usage;
         }
     }
 }
