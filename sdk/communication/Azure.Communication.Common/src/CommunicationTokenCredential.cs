@@ -35,9 +35,9 @@ namespace Azure.Communication
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="EntraTokenCredential"/>.
+        /// Initializes a new instance of <see cref="CommunicationTokenCredential"/>.
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="options">The options for how the token will be fetched</param>
         public CommunicationTokenCredential(EntraCommunicationTokenCredentialOptions options)
         {
             Argument.AssertNotNull(options, nameof(options));
