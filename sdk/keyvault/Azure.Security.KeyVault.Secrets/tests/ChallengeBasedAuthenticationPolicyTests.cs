@@ -343,6 +343,77 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             }
         }
 
+        [Test]
+        [TestCase("standard", """Bearer realm="", authorization_uri="https://login.microsoftonline.com/common/oauth2/authorize", error="insufficient_claims", claims="eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwidmFsdWUiOiIxNzI2MDc3NTk1In0sInhtc19jYWVlcnJvciI6eyJ2YWx1ZSI6IjEwMDEyIn19fQ==" """, """{"access_token":{"nbf":{"essential":true,"value":"1726077595"},"xms_caeerror":{"value":"10012"}}}""")]
+        public async Task VerifyClaimsInToken(string challenge, string expectedClaims)
+        {
+            string claims = null;
+            int callCount = 0;
+
+            MockTransport keyVaultTransport = new(new[]
+            {
+                // Initial challlenge
+                new MockResponse(401)
+                    .WithHeader("WWW-Authenticate", @"Bearer authorization=""https://login.windows.net/de763a21-49f7-4b08-a8e1-52c8fbc103b4"", resource=""https://vault.azure.net"""),
+
+                // CAE Challenge
+                new MockResponse(401)
+                    .WithHeader("WWW-Authenticate", challenge),
+
+                new MockResponse(200)
+                {
+                    ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
+                },
+            });
+
+            var credential = new TokenCredentialStub((r, c) =>
+            {
+                claims = r.Claims;
+                Interlocked.Increment(ref callCount);
+                Assert.AreEqual(true, r.IsCaeEnabled);
+
+                return new(callCount.ToString(), DateTimeOffset.Now.AddHours(2));
+            }, true);
+            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+
+            SecretClient client = new(
+            VaultUri,
+            credential,
+            new SecretClientOptions()
+            {
+                Transport = keyVaultTransport,
+            });
+
+            var FooResponse = await client.GetSecretAsync("test-secret");
+            Assert.AreEqual(expectedClaims, claims);
+        }
+
+        private class TokenCredentialStub : TokenCredential
+        {
+            public TokenCredentialStub(Func<TokenRequestContext, CancellationToken, AccessToken> handler, bool isAsync)
+            {
+                if (isAsync)
+                {
+#pragma warning disable 1998
+                    _getTokenAsyncHandler = async (r, c) => handler(r, c);
+#pragma warning restore 1998
+                }
+                else
+                {
+                    _getTokenHandler = handler;
+                }
+            }
+
+            private readonly Func<TokenRequestContext, CancellationToken, ValueTask<AccessToken>> _getTokenAsyncHandler;
+            private readonly Func<TokenRequestContext, CancellationToken, AccessToken> _getTokenHandler;
+
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+                => _getTokenAsyncHandler(requestContext, cancellationToken);
+
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+                => _getTokenHandler(requestContext, cancellationToken);
+        }
+
         private class MockTransportBuilder
         {
             private const string AuthorizationHeader = "Authorization";
