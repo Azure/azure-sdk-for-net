@@ -22,6 +22,11 @@
     </InternalsVisibleTo>
   </ItemGroup>
 
+  <!-- Temporary CI exclusion pending breaking change updates for 2.0.0 GA -->
+  <ItemGroup>
+    <ExcludeFromProjectReferenceToConversion Include="Azure.Search.Documents.Tests" />
+  </ItemGroup>
+
   <Choose>
     <When Condition="'$(GAServiceVersionLabel)' != ''">
       <PropertyGroup>

@@ -48,9 +48,4 @@
 
   <!-- Pull in Microsoft.Azure.Core.Spatial -->
   <Import Project="..\..\..\core\Microsoft.Azure.Core.Spatial\src\Microsoft.Azure.Core.Spatial.props" />
-
-  <!-- Temporary compilation exclusion of Azure.AI.OpenAI dependency, pending 2.0.0 package version update -->
-  <ItemGroup>
-    <Compile Remove="Samples\Sample07*"/>
-  </ItemGroup>
 </Project>
