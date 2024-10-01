@@ -17,6 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
+            SearchResourceCounter aliasesCount = default;
             SearchResourceCounter documentCount = default;
             SearchResourceCounter indexesCount = default;
             SearchResourceCounter indexersCount = default;
@@ -27,6 +28,11 @@ namespace Azure.Search.Documents.Indexes.Models
             SearchResourceCounter vectorIndexSize = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("aliasesCount"u8))
+                {
+                    aliasesCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("documentCount"u8))
                 {
                     documentCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
@@ -69,6 +75,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new SearchServiceCounters(
+                aliasesCount,
                 documentCount,
                 indexesCount,
                 indexersCount,

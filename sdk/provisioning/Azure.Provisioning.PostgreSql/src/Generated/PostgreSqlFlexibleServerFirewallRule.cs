@@ -59,9 +59,8 @@ public partial class PostgreSqlFlexibleServerFirewallRule : Resource
     /// </summary>
     /// <param name="resourceName">Name of the PostgreSqlFlexibleServerFirewallRule.</param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerFirewallRule.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlFlexibleServerFirewallRule(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/firewallRules", resourceVersion, context)
+    public PostgreSqlFlexibleServerFirewallRule(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/firewallRules", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _endIPAddress = BicepValue<IPAddress>.DefineProperty(this, "EndIPAddress", ["properties", "endIpAddress"], isRequired: true);
@@ -69,6 +68,27 @@ public partial class PostgreSqlFlexibleServerFirewallRule : Resource
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<PostgreSqlFlexibleServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported PostgreSqlFlexibleServerFirewallRule resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-08-01.
+        /// </summary>
+        public static readonly string V2024_08_01 = "2024-08-01";
+
+        /// <summary>
+        /// 2022-12-01.
+        /// </summary>
+        public static readonly string V2022_12_01 = "2022-12-01";
+
+        /// <summary>
+        /// 2021-06-01.
+        /// </summary>
+        public static readonly string V2021_06_01 = "2021-06-01";
     }
 
     /// <summary>

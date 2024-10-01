@@ -69,9 +69,8 @@ public partial class ManagementGroup : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagementGroup.</param>
     /// <param name="resourceVersion">Version of the ManagementGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagementGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Management/managementGroups", resourceVersion, context)
+    public ManagementGroup(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Management/managementGroups", resourceVersion ?? "2023-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"]);
         _details = BicepValue<CreateManagementGroupDetails>.DefineProperty(this, "Details", ["properties", "details"]);
@@ -80,6 +79,47 @@ public partial class ManagementGroup : Resource
         _id = BicepValue<string>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _tenantId = BicepValue<Guid>.DefineProperty(this, "TenantId", ["properties", "tenantId"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Supported ManagementGroup resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2023-04-01.
+        /// </summary>
+        public static readonly string V2023_04_01 = "2023-04-01";
+
+        /// <summary>
+        /// 2021-04-01.
+        /// </summary>
+        public static readonly string V2021_04_01 = "2021-04-01";
+
+        /// <summary>
+        /// 2020-10-01.
+        /// </summary>
+        public static readonly string V2020_10_01 = "2020-10-01";
+
+        /// <summary>
+        /// 2020-05-01.
+        /// </summary>
+        public static readonly string V2020_05_01 = "2020-05-01";
+
+        /// <summary>
+        /// 2020-02-01.
+        /// </summary>
+        public static readonly string V2020_02_01 = "2020-02-01";
+
+        /// <summary>
+        /// 2019-11-01.
+        /// </summary>
+        public static readonly string V2019_11_01 = "2019-11-01";
+
+        /// <summary>
+        /// 2018-03-01-beta.
+        /// </summary>
+        public static readonly string V2018_03_01_beta = "2018-03-01-beta";
     }
 
     /// <summary>

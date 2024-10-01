@@ -32,7 +32,7 @@ public class SignalRSpecification() :
         Roles.Add(new Role("SignalRRestApiOwner", "fd53cd77-2268-407a-8f46-7e7863d0f521", "Full access to Azure SignalR Service REST APIs"));
         Roles.Add(new Role("SignalRRestApiReader", "ddde6b66-c0df-4114-a159-3618637b3035", "Read-only access to Azure SignalR Service REST APIs"));
         Roles.Add(new Role("SignalRServiceOwner", "7e4f1700-ea5a-4f59-8f37-079cfe29dce3", "Full access to Azure SignalR Service REST APIs"));
-        Roles.Add(new Role("SignalRWebPubSubContributor", "8cf5e20a-e4b2-4e9d-b3a1-5ceb692c2761", "Create, Read, Update, and Delete SignalR service resources"));
+        Roles.Add(new Role("SignalRContributor", "8cf5e20a-e4b2-4e9d-b3a1-5ceb692c2761", "Create, Read, Update, and Delete SignalR service resources"));
 
         // Assign Roles
         CustomizeResource<SignalRResource>(r => r.GenerateRoleAssignment = true);

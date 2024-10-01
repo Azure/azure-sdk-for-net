@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator ==(ClusterPoolUpgradeType left, ClusterPoolUpgradeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterPoolUpgradeType"/> values are not the same. </summary>
         public static bool operator !=(ClusterPoolUpgradeType left, ClusterPoolUpgradeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClusterPoolUpgradeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterPoolUpgradeType"/>. </summary>
         public static implicit operator ClusterPoolUpgradeType(string value) => new ClusterPoolUpgradeType(value);
 
         /// <inheritdoc />

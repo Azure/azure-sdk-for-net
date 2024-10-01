@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(ComputeFleetWindowsPatchAssessmentMode left, ComputeFleetWindowsPatchAssessmentMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeFleetWindowsPatchAssessmentMode"/> values are not the same. </summary>
         public static bool operator !=(ComputeFleetWindowsPatchAssessmentMode left, ComputeFleetWindowsPatchAssessmentMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeFleetWindowsPatchAssessmentMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetWindowsPatchAssessmentMode"/>. </summary>
         public static implicit operator ComputeFleetWindowsPatchAssessmentMode(string value) => new ComputeFleetWindowsPatchAssessmentMode(value);
 
         /// <inheritdoc />

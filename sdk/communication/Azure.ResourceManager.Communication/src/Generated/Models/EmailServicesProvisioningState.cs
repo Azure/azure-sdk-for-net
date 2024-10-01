@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Communication.Models
         public static bool operator ==(EmailServicesProvisioningState left, EmailServicesProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EmailServicesProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(EmailServicesProvisioningState left, EmailServicesProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EmailServicesProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EmailServicesProvisioningState"/>. </summary>
         public static implicit operator EmailServicesProvisioningState(string value) => new EmailServicesProvisioningState(value);
 
         /// <inheritdoc />

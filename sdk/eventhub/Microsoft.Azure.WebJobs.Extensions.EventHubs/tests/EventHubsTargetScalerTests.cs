@@ -129,6 +129,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [TestCase(21, new[] { 1, 4, 10, 20 }, 20)]
         [TestCase(0, new[] { 1, 4, 10, 20 }, 1)]
         [TestCase(10, new[] { 1, 4, 10, 20 }, 10)]
+        [TestCase(10, new int[0], 0)]
         public void GetSortedValidWorkerCountsForPartitionCount_ReturnsExpected(int workerCount, int[] sortedWorkerCountList, int expectedValidWorkerCount)
         {
             int actualValidWorkerCount = EventHubsTargetScaler.GetValidWorkerCount(workerCount, sortedWorkerCountList);

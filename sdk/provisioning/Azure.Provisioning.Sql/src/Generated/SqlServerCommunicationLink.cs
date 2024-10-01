@@ -71,9 +71,8 @@ public partial class SqlServerCommunicationLink : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlServerCommunicationLink.</param>
     /// <param name="resourceVersion">Version of the SqlServerCommunicationLink.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerCommunicationLink(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/communicationLinks", resourceVersion ?? "2014-04-01", context)
+    public SqlServerCommunicationLink(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/communicationLinks", resourceVersion ?? "2014-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _partnerServer = BicepValue<string>.DefineProperty(this, "PartnerServer", ["properties", "partnerServer"]);

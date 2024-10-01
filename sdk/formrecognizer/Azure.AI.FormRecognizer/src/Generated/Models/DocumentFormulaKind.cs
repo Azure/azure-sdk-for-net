@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static bool operator ==(DocumentFormulaKind left, DocumentFormulaKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentFormulaKind"/> values are not the same. </summary>
         public static bool operator !=(DocumentFormulaKind left, DocumentFormulaKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DocumentFormulaKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentFormulaKind"/>. </summary>
         public static implicit operator DocumentFormulaKind(string value) => new DocumentFormulaKind(value);
 
         /// <inheritdoc />

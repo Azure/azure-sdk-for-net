@@ -82,9 +82,8 @@ public partial class SyncAgent : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SyncAgent.</param>
     /// <param name="resourceVersion">Version of the SyncAgent.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SyncAgent(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/syncAgents", resourceVersion ?? "2021-11-01", context)
+    public SyncAgent(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/syncAgents", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _syncDatabaseId = BicepValue<ResourceIdentifier>.DefineProperty(this, "SyncDatabaseId", ["properties", "syncDatabaseId"]);

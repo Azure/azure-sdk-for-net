@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator ==(DBConnectionAuthenticationMode left, DBConnectionAuthenticationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DBConnectionAuthenticationMode"/> values are not the same. </summary>
         public static bool operator !=(DBConnectionAuthenticationMode left, DBConnectionAuthenticationMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DBConnectionAuthenticationMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DBConnectionAuthenticationMode"/>. </summary>
         public static implicit operator DBConnectionAuthenticationMode(string value) => new DBConnectionAuthenticationMode(value);
 
         /// <inheritdoc />

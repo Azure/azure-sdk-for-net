@@ -1,5 +1,6 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
+    <GAServiceVersionLabel>2024_06_01</GAServiceVersionLabel>
     <!--
       During development, we may want to get ahead of the published Nuget package versions. These next property flags
       allow you to replace Nuget package references with external assembly .dll references, or even the source code
@@ -13,7 +14,7 @@
     <ExternalAzureCoreLibrary>../../external/Azure.Core.Slim/netstandard2.0/Azure.Core.Slim.dll</ExternalAzureCoreLibrary>
     -->
   </PropertyGroup>
-  
+
   <!--
     Add any shared properties you want for the projects under this package directory that need to be set before the auto imported Directory.Build.props
   -->

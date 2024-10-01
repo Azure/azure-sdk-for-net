@@ -65,9 +65,8 @@ public partial class PartnerConfiguration : Resource
     /// </summary>
     /// <param name="resourceName">Name of the PartnerConfiguration.</param>
     /// <param name="resourceVersion">Version of the PartnerConfiguration.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PartnerConfiguration(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/partnerConfigurations", resourceVersion ?? "2022-06-15", context)
+    public PartnerConfiguration(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/partnerConfigurations", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         void IJsonModel<KubernetesClusterExtensionStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubernetesClusterExtensionStatus)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
@@ -67,7 +75,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         KubernetesClusterExtensionStatus IJsonModel<KubernetesClusterExtensionStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -44,6 +44,8 @@ namespace Azure.Storage.DataMovement
         private readonly CancellationTokenSource _cancellationTokenSource = new();
         private CancellationToken _cancellationToken => _cancellationTokenSource.Token;
 
+        private readonly Func<string> _generateTransferId;
+
         /// <summary>
         /// Protected constructor for mocking.
         /// </summary>
@@ -55,20 +57,17 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="options">Options that will apply to all transfers started by this TransferManager.</param>
         public TransferManager(TransferManagerOptions options = default)
-        {
-            _jobsProcessor = ChannelProcessing.NewProcessor<TransferJobInternal>(parallelism: 1);
-            _partsProcessor = ChannelProcessing.NewProcessor<JobPartInternal>(DataMovementConstants.MaxJobPartReaders);
-            _chunksProcessor = ChannelProcessing.NewProcessor<Func<Task>>(options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks);
-            _jobBuilder = new(
-                ArrayPool<byte>.Shared,
+            : this(
+            ChannelProcessing.NewProcessor<TransferJobInternal>(parallelism: 1),
+            ChannelProcessing.NewProcessor<JobPartInternal>(DataMovementConstants.MaxJobPartReaders),
+            ChannelProcessing.NewProcessor<Func<Task>>(options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks),
+            new(ArrayPool<byte>.Shared,
                 options?.ErrorHandling ?? DataTransferErrorMode.StopOnAnyFailure,
-                new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default));
-            TransferCheckpointStoreOptions checkpointerOptions = options?.CheckpointerOptions != default ? new TransferCheckpointStoreOptions(options.CheckpointerOptions) : default;
-            _checkpointer = checkpointerOptions != default ? checkpointerOptions.GetCheckpointer() : CreateDefaultCheckpointer();
-            _resumeProviders = options?.ResumeProviders != null ? new(options.ResumeProviders) : new();
-
-            ConfigureProcessorCallbacks();
-        }
+                new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default)),
+                CheckpointerExtensions.BuildCheckpointer(options?.CheckpointerOptions),
+                options?.ResumeProviders != null ? new List<StorageResourceProvider>(options.ResumeProviders) : new(),
+                default)
+        {}
 
         /// <summary>
         /// Dependency injection constructor.
@@ -79,14 +78,16 @@ namespace Azure.Storage.DataMovement
             IProcessor<Func<Task>> chunksProcessor,
             JobBuilder jobBuilder,
             TransferCheckpointer checkpointer,
-            ICollection<StorageResourceProvider> resumeProviders)
+            ICollection<StorageResourceProvider> resumeProviders,
+            Func<string> generateTransferId = default)
         {
             _jobsProcessor = jobsProcessor;
             _partsProcessor = partsProcessor;
             _chunksProcessor = chunksProcessor;
             _jobBuilder = jobBuilder;
-            _resumeProviders = new(resumeProviders);
+            _resumeProviders = new(resumeProviders ?? new List<StorageResourceProvider>());
             _checkpointer = checkpointer;
+            _generateTransferId = generateTransferId ?? (() => Guid.NewGuid().ToString());
 
             ConfigureProcessorCallbacks();
         }
@@ -207,6 +208,11 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken = default)
         {
             cancellationToken = LinkCancellation(cancellationToken);
+            if (_checkpointer is DisabledTransferCheckpointer)
+            {
+                throw Errors.CheckpointerDisabled("ResumeAllTransfersAsync");
+            }
+
             List<DataTransfer> transfers = new();
             await foreach (DataTransferProperties properties in GetResumableTransfersAsync().ConfigureAwait(false))
             {
@@ -233,6 +239,10 @@ namespace Azure.Storage.DataMovement
             cancellationToken = LinkCancellation(cancellationToken);
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Argument.AssertNotNullOrWhiteSpace(transferId, nameof(transferId));
+            if (_checkpointer is DisabledTransferCheckpointer)
+            {
+                throw Errors.CheckpointerDisabled("ResumeTransferAsync");
+            }
 
             if (!await _checkpointer.IsResumableAsync(transferId, cancellationToken).ConfigureAwait(false))
             {
@@ -345,7 +355,7 @@ namespace Azure.Storage.DataMovement
 
             transferOptions ??= new DataTransferOptions();
 
-            string transferId = Guid.NewGuid().ToString();
+            string transferId = _generateTransferId();
             await _checkpointer.AddNewJobAsync(
                 transferId,
                 sourceResource,
@@ -389,22 +399,6 @@ namespace Azure.Storage.DataMovement
             return transfer;
         }
         #endregion
-
-        /// <summary>
-        /// Returns a default checkpointer if not specified by the user already.
-        ///
-        /// By default a local folder will be used to store the job transfer files.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="LocalTransferCheckpointer"/> using the folder
-        /// where the application is stored with and making a new folder called
-        /// .azstoragedml to store all the job plan files.
-        /// </returns>
-        private static LocalTransferCheckpointer CreateDefaultCheckpointer()
-        {
-            // Return checkpointer
-            return new LocalTransferCheckpointer(default);
-        }
 
         private async Task SetDataTransfers()
         {

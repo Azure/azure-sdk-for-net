@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(BillingStatisticKind left, BillingStatisticKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingStatisticKind"/> values are not the same. </summary>
         public static bool operator !=(BillingStatisticKind left, BillingStatisticKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BillingStatisticKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingStatisticKind"/>. </summary>
         public static implicit operator BillingStatisticKind(string value) => new BillingStatisticKind(value);
 
         /// <inheritdoc />

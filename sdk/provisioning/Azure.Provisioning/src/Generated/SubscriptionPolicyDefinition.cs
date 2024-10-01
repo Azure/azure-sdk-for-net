@@ -115,9 +115,8 @@ public partial class SubscriptionPolicyDefinition : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SubscriptionPolicyDefinition.</param>
     /// <param name="resourceVersion">Version of the SubscriptionPolicyDefinition.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SubscriptionPolicyDefinition(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Authorization/policyDefinitions", resourceVersion, context)
+    public SubscriptionPolicyDefinition(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Authorization/policyDefinitions", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);

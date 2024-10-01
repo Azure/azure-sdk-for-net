@@ -58,9 +58,8 @@ public partial class AppServicePlanVirtualNetworkConnectionGateway : Resource
     /// </summary>
     /// <param name="resourceName">Name of the AppServicePlanVirtualNetworkConnectionGateway.</param>
     /// <param name="resourceVersion">Version of the AppServicePlanVirtualNetworkConnectionGateway.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public AppServicePlanVirtualNetworkConnectionGateway(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/serverfarms/virtualNetworkConnections/gateways", resourceVersion, context)
+    public AppServicePlanVirtualNetworkConnectionGateway(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/serverfarms/virtualNetworkConnections/gateways", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);

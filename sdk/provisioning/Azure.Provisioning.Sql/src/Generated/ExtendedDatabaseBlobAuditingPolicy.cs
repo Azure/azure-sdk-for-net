@@ -200,9 +200,8 @@ public partial class ExtendedDatabaseBlobAuditingPolicy : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ExtendedDatabaseBlobAuditingPolicy.</param>
     /// <param name="resourceVersion">Version of the ExtendedDatabaseBlobAuditingPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ExtendedDatabaseBlobAuditingPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/extendedAuditingSettings", resourceVersion, context)
+    public ExtendedDatabaseBlobAuditingPolicy(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/databases/extendedAuditingSettings", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _auditActionsAndGroups = BicepList<string>.DefineProperty(this, "AuditActionsAndGroups", ["properties", "auditActionsAndGroups"]);
@@ -219,6 +218,37 @@ public partial class ExtendedDatabaseBlobAuditingPolicy : Resource
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<SqlDatabase>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported ExtendedDatabaseBlobAuditingPolicy resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
+
+        /// <summary>
+        /// 2015-01-01.
+        /// </summary>
+        public static readonly string V2015_01_01 = "2015-01-01";
+
+        /// <summary>
+        /// 2014-04-01.
+        /// </summary>
+        public static readonly string V2014_04_01 = "2014-04-01";
+
+        /// <summary>
+        /// 2014-01-01.
+        /// </summary>
+        public static readonly string V2014_01_01 = "2014-01-01";
     }
 
     /// <summary>

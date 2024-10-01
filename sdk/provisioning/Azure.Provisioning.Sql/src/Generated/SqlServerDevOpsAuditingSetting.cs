@@ -108,9 +108,8 @@ public partial class SqlServerDevOpsAuditingSetting : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlServerDevOpsAuditingSetting.</param>
     /// <param name="resourceVersion">Version of the SqlServerDevOpsAuditingSetting.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerDevOpsAuditingSetting(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/devOpsAuditingSettings", resourceVersion ?? "2021-11-01", context)
+    public SqlServerDevOpsAuditingSetting(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/devOpsAuditingSettings", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _isAzureMonitorTargetEnabled = BicepValue<bool>.DefineProperty(this, "IsAzureMonitorTargetEnabled", ["properties", "isAzureMonitorTargetEnabled"]);

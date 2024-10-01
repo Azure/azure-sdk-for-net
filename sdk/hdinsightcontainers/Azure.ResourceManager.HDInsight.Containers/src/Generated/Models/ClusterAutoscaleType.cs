@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator ==(ClusterAutoscaleType left, ClusterAutoscaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterAutoscaleType"/> values are not the same. </summary>
         public static bool operator !=(ClusterAutoscaleType left, ClusterAutoscaleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClusterAutoscaleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterAutoscaleType"/>. </summary>
         public static implicit operator ClusterAutoscaleType(string value) => new ClusterAutoscaleType(value);
 
         /// <inheritdoc />

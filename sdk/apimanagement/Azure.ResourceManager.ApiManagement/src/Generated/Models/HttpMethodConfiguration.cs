@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(HttpMethodConfiguration left, HttpMethodConfiguration right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HttpMethodConfiguration"/> values are not the same. </summary>
         public static bool operator !=(HttpMethodConfiguration left, HttpMethodConfiguration right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HttpMethodConfiguration"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HttpMethodConfiguration"/>. </summary>
         public static implicit operator HttpMethodConfiguration(string value) => new HttpMethodConfiguration(value);
 
         /// <inheritdoc />

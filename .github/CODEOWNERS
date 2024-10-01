@@ -151,7 +151,7 @@
 # ServiceOwners:                                                   @cataggar @nivasn-msft @amitchat @aishu
 
 # ServiceLabel: %Azure Data Explorer
-# ServiceOwners:                                                   @ilayrn @orhasban @zoharHenMicrosoft @sagivf @Aviv-Yaniv
+# ServiceOwners:                                                   @ilayrn @orhasban @zoharHenMicrosoft @Aviv-Yaniv
 
 # PRLabel: %Azure Stack
 /sdk/azurestack*/                                                  @sijuman @sarathys @bganapa @rakku-ms
@@ -1015,12 +1015,6 @@
 # ServiceLabel: %Network - Mobile %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
 
-# PRLabel: %Network - Cloud
-/sdk/networkcloud/Azure.ResourceManager.*/                         @Azure/azure-sdk-write-networkcloud
-
-# ServiceLabel: %Network - Cloud %Mgmt
-# ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
-
 # PRLabel: %New Relic
 /sdk/newrelicobservability/Azure.ResourceManager.*/                @dipeshbhakat-microsoft @vipray-ms
 
@@ -1066,7 +1060,6 @@
 # PRLabel: %Spring App Discovery
 /sdk/springappdiscovery/Azure.ResourceManager.*/                   @sunkun99 @archerzz @ArcturusZhang @ArthurMa1978
 
-
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
 
@@ -1081,6 +1074,8 @@
 /eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 /.github/workflows/                                                @Azure/azure-sdk-eng
+/.github/CODEOWNERS                                                @jsquire @Azure/azure-sdk-eng
+/.config/1espt/                                                    @benbp @weshaggard
 
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml                               @jsquire

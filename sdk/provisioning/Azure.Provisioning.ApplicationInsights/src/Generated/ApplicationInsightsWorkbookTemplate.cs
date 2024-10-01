@@ -98,9 +98,8 @@ public partial class ApplicationInsightsWorkbookTemplate : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ApplicationInsightsWorkbookTemplate.</param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsWorkbookTemplate.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ApplicationInsightsWorkbookTemplate(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Insights/workbooktemplates", resourceVersion ?? "2020-11-20", context)
+    public ApplicationInsightsWorkbookTemplate(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Insights/workbooktemplates", resourceVersion ?? "2020-11-20")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

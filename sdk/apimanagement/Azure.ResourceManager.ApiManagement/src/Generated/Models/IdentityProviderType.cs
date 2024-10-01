@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(IdentityProviderType left, IdentityProviderType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IdentityProviderType"/> values are not the same. </summary>
         public static bool operator !=(IdentityProviderType left, IdentityProviderType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IdentityProviderType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IdentityProviderType"/>. </summary>
         public static implicit operator IdentityProviderType(string value) => new IdentityProviderType(value);
 
         /// <inheritdoc />

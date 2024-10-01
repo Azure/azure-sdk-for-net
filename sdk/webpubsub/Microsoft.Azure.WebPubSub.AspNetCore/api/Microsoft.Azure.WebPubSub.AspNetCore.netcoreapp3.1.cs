@@ -7,6 +7,10 @@ namespace Microsoft.AspNetCore.Builder
 }
 namespace Microsoft.Azure.WebPubSub.AspNetCore
 {
+    public partial class MqttConnectionException : System.Exception
+    {
+        public MqttConnectionException(Microsoft.Azure.WebPubSub.Common.MqttConnectEventErrorResponse mqttErrorResponse) { }
+    }
     public abstract partial class WebPubSubHub
     {
         protected WebPubSubHub() { }

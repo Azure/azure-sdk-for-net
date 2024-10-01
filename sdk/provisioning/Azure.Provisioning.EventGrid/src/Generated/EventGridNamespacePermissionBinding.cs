@@ -80,9 +80,8 @@ public partial class EventGridNamespacePermissionBinding : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EventGridNamespacePermissionBinding.</param>
     /// <param name="resourceVersion">Version of the EventGridNamespacePermissionBinding.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventGridNamespacePermissionBinding(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/permissionBindings", resourceVersion, context)
+    public EventGridNamespacePermissionBinding(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/namespaces/permissionBindings", resourceVersion ?? "2024-06-01-preview")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _clientGroupName = BicepValue<string>.DefineProperty(this, "ClientGroupName", ["properties", "clientGroupName"]);
@@ -93,6 +92,17 @@ public partial class EventGridNamespacePermissionBinding : Resource
         _provisioningState = BicepValue<PermissionBindingProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<EventGridNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported EventGridNamespacePermissionBinding resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-06-01-preview.
+        /// </summary>
+        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
     }
 
     /// <summary>

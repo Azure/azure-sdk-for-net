@@ -25,20 +25,6 @@ namespace Azure.Maps.Search.Models
             return new GeocodingResponse(type, features?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FeaturesItem"/>. </summary>
-        /// <param name="type"> The type of a feature must be Feature. </param>
-        /// <param name="id"> ID for feature returned. </param>
-        /// <param name="properties"></param>
-        /// <param name="geometry"> A valid `GeoJSON Point` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.2) for details. </param>
-        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
-        /// <returns> A new <see cref="Models.FeaturesItem"/> instance for mocking. </returns>
-        public static FeaturesItem FeaturesItem(FeatureTypeEnum? type = null, string id = null, FeaturesItemProperties properties = null, GeoJsonPoint geometry = null, IEnumerable<double> boundingBox = null)
-        {
-            boundingBox ??= new List<double>();
-
-            return new FeaturesItem(type, id, properties, geometry, boundingBox?.ToList());
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.FeaturesItemProperties"/>. </summary>
         /// <param name="type">
         /// One of:
@@ -144,22 +130,6 @@ namespace Azure.Maps.Search.Models
         public static Intersection Intersection(string baseStreet = null, string secondaryStreet1 = null, string secondaryStreet2 = null, string intersectionType = null, string displayName = null)
         {
             return new Intersection(baseStreet, secondaryStreet1, secondaryStreet2, intersectionType, displayName);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GeocodePointsItem"/>. </summary>
-        /// <param name="geometry"> A valid `GeoJSON Point` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.2) for details. </param>
-        /// <param name="calculationMethod"> The method that was used to compute the geocode point. </param>
-        /// <param name="usageTypes">
-        /// The best use for the geocode point.
-        /// Each geocode point is defined as a `Route` point, a `Display` point or both.
-        /// Use `Route` points if you are creating a route to the location. Use `Display` points if you are showing the location on a map. For example, if the location is a park, a `Route` point may specify an entrance to the park where you can enter with a car, and a `Display` point may be a point that specifies the center of the park.
-        /// </param>
-        /// <returns> A new <see cref="Models.GeocodePointsItem"/> instance for mocking. </returns>
-        public static GeocodePointsItem GeocodePointsItem(GeoJsonPoint geometry = null, CalculationMethodEnum? calculationMethod = null, IEnumerable<UsageTypeEnum> usageTypes = null)
-        {
-            usageTypes ??= new List<UsageTypeEnum>();
-
-            return new GeocodePointsItem(geometry, calculationMethod, usageTypes?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ErrorDetail"/>. </summary>
