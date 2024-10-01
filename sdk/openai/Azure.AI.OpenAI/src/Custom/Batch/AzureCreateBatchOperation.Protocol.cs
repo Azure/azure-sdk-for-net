@@ -11,8 +11,7 @@ using System.ClientModel.Primitives;
 namespace Azure.AI.OpenAI.Batch;
 
 /// <summary>
-/// A long-running operation for executing a batch from an uploaded file of 
-/// requests.
+/// A long-running operation for executing a batch from an uploaded file of requests.
 /// </summary>
 internal partial class AzureCreateBatchOperation : CreateBatchOperation
 {
