@@ -48,4 +48,7 @@
 
   <!-- Pull in Microsoft.Azure.Core.Spatial -->
   <Import Project="..\..\..\core\Microsoft.Azure.Core.Spatial\src\Microsoft.Azure.Core.Spatial.props" />
+
+  <!-- Temporarily retain package-only references to Azure.AI.OpenAI pending 2.0.0 GA updates -->
+  <ExcludeFromProjectReferenceToConversion Include="Azure.AI.OpenAI" />
 </Project>
