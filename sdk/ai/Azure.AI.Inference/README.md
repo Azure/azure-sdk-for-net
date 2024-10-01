@@ -342,32 +342,42 @@ To generate embeddings for additional phrases, simply call `client.embed` multip
 
 ### Observability with OpenTelemetry
 
-The Open Telemetry library provides tracing for Azure AI Inference client library for C#. Refer to the Installation chapter above for installation instructions.
-Please refer to [Azure SDK Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing)
-for general information on OpenTelemtery support in Azure client libraries.
+Azure AI Inference client library supports tracing and metrics with OpenTelemetry. Refer to
+[Azure SDK Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing)
+documentation for general information on OpenTelemetry support in Azure client libraries.
 
-Distributed tracing and metrics with OpenTelemetry are supported in Azure AI Inference in experimental mode and can be enabled through either of these three steps:
+Distributed tracing and metrics with OpenTelemetry are supported in Azure AI Inference in experimental mode and could be enabled through either
+of these steps:
 
 - Set the `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` environment variable to `true`.
-- Set the `Azure.Experimental.EnableActivitySource` context switch to `true`` in your application code
-
-Check out [OpenTelemetry .NET](https://opentelemetry.io/docs/languages/net/) and your observability provider documentation on how to configure OpenTelemetry.
+- Set the `Azure.Experimental.EnableActivitySource` context switch to `true` in your application code
 
 Refer to [Azure Monitor documentation](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable?tabs=aspnetcore) on how to use
 Azure Monitor OpenTelemetry Distro.
 
 > [!NOTE]
 > With the Azure Monitor OpenTelemetry Distro, you only need to opt-into Azure SDK experimental telemetry features with one of the ways documented at
-> the beggining of this section.
+> the beginning of this section.
 > The distro enables activity sources and meters for Azure AI Inference automatically.
 
 The following section provides an example on how to configure OpenTelemetry and enable Azure AI Inference tracing and metrics if your
-OpenTelemtery distro does not include Azure AI Inference by default.
+OpenTelemetry distro does not include Azure AI Inference by default.
 
 #### Generic OpenTelemetry configuration
 
 In this example we're going to export traces and metrics to console, and to the local [OTLP](https://opentelemetry.io/docs/specs/otel/protocol/) destination.
 [Aspire dashboard](https://learn.microsoft.com/dotnet/aspire/fundamentals/dashboard/standalone) can be used for local testing and exploration.
+
+To run this example, you'll need to install the following dependencies (HTTP tracing and metrics instrumentation
+as well as console and OTLP exporters):
+
+```dotnetcli
+dotnet add package OpenTelemetry.Instrumentation.Http
+dotnet add package OpenTelemetry.Exporter.Console
+dotnet add package OpenTelemetry.Exporter.OpenTelemetryProtocol
+```
+
+These packages also bring [OpenTelemetry SDK](https://www.nuget.org/packages/OpenTelemetry) as a dependency.
 
 ```C# Snippet:Azure_AI_Inference_EnableOpenTelemetry
 // Enables experimental Azure SDK observability
@@ -394,6 +404,8 @@ using var meterProvider = Sdk.CreateMeterProviderBuilder()
     .AddOtlpExporter()
     .Build();
 ```
+
+Check out [OpenTelemetry .NET](https://opentelemetry.io/docs/languages/net/) and your observability provider documentation on how to configure OpenTelemetry.
 
 ### Exceptions
 
