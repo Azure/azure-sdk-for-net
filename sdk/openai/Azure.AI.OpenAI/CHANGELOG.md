@@ -1,5 +1,17 @@
 # Release History
 
+## 2.1.0-beta.1 (2024-10-01)
+
+Relative to the prior GA release, this update restores preview surfaces, retargeting to the latest `2024-08-01-preview` service `api-version` label. It also brings early support for the newly-announced `/realtime` capabilities with `gpt-4o-realtime-preview`. You can read more about Azure OpenAI support for `/realtime` in the annoucement post here: https://azure.microsoft.com/blog/announcing-new-products-and-features-for-azure-openai-service-including-gpt-4o-realtime-preview-with-audio-and-speech-capabilities/
+
+### Features Added
+
+- Added a new `RealtimeConversationClient` in a corresponding scenario namespace. ([ff75da4](https://github.com/openai/openai-dotnet/commit/ff75da4167bc83fa85eb69ac142cab88a963ed06))
+  - This maps to the new `/realtime` beta endpoint and is thus marked with a new `[Experimental("OPENAI002")]` diagnostic tag. 
+  - This is a very early version of the convenience surface and thus subject to significant change
+  - Documentation and samples will arrive soon; in the interim, see [the scenario test files](/tests/ConversationTests.cs) for basic usage
+  - You can also find an external sample employing this client, together with Azure OpenAI support, at https://github.com/Azure-Samples/aoai-realtime-audio-sdk/tree/main/dotnet/samples/console
+
 ## 2.0.0 (2024-09-30)
 
 This update marks the first stable library version for `Azure.AI.OpenAI`. It snaps its dependency to `OpenAI`'s matched `2.0.0` stable version and targets the latest Azure OpenAI Service stable `api-version` label of `2024-06-01`. As a GA label, the `2.0.0` stable version exposes a subset of preview features, with preview library labels continuing to support preview features.
