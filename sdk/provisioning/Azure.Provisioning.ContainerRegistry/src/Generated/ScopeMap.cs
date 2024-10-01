@@ -80,9 +80,8 @@ public partial class ScopeMap : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ScopeMap.</param>
     /// <param name="resourceVersion">Version of the ScopeMap.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ScopeMap(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerRegistry/registries/scopeMaps", resourceVersion ?? "2023-07-01", context)
+    public ScopeMap(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ContainerRegistry/registries/scopeMaps", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _actions = BicepList<string>.DefineProperty(this, "Actions", ["properties", "actions"]);

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(MonitorWorkspacePublicNetworkAccess left, MonitorWorkspacePublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorWorkspacePublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(MonitorWorkspacePublicNetworkAccess left, MonitorWorkspacePublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MonitorWorkspacePublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorWorkspacePublicNetworkAccess"/>. </summary>
         public static implicit operator MonitorWorkspacePublicNetworkAccess(string value) => new MonitorWorkspacePublicNetworkAccess(value);
 
         /// <inheritdoc />

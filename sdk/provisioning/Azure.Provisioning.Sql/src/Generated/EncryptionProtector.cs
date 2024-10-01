@@ -96,9 +96,8 @@ public partial class EncryptionProtector : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EncryptionProtector.</param>
     /// <param name="resourceVersion">Version of the EncryptionProtector.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EncryptionProtector(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/encryptionProtector", resourceVersion ?? "2021-11-01", context)
+    public EncryptionProtector(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/encryptionProtector", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _isAutoRotationEnabled = BicepValue<bool>.DefineProperty(this, "IsAutoRotationEnabled", ["properties", "autoRotationEnabled"]);

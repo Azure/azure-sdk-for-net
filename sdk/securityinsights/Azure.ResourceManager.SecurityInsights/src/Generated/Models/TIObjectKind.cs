@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator ==(TIObjectKind left, TIObjectKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TIObjectKind"/> values are not the same. </summary>
         public static bool operator !=(TIObjectKind left, TIObjectKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TIObjectKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TIObjectKind"/>. </summary>
         public static implicit operator TIObjectKind(string value) => new TIObjectKind(value);
 
         /// <inheritdoc />

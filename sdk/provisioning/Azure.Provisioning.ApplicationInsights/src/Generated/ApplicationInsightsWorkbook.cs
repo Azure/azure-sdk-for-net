@@ -136,9 +136,8 @@ public partial class ApplicationInsightsWorkbook : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ApplicationInsightsWorkbook.</param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsWorkbook.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ApplicationInsightsWorkbook(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Insights/workbooks", resourceVersion ?? "2023-06-01", context)
+    public ApplicationInsightsWorkbook(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Insights/workbooks", resourceVersion ?? "2023-06-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

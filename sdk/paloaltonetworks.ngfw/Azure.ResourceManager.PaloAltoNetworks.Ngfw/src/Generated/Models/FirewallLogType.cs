@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static bool operator ==(FirewallLogType left, FirewallLogType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FirewallLogType"/> values are not the same. </summary>
         public static bool operator !=(FirewallLogType left, FirewallLogType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FirewallLogType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallLogType"/>. </summary>
         public static implicit operator FirewallLogType(string value) => new FirewallLogType(value);
 
         /// <inheritdoc />

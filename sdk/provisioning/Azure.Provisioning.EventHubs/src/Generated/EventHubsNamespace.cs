@@ -183,9 +183,8 @@ public partial class EventHubsNamespace : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EventHubsNamespace.</param>
     /// <param name="resourceVersion">Version of the EventHubsNamespace.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventHubsNamespace(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces", resourceVersion ?? "2017-04-01", context)
+    public EventHubsNamespace(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventHub/namespaces", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

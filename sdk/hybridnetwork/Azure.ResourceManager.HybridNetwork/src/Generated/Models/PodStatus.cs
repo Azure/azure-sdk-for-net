@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static bool operator ==(PodStatus left, PodStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PodStatus"/> values are not the same. </summary>
         public static bool operator !=(PodStatus left, PodStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PodStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PodStatus"/>. </summary>
         public static implicit operator PodStatus(string value) => new PodStatus(value);
 
         /// <inheritdoc />

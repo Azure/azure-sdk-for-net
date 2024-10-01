@@ -363,9 +363,8 @@ public partial class StorageAccount : Resource
     /// </summary>
     /// <param name="resourceName">Name of the StorageAccount.</param>
     /// <param name="resourceVersion">Version of the StorageAccount.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public StorageAccount(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts", resourceVersion ?? "2023-01-01", context)
+    public StorageAccount(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Storage/storageAccounts", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<StorageKind>.DefineProperty(this, "Kind", ["kind"], isRequired: true);

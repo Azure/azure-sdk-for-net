@@ -121,9 +121,8 @@ public partial class RoleAssignment : Resource
     /// </summary>
     /// <param name="resourceName">Name of the RoleAssignment.</param>
     /// <param name="resourceVersion">Version of the RoleAssignment.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public RoleAssignment(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Authorization/roleAssignments", resourceVersion ?? "2022-04-01", context)
+    public RoleAssignment(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Authorization/roleAssignments", resourceVersion ?? "2022-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true, defaultValue: GetNameDefaultValue());
         _principalId = BicepValue<Guid>.DefineProperty(this, "PrincipalId", ["properties", "principalId"], isRequired: true);

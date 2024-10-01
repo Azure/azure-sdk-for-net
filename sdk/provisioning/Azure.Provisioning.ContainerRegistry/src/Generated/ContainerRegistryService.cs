@@ -158,9 +158,8 @@ public partial class ContainerRegistryService : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ContainerRegistryService.</param>
     /// <param name="resourceVersion">Version of the ContainerRegistryService.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerRegistryService(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.ContainerRegistry/registries", resourceVersion ?? "2023-07-01", context)
+    public ContainerRegistryService(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.ContainerRegistry/registries", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

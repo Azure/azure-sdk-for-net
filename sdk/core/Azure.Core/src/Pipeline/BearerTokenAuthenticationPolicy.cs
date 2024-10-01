@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
@@ -71,7 +72,7 @@ namespace Azure.Core.Pipeline
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
         protected virtual ValueTask AuthorizeRequestAsync(HttpMessage message)
         {
-            var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
+            var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId, isCaeEnabled: true);
             return AuthenticateAndAuthorizeRequestAsync(message, context);
         }
 
@@ -84,30 +85,72 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
         protected virtual void AuthorizeRequest(HttpMessage message)
         {
-            var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
+            var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId, isCaeEnabled: true);
             AuthenticateAndAuthorizeRequest(message, context);
         }
 
         /// <summary>
         /// Executed in the event a 401 response with a WWW-Authenticate authentication challenge header is received after the initial request.
+        /// The default implementation will attempt to handle Continuous Access Evaluation (CAE) claims challenges.
         /// </summary>
         /// <remarks>Service client libraries may override this to handle service specific authentication challenges.</remarks>
         /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
         /// <returns>A boolean indicating whether the request was successfully authenticated and should be sent to the transport.</returns>
-        protected virtual ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message)
+        protected virtual async ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message)
         {
+            if (AuthorizationChallengeParser.IsCaeClaimsChallenge(message.Response) &&
+                TryGetTokenRequestContextForCaeChallenge(message, out var tokenRequestContext))
+            {
+                await AuthenticateAndAuthorizeRequestAsync(message, tokenRequestContext).ConfigureAwait(false);
+                return true;
+            }
+
             return default;
         }
 
         /// <summary>
         /// Executed in the event a 401 response with a WWW-Authenticate authentication challenge header is received after the initial request.
+        /// The default implementation will attempt to handle Continuous Access Evaluation (CAE) claims challenges.
         /// </summary>
         /// <remarks>Service client libraries may override this to handle service specific authentication challenges.</remarks>
         /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
         /// <returns>A boolean indicating whether the request was successfully authenticated and should be sent to the transport.</returns>
         protected virtual bool AuthorizeRequestOnChallenge(HttpMessage message)
         {
+            if (AuthorizationChallengeParser.IsCaeClaimsChallenge(message.Response) &&
+                TryGetTokenRequestContextForCaeChallenge(message, out var tokenRequestContext))
+            {
+                AuthenticateAndAuthorizeRequest(message, tokenRequestContext);
+                return true;
+            }
             return false;
+        }
+
+        internal bool TryGetTokenRequestContextForCaeChallenge(HttpMessage message, out TokenRequestContext tokenRequestContext)
+        {
+            string? decodedClaims = null;
+            string? encodedClaims = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "claims");
+            try
+            {
+                decodedClaims = encodedClaims switch
+                {
+                    null => null,
+                    { Length: 0 } => null,
+                    string enc => Encoding.UTF8.GetString(Convert.FromBase64String(enc))
+                };
+            }
+            catch (FormatException ex)
+            {
+                AzureCoreEventSource.Singleton.FailedToDecodeCaeChallengeClaims(encodedClaims, ex.ToString());
+            }
+            if (decodedClaims == null)
+            {
+                tokenRequestContext = default;
+                return false;
+            }
+
+            tokenRequestContext = new TokenRequestContext(_scopes, message.Request.ClientRequestId, decodedClaims, isCaeEnabled: true);
+            return true;
         }
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
@@ -385,7 +428,7 @@ namespace Azure.Core.Pipeline
 
                 public bool IsCurrentContextMismatched(TokenRequestContext context) =>
                     (context.Scopes != null && !context.Scopes.AsSpan().SequenceEqual(CurrentContext.Scopes.AsSpan())) ||
-                    (context.Claims != null && !string.Equals(context.Claims, CurrentContext.Claims)) ||
+                    !string.Equals(context.Claims, CurrentContext.Claims) ||
                     (context.TenantId != null && !string.Equals(context.TenantId, CurrentContext.TenantId));
 
                 public bool IsBackgroundTokenAvailable(DateTimeOffset now) =>

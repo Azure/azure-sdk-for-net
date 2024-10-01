@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static bool operator ==(RedisEnterpriseClusteringPolicy left, RedisEnterpriseClusteringPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseClusteringPolicy"/> values are not the same. </summary>
         public static bool operator !=(RedisEnterpriseClusteringPolicy left, RedisEnterpriseClusteringPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RedisEnterpriseClusteringPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseClusteringPolicy"/>. </summary>
         public static implicit operator RedisEnterpriseClusteringPolicy(string value) => new RedisEnterpriseClusteringPolicy(value);
 
         /// <inheritdoc />

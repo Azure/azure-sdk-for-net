@@ -172,9 +172,8 @@ public partial class ContainerAppManagedEnvironment : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ContainerAppManagedEnvironment.</param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironment.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerAppManagedEnvironment(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.App/managedEnvironments", resourceVersion ?? "2023-05-01", context)
+    public ContainerAppManagedEnvironment(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.App/managedEnvironments", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

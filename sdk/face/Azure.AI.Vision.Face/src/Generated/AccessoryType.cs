@@ -36,7 +36,7 @@ namespace Azure.AI.Vision.Face
         public static bool operator ==(AccessoryType left, AccessoryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AccessoryType"/> values are not the same. </summary>
         public static bool operator !=(AccessoryType left, AccessoryType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AccessoryType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AccessoryType"/>. </summary>
         public static implicit operator AccessoryType(string value) => new AccessoryType(value);
 
         /// <inheritdoc />

@@ -127,9 +127,8 @@ public partial class SyncGroup : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SyncGroup.</param>
     /// <param name="resourceVersion">Version of the SyncGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SyncGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/syncGroups", resourceVersion ?? "2021-11-01", context)
+    public SyncGroup(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/databases/syncGroups", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _conflictLoggingRetentionInDays = BicepValue<int>.DefineProperty(this, "ConflictLoggingRetentionInDays", ["properties", "conflictLoggingRetentionInDays"]);

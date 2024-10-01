@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static bool operator ==(WebPubSubKeyType left, WebPubSubKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebPubSubKeyType"/> values are not the same. </summary>
         public static bool operator !=(WebPubSubKeyType left, WebPubSubKeyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WebPubSubKeyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WebPubSubKeyType"/>. </summary>
         public static implicit operator WebPubSubKeyType(string value) => new WebPubSubKeyType(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(DataBoundaryName left, DataBoundaryName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoundaryName"/> values are not the same. </summary>
         public static bool operator !=(DataBoundaryName left, DataBoundaryName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataBoundaryName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoundaryName"/>. </summary>
         public static implicit operator DataBoundaryName(string value) => new DataBoundaryName(value);
 
         /// <inheritdoc />

@@ -20,6 +20,8 @@ public class BasicOperationalInsightsTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 OperationalInsightsWorkspace workspace =
                     new(nameof(workspace))
                     {
@@ -29,13 +31,16 @@ public class BasicOperationalInsightsTests(bool async)
                         },
                         Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
                     };
+                infra.Add(workspace);
+
+                return infra;
             })
         .Compare(
             """
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
+            resource workspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
               name: take('workspace-${uniqueString(resourceGroup().id)}', 63)
               location: location
               identity: {

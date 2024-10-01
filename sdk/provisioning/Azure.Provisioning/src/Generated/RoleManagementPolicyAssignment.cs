@@ -84,9 +84,8 @@ public partial class RoleManagementPolicyAssignment : Resource
     /// </summary>
     /// <param name="resourceName">Name of the RoleManagementPolicyAssignment.</param>
     /// <param name="resourceVersion">Version of the RoleManagementPolicyAssignment.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public RoleManagementPolicyAssignment(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Authorization/roleManagementPolicyAssignments", resourceVersion ?? "2020-10-01", context)
+    public RoleManagementPolicyAssignment(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Authorization/roleManagementPolicyAssignments", resourceVersion ?? "2020-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _policyId = BicepValue<ResourceIdentifier>.DefineProperty(this, "PolicyId", ["properties", "policyId"]);

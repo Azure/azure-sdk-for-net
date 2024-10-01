@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(AssociationEntityProvisioningState left, AssociationEntityProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssociationEntityProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(AssociationEntityProvisioningState left, AssociationEntityProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AssociationEntityProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AssociationEntityProvisioningState"/>. </summary>
         public static implicit operator AssociationEntityProvisioningState(string value) => new AssociationEntityProvisioningState(value);
 
         /// <inheritdoc />

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static bool operator ==(DedicatedHsmSkuName left, DedicatedHsmSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DedicatedHsmSkuName"/> values are not the same. </summary>
         public static bool operator !=(DedicatedHsmSkuName left, DedicatedHsmSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DedicatedHsmSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DedicatedHsmSkuName"/>. </summary>
         public static implicit operator DedicatedHsmSkuName(string value) => new DedicatedHsmSkuName(value);
 
         /// <inheritdoc />

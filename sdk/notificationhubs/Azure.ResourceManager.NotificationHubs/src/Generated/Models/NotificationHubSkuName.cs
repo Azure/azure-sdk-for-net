@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static bool operator ==(NotificationHubSkuName left, NotificationHubSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotificationHubSkuName"/> values are not the same. </summary>
         public static bool operator !=(NotificationHubSkuName left, NotificationHubSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NotificationHubSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationHubSkuName"/>. </summary>
         public static implicit operator NotificationHubSkuName(string value) => new NotificationHubSkuName(value);
 
         /// <inheritdoc />

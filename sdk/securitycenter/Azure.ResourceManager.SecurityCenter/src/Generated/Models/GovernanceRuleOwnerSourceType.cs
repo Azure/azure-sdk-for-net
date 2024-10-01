@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(GovernanceRuleOwnerSourceType left, GovernanceRuleOwnerSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GovernanceRuleOwnerSourceType"/> values are not the same. </summary>
         public static bool operator !=(GovernanceRuleOwnerSourceType left, GovernanceRuleOwnerSourceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GovernanceRuleOwnerSourceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GovernanceRuleOwnerSourceType"/>. </summary>
         public static implicit operator GovernanceRuleOwnerSourceType(string value) => new GovernanceRuleOwnerSourceType(value);
 
         /// <inheritdoc />

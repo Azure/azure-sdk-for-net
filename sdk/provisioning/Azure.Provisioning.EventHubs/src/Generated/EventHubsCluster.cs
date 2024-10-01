@@ -100,9 +100,8 @@ public partial class EventHubsCluster : Resource
     /// </summary>
     /// <param name="resourceName">Name of the EventHubsCluster.</param>
     /// <param name="resourceVersion">Version of the EventHubsCluster.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public EventHubsCluster(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventHub/clusters", resourceVersion ?? "2024-01-01", context)
+    public EventHubsCluster(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventHub/clusters", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);

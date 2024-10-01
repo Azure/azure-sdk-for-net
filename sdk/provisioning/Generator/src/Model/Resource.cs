@@ -16,6 +16,7 @@ public class Resource(Specification spec, Type armType)
         spec: spec)
 {
     public string? ResourceType { get; set; }
+    public string? ResourceNamespace { get; set; }
     public string? DefaultResourceVersion { get; set; }
     public IList<string>? ResourceVersions { get; set; }
     public NameRequirements? NameRequirements { get; set; }
@@ -30,8 +31,8 @@ public class Resource(Specification spec, Type armType)
     {
         base.Lint();
         //if (NameRequirements is null) { Warn($"{GetTypeReference()} has no {nameof(NameRequirements)}."); }
-        //if (ResourceVersions is null) { Warn($"{GetTypeReference()} has no {nameof(ResourceVersions)}."); }
-        //else if (DefaultResourceVersion is null) { Warn($"{GetTypeReference()} has no {nameof(DefaultResourceVersion)}."); }
+        if (DefaultResourceVersion is null) { Warn($"{ResourceType} has no {nameof(DefaultResourceVersion)}."); }
+        else if (ResourceVersions is null) { Warn($"{ResourceType} has no {nameof(ResourceVersions)}."); }
     }
 
     public override void Generate()
@@ -117,14 +118,13 @@ public class Resource(Specification spec, Type armType)
                     writer.WriteLine($"/// </summary>");
                     writer.WriteLine($"/// <param name=\"resourceName\">Name of the {Name}.</param>");
                     writer.WriteLine($"/// <param name=\"resourceVersion\">Version of the {Name}.</param>");
-                    writer.WriteLine($"/// <param name=\"context\">Provisioning context for this resource.</param>");
-                    writer.WriteLine($"public {Name}(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)");
+                    writer.WriteLine($"public {Name}(string resourceName, string? resourceVersion = default)");
                     writer.Write($"    : base(resourceName, \"{ResourceType}\", resourceVersion");
                     if (DefaultResourceVersion is not null)
                     {
                         writer.Write($" ?? \"{DefaultResourceVersion}\"");
                     }
-                    writer.WriteLine(", context)");
+                    writer.WriteLine(")");
                     using (writer.Scope("{", "}"))
                     {
                         foreach (Property property in Properties)

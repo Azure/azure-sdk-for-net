@@ -420,13 +420,26 @@ namespace Azure.Analytics.Defender.Easm.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_EasmClient_ValidateDiscoveryGroup_ShortVersion()
+        public void Example_EasmClient_ValidateDiscoveryGroup_DiscoveryGroupsValidateDiscoGroup()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            using RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new
+            {
+                description = "This is a disco group",
+                frequencyMilliseconds = 604800000,
+                tier = "advanced",
+                seeds = new object[]
+            {
+new
+{
+name = "thisisatest.microsoft.com",
+kind = "host",
+}
+            },
+            });
             Response response = client.ValidateDiscoveryGroup(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -435,13 +448,26 @@ namespace Azure.Analytics.Defender.Easm.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_EasmClient_ValidateDiscoveryGroup_ShortVersion_Async()
+        public async Task Example_EasmClient_ValidateDiscoveryGroup_DiscoveryGroupsValidateDiscoGroup_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            using RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new
+            {
+                description = "This is a disco group",
+                frequencyMilliseconds = 604800000,
+                tier = "advanced",
+                seeds = new object[]
+            {
+new
+{
+name = "thisisatest.microsoft.com",
+kind = "host",
+}
+            },
+            });
             Response response = await client.ValidateDiscoveryGroupAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -450,173 +476,57 @@ namespace Azure.Analytics.Defender.Easm.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_EasmClient_ValidateDiscoveryGroup_ShortVersion_Convenience()
+        public void Example_EasmClient_ValidateDiscoveryGroup_DiscoveryGroupsValidateDiscoGroup_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            DiscoveryGroupPayload body = new DiscoveryGroupPayload();
-            Response<ValidateResult> response = client.ValidateDiscoveryGroup(body);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_EasmClient_ValidateDiscoveryGroup_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            DiscoveryGroupPayload body = new DiscoveryGroupPayload();
-            Response<ValidateResult> response = await client.ValidateDiscoveryGroupAsync(body);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_EasmClient_ValidateDiscoveryGroup_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                name = "<name>",
-                description = "<description>",
-                tier = "<tier>",
-                frequencyMilliseconds = 1234L,
-                seeds = new object[]
-            {
-new
-{
-kind = "as",
-name = "<name>",
-}
-            },
-                names = new object[]
-            {
-"<names>"
-            },
-                excludes = new object[]
-            {
-null
-            },
-                templateId = "<templateId>",
-            });
-            Response response = client.ValidateDiscoveryGroup(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("value").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_EasmClient_ValidateDiscoveryGroup_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                name = "<name>",
-                description = "<description>",
-                tier = "<tier>",
-                frequencyMilliseconds = 1234L,
-                seeds = new object[]
-            {
-new
-{
-kind = "as",
-name = "<name>",
-}
-            },
-                names = new object[]
-            {
-"<names>"
-            },
-                excludes = new object[]
-            {
-null
-            },
-                templateId = "<templateId>",
-            });
-            Response response = await client.ValidateDiscoveryGroupAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("value").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_EasmClient_ValidateDiscoveryGroup_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
             DiscoveryGroupPayload body = new DiscoveryGroupPayload
             {
-                Name = "<name>",
-                Description = "<description>",
-                Tier = "<tier>",
-                FrequencyMilliseconds = 1234L,
+                Description = "This is a disco group",
+                Tier = "advanced",
+                FrequencyMilliseconds = 604800000,
                 Seeds = {new DiscoverySource
 {
-Kind = DiscoverySourceKind.As,
-Name = "<name>",
+Kind = DiscoverySourceKind.Host,
+Name = "thisisatest.microsoft.com",
 }},
-                Names = { "<names>" },
-                Excludes = { default },
-                TemplateId = "<templateId>",
             };
             Response<ValidateResult> response = client.ValidateDiscoveryGroup(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_EasmClient_ValidateDiscoveryGroup_AllParameters_Convenience_Async()
+        public async Task Example_EasmClient_ValidateDiscoveryGroup_DiscoveryGroupsValidateDiscoGroup_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
             DiscoveryGroupPayload body = new DiscoveryGroupPayload
             {
-                Name = "<name>",
-                Description = "<description>",
-                Tier = "<tier>",
-                FrequencyMilliseconds = 1234L,
+                Description = "This is a disco group",
+                Tier = "advanced",
+                FrequencyMilliseconds = 604800000,
                 Seeds = {new DiscoverySource
 {
-Kind = DiscoverySourceKind.As,
-Name = "<name>",
+Kind = DiscoverySourceKind.Host,
+Name = "thisisatest.microsoft.com",
 }},
-                Names = { "<names>" },
-                Excludes = { default },
-                TemplateId = "<templateId>",
             };
             Response<ValidateResult> response = await client.ValidateDiscoveryGroupAsync(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoGroup_GetDiscoveryGroup_ShortVersion()
+        public void Example_DiscoGroup_GetDiscoveryGroup_DiscoveryGroupsGetDiscoGroup()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            Response response = client.GetDiscoveryGroup("<groupName>", null);
+            Response response = client.GetDiscoveryGroup("ThisisaDiscoGroup", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -624,13 +534,13 @@ Name = "<name>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoGroup_GetDiscoveryGroup_ShortVersion_Async()
+        public async Task Example_DiscoGroup_GetDiscoveryGroup_DiscoveryGroupsGetDiscoGroup_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            Response response = await client.GetDiscoveryGroupAsync("<groupName>", null);
+            Response response = await client.GetDiscoveryGroupAsync("ThisisaDiscoGroup", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -638,411 +548,161 @@ Name = "<name>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoGroup_GetDiscoveryGroup_ShortVersion_Convenience()
+        public void Example_DiscoGroup_GetDiscoveryGroup_DiscoveryGroupsGetDiscoGroup_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            Response<DiscoveryGroup> response = client.GetDiscoveryGroup("<groupName>");
+            Response<DiscoveryGroup> response = client.GetDiscoveryGroup("ThisisaDiscoGroup");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoGroup_GetDiscoveryGroup_ShortVersion_Convenience_Async()
+        public async Task Example_DiscoGroup_GetDiscoveryGroup_DiscoveryGroupsGetDiscoGroup_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            Response<DiscoveryGroup> response = await client.GetDiscoveryGroupAsync("<groupName>");
+            Response<DiscoveryGroup> response = await client.GetDiscoveryGroupAsync("ThisisaDiscoGroup");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoGroup_GetDiscoveryGroup_AllParameters()
+        public void Example_DiscoGroup_CreateOrReplaceDiscoveryGroup_DiscoveryGroupsCreateOrReplaceDiscoGroup()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            Response response = client.GetDiscoveryGroup("<groupName>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("tier").ToString());
-            Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
-            Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("names")[0].ToString());
-            Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
-            Console.WriteLine(result.GetProperty("createdDate").ToString());
-            Console.WriteLine(result.GetProperty("templateId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoGroup_GetDiscoveryGroup_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            Response response = await client.GetDiscoveryGroupAsync("<groupName>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("tier").ToString());
-            Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
-            Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("names")[0].ToString());
-            Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
-            Console.WriteLine(result.GetProperty("createdDate").ToString());
-            Console.WriteLine(result.GetProperty("templateId").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoGroup_GetDiscoveryGroup_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            Response<DiscoveryGroup> response = client.GetDiscoveryGroup("<groupName>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoGroup_GetDiscoveryGroup_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            Response<DiscoveryGroup> response = await client.GetDiscoveryGroupAsync("<groupName>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoGroup_CreateOrReplaceDiscoveryGroup_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new object());
-            Response response = client.CreateOrReplaceDiscoveryGroup("<groupName>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoGroup_CreateOrReplaceDiscoveryGroup_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new object());
-            Response response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoGroup_CreateOrReplaceDiscoveryGroup_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            DiscoveryGroupPayload body = new DiscoveryGroupPayload();
-            Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoveryGroup("<groupName>", body);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoGroup_CreateOrReplaceDiscoveryGroup_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            DiscoveryGroupPayload body = new DiscoveryGroupPayload();
-            Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>", body);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoGroup_CreateOrReplaceDiscoveryGroup_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
-                name = "<name>",
-                description = "<description>",
-                tier = "<tier>",
-                frequencyMilliseconds = 1234L,
+                description = "This is a disco group",
+                frequencyMilliseconds = 604800000,
+                tier = "advanced",
                 seeds = new object[]
             {
 new
 {
-kind = "as",
-name = "<name>",
+name = "thisisatest.microsoft.com",
+kind = "host",
 }
             },
-                names = new object[]
-            {
-"<names>"
-            },
-                excludes = new object[]
-            {
-null
-            },
-                templateId = "<templateId>",
             });
-            Response response = client.CreateOrReplaceDiscoveryGroup("<groupName>", content);
+            Response response = client.CreateOrReplaceDiscoveryGroup("ThisisaDiscoGroup", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("tier").ToString());
-            Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
-            Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("names")[0].ToString());
-            Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
-            Console.WriteLine(result.GetProperty("createdDate").ToString());
-            Console.WriteLine(result.GetProperty("templateId").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoGroup_CreateOrReplaceDiscoveryGroup_AllParameters_Async()
+        public async Task Example_DiscoGroup_CreateOrReplaceDiscoveryGroup_DiscoveryGroupsCreateOrReplaceDiscoGroup_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
-                name = "<name>",
-                description = "<description>",
-                tier = "<tier>",
-                frequencyMilliseconds = 1234L,
+                description = "This is a disco group",
+                frequencyMilliseconds = 604800000,
+                tier = "advanced",
                 seeds = new object[]
             {
 new
 {
-kind = "as",
-name = "<name>",
+name = "thisisatest.microsoft.com",
+kind = "host",
 }
             },
-                names = new object[]
-            {
-"<names>"
-            },
-                excludes = new object[]
-            {
-null
-            },
-                templateId = "<templateId>",
             });
-            Response response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>", content);
+            Response response = await client.CreateOrReplaceDiscoveryGroupAsync("ThisisaDiscoGroup", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("tier").ToString());
-            Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
-            Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("names")[0].ToString());
-            Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
-            Console.WriteLine(result.GetProperty("createdDate").ToString());
-            Console.WriteLine(result.GetProperty("templateId").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoGroup_CreateOrReplaceDiscoveryGroup_AllParameters_Convenience()
+        public void Example_DiscoGroup_CreateOrReplaceDiscoveryGroup_DiscoveryGroupsCreateOrReplaceDiscoGroup_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
             DiscoveryGroupPayload body = new DiscoveryGroupPayload
             {
-                Name = "<name>",
-                Description = "<description>",
-                Tier = "<tier>",
-                FrequencyMilliseconds = 1234L,
+                Description = "This is a disco group",
+                Tier = "advanced",
+                FrequencyMilliseconds = 604800000,
                 Seeds = {new DiscoverySource
 {
-Kind = DiscoverySourceKind.As,
-Name = "<name>",
+Kind = DiscoverySourceKind.Host,
+Name = "thisisatest.microsoft.com",
 }},
-                Names = { "<names>" },
-                Excludes = { default },
-                TemplateId = "<templateId>",
             };
-            Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoveryGroup("<groupName>", body);
+            Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoveryGroup("ThisisaDiscoGroup", body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoGroup_CreateOrReplaceDiscoveryGroup_AllParameters_Convenience_Async()
+        public async Task Example_DiscoGroup_CreateOrReplaceDiscoveryGroup_DiscoveryGroupsCreateOrReplaceDiscoGroup_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
             DiscoveryGroupPayload body = new DiscoveryGroupPayload
             {
-                Name = "<name>",
-                Description = "<description>",
-                Tier = "<tier>",
-                FrequencyMilliseconds = 1234L,
+                Description = "This is a disco group",
+                Tier = "advanced",
+                FrequencyMilliseconds = 604800000,
                 Seeds = {new DiscoverySource
 {
-Kind = DiscoverySourceKind.As,
-Name = "<name>",
+Kind = DiscoverySourceKind.Host,
+Name = "thisisatest.microsoft.com",
 }},
-                Names = { "<names>" },
-                Excludes = { default },
-                TemplateId = "<templateId>",
             };
-            Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>", body);
+            Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoveryGroupAsync("ThisisaDiscoGroup", body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_EasmClient_RunDiscoveryGroup_ShortVersion()
+        public void Example_EasmClient_RunDiscoveryGroup_DiscoveryGroupsRunDiscoGroup()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            Response response = client.RunDiscoveryGroup("<groupName>");
+            Response response = client.RunDiscoveryGroup("ThisisaDiscoGroup");
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_EasmClient_RunDiscoveryGroup_ShortVersion_Async()
+        public async Task Example_EasmClient_RunDiscoveryGroup_DiscoveryGroupsRunDiscoGroup_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            Response response = await client.RunDiscoveryGroupAsync("<groupName>");
+            Response response = await client.RunDiscoveryGroupAsync("ThisisaDiscoGroup");
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_EasmClient_RunDiscoveryGroup_AllParameters()
+        public void Example_DiscoTemplate_GetDiscoveryTemplate_DiscoveryTemplatesGetDiscoTemplate()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            Response response = client.RunDiscoveryGroup("<groupName>");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_EasmClient_RunDiscoveryGroup_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            Response response = await client.RunDiscoveryGroupAsync("<groupName>");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoTemplate_GetDiscoveryTemplate_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            Response response = client.GetDiscoveryTemplate("<templateId>", null);
+            Response response = client.GetDiscoveryTemplate("12345", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -1050,13 +710,13 @@ Name = "<name>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoTemplate_GetDiscoveryTemplate_ShortVersion_Async()
+        public async Task Example_DiscoTemplate_GetDiscoveryTemplate_DiscoveryTemplatesGetDiscoTemplate_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            Response response = await client.GetDiscoveryTemplateAsync("<templateId>", null);
+            Response response = await client.GetDiscoveryTemplateAsync("12345", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -1064,94 +724,24 @@ Name = "<name>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoTemplate_GetDiscoveryTemplate_ShortVersion_Convenience()
+        public void Example_DiscoTemplate_GetDiscoveryTemplate_DiscoveryTemplatesGetDiscoTemplate_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            Response<DiscoveryTemplate> response = client.GetDiscoveryTemplate("<templateId>");
+            Response<DiscoveryTemplate> response = client.GetDiscoveryTemplate("12345");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoTemplate_GetDiscoveryTemplate_ShortVersion_Convenience_Async()
+        public async Task Example_DiscoTemplate_GetDiscoveryTemplate_DiscoveryTemplatesGetDiscoTemplate_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            Response<DiscoveryTemplate> response = await client.GetDiscoveryTemplateAsync("<templateId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoTemplate_GetDiscoveryTemplate_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            Response response = client.GetDiscoveryTemplate("<templateId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("industry").ToString());
-            Console.WriteLine(result.GetProperty("region").ToString());
-            Console.WriteLine(result.GetProperty("countryCode").ToString());
-            Console.WriteLine(result.GetProperty("stateCode").ToString());
-            Console.WriteLine(result.GetProperty("city").ToString());
-            Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("names")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoTemplate_GetDiscoveryTemplate_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            Response response = await client.GetDiscoveryTemplateAsync("<templateId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("industry").ToString());
-            Console.WriteLine(result.GetProperty("region").ToString());
-            Console.WriteLine(result.GetProperty("countryCode").ToString());
-            Console.WriteLine(result.GetProperty("stateCode").ToString());
-            Console.WriteLine(result.GetProperty("city").ToString());
-            Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
-            Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("names")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoTemplate_GetDiscoveryTemplate_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            Response<DiscoveryTemplate> response = client.GetDiscoveryTemplate("<templateId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoTemplate_GetDiscoveryTemplate_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            Response<DiscoveryTemplate> response = await client.GetDiscoveryTemplateAsync("<templateId>");
+            Response<DiscoveryTemplate> response = await client.GetDiscoveryTemplateAsync("12345");
         }
 
         [Test]
@@ -1710,9 +1300,9 @@ Name = "<name>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoGroup_GetDiscoveryGroups_ShortVersion()
+        public void Example_DiscoGroup_GetDiscoveryGroups_DiscoveryGroupsListDiscoGroup()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1725,9 +1315,9 @@ Name = "<name>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoGroup_GetDiscoveryGroups_ShortVersion_Async()
+        public async Task Example_DiscoGroup_GetDiscoveryGroups_DiscoveryGroupsListDiscoGroup_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1740,9 +1330,9 @@ Name = "<name>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoGroup_GetDiscoveryGroups_ShortVersion_Convenience()
+        public void Example_DiscoGroup_GetDiscoveryGroups_DiscoveryGroupsListDiscoGroup_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1753,9 +1343,9 @@ Name = "<name>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoGroup_GetDiscoveryGroups_ShortVersion_Convenience_Async()
+        public async Task Example_DiscoGroup_GetDiscoveryGroups_DiscoveryGroupsListDiscoGroup_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1766,115 +1356,13 @@ Name = "<name>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoGroup_GetDiscoveryGroups_AllParameters()
+        public void Example_EasmClient_GetDiscoveryGroupRuns_DiscoveryGroupsListRuns()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetDiscoveryGroups("<filter>", 1234, 1234, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("displayName").ToString());
-                Console.WriteLine(result.GetProperty("description").ToString());
-                Console.WriteLine(result.GetProperty("tier").ToString());
-                Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
-                Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("names")[0].ToString());
-                Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
-                Console.WriteLine(result.GetProperty("createdDate").ToString());
-                Console.WriteLine(result.GetProperty("templateId").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoGroup_GetDiscoveryGroups_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetDiscoveryGroupsAsync("<filter>", 1234, 1234, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("displayName").ToString());
-                Console.WriteLine(result.GetProperty("description").ToString());
-                Console.WriteLine(result.GetProperty("tier").ToString());
-                Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
-                Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("names")[0].ToString());
-                Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
-                Console.WriteLine(result.GetProperty("createdDate").ToString());
-                Console.WriteLine(result.GetProperty("templateId").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoGroup_GetDiscoveryGroups_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            foreach (DiscoveryGroup item in client.GetDiscoveryGroups(filter: "<filter>", skip: 1234, maxpagesize: 1234))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoGroup_GetDiscoveryGroups_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            await foreach (DiscoveryGroup item in client.GetDiscoveryGroupsAsync(filter: "<filter>", skip: 1234, maxpagesize: 1234))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_EasmClient_GetDiscoveryGroupRuns_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            foreach (BinaryData item in client.GetDiscoveryGroupRuns("<groupName>", null, null, null, null))
+            foreach (BinaryData item in client.GetDiscoveryGroupRuns("ThisisaDiscoGroup", null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -1883,13 +1371,13 @@ Name = "<name>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_EasmClient_GetDiscoveryGroupRuns_ShortVersion_Async()
+        public async Task Example_EasmClient_GetDiscoveryGroupRuns_DiscoveryGroupsListRuns_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetDiscoveryGroupRunsAsync("<groupName>", null, null, null, null))
+            await foreach (BinaryData item in client.GetDiscoveryGroupRunsAsync("ThisisaDiscoGroup", null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -1898,111 +1386,35 @@ Name = "<name>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_EasmClient_GetDiscoveryGroupRuns_ShortVersion_Convenience()
+        public void Example_EasmClient_GetDiscoveryGroupRuns_DiscoveryGroupsListRuns_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            foreach (DiscoveryRunResult item in client.GetDiscoveryGroupRuns("<groupName>"))
+            foreach (DiscoveryRunResult item in client.GetDiscoveryGroupRuns("ThisisaDiscoGroup"))
             {
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_EasmClient_GetDiscoveryGroupRuns_ShortVersion_Convenience_Async()
+        public async Task Example_EasmClient_GetDiscoveryGroupRuns_DiscoveryGroupsListRuns_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            await foreach (DiscoveryRunResult item in client.GetDiscoveryGroupRunsAsync("<groupName>"))
+            await foreach (DiscoveryRunResult item in client.GetDiscoveryGroupRunsAsync("ThisisaDiscoGroup"))
             {
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_EasmClient_GetDiscoveryGroupRuns_AllParameters()
+        public void Example_DiscoTemplate_GetDiscoveryTemplates_DiscoveryTemplatesListDiscoTemplate()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            foreach (BinaryData item in client.GetDiscoveryGroupRuns("<groupName>", "<filter>", 1234, 1234, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("submittedDate").ToString());
-                Console.WriteLine(result.GetProperty("startedDate").ToString());
-                Console.WriteLine(result.GetProperty("completedDate").ToString());
-                Console.WriteLine(result.GetProperty("tier").ToString());
-                Console.WriteLine(result.GetProperty("state").ToString());
-                Console.WriteLine(result.GetProperty("totalAssetsFoundCount").ToString());
-                Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("names")[0].ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_EasmClient_GetDiscoveryGroupRuns_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetDiscoveryGroupRunsAsync("<groupName>", "<filter>", 1234, 1234, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("submittedDate").ToString());
-                Console.WriteLine(result.GetProperty("startedDate").ToString());
-                Console.WriteLine(result.GetProperty("completedDate").ToString());
-                Console.WriteLine(result.GetProperty("tier").ToString());
-                Console.WriteLine(result.GetProperty("state").ToString());
-                Console.WriteLine(result.GetProperty("totalAssetsFoundCount").ToString());
-                Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("names")[0].ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_EasmClient_GetDiscoveryGroupRuns_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            foreach (DiscoveryRunResult item in client.GetDiscoveryGroupRuns("<groupName>", filter: "<filter>", skip: 1234, maxpagesize: 1234))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_EasmClient_GetDiscoveryGroupRuns_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            await foreach (DiscoveryRunResult item in client.GetDiscoveryGroupRunsAsync("<groupName>", filter: "<filter>", skip: 1234, maxpagesize: 1234))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoTemplate_GetDiscoveryTemplates_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -2015,9 +1427,9 @@ Name = "<name>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoTemplate_GetDiscoveryTemplates_ShortVersion_Async()
+        public async Task Example_DiscoTemplate_GetDiscoveryTemplates_DiscoveryTemplatesListDiscoTemplate_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -2030,9 +1442,9 @@ Name = "<name>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoTemplate_GetDiscoveryTemplates_ShortVersion_Convenience()
+        public void Example_DiscoTemplate_GetDiscoveryTemplates_DiscoveryTemplatesListDiscoTemplate_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -2043,89 +1455,13 @@ Name = "<name>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoTemplate_GetDiscoveryTemplates_ShortVersion_Convenience_Async()
+        public async Task Example_DiscoTemplate_GetDiscoveryTemplates_DiscoveryTemplatesListDiscoTemplate_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
             await foreach (DiscoveryTemplate item in client.GetDiscoveryTemplatesAsync())
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoTemplate_GetDiscoveryTemplates_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            foreach (BinaryData item in client.GetDiscoveryTemplates("<filter>", 1234, 1234, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("displayName").ToString());
-                Console.WriteLine(result.GetProperty("industry").ToString());
-                Console.WriteLine(result.GetProperty("region").ToString());
-                Console.WriteLine(result.GetProperty("countryCode").ToString());
-                Console.WriteLine(result.GetProperty("stateCode").ToString());
-                Console.WriteLine(result.GetProperty("city").ToString());
-                Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("names")[0].ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoTemplate_GetDiscoveryTemplates_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetDiscoveryTemplatesAsync("<filter>", 1234, 1234, null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("displayName").ToString());
-                Console.WriteLine(result.GetProperty("industry").ToString());
-                Console.WriteLine(result.GetProperty("region").ToString());
-                Console.WriteLine(result.GetProperty("countryCode").ToString());
-                Console.WriteLine(result.GetProperty("stateCode").ToString());
-                Console.WriteLine(result.GetProperty("city").ToString());
-                Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("names")[0].ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DiscoTemplate_GetDiscoveryTemplates_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            foreach (DiscoveryTemplate item in client.GetDiscoveryTemplates(filter: "<filter>", skip: 1234, maxpagesize: 1234))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DiscoTemplate_GetDiscoveryTemplates_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            EasmClient client = new EasmClient(endpoint, credential);
-
-            await foreach (DiscoveryTemplate item in client.GetDiscoveryTemplatesAsync(filter: "<filter>", skip: 1234, maxpagesize: 1234))
             {
             }
         }

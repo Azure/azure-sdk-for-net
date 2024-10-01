@@ -65,9 +65,8 @@ public partial class ContainerAppManagedEnvironmentCertificate : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ContainerAppManagedEnvironmentCertificate.</param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironmentCertificate.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerAppManagedEnvironmentCertificate(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.App/managedEnvironments/certificates", resourceVersion ?? "2023-05-01", context)
+    public ContainerAppManagedEnvironmentCertificate(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.App/managedEnvironments/certificates", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
