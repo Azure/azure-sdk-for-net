@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI.Chat
 {
     /// <summary> The MongoDBChatDataSource. </summary>
-    public partial class MongoDBChatDataSource : AzureChatDataSource
+    public partial class MongoDBChatDataSource : ChatDataSource
     {
     }
 }
