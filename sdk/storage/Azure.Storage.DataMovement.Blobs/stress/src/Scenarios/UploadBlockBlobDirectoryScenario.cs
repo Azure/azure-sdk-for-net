@@ -2,23 +2,23 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Stress;
 using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Tests;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
-    public class BlobSingleUploadScenario : BlobScenarioBase
+    public class UploadBlockBlobDirectoryScenario : BlobScenarioBase
     {
         private int _blobSize;
-        public BlobSingleUploadScenario(
+        private int _blobCount;
+        public UploadBlockBlobDirectoryScenario(
             Uri destinationBlobUri,
             int? blobSize,
+            int? blobCount,
             TransferManagerOptions transferManagerOptions,
             DataTransferOptions dataTransferOptions,
             TokenCredential tokenCredential,
@@ -26,46 +26,50 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             string testRunId)
             : base(destinationBlobUri, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
         {
-            _blobSize = blobSize.HasValue ? blobSize.Value : 100;
+            _blobSize = blobSize != default ? blobSize.Value : DataMovementBlobStressConstants.DefaultObjectSize;
+            _blobCount = blobCount != default ? blobCount.Value : DataMovementBlobStressConstants.DefaultObjectCount;
         }
 
-        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.UploadSingleBlockBlob;
+        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.UploadDirectoryBlockBlob;
 
         public override async Task RunTestAsync(CancellationToken cancellationToken)
         {
+            // Create test local directory
             DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
+
+            // Create destination blob container
             string destinationContainerName = TestSetupHelper.Randomize("container");
             BlobContainerClient destinationContainerClient = _destinationServiceClient.GetBlobContainerClient(destinationContainerName);
             await destinationContainerClient.CreateIfNotExistsAsync();
-            string blobName = TestSetupHelper.Randomize("blob");
+
+            // Create Local Files
+            await TestSetupHelper.CreateLocalFilesToUploadAsync(disposingLocalDirectory.DirectoryPath, _blobCount, _blobSize);
 
             // Create Local Source Storage Resource
-            StorageResource sourceResource = await TestSetupHelper.GetTemporaryFileStorageResourceAsync(
-                disposingLocalDirectory.DirectoryPath,
-                fileName: blobName,
-                fileSize: _blobSize,
-                cancellationToken: cancellationToken);
+            StorageResource sourceResource = await TestSetupHelper.GetTemporaryFileStorageResourceAsync(disposingLocalDirectory.DirectoryPath);
 
             // Create Destination Storage Resource
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(_destinationBlobUri)
             {
                 BlobContainerName = destinationContainerName,
-                BlobName = blobName
             };
-            BlockBlobClient destinationBlob = destinationContainerClient.GetBlockBlobClient(blobName);
-            StorageResource destinationResource = _blobsStorageResourceProvider.FromBlob(blobUriBuilder.ToUri().AbsoluteUri);
+            StorageResource destinationResource = _blobsStorageResourceProvider.FromContainer(blobUriBuilder.ToUri());
 
-            // Start Transfer
+            // Initialize TransferManager
+            TransferManager transferManager = new TransferManager();
+
+            // Upload
             await new TransferValidator()
             {
                 TransferManager = new(_transferManagerOptions)
             }.TransferAndVerifyAsync(
                 sourceResource,
                 destinationResource,
-                cToken => Task.FromResult(File.OpenRead(sourceResource.Uri.AbsolutePath) as Stream),
-                async cToken => await destinationBlob.OpenReadAsync(default, cToken),
-                options: _dataTransferOptions,
-                cancellationToken: cancellationToken);
+                TransferValidator.GetLocalFileLister(disposingLocalDirectory.DirectoryPath),
+                TransferValidator.GetBlobLister(destinationContainerClient, default),
+                _blobCount,
+                _dataTransferOptions,
+                cancellationToken);
         }
     }
 }

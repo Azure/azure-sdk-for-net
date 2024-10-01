@@ -72,14 +72,13 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             string localSourceFile = Path.Combine(prefixPath, fileName);
             // create a new file and copy contents of stream into it, and then close the FileStream
             // so the StagedUploadAsync call is not prevented from reading using its FileStream.
-            Console.Out.Write($"Creating File: {localSourceFile}..");
             using (FileStream fileStream = File.Create(localSourceFile))
             {
-                Console.Out.WriteLine("Copying Stream to File..");
                 await originalStream.CopyToAsync(
                     fileStream,
                     bufferSize,
                     cancellationToken: cancellationToken);
+                fileStream.Close();
             }
             LocalFilesStorageResourceProvider files = new();
             return files.FromFile(localSourceFile);

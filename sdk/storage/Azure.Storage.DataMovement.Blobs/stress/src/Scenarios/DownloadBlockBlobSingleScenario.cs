@@ -13,10 +13,10 @@ using Azure.Storage.DataMovement.Tests;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
-    public class BlobSingleDownloadScenario : BlobScenarioBase
+    public class DownloadBlockBlobSingleScenario : BlobScenarioBase
     {
         private int? _blobSize;
-        public BlobSingleDownloadScenario(
+        public DownloadBlockBlobSingleScenario(
             Uri sourceBlobUri,
             int? blobSize,
             TransferManagerOptions transferManagerOptions,
@@ -35,7 +35,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
         {
             string sourceContainerName = TestSetupHelper.Randomize("container");
             BlobContainerClient sourceContainerClient = _destinationServiceClient.GetBlobContainerClient(sourceContainerName);
-            await sourceContainerClient.CreateIfNotExistsAsync();
+            await sourceContainerClient.CreateIfNotExistsAsync(cancellationToken: cancellationToken);
 
             DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
 
