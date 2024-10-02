@@ -53,9 +53,8 @@ public partial class SqlServerTrustGroup : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlServerTrustGroup.</param>
     /// <param name="resourceVersion">Version of the SqlServerTrustGroup.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerTrustGroup(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/locations/serverTrustGroups", resourceVersion ?? "2021-11-01", context)
+    public SqlServerTrustGroup(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/locations/serverTrustGroups", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _groupMembers = BicepList<ServerTrustGroupServerInfo>.DefineProperty(this, "GroupMembers", ["properties", "groupMembers"]);

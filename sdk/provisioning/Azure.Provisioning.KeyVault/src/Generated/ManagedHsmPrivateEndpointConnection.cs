@@ -92,9 +92,8 @@ public partial class ManagedHsmPrivateEndpointConnection : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedHsmPrivateEndpointConnection.</param>
     /// <param name="resourceVersion">Version of the ManagedHsmPrivateEndpointConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedHsmPrivateEndpointConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.KeyVault/managedHSMs/privateEndpointConnections", resourceVersion, context)
+    public ManagedHsmPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.KeyVault/managedHSMs/privateEndpointConnections", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -107,6 +106,47 @@ public partial class ManagedHsmPrivateEndpointConnection : Resource
         _provisioningState = BicepValue<ManagedHsmPrivateEndpointConnectionProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _parent = ResourceReference<ManagedHsm>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported ManagedHsmPrivateEndpointConnection resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-04-01-preview.
+        /// </summary>
+        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
+
+        /// <summary>
+        /// 2023-08-01-PREVIEW.
+        /// </summary>
+        public static readonly string V2023_08_01_PREVIEW = "2023-08-01-PREVIEW";
+
+        /// <summary>
+        /// 2023-07-01.
+        /// </summary>
+        public static readonly string V2023_07_01 = "2023-07-01";
+
+        /// <summary>
+        /// 2023-02-01.
+        /// </summary>
+        public static readonly string V2023_02_01 = "2023-02-01";
+
+        /// <summary>
+        /// 2022-11-01.
+        /// </summary>
+        public static readonly string V2022_11_01 = "2022-11-01";
+
+        /// <summary>
+        /// 2022-07-01.
+        /// </summary>
+        public static readonly string V2022_07_01 = "2022-07-01";
+
+        /// <summary>
+        /// 2021-10-01.
+        /// </summary>
+        public static readonly string V2021_10_01 = "2021-10-01";
     }
 
     /// <summary>

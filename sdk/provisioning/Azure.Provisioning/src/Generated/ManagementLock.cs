@@ -64,9 +64,8 @@ public partial class ManagementLock : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagementLock.</param>
     /// <param name="resourceVersion">Version of the ManagementLock.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagementLock(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Authorization/locks", resourceVersion ?? "2020-05-01", context)
+    public ManagementLock(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Authorization/locks", resourceVersion ?? "2020-05-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _level = BicepValue<ManagementLockLevel>.DefineProperty(this, "Level", ["properties", "level"], isRequired: true);

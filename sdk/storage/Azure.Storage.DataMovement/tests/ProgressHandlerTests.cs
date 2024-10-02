@@ -192,7 +192,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task ProgressHandler_Copy()
         {
             // Arrange
-            await using DisposingContainer source = await GetTestContainerAsync(publicAccessType: PublicAccessType.Blob);
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer source = await GetTestContainerAsync(service);
             await using DisposingContainer destination = await GetTestContainerAsync();
 
             await PopulateTestContainer(source.Container);
@@ -255,8 +256,9 @@ namespace Azure.Storage.DataMovement.Tests
             int fileCount = 10;
             int chunkSize = Constants.KB / 2;
 
+            BlobServiceClient service = GetServiceClient_OAuth();
             using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.Blob);
+            await using DisposingContainer sourceContainer = await GetTestContainerAsync(service);
             await using DisposingContainer destinationContainer = await GetTestContainerAsync();
 
             StorageResourceContainer sourceResource;

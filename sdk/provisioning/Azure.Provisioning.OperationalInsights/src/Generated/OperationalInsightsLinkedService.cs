@@ -73,9 +73,8 @@ public partial class OperationalInsightsLinkedService : Resource
     /// </summary>
     /// <param name="resourceName">Name of the OperationalInsightsLinkedService.</param>
     /// <param name="resourceVersion">Version of the OperationalInsightsLinkedService.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public OperationalInsightsLinkedService(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.OperationalInsights/workspaces/linkedServices", resourceVersion ?? "2020-08-01", context)
+    public OperationalInsightsLinkedService(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.OperationalInsights/workspaces/linkedServices", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _provisioningState = BicepValue<OperationalInsightsLinkedServiceEntityStatus>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"]);
@@ -92,6 +91,11 @@ public partial class OperationalInsightsLinkedService : Resource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-09-01.
+        /// </summary>
+        public static readonly string V2023_09_01 = "2023-09-01";
+
         /// <summary>
         /// 2020-08-01.
         /// </summary>

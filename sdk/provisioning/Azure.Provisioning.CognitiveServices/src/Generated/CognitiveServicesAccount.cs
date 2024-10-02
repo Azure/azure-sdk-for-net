@@ -88,9 +88,8 @@ public partial class CognitiveServicesAccount : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CognitiveServicesAccount.</param>
     /// <param name="resourceVersion">Version of the CognitiveServicesAccount.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CognitiveServicesAccount(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.CognitiveServices/accounts", resourceVersion ?? "2022-12-01", context)
+    public CognitiveServicesAccount(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.CognitiveServices/accounts", resourceVersion ?? "2024-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -110,9 +109,9 @@ public partial class CognitiveServicesAccount : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-06-01-preview.
+        /// 2024-10-01.
         /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
+        public static readonly string V2024_10_01 = "2024-10-01";
 
         /// <summary>
         /// 2023-05-01.
@@ -176,13 +175,13 @@ public partial class CognitiveServicesAccount : Resource
             new FunctionCallExpression(new MemberExpression(new IdentifierExpression(ResourceName), "listKeys")));
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// CognitiveServicesAccount.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this CognitiveServicesAccount.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(CognitiveServicesBuiltInRole role, UserAssignedIdentity identity) =>
+    public RoleAssignment CreateRoleAssignment(CognitiveServicesBuiltInRole role, UserAssignedIdentity identity) =>
         new($"{ResourceName}_{identity.ResourceName}_{CognitiveServicesBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
@@ -193,15 +192,16 @@ public partial class CognitiveServicesAccount : Resource
         };
 
     /// <summary>
-    /// Assign a role to a principal that grants access to this
+    /// Creates a role assignment for a principal that grants access to this
     /// CognitiveServicesAccount.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="resourceNameSuffix">Optional role assignment resource name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(CognitiveServicesBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
-        new($"{ResourceName}_{CognitiveServicesBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(CognitiveServicesBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? resourceNameSuffix = default) =>
+        new($"{ResourceName}_{CognitiveServicesBuiltInRole.GetBuiltInRoleName(role)}{(resourceNameSuffix is null ? "" : "_")}{resourceNameSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
             Scope = new IdentifierExpression(ResourceName),

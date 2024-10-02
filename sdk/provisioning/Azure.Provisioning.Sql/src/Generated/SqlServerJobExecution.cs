@@ -124,9 +124,8 @@ public partial class SqlServerJobExecution : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlServerJobExecution.</param>
     /// <param name="resourceVersion">Version of the SqlServerJobExecution.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerJobExecution(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/jobAgents/jobs/executions", resourceVersion ?? "2021-11-01", context)
+    public SqlServerJobExecution(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/jobAgents/jobs/executions", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _createOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreateOn", ["properties", "createTime"], isOutput: true);

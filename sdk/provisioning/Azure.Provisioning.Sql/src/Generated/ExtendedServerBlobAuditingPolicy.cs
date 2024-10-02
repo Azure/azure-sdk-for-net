@@ -220,9 +220,8 @@ public partial class ExtendedServerBlobAuditingPolicy : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ExtendedServerBlobAuditingPolicy.</param>
     /// <param name="resourceVersion">Version of the ExtendedServerBlobAuditingPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ExtendedServerBlobAuditingPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/extendedAuditingSettings", resourceVersion ?? "2021-11-01", context)
+    public ExtendedServerBlobAuditingPolicy(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/extendedAuditingSettings", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _auditActionsAndGroups = BicepList<string>.DefineProperty(this, "AuditActionsAndGroups", ["properties", "auditActionsAndGroups"]);

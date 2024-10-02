@@ -125,9 +125,8 @@ public partial class SiteInstanceExtension : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SiteInstanceExtension.</param>
     /// <param name="resourceVersion">Version of the SiteInstanceExtension.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SiteInstanceExtension(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/instances/extensions", resourceVersion, context)
+    public SiteInstanceExtension(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Web/sites/instances/extensions", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _connectionString = BicepValue<string>.DefineProperty(this, "ConnectionString", ["properties", "connectionString"]);

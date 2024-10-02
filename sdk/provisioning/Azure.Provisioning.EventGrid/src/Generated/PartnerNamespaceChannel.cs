@@ -103,9 +103,8 @@ public partial class PartnerNamespaceChannel : Resource
     /// </summary>
     /// <param name="resourceName">Name of the PartnerNamespaceChannel.</param>
     /// <param name="resourceVersion">Version of the PartnerNamespaceChannel.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PartnerNamespaceChannel(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.EventGrid/partnerNamespaces/channels", resourceVersion ?? "2022-06-15", context)
+    public PartnerNamespaceChannel(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.EventGrid/partnerNamespaces/channels", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _channelType = BicepValue<PartnerNamespaceChannelType>.DefineProperty(this, "ChannelType", ["properties", "channelType"]);

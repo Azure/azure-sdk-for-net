@@ -71,9 +71,8 @@ public partial class GeoBackupPolicy : Resource
     /// </summary>
     /// <param name="resourceName">Name of the GeoBackupPolicy.</param>
     /// <param name="resourceVersion">Version of the GeoBackupPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public GeoBackupPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/geoBackupPolicies", resourceVersion ?? "2021-11-01", context)
+    public GeoBackupPolicy(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/databases/geoBackupPolicies", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _state = BicepValue<GeoBackupPolicyState>.DefineProperty(this, "State", ["properties", "state"], isRequired: true);

@@ -47,7 +47,7 @@ namespace Azure.Provisioning.CloudMachine
     public partial class CloudMachineInfrastructure : Azure.Provisioning.Infrastructure
     {
         public CloudMachineInfrastructure(string cloudMachineId) : base (default(string)) { }
-        public Azure.Provisioning.BicepParameter PrincipalIdParameter { get { throw null; } }
+        public Azure.Provisioning.ProvisioningParameter PrincipalIdParameter { get { throw null; } }
         public override Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningContext? context = null) { throw null; }
         public static bool Configure(string[] args, System.Action<Azure.Provisioning.CloudMachine.CloudMachineInfrastructure>? configure = null) { throw null; }
     }
