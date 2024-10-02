@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
@@ -32,5 +33,10 @@ public class InputModel : IJsonModel<InputModel>
     BinaryData IPersistableModel<InputModel>.Write(ModelReaderWriterOptions options)
     {
         throw new NotImplementedException();
+    }
+
+    public static implicit operator BinaryContent(InputModel inputModel)
+    {
+        return BinaryContent.Create(inputModel);
     }
 }

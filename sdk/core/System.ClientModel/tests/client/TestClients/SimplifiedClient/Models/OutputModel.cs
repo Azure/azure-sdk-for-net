@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
@@ -32,5 +33,17 @@ public class OutputModel : IJsonModel<OutputModel>
     BinaryData IPersistableModel<OutputModel>.Write(ModelReaderWriterOptions options)
     {
         throw new NotImplementedException();
+    }
+
+    internal static OutputModel DeserializeOutputModel(JsonElement element)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static explicit operator OutputModel(ClientResult result)
+    {
+        using PipelineResponse response = result.GetRawResponse();
+        using JsonDocument document = JsonDocument.Parse(response.Content);
+        return DeserializeOutputModel(document.RootElement);
     }
 }

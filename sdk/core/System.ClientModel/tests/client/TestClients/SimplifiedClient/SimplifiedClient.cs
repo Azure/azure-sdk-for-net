@@ -16,12 +16,6 @@ public class SimplifiedClient
     private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
 
-    public SimplifiedClient(SimplifiedClientOptions? options = default)
-        : this(new Uri("https://www.example.com"), new ApiKeyCredential("fake_key"))
-    {
-        // Provided to make test illustrations simpler - not typical for a client implementation
-    }
-
     public SimplifiedClient(Uri endpoint, ApiKeyCredential credential, SimplifiedClientOptions? options = default)
     {
         Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -40,26 +34,44 @@ public class SimplifiedClient
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
     }
 
+    public ClientPipeline Pipeline => _pipeline;
+
     // Convenience method - async
-    public Task<ClientResult<OutputModel>> GetModelAsync(InputModel input, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<OutputModel>> GetModelAsync(InputModel inputModel, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        Argument.AssertNotNull(inputModel, nameof(inputModel));
+
+        BinaryContent content = (BinaryContent)inputModel;
+
+        ClientResult result = await GetModelAsync(content, cancellationToken.ToRequestOptions());
+
+        OutputModel outputModel = (OutputModel)result;
+
+        return ClientResult.FromValue(outputModel, result.GetRawResponse());
     }
 
     // Convenience method - sync
-    public ClientResult<OutputModel> GetModel(InputModel input, CancellationToken cancellationToken = default)
+    public virtual ClientResult<OutputModel> GetModel(InputModel inputModel, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        Argument.AssertNotNull(inputModel, nameof(inputModel));
+
+        BinaryContent content = (BinaryContent)inputModel;
+
+        ClientResult result = GetModel(content, cancellationToken.ToRequestOptions());
+
+        OutputModel outputModel = (OutputModel)result;
+
+        return ClientResult.FromValue(outputModel, result.GetRawResponse());
     }
 
     // Protocol method - async
-    public Task<ClientResult> GetModelAsync(BinaryContent content, RequestOptions? options = default)
+    public virtual Task<ClientResult> GetModelAsync(BinaryContent content, RequestOptions? options = default)
     {
         throw new NotImplementedException();
     }
 
     // Protocol method - sync
-    public ClientResult GetModel(BinaryContent content, RequestOptions? options = default)
+    public virtual ClientResult GetModel(BinaryContent content, RequestOptions? options = default)
     {
         throw new NotImplementedException();
     }
@@ -67,6 +79,21 @@ public class SimplifiedClient
     // Request creation helper
     private PipelineMessage CreateGetModelRequest(BinaryContent content, RequestOptions? options)
     {
-        throw new NotImplementedException();
+        PipelineMessage message = Pipeline.CreateMessage();
+        message.ResponseClassifier = PipelineMessageClassifier200;
+        PipelineRequest request = message.Request;
+        request.Method = "POST";
+        ClientUriBuilder uri = new ClientUriBuilder();
+        uri.Reset(_endpoint);
+        uri.AppendPath("/literal", false);
+        request.Uri = uri.ToUri();
+        request.Headers.Set("Content-Type", "application/json");
+        request.Headers.Set("Accept", "application/json");
+        request.Content = content;
+        message.Apply(options);
+        return message;
     }
+
+    private static PipelineMessageClassifier? _pipelineMessageClassifier200;
+    private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 }
