@@ -24,6 +24,7 @@ modelerfour:
 use-model-reader-writer: true
 skip-serialization-format-xml: true
 enable-bicep-serialization: true
+use-write-core: true
 
 #mgmt-debug:
 #  show-serialized-names: true

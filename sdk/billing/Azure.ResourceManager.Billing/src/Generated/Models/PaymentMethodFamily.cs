@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Billing.Models
         public static bool operator ==(PaymentMethodFamily left, PaymentMethodFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PaymentMethodFamily"/> values are not the same. </summary>
         public static bool operator !=(PaymentMethodFamily left, PaymentMethodFamily right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PaymentMethodFamily"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PaymentMethodFamily"/>. </summary>
         public static implicit operator PaymentMethodFamily(string value) => new PaymentMethodFamily(value);
 
         /// <inheritdoc />

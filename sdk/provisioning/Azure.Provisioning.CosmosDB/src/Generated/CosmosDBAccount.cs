@@ -380,9 +380,8 @@ public partial class CosmosDBAccount : Resource
     /// </summary>
     /// <param name="resourceName">Name of the CosmosDBAccount.</param>
     /// <param name="resourceVersion">Version of the CosmosDBAccount.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public CosmosDBAccount(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts", resourceVersion ?? "2024-05-15-preview", context)
+    public CosmosDBAccount(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -443,9 +442,14 @@ public partial class CosmosDBAccount : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-15-preview.
+        /// 2024-09-01-preview.
         /// </summary>
-        public static readonly string V2024_05_15_preview = "2024-05-15-preview";
+        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
+
+        /// <summary>
+        /// 2024-08-15.
+        /// </summary>
+        public static readonly string V2024_08_15 = "2024-08-15";
 
         /// <summary>
         /// 2024-05-15.
@@ -594,18 +598,38 @@ public partial class CosmosDBAccount : Resource
             new FunctionCallExpression(new MemberExpression(new IdentifierExpression(ResourceName), "listKeys")));
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// CosmosDBAccount.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this CosmosDBAccount.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(CosmosDBBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{identity.ResourceName}_{CosmosDBBuiltInRole.GetBuiltInRoleName(role)}_{ResourceName}")
+    public RoleAssignment CreateRoleAssignment(CosmosDBBuiltInRole role, UserAssignedIdentity identity) =>
+        new($"{ResourceName}_{identity.ResourceName}_{CosmosDBBuiltInRole.GetBuiltInRoleName(role)}")
         {
+            Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
             Scope = new IdentifierExpression(ResourceName),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
+        };
+
+    /// <summary>
+    /// Creates a role assignment for a principal that grants access to this
+    /// CosmosDBAccount.
+    /// </summary>
+    /// <param name="role">The role to grant.</param>
+    /// <param name="principalType">The type of the principal to assign to.</param>
+    /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="resourceNameSuffix">Optional role assignment resource name suffix.</param>
+    /// <returns>The <see cref="RoleAssignment"/>.</returns>
+    public RoleAssignment CreateRoleAssignment(CosmosDBBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? resourceNameSuffix = default) =>
+        new($"{ResourceName}_{CosmosDBBuiltInRole.GetBuiltInRoleName(role)}{(resourceNameSuffix is null ? "" : "_")}{resourceNameSuffix}")
+        {
+            Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
+            Scope = new IdentifierExpression(ResourceName),
+            PrincipalType = principalType,
+            RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
+            PrincipalId = principalId
         };
 }

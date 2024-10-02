@@ -65,7 +65,7 @@ namespace Azure.Storage.Cryptography.Models
                 {
                     EncryptionAlgorithm = ClientSideEncryptionAlgorithm.AesCbc256,
 #pragma warning disable CS0618 // obsolete
-                    EncryptionVersion = ClientSideEncryptionVersion.V1_0
+                    EncryptionVersion = ClientSideEncryptionVersionInternal.V1_0
 #pragma warning restore CS0618 // obsolete
                 },
                 KeyWrappingMetadata = new Dictionary<string, string>()
@@ -92,7 +92,7 @@ namespace Azure.Storage.Cryptography.Models
             // v2.0 binds content encryption key with protocol version under a single keywrap
             int keyOffset = Constants.ClientSideEncryption.V2.WrappedDataVersionLength;
             var dataToWrap = new byte[keyOffset + contentEncryptionKey.Length];
-            Encoding.UTF8.GetBytes(ClientSideEncryptionVersion.V2_0.Serialize()).CopyTo(dataToWrap, 0);
+            Encoding.UTF8.GetBytes(ClientSideEncryptionVersionInternal.V2_0.Serialize()).CopyTo(dataToWrap, 0);
             contentEncryptionKey.CopyTo(dataToWrap, keyOffset);
 
             return new EncryptionData()
@@ -101,7 +101,7 @@ namespace Azure.Storage.Cryptography.Models
                 EncryptionAgent = new EncryptionAgent()
                 {
                     EncryptionAlgorithm = ClientSideEncryptionAlgorithm.AesGcm256,
-                    EncryptionVersion = ClientSideEncryptionVersion.V2_0
+                    EncryptionVersion = ClientSideEncryptionVersionInternal.V2_0
                 },
                 EncryptedRegionInfo = new EncryptedRegionInfo()
                 {

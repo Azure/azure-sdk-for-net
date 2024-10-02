@@ -172,9 +172,8 @@ public partial class ContainerAppManagedEnvironment : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ContainerAppManagedEnvironment.</param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironment.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ContainerAppManagedEnvironment(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.App/managedEnvironments", resourceVersion ?? "2023-05-01", context)
+    public ContainerAppManagedEnvironment(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.App/managedEnvironments", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -242,18 +241,38 @@ public partial class ContainerAppManagedEnvironment : Resource
         new(resourceName, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// ContainerAppManagedEnvironment.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this ContainerAppManagedEnvironment.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(AppContainersBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{identity.ResourceName}_{AppContainersBuiltInRole.GetBuiltInRoleName(role)}_{ResourceName}")
+    public RoleAssignment CreateRoleAssignment(AppContainersBuiltInRole role, UserAssignedIdentity identity) =>
+        new($"{ResourceName}_{identity.ResourceName}_{AppContainersBuiltInRole.GetBuiltInRoleName(role)}")
         {
+            Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
             Scope = new IdentifierExpression(ResourceName),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
+        };
+
+    /// <summary>
+    /// Creates a role assignment for a principal that grants access to this
+    /// ContainerAppManagedEnvironment.
+    /// </summary>
+    /// <param name="role">The role to grant.</param>
+    /// <param name="principalType">The type of the principal to assign to.</param>
+    /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="resourceNameSuffix">Optional role assignment resource name suffix.</param>
+    /// <returns>The <see cref="RoleAssignment"/>.</returns>
+    public RoleAssignment CreateRoleAssignment(AppContainersBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? resourceNameSuffix = default) =>
+        new($"{ResourceName}_{AppContainersBuiltInRole.GetBuiltInRoleName(role)}{(resourceNameSuffix is null ? "" : "_")}{resourceNameSuffix}")
+        {
+            Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
+            Scope = new IdentifierExpression(ResourceName),
+            PrincipalType = principalType,
+            RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
+            PrincipalId = principalId
         };
 }

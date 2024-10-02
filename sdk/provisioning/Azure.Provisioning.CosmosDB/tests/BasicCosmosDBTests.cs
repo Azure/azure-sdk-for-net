@@ -21,19 +21,17 @@ public class BasicCosmosDBTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter location =
-                    new(nameof(location), typeof(string))
-                    {
-                        Value = BicepFunction.GetResourceGroup().Location,
-                        Description = "DB location."
-                    };
-                BicepParameter dbName = new(nameof(dbName), typeof(string)) { Value = "orders" };
-                BicepParameter containerName = new(nameof(containerName), typeof(string)) { Value = "products" };
+                Infrastructure infra = new();
+
+                ProvisioningParameter dbName = new(nameof(dbName), typeof(string)) { Value = "orders" };
+                infra.Add(dbName);
+
+                ProvisioningParameter containerName = new(nameof(containerName), typeof(string)) { Value = "products" };
+                infra.Add(containerName);
 
                 CosmosDBAccount cosmos =
                     new(nameof(cosmos))
                     {
-                        Location = location,
                         DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard,
                         ConsistencyPolicy = new ConsistencyPolicy
                         {
@@ -41,9 +39,10 @@ public class BasicCosmosDBTests(bool async)
                         },
                         Locations =
                         {
-                            new CosmosDBAccountLocation { LocationName = location }
+                            new CosmosDBAccountLocation { LocationName = BicepFunction.GetResourceGroup().Location }
                         }
                     };
+                infra.Add(cosmos);
 
                 CosmosDBSqlDatabase db =
                     new(nameof(db), CosmosDBAccount.ResourceVersions.V2023_11_15)
@@ -59,6 +58,7 @@ public class BasicCosmosDBTests(bool async)
                             Throughput = 400
                         }
                     };
+                infra.Add(db);
 
                 CosmosDBSqlContainer container =
                     new(nameof(container), CosmosDBAccount.ResourceVersions.V2023_11_15)
@@ -74,63 +74,66 @@ public class BasicCosmosDBTests(bool async)
                             }
                         },
                     };
+                infra.Add(container);
 
-                _ = new BicepOutput("containerName", typeof(string)) { Value = container.Name };
-                _ = new BicepOutput("containerId", typeof(string)) { Value = container.Id };
+                infra.Add(new ProvisioningOutput("containerName", typeof(string)) { Value = container.Name });
+                infra.Add(new ProvisioningOutput("containerId", typeof(string)) { Value = container.Id });
+
+                return infra;
             })
         .Compare(
             """
-            @description('DB location.')
-            param location string = resourceGroup().location
-
             param dbName string = 'orders'
 
             param containerName string = 'products'
 
-            resource cosmos 'Microsoft.DocumentDB/databaseAccounts@2024-05-15-preview' = {
-                name: take('cosmos-${uniqueString(resourceGroup().id)}', 44)
-                location: location
-                properties: {
-                    locations: [
-                        {
-                            locationName: location
-                        }
-                    ]
-                    consistencyPolicy: {
-                        defaultConsistencyLevel: 'Session'
-                    }
-                    databaseAccountOfferType: 'Standard'
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
+            resource cosmos 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
+              name: take('cosmos-${uniqueString(resourceGroup().id)}', 44)
+              location: location
+              properties: {
+                locations: [
+                  {
+                    locationName: resourceGroup().location
+                  }
+                ]
+                consistencyPolicy: {
+                  defaultConsistencyLevel: 'Session'
                 }
+                databaseAccountOfferType: 'Standard'
+              }
             }
 
             resource db 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2023-11-15' = {
-                name: dbName
-                location: resourceGroup().location
-                properties: {
-                    resource: {
-                        id: dbName
-                    }
-                    options: {
-                        throughput: 400
-                    }
+              name: dbName
+              location: location
+              properties: {
+                resource: {
+                  id: dbName
                 }
-                parent: cosmos
+                options: {
+                  throughput: 400
+                }
+              }
+              parent: cosmos
             }
 
             resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2023-11-15' = {
-                name: containerName
-                location: resourceGroup().location
-                properties: {
-                    resource: {
-                        id: containerName
-                        partitionKey: {
-                            paths: [
-                                '/myPartitionKey'
-                            ]
-                        }
-                    }
+              name: containerName
+              location: location
+              properties: {
+                resource: {
+                  id: containerName
+                  partitionKey: {
+                    paths: [
+                      '/myPartitionKey'
+                    ]
+                  }
                 }
-                parent: db
+              }
+              parent: db
             }
 
             output containerName string = containerName

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         void IJsonModel<PlannedFailoverModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PlannedFailoverModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PlannedFailoverModelCustomProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -43,7 +51,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PlannedFailoverModelCustomProperties IJsonModel<PlannedFailoverModelCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

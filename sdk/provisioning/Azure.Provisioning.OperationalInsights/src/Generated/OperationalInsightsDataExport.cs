@@ -97,9 +97,8 @@ public partial class OperationalInsightsDataExport : Resource
     /// </summary>
     /// <param name="resourceName">Name of the OperationalInsightsDataExport.</param>
     /// <param name="resourceVersion">Version of the OperationalInsightsDataExport.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public OperationalInsightsDataExport(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.OperationalInsights/workspaces/dataExports", resourceVersion ?? "2020-08-01", context)
+    public OperationalInsightsDataExport(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.OperationalInsights/workspaces/dataExports", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdDate"]);
@@ -120,6 +119,11 @@ public partial class OperationalInsightsDataExport : Resource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-09-01.
+        /// </summary>
+        public static readonly string V2023_09_01 = "2023-09-01";
+
         /// <summary>
         /// 2020-08-01.
         /// </summary>

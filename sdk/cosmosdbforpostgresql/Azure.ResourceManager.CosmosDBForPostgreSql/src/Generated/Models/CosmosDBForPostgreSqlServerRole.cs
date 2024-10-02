@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         public static bool operator ==(CosmosDBForPostgreSqlServerRole left, CosmosDBForPostgreSqlServerRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBForPostgreSqlServerRole"/> values are not the same. </summary>
         public static bool operator !=(CosmosDBForPostgreSqlServerRole left, CosmosDBForPostgreSqlServerRole right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CosmosDBForPostgreSqlServerRole"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBForPostgreSqlServerRole"/>. </summary>
         public static implicit operator CosmosDBForPostgreSqlServerRole(string value) => new CosmosDBForPostgreSqlServerRole(value);
 
         /// <inheritdoc />

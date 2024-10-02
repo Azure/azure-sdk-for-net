@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         public static bool operator ==(EnablementStatus left, EnablementStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnablementStatus"/> values are not the same. </summary>
         public static bool operator !=(EnablementStatus left, EnablementStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EnablementStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EnablementStatus"/>. </summary>
         public static implicit operator EnablementStatus(string value) => new EnablementStatus(value);
 
         /// <inheritdoc />

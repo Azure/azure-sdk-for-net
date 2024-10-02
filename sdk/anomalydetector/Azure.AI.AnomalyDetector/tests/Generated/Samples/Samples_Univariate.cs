@@ -18,9 +18,9 @@ namespace Azure.AI.AnomalyDetector.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Univariate_DetectUnivariateEntireSeries_ShortVersion()
+        public void Example_Univariate_DetectUnivariateEntireSeries_UnivariateDetectEntireSeries()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
@@ -30,9 +30,249 @@ namespace Azure.AI.AnomalyDetector.Samples
             {
 new
 {
-value = 123.45F,
+timestamp = "1972-01-01T00:00:00Z",
+value = 826,
+},
+new
+{
+timestamp = "1972-02-01T00:00:00Z",
+value = 799,
+},
+new
+{
+timestamp = "1972-03-01T00:00:00Z",
+value = 890,
+},
+new
+{
+timestamp = "1972-04-01T00:00:00Z",
+value = 900,
+},
+new
+{
+timestamp = "1972-05-01T00:00:00Z",
+value = 961,
+},
+new
+{
+timestamp = "1972-06-01T00:00:00Z",
+value = 935,
+},
+new
+{
+timestamp = "1972-07-01T00:00:00Z",
+value = 894,
+},
+new
+{
+timestamp = "1972-08-01T00:00:00Z",
+value = 855,
+},
+new
+{
+timestamp = "1972-09-01T00:00:00Z",
+value = 809,
+},
+new
+{
+timestamp = "1972-10-01T00:00:00Z",
+value = 810,
+},
+new
+{
+timestamp = "1972-11-01T00:00:00Z",
+value = 766,
+},
+new
+{
+timestamp = "1972-12-01T00:00:00Z",
+value = 805,
+},
+new
+{
+timestamp = "1973-01-01T00:00:00Z",
+value = 821,
+},
+new
+{
+timestamp = "1973-02-01T00:00:00Z",
+value = 773,
+},
+new
+{
+timestamp = "1973-03-01T00:00:00Z",
+value = 883,
+},
+new
+{
+timestamp = "1973-04-01T00:00:00Z",
+value = 898,
+},
+new
+{
+timestamp = "1973-05-01T00:00:00Z",
+value = 957,
+},
+new
+{
+timestamp = "1973-06-01T00:00:00Z",
+value = 924,
+},
+new
+{
+timestamp = "1973-07-01T00:00:00Z",
+value = 881,
+},
+new
+{
+timestamp = "1973-08-01T00:00:00Z",
+value = 837,
+},
+new
+{
+timestamp = "1973-09-01T00:00:00Z",
+value = 784,
+},
+new
+{
+timestamp = "1973-10-01T00:00:00Z",
+value = 791,
+},
+new
+{
+timestamp = "1973-11-01T00:00:00Z",
+value = 760,
+},
+new
+{
+timestamp = "1973-12-01T00:00:00Z",
+value = 802,
+},
+new
+{
+timestamp = "1974-01-01T00:00:00Z",
+value = 828,
+},
+new
+{
+timestamp = "1974-02-01T00:00:00Z",
+value = 1030,
+},
+new
+{
+timestamp = "1974-03-01T00:00:00Z",
+value = 889,
+},
+new
+{
+timestamp = "1974-04-01T00:00:00Z",
+value = 902,
+},
+new
+{
+timestamp = "1974-05-01T00:00:00Z",
+value = 969,
+},
+new
+{
+timestamp = "1974-06-01T00:00:00Z",
+value = 947,
+},
+new
+{
+timestamp = "1974-07-01T00:00:00Z",
+value = 908,
+},
+new
+{
+timestamp = "1974-08-01T00:00:00Z",
+value = 867,
+},
+new
+{
+timestamp = "1974-09-01T00:00:00Z",
+value = 815,
+},
+new
+{
+timestamp = "1974-10-01T00:00:00Z",
+value = 812,
+},
+new
+{
+timestamp = "1974-11-01T00:00:00Z",
+value = 773,
+},
+new
+{
+timestamp = "1974-12-01T00:00:00Z",
+value = 813,
+},
+new
+{
+timestamp = "1975-01-01T00:00:00Z",
+value = 834,
+},
+new
+{
+timestamp = "1975-02-01T00:00:00Z",
+value = 782,
+},
+new
+{
+timestamp = "1975-03-01T00:00:00Z",
+value = 892,
+},
+new
+{
+timestamp = "1975-04-01T00:00:00Z",
+value = 903,
+},
+new
+{
+timestamp = "1975-05-01T00:00:00Z",
+value = 966,
+},
+new
+{
+timestamp = "1975-06-01T00:00:00Z",
+value = 937,
+},
+new
+{
+timestamp = "1975-07-01T00:00:00Z",
+value = 896,
+},
+new
+{
+timestamp = "1975-08-01T00:00:00Z",
+value = 858,
+},
+new
+{
+timestamp = "1975-09-01T00:00:00Z",
+value = 817,
+},
+new
+{
+timestamp = "1975-10-01T00:00:00Z",
+value = 827,
+},
+new
+{
+timestamp = "1975-11-01T00:00:00Z",
+value = 797,
+},
+new
+{
+timestamp = "1975-12-01T00:00:00Z",
+value = 843,
 }
             },
+                maxAnomalyRatio = 0.25,
+                sensitivity = 95,
+                granularity = "monthly",
+                imputeMode = "auto",
             });
             Response response = client.DetectUnivariateEntireSeries(content);
 
@@ -48,9 +288,9 @@ value = 123.45F,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Univariate_DetectUnivariateEntireSeries_ShortVersion_Async()
+        public async Task Example_Univariate_DetectUnivariateEntireSeries_UnivariateDetectEntireSeries_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
@@ -60,9 +300,249 @@ value = 123.45F,
             {
 new
 {
-value = 123.45F,
+timestamp = "1972-01-01T00:00:00Z",
+value = 826,
+},
+new
+{
+timestamp = "1972-02-01T00:00:00Z",
+value = 799,
+},
+new
+{
+timestamp = "1972-03-01T00:00:00Z",
+value = 890,
+},
+new
+{
+timestamp = "1972-04-01T00:00:00Z",
+value = 900,
+},
+new
+{
+timestamp = "1972-05-01T00:00:00Z",
+value = 961,
+},
+new
+{
+timestamp = "1972-06-01T00:00:00Z",
+value = 935,
+},
+new
+{
+timestamp = "1972-07-01T00:00:00Z",
+value = 894,
+},
+new
+{
+timestamp = "1972-08-01T00:00:00Z",
+value = 855,
+},
+new
+{
+timestamp = "1972-09-01T00:00:00Z",
+value = 809,
+},
+new
+{
+timestamp = "1972-10-01T00:00:00Z",
+value = 810,
+},
+new
+{
+timestamp = "1972-11-01T00:00:00Z",
+value = 766,
+},
+new
+{
+timestamp = "1972-12-01T00:00:00Z",
+value = 805,
+},
+new
+{
+timestamp = "1973-01-01T00:00:00Z",
+value = 821,
+},
+new
+{
+timestamp = "1973-02-01T00:00:00Z",
+value = 773,
+},
+new
+{
+timestamp = "1973-03-01T00:00:00Z",
+value = 883,
+},
+new
+{
+timestamp = "1973-04-01T00:00:00Z",
+value = 898,
+},
+new
+{
+timestamp = "1973-05-01T00:00:00Z",
+value = 957,
+},
+new
+{
+timestamp = "1973-06-01T00:00:00Z",
+value = 924,
+},
+new
+{
+timestamp = "1973-07-01T00:00:00Z",
+value = 881,
+},
+new
+{
+timestamp = "1973-08-01T00:00:00Z",
+value = 837,
+},
+new
+{
+timestamp = "1973-09-01T00:00:00Z",
+value = 784,
+},
+new
+{
+timestamp = "1973-10-01T00:00:00Z",
+value = 791,
+},
+new
+{
+timestamp = "1973-11-01T00:00:00Z",
+value = 760,
+},
+new
+{
+timestamp = "1973-12-01T00:00:00Z",
+value = 802,
+},
+new
+{
+timestamp = "1974-01-01T00:00:00Z",
+value = 828,
+},
+new
+{
+timestamp = "1974-02-01T00:00:00Z",
+value = 1030,
+},
+new
+{
+timestamp = "1974-03-01T00:00:00Z",
+value = 889,
+},
+new
+{
+timestamp = "1974-04-01T00:00:00Z",
+value = 902,
+},
+new
+{
+timestamp = "1974-05-01T00:00:00Z",
+value = 969,
+},
+new
+{
+timestamp = "1974-06-01T00:00:00Z",
+value = 947,
+},
+new
+{
+timestamp = "1974-07-01T00:00:00Z",
+value = 908,
+},
+new
+{
+timestamp = "1974-08-01T00:00:00Z",
+value = 867,
+},
+new
+{
+timestamp = "1974-09-01T00:00:00Z",
+value = 815,
+},
+new
+{
+timestamp = "1974-10-01T00:00:00Z",
+value = 812,
+},
+new
+{
+timestamp = "1974-11-01T00:00:00Z",
+value = 773,
+},
+new
+{
+timestamp = "1974-12-01T00:00:00Z",
+value = 813,
+},
+new
+{
+timestamp = "1975-01-01T00:00:00Z",
+value = 834,
+},
+new
+{
+timestamp = "1975-02-01T00:00:00Z",
+value = 782,
+},
+new
+{
+timestamp = "1975-03-01T00:00:00Z",
+value = 892,
+},
+new
+{
+timestamp = "1975-04-01T00:00:00Z",
+value = 903,
+},
+new
+{
+timestamp = "1975-05-01T00:00:00Z",
+value = 966,
+},
+new
+{
+timestamp = "1975-06-01T00:00:00Z",
+value = 937,
+},
+new
+{
+timestamp = "1975-07-01T00:00:00Z",
+value = 896,
+},
+new
+{
+timestamp = "1975-08-01T00:00:00Z",
+value = 858,
+},
+new
+{
+timestamp = "1975-09-01T00:00:00Z",
+value = 817,
+},
+new
+{
+timestamp = "1975-10-01T00:00:00Z",
+value = 827,
+},
+new
+{
+timestamp = "1975-11-01T00:00:00Z",
+value = 797,
+},
+new
+{
+timestamp = "1975-12-01T00:00:00Z",
+value = 843,
 }
             },
+                maxAnomalyRatio = 0.25,
+                sensitivity = 95,
+                granularity = "monthly",
+                imputeMode = "auto",
             });
             Response response = await client.DetectUnivariateEntireSeriesAsync(content);
 
@@ -78,9 +558,9 @@ value = 123.45F,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Univariate_DetectUnivariateEntireSeries_AllParameters()
+        public void Example_Univariate_DetectUnivariateLastPoint_DetectUnivariateLastPoint()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
@@ -90,87 +570,250 @@ value = 123.45F,
             {
 new
 {
-timestamp = "2022-05-10T18:57:31.2311892Z",
-value = 123.45F,
-}
-            },
-                granularity = "yearly",
-                customInterval = 1234,
-                period = 1234,
-                maxAnomalyRatio = 123.45F,
-                sensitivity = 1234,
-                imputeMode = "auto",
-                imputeFixedValue = 123.45F,
-            });
-            Response response = client.DetectUnivariateEntireSeries(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("period").ToString());
-            Console.WriteLine(result.GetProperty("expectedValues")[0].ToString());
-            Console.WriteLine(result.GetProperty("upperMargins")[0].ToString());
-            Console.WriteLine(result.GetProperty("lowerMargins")[0].ToString());
-            Console.WriteLine(result.GetProperty("isAnomaly")[0].ToString());
-            Console.WriteLine(result.GetProperty("isNegativeAnomaly")[0].ToString());
-            Console.WriteLine(result.GetProperty("isPositiveAnomaly")[0].ToString());
-            Console.WriteLine(result.GetProperty("severity")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Univariate_DetectUnivariateEntireSeries_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                series = new object[]
-            {
+timestamp = "1972-01-01T00:00:00Z",
+value = 826,
+},
 new
 {
-timestamp = "2022-05-10T18:57:31.2311892Z",
-value = 123.45F,
-}
-            },
-                granularity = "yearly",
-                customInterval = 1234,
-                period = 1234,
-                maxAnomalyRatio = 123.45F,
-                sensitivity = 1234,
-                imputeMode = "auto",
-                imputeFixedValue = 123.45F,
-            });
-            Response response = await client.DetectUnivariateEntireSeriesAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("period").ToString());
-            Console.WriteLine(result.GetProperty("expectedValues")[0].ToString());
-            Console.WriteLine(result.GetProperty("upperMargins")[0].ToString());
-            Console.WriteLine(result.GetProperty("lowerMargins")[0].ToString());
-            Console.WriteLine(result.GetProperty("isAnomaly")[0].ToString());
-            Console.WriteLine(result.GetProperty("isNegativeAnomaly")[0].ToString());
-            Console.WriteLine(result.GetProperty("isPositiveAnomaly")[0].ToString());
-            Console.WriteLine(result.GetProperty("severity")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Univariate_DetectUnivariateLastPoint_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                series = new object[]
-            {
+timestamp = "1972-02-01T00:00:00Z",
+value = 799,
+},
 new
 {
-value = 123.45F,
+timestamp = "1972-03-01T00:00:00Z",
+value = 890,
+},
+new
+{
+timestamp = "1972-04-01T00:00:00Z",
+value = 900,
+},
+new
+{
+timestamp = "1972-05-01T00:00:00Z",
+value = 961,
+},
+new
+{
+timestamp = "1972-06-01T00:00:00Z",
+value = 935,
+},
+new
+{
+timestamp = "1972-07-01T00:00:00Z",
+value = 894,
+},
+new
+{
+timestamp = "1972-08-01T00:00:00Z",
+value = 855,
+},
+new
+{
+timestamp = "1972-09-01T00:00:00Z",
+value = 809,
+},
+new
+{
+timestamp = "1972-10-01T00:00:00Z",
+value = 810,
+},
+new
+{
+timestamp = "1972-11-01T00:00:00Z",
+value = 766,
+},
+new
+{
+timestamp = "1972-12-01T00:00:00Z",
+value = 805,
+},
+new
+{
+timestamp = "1973-01-01T00:00:00Z",
+value = 821,
+},
+new
+{
+timestamp = "1973-02-01T00:00:00Z",
+value = 773,
+},
+new
+{
+timestamp = "1973-03-01T00:00:00Z",
+value = 883,
+},
+new
+{
+timestamp = "1973-04-01T00:00:00Z",
+value = 898,
+},
+new
+{
+timestamp = "1973-05-01T00:00:00Z",
+value = 957,
+},
+new
+{
+timestamp = "1973-06-01T00:00:00Z",
+value = 924,
+},
+new
+{
+timestamp = "1973-07-01T00:00:00Z",
+value = 881,
+},
+new
+{
+timestamp = "1973-08-01T00:00:00Z",
+value = 837,
+},
+new
+{
+timestamp = "1973-09-01T00:00:00Z",
+value = 784,
+},
+new
+{
+timestamp = "1973-10-01T00:00:00Z",
+value = 791,
+},
+new
+{
+timestamp = "1973-11-01T00:00:00Z",
+value = 760,
+},
+new
+{
+timestamp = "1973-12-01T00:00:00Z",
+value = 802,
+},
+new
+{
+timestamp = "1974-01-01T00:00:00Z",
+value = 828,
+},
+new
+{
+timestamp = "1974-02-01T00:00:00Z",
+value = 1030,
+},
+new
+{
+timestamp = "1974-03-01T00:00:00Z",
+value = 889,
+},
+new
+{
+timestamp = "1974-04-01T00:00:00Z",
+value = 902,
+},
+new
+{
+timestamp = "1974-05-01T00:00:00Z",
+value = 969,
+},
+new
+{
+timestamp = "1974-06-01T00:00:00Z",
+value = 947,
+},
+new
+{
+timestamp = "1974-07-01T00:00:00Z",
+value = 908,
+},
+new
+{
+timestamp = "1974-08-01T00:00:00Z",
+value = 867,
+},
+new
+{
+timestamp = "1974-09-01T00:00:00Z",
+value = 815,
+},
+new
+{
+timestamp = "1974-10-01T00:00:00Z",
+value = 812,
+},
+new
+{
+timestamp = "1974-11-01T00:00:00Z",
+value = 773,
+},
+new
+{
+timestamp = "1974-12-01T00:00:00Z",
+value = 813,
+},
+new
+{
+timestamp = "1975-01-01T00:00:00Z",
+value = 834,
+},
+new
+{
+timestamp = "1975-02-01T00:00:00Z",
+value = 782,
+},
+new
+{
+timestamp = "1975-03-01T00:00:00Z",
+value = 892,
+},
+new
+{
+timestamp = "1975-04-01T00:00:00Z",
+value = 903,
+},
+new
+{
+timestamp = "1975-05-01T00:00:00Z",
+value = 966,
+},
+new
+{
+timestamp = "1975-06-01T00:00:00Z",
+value = 937,
+},
+new
+{
+timestamp = "1975-07-01T00:00:00Z",
+value = 896,
+},
+new
+{
+timestamp = "1975-08-01T00:00:00Z",
+value = 858,
+},
+new
+{
+timestamp = "1975-09-01T00:00:00Z",
+value = 817,
+},
+new
+{
+timestamp = "1975-10-01T00:00:00Z",
+value = 827,
+},
+new
+{
+timestamp = "1975-11-01T00:00:00Z",
+value = 797,
+},
+new
+{
+timestamp = "1975-12-01T00:00:00Z",
+value = 843,
 }
             },
+                maxAnomalyRatio = 0.25,
+                sensitivity = 95,
+                granularity = "monthly",
+                imputeMode = "fixed",
+                imputeFixedValue = 800,
             });
             Response response = client.DetectUnivariateLastPoint(content);
 
@@ -187,9 +830,9 @@ value = 123.45F,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Univariate_DetectUnivariateLastPoint_ShortVersion_Async()
+        public async Task Example_Univariate_DetectUnivariateLastPoint_DetectUnivariateLastPoint_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
@@ -199,9 +842,250 @@ value = 123.45F,
             {
 new
 {
-value = 123.45F,
+timestamp = "1972-01-01T00:00:00Z",
+value = 826,
+},
+new
+{
+timestamp = "1972-02-01T00:00:00Z",
+value = 799,
+},
+new
+{
+timestamp = "1972-03-01T00:00:00Z",
+value = 890,
+},
+new
+{
+timestamp = "1972-04-01T00:00:00Z",
+value = 900,
+},
+new
+{
+timestamp = "1972-05-01T00:00:00Z",
+value = 961,
+},
+new
+{
+timestamp = "1972-06-01T00:00:00Z",
+value = 935,
+},
+new
+{
+timestamp = "1972-07-01T00:00:00Z",
+value = 894,
+},
+new
+{
+timestamp = "1972-08-01T00:00:00Z",
+value = 855,
+},
+new
+{
+timestamp = "1972-09-01T00:00:00Z",
+value = 809,
+},
+new
+{
+timestamp = "1972-10-01T00:00:00Z",
+value = 810,
+},
+new
+{
+timestamp = "1972-11-01T00:00:00Z",
+value = 766,
+},
+new
+{
+timestamp = "1972-12-01T00:00:00Z",
+value = 805,
+},
+new
+{
+timestamp = "1973-01-01T00:00:00Z",
+value = 821,
+},
+new
+{
+timestamp = "1973-02-01T00:00:00Z",
+value = 773,
+},
+new
+{
+timestamp = "1973-03-01T00:00:00Z",
+value = 883,
+},
+new
+{
+timestamp = "1973-04-01T00:00:00Z",
+value = 898,
+},
+new
+{
+timestamp = "1973-05-01T00:00:00Z",
+value = 957,
+},
+new
+{
+timestamp = "1973-06-01T00:00:00Z",
+value = 924,
+},
+new
+{
+timestamp = "1973-07-01T00:00:00Z",
+value = 881,
+},
+new
+{
+timestamp = "1973-08-01T00:00:00Z",
+value = 837,
+},
+new
+{
+timestamp = "1973-09-01T00:00:00Z",
+value = 784,
+},
+new
+{
+timestamp = "1973-10-01T00:00:00Z",
+value = 791,
+},
+new
+{
+timestamp = "1973-11-01T00:00:00Z",
+value = 760,
+},
+new
+{
+timestamp = "1973-12-01T00:00:00Z",
+value = 802,
+},
+new
+{
+timestamp = "1974-01-01T00:00:00Z",
+value = 828,
+},
+new
+{
+timestamp = "1974-02-01T00:00:00Z",
+value = 1030,
+},
+new
+{
+timestamp = "1974-03-01T00:00:00Z",
+value = 889,
+},
+new
+{
+timestamp = "1974-04-01T00:00:00Z",
+value = 902,
+},
+new
+{
+timestamp = "1974-05-01T00:00:00Z",
+value = 969,
+},
+new
+{
+timestamp = "1974-06-01T00:00:00Z",
+value = 947,
+},
+new
+{
+timestamp = "1974-07-01T00:00:00Z",
+value = 908,
+},
+new
+{
+timestamp = "1974-08-01T00:00:00Z",
+value = 867,
+},
+new
+{
+timestamp = "1974-09-01T00:00:00Z",
+value = 815,
+},
+new
+{
+timestamp = "1974-10-01T00:00:00Z",
+value = 812,
+},
+new
+{
+timestamp = "1974-11-01T00:00:00Z",
+value = 773,
+},
+new
+{
+timestamp = "1974-12-01T00:00:00Z",
+value = 813,
+},
+new
+{
+timestamp = "1975-01-01T00:00:00Z",
+value = 834,
+},
+new
+{
+timestamp = "1975-02-01T00:00:00Z",
+value = 782,
+},
+new
+{
+timestamp = "1975-03-01T00:00:00Z",
+value = 892,
+},
+new
+{
+timestamp = "1975-04-01T00:00:00Z",
+value = 903,
+},
+new
+{
+timestamp = "1975-05-01T00:00:00Z",
+value = 966,
+},
+new
+{
+timestamp = "1975-06-01T00:00:00Z",
+value = 937,
+},
+new
+{
+timestamp = "1975-07-01T00:00:00Z",
+value = 896,
+},
+new
+{
+timestamp = "1975-08-01T00:00:00Z",
+value = 858,
+},
+new
+{
+timestamp = "1975-09-01T00:00:00Z",
+value = 817,
+},
+new
+{
+timestamp = "1975-10-01T00:00:00Z",
+value = 827,
+},
+new
+{
+timestamp = "1975-11-01T00:00:00Z",
+value = 797,
+},
+new
+{
+timestamp = "1975-12-01T00:00:00Z",
+value = 843,
 }
             },
+                maxAnomalyRatio = 0.25,
+                sensitivity = 95,
+                granularity = "monthly",
+                imputeMode = "fixed",
+                imputeFixedValue = 800,
             });
             Response response = await client.DetectUnivariateLastPointAsync(content);
 
@@ -218,173 +1102,435 @@ value = 123.45F,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Univariate_DetectUnivariateLastPoint_ShortVersion_Convenience()
+        public void Example_Univariate_DetectUnivariateLastPoint_DetectUnivariateLastPoint_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
             UnivariateDetectionOptions options = new UnivariateDetectionOptions(new TimeSeriesPoint[]
             {
-new TimeSeriesPoint(123.45F)
-            });
-            Response<UnivariateLastDetectionResult> response = client.DetectUnivariateLastPoint(options);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Univariate_DetectUnivariateLastPoint_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
-
-            UnivariateDetectionOptions options = new UnivariateDetectionOptions(new TimeSeriesPoint[]
-            {
-new TimeSeriesPoint(123.45F)
-            });
-            Response<UnivariateLastDetectionResult> response = await client.DetectUnivariateLastPointAsync(options);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Univariate_DetectUnivariateLastPoint_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                series = new object[]
-            {
-new
+new TimeSeriesPoint(826)
 {
-timestamp = "2022-05-10T18:57:31.2311892Z",
-value = 123.45F,
-}
-            },
-                granularity = "yearly",
-                customInterval = 1234,
-                period = 1234,
-                maxAnomalyRatio = 123.45F,
-                sensitivity = 1234,
-                imputeMode = "auto",
-                imputeFixedValue = 123.45F,
-            });
-            Response response = client.DetectUnivariateLastPoint(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("period").ToString());
-            Console.WriteLine(result.GetProperty("suggestedWindow").ToString());
-            Console.WriteLine(result.GetProperty("expectedValue").ToString());
-            Console.WriteLine(result.GetProperty("upperMargin").ToString());
-            Console.WriteLine(result.GetProperty("lowerMargin").ToString());
-            Console.WriteLine(result.GetProperty("isAnomaly").ToString());
-            Console.WriteLine(result.GetProperty("isNegativeAnomaly").ToString());
-            Console.WriteLine(result.GetProperty("isPositiveAnomaly").ToString());
-            Console.WriteLine(result.GetProperty("severity").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Univariate_DetectUnivariateLastPoint_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                series = new object[]
-            {
-new
+Timestamp = DateTimeOffset.Parse("1972-01-01T00:00:00Z"),
+},
+new TimeSeriesPoint(799)
 {
-timestamp = "2022-05-10T18:57:31.2311892Z",
-value = 123.45F,
-}
-            },
-                granularity = "yearly",
-                customInterval = 1234,
-                period = 1234,
-                maxAnomalyRatio = 123.45F,
-                sensitivity = 1234,
-                imputeMode = "auto",
-                imputeFixedValue = 123.45F,
-            });
-            Response response = await client.DetectUnivariateLastPointAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("period").ToString());
-            Console.WriteLine(result.GetProperty("suggestedWindow").ToString());
-            Console.WriteLine(result.GetProperty("expectedValue").ToString());
-            Console.WriteLine(result.GetProperty("upperMargin").ToString());
-            Console.WriteLine(result.GetProperty("lowerMargin").ToString());
-            Console.WriteLine(result.GetProperty("isAnomaly").ToString());
-            Console.WriteLine(result.GetProperty("isNegativeAnomaly").ToString());
-            Console.WriteLine(result.GetProperty("isPositiveAnomaly").ToString());
-            Console.WriteLine(result.GetProperty("severity").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Univariate_DetectUnivariateLastPoint_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
-
-            UnivariateDetectionOptions options = new UnivariateDetectionOptions(new TimeSeriesPoint[]
-            {
-new TimeSeriesPoint(123.45F)
+Timestamp = DateTimeOffset.Parse("1972-02-01T00:00:00Z"),
+},
+new TimeSeriesPoint(890)
 {
-Timestamp = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+Timestamp = DateTimeOffset.Parse("1972-03-01T00:00:00Z"),
+},
+new TimeSeriesPoint(900)
+{
+Timestamp = DateTimeOffset.Parse("1972-04-01T00:00:00Z"),
+},
+new TimeSeriesPoint(961)
+{
+Timestamp = DateTimeOffset.Parse("1972-05-01T00:00:00Z"),
+},
+new TimeSeriesPoint(935)
+{
+Timestamp = DateTimeOffset.Parse("1972-06-01T00:00:00Z"),
+},
+new TimeSeriesPoint(894)
+{
+Timestamp = DateTimeOffset.Parse("1972-07-01T00:00:00Z"),
+},
+new TimeSeriesPoint(855)
+{
+Timestamp = DateTimeOffset.Parse("1972-08-01T00:00:00Z"),
+},
+new TimeSeriesPoint(809)
+{
+Timestamp = DateTimeOffset.Parse("1972-09-01T00:00:00Z"),
+},
+new TimeSeriesPoint(810)
+{
+Timestamp = DateTimeOffset.Parse("1972-10-01T00:00:00Z"),
+},
+new TimeSeriesPoint(766)
+{
+Timestamp = DateTimeOffset.Parse("1972-11-01T00:00:00Z"),
+},
+new TimeSeriesPoint(805)
+{
+Timestamp = DateTimeOffset.Parse("1972-12-01T00:00:00Z"),
+},
+new TimeSeriesPoint(821)
+{
+Timestamp = DateTimeOffset.Parse("1973-01-01T00:00:00Z"),
+},
+new TimeSeriesPoint(773)
+{
+Timestamp = DateTimeOffset.Parse("1973-02-01T00:00:00Z"),
+},
+new TimeSeriesPoint(883)
+{
+Timestamp = DateTimeOffset.Parse("1973-03-01T00:00:00Z"),
+},
+new TimeSeriesPoint(898)
+{
+Timestamp = DateTimeOffset.Parse("1973-04-01T00:00:00Z"),
+},
+new TimeSeriesPoint(957)
+{
+Timestamp = DateTimeOffset.Parse("1973-05-01T00:00:00Z"),
+},
+new TimeSeriesPoint(924)
+{
+Timestamp = DateTimeOffset.Parse("1973-06-01T00:00:00Z"),
+},
+new TimeSeriesPoint(881)
+{
+Timestamp = DateTimeOffset.Parse("1973-07-01T00:00:00Z"),
+},
+new TimeSeriesPoint(837)
+{
+Timestamp = DateTimeOffset.Parse("1973-08-01T00:00:00Z"),
+},
+new TimeSeriesPoint(784)
+{
+Timestamp = DateTimeOffset.Parse("1973-09-01T00:00:00Z"),
+},
+new TimeSeriesPoint(791)
+{
+Timestamp = DateTimeOffset.Parse("1973-10-01T00:00:00Z"),
+},
+new TimeSeriesPoint(760)
+{
+Timestamp = DateTimeOffset.Parse("1973-11-01T00:00:00Z"),
+},
+new TimeSeriesPoint(802)
+{
+Timestamp = DateTimeOffset.Parse("1973-12-01T00:00:00Z"),
+},
+new TimeSeriesPoint(828)
+{
+Timestamp = DateTimeOffset.Parse("1974-01-01T00:00:00Z"),
+},
+new TimeSeriesPoint(1030)
+{
+Timestamp = DateTimeOffset.Parse("1974-02-01T00:00:00Z"),
+},
+new TimeSeriesPoint(889)
+{
+Timestamp = DateTimeOffset.Parse("1974-03-01T00:00:00Z"),
+},
+new TimeSeriesPoint(902)
+{
+Timestamp = DateTimeOffset.Parse("1974-04-01T00:00:00Z"),
+},
+new TimeSeriesPoint(969)
+{
+Timestamp = DateTimeOffset.Parse("1974-05-01T00:00:00Z"),
+},
+new TimeSeriesPoint(947)
+{
+Timestamp = DateTimeOffset.Parse("1974-06-01T00:00:00Z"),
+},
+new TimeSeriesPoint(908)
+{
+Timestamp = DateTimeOffset.Parse("1974-07-01T00:00:00Z"),
+},
+new TimeSeriesPoint(867)
+{
+Timestamp = DateTimeOffset.Parse("1974-08-01T00:00:00Z"),
+},
+new TimeSeriesPoint(815)
+{
+Timestamp = DateTimeOffset.Parse("1974-09-01T00:00:00Z"),
+},
+new TimeSeriesPoint(812)
+{
+Timestamp = DateTimeOffset.Parse("1974-10-01T00:00:00Z"),
+},
+new TimeSeriesPoint(773)
+{
+Timestamp = DateTimeOffset.Parse("1974-11-01T00:00:00Z"),
+},
+new TimeSeriesPoint(813)
+{
+Timestamp = DateTimeOffset.Parse("1974-12-01T00:00:00Z"),
+},
+new TimeSeriesPoint(834)
+{
+Timestamp = DateTimeOffset.Parse("1975-01-01T00:00:00Z"),
+},
+new TimeSeriesPoint(782)
+{
+Timestamp = DateTimeOffset.Parse("1975-02-01T00:00:00Z"),
+},
+new TimeSeriesPoint(892)
+{
+Timestamp = DateTimeOffset.Parse("1975-03-01T00:00:00Z"),
+},
+new TimeSeriesPoint(903)
+{
+Timestamp = DateTimeOffset.Parse("1975-04-01T00:00:00Z"),
+},
+new TimeSeriesPoint(966)
+{
+Timestamp = DateTimeOffset.Parse("1975-05-01T00:00:00Z"),
+},
+new TimeSeriesPoint(937)
+{
+Timestamp = DateTimeOffset.Parse("1975-06-01T00:00:00Z"),
+},
+new TimeSeriesPoint(896)
+{
+Timestamp = DateTimeOffset.Parse("1975-07-01T00:00:00Z"),
+},
+new TimeSeriesPoint(858)
+{
+Timestamp = DateTimeOffset.Parse("1975-08-01T00:00:00Z"),
+},
+new TimeSeriesPoint(817)
+{
+Timestamp = DateTimeOffset.Parse("1975-09-01T00:00:00Z"),
+},
+new TimeSeriesPoint(827)
+{
+Timestamp = DateTimeOffset.Parse("1975-10-01T00:00:00Z"),
+},
+new TimeSeriesPoint(797)
+{
+Timestamp = DateTimeOffset.Parse("1975-11-01T00:00:00Z"),
+},
+new TimeSeriesPoint(843)
+{
+Timestamp = DateTimeOffset.Parse("1975-12-01T00:00:00Z"),
 }
             })
             {
-                Granularity = TimeGranularity.Yearly,
-                CustomInterval = 1234,
-                Period = 1234,
-                MaxAnomalyRatio = 123.45F,
-                Sensitivity = 1234,
-                ImputeMode = ImputeMode.Auto,
-                ImputeFixedValue = 123.45F,
+                Granularity = TimeGranularity.Monthly,
+                MaxAnomalyRatio = (float)0.25,
+                Sensitivity = 95,
+                ImputeMode = ImputeMode.Fixed,
+                ImputeFixedValue = 800,
             };
             Response<UnivariateLastDetectionResult> response = client.DetectUnivariateLastPoint(options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Univariate_DetectUnivariateLastPoint_AllParameters_Convenience_Async()
+        public async Task Example_Univariate_DetectUnivariateLastPoint_DetectUnivariateLastPoint_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
             UnivariateDetectionOptions options = new UnivariateDetectionOptions(new TimeSeriesPoint[]
             {
-new TimeSeriesPoint(123.45F)
+new TimeSeriesPoint(826)
 {
-Timestamp = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+Timestamp = DateTimeOffset.Parse("1972-01-01T00:00:00Z"),
+},
+new TimeSeriesPoint(799)
+{
+Timestamp = DateTimeOffset.Parse("1972-02-01T00:00:00Z"),
+},
+new TimeSeriesPoint(890)
+{
+Timestamp = DateTimeOffset.Parse("1972-03-01T00:00:00Z"),
+},
+new TimeSeriesPoint(900)
+{
+Timestamp = DateTimeOffset.Parse("1972-04-01T00:00:00Z"),
+},
+new TimeSeriesPoint(961)
+{
+Timestamp = DateTimeOffset.Parse("1972-05-01T00:00:00Z"),
+},
+new TimeSeriesPoint(935)
+{
+Timestamp = DateTimeOffset.Parse("1972-06-01T00:00:00Z"),
+},
+new TimeSeriesPoint(894)
+{
+Timestamp = DateTimeOffset.Parse("1972-07-01T00:00:00Z"),
+},
+new TimeSeriesPoint(855)
+{
+Timestamp = DateTimeOffset.Parse("1972-08-01T00:00:00Z"),
+},
+new TimeSeriesPoint(809)
+{
+Timestamp = DateTimeOffset.Parse("1972-09-01T00:00:00Z"),
+},
+new TimeSeriesPoint(810)
+{
+Timestamp = DateTimeOffset.Parse("1972-10-01T00:00:00Z"),
+},
+new TimeSeriesPoint(766)
+{
+Timestamp = DateTimeOffset.Parse("1972-11-01T00:00:00Z"),
+},
+new TimeSeriesPoint(805)
+{
+Timestamp = DateTimeOffset.Parse("1972-12-01T00:00:00Z"),
+},
+new TimeSeriesPoint(821)
+{
+Timestamp = DateTimeOffset.Parse("1973-01-01T00:00:00Z"),
+},
+new TimeSeriesPoint(773)
+{
+Timestamp = DateTimeOffset.Parse("1973-02-01T00:00:00Z"),
+},
+new TimeSeriesPoint(883)
+{
+Timestamp = DateTimeOffset.Parse("1973-03-01T00:00:00Z"),
+},
+new TimeSeriesPoint(898)
+{
+Timestamp = DateTimeOffset.Parse("1973-04-01T00:00:00Z"),
+},
+new TimeSeriesPoint(957)
+{
+Timestamp = DateTimeOffset.Parse("1973-05-01T00:00:00Z"),
+},
+new TimeSeriesPoint(924)
+{
+Timestamp = DateTimeOffset.Parse("1973-06-01T00:00:00Z"),
+},
+new TimeSeriesPoint(881)
+{
+Timestamp = DateTimeOffset.Parse("1973-07-01T00:00:00Z"),
+},
+new TimeSeriesPoint(837)
+{
+Timestamp = DateTimeOffset.Parse("1973-08-01T00:00:00Z"),
+},
+new TimeSeriesPoint(784)
+{
+Timestamp = DateTimeOffset.Parse("1973-09-01T00:00:00Z"),
+},
+new TimeSeriesPoint(791)
+{
+Timestamp = DateTimeOffset.Parse("1973-10-01T00:00:00Z"),
+},
+new TimeSeriesPoint(760)
+{
+Timestamp = DateTimeOffset.Parse("1973-11-01T00:00:00Z"),
+},
+new TimeSeriesPoint(802)
+{
+Timestamp = DateTimeOffset.Parse("1973-12-01T00:00:00Z"),
+},
+new TimeSeriesPoint(828)
+{
+Timestamp = DateTimeOffset.Parse("1974-01-01T00:00:00Z"),
+},
+new TimeSeriesPoint(1030)
+{
+Timestamp = DateTimeOffset.Parse("1974-02-01T00:00:00Z"),
+},
+new TimeSeriesPoint(889)
+{
+Timestamp = DateTimeOffset.Parse("1974-03-01T00:00:00Z"),
+},
+new TimeSeriesPoint(902)
+{
+Timestamp = DateTimeOffset.Parse("1974-04-01T00:00:00Z"),
+},
+new TimeSeriesPoint(969)
+{
+Timestamp = DateTimeOffset.Parse("1974-05-01T00:00:00Z"),
+},
+new TimeSeriesPoint(947)
+{
+Timestamp = DateTimeOffset.Parse("1974-06-01T00:00:00Z"),
+},
+new TimeSeriesPoint(908)
+{
+Timestamp = DateTimeOffset.Parse("1974-07-01T00:00:00Z"),
+},
+new TimeSeriesPoint(867)
+{
+Timestamp = DateTimeOffset.Parse("1974-08-01T00:00:00Z"),
+},
+new TimeSeriesPoint(815)
+{
+Timestamp = DateTimeOffset.Parse("1974-09-01T00:00:00Z"),
+},
+new TimeSeriesPoint(812)
+{
+Timestamp = DateTimeOffset.Parse("1974-10-01T00:00:00Z"),
+},
+new TimeSeriesPoint(773)
+{
+Timestamp = DateTimeOffset.Parse("1974-11-01T00:00:00Z"),
+},
+new TimeSeriesPoint(813)
+{
+Timestamp = DateTimeOffset.Parse("1974-12-01T00:00:00Z"),
+},
+new TimeSeriesPoint(834)
+{
+Timestamp = DateTimeOffset.Parse("1975-01-01T00:00:00Z"),
+},
+new TimeSeriesPoint(782)
+{
+Timestamp = DateTimeOffset.Parse("1975-02-01T00:00:00Z"),
+},
+new TimeSeriesPoint(892)
+{
+Timestamp = DateTimeOffset.Parse("1975-03-01T00:00:00Z"),
+},
+new TimeSeriesPoint(903)
+{
+Timestamp = DateTimeOffset.Parse("1975-04-01T00:00:00Z"),
+},
+new TimeSeriesPoint(966)
+{
+Timestamp = DateTimeOffset.Parse("1975-05-01T00:00:00Z"),
+},
+new TimeSeriesPoint(937)
+{
+Timestamp = DateTimeOffset.Parse("1975-06-01T00:00:00Z"),
+},
+new TimeSeriesPoint(896)
+{
+Timestamp = DateTimeOffset.Parse("1975-07-01T00:00:00Z"),
+},
+new TimeSeriesPoint(858)
+{
+Timestamp = DateTimeOffset.Parse("1975-08-01T00:00:00Z"),
+},
+new TimeSeriesPoint(817)
+{
+Timestamp = DateTimeOffset.Parse("1975-09-01T00:00:00Z"),
+},
+new TimeSeriesPoint(827)
+{
+Timestamp = DateTimeOffset.Parse("1975-10-01T00:00:00Z"),
+},
+new TimeSeriesPoint(797)
+{
+Timestamp = DateTimeOffset.Parse("1975-11-01T00:00:00Z"),
+},
+new TimeSeriesPoint(843)
+{
+Timestamp = DateTimeOffset.Parse("1975-12-01T00:00:00Z"),
 }
             })
             {
-                Granularity = TimeGranularity.Yearly,
-                CustomInterval = 1234,
-                Period = 1234,
-                MaxAnomalyRatio = 123.45F,
-                Sensitivity = 1234,
-                ImputeMode = ImputeMode.Auto,
-                ImputeFixedValue = 123.45F,
+                Granularity = TimeGranularity.Monthly,
+                MaxAnomalyRatio = (float)0.25,
+                Sensitivity = 95,
+                ImputeMode = ImputeMode.Fixed,
+                ImputeFixedValue = 800,
             };
             Response<UnivariateLastDetectionResult> response = await client.DetectUnivariateLastPointAsync(options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Univariate_DetectUnivariateChangePoint_ShortVersion()
+        public void Example_Univariate_DetectUnivariateChangePoint_UnivariateDetectionOfAChangePoint()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
@@ -394,10 +1540,1295 @@ Timestamp = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
             {
 new
 {
-value = 123.45F,
+timestamp = "2017-01-01T06:45:00Z",
+value = 1639196,
+},
+new
+{
+timestamp = "2017-01-01T06:50:00Z",
+value = 1639290,
+},
+new
+{
+timestamp = "2017-01-01T06:55:00Z",
+value = 1667293,
+},
+new
+{
+timestamp = "2017-01-01T07:00:00Z",
+value = 1703130,
+},
+new
+{
+timestamp = "2017-01-01T07:05:00Z",
+value = 1650912,
+},
+new
+{
+timestamp = "2017-01-01T07:10:00Z",
+value = 1653596,
+},
+new
+{
+timestamp = "2017-01-01T07:15:00Z",
+value = 1653793,
+},
+new
+{
+timestamp = "2017-01-01T07:20:00Z",
+value = 1653795,
+},
+new
+{
+timestamp = "2017-01-01T07:25:00Z",
+value = 1663471,
+},
+new
+{
+timestamp = "2017-01-01T07:30:00Z",
+value = 1662358,
+},
+new
+{
+timestamp = "2017-01-01T07:35:00Z",
+value = 1664320,
+},
+new
+{
+timestamp = "2017-01-01T07:40:00Z",
+value = 1664942,
+},
+new
+{
+timestamp = "2017-01-01T07:45:00Z",
+value = 1664966,
+},
+new
+{
+timestamp = "2017-01-01T07:50:00Z",
+value = 1724271,
+},
+new
+{
+timestamp = "2017-01-01T07:55:00Z",
+value = 1678720,
+},
+new
+{
+timestamp = "2017-01-01T08:00:00Z",
+value = 1672536,
+},
+new
+{
+timestamp = "2017-01-01T08:05:00Z",
+value = 1672544,
+},
+new
+{
+timestamp = "2017-01-01T08:10:00Z",
+value = 1672364,
+},
+new
+{
+timestamp = "2017-01-01T08:15:00Z",
+value = 1672912,
+},
+new
+{
+timestamp = "2017-01-01T08:20:00Z",
+value = 1672736,
+},
+new
+{
+timestamp = "2017-01-01T08:25:00Z",
+value = 1672725,
+},
+new
+{
+timestamp = "2017-01-01T08:30:00Z",
+value = 1673247,
+},
+new
+{
+timestamp = "2017-01-01T08:35:00Z",
+value = 1673109,
+},
+new
+{
+timestamp = "2017-01-01T08:40:00Z",
+value = 1690088,
+},
+new
+{
+timestamp = "2017-01-01T08:45:00Z",
+value = 1703865,
+},
+new
+{
+timestamp = "2017-01-01T08:50:00Z",
+value = 1703865,
+},
+new
+{
+timestamp = "2017-01-01T08:55:00Z",
+value = 1786581,
+},
+new
+{
+timestamp = "2017-01-01T09:00:00Z",
+value = 1800945,
+},
+new
+{
+timestamp = "2017-01-01T09:05:00Z",
+value = 1800957,
+},
+new
+{
+timestamp = "2017-01-01T09:10:00Z",
+value = 1801191,
+},
+new
+{
+timestamp = "2017-01-01T09:15:00Z",
+value = 1801412,
+},
+new
+{
+timestamp = "2017-01-01T09:20:00Z",
+value = 1801621,
+},
+new
+{
+timestamp = "2017-01-01T09:25:00Z",
+value = 1801621,
+},
+new
+{
+timestamp = "2017-01-01T09:30:00Z",
+value = 1801654,
+},
+new
+{
+timestamp = "2017-01-01T09:35:00Z",
+value = 1802105,
+},
+new
+{
+timestamp = "2017-01-01T09:40:00Z",
+value = 1801800,
+},
+new
+{
+timestamp = "2017-01-01T09:45:00Z",
+value = 1803040,
+},
+new
+{
+timestamp = "2017-01-01T09:50:00Z",
+value = 1803672,
+},
+new
+{
+timestamp = "2017-01-01T09:55:00Z",
+value = 1803535,
+},
+new
+{
+timestamp = "2017-01-01T10:00:00Z",
+value = 1803541,
+},
+new
+{
+timestamp = "2017-01-01T10:05:00Z",
+value = 1803545,
+},
+new
+{
+timestamp = "2017-01-01T10:10:00Z",
+value = 1803599,
+},
+new
+{
+timestamp = "2017-01-01T10:15:00Z",
+value = 1803616,
+},
+new
+{
+timestamp = "2017-01-01T10:20:00Z",
+value = 1803619,
+},
+new
+{
+timestamp = "2017-01-01T10:25:00Z",
+value = 1809942,
+},
+new
+{
+timestamp = "2017-01-01T10:30:00Z",
+value = 1802720,
+},
+new
+{
+timestamp = "2017-01-01T10:35:00Z",
+value = 1802720,
+},
+new
+{
+timestamp = "2017-01-01T10:40:00Z",
+value = 1802888,
+},
+new
+{
+timestamp = "2017-01-01T10:45:00Z",
+value = 1809574,
+},
+new
+{
+timestamp = "2017-01-01T10:50:00Z",
+value = 1803896,
+},
+new
+{
+timestamp = "2017-01-01T10:55:00Z",
+value = 1803850,
+},
+new
+{
+timestamp = "2017-01-01T11:00:00Z",
+value = 1803854,
+},
+new
+{
+timestamp = "2017-01-01T11:05:00Z",
+value = 1803854,
+},
+new
+{
+timestamp = "2017-01-01T11:10:00Z",
+value = 1803797,
+},
+new
+{
+timestamp = "2017-01-01T11:15:00Z",
+value = 1803921,
+},
+new
+{
+timestamp = "2017-01-01T11:20:00Z",
+value = 1803933,
+},
+new
+{
+timestamp = "2017-01-01T11:25:00Z",
+value = 1804040,
+},
+new
+{
+timestamp = "2017-01-01T11:30:00Z",
+value = 1804044,
+},
+new
+{
+timestamp = "2017-01-01T11:35:00Z",
+value = 1804070,
+},
+new
+{
+timestamp = "2017-01-01T11:40:00Z",
+value = 1804070,
+},
+new
+{
+timestamp = "2017-01-01T11:45:00Z",
+value = 1804068,
+},
+new
+{
+timestamp = "2017-01-01T11:50:00Z",
+value = 1804073,
+},
+new
+{
+timestamp = "2017-01-01T11:55:00Z",
+value = 1804101,
+},
+new
+{
+timestamp = "2017-01-01T12:00:00Z",
+value = 1804674,
+},
+new
+{
+timestamp = "2017-01-01T12:05:00Z",
+value = 1804714,
+},
+new
+{
+timestamp = "2017-01-01T12:10:00Z",
+value = 1804730,
+},
+new
+{
+timestamp = "2017-01-01T12:15:00Z",
+value = 1804816,
+},
+new
+{
+timestamp = "2017-01-01T12:20:00Z",
+value = 1803996,
+},
+new
+{
+timestamp = "2017-01-01T12:25:00Z",
+value = 1803998,
+},
+new
+{
+timestamp = "2017-01-01T12:30:00Z",
+value = 1804015,
+},
+new
+{
+timestamp = "2017-01-01T12:35:00Z",
+value = 1804047,
+},
+new
+{
+timestamp = "2017-01-01T12:40:00Z",
+value = 1804050,
+},
+new
+{
+timestamp = "2017-01-01T12:45:00Z",
+value = 1804218,
+},
+new
+{
+timestamp = "2017-01-01T12:50:00Z",
+value = 1804217,
+},
+new
+{
+timestamp = "2017-01-01T12:55:00Z",
+value = 1804217,
+},
+new
+{
+timestamp = "2017-01-01T13:00:00Z",
+value = 1804205,
+},
+new
+{
+timestamp = "2017-01-01T13:05:00Z",
+value = 1804728,
+},
+new
+{
+timestamp = "2017-01-01T13:10:00Z",
+value = 1804748,
+},
+new
+{
+timestamp = "2017-01-01T13:15:00Z",
+value = 1805232,
+},
+new
+{
+timestamp = "2017-01-01T13:20:00Z",
+value = 1814121,
+},
+new
+{
+timestamp = "2017-01-01T13:25:00Z",
+value = 1806789,
+},
+new
+{
+timestamp = "2017-01-01T13:30:00Z",
+value = 1806119,
+},
+new
+{
+timestamp = "2017-01-01T13:35:00Z",
+value = 1806329,
+},
+new
+{
+timestamp = "2017-01-01T13:40:00Z",
+value = 1806454,
+},
+new
+{
+timestamp = "2017-01-01T13:45:00Z",
+value = 1806852,
+},
+new
+{
+timestamp = "2017-01-01T13:50:00Z",
+value = 1807347,
+},
+new
+{
+timestamp = "2017-01-01T13:55:00Z",
+value = 1812144,
+},
+new
+{
+timestamp = "2017-01-01T14:00:00Z",
+value = 1807418,
+},
+new
+{
+timestamp = "2017-01-01T14:05:00Z",
+value = 1807418,
+},
+new
+{
+timestamp = "2017-01-01T14:10:00Z",
+value = 1807432,
+},
+new
+{
+timestamp = "2017-01-01T14:15:00Z",
+value = 1808540,
+},
+new
+{
+timestamp = "2017-01-01T14:20:00Z",
+value = 1808541,
+},
+new
+{
+timestamp = "2017-01-01T14:25:00Z",
+value = 1807831,
+},
+new
+{
+timestamp = "2017-01-01T14:30:00Z",
+value = 1807852,
+},
+new
+{
+timestamp = "2017-01-01T14:35:00Z",
+value = 1807811,
+},
+new
+{
+timestamp = "2017-01-01T14:40:00Z",
+value = 2214285,
+},
+new
+{
+timestamp = "2017-01-01T14:45:00Z",
+value = 2215019,
+},
+new
+{
+timestamp = "2017-01-01T14:50:00Z",
+value = 2215329,
+},
+new
+{
+timestamp = "2017-01-01T14:55:00Z",
+value = 2215097,
+},
+new
+{
+timestamp = "2017-01-01T15:00:00Z",
+value = 2215129,
+},
+new
+{
+timestamp = "2017-01-01T15:05:00Z",
+value = 2215120,
+},
+new
+{
+timestamp = "2017-01-01T15:10:00Z",
+value = 2217056,
+},
+new
+{
+timestamp = "2017-01-01T15:15:00Z",
+value = 2217056,
+},
+new
+{
+timestamp = "2017-01-01T15:20:00Z",
+value = 2222126,
+},
+new
+{
+timestamp = "2017-01-01T15:25:00Z",
+value = 2226472,
+},
+new
+{
+timestamp = "2017-01-01T15:30:00Z",
+value = 2226722,
+},
+new
+{
+timestamp = "2017-01-01T15:35:00Z",
+value = 2226729,
+},
+new
+{
+timestamp = "2017-01-01T15:40:00Z",
+value = 2226735,
+},
+new
+{
+timestamp = "2017-01-01T15:45:00Z",
+value = 2226735,
+},
+new
+{
+timestamp = "2017-01-01T15:50:00Z",
+value = 2226735,
+},
+new
+{
+timestamp = "2017-01-01T15:55:00Z",
+value = 2226952,
+},
+new
+{
+timestamp = "2017-01-01T16:00:00Z",
+value = 2226962,
+},
+new
+{
+timestamp = "2017-01-01T16:05:00Z",
+value = 2649337,
+},
+new
+{
+timestamp = "2017-01-01T16:10:00Z",
+value = 2092796,
+},
+new
+{
+timestamp = "2017-01-01T16:15:00Z",
+value = 2092839,
+},
+new
+{
+timestamp = "2017-01-01T16:20:00Z",
+value = 2092940,
+},
+new
+{
+timestamp = "2017-01-01T16:25:00Z",
+value = 2092940,
+},
+new
+{
+timestamp = "2017-01-01T16:30:00Z",
+value = 2092965,
+},
+new
+{
+timestamp = "2017-01-01T16:35:00Z",
+value = 2092979,
+},
+new
+{
+timestamp = "2017-01-01T16:40:00Z",
+value = 2095588,
+},
+new
+{
+timestamp = "2017-01-01T16:45:00Z",
+value = 2099586,
+},
+new
+{
+timestamp = "2017-01-01T16:50:00Z",
+value = 2102981,
+},
+new
+{
+timestamp = "2017-01-01T16:55:00Z",
+value = 2108053,
+},
+new
+{
+timestamp = "2017-01-01T17:00:00Z",
+value = 2107907,
+},
+new
+{
+timestamp = "2017-01-01T17:05:00Z",
+value = 2108241,
+},
+new
+{
+timestamp = "2017-01-01T17:10:00Z",
+value = 2100321,
+},
+new
+{
+timestamp = "2017-01-01T17:15:00Z",
+value = 2100448,
+},
+new
+{
+timestamp = "2017-01-01T17:20:00Z",
+value = 2100483,
+},
+new
+{
+timestamp = "2017-01-01T17:25:00Z",
+value = 2103042,
+},
+new
+{
+timestamp = "2017-01-01T17:30:00Z",
+value = 2103037,
+},
+new
+{
+timestamp = "2017-01-01T17:35:00Z",
+value = 2103040,
+},
+new
+{
+timestamp = "2017-01-01T17:40:00Z",
+value = 2103054,
+},
+new
+{
+timestamp = "2017-01-01T17:45:00Z",
+value = 2103058,
+},
+new
+{
+timestamp = "2017-01-01T17:50:00Z",
+value = 1830757,
+},
+new
+{
+timestamp = "2017-01-01T17:55:00Z",
+value = 1830855,
+},
+new
+{
+timestamp = "2017-01-01T18:00:00Z",
+value = 1831495,
+},
+new
+{
+timestamp = "2017-01-01T18:05:00Z",
+value = 1831463,
+},
+new
+{
+timestamp = "2017-01-01T18:10:00Z",
+value = 1831963,
+},
+new
+{
+timestamp = "2017-01-01T18:15:00Z",
+value = 1832046,
+},
+new
+{
+timestamp = "2017-01-01T18:20:00Z",
+value = 1832070,
+},
+new
+{
+timestamp = "2017-01-01T18:25:00Z",
+value = 1835511,
+},
+new
+{
+timestamp = "2017-01-01T18:30:00Z",
+value = 1835265,
+},
+new
+{
+timestamp = "2017-01-01T18:35:00Z",
+value = 1835481,
+},
+new
+{
+timestamp = "2017-01-01T18:40:00Z",
+value = 1835578,
+},
+new
+{
+timestamp = "2017-01-01T18:45:00Z",
+value = 1835611,
+},
+new
+{
+timestamp = "2017-01-01T18:50:00Z",
+value = 1836314,
+},
+new
+{
+timestamp = "2017-01-01T18:55:00Z",
+value = 1836369,
+},
+new
+{
+timestamp = "2017-01-01T19:00:00Z",
+value = 1837280,
+},
+new
+{
+timestamp = "2017-01-01T19:05:00Z",
+value = 1842939,
+},
+new
+{
+timestamp = "2017-01-01T19:10:00Z",
+value = 1843126,
+},
+new
+{
+timestamp = "2017-01-01T19:15:00Z",
+value = 1845840,
+},
+new
+{
+timestamp = "2017-01-01T19:20:00Z",
+value = 1842444,
+},
+new
+{
+timestamp = "2017-01-01T19:25:00Z",
+value = 1839891,
+},
+new
+{
+timestamp = "2017-01-01T19:30:00Z",
+value = 1839875,
+},
+new
+{
+timestamp = "2017-01-01T19:35:00Z",
+value = 1839870,
+},
+new
+{
+timestamp = "2017-01-01T19:40:00Z",
+value = 1840090,
+},
+new
+{
+timestamp = "2017-01-01T19:45:00Z",
+value = 1840479,
+},
+new
+{
+timestamp = "2017-01-01T19:50:00Z",
+value = 1840479,
+},
+new
+{
+timestamp = "2017-01-01T19:55:00Z",
+value = 1840482,
+},
+new
+{
+timestamp = "2017-01-01T20:00:00Z",
+value = 1841522,
+},
+new
+{
+timestamp = "2017-01-01T20:05:00Z",
+value = 1841836,
+},
+new
+{
+timestamp = "2017-01-01T20:10:00Z",
+value = 1842377,
+},
+new
+{
+timestamp = "2017-01-01T20:15:00Z",
+value = 1842388,
+},
+new
+{
+timestamp = "2017-01-01T20:20:00Z",
+value = 1842489,
+},
+new
+{
+timestamp = "2017-01-01T20:25:00Z",
+value = 1842489,
+},
+new
+{
+timestamp = "2017-01-01T20:30:00Z",
+value = 1842489,
+},
+new
+{
+timestamp = "2017-01-01T20:35:00Z",
+value = 1842496,
+},
+new
+{
+timestamp = "2017-01-01T20:40:00Z",
+value = 1842689,
+},
+new
+{
+timestamp = "2017-01-01T20:45:00Z",
+value = 1843117,
+},
+new
+{
+timestamp = "2017-01-01T20:50:00Z",
+value = 1843116,
+},
+new
+{
+timestamp = "2017-01-01T20:55:00Z",
+value = 1843227,
+},
+new
+{
+timestamp = "2017-01-01T21:00:00Z",
+value = 1843138,
+},
+new
+{
+timestamp = "2017-01-01T21:05:00Z",
+value = 1843141,
+},
+new
+{
+timestamp = "2017-01-01T21:10:00Z",
+value = 1843310,
+},
+new
+{
+timestamp = "2017-01-01T21:15:00Z",
+value = 1843310,
+},
+new
+{
+timestamp = "2017-01-01T21:20:00Z",
+value = 1843507,
+},
+new
+{
+timestamp = "2017-01-01T21:25:00Z",
+value = 1843953,
+},
+new
+{
+timestamp = "2017-01-01T21:30:00Z",
+value = 1844778,
+},
+new
+{
+timestamp = "2017-01-01T21:35:00Z",
+value = 1843918,
+},
+new
+{
+timestamp = "2017-01-01T21:40:00Z",
+value = 1882692,
+},
+new
+{
+timestamp = "2017-01-01T21:45:00Z",
+value = 1974888,
+},
+new
+{
+timestamp = "2017-01-01T21:50:00Z",
+value = 2157136,
+},
+new
+{
+timestamp = "2017-01-01T21:55:00Z",
+value = 2154987,
+},
+new
+{
+timestamp = "2017-01-01T22:00:00Z",
+value = 2155664,
+},
+new
+{
+timestamp = "2017-01-01T22:05:00Z",
+value = 2155660,
+},
+new
+{
+timestamp = "2017-01-01T22:10:00Z",
+value = 2155824,
+},
+new
+{
+timestamp = "2017-01-01T22:15:00Z",
+value = 2155824,
+},
+new
+{
+timestamp = "2017-01-01T22:20:00Z",
+value = 2156329,
+},
+new
+{
+timestamp = "2017-01-01T22:25:00Z",
+value = 2156479,
+},
+new
+{
+timestamp = "2017-01-01T22:30:00Z",
+value = 2165269,
+},
+new
+{
+timestamp = "2017-01-01T22:35:00Z",
+value = 2165433,
+},
+new
+{
+timestamp = "2017-01-01T22:40:00Z",
+value = 2165739,
+},
+new
+{
+timestamp = "2017-01-01T22:45:00Z",
+value = 2165931,
+},
+new
+{
+timestamp = "2017-01-01T22:50:00Z",
+value = 2165928,
+},
+new
+{
+timestamp = "2017-01-01T22:55:00Z",
+value = 2165989,
+},
+new
+{
+timestamp = "2017-01-01T23:00:00Z",
+value = 2228961,
+},
+new
+{
+timestamp = "2017-01-01T23:05:00Z",
+value = 2228961,
+},
+new
+{
+timestamp = "2017-01-01T23:10:00Z",
+value = 2228961,
+},
+new
+{
+timestamp = "2017-01-01T23:15:00Z",
+value = 2485802,
+},
+new
+{
+timestamp = "2017-01-01T23:20:00Z",
+value = 2485802,
+},
+new
+{
+timestamp = "2017-01-01T23:25:00Z",
+value = 2486021,
+},
+new
+{
+timestamp = "2017-01-01T23:30:00Z",
+value = 2485293,
+},
+new
+{
+timestamp = "2017-01-01T23:35:00Z",
+value = 2485293,
+},
+new
+{
+timestamp = "2017-01-01T23:40:00Z",
+value = 2485324,
+},
+new
+{
+timestamp = "2017-01-01T23:45:00Z",
+value = 2489142,
+},
+new
+{
+timestamp = "2017-01-01T23:50:00Z",
+value = 2526312,
+},
+new
+{
+timestamp = "2017-01-01T23:55:00Z",
+value = 2526313,
+},
+new
+{
+timestamp = "2017-01-02T00:00:00Z",
+value = 2526314,
+},
+new
+{
+timestamp = "2017-01-02T00:05:00Z",
+value = 2526324,
+},
+new
+{
+timestamp = "2017-01-02T00:10:00Z",
+value = 2526325,
+},
+new
+{
+timestamp = "2017-01-02T00:15:00Z",
+value = 2526205,
+},
+new
+{
+timestamp = "2017-01-02T00:20:00Z",
+value = 2526226,
+},
+new
+{
+timestamp = "2017-01-02T00:25:00Z",
+value = 2526475,
+},
+new
+{
+timestamp = "2017-01-02T00:30:00Z",
+value = 2526471,
+},
+new
+{
+timestamp = "2017-01-02T00:35:00Z",
+value = 2526471,
+},
+new
+{
+timestamp = "2017-01-02T00:40:00Z",
+value = 2526534,
+},
+new
+{
+timestamp = "2017-01-02T00:45:00Z",
+value = 2526646,
+},
+new
+{
+timestamp = "2017-01-02T00:50:00Z",
+value = 2526646,
+},
+new
+{
+timestamp = "2017-01-02T00:55:00Z",
+value = 2526648,
+},
+new
+{
+timestamp = "2017-01-02T01:00:00Z",
+value = 2526658,
+},
+new
+{
+timestamp = "2017-01-02T01:05:00Z",
+value = 2526771,
+},
+new
+{
+timestamp = "2017-01-02T01:10:00Z",
+value = 2526773,
+},
+new
+{
+timestamp = "2017-01-02T01:15:00Z",
+value = 2526793,
+},
+new
+{
+timestamp = "2017-01-02T01:20:00Z",
+value = 2527010,
+},
+new
+{
+timestamp = "2017-01-02T01:25:00Z",
+value = 2527031,
+},
+new
+{
+timestamp = "2017-01-02T01:30:00Z",
+value = 3178096,
+},
+new
+{
+timestamp = "2017-01-02T01:35:00Z",
+value = 3196305,
+},
+new
+{
+timestamp = "2017-01-02T01:40:00Z",
+value = 3196202,
+},
+new
+{
+timestamp = "2017-01-02T01:45:00Z",
+value = 3196202,
+},
+new
+{
+timestamp = "2017-01-02T01:50:00Z",
+value = 3196205,
+},
+new
+{
+timestamp = "2017-01-02T01:55:00Z",
+value = 3229232,
+},
+new
+{
+timestamp = "2017-01-02T02:00:00Z",
+value = 3230463,
+},
+new
+{
+timestamp = "2017-01-02T02:05:00Z",
+value = 3230468,
+},
+new
+{
+timestamp = "2017-01-02T02:10:00Z",
+value = 3230468,
+},
+new
+{
+timestamp = "2017-01-02T02:15:00Z",
+value = 3230468,
+},
+new
+{
+timestamp = "2017-01-02T02:20:00Z",
+value = 3230470,
+},
+new
+{
+timestamp = "2017-01-02T02:25:00Z",
+value = 3230467,
+},
+new
+{
+timestamp = "2017-01-02T02:30:00Z",
+value = 3230506,
+},
+new
+{
+timestamp = "2017-01-02T02:35:00Z",
+value = 3231536,
+},
+new
+{
+timestamp = "2017-01-02T02:40:00Z",
+value = 3230723,
+},
+new
+{
+timestamp = "2017-01-02T02:45:00Z",
+value = 3230727,
+},
+new
+{
+timestamp = "2017-01-02T02:50:00Z",
+value = 3230727,
+},
+new
+{
+timestamp = "2017-01-02T02:55:00Z",
+value = 3230727,
+},
+new
+{
+timestamp = "2017-01-02T03:00:00Z",
+value = 3231880,
+},
+new
+{
+timestamp = "2017-01-02T03:05:00Z",
+value = 3232283,
+},
+new
+{
+timestamp = "2017-01-02T03:10:00Z",
+value = 3232283,
+},
+new
+{
+timestamp = "2017-01-02T03:15:00Z",
+value = 3232283,
+},
+new
+{
+timestamp = "2017-01-02T03:20:00Z",
+value = 3232325,
+},
+new
+{
+timestamp = "2017-01-02T03:25:00Z",
+value = 3232323,
+},
+new
+{
+timestamp = "2017-01-02T03:30:00Z",
+value = 3232327,
+},
+new
+{
+timestamp = "2017-01-02T03:35:00Z",
+value = 3232340,
+},
+new
+{
+timestamp = "2017-01-02T03:40:00Z",
+value = 3232713,
+},
+new
+{
+timestamp = "2017-01-02T03:45:00Z",
+value = 3232729,
+},
+new
+{
+timestamp = "2017-01-02T03:50:00Z",
+value = 3232756,
+},
+new
+{
+timestamp = "2017-01-02T03:55:00Z",
+value = 3233500,
+},
+new
+{
+timestamp = "2017-01-02T04:00:00Z",
+value = 3233500,
+},
+new
+{
+timestamp = "2017-01-02T04:05:00Z",
+value = 3233500,
 }
             },
-                granularity = "yearly",
+                granularity = "minutely",
+                customInterval = 5,
+                stableTrendWindow = 10,
+                threshold = 0.99,
+                period = 0,
             });
             Response response = client.DetectUnivariateChangePoint(content);
 
@@ -407,9 +2838,9 @@ value = 123.45F,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Univariate_DetectUnivariateChangePoint_ShortVersion_Async()
+        public async Task Example_Univariate_DetectUnivariateChangePoint_UnivariateDetectionOfAChangePoint_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
@@ -419,10 +2850,1295 @@ value = 123.45F,
             {
 new
 {
-value = 123.45F,
+timestamp = "2017-01-01T06:45:00Z",
+value = 1639196,
+},
+new
+{
+timestamp = "2017-01-01T06:50:00Z",
+value = 1639290,
+},
+new
+{
+timestamp = "2017-01-01T06:55:00Z",
+value = 1667293,
+},
+new
+{
+timestamp = "2017-01-01T07:00:00Z",
+value = 1703130,
+},
+new
+{
+timestamp = "2017-01-01T07:05:00Z",
+value = 1650912,
+},
+new
+{
+timestamp = "2017-01-01T07:10:00Z",
+value = 1653596,
+},
+new
+{
+timestamp = "2017-01-01T07:15:00Z",
+value = 1653793,
+},
+new
+{
+timestamp = "2017-01-01T07:20:00Z",
+value = 1653795,
+},
+new
+{
+timestamp = "2017-01-01T07:25:00Z",
+value = 1663471,
+},
+new
+{
+timestamp = "2017-01-01T07:30:00Z",
+value = 1662358,
+},
+new
+{
+timestamp = "2017-01-01T07:35:00Z",
+value = 1664320,
+},
+new
+{
+timestamp = "2017-01-01T07:40:00Z",
+value = 1664942,
+},
+new
+{
+timestamp = "2017-01-01T07:45:00Z",
+value = 1664966,
+},
+new
+{
+timestamp = "2017-01-01T07:50:00Z",
+value = 1724271,
+},
+new
+{
+timestamp = "2017-01-01T07:55:00Z",
+value = 1678720,
+},
+new
+{
+timestamp = "2017-01-01T08:00:00Z",
+value = 1672536,
+},
+new
+{
+timestamp = "2017-01-01T08:05:00Z",
+value = 1672544,
+},
+new
+{
+timestamp = "2017-01-01T08:10:00Z",
+value = 1672364,
+},
+new
+{
+timestamp = "2017-01-01T08:15:00Z",
+value = 1672912,
+},
+new
+{
+timestamp = "2017-01-01T08:20:00Z",
+value = 1672736,
+},
+new
+{
+timestamp = "2017-01-01T08:25:00Z",
+value = 1672725,
+},
+new
+{
+timestamp = "2017-01-01T08:30:00Z",
+value = 1673247,
+},
+new
+{
+timestamp = "2017-01-01T08:35:00Z",
+value = 1673109,
+},
+new
+{
+timestamp = "2017-01-01T08:40:00Z",
+value = 1690088,
+},
+new
+{
+timestamp = "2017-01-01T08:45:00Z",
+value = 1703865,
+},
+new
+{
+timestamp = "2017-01-01T08:50:00Z",
+value = 1703865,
+},
+new
+{
+timestamp = "2017-01-01T08:55:00Z",
+value = 1786581,
+},
+new
+{
+timestamp = "2017-01-01T09:00:00Z",
+value = 1800945,
+},
+new
+{
+timestamp = "2017-01-01T09:05:00Z",
+value = 1800957,
+},
+new
+{
+timestamp = "2017-01-01T09:10:00Z",
+value = 1801191,
+},
+new
+{
+timestamp = "2017-01-01T09:15:00Z",
+value = 1801412,
+},
+new
+{
+timestamp = "2017-01-01T09:20:00Z",
+value = 1801621,
+},
+new
+{
+timestamp = "2017-01-01T09:25:00Z",
+value = 1801621,
+},
+new
+{
+timestamp = "2017-01-01T09:30:00Z",
+value = 1801654,
+},
+new
+{
+timestamp = "2017-01-01T09:35:00Z",
+value = 1802105,
+},
+new
+{
+timestamp = "2017-01-01T09:40:00Z",
+value = 1801800,
+},
+new
+{
+timestamp = "2017-01-01T09:45:00Z",
+value = 1803040,
+},
+new
+{
+timestamp = "2017-01-01T09:50:00Z",
+value = 1803672,
+},
+new
+{
+timestamp = "2017-01-01T09:55:00Z",
+value = 1803535,
+},
+new
+{
+timestamp = "2017-01-01T10:00:00Z",
+value = 1803541,
+},
+new
+{
+timestamp = "2017-01-01T10:05:00Z",
+value = 1803545,
+},
+new
+{
+timestamp = "2017-01-01T10:10:00Z",
+value = 1803599,
+},
+new
+{
+timestamp = "2017-01-01T10:15:00Z",
+value = 1803616,
+},
+new
+{
+timestamp = "2017-01-01T10:20:00Z",
+value = 1803619,
+},
+new
+{
+timestamp = "2017-01-01T10:25:00Z",
+value = 1809942,
+},
+new
+{
+timestamp = "2017-01-01T10:30:00Z",
+value = 1802720,
+},
+new
+{
+timestamp = "2017-01-01T10:35:00Z",
+value = 1802720,
+},
+new
+{
+timestamp = "2017-01-01T10:40:00Z",
+value = 1802888,
+},
+new
+{
+timestamp = "2017-01-01T10:45:00Z",
+value = 1809574,
+},
+new
+{
+timestamp = "2017-01-01T10:50:00Z",
+value = 1803896,
+},
+new
+{
+timestamp = "2017-01-01T10:55:00Z",
+value = 1803850,
+},
+new
+{
+timestamp = "2017-01-01T11:00:00Z",
+value = 1803854,
+},
+new
+{
+timestamp = "2017-01-01T11:05:00Z",
+value = 1803854,
+},
+new
+{
+timestamp = "2017-01-01T11:10:00Z",
+value = 1803797,
+},
+new
+{
+timestamp = "2017-01-01T11:15:00Z",
+value = 1803921,
+},
+new
+{
+timestamp = "2017-01-01T11:20:00Z",
+value = 1803933,
+},
+new
+{
+timestamp = "2017-01-01T11:25:00Z",
+value = 1804040,
+},
+new
+{
+timestamp = "2017-01-01T11:30:00Z",
+value = 1804044,
+},
+new
+{
+timestamp = "2017-01-01T11:35:00Z",
+value = 1804070,
+},
+new
+{
+timestamp = "2017-01-01T11:40:00Z",
+value = 1804070,
+},
+new
+{
+timestamp = "2017-01-01T11:45:00Z",
+value = 1804068,
+},
+new
+{
+timestamp = "2017-01-01T11:50:00Z",
+value = 1804073,
+},
+new
+{
+timestamp = "2017-01-01T11:55:00Z",
+value = 1804101,
+},
+new
+{
+timestamp = "2017-01-01T12:00:00Z",
+value = 1804674,
+},
+new
+{
+timestamp = "2017-01-01T12:05:00Z",
+value = 1804714,
+},
+new
+{
+timestamp = "2017-01-01T12:10:00Z",
+value = 1804730,
+},
+new
+{
+timestamp = "2017-01-01T12:15:00Z",
+value = 1804816,
+},
+new
+{
+timestamp = "2017-01-01T12:20:00Z",
+value = 1803996,
+},
+new
+{
+timestamp = "2017-01-01T12:25:00Z",
+value = 1803998,
+},
+new
+{
+timestamp = "2017-01-01T12:30:00Z",
+value = 1804015,
+},
+new
+{
+timestamp = "2017-01-01T12:35:00Z",
+value = 1804047,
+},
+new
+{
+timestamp = "2017-01-01T12:40:00Z",
+value = 1804050,
+},
+new
+{
+timestamp = "2017-01-01T12:45:00Z",
+value = 1804218,
+},
+new
+{
+timestamp = "2017-01-01T12:50:00Z",
+value = 1804217,
+},
+new
+{
+timestamp = "2017-01-01T12:55:00Z",
+value = 1804217,
+},
+new
+{
+timestamp = "2017-01-01T13:00:00Z",
+value = 1804205,
+},
+new
+{
+timestamp = "2017-01-01T13:05:00Z",
+value = 1804728,
+},
+new
+{
+timestamp = "2017-01-01T13:10:00Z",
+value = 1804748,
+},
+new
+{
+timestamp = "2017-01-01T13:15:00Z",
+value = 1805232,
+},
+new
+{
+timestamp = "2017-01-01T13:20:00Z",
+value = 1814121,
+},
+new
+{
+timestamp = "2017-01-01T13:25:00Z",
+value = 1806789,
+},
+new
+{
+timestamp = "2017-01-01T13:30:00Z",
+value = 1806119,
+},
+new
+{
+timestamp = "2017-01-01T13:35:00Z",
+value = 1806329,
+},
+new
+{
+timestamp = "2017-01-01T13:40:00Z",
+value = 1806454,
+},
+new
+{
+timestamp = "2017-01-01T13:45:00Z",
+value = 1806852,
+},
+new
+{
+timestamp = "2017-01-01T13:50:00Z",
+value = 1807347,
+},
+new
+{
+timestamp = "2017-01-01T13:55:00Z",
+value = 1812144,
+},
+new
+{
+timestamp = "2017-01-01T14:00:00Z",
+value = 1807418,
+},
+new
+{
+timestamp = "2017-01-01T14:05:00Z",
+value = 1807418,
+},
+new
+{
+timestamp = "2017-01-01T14:10:00Z",
+value = 1807432,
+},
+new
+{
+timestamp = "2017-01-01T14:15:00Z",
+value = 1808540,
+},
+new
+{
+timestamp = "2017-01-01T14:20:00Z",
+value = 1808541,
+},
+new
+{
+timestamp = "2017-01-01T14:25:00Z",
+value = 1807831,
+},
+new
+{
+timestamp = "2017-01-01T14:30:00Z",
+value = 1807852,
+},
+new
+{
+timestamp = "2017-01-01T14:35:00Z",
+value = 1807811,
+},
+new
+{
+timestamp = "2017-01-01T14:40:00Z",
+value = 2214285,
+},
+new
+{
+timestamp = "2017-01-01T14:45:00Z",
+value = 2215019,
+},
+new
+{
+timestamp = "2017-01-01T14:50:00Z",
+value = 2215329,
+},
+new
+{
+timestamp = "2017-01-01T14:55:00Z",
+value = 2215097,
+},
+new
+{
+timestamp = "2017-01-01T15:00:00Z",
+value = 2215129,
+},
+new
+{
+timestamp = "2017-01-01T15:05:00Z",
+value = 2215120,
+},
+new
+{
+timestamp = "2017-01-01T15:10:00Z",
+value = 2217056,
+},
+new
+{
+timestamp = "2017-01-01T15:15:00Z",
+value = 2217056,
+},
+new
+{
+timestamp = "2017-01-01T15:20:00Z",
+value = 2222126,
+},
+new
+{
+timestamp = "2017-01-01T15:25:00Z",
+value = 2226472,
+},
+new
+{
+timestamp = "2017-01-01T15:30:00Z",
+value = 2226722,
+},
+new
+{
+timestamp = "2017-01-01T15:35:00Z",
+value = 2226729,
+},
+new
+{
+timestamp = "2017-01-01T15:40:00Z",
+value = 2226735,
+},
+new
+{
+timestamp = "2017-01-01T15:45:00Z",
+value = 2226735,
+},
+new
+{
+timestamp = "2017-01-01T15:50:00Z",
+value = 2226735,
+},
+new
+{
+timestamp = "2017-01-01T15:55:00Z",
+value = 2226952,
+},
+new
+{
+timestamp = "2017-01-01T16:00:00Z",
+value = 2226962,
+},
+new
+{
+timestamp = "2017-01-01T16:05:00Z",
+value = 2649337,
+},
+new
+{
+timestamp = "2017-01-01T16:10:00Z",
+value = 2092796,
+},
+new
+{
+timestamp = "2017-01-01T16:15:00Z",
+value = 2092839,
+},
+new
+{
+timestamp = "2017-01-01T16:20:00Z",
+value = 2092940,
+},
+new
+{
+timestamp = "2017-01-01T16:25:00Z",
+value = 2092940,
+},
+new
+{
+timestamp = "2017-01-01T16:30:00Z",
+value = 2092965,
+},
+new
+{
+timestamp = "2017-01-01T16:35:00Z",
+value = 2092979,
+},
+new
+{
+timestamp = "2017-01-01T16:40:00Z",
+value = 2095588,
+},
+new
+{
+timestamp = "2017-01-01T16:45:00Z",
+value = 2099586,
+},
+new
+{
+timestamp = "2017-01-01T16:50:00Z",
+value = 2102981,
+},
+new
+{
+timestamp = "2017-01-01T16:55:00Z",
+value = 2108053,
+},
+new
+{
+timestamp = "2017-01-01T17:00:00Z",
+value = 2107907,
+},
+new
+{
+timestamp = "2017-01-01T17:05:00Z",
+value = 2108241,
+},
+new
+{
+timestamp = "2017-01-01T17:10:00Z",
+value = 2100321,
+},
+new
+{
+timestamp = "2017-01-01T17:15:00Z",
+value = 2100448,
+},
+new
+{
+timestamp = "2017-01-01T17:20:00Z",
+value = 2100483,
+},
+new
+{
+timestamp = "2017-01-01T17:25:00Z",
+value = 2103042,
+},
+new
+{
+timestamp = "2017-01-01T17:30:00Z",
+value = 2103037,
+},
+new
+{
+timestamp = "2017-01-01T17:35:00Z",
+value = 2103040,
+},
+new
+{
+timestamp = "2017-01-01T17:40:00Z",
+value = 2103054,
+},
+new
+{
+timestamp = "2017-01-01T17:45:00Z",
+value = 2103058,
+},
+new
+{
+timestamp = "2017-01-01T17:50:00Z",
+value = 1830757,
+},
+new
+{
+timestamp = "2017-01-01T17:55:00Z",
+value = 1830855,
+},
+new
+{
+timestamp = "2017-01-01T18:00:00Z",
+value = 1831495,
+},
+new
+{
+timestamp = "2017-01-01T18:05:00Z",
+value = 1831463,
+},
+new
+{
+timestamp = "2017-01-01T18:10:00Z",
+value = 1831963,
+},
+new
+{
+timestamp = "2017-01-01T18:15:00Z",
+value = 1832046,
+},
+new
+{
+timestamp = "2017-01-01T18:20:00Z",
+value = 1832070,
+},
+new
+{
+timestamp = "2017-01-01T18:25:00Z",
+value = 1835511,
+},
+new
+{
+timestamp = "2017-01-01T18:30:00Z",
+value = 1835265,
+},
+new
+{
+timestamp = "2017-01-01T18:35:00Z",
+value = 1835481,
+},
+new
+{
+timestamp = "2017-01-01T18:40:00Z",
+value = 1835578,
+},
+new
+{
+timestamp = "2017-01-01T18:45:00Z",
+value = 1835611,
+},
+new
+{
+timestamp = "2017-01-01T18:50:00Z",
+value = 1836314,
+},
+new
+{
+timestamp = "2017-01-01T18:55:00Z",
+value = 1836369,
+},
+new
+{
+timestamp = "2017-01-01T19:00:00Z",
+value = 1837280,
+},
+new
+{
+timestamp = "2017-01-01T19:05:00Z",
+value = 1842939,
+},
+new
+{
+timestamp = "2017-01-01T19:10:00Z",
+value = 1843126,
+},
+new
+{
+timestamp = "2017-01-01T19:15:00Z",
+value = 1845840,
+},
+new
+{
+timestamp = "2017-01-01T19:20:00Z",
+value = 1842444,
+},
+new
+{
+timestamp = "2017-01-01T19:25:00Z",
+value = 1839891,
+},
+new
+{
+timestamp = "2017-01-01T19:30:00Z",
+value = 1839875,
+},
+new
+{
+timestamp = "2017-01-01T19:35:00Z",
+value = 1839870,
+},
+new
+{
+timestamp = "2017-01-01T19:40:00Z",
+value = 1840090,
+},
+new
+{
+timestamp = "2017-01-01T19:45:00Z",
+value = 1840479,
+},
+new
+{
+timestamp = "2017-01-01T19:50:00Z",
+value = 1840479,
+},
+new
+{
+timestamp = "2017-01-01T19:55:00Z",
+value = 1840482,
+},
+new
+{
+timestamp = "2017-01-01T20:00:00Z",
+value = 1841522,
+},
+new
+{
+timestamp = "2017-01-01T20:05:00Z",
+value = 1841836,
+},
+new
+{
+timestamp = "2017-01-01T20:10:00Z",
+value = 1842377,
+},
+new
+{
+timestamp = "2017-01-01T20:15:00Z",
+value = 1842388,
+},
+new
+{
+timestamp = "2017-01-01T20:20:00Z",
+value = 1842489,
+},
+new
+{
+timestamp = "2017-01-01T20:25:00Z",
+value = 1842489,
+},
+new
+{
+timestamp = "2017-01-01T20:30:00Z",
+value = 1842489,
+},
+new
+{
+timestamp = "2017-01-01T20:35:00Z",
+value = 1842496,
+},
+new
+{
+timestamp = "2017-01-01T20:40:00Z",
+value = 1842689,
+},
+new
+{
+timestamp = "2017-01-01T20:45:00Z",
+value = 1843117,
+},
+new
+{
+timestamp = "2017-01-01T20:50:00Z",
+value = 1843116,
+},
+new
+{
+timestamp = "2017-01-01T20:55:00Z",
+value = 1843227,
+},
+new
+{
+timestamp = "2017-01-01T21:00:00Z",
+value = 1843138,
+},
+new
+{
+timestamp = "2017-01-01T21:05:00Z",
+value = 1843141,
+},
+new
+{
+timestamp = "2017-01-01T21:10:00Z",
+value = 1843310,
+},
+new
+{
+timestamp = "2017-01-01T21:15:00Z",
+value = 1843310,
+},
+new
+{
+timestamp = "2017-01-01T21:20:00Z",
+value = 1843507,
+},
+new
+{
+timestamp = "2017-01-01T21:25:00Z",
+value = 1843953,
+},
+new
+{
+timestamp = "2017-01-01T21:30:00Z",
+value = 1844778,
+},
+new
+{
+timestamp = "2017-01-01T21:35:00Z",
+value = 1843918,
+},
+new
+{
+timestamp = "2017-01-01T21:40:00Z",
+value = 1882692,
+},
+new
+{
+timestamp = "2017-01-01T21:45:00Z",
+value = 1974888,
+},
+new
+{
+timestamp = "2017-01-01T21:50:00Z",
+value = 2157136,
+},
+new
+{
+timestamp = "2017-01-01T21:55:00Z",
+value = 2154987,
+},
+new
+{
+timestamp = "2017-01-01T22:00:00Z",
+value = 2155664,
+},
+new
+{
+timestamp = "2017-01-01T22:05:00Z",
+value = 2155660,
+},
+new
+{
+timestamp = "2017-01-01T22:10:00Z",
+value = 2155824,
+},
+new
+{
+timestamp = "2017-01-01T22:15:00Z",
+value = 2155824,
+},
+new
+{
+timestamp = "2017-01-01T22:20:00Z",
+value = 2156329,
+},
+new
+{
+timestamp = "2017-01-01T22:25:00Z",
+value = 2156479,
+},
+new
+{
+timestamp = "2017-01-01T22:30:00Z",
+value = 2165269,
+},
+new
+{
+timestamp = "2017-01-01T22:35:00Z",
+value = 2165433,
+},
+new
+{
+timestamp = "2017-01-01T22:40:00Z",
+value = 2165739,
+},
+new
+{
+timestamp = "2017-01-01T22:45:00Z",
+value = 2165931,
+},
+new
+{
+timestamp = "2017-01-01T22:50:00Z",
+value = 2165928,
+},
+new
+{
+timestamp = "2017-01-01T22:55:00Z",
+value = 2165989,
+},
+new
+{
+timestamp = "2017-01-01T23:00:00Z",
+value = 2228961,
+},
+new
+{
+timestamp = "2017-01-01T23:05:00Z",
+value = 2228961,
+},
+new
+{
+timestamp = "2017-01-01T23:10:00Z",
+value = 2228961,
+},
+new
+{
+timestamp = "2017-01-01T23:15:00Z",
+value = 2485802,
+},
+new
+{
+timestamp = "2017-01-01T23:20:00Z",
+value = 2485802,
+},
+new
+{
+timestamp = "2017-01-01T23:25:00Z",
+value = 2486021,
+},
+new
+{
+timestamp = "2017-01-01T23:30:00Z",
+value = 2485293,
+},
+new
+{
+timestamp = "2017-01-01T23:35:00Z",
+value = 2485293,
+},
+new
+{
+timestamp = "2017-01-01T23:40:00Z",
+value = 2485324,
+},
+new
+{
+timestamp = "2017-01-01T23:45:00Z",
+value = 2489142,
+},
+new
+{
+timestamp = "2017-01-01T23:50:00Z",
+value = 2526312,
+},
+new
+{
+timestamp = "2017-01-01T23:55:00Z",
+value = 2526313,
+},
+new
+{
+timestamp = "2017-01-02T00:00:00Z",
+value = 2526314,
+},
+new
+{
+timestamp = "2017-01-02T00:05:00Z",
+value = 2526324,
+},
+new
+{
+timestamp = "2017-01-02T00:10:00Z",
+value = 2526325,
+},
+new
+{
+timestamp = "2017-01-02T00:15:00Z",
+value = 2526205,
+},
+new
+{
+timestamp = "2017-01-02T00:20:00Z",
+value = 2526226,
+},
+new
+{
+timestamp = "2017-01-02T00:25:00Z",
+value = 2526475,
+},
+new
+{
+timestamp = "2017-01-02T00:30:00Z",
+value = 2526471,
+},
+new
+{
+timestamp = "2017-01-02T00:35:00Z",
+value = 2526471,
+},
+new
+{
+timestamp = "2017-01-02T00:40:00Z",
+value = 2526534,
+},
+new
+{
+timestamp = "2017-01-02T00:45:00Z",
+value = 2526646,
+},
+new
+{
+timestamp = "2017-01-02T00:50:00Z",
+value = 2526646,
+},
+new
+{
+timestamp = "2017-01-02T00:55:00Z",
+value = 2526648,
+},
+new
+{
+timestamp = "2017-01-02T01:00:00Z",
+value = 2526658,
+},
+new
+{
+timestamp = "2017-01-02T01:05:00Z",
+value = 2526771,
+},
+new
+{
+timestamp = "2017-01-02T01:10:00Z",
+value = 2526773,
+},
+new
+{
+timestamp = "2017-01-02T01:15:00Z",
+value = 2526793,
+},
+new
+{
+timestamp = "2017-01-02T01:20:00Z",
+value = 2527010,
+},
+new
+{
+timestamp = "2017-01-02T01:25:00Z",
+value = 2527031,
+},
+new
+{
+timestamp = "2017-01-02T01:30:00Z",
+value = 3178096,
+},
+new
+{
+timestamp = "2017-01-02T01:35:00Z",
+value = 3196305,
+},
+new
+{
+timestamp = "2017-01-02T01:40:00Z",
+value = 3196202,
+},
+new
+{
+timestamp = "2017-01-02T01:45:00Z",
+value = 3196202,
+},
+new
+{
+timestamp = "2017-01-02T01:50:00Z",
+value = 3196205,
+},
+new
+{
+timestamp = "2017-01-02T01:55:00Z",
+value = 3229232,
+},
+new
+{
+timestamp = "2017-01-02T02:00:00Z",
+value = 3230463,
+},
+new
+{
+timestamp = "2017-01-02T02:05:00Z",
+value = 3230468,
+},
+new
+{
+timestamp = "2017-01-02T02:10:00Z",
+value = 3230468,
+},
+new
+{
+timestamp = "2017-01-02T02:15:00Z",
+value = 3230468,
+},
+new
+{
+timestamp = "2017-01-02T02:20:00Z",
+value = 3230470,
+},
+new
+{
+timestamp = "2017-01-02T02:25:00Z",
+value = 3230467,
+},
+new
+{
+timestamp = "2017-01-02T02:30:00Z",
+value = 3230506,
+},
+new
+{
+timestamp = "2017-01-02T02:35:00Z",
+value = 3231536,
+},
+new
+{
+timestamp = "2017-01-02T02:40:00Z",
+value = 3230723,
+},
+new
+{
+timestamp = "2017-01-02T02:45:00Z",
+value = 3230727,
+},
+new
+{
+timestamp = "2017-01-02T02:50:00Z",
+value = 3230727,
+},
+new
+{
+timestamp = "2017-01-02T02:55:00Z",
+value = 3230727,
+},
+new
+{
+timestamp = "2017-01-02T03:00:00Z",
+value = 3231880,
+},
+new
+{
+timestamp = "2017-01-02T03:05:00Z",
+value = 3232283,
+},
+new
+{
+timestamp = "2017-01-02T03:10:00Z",
+value = 3232283,
+},
+new
+{
+timestamp = "2017-01-02T03:15:00Z",
+value = 3232283,
+},
+new
+{
+timestamp = "2017-01-02T03:20:00Z",
+value = 3232325,
+},
+new
+{
+timestamp = "2017-01-02T03:25:00Z",
+value = 3232323,
+},
+new
+{
+timestamp = "2017-01-02T03:30:00Z",
+value = 3232327,
+},
+new
+{
+timestamp = "2017-01-02T03:35:00Z",
+value = 3232340,
+},
+new
+{
+timestamp = "2017-01-02T03:40:00Z",
+value = 3232713,
+},
+new
+{
+timestamp = "2017-01-02T03:45:00Z",
+value = 3232729,
+},
+new
+{
+timestamp = "2017-01-02T03:50:00Z",
+value = 3232756,
+},
+new
+{
+timestamp = "2017-01-02T03:55:00Z",
+value = 3233500,
+},
+new
+{
+timestamp = "2017-01-02T04:00:00Z",
+value = 3233500,
+},
+new
+{
+timestamp = "2017-01-02T04:05:00Z",
+value = 3233500,
 }
             },
-                granularity = "yearly",
+                granularity = "minutely",
+                customInterval = 5,
+                stableTrendWindow = 10,
+                threshold = 0.99,
+                period = 0,
             });
             Response response = await client.DetectUnivariateChangePointAsync(content);
 
@@ -432,142 +4148,2096 @@ value = 123.45F,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Univariate_DetectUnivariateChangePoint_ShortVersion_Convenience()
+        public void Example_Univariate_DetectUnivariateChangePoint_UnivariateDetectionOfAChangePoint_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
             UnivariateChangePointDetectionOptions options = new UnivariateChangePointDetectionOptions(new TimeSeriesPoint[]
             {
-new TimeSeriesPoint(123.45F)
-            }, TimeGranularity.Yearly);
-            Response<UnivariateChangePointDetectionResult> response = client.DetectUnivariateChangePoint(options);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Univariate_DetectUnivariateChangePoint_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
-
-            UnivariateChangePointDetectionOptions options = new UnivariateChangePointDetectionOptions(new TimeSeriesPoint[]
-            {
-new TimeSeriesPoint(123.45F)
-            }, TimeGranularity.Yearly);
-            Response<UnivariateChangePointDetectionResult> response = await client.DetectUnivariateChangePointAsync(options);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Univariate_DetectUnivariateChangePoint_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                series = new object[]
-            {
-new
+new TimeSeriesPoint(1639196)
 {
-timestamp = "2022-05-10T18:57:31.2311892Z",
-value = 123.45F,
-}
-            },
-                granularity = "yearly",
-                customInterval = 1234,
-                period = 1234,
-                stableTrendWindow = 1234,
-                threshold = 123.45F,
-            });
-            Response response = client.DetectUnivariateChangePoint(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("period").ToString());
-            Console.WriteLine(result.GetProperty("isChangePoint")[0].ToString());
-            Console.WriteLine(result.GetProperty("confidenceScores")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Univariate_DetectUnivariateChangePoint_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                series = new object[]
-            {
-new
+Timestamp = DateTimeOffset.Parse("2017-01-01T06:45:00Z"),
+},
+new TimeSeriesPoint(1639290)
 {
-timestamp = "2022-05-10T18:57:31.2311892Z",
-value = 123.45F,
-}
-            },
-                granularity = "yearly",
-                customInterval = 1234,
-                period = 1234,
-                stableTrendWindow = 1234,
-                threshold = 123.45F,
-            });
-            Response response = await client.DetectUnivariateChangePointAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("period").ToString());
-            Console.WriteLine(result.GetProperty("isChangePoint")[0].ToString());
-            Console.WriteLine(result.GetProperty("confidenceScores")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Univariate_DetectUnivariateChangePoint_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
-
-            UnivariateChangePointDetectionOptions options = new UnivariateChangePointDetectionOptions(new TimeSeriesPoint[]
-            {
-new TimeSeriesPoint(123.45F)
+Timestamp = DateTimeOffset.Parse("2017-01-01T06:50:00Z"),
+},
+new TimeSeriesPoint(1667293)
 {
-Timestamp = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+Timestamp = DateTimeOffset.Parse("2017-01-01T06:55:00Z"),
+},
+new TimeSeriesPoint(1703130)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:00:00Z"),
+},
+new TimeSeriesPoint(1650912)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:05:00Z"),
+},
+new TimeSeriesPoint(1653596)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:10:00Z"),
+},
+new TimeSeriesPoint(1653793)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:15:00Z"),
+},
+new TimeSeriesPoint(1653795)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:20:00Z"),
+},
+new TimeSeriesPoint(1663471)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:25:00Z"),
+},
+new TimeSeriesPoint(1662358)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:30:00Z"),
+},
+new TimeSeriesPoint(1664320)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:35:00Z"),
+},
+new TimeSeriesPoint(1664942)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:40:00Z"),
+},
+new TimeSeriesPoint(1664966)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:45:00Z"),
+},
+new TimeSeriesPoint(1724271)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:50:00Z"),
+},
+new TimeSeriesPoint(1678720)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:55:00Z"),
+},
+new TimeSeriesPoint(1672536)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:00:00Z"),
+},
+new TimeSeriesPoint(1672544)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:05:00Z"),
+},
+new TimeSeriesPoint(1672364)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:10:00Z"),
+},
+new TimeSeriesPoint(1672912)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:15:00Z"),
+},
+new TimeSeriesPoint(1672736)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:20:00Z"),
+},
+new TimeSeriesPoint(1672725)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:25:00Z"),
+},
+new TimeSeriesPoint(1673247)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:30:00Z"),
+},
+new TimeSeriesPoint(1673109)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:35:00Z"),
+},
+new TimeSeriesPoint(1690088)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:40:00Z"),
+},
+new TimeSeriesPoint(1703865)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:45:00Z"),
+},
+new TimeSeriesPoint(1703865)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:50:00Z"),
+},
+new TimeSeriesPoint(1786581)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:55:00Z"),
+},
+new TimeSeriesPoint(1800945)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:00:00Z"),
+},
+new TimeSeriesPoint(1800957)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:05:00Z"),
+},
+new TimeSeriesPoint(1801191)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:10:00Z"),
+},
+new TimeSeriesPoint(1801412)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:15:00Z"),
+},
+new TimeSeriesPoint(1801621)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:20:00Z"),
+},
+new TimeSeriesPoint(1801621)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:25:00Z"),
+},
+new TimeSeriesPoint(1801654)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:30:00Z"),
+},
+new TimeSeriesPoint(1802105)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:35:00Z"),
+},
+new TimeSeriesPoint(1801800)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:40:00Z"),
+},
+new TimeSeriesPoint(1803040)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:45:00Z"),
+},
+new TimeSeriesPoint(1803672)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:50:00Z"),
+},
+new TimeSeriesPoint(1803535)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:55:00Z"),
+},
+new TimeSeriesPoint(1803541)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:00:00Z"),
+},
+new TimeSeriesPoint(1803545)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:05:00Z"),
+},
+new TimeSeriesPoint(1803599)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:10:00Z"),
+},
+new TimeSeriesPoint(1803616)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:15:00Z"),
+},
+new TimeSeriesPoint(1803619)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:20:00Z"),
+},
+new TimeSeriesPoint(1809942)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:25:00Z"),
+},
+new TimeSeriesPoint(1802720)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:30:00Z"),
+},
+new TimeSeriesPoint(1802720)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:35:00Z"),
+},
+new TimeSeriesPoint(1802888)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:40:00Z"),
+},
+new TimeSeriesPoint(1809574)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:45:00Z"),
+},
+new TimeSeriesPoint(1803896)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:50:00Z"),
+},
+new TimeSeriesPoint(1803850)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:55:00Z"),
+},
+new TimeSeriesPoint(1803854)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:00:00Z"),
+},
+new TimeSeriesPoint(1803854)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:05:00Z"),
+},
+new TimeSeriesPoint(1803797)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:10:00Z"),
+},
+new TimeSeriesPoint(1803921)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:15:00Z"),
+},
+new TimeSeriesPoint(1803933)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:20:00Z"),
+},
+new TimeSeriesPoint(1804040)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:25:00Z"),
+},
+new TimeSeriesPoint(1804044)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:30:00Z"),
+},
+new TimeSeriesPoint(1804070)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:35:00Z"),
+},
+new TimeSeriesPoint(1804070)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:40:00Z"),
+},
+new TimeSeriesPoint(1804068)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:45:00Z"),
+},
+new TimeSeriesPoint(1804073)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:50:00Z"),
+},
+new TimeSeriesPoint(1804101)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:55:00Z"),
+},
+new TimeSeriesPoint(1804674)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:00:00Z"),
+},
+new TimeSeriesPoint(1804714)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:05:00Z"),
+},
+new TimeSeriesPoint(1804730)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:10:00Z"),
+},
+new TimeSeriesPoint(1804816)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:15:00Z"),
+},
+new TimeSeriesPoint(1803996)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:20:00Z"),
+},
+new TimeSeriesPoint(1803998)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:25:00Z"),
+},
+new TimeSeriesPoint(1804015)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:30:00Z"),
+},
+new TimeSeriesPoint(1804047)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:35:00Z"),
+},
+new TimeSeriesPoint(1804050)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:40:00Z"),
+},
+new TimeSeriesPoint(1804218)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:45:00Z"),
+},
+new TimeSeriesPoint(1804217)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:50:00Z"),
+},
+new TimeSeriesPoint(1804217)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:55:00Z"),
+},
+new TimeSeriesPoint(1804205)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:00:00Z"),
+},
+new TimeSeriesPoint(1804728)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:05:00Z"),
+},
+new TimeSeriesPoint(1804748)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:10:00Z"),
+},
+new TimeSeriesPoint(1805232)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:15:00Z"),
+},
+new TimeSeriesPoint(1814121)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:20:00Z"),
+},
+new TimeSeriesPoint(1806789)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:25:00Z"),
+},
+new TimeSeriesPoint(1806119)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:30:00Z"),
+},
+new TimeSeriesPoint(1806329)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:35:00Z"),
+},
+new TimeSeriesPoint(1806454)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:40:00Z"),
+},
+new TimeSeriesPoint(1806852)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:45:00Z"),
+},
+new TimeSeriesPoint(1807347)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:50:00Z"),
+},
+new TimeSeriesPoint(1812144)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:55:00Z"),
+},
+new TimeSeriesPoint(1807418)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:00:00Z"),
+},
+new TimeSeriesPoint(1807418)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:05:00Z"),
+},
+new TimeSeriesPoint(1807432)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:10:00Z"),
+},
+new TimeSeriesPoint(1808540)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:15:00Z"),
+},
+new TimeSeriesPoint(1808541)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:20:00Z"),
+},
+new TimeSeriesPoint(1807831)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:25:00Z"),
+},
+new TimeSeriesPoint(1807852)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:30:00Z"),
+},
+new TimeSeriesPoint(1807811)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:35:00Z"),
+},
+new TimeSeriesPoint(2214285)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:40:00Z"),
+},
+new TimeSeriesPoint(2215019)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:45:00Z"),
+},
+new TimeSeriesPoint(2215329)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:50:00Z"),
+},
+new TimeSeriesPoint(2215097)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:55:00Z"),
+},
+new TimeSeriesPoint(2215129)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:00:00Z"),
+},
+new TimeSeriesPoint(2215120)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:05:00Z"),
+},
+new TimeSeriesPoint(2217056)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:10:00Z"),
+},
+new TimeSeriesPoint(2217056)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:15:00Z"),
+},
+new TimeSeriesPoint(2222126)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:20:00Z"),
+},
+new TimeSeriesPoint(2226472)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:25:00Z"),
+},
+new TimeSeriesPoint(2226722)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:30:00Z"),
+},
+new TimeSeriesPoint(2226729)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:35:00Z"),
+},
+new TimeSeriesPoint(2226735)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:40:00Z"),
+},
+new TimeSeriesPoint(2226735)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:45:00Z"),
+},
+new TimeSeriesPoint(2226735)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:50:00Z"),
+},
+new TimeSeriesPoint(2226952)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:55:00Z"),
+},
+new TimeSeriesPoint(2226962)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:00:00Z"),
+},
+new TimeSeriesPoint(2649337)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:05:00Z"),
+},
+new TimeSeriesPoint(2092796)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:10:00Z"),
+},
+new TimeSeriesPoint(2092839)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:15:00Z"),
+},
+new TimeSeriesPoint(2092940)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:20:00Z"),
+},
+new TimeSeriesPoint(2092940)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:25:00Z"),
+},
+new TimeSeriesPoint(2092965)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:30:00Z"),
+},
+new TimeSeriesPoint(2092979)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:35:00Z"),
+},
+new TimeSeriesPoint(2095588)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:40:00Z"),
+},
+new TimeSeriesPoint(2099586)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:45:00Z"),
+},
+new TimeSeriesPoint(2102981)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:50:00Z"),
+},
+new TimeSeriesPoint(2108053)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:55:00Z"),
+},
+new TimeSeriesPoint(2107907)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:00:00Z"),
+},
+new TimeSeriesPoint(2108241)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:05:00Z"),
+},
+new TimeSeriesPoint(2100321)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:10:00Z"),
+},
+new TimeSeriesPoint(2100448)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:15:00Z"),
+},
+new TimeSeriesPoint(2100483)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:20:00Z"),
+},
+new TimeSeriesPoint(2103042)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:25:00Z"),
+},
+new TimeSeriesPoint(2103037)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:30:00Z"),
+},
+new TimeSeriesPoint(2103040)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:35:00Z"),
+},
+new TimeSeriesPoint(2103054)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:40:00Z"),
+},
+new TimeSeriesPoint(2103058)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:45:00Z"),
+},
+new TimeSeriesPoint(1830757)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:50:00Z"),
+},
+new TimeSeriesPoint(1830855)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:55:00Z"),
+},
+new TimeSeriesPoint(1831495)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:00:00Z"),
+},
+new TimeSeriesPoint(1831463)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:05:00Z"),
+},
+new TimeSeriesPoint(1831963)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:10:00Z"),
+},
+new TimeSeriesPoint(1832046)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:15:00Z"),
+},
+new TimeSeriesPoint(1832070)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:20:00Z"),
+},
+new TimeSeriesPoint(1835511)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:25:00Z"),
+},
+new TimeSeriesPoint(1835265)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:30:00Z"),
+},
+new TimeSeriesPoint(1835481)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:35:00Z"),
+},
+new TimeSeriesPoint(1835578)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:40:00Z"),
+},
+new TimeSeriesPoint(1835611)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:45:00Z"),
+},
+new TimeSeriesPoint(1836314)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:50:00Z"),
+},
+new TimeSeriesPoint(1836369)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:55:00Z"),
+},
+new TimeSeriesPoint(1837280)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:00:00Z"),
+},
+new TimeSeriesPoint(1842939)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:05:00Z"),
+},
+new TimeSeriesPoint(1843126)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:10:00Z"),
+},
+new TimeSeriesPoint(1845840)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:15:00Z"),
+},
+new TimeSeriesPoint(1842444)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:20:00Z"),
+},
+new TimeSeriesPoint(1839891)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:25:00Z"),
+},
+new TimeSeriesPoint(1839875)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:30:00Z"),
+},
+new TimeSeriesPoint(1839870)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:35:00Z"),
+},
+new TimeSeriesPoint(1840090)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:40:00Z"),
+},
+new TimeSeriesPoint(1840479)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:45:00Z"),
+},
+new TimeSeriesPoint(1840479)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:50:00Z"),
+},
+new TimeSeriesPoint(1840482)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:55:00Z"),
+},
+new TimeSeriesPoint(1841522)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:00:00Z"),
+},
+new TimeSeriesPoint(1841836)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:05:00Z"),
+},
+new TimeSeriesPoint(1842377)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:10:00Z"),
+},
+new TimeSeriesPoint(1842388)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:15:00Z"),
+},
+new TimeSeriesPoint(1842489)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:20:00Z"),
+},
+new TimeSeriesPoint(1842489)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:25:00Z"),
+},
+new TimeSeriesPoint(1842489)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:30:00Z"),
+},
+new TimeSeriesPoint(1842496)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:35:00Z"),
+},
+new TimeSeriesPoint(1842689)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:40:00Z"),
+},
+new TimeSeriesPoint(1843117)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:45:00Z"),
+},
+new TimeSeriesPoint(1843116)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:50:00Z"),
+},
+new TimeSeriesPoint(1843227)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:55:00Z"),
+},
+new TimeSeriesPoint(1843138)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:00:00Z"),
+},
+new TimeSeriesPoint(1843141)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:05:00Z"),
+},
+new TimeSeriesPoint(1843310)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:10:00Z"),
+},
+new TimeSeriesPoint(1843310)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:15:00Z"),
+},
+new TimeSeriesPoint(1843507)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:20:00Z"),
+},
+new TimeSeriesPoint(1843953)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:25:00Z"),
+},
+new TimeSeriesPoint(1844778)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:30:00Z"),
+},
+new TimeSeriesPoint(1843918)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:35:00Z"),
+},
+new TimeSeriesPoint(1882692)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:40:00Z"),
+},
+new TimeSeriesPoint(1974888)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:45:00Z"),
+},
+new TimeSeriesPoint(2157136)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:50:00Z"),
+},
+new TimeSeriesPoint(2154987)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:55:00Z"),
+},
+new TimeSeriesPoint(2155664)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:00:00Z"),
+},
+new TimeSeriesPoint(2155660)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:05:00Z"),
+},
+new TimeSeriesPoint(2155824)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:10:00Z"),
+},
+new TimeSeriesPoint(2155824)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:15:00Z"),
+},
+new TimeSeriesPoint(2156329)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:20:00Z"),
+},
+new TimeSeriesPoint(2156479)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:25:00Z"),
+},
+new TimeSeriesPoint(2165269)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:30:00Z"),
+},
+new TimeSeriesPoint(2165433)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:35:00Z"),
+},
+new TimeSeriesPoint(2165739)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:40:00Z"),
+},
+new TimeSeriesPoint(2165931)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:45:00Z"),
+},
+new TimeSeriesPoint(2165928)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:50:00Z"),
+},
+new TimeSeriesPoint(2165989)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:55:00Z"),
+},
+new TimeSeriesPoint(2228961)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:00:00Z"),
+},
+new TimeSeriesPoint(2228961)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:05:00Z"),
+},
+new TimeSeriesPoint(2228961)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:10:00Z"),
+},
+new TimeSeriesPoint(2485802)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:15:00Z"),
+},
+new TimeSeriesPoint(2485802)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:20:00Z"),
+},
+new TimeSeriesPoint(2486021)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:25:00Z"),
+},
+new TimeSeriesPoint(2485293)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:30:00Z"),
+},
+new TimeSeriesPoint(2485293)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:35:00Z"),
+},
+new TimeSeriesPoint(2485324)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:40:00Z"),
+},
+new TimeSeriesPoint(2489142)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:45:00Z"),
+},
+new TimeSeriesPoint(2526312)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:50:00Z"),
+},
+new TimeSeriesPoint(2526313)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:55:00Z"),
+},
+new TimeSeriesPoint(2526314)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:00:00Z"),
+},
+new TimeSeriesPoint(2526324)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:05:00Z"),
+},
+new TimeSeriesPoint(2526325)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:10:00Z"),
+},
+new TimeSeriesPoint(2526205)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:15:00Z"),
+},
+new TimeSeriesPoint(2526226)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:20:00Z"),
+},
+new TimeSeriesPoint(2526475)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:25:00Z"),
+},
+new TimeSeriesPoint(2526471)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:30:00Z"),
+},
+new TimeSeriesPoint(2526471)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:35:00Z"),
+},
+new TimeSeriesPoint(2526534)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:40:00Z"),
+},
+new TimeSeriesPoint(2526646)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:45:00Z"),
+},
+new TimeSeriesPoint(2526646)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:50:00Z"),
+},
+new TimeSeriesPoint(2526648)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:55:00Z"),
+},
+new TimeSeriesPoint(2526658)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:00:00Z"),
+},
+new TimeSeriesPoint(2526771)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:05:00Z"),
+},
+new TimeSeriesPoint(2526773)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:10:00Z"),
+},
+new TimeSeriesPoint(2526793)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:15:00Z"),
+},
+new TimeSeriesPoint(2527010)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:20:00Z"),
+},
+new TimeSeriesPoint(2527031)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:25:00Z"),
+},
+new TimeSeriesPoint(3178096)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:30:00Z"),
+},
+new TimeSeriesPoint(3196305)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:35:00Z"),
+},
+new TimeSeriesPoint(3196202)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:40:00Z"),
+},
+new TimeSeriesPoint(3196202)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:45:00Z"),
+},
+new TimeSeriesPoint(3196205)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:50:00Z"),
+},
+new TimeSeriesPoint(3229232)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:55:00Z"),
+},
+new TimeSeriesPoint(3230463)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:00:00Z"),
+},
+new TimeSeriesPoint(3230468)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:05:00Z"),
+},
+new TimeSeriesPoint(3230468)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:10:00Z"),
+},
+new TimeSeriesPoint(3230468)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:15:00Z"),
+},
+new TimeSeriesPoint(3230470)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:20:00Z"),
+},
+new TimeSeriesPoint(3230467)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:25:00Z"),
+},
+new TimeSeriesPoint(3230506)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:30:00Z"),
+},
+new TimeSeriesPoint(3231536)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:35:00Z"),
+},
+new TimeSeriesPoint(3230723)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:40:00Z"),
+},
+new TimeSeriesPoint(3230727)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:45:00Z"),
+},
+new TimeSeriesPoint(3230727)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:50:00Z"),
+},
+new TimeSeriesPoint(3230727)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:55:00Z"),
+},
+new TimeSeriesPoint(3231880)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:00:00Z"),
+},
+new TimeSeriesPoint(3232283)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:05:00Z"),
+},
+new TimeSeriesPoint(3232283)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:10:00Z"),
+},
+new TimeSeriesPoint(3232283)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:15:00Z"),
+},
+new TimeSeriesPoint(3232325)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:20:00Z"),
+},
+new TimeSeriesPoint(3232323)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:25:00Z"),
+},
+new TimeSeriesPoint(3232327)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:30:00Z"),
+},
+new TimeSeriesPoint(3232340)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:35:00Z"),
+},
+new TimeSeriesPoint(3232713)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:40:00Z"),
+},
+new TimeSeriesPoint(3232729)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:45:00Z"),
+},
+new TimeSeriesPoint(3232756)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:50:00Z"),
+},
+new TimeSeriesPoint(3233500)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:55:00Z"),
+},
+new TimeSeriesPoint(3233500)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T04:00:00Z"),
+},
+new TimeSeriesPoint(3233500)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T04:05:00Z"),
 }
-            }, TimeGranularity.Yearly)
+            }, TimeGranularity.PerMinute)
             {
-                CustomInterval = 1234,
-                Period = 1234,
-                StableTrendWindow = 1234,
-                Threshold = 123.45F,
+                CustomInterval = 5,
+                Period = 0,
+                StableTrendWindow = 10,
+                Threshold = (float)0.99,
             };
             Response<UnivariateChangePointDetectionResult> response = client.DetectUnivariateChangePoint(options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Univariate_DetectUnivariateChangePoint_AllParameters_Convenience_Async()
+        public async Task Example_Univariate_DetectUnivariateChangePoint_UnivariateDetectionOfAChangePoint_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
             UnivariateChangePointDetectionOptions options = new UnivariateChangePointDetectionOptions(new TimeSeriesPoint[]
             {
-new TimeSeriesPoint(123.45F)
+new TimeSeriesPoint(1639196)
 {
-Timestamp = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+Timestamp = DateTimeOffset.Parse("2017-01-01T06:45:00Z"),
+},
+new TimeSeriesPoint(1639290)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T06:50:00Z"),
+},
+new TimeSeriesPoint(1667293)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T06:55:00Z"),
+},
+new TimeSeriesPoint(1703130)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:00:00Z"),
+},
+new TimeSeriesPoint(1650912)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:05:00Z"),
+},
+new TimeSeriesPoint(1653596)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:10:00Z"),
+},
+new TimeSeriesPoint(1653793)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:15:00Z"),
+},
+new TimeSeriesPoint(1653795)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:20:00Z"),
+},
+new TimeSeriesPoint(1663471)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:25:00Z"),
+},
+new TimeSeriesPoint(1662358)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:30:00Z"),
+},
+new TimeSeriesPoint(1664320)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:35:00Z"),
+},
+new TimeSeriesPoint(1664942)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:40:00Z"),
+},
+new TimeSeriesPoint(1664966)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:45:00Z"),
+},
+new TimeSeriesPoint(1724271)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:50:00Z"),
+},
+new TimeSeriesPoint(1678720)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T07:55:00Z"),
+},
+new TimeSeriesPoint(1672536)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:00:00Z"),
+},
+new TimeSeriesPoint(1672544)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:05:00Z"),
+},
+new TimeSeriesPoint(1672364)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:10:00Z"),
+},
+new TimeSeriesPoint(1672912)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:15:00Z"),
+},
+new TimeSeriesPoint(1672736)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:20:00Z"),
+},
+new TimeSeriesPoint(1672725)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:25:00Z"),
+},
+new TimeSeriesPoint(1673247)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:30:00Z"),
+},
+new TimeSeriesPoint(1673109)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:35:00Z"),
+},
+new TimeSeriesPoint(1690088)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:40:00Z"),
+},
+new TimeSeriesPoint(1703865)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:45:00Z"),
+},
+new TimeSeriesPoint(1703865)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:50:00Z"),
+},
+new TimeSeriesPoint(1786581)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T08:55:00Z"),
+},
+new TimeSeriesPoint(1800945)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:00:00Z"),
+},
+new TimeSeriesPoint(1800957)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:05:00Z"),
+},
+new TimeSeriesPoint(1801191)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:10:00Z"),
+},
+new TimeSeriesPoint(1801412)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:15:00Z"),
+},
+new TimeSeriesPoint(1801621)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:20:00Z"),
+},
+new TimeSeriesPoint(1801621)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:25:00Z"),
+},
+new TimeSeriesPoint(1801654)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:30:00Z"),
+},
+new TimeSeriesPoint(1802105)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:35:00Z"),
+},
+new TimeSeriesPoint(1801800)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:40:00Z"),
+},
+new TimeSeriesPoint(1803040)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:45:00Z"),
+},
+new TimeSeriesPoint(1803672)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:50:00Z"),
+},
+new TimeSeriesPoint(1803535)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T09:55:00Z"),
+},
+new TimeSeriesPoint(1803541)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:00:00Z"),
+},
+new TimeSeriesPoint(1803545)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:05:00Z"),
+},
+new TimeSeriesPoint(1803599)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:10:00Z"),
+},
+new TimeSeriesPoint(1803616)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:15:00Z"),
+},
+new TimeSeriesPoint(1803619)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:20:00Z"),
+},
+new TimeSeriesPoint(1809942)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:25:00Z"),
+},
+new TimeSeriesPoint(1802720)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:30:00Z"),
+},
+new TimeSeriesPoint(1802720)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:35:00Z"),
+},
+new TimeSeriesPoint(1802888)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:40:00Z"),
+},
+new TimeSeriesPoint(1809574)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:45:00Z"),
+},
+new TimeSeriesPoint(1803896)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:50:00Z"),
+},
+new TimeSeriesPoint(1803850)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T10:55:00Z"),
+},
+new TimeSeriesPoint(1803854)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:00:00Z"),
+},
+new TimeSeriesPoint(1803854)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:05:00Z"),
+},
+new TimeSeriesPoint(1803797)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:10:00Z"),
+},
+new TimeSeriesPoint(1803921)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:15:00Z"),
+},
+new TimeSeriesPoint(1803933)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:20:00Z"),
+},
+new TimeSeriesPoint(1804040)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:25:00Z"),
+},
+new TimeSeriesPoint(1804044)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:30:00Z"),
+},
+new TimeSeriesPoint(1804070)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:35:00Z"),
+},
+new TimeSeriesPoint(1804070)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:40:00Z"),
+},
+new TimeSeriesPoint(1804068)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:45:00Z"),
+},
+new TimeSeriesPoint(1804073)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:50:00Z"),
+},
+new TimeSeriesPoint(1804101)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T11:55:00Z"),
+},
+new TimeSeriesPoint(1804674)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:00:00Z"),
+},
+new TimeSeriesPoint(1804714)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:05:00Z"),
+},
+new TimeSeriesPoint(1804730)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:10:00Z"),
+},
+new TimeSeriesPoint(1804816)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:15:00Z"),
+},
+new TimeSeriesPoint(1803996)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:20:00Z"),
+},
+new TimeSeriesPoint(1803998)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:25:00Z"),
+},
+new TimeSeriesPoint(1804015)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:30:00Z"),
+},
+new TimeSeriesPoint(1804047)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:35:00Z"),
+},
+new TimeSeriesPoint(1804050)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:40:00Z"),
+},
+new TimeSeriesPoint(1804218)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:45:00Z"),
+},
+new TimeSeriesPoint(1804217)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:50:00Z"),
+},
+new TimeSeriesPoint(1804217)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T12:55:00Z"),
+},
+new TimeSeriesPoint(1804205)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:00:00Z"),
+},
+new TimeSeriesPoint(1804728)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:05:00Z"),
+},
+new TimeSeriesPoint(1804748)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:10:00Z"),
+},
+new TimeSeriesPoint(1805232)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:15:00Z"),
+},
+new TimeSeriesPoint(1814121)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:20:00Z"),
+},
+new TimeSeriesPoint(1806789)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:25:00Z"),
+},
+new TimeSeriesPoint(1806119)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:30:00Z"),
+},
+new TimeSeriesPoint(1806329)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:35:00Z"),
+},
+new TimeSeriesPoint(1806454)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:40:00Z"),
+},
+new TimeSeriesPoint(1806852)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:45:00Z"),
+},
+new TimeSeriesPoint(1807347)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:50:00Z"),
+},
+new TimeSeriesPoint(1812144)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T13:55:00Z"),
+},
+new TimeSeriesPoint(1807418)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:00:00Z"),
+},
+new TimeSeriesPoint(1807418)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:05:00Z"),
+},
+new TimeSeriesPoint(1807432)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:10:00Z"),
+},
+new TimeSeriesPoint(1808540)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:15:00Z"),
+},
+new TimeSeriesPoint(1808541)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:20:00Z"),
+},
+new TimeSeriesPoint(1807831)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:25:00Z"),
+},
+new TimeSeriesPoint(1807852)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:30:00Z"),
+},
+new TimeSeriesPoint(1807811)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:35:00Z"),
+},
+new TimeSeriesPoint(2214285)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:40:00Z"),
+},
+new TimeSeriesPoint(2215019)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:45:00Z"),
+},
+new TimeSeriesPoint(2215329)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:50:00Z"),
+},
+new TimeSeriesPoint(2215097)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T14:55:00Z"),
+},
+new TimeSeriesPoint(2215129)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:00:00Z"),
+},
+new TimeSeriesPoint(2215120)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:05:00Z"),
+},
+new TimeSeriesPoint(2217056)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:10:00Z"),
+},
+new TimeSeriesPoint(2217056)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:15:00Z"),
+},
+new TimeSeriesPoint(2222126)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:20:00Z"),
+},
+new TimeSeriesPoint(2226472)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:25:00Z"),
+},
+new TimeSeriesPoint(2226722)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:30:00Z"),
+},
+new TimeSeriesPoint(2226729)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:35:00Z"),
+},
+new TimeSeriesPoint(2226735)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:40:00Z"),
+},
+new TimeSeriesPoint(2226735)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:45:00Z"),
+},
+new TimeSeriesPoint(2226735)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:50:00Z"),
+},
+new TimeSeriesPoint(2226952)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T15:55:00Z"),
+},
+new TimeSeriesPoint(2226962)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:00:00Z"),
+},
+new TimeSeriesPoint(2649337)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:05:00Z"),
+},
+new TimeSeriesPoint(2092796)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:10:00Z"),
+},
+new TimeSeriesPoint(2092839)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:15:00Z"),
+},
+new TimeSeriesPoint(2092940)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:20:00Z"),
+},
+new TimeSeriesPoint(2092940)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:25:00Z"),
+},
+new TimeSeriesPoint(2092965)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:30:00Z"),
+},
+new TimeSeriesPoint(2092979)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:35:00Z"),
+},
+new TimeSeriesPoint(2095588)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:40:00Z"),
+},
+new TimeSeriesPoint(2099586)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:45:00Z"),
+},
+new TimeSeriesPoint(2102981)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:50:00Z"),
+},
+new TimeSeriesPoint(2108053)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T16:55:00Z"),
+},
+new TimeSeriesPoint(2107907)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:00:00Z"),
+},
+new TimeSeriesPoint(2108241)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:05:00Z"),
+},
+new TimeSeriesPoint(2100321)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:10:00Z"),
+},
+new TimeSeriesPoint(2100448)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:15:00Z"),
+},
+new TimeSeriesPoint(2100483)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:20:00Z"),
+},
+new TimeSeriesPoint(2103042)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:25:00Z"),
+},
+new TimeSeriesPoint(2103037)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:30:00Z"),
+},
+new TimeSeriesPoint(2103040)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:35:00Z"),
+},
+new TimeSeriesPoint(2103054)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:40:00Z"),
+},
+new TimeSeriesPoint(2103058)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:45:00Z"),
+},
+new TimeSeriesPoint(1830757)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:50:00Z"),
+},
+new TimeSeriesPoint(1830855)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T17:55:00Z"),
+},
+new TimeSeriesPoint(1831495)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:00:00Z"),
+},
+new TimeSeriesPoint(1831463)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:05:00Z"),
+},
+new TimeSeriesPoint(1831963)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:10:00Z"),
+},
+new TimeSeriesPoint(1832046)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:15:00Z"),
+},
+new TimeSeriesPoint(1832070)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:20:00Z"),
+},
+new TimeSeriesPoint(1835511)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:25:00Z"),
+},
+new TimeSeriesPoint(1835265)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:30:00Z"),
+},
+new TimeSeriesPoint(1835481)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:35:00Z"),
+},
+new TimeSeriesPoint(1835578)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:40:00Z"),
+},
+new TimeSeriesPoint(1835611)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:45:00Z"),
+},
+new TimeSeriesPoint(1836314)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:50:00Z"),
+},
+new TimeSeriesPoint(1836369)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T18:55:00Z"),
+},
+new TimeSeriesPoint(1837280)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:00:00Z"),
+},
+new TimeSeriesPoint(1842939)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:05:00Z"),
+},
+new TimeSeriesPoint(1843126)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:10:00Z"),
+},
+new TimeSeriesPoint(1845840)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:15:00Z"),
+},
+new TimeSeriesPoint(1842444)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:20:00Z"),
+},
+new TimeSeriesPoint(1839891)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:25:00Z"),
+},
+new TimeSeriesPoint(1839875)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:30:00Z"),
+},
+new TimeSeriesPoint(1839870)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:35:00Z"),
+},
+new TimeSeriesPoint(1840090)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:40:00Z"),
+},
+new TimeSeriesPoint(1840479)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:45:00Z"),
+},
+new TimeSeriesPoint(1840479)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:50:00Z"),
+},
+new TimeSeriesPoint(1840482)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T19:55:00Z"),
+},
+new TimeSeriesPoint(1841522)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:00:00Z"),
+},
+new TimeSeriesPoint(1841836)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:05:00Z"),
+},
+new TimeSeriesPoint(1842377)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:10:00Z"),
+},
+new TimeSeriesPoint(1842388)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:15:00Z"),
+},
+new TimeSeriesPoint(1842489)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:20:00Z"),
+},
+new TimeSeriesPoint(1842489)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:25:00Z"),
+},
+new TimeSeriesPoint(1842489)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:30:00Z"),
+},
+new TimeSeriesPoint(1842496)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:35:00Z"),
+},
+new TimeSeriesPoint(1842689)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:40:00Z"),
+},
+new TimeSeriesPoint(1843117)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:45:00Z"),
+},
+new TimeSeriesPoint(1843116)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:50:00Z"),
+},
+new TimeSeriesPoint(1843227)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T20:55:00Z"),
+},
+new TimeSeriesPoint(1843138)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:00:00Z"),
+},
+new TimeSeriesPoint(1843141)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:05:00Z"),
+},
+new TimeSeriesPoint(1843310)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:10:00Z"),
+},
+new TimeSeriesPoint(1843310)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:15:00Z"),
+},
+new TimeSeriesPoint(1843507)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:20:00Z"),
+},
+new TimeSeriesPoint(1843953)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:25:00Z"),
+},
+new TimeSeriesPoint(1844778)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:30:00Z"),
+},
+new TimeSeriesPoint(1843918)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:35:00Z"),
+},
+new TimeSeriesPoint(1882692)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:40:00Z"),
+},
+new TimeSeriesPoint(1974888)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:45:00Z"),
+},
+new TimeSeriesPoint(2157136)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:50:00Z"),
+},
+new TimeSeriesPoint(2154987)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T21:55:00Z"),
+},
+new TimeSeriesPoint(2155664)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:00:00Z"),
+},
+new TimeSeriesPoint(2155660)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:05:00Z"),
+},
+new TimeSeriesPoint(2155824)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:10:00Z"),
+},
+new TimeSeriesPoint(2155824)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:15:00Z"),
+},
+new TimeSeriesPoint(2156329)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:20:00Z"),
+},
+new TimeSeriesPoint(2156479)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:25:00Z"),
+},
+new TimeSeriesPoint(2165269)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:30:00Z"),
+},
+new TimeSeriesPoint(2165433)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:35:00Z"),
+},
+new TimeSeriesPoint(2165739)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:40:00Z"),
+},
+new TimeSeriesPoint(2165931)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:45:00Z"),
+},
+new TimeSeriesPoint(2165928)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:50:00Z"),
+},
+new TimeSeriesPoint(2165989)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T22:55:00Z"),
+},
+new TimeSeriesPoint(2228961)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:00:00Z"),
+},
+new TimeSeriesPoint(2228961)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:05:00Z"),
+},
+new TimeSeriesPoint(2228961)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:10:00Z"),
+},
+new TimeSeriesPoint(2485802)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:15:00Z"),
+},
+new TimeSeriesPoint(2485802)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:20:00Z"),
+},
+new TimeSeriesPoint(2486021)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:25:00Z"),
+},
+new TimeSeriesPoint(2485293)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:30:00Z"),
+},
+new TimeSeriesPoint(2485293)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:35:00Z"),
+},
+new TimeSeriesPoint(2485324)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:40:00Z"),
+},
+new TimeSeriesPoint(2489142)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:45:00Z"),
+},
+new TimeSeriesPoint(2526312)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:50:00Z"),
+},
+new TimeSeriesPoint(2526313)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-01T23:55:00Z"),
+},
+new TimeSeriesPoint(2526314)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:00:00Z"),
+},
+new TimeSeriesPoint(2526324)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:05:00Z"),
+},
+new TimeSeriesPoint(2526325)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:10:00Z"),
+},
+new TimeSeriesPoint(2526205)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:15:00Z"),
+},
+new TimeSeriesPoint(2526226)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:20:00Z"),
+},
+new TimeSeriesPoint(2526475)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:25:00Z"),
+},
+new TimeSeriesPoint(2526471)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:30:00Z"),
+},
+new TimeSeriesPoint(2526471)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:35:00Z"),
+},
+new TimeSeriesPoint(2526534)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:40:00Z"),
+},
+new TimeSeriesPoint(2526646)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:45:00Z"),
+},
+new TimeSeriesPoint(2526646)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:50:00Z"),
+},
+new TimeSeriesPoint(2526648)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T00:55:00Z"),
+},
+new TimeSeriesPoint(2526658)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:00:00Z"),
+},
+new TimeSeriesPoint(2526771)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:05:00Z"),
+},
+new TimeSeriesPoint(2526773)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:10:00Z"),
+},
+new TimeSeriesPoint(2526793)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:15:00Z"),
+},
+new TimeSeriesPoint(2527010)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:20:00Z"),
+},
+new TimeSeriesPoint(2527031)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:25:00Z"),
+},
+new TimeSeriesPoint(3178096)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:30:00Z"),
+},
+new TimeSeriesPoint(3196305)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:35:00Z"),
+},
+new TimeSeriesPoint(3196202)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:40:00Z"),
+},
+new TimeSeriesPoint(3196202)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:45:00Z"),
+},
+new TimeSeriesPoint(3196205)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:50:00Z"),
+},
+new TimeSeriesPoint(3229232)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T01:55:00Z"),
+},
+new TimeSeriesPoint(3230463)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:00:00Z"),
+},
+new TimeSeriesPoint(3230468)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:05:00Z"),
+},
+new TimeSeriesPoint(3230468)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:10:00Z"),
+},
+new TimeSeriesPoint(3230468)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:15:00Z"),
+},
+new TimeSeriesPoint(3230470)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:20:00Z"),
+},
+new TimeSeriesPoint(3230467)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:25:00Z"),
+},
+new TimeSeriesPoint(3230506)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:30:00Z"),
+},
+new TimeSeriesPoint(3231536)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:35:00Z"),
+},
+new TimeSeriesPoint(3230723)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:40:00Z"),
+},
+new TimeSeriesPoint(3230727)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:45:00Z"),
+},
+new TimeSeriesPoint(3230727)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:50:00Z"),
+},
+new TimeSeriesPoint(3230727)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T02:55:00Z"),
+},
+new TimeSeriesPoint(3231880)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:00:00Z"),
+},
+new TimeSeriesPoint(3232283)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:05:00Z"),
+},
+new TimeSeriesPoint(3232283)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:10:00Z"),
+},
+new TimeSeriesPoint(3232283)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:15:00Z"),
+},
+new TimeSeriesPoint(3232325)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:20:00Z"),
+},
+new TimeSeriesPoint(3232323)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:25:00Z"),
+},
+new TimeSeriesPoint(3232327)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:30:00Z"),
+},
+new TimeSeriesPoint(3232340)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:35:00Z"),
+},
+new TimeSeriesPoint(3232713)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:40:00Z"),
+},
+new TimeSeriesPoint(3232729)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:45:00Z"),
+},
+new TimeSeriesPoint(3232756)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:50:00Z"),
+},
+new TimeSeriesPoint(3233500)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T03:55:00Z"),
+},
+new TimeSeriesPoint(3233500)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T04:00:00Z"),
+},
+new TimeSeriesPoint(3233500)
+{
+Timestamp = DateTimeOffset.Parse("2017-01-02T04:05:00Z"),
 }
-            }, TimeGranularity.Yearly)
+            }, TimeGranularity.PerMinute)
             {
-                CustomInterval = 1234,
-                Period = 1234,
-                StableTrendWindow = 1234,
-                Threshold = 123.45F,
+                CustomInterval = 5,
+                Period = 0,
+                StableTrendWindow = 10,
+                Threshold = (float)0.99,
             };
             Response<UnivariateChangePointDetectionResult> response = await client.DetectUnivariateChangePointAsync(options);
         }

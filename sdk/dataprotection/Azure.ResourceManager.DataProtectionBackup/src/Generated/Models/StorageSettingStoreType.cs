@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static bool operator ==(StorageSettingStoreType left, StorageSettingStoreType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageSettingStoreType"/> values are not the same. </summary>
         public static bool operator !=(StorageSettingStoreType left, StorageSettingStoreType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageSettingStoreType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageSettingStoreType"/>. </summary>
         public static implicit operator StorageSettingStoreType(string value) => new StorageSettingStoreType(value);
 
         /// <inheritdoc />

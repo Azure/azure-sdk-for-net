@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(DBNodeActionType left, DBNodeActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DBNodeActionType"/> values are not the same. </summary>
         public static bool operator !=(DBNodeActionType left, DBNodeActionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DBNodeActionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DBNodeActionType"/>. </summary>
         public static implicit operator DBNodeActionType(string value) => new DBNodeActionType(value);
 
         /// <inheritdoc />

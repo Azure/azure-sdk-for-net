@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         public static bool operator ==(FreeTrialState left, FreeTrialState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FreeTrialState"/> values are not the same. </summary>
         public static bool operator !=(FreeTrialState left, FreeTrialState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FreeTrialState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FreeTrialState"/>. </summary>
         public static implicit operator FreeTrialState(string value) => new FreeTrialState(value);
 
         /// <inheritdoc />

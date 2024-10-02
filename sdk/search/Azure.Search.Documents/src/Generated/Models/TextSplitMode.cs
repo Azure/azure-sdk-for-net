@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(TextSplitMode left, TextSplitMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TextSplitMode"/> values are not the same. </summary>
         public static bool operator !=(TextSplitMode left, TextSplitMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TextSplitMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TextSplitMode"/>. </summary>
         public static implicit operator TextSplitMode(string value) => new TextSplitMode(value);
 
         /// <inheritdoc />

@@ -71,9 +71,8 @@ public partial class PostgreSqlServerKey : Resource
     /// </summary>
     /// <param name="resourceName">Name of the PostgreSqlServerKey.</param>
     /// <param name="resourceVersion">Version of the PostgreSqlServerKey.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public PostgreSqlServerKey(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/keys", resourceVersion ?? "2020-01-01", context)
+    public PostgreSqlServerKey(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/keys", resourceVersion ?? "2020-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _serverKeyType = BicepValue<PostgreSqlServerKeyType>.DefineProperty(this, "ServerKeyType", ["properties", "serverKeyType"]);

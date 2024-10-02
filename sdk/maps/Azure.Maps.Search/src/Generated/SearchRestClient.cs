@@ -505,7 +505,7 @@ namespace Azure.Maps.Search
         /// <param name="resolution"> Resolution determines the amount of points to send back. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public async Task<Response<Boundary>> GetPolygonAsync(IEnumerable<double> coordinates, string view = null, BoundaryResultTypeEnum? resultType = null, ResolutionEnum? resolution = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BoundaryInternal>> GetPolygonAsync(IEnumerable<double> coordinates, string view = null, BoundaryResultTypeEnum? resultType = null, ResolutionEnum? resolution = null, CancellationToken cancellationToken = default)
         {
             if (coordinates == null)
             {
@@ -518,9 +518,9 @@ namespace Azure.Maps.Search
             {
                 case 200:
                     {
-                        Boundary value = default;
+                        BoundaryInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Boundary.DeserializeBoundary(document.RootElement);
+                        value = BoundaryInternal.DeserializeBoundaryInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -545,7 +545,7 @@ namespace Azure.Maps.Search
         /// <param name="resolution"> Resolution determines the amount of points to send back. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public Response<Boundary> GetPolygon(IEnumerable<double> coordinates, string view = null, BoundaryResultTypeEnum? resultType = null, ResolutionEnum? resolution = null, CancellationToken cancellationToken = default)
+        public Response<BoundaryInternal> GetPolygon(IEnumerable<double> coordinates, string view = null, BoundaryResultTypeEnum? resultType = null, ResolutionEnum? resolution = null, CancellationToken cancellationToken = default)
         {
             if (coordinates == null)
             {
@@ -558,9 +558,9 @@ namespace Azure.Maps.Search
             {
                 case 200:
                     {
-                        Boundary value = default;
+                        BoundaryInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Boundary.DeserializeBoundary(document.RootElement);
+                        value = BoundaryInternal.DeserializeBoundaryInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

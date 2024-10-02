@@ -31,9 +31,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 case OperationType.Db:
                     SetDbDependencyProperties(ref activityTagsProcessor.MappedTags);
                     break;
-                case OperationType.Rpc:
-                    SetRpcDependencyProperties(ref activityTagsProcessor.MappedTags);
-                    break;
                 case OperationType.Messaging:
                     SetMessagingDependencyProperties(activity, ref activityTagsProcessor.MappedTags);
                     break;
@@ -101,14 +98,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 Properties.Add(SemanticConventions.AttributeDbName, sanitizedDbName);
             }
-        }
-
-        private void SetRpcDependencyProperties(ref AzMonList rpcTagObjects)
-        {
-            var rpcAttributeTagObjects = AzMonList.GetTagValues(ref rpcTagObjects, SemanticConventions.AttributeRpcService, SemanticConventions.AttributeRpcSystem, SemanticConventions.AttributeRpcStatus);
-            Data = rpcAttributeTagObjects[0]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
-            Type = rpcAttributeTagObjects[1]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
-            ResultCode = rpcAttributeTagObjects[2]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_ResultCode_MaxLength);
         }
 
         private void SetMessagingDependencyProperties(Activity activity, ref AzMonList messagingTagObjects)

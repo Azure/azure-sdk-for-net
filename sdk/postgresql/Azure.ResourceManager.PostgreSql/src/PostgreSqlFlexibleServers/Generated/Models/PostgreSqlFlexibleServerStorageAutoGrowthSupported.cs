@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlFlexibleServerStorageAutoGrowthSupported left, PostgreSqlFlexibleServerStorageAutoGrowthSupported right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerStorageAutoGrowthSupported"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlFlexibleServerStorageAutoGrowthSupported left, PostgreSqlFlexibleServerStorageAutoGrowthSupported right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerStorageAutoGrowthSupported"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerStorageAutoGrowthSupported"/>. </summary>
         public static implicit operator PostgreSqlFlexibleServerStorageAutoGrowthSupported(string value) => new PostgreSqlFlexibleServerStorageAutoGrowthSupported(value);
 
         /// <inheritdoc />

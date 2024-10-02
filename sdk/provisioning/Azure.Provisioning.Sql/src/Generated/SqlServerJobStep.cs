@@ -86,9 +86,8 @@ public partial class SqlServerJobStep : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlServerJobStep.</param>
     /// <param name="resourceVersion">Version of the SqlServerJobStep.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerJobStep(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/jobAgents/jobs/steps", resourceVersion ?? "2021-11-01", context)
+    public SqlServerJobStep(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/jobAgents/jobs/steps", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _action = BicepValue<JobStepAction>.DefineProperty(this, "Action", ["properties", "action"]);

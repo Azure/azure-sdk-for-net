@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 
@@ -12,7 +13,7 @@ namespace Azure.Provisioning;
 /// Collect resources and other constructs like parameters together.
 /// </summary>
 /// <param name="name"></param>
-public class Infrastructure(string name) : Provisionable
+public class Infrastructure(string name = "main") : Provisionable
 {
     /// <summary>
     /// A friendly name that can also be used if compiling to a module.
@@ -28,10 +29,18 @@ public class Infrastructure(string name) : Provisionable
     // Placeholder until we get module splitting handled
     private Infrastructure? _parent = null;
 
-    // TODO: Figure out the right way to expose ethis publicly
-    protected internal override IEnumerable<Provisionable> GetResources() => _resources;
+    /// <inheritdoc/>
+    public override IEnumerable<Provisionable> GetResources() => _resources;
     private readonly List<Provisionable> _resources = [];
 
+    /// <summary>
+    /// Adds a provisionable construct to this Infrastructure.
+    /// </summary>
+    /// <param name="resource">The provisionable construct to add.</param>
+    /// <remarks>
+    /// This will remove any existing association between this provisionable
+    /// construct and other Infrastructure instances.
+    /// </remarks>
     public virtual void Add(Provisionable resource)
     {
         if (resource is ProvisioningConstruct construct &&
@@ -57,8 +66,17 @@ public class Infrastructure(string name) : Provisionable
             _resources.Add(nested);
             nested._parent = this;
         }
+
+        // Ensure all cases are covered
+        Debug.Assert(
+            resource is ProvisioningConstruct || resource is Infrastructure,
+            $"{nameof(Infrastructure)} needs to be updated if you add a new fork in the hierarchy derived from {nameof(Provisionable)}!");
     }
 
+    /// <summary>
+    /// Remove a provisionable construct from this Infrastructure.
+    /// </summary>
+    /// <param name="resource">The provisionable construct to remove.</param>
     public virtual void Remove(Provisionable resource)
     {
         if (resource is ProvisioningConstruct construct &&
@@ -75,35 +93,89 @@ public class Infrastructure(string name) : Provisionable
         }
     }
 
+    /// <inheritdoc/>
     protected internal override void Validate(ProvisioningContext? context = null)
     {
-        context ??= ProvisioningContext.Provider.GetProvisioningContext();
+        context ??= new();
         base.Validate(context);
         foreach (Provisionable resource in GetResources()) { resource.Validate(context); }
     }
 
+    /// <inheritdoc/>
     protected internal override void Resolve(ProvisioningContext? context = default)
     {
-        context ??= ProvisioningContext.Provider.GetProvisioningContext();
+        context ??= new();
         base.Resolve(context);
 
         Provisionable[] cached = [.. GetResources()]; // Copy so Resolve can mutate
         foreach (Provisionable resource in cached) { resource.Resolve(context); }
+
+        foreach (InfrastructureResolver resolver in context.InfrastructureResolvers)
+        {
+            resolver.ResolveInfrastructure(context, this);
+        }
     }
 
-    protected internal override IEnumerable<Statement> Compile(ProvisioningContext? context = default)
+    /// <inheritdoc/>
+    protected internal override IEnumerable<Statement> Compile() =>
+        // TODO: For now I'm letting this through in case someone calls Compile
+        // before Build while debugging.  We could also make it a little less
+        // friendly and more predictable by throwing here.
+        CompileInternal(context: null);
+
+    /// <summary>
+    /// Compile this infrastructure into a set of bicep modules.
+    /// </summary>
+    /// <param name="context">Provisioning context.</param>
+    /// <returns>Dictionary mapping module names to module definitions.</returns>
+    protected internal IDictionary<string, IEnumerable<Statement>> CompileModules(ProvisioningContext? context = default)
     {
-        context ??= ProvisioningContext.Provider.GetProvisioningContext();
+        // This API shape will eventually help us grow into compiling multiple
+        // modules at once and automatically splitting resources across them.
+        context ??= new();
+        Dictionary<string, IEnumerable<Statement>> modules = [];
+        modules.Add(Name, CompileInternal(context));
+
+        // Optionally add any nested modules
+        List<Infrastructure> nested = [];
+        foreach (InfrastructureResolver resolver in context.InfrastructureResolvers)
+        {
+            nested.AddRange(resolver.GetNestedInfrastructure(context, this));
+        }
+        foreach (Infrastructure infra in nested)
+        {
+            modules.Add(infra.Name, infra.CompileInternal(context));
+        }
+
+        return modules;
+    }
+
+    /// <inheritdoc/>
+    private List<Statement> CompileInternal(ProvisioningContext? context)
+    {
         List<Statement> statements = [];
         if (TargetScope is not null)
         {
             statements.Add(new TargetScopeStatement(TargetScope));
         }
-        foreach (Provisionable resource in GetResources())
+
+        IEnumerable<Provisionable> resources = GetResources();
+
+        // Optionally customize the resources with the extensibility hooks on
+        // ProvisioningContext.
+        if (context is not null)
+        {
+            foreach (InfrastructureResolver resolver in context.InfrastructureResolvers)
+            {
+                resources = resolver.ResolveResources(context, resources);
+            }
+        }
+
+        foreach (Provisionable resource in resources)
         {
             if (resource is ProvisioningConstruct construct)
             {
-                statements.AddRange(construct.Compile(context));
+                statements.AddRange(construct.Compile());
             }
             else if (resource is Infrastructure nested)
             {
@@ -118,26 +190,22 @@ public class Infrastructure(string name) : Provisionable
         return statements;
     }
 
-    protected internal IDictionary<string, IEnumerable<Statement>> CompileModules(ProvisioningContext? context = default)
-    {
-        // This API shape will eventually help us grow into compiling multiple
-        // modules at once and automatically splitting resources across them.
-        context ??= ProvisioningContext.Provider.GetProvisioningContext();
-        Dictionary<string, IEnumerable<Statement>> modules = [];
-        modules.Add(Name, Compile(context));
-        return modules;
-    }
-
+    /// <summary>
+    /// Compose all the resources into a concrete <see cref="ProvisioningPlan"/>
+    /// that can be compiled into Bicep, deployed, etc.
+    /// </summary>
+    /// <param name="context">
+    /// The provisioning context to use for composing resources.
+    /// </param>
+    /// <returns>
+    /// A <see cref="ProvisioningPlan"/> that can be compiled into Bicep,
+    /// deployed, etc.
+    /// </returns>
     public virtual ProvisioningPlan Build(ProvisioningContext? context = default)
     {
-        context ??= ProvisioningContext.Provider.GetProvisioningContext();
+        context ??= new();
         Resolve(context);
         Validate(context);
-
-        // Reset the default infrastructure so the context can continue to be
-        // used for additional provisioning.
-        context.DefaultInfrastructure = context.DefaultInfrastructureProvider();
-
         return new ProvisioningPlan(this, context);
     }
 }

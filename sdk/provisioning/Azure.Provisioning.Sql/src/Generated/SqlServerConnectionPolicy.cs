@@ -64,9 +64,8 @@ public partial class SqlServerConnectionPolicy : Resource
     /// </summary>
     /// <param name="resourceName">Name of the SqlServerConnectionPolicy.</param>
     /// <param name="resourceVersion">Version of the SqlServerConnectionPolicy.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SqlServerConnectionPolicy(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/servers/connectionPolicies", resourceVersion ?? "2021-11-01", context)
+    public SqlServerConnectionPolicy(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/servers/connectionPolicies", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _connectionType = BicepValue<ServerConnectionType>.DefineProperty(this, "ConnectionType", ["properties", "connectionType"]);

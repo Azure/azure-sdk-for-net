@@ -85,9 +85,8 @@ public partial class ManagedInstanceKey : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedInstanceKey.</param>
     /// <param name="resourceVersion">Version of the ManagedInstanceKey.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedInstanceKey(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/keys", resourceVersion, context)
+    public ManagedInstanceKey(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/keys", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _serverKeyType = BicepValue<SqlServerKeyType>.DefineProperty(this, "ServerKeyType", ["properties", "serverKeyType"]);
@@ -99,6 +98,22 @@ public partial class ManagedInstanceKey : Resource
         _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
         _thumbprint = BicepValue<string>.DefineProperty(this, "Thumbprint", ["properties", "thumbprint"], isOutput: true);
         _parent = ResourceReference<ManagedInstance>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported ManagedInstanceKey resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-05-01-preview.
+        /// </summary>
+        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
     }
 
     /// <summary>

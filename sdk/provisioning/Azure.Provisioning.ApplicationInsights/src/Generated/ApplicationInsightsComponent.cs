@@ -242,9 +242,8 @@ public partial class ApplicationInsightsComponent : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ApplicationInsightsComponent.</param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsComponent.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ApplicationInsightsComponent(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Insights/components", resourceVersion ?? "2020-02-02", context)
+    public ApplicationInsightsComponent(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Insights/components", resourceVersion ?? "2020-02-02")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isRequired: true);
@@ -330,18 +329,38 @@ public partial class ApplicationInsightsComponent : Resource
         new(minLength: 1, maxLength: 260, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period | ResourceNameCharacters.Parentheses);
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// ApplicationInsightsComponent.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this ApplicationInsightsComponent.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(ApplicationInsightsBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{identity.ResourceName}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}_{ResourceName}")
+    public RoleAssignment CreateRoleAssignment(ApplicationInsightsBuiltInRole role, UserAssignedIdentity identity) =>
+        new($"{ResourceName}_{identity.ResourceName}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}")
         {
+            Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
             Scope = new IdentifierExpression(ResourceName),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
+        };
+
+    /// <summary>
+    /// Creates a role assignment for a principal that grants access to this
+    /// ApplicationInsightsComponent.
+    /// </summary>
+    /// <param name="role">The role to grant.</param>
+    /// <param name="principalType">The type of the principal to assign to.</param>
+    /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="resourceNameSuffix">Optional role assignment resource name suffix.</param>
+    /// <returns>The <see cref="RoleAssignment"/>.</returns>
+    public RoleAssignment CreateRoleAssignment(ApplicationInsightsBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? resourceNameSuffix = default) =>
+        new($"{ResourceName}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}{(resourceNameSuffix is null ? "" : "_")}{resourceNameSuffix}")
+        {
+            Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
+            Scope = new IdentifierExpression(ResourceName),
+            PrincipalType = principalType,
+            RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
+            PrincipalId = principalId
         };
 }

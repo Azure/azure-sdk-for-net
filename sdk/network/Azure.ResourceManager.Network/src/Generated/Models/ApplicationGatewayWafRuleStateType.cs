@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ApplicationGatewayWafRuleStateType left, ApplicationGatewayWafRuleStateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayWafRuleStateType"/> values are not the same. </summary>
         public static bool operator !=(ApplicationGatewayWafRuleStateType left, ApplicationGatewayWafRuleStateType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationGatewayWafRuleStateType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayWafRuleStateType"/>. </summary>
         public static implicit operator ApplicationGatewayWafRuleStateType(string value) => new ApplicationGatewayWafRuleStateType(value);
 
         /// <inheritdoc />

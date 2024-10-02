@@ -102,9 +102,8 @@ public partial class ManagedDatabaseSensitivityLabel : Resource
     /// </summary>
     /// <param name="resourceName">Name of the ManagedDatabaseSensitivityLabel.</param>
     /// <param name="resourceVersion">Version of the ManagedDatabaseSensitivityLabel.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedDatabaseSensitivityLabel(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/databases/schemas/tables/columns/sensitivityLabels", resourceVersion, context)
+    public ManagedDatabaseSensitivityLabel(string resourceName, string? resourceVersion = default)
+        : base(resourceName, "Microsoft.Sql/managedInstances/databases/schemas/tables/columns/sensitivityLabels", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _informationType = BicepValue<string>.DefineProperty(this, "InformationType", ["properties", "informationType"]);
