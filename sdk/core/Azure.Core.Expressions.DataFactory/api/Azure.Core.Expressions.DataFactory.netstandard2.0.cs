@@ -56,7 +56,7 @@ namespace Azure.Core.Expressions.DataFactory
         public static Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceKind LinkedServiceReference { get { throw null; } }
         public bool Equals(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceKind other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
+        public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceKind left, Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceKind right) { throw null; }

@@ -13,7 +13,7 @@
     <Error Condition="'@(MissingTargetFrameworks)' != ''" Text="Missing required target frameworks '@(MissingTargetFrameworks)'. Please ensure you add those frameworks." />
   </Target>
 
-<!-- TEMPORARY while transitioning to have a .NET 6 target, once libraries with new targers have had a chance to release, this can be restored -->
+<!-- TEMPORARY while transitioning to require a .NET 6 target, once libraries with new targets have had a chance to release, this can be restored -->
   <!-- <Target Name="ValidateRunApiCompat" BeforeTargets="Build" Condition="'$(ValidateRunApiCompat)' == 'true'">
     <Error Condition="'$(RunApiCompat)' == 'false' and '$(IncludeBuildOutput)' != 'false'"
            Text="Api Compat cannot be disabled."/>
@@ -97,6 +97,12 @@
 
     <PackageReference Condition="'$(EnableBannedApiAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="All" />
 
+  </ItemGroup>
+
+  <!-- Remove packages built into the .NET 6+ runtime -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <!-- Remove System.Text.Json for .NET 6 targets -->
+    <PackageReference Remove="System.Text.Json" />
   </ItemGroup>
 
   <!-- Add Package Icon to DataPlane Packages -->
