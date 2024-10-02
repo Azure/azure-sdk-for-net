@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
@@ -102,7 +103,11 @@ public class BicepDictionary<T> : BicepValue, IDictionary<string, BicepValue<T>>
     public bool IsReadOnly => false;
 
     public bool ContainsKey(string key) => _values.ContainsKey(key);
-    public bool TryGetValue(string key, /*[MaybeNullWhen(false)]*/ out BicepValue<T> value) => _values.TryGetValue(key, out value);
+#if NET6_0_OR_GREATER
+    public bool TryGetValue(string key, [MaybeNullWhen(false)] out BicepValue<T> value) => _values.TryGetValue(key, out value);
+#else
+    public bool TryGetValue(string key, out BicepValue<T> value) => _values.TryGetValue(key, out value);
+#endif
     public bool Contains(KeyValuePair<string, BicepValue<T>> item) => _values.Contains(item);
     public void CopyTo(KeyValuePair<string, BicepValue<T>>[] array, int arrayIndex) => _values.CopyTo(array, arrayIndex);
     public bool Remove(KeyValuePair<string, BicepValue<T>> item) => Remove(item.Key);
@@ -118,7 +123,7 @@ public class BicepDictionary<T> : BicepValue, IDictionary<string, BicepValue<T>>
     void IDictionary<string, BicepValue>.Add(string key, BicepValue value) => Add(key, (BicepValue<T>)value);
     bool IDictionary<string, BicepValue>.TryGetValue(string key, out BicepValue value)
     {
-        if (TryGetValue(key, out BicepValue<T> val))
+        if (TryGetValue(key, out BicepValue<T>? val))
         {
             value = val;
             return true;
