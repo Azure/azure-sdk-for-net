@@ -9,6 +9,8 @@
     <PackageTags>azure;datafactory</PackageTags>
     <Nullable>enable</Nullable>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <!-- Remove this line when Azure.Core.Expressions.DataFactory is released for net6.0  -->
+    <RunApiCompat Condition="'$(TargetFramework)' == 'net6.0'">false</RunApiCompat>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
   </PropertyGroup>
