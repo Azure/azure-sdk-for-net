@@ -100,8 +100,11 @@
   </ItemGroup>
 
   <!-- Remove packages built into the .NET 6+ runtime -->
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-    <!-- Remove System.Text.Json for .NET 6 targets -->
+  <ItemGroup Condition="'$(TargetFramework)' >= 'net6.0'">
+    <PackageReference Remove="System.Buffers" />
+    <PackageReference Remove="System.Net.Http" />
+    <PackageReference Remove="System.Threading.Channels" />
+    <PackageReference Remove="System.Text.Encodings.Web" />
     <PackageReference Remove="System.Text.Json" />
   </ItemGroup>
 
