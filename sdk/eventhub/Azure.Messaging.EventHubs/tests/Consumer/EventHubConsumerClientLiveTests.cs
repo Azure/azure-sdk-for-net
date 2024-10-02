@@ -2490,13 +2490,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Give the consumer a moment to ensure that it is established and then send events for it to read.
 
-                    await Task.Delay(1250);
+                    await Task.Delay(1000);
                     await SendEventsToAllPartitionsAsync(scope.EventHubName, sourceEvents, partitions, cancellationSource.Token);
 
                     // Read the events and validate the resulting state.
 
                     var readState = await readTask;
-                    //Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                     Assert.That(readState.Events.Count, Is.EqualTo(sourceEvents.Count), "Only the source events should have been read.");
 
                     foreach (var sourceEvent in sourceEvents)
