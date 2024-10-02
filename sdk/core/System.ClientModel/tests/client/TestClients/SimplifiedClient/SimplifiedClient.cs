@@ -41,7 +41,7 @@ public class SimplifiedClient
     {
         Argument.AssertNotNull(inputModel, nameof(inputModel));
 
-        BinaryContent content = (BinaryContent)inputModel;
+        using BinaryContent content = (BinaryContent)inputModel;
 
         ClientResult result = await GetModelAsync(content, cancellationToken.ToRequestOptions());
 
@@ -55,7 +55,7 @@ public class SimplifiedClient
     {
         Argument.AssertNotNull(inputModel, nameof(inputModel));
 
-        BinaryContent content = (BinaryContent)inputModel;
+        using BinaryContent content = (BinaryContent)inputModel;
 
         ClientResult result = GetModel(content, cancellationToken.ToRequestOptions());
 
@@ -65,15 +65,43 @@ public class SimplifiedClient
     }
 
     // Protocol method - async
-    public virtual Task<ClientResult> GetModelAsync(BinaryContent content, RequestOptions? options = default)
+    public virtual async Task<ClientResult> GetModelAsync(BinaryContent content, RequestOptions? options = default)
     {
-        throw new NotImplementedException();
+        using PipelineMessage message = CreateGetModelRequest(content, options);
+
+        await Pipeline.SendAsync(message).ConfigureAwait(false);
+
+        PipelineResponse response = message.Response!;
+
+        if (response.IsError &&
+            (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
+        {
+            throw await ClientResultException.CreateAsync(response).ConfigureAwait(false);
+        }
+
+        response = message.BufferResponse ? response : message.ExtractResponse()!;
+
+        return ClientResult.FromResponse(response);
     }
 
     // Protocol method - sync
     public virtual ClientResult GetModel(BinaryContent content, RequestOptions? options = default)
     {
-        throw new NotImplementedException();
+        using PipelineMessage message = CreateGetModelRequest(content, options);
+
+        Pipeline.Send(message);
+
+        PipelineResponse response = message.Response!;
+
+        if (response.IsError &&
+            (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
+        {
+            throw new ClientResultException(response);
+        }
+
+        response = message.BufferResponse ? response : message.ExtractResponse()!;
+
+        return ClientResult.FromResponse(response);
     }
 
     // Request creation helper
