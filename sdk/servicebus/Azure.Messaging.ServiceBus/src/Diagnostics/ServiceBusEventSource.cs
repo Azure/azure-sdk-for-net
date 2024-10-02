@@ -351,7 +351,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
-        [Event(ReceiverAcceptSessionCanceledEvent, Level = EventLevel.Verbose, Message = "An accept session operation was for a receiver. (Namespace '{0}', Entity path '{1}'). Error Message: '{2}'")]
+        [Event(ReceiverAcceptSessionCanceledEvent, Level = EventLevel.Verbose, Message = "An accept session operation for a receiver was canceled. (Namespace '{0}', Entity path '{1}'). Error Message: '{2}'")]
         public void ReceiverAcceptSessionCanceled(string fullyQualifiedNamespace, string entityPath, string exception)
         {
             if (IsEnabled())
