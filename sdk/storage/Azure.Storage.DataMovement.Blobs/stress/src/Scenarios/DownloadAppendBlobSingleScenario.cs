@@ -2,30 +2,30 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Storage.Blobs.Models;
 using Azure.Storage.Stress;
+using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
-    public class DownloadBlockBlobDirectoryScenario : DownloadBlobDirectoryScenarioBase
+    public class DownloadAppendBlobSingleScenario : DownloadBlobSingleScenarioBase
     {
-        public DownloadBlockBlobDirectoryScenario(
-            Uri destinationBlobUri,
+        public DownloadAppendBlobSingleScenario(
+            Uri sourceBlobUri,
             int? blobSize,
-            int? blobCount,
             TransferManagerOptions transferManagerOptions,
             DataTransferOptions dataTransferOptions,
             TokenCredential tokenCredential,
             Metrics metrics,
-            string testRunId) :
-            base(destinationBlobUri, blobSize, blobCount, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
+            string testRunId)
+            : base(sourceBlobUri, blobSize, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
         {
         }
 
-        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.DownloadDirectoryBlockBlob;
+        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.DownloadSingleBlockBlob;
 
         public override async Task RunTestAsync(CancellationToken cancellationToken)
             => await RunTestInternalAsync(BlobType.Block, cancellationToken);

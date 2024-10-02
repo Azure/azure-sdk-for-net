@@ -10,9 +10,9 @@ using Azure.Storage.Stress;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
-    public class CopyBlockBlobDirectoryScenario : CopyBlobDirectoryScenarioBase
+    public class CopyAppendBlobDirectoryScenario : CopyBlobDirectoryScenarioBase
     {
-        public CopyBlockBlobDirectoryScenario(
+        public CopyAppendBlobDirectoryScenario(
             Uri sourceBlobUri,
             Uri destinationBlobUri,
             int? blobSize,
@@ -27,9 +27,9 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
         {
         }
 
-        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.CopyDirectoryBlockBlob;
+        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.CopyDirectoryAppendBlob;
 
         public override Task RunTestAsync(CancellationToken cancellationToken)
-            => RunTestInternalAsync(BlobType.Block, cancellationToken);
+            => RunTestInternalAsync(BlobType.Append, cancellationToken);
     }
 }

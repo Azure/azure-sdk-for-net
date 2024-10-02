@@ -10,9 +10,9 @@ using Azure.Storage.Stress;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
-    public class DownloadBlockBlobDirectoryScenario : DownloadBlobDirectoryScenarioBase
+    public class DownloadPageBlobDirectoryScenario : DownloadBlobDirectoryScenarioBase
     {
-        public DownloadBlockBlobDirectoryScenario(
+        public DownloadPageBlobDirectoryScenario(
             Uri destinationBlobUri,
             int? blobSize,
             int? blobCount,
@@ -25,9 +25,9 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
         {
         }
 
-        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.DownloadDirectoryBlockBlob;
+        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.DownloadDirectoryPageBlob;
 
         public override async Task RunTestAsync(CancellationToken cancellationToken)
-            => await RunTestInternalAsync(BlobType.Block, cancellationToken);
+            => await RunTestInternalAsync(BlobType.Page, cancellationToken);
     }
 }

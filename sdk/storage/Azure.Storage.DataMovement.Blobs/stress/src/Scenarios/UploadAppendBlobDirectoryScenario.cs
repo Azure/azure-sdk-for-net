@@ -10,9 +10,9 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
-    public class UploadBlockBlobDirectoryScenario : UploadBlobDirectoryScenarioBase
+    public class UploadAppendBlobDirectoryScenario : UploadBlobDirectoryScenarioBase
     {
-        public UploadBlockBlobDirectoryScenario(
+        public UploadAppendBlobDirectoryScenario(
             Uri destinationBlobUri,
             int? blobSize,
             int? blobCount,
@@ -25,9 +25,9 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
         {
         }
 
-        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.UploadDirectoryBlockBlob;
+        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.UploadDirectoryAppendBlob;
 
         public override Task RunTestAsync(CancellationToken cancellationToken)
-            => RunTestInternalAsync(BlobType.Block, cancellationToken);
+            => RunTestInternalAsync(BlobType.Append, cancellationToken);
     }
 }

@@ -14,15 +14,17 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
     public abstract class BlobScenarioBase : TestScenarioBase
     {
         protected internal readonly Uri _destinationBlobUri;
+        protected internal int _blobSize;
         protected internal readonly TokenCredential _tokenCredential;
         protected internal BlobsStorageResourceProvider _blobsStorageResourceProvider;
         protected internal LocalFilesStorageResourceProvider _localFilesStorageResourceProvider;
-        protected internal BlobServiceClient _destinationServiceClient;
+        protected internal BlobServiceClient _blobServiceClient;
         protected internal readonly TransferManagerOptions _transferManagerOptions;
         protected internal readonly DataTransferOptions _dataTransferOptions;
 
         public BlobScenarioBase(
-            Uri destinationBlobUri,
+            Uri blobUri,
+            int? blobSize,
             TransferManagerOptions transferManagerOptions,
             DataTransferOptions dataTransferOptions,
             TokenCredential tokenCredential,
@@ -30,13 +32,14 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             string testRunId)
             : base(metrics, testRunId)
         {
-            _destinationBlobUri = destinationBlobUri;
+            _destinationBlobUri = blobUri;
+            _blobSize = blobSize != default ? blobSize.Value : DataMovementBlobStressConstants.DefaultObjectSize;
             _transferManagerOptions = transferManagerOptions;
             _dataTransferOptions = dataTransferOptions;
             _tokenCredential = tokenCredential;
             _blobsStorageResourceProvider = new BlobsStorageResourceProvider(tokenCredential);
             _localFilesStorageResourceProvider = new LocalFilesStorageResourceProvider();
-            _destinationServiceClient = new BlobServiceClient(destinationBlobUri, tokenCredential);
+            _blobServiceClient = new BlobServiceClient(blobUri, tokenCredential);
         }
     }
 }

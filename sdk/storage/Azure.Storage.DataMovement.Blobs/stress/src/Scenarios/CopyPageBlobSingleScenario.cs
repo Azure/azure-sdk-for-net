@@ -10,26 +10,25 @@ using Azure.Storage.Stress;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
-    public class CopyBlockBlobDirectoryScenario : CopyBlobDirectoryScenarioBase
+    public class CopyPageBlobSingleScenario : CopyBlobSingleScenarioBase
     {
-        public CopyBlockBlobDirectoryScenario(
+        public CopyPageBlobSingleScenario(
             Uri sourceBlobUri,
             Uri destinationBlobUri,
             int? blobSize,
-            int? blobCount,
             TransferManagerOptions transferManagerOptions,
             DataTransferOptions dataTransferOptions,
             TokenCredential sourceTokenCredential,
             TokenCredential destinationTokenCredential,
             Metrics metrics,
             string testRunId)
-            : base(sourceBlobUri, destinationBlobUri, blobSize, blobCount, transferManagerOptions, dataTransferOptions, sourceTokenCredential, destinationTokenCredential, metrics, testRunId)
+            : base(sourceBlobUri, destinationBlobUri, blobSize, transferManagerOptions, dataTransferOptions, sourceTokenCredential, destinationTokenCredential, metrics, testRunId)
         {
         }
 
-        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.CopyDirectoryBlockBlob;
+        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.CopySinglePageBlob;
 
         public override Task RunTestAsync(CancellationToken cancellationToken)
-            => RunTestInternalAsync(BlobType.Block, cancellationToken);
+            => RunTestInternalAsync(BlobType.Page, cancellationToken);
     }
 }

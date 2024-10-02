@@ -11,9 +11,9 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
-    public class DownloadBlockBlobSingleScenario : DownloadBlobSingleScenarioBase
+    public class DownloadPageBlobSingleScenario : DownloadBlobSingleScenarioBase
     {
-        public DownloadBlockBlobSingleScenario(
+        public DownloadPageBlobSingleScenario(
             Uri sourceBlobUri,
             int? blobSize,
             TransferManagerOptions transferManagerOptions,
@@ -25,9 +25,9 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
         {
         }
 
-        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.DownloadSingleBlockBlob;
+        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.DownloadSinglePageBlob;
 
         public override async Task RunTestAsync(CancellationToken cancellationToken)
-            => await RunTestInternalAsync(BlobType.Block, cancellationToken);
+            => await RunTestInternalAsync(BlobType.Page, cancellationToken);
     }
 }

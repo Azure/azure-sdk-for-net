@@ -10,24 +10,23 @@ using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
-    public class UploadBlockBlobDirectoryScenario : UploadBlobDirectoryScenarioBase
+    public class UploadPageBlobSingleScenario : UploadBlobSingleScenarioBase
     {
-        public UploadBlockBlobDirectoryScenario(
+        public UploadPageBlobSingleScenario(
             Uri destinationBlobUri,
             int? blobSize,
-            int? blobCount,
             TransferManagerOptions transferManagerOptions,
             DataTransferOptions dataTransferOptions,
             TokenCredential tokenCredential,
             Metrics metrics,
             string testRunId)
-            : base(destinationBlobUri, blobSize, blobCount, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
+            : base(destinationBlobUri, blobSize, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
         {
         }
 
-        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.UploadDirectoryBlockBlob;
+        public override string Name => DataMovementBlobStressConstants.TestScenarioNameStr.UploadSinglePageBlob;
 
-        public override Task RunTestAsync(CancellationToken cancellationToken)
-            => RunTestInternalAsync(BlobType.Block, cancellationToken);
+        public override Task RunTestAsync(CancellationToken cancellationToken = default)
+            => RunTestInternalAsync(BlobType.Append, cancellationToken);
     }
 }
