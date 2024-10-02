@@ -4,7 +4,10 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 using Azure.Provisioning.CloudMachine;
+using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 
 namespace Azure.CloudMachine.Tests;
@@ -57,4 +60,35 @@ public class CloudMachineTests
             Bar = true
         });
     }
+
+    public record Fact(string text);
+    [Ignore("no recordings yet")]
+    [Theory]
+    [TestCase("""{ "id" : 1 }""")]
+    public void E2EApp()
+    {
+        CloudMachineClient cm = new();
+        cm.StrartReceiving<Fact>(ToDoReceived);
+        cm.Uploaded<Fact>(ToDoUploaded);
+
+        foreach ((string path, byte[] content) in SimulatedRequests)
+        {
+            switch (path)
+            {
+                case "add":
+                    cm.Send(content);
+                    break;
+                case "search":
+                    cm.Search(content);
+            }
+        }
+
+        void ToDoReceived(Fact fact) => cm.Upload(fact);
+        void ToDoUploaded(Fact fact) => cm.AI.AddFact(fact);
+    }
+
+    private IEnumerable<(string Path, byte[] Content)> SimulatedRequests => [
+        ("add", BinaryData.FromObjectAsJson(new { text = "Our company name is Microsoft" }).ToArray()),
+        ("search", BinaryData.FromObjectAsJson(new { text = "What's the name of your company?" }).ToArray()),
+    ];
 }
