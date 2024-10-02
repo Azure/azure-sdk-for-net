@@ -8,6 +8,8 @@
     <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure SDK Spatial System Text Json</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <!-- Remove this line when Microsoft.Azure.Core.NewtonsoftJson is released for net6.0  -->
+    <RunApiCompat Condition="'$(TargetFramework)' == 'net6.0'">false</RunApiCompat>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
   </PropertyGroup>
 
