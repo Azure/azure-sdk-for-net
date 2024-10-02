@@ -68,13 +68,6 @@ public abstract class PipelineRequest : IDisposable
     /// </summary>
     protected abstract BinaryContent? ContentCore { get; set; }
 
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    // TODO: validate that Azure.Core request can newslot it to always
-    // provide a value.
-    public virtual string? ClientRequestId { get; set; }
-
     /// <inheritdoc/>
     public abstract void Dispose();
 }
