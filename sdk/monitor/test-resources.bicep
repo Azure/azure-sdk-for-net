@@ -296,9 +296,13 @@ output LOGS_ENDPOINT string =  'https://api.loganalytics.io'
 
 output CONNECTION_STRING string = ApplicationInsightsResource1.properties.ConnectionString
 output WORKSPACE_ID string = LogAnalyticsWorkspace1.properties.customerId
+output WORKSPACE_PRIMARY_RESOURCE_ID string = LogAnalyticsWorkspace1.id
 
 output SECONDARY_CONNECTION_STRING string = ApplicationInsightsResource2.properties.ConnectionString
 output SECONDARY_WORKSPACE_ID string = LogAnalyticsWorkspace2.properties.customerId
+output WORKSPACE_SECONDARY_RESOURCE_ID string = LogAnalyticsWorkspace2.id
 
 output STORAGE_NAME string = storageAccount.name
 output STORAGE_ID string = storageAccount.id
+output METRICS_RESOURCE_ID string = LogAnalyticsWorkspace1.id
+output METRICS_RESOURCE_NAMESPACE string = 'Microsoft.OperationalInsights/workspaces'

@@ -34,7 +34,7 @@ namespace Azure.Monitor.Query.Tests
         [SetUp]
         public void SetUp()
         {
-            _testData = new MetricsTestData(TestEnvironment, DateTimeOffset.UtcNow);
+            _testData = new MetricsTestData(TestEnvironment, Recording.UtcNow);
         }
 
         [RecordedTest]
