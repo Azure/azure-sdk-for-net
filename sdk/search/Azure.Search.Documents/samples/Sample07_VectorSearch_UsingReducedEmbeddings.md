@@ -98,7 +98,7 @@ public static ReadOnlyMemory<float> GetEmbeddings(string input)
 {
     Uri endpoint = new Uri(Environment.GetEnvironmentVariable("OpenAI_ENDPOINT"));
     string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
-    AzureKeyCredential credential = new AzureKeyCredential(key);
+    ApiKeyCredential credential = new ApiKeyCredential(key);
 
     AzureOpenAIClient openAIClient = new AzureOpenAIClient(endpoint, credential);
     EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("my-text-embedding-3-small");
@@ -107,7 +107,7 @@ public static ReadOnlyMemory<float> GetEmbeddings(string input)
     {
         Dimensions = 256
     };
-    Embedding embedding = embeddingClient.GenerateEmbedding(input, embeddingsOptions);
+    OpenAIEmbedding embedding = embeddingClient.GenerateEmbedding(input, embeddingsOptions);
     return embedding.ToFloats();
 }
 ```
